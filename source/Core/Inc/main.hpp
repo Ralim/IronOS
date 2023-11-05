@@ -2,10 +2,11 @@
 #define __MAIN_H
 #include "OLED.hpp"
 #include "Setup.h"
+#include "Types.h"
 #include <stdint.h>
-extern volatile uint32_t currentTempTargetDegC;
-extern bool              settingsWereReset;
-extern bool              usb_pd_available;
+extern volatile TemperatureType_t currentTempTargetDegC;
+extern bool                       settingsWereReset;
+extern bool                       usb_pd_available;
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -25,13 +26,15 @@ extern TickType_t   lastMovementTime;
 }
 // Accelerometer type
 enum class AccelType {
-  Scanning = 0,
-  None     = 1,
-  MMA      = 2,
-  LIS      = 3,
-  BMA      = 4,
-  MSA      = 5,
-  SC7      = 6,
+  Scanning  = 0,
+  None      = 1,
+  MMA       = 2,
+  LIS       = 3,
+  BMA       = 4,
+  MSA       = 5,
+  SC7       = 6,
+  GPIO      = 7,
+  LIS_CLONE = 8,
 };
 extern AccelType DetectedAccelerometerVersion;
 

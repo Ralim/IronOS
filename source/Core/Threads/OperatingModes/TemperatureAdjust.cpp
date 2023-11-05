@@ -1,26 +1,34 @@
 #include "OperatingModes.h"
 void gui_solderingTempAdjust(void) {
-  TickType_t lastChange              = xTaskGetTickCount();
-  currentTempTargetDegC              = 0; // Turn off heater while adjusting temp
-  TickType_t  autoRepeatTimer        = 0;
-  uint8_t     autoRepeatAcceleration = 0;
-  bool        waitForRelease         = false;
-  ButtonState buttons                = getButtonState();
+  TickType_t lastChange             = xTaskGetTickCount();
+  currentTempTargetDegC             = 0; // Turn off heater while adjusting temp
+  TickType_t autoRepeatTimer        = 0;
+  uint8_t    autoRepeatAcceleration = 0;
+#ifndef PROFILE_SUPPORT
+  bool        waitForRelease = false;
+  ButtonState buttons        = getButtonState();
+
   if (buttons != BUTTON_NONE) {
     // Temp adjust entered by long-pressing F button.
     waitForRelease = true;
   }
+#else
+  ButtonState buttons;
+#endif
+
   for (;;) {
     OLED::setCursor(0, 0);
     OLED::clearScreen();
     buttons = getButtonState();
     if (buttons) {
+      lastChange = xTaskGetTickCount();
+#ifndef PROFILE_SUPPORT
       if (waitForRelease) {
         buttons = BUTTON_NONE;
       }
-      lastChange = xTaskGetTickCount();
     } else {
       waitForRelease = false;
+#endif
     }
     int16_t delta = 0;
     switch (buttons) {
@@ -71,20 +79,25 @@ void gui_solderingTempAdjust(void) {
       newTemp = (newTemp / delta) * delta;
 
       if (getSettingValue(SettingsOptions::TemperatureInF)) {
-        if (newTemp > MAX_TEMP_F)
+        if (newTemp > MAX_TEMP_F) {
           newTemp = MAX_TEMP_F;
-        if (newTemp < MIN_TEMP_F)
+        }
+        if (newTemp < MIN_TEMP_F) {
           newTemp = MIN_TEMP_F;
+        }
       } else {
-        if (newTemp > MAX_TEMP_C)
+        if (newTemp > MAX_TEMP_C) {
           newTemp = MAX_TEMP_C;
-        if (newTemp < MIN_TEMP_C)
+        }
+        if (newTemp < MIN_TEMP_C) {
           newTemp = MIN_TEMP_C;
+        }
       }
       setSettingValue(SettingsOptions::SolderingTemp, (uint16_t)newTemp);
     }
-    if (xTaskGetTickCount() - lastChange > (TICKS_SECOND * 2))
+    if (xTaskGetTickCount() - lastChange > (TICKS_SECOND * 2)) {
       return; // exit if user just doesn't press anything for a bit
+    }
 
     if (OLED::getRotation()) {
       OLED::print(getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled) ? LargeSymbolPlus : LargeSymbolMinus, FontStyle::LARGE);
@@ -94,11 +107,7 @@ void gui_solderingTempAdjust(void) {
 
     OLED::print(LargeSymbolSpace, FontStyle::LARGE);
     OLED::printNumber(getSettingValue(SettingsOptions::SolderingTemp), 3, FontStyle::LARGE);
-    if (getSettingValue(SettingsOptions::TemperatureInF))
-      OLED::drawSymbol(0);
-    else {
-      OLED::drawSymbol(1);
-    }
+    OLED::printSymbolDeg(FontStyle::EXTRAS);
     OLED::print(LargeSymbolSpace, FontStyle::LARGE);
     if (OLED::getRotation()) {
       OLED::print(getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled) ? LargeSymbolMinus : LargeSymbolPlus, FontStyle::LARGE);

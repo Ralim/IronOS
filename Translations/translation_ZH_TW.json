@@ -3,8 +3,8 @@
     "languageLocalName": "正體中文",
     "tempUnitFahrenheit": true,
     "messagesWarn": {
-        "CJCCalibrationDone": {
-            "message": "Calibration done!"
+        "CalibrationDone": {
+            "message": "校正完成！"
         },
         "ResetOKMessage": {
             "message": "已重設！"
@@ -30,11 +30,14 @@
         "WarningThermalRunaway": {
             "message": "加熱失控"
         },
+        "WarningTipShorted": {
+            "message": "!烙鐵頭短路!"
+        },
         "SettingsCalibrationWarning": {
-            "message": "Before rebooting, make sure tip & handle are at room temperature!"
+            "message": "在重啟前請確認烙鐵頭及本體已完全冷卻！"
         },
         "CJCCalibrating": {
-            "message": "calibrating"
+            "message": "校正中"
         },
         "SettingsResetWarning": {
             "message": "你是否確定要將全部設定重設到預設值？"
@@ -60,8 +63,17 @@
         "OffString": {
             "message": "關"
         },
+        "ProfilePreheatString": {
+            "message": "Preheat"
+        },
+        "ProfileCooldownString": {
+            "message": "Cooldown"
+        },
         "DeviceFailedValidationWarning": {
             "message": "這支電烙鐵很有可能是冒牌貨！"
+        },
+        "TooHotToStartProfileWarning": {
+            "message": "Too hot to start profile"
         }
     },
     "characters": {
@@ -121,7 +133,7 @@
         },
         "PDVpdo": {
             "displayText": "PD VPDO",
-            "description": "Enables PPS & EPR modes"
+            "description": "開啟PPS及EPR支援"
         },
         "BoostTemperature": {
             "displayText": "增熱溫度",
@@ -142,6 +154,62 @@
         "LockingMode": {
             "displayText": "按鍵鎖定",
             "description": "於焊接模式時，同時長按兩個按鍵啟用按鍵鎖定 <無=停用 | 增=只容許增熱模式 | 全=鎖定全部>"
+        },
+        "ProfilePhases": {
+            "displayText": "Profile Phases",
+            "description": "Number of phases in profile mode"
+        },
+        "ProfilePreheatTemp": {
+            "displayText": "Preheat Temp",
+            "description": "Preheat to this temperature at the start of profile mode"
+        },
+        "ProfilePreheatSpeed": {
+            "displayText": "Preheat Speed",
+            "description": "Preheat at this rate (degrees per second)"
+        },
+        "ProfilePhase1Temp": {
+            "displayText": "Phase 1 Temp",
+            "description": "Target temperature for the end of this phase"
+        },
+        "ProfilePhase1Duration": {
+            "displayText": "Phase 1 Duration",
+            "description": "Target duration of this phase (seconds)"
+        },
+        "ProfilePhase2Temp": {
+            "displayText": "Phase 2 Temp",
+            "description": ""
+        },
+        "ProfilePhase2Duration": {
+            "displayText": "Phase 2 Duration",
+            "description": ""
+        },
+        "ProfilePhase3Temp": {
+            "displayText": "Phase 3 Temp",
+            "description": ""
+        },
+        "ProfilePhase3Duration": {
+            "displayText": "Phase 3 Duration",
+            "description": ""
+        },
+        "ProfilePhase4Temp": {
+            "displayText": "Phase 4 Temp",
+            "description": ""
+        },
+        "ProfilePhase4Duration": {
+            "displayText": "Phase 4 Duration",
+            "description": ""
+        },
+        "ProfilePhase5Temp": {
+            "displayText": "Phase 5 Temp",
+            "description": ""
+        },
+        "ProfilePhase5Duration": {
+            "displayText": "Phase 5 Duration",
+            "description": ""
+        },
+        "ProfileCooldownSpeed": {
+            "displayText": "Cooldown Speed",
+            "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
         },
         "MotionSensitivity": {
             "displayText": "動作敏感度",
@@ -212,8 +280,8 @@
             "description": "於焊接模式畫面以英文小字型顯示詳細資料"
         },
         "BluetoothLE": {
-            "displayText": "Bluetooth",
-            "description": "Enables BLE"
+            "displayText": "藍牙",
+            "description": "開啟藍牙支援"
         },
         "PowerLimit": {
             "displayText": "功率限制",
@@ -221,7 +289,7 @@
         },
         "CalibrateCJC": {
             "displayText": "校正CJC",
-            "description": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5 C)"
+            "description": "在下次重啟時校正烙鐵頭熱電偶冷接點補償值（CJC）（溫差小於5攝氏度時無需校正）"
         },
         "VoltageCalibration": {
             "displayText": "輸入電壓校正？",

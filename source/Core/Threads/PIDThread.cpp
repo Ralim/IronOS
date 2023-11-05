@@ -10,20 +10,21 @@
 #include "Settings.h"
 #include "TipThermoModel.h"
 #include "cmsis_os.h"
+#include "configuration.h"
 #include "history.hpp"
 #include "main.hpp"
 #include "power.hpp"
 #include "task.h"
 
-static TickType_t powerPulseWaitUnit      = 25 * TICKS_100MS;      // 2.5 s
-static TickType_t powerPulseDurationUnit  = (5 * TICKS_100MS) / 2; // 250 ms
-TaskHandle_t      pidTaskNotification     = NULL;
-volatile uint32_t currentTempTargetDegC   = 0; // Current temperature target in C
-int32_t           powerSupplyWattageLimit = 0;
-bool              heaterThermalRunaway    = false;
+static TickType_t          powerPulseWaitUnit      = 25 * TICKS_100MS;      // 2.5 s
+static TickType_t          powerPulseDurationUnit  = (5 * TICKS_100MS) / 2; // 250 ms
+TaskHandle_t               pidTaskNotification     = NULL;
+volatile TemperatureType_t currentTempTargetDegC   = 0; // Current temperature target in C
+int32_t                    powerSupplyWattageLimit = 0;
+bool                       heaterThermalRunaway    = false;
 
-static int32_t getPIDResultX10Watts(int32_t tError);
-static void    detectThermalRunaway(const int16_t currentTipTempInC, const int tError);
+static int32_t getPIDResultX10Watts(TemperatureType_t set_point, TemperatureType_t current_value);
+static void    detectThermalRunaway(const TemperatureType_t currentTipTempInC, const TemperatureType_t tError);
 static void    setOutputx10WattsViaFilters(int32_t x10Watts);
 static int32_t getX10WattageLimits();
 
@@ -37,8 +38,8 @@ void startPIDTask(void const *argument __unused) {
 
   currentTempTargetDegC = 0; // Force start with no output (off). If in sleep / soldering this will
                              // be over-ridden rapidly
-  pidTaskNotification    = xTaskGetCurrentTaskHandle();
-  uint32_t PIDTempTarget = 0;
+  pidTaskNotification             = xTaskGetCurrentTaskHandle();
+  TemperatureType_t PIDTempTarget = 0;
   // Pre-seed the adc filters
   for (int i = 0; i < 32; i++) {
     ulTaskNotifyTake(pdTRUE, 5);
@@ -58,22 +59,22 @@ void startPIDTask(void const *argument __unused) {
     // This is a call to block this thread until the ADC does its samples
     if (ulTaskNotifyTake(pdTRUE, TICKS_SECOND * 2)) {
       // Do the reading here to keep the temp calculations churning along
-      uint32_t currentTipTempInC = TipThermoModel::getTipInC(true);
-      PIDTempTarget              = currentTempTargetDegC;
+      TemperatureType_t currentTipTempInC = TipThermoModel::getTipInC(true);
+
+      PIDTempTarget = currentTempTargetDegC;
       if (PIDTempTarget > 0) {
         // Cap the max set point to 450C
-        if (PIDTempTarget > (450)) {
+        if (PIDTempTarget > 450) {
           // Maximum allowed output
-          PIDTempTarget = (450);
+          PIDTempTarget = 450;
         }
         // Safety check that not aiming higher than current tip can measure
         if (PIDTempTarget > TipThermoModel::getTipMaxInC()) {
           PIDTempTarget = TipThermoModel::getTipMaxInC();
         }
-        int32_t tError = PIDTempTarget - currentTipTempInC;
 
-        detectThermalRunaway(currentTipTempInC, tError);
-        x10WattsOut = getPIDResultX10Watts(tError);
+        detectThermalRunaway(currentTipTempInC, PIDTempTarget - currentTipTempInC);
+        x10WattsOut = getPIDResultX10Watts(PIDTempTarget, currentTipTempInC);
       } else {
         detectThermalRunaway(currentTipTempInC, 0);
       }
@@ -88,7 +89,54 @@ void startPIDTask(void const *argument __unused) {
   }
 }
 
-template <class T = int32_t> struct Integrator {
+#ifdef TIP_CONTROL_PID
+template <class T, T Kp, T Ki, T Kd, T integral_limit_scale> struct PID {
+  T previous_error_term;
+  T integration_running_sum;
+
+  T update(const T set_point, const T new_reading, const TickType_t interval_ms, const T max_output) {
+    const T target_delta = set_point - new_reading;
+
+    // Proportional term
+    const T kp_result = Kp * target_delta;
+
+    // Integral term as we use mixed sampling rates, we cant assume a constant sample interval
+    // Thus we multiply this out by the interval time to ~= dv/dt
+    // Then the shift by 1000 is ms -> Seconds
+
+    integration_running_sum += (target_delta * interval_ms * Ki) / 1000;
+
+    // We constrain integration_running_sum to limit windup
+    // This is not overly required for most use cases but can prevent large overshoot in constrained implementations
+    if (integration_running_sum > integral_limit_scale * max_output) {
+      integration_running_sum = integral_limit_scale * max_output;
+    } else if (integration_running_sum < -integral_limit_scale * max_output) {
+      integration_running_sum = -integral_limit_scale * max_output;
+    }
+    // Calculate the integral term, we use a shift 100 to get precision in integral as we often need small amounts
+    T ki_result = integration_running_sum / 100;
+
+    // Derivative term
+    T derivative = (target_delta - previous_error_term);
+    T kd_result  = ((Kd * derivative) / (T)(interval_ms));
+
+    // Summation of the outputs
+    T output = kp_result + ki_result + kd_result;
+
+    // Restrict to max / 0
+    if (output > max_output)
+      output = max_output;
+    else if (output < 0)
+      output = 0;
+
+    // Save target_delta to previous target_delta
+    previous_error_term = target_delta;
+
+    return output;
+  }
+};
+#else
+template <class T = TemperatureType_t> struct Integrator {
   T sum;
 
   T update(const T val, const int32_t inertia, const int32_t gain, const int32_t rate, const int32_t limit) {
@@ -99,11 +147,12 @@ template <class T = int32_t> struct Integrator {
     // Add the new value x integration interval ( 1 / rate)
     sum += (gain * val) / rate;
 
-    // limit the output
-    if (sum > limit)
+    // constrain the output between +- our max power output, this limits windup when doing the inital heatup or when solding something large
+    if (sum > limit) {
       sum = limit;
-    else if (sum < -limit)
+    } else if (sum < -limit) {
       sum = -limit;
+    }
 
     return sum;
   }
@@ -112,15 +161,23 @@ template <class T = int32_t> struct Integrator {
 
   T get(bool positiveOnly = true) const { return (positiveOnly) ? ((sum > 0) ? sum : 0) : sum; }
 };
-int32_t getPIDResultX10Watts(int32_t setpointDelta) {
-  static TickType_t          lastCall   = 0;
-  static Integrator<int32_t> powerStore = {0};
+#endif
+int32_t getPIDResultX10Watts(TemperatureType_t set_point, TemperatureType_t current_reading) {
+  static TickType_t lastCall = 0;
 
-  const TickType_t rate = 1000 / (xTaskGetTickCount() - lastCall);
-  lastCall              = xTaskGetTickCount();
+#ifdef TIP_CONTROL_PID
+  static PID<TemperatureType_t, TIP_PID_KP, TIP_PID_KI, TIP_PID_KD, 5> pid = {0, 0};
+
+  const TickType_t interval = (xTaskGetTickCount() - lastCall);
+
+#else
+  static Integrator<TemperatureType_t> powerStore = {0};
+  const TickType_t                     rate       = TICKS_SECOND / (xTaskGetTickCount() - lastCall);
+#endif
+  lastCall = xTaskGetTickCount();
   // Sandman note:
   // PID Challenge - we have a small thermal mass that we to want heat up as fast as possible but we don't
-  // want to overshot excessively (if at all) the setpoint temperature. In the same time we have 'imprecise'
+  // want to overshot excessively (if at all) the set point temperature. In the same time we have 'imprecise'
   // instant temperature measurements. The nature of temperature reading imprecision is not necessarily
   // related to the sensor (thermocouple) or DAQ system, that otherwise are fairly decent. The real issue	is
   // the thermal inertia. We basically read the temperature in the window between two heating sessions when
@@ -130,7 +187,7 @@ int32_t getPIDResultX10Watts(int32_t setpointDelta) {
   // negative side effects. As a result, we can only rely on the I term but with a twist. Instead of a simple
   // integrator we are going to use a self decaying integrator that acts more like a dual I term / P term
   // rather than a plain I term. Depending on the circumstances, like when the delta temperature is large,
-  // it acts more like a P term whereas on closing to setpoint it acts increasingly closer to a plain I term.
+  // it acts more like a P term whereas on closing to set point it acts increasingly closer to a plain I term.
   // So in a sense, we have a bit of both.
   //																		 So there we go...
 
@@ -138,20 +195,22 @@ int32_t getPIDResultX10Watts(int32_t setpointDelta) {
   // delta temperature is in °C. The result is the power in X10 W needed to raise (or decrease!) the
   // tip temperature with (Delta Temperature ) °C in 1 second.
   // Note on powerStore. On update, if the value is provided in X10 (W) units then inertia shall be provided
-  // in X10 (J / °C) units as well. Also, powerStore is updated with a gain of 2. Where this comes from: The actual
-  // power CMOS is controlled by TIM3->CTR1 (that is software modulated - on/off - by TIM2-CTR4 interrupts). However,
-  // TIM3->CTR1 is configured with a duty cycle of 50% so, in real, we get only 50% of the presumed power output
-  // so we basically double the need (gain = 2) to get what we want.
-  return powerStore.update(TIP_THERMAL_MASS * setpointDelta, // the required power
-                           getTipThermalMass(),              // Inertia, smaller numbers increase dominance of the previous value
-                           2,                                // gain
-                           rate,                             // PID cycle frequency
+  // in X10 (J / °C) units as well.
+
+#ifdef TIP_CONTROL_PID
+  return pid.update(set_point, current_reading, interval, getX10WattageLimits());
+#else
+  return powerStore.update(((TemperatureType_t)getTipThermalMass()) * (set_point - current_reading), // the required power
+                           getTipInertia(),                                                          // Inertia, smaller numbers increase dominance of the previous value
+                           2,                                                                        // gain
+                           rate,                                                                     // PID cycle frequency
                            getX10WattageLimits());
+#endif
 }
 
-void detectThermalRunaway(const int16_t currentTipTempInC, const int tError) {
-  static uint16_t   tipTempCRunawayTemp   = 0;
-  static TickType_t runawaylastChangeTime = 0;
+void detectThermalRunaway(const TemperatureType_t currentTipTempInC, const TemperatureType_t tError) {
+  static TemperatureType_t tipTempCRunawayTemp   = 0;
+  static TickType_t        runawaylastChangeTime = 0;
 
   // Check for thermal runaway, where it has been x seconds with negligible (y) temp rise
   // While trying to actively heat
@@ -160,7 +219,7 @@ void detectThermalRunaway(const int16_t currentTipTempInC, const int tError) {
   if ((tError > THERMAL_RUNAWAY_TEMP_C)) {
 
     // If we have heated up by more than 20C since last sample point, snapshot time and tip temp
-    int16_t delta = (int16_t)currentTipTempInC - (int16_t)tipTempCRunawayTemp;
+    TemperatureType_t delta = currentTipTempInC - tipTempCRunawayTemp;
     if (delta > THERMAL_RUNAWAY_TEMP_C) {
       // We have heated up more than the threshold, reset the timer
       tipTempCRunawayTemp   = currentTipTempInC;

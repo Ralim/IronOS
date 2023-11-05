@@ -21,7 +21,6 @@ void timer0_comp1_callback(void);
 void timer0_comp2_callback(void);
 void adc_fifo_irq(void);
 void GPIO_IRQHandler(void);
-void switchToSlowPWM(void);
 #ifdef __cplusplus
 }
 #endif

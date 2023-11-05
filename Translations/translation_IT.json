@@ -3,7 +3,7 @@
     "languageLocalName": "Italiano",
     "tempUnitFahrenheit": false,
     "messagesWarn": {
-        "CJCCalibrationDone": {
+        "CalibrationDone": {
             "message": "Calibrazione\ncompletata!"
         },
         "ResetOKMessage": {
@@ -29,6 +29,9 @@
         },
         "WarningThermalRunaway": {
             "message": "Temperatura\nfuori controllo"
+        },
+        "WarningTipShorted": {
+            "message": "Punta in cortocircuito!"
         },
         "SettingsCalibrationWarning": {
             "message": "Prima di riavviare assicurati che la punta e l'impugnatura siano a temperatura ambiente!"
@@ -60,8 +63,17 @@
         "OffString": {
             "message": "OFF"
         },
+        "ProfilePreheatString": {
+            "message": "Preriscaldamento\n"
+        },
+        "ProfileCooldownString": {
+            "message": "Raffreddamento\n"
+        },
         "DeviceFailedValidationWarning": {
             "message": "È probabile che questo dispositivo sia contraffatto!"
+        },
+        "TooHotToStartProfileWarning": {
+            "message": "Troppo caldo\nper il profilo"
         }
     },
     "characters": {
@@ -125,7 +137,7 @@
         },
         "BoostTemperature": {
             "displayText": "Temp\nTurbo",
-            "description": "Imposta la temperatura della funzione Turbo [°C/°F]"
+            "description": "Imposta la temperatura della funzione turbo [°C/°F]"
         },
         "AutoStart": {
             "displayText": "Avvio\nautomatico",
@@ -141,19 +153,75 @@
         },
         "LockingMode": {
             "displayText": "Blocco\ntasti",
-            "description": "Blocca i tasti durante la modalità Saldatura; tieni premuto entrambi per bloccare o sbloccare [D: disattiva; T: consenti Turbo; C: blocco completo]"
+            "description": "Blocca i tasti durante la modalità saldatura; tieni premuto entrambi per bloccare o sbloccare [D: disattiva; T: consenti Turbo; C: blocco completo]"
+        },
+        "ProfilePhases": {
+            "displayText": "Fasi modalità\nprofilo",
+            "description": "Imposta il numero di fasi da attuare per un profilo di riscaldamento personalizzato"
+        },
+        "ProfilePreheatTemp": {
+            "displayText": "Temperatura\npreriscaldamento",
+            "description": "Imposta la temperatura di preriscaldamento da raggiungere all'inizio del profilo di riscaldamento"
+        },
+        "ProfilePreheatSpeed": {
+            "displayText": "Velocità\npreriscaldamento",
+            "description": "Imposta la velocità di preriscaldamento [°C/s]"
+        },
+        "ProfilePhase1Temp": {
+            "displayText": "Temperatura\nfase 1",
+            "description": "Imposta la temperatura da raggiungere alla fine di questa fase"
+        },
+        "ProfilePhase1Duration": {
+            "displayText": "Durata\nfase 1",
+            "description": "Imposta la durata di questa fase [secondi]"
+        },
+        "ProfilePhase2Temp": {
+            "displayText": "Temperatura\nfase 2",
+            "description": ""
+        },
+        "ProfilePhase2Duration": {
+            "displayText": "Durata\nfase 2",
+            "description": ""
+        },
+        "ProfilePhase3Temp": {
+            "displayText": "Temperatura\nfase 3",
+            "description": ""
+        },
+        "ProfilePhase3Duration": {
+            "displayText": "Durata\nfase 3",
+            "description": ""
+        },
+        "ProfilePhase4Temp": {
+            "displayText": "Temperatura\nfase 4",
+            "description": ""
+        },
+        "ProfilePhase4Duration": {
+            "displayText": "Durata\nfase 4",
+            "description": ""
+        },
+        "ProfilePhase5Temp": {
+            "displayText": "Temperatura\nfase 5",
+            "description": ""
+        },
+        "ProfilePhase5Duration": {
+            "displayText": "Durata\nfase 5",
+            "description": ""
+        },
+        "ProfileCooldownSpeed": {
+            "displayText": "Velocità\nraffreddamento",
+            "description": "Imposta la velocità di raffreddamento al termine del profilo di riscaldamento [°C/s]"
         },
         "MotionSensitivity": {
             "displayText": "Sensibilità\nal movimento",
-            "description": "Imposta la sensibilità al movimento per uscire dalla modalità Riposo [0: nessuna; 1: minima; 9: massima]"
+            "description": "Imposta la sensibilità al movimento per uscire dalla modalità riposo [0: nessuna; 1: minima; 9: massima]"
         },
         "SleepTemperature": {
-            "displayText": "Temp\nriposo",
-            "description": "Imposta la temperatura da mantenere in modalità Riposo [°C/°F]"
+            "displayText": "Temperatura\nriposo",
+            "description": "Imposta la temperatura da mantenere in modalità riposo [°C/°F]"
         },
         "SleepTimeout": {
             "displayText": "Timer\nriposo",
-            "description": "Imposta il timer per entrare in modalità Riposo [secondi/minuti]"
+            "description": "Imposta il timer per entrare in modalità riposo [secondi/minuti]"
         },
         "ShutdownTimeout": {
             "displayText": "Timer\nspegnimento",
@@ -161,7 +229,7 @@
         },
         "HallEffSensitivity": {
             "displayText": "Sensore\nHall",
-            "description": "Regola la sensibilità del sensore ad effetto Hall per entrare in modalità Riposo [0: nessuna; 1: minima; 9: massima]"
+            "description": "Regola la sensibilità del sensore ad effetto Hall per entrare in modalità riposo [0: nessuna; 1: minima; 9: massima]"
         },
         "TemperatureUnit": {
             "displayText": "Unità di\ntemperatura",
@@ -209,7 +277,7 @@
         },
         "AdvancedSoldering": {
             "displayText": "Dettagli\nsaldatura",
-            "description": "Mostra informazioni dettagliate durante la modalità Saldatura"
+            "description": "Mostra informazioni dettagliate durante la modalità saldatura"
         },
         "BluetoothLE": {
             "displayText": "Bluetooth\n",
@@ -221,7 +289,7 @@
         },
         "CalibrateCJC": {
             "displayText": "Calibra T\nall'avvio",
-            "description": "Calibra le rilevazioni di temperatura al prossimo riavvio (non necessario se il Delta T<5 °C)"
+            "description": "Calibra le rilevazioni di temperatura al prossimo riavvio (non necessario se lo scarto di temperatura è minore di 5 °C)"
         },
         "VoltageCalibration": {
             "displayText": "Calibrazione\ntensione",

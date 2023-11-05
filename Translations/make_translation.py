@@ -66,6 +66,29 @@ def read_translation(json_root: Union[str, Path], lang_code: str) -> dict:
     return lang
 
 
+def filter_translation(lang: dict, defs: dict, macros: frozenset):
+    def check_excluded(record):
+        if "include" in record and not any(m in macros for m in record["include"]):
+            return True
+
+        if "exclude" in record and any(m in macros for m in record["exclude"]):
+            return True
+
+        return False
+
+    for category in ("menuOptions", "menuGroups"):
+        for index, record in enumerate(defs[category]):
+            if check_excluded(record):
+                lang[category][record["id"]]["displayText"] = ""
+                lang[category][record["id"]]["description"] = ""
+
+    for index, record in enumerate(defs["messagesWarn"]):
+        if check_excluded(record):
+            lang["messagesWarn"][record["id"]]["message"] = ""
+
+    return lang
+
+
 def validate_langcode_matches_content(filename: str, content: dict) -> None:
     # Extract lang code from file name
     lang_code = filename[12:-5].upper()
@@ -101,6 +124,8 @@ def get_constants() -> List[Tuple[str, str]]:
         ("SmallSymbolSpace", " "),
         ("LargeSymbolDot", "."),
         ("SmallSymbolDot", "."),
+        ("SmallSymbolSlash", "/"),
+        ("SmallSymbolColon", ":"),
         ("LargeSymbolDegC", "C"),
         ("SmallSymbolDegC", "C"),
         ("LargeSymbolDegF", "F"),
@@ -155,6 +180,8 @@ def get_accel_names_list() -> List[str]:
         "BMA223",
         "MSA301",
         "SC7A20",
+        "GPIO",
+        "LIS2 CLONE",
     ]
 
 
@@ -162,8 +189,8 @@ def get_power_source_list() -> List[str]:
     return [
         "DC",
         "QC",
-        "PD W. VBus",
-        "PD No VBus",
+        "PV:PDwVBus",
+        "PD:No VBus",
     ]
 
 
@@ -250,7 +277,6 @@ def get_letter_counts(defs: dict, lang: dict, build_version: str) -> Dict:
     # collapse all strings down into the composite letters and store totals for these
     # Doing this seperately for small and big font
     def sort_and_count(list_in: List[str]):
-
         symbol_counts: dict[str, int] = {}
         for line in list_in:
             line = line.replace("\n", "").replace("\r", "")
@@ -439,7 +465,6 @@ class FontMapsPerFont:
 def get_font_map_per_font(
     text_list_small_font: List[str], text_list_large_font: List[str]
 ) -> FontMapsPerFont:
-
     pending_small_symbols = set(text_list_small_font)
     pending_large_symbols = set(text_list_large_font)
 
@@ -1029,7 +1054,6 @@ def get_translation_strings_and_indices_text(
     large_font_symbol_conversion_table: Dict[str, bytes],
     suffix: str = "",
 ) -> str:
-
     # For all strings; we want to convert them to their byte encoded form (using font index lookups)
     # Then we want to sort by their reversed format to see if we can remove any duplicates by combining the tails (last n bytes;n>0)
     # Finally we look for any that are contained inside one another, and if they are we update them to point to this
@@ -1118,7 +1142,6 @@ def get_translation_strings_and_indices_text(
     translation_strings_text = "  /* .strings = */ {\n"
 
     for i, encoded_bytes in enumerate(byte_encoded_strings):
-
         if i > 0:
             translation_strings_text += ' "\\0"\n'
 
@@ -1240,6 +1263,63 @@ def get_translation_sanity_checks_text(defs: dict) -> str:
     return sanity_checks_text
 
 
+def get_version_suffix(ver) -> str:
+    # Check env var from push.yml first:
+    # - if it's pull request then use vX.YY + C.ID for version line as in *C*I with proper tag instead of merge tag for detached tree
+    if os.environ.get("GITHUB_CI_PR_SHA", "") != "":
+        return "C" + "." + os.environ["GITHUB_CI_PR_SHA"][:8].upper()
+    # - no github PR SHA ID, hence keep checking
+
+    suffix = str("")
+
+    try:
+        # Use commands _hoping_ they won't be too new for one environments nor deprecated for another ones:
+        ## - get commit id; --short=8 - the shorted hash with 8 digits (increase/decrease if needed!)
+        sha_id = f"{subprocess.check_output(['git', 'rev-parse', '--short=8', 'HEAD']).strip().decode('ascii').upper()}"
+        ## - if the exact commit relates to tag, then this command should return one-line tag name:
+        tag = f"{subprocess.check_output(['git', 'tag', '--points-at', '%s' % sha_id]).strip().decode('ascii')}"
+        if (
+            f"{subprocess.check_output(['git', 'rev-parse', '--symbolic-full-name', '--short', 'HEAD']).strip().decode('ascii')}"
+            == "HEAD"
+        ):
+            return "E" + "." + sha_id
+        else:
+            ## - get short "traditional" branch name (as in `git branch` for that one with asterisk):
+            branch = f"{subprocess.check_output(['git', 'symbolic-ref', '--short', 'HEAD']).strip().decode('ascii')}"
+        if tag and "" != tag:
+            # _Speculate_ on tag that it's Release...
+            if ver == tag:
+                # ... but only if double-check for tag is matched
+                suffix = "R"
+            else:
+                # ... otherwise it's tagged but not a release version!
+                suffix = "T"
+        elif branch and "" != branch:
+            # _Hardcoded_ current main development branch...
+            if "dev" == branch:
+                suffix = "D"
+            # ... or some other branch
+            else:
+                suffix = "B"
+        else:
+            # Something else but from Git
+            suffix = "G"
+        # Attach SHA commit to ID a build since it's from git anyway
+        suffix += "." + sha_id
+    except subprocess.CalledProcessError:
+        # No git tree so _probably_ Homebrew build from source
+        suffix = "H"
+    except OSError:
+        # Something _special_?
+        suffix = "S"
+
+    if "" == suffix:
+        # Something _very_ special!
+        suffix = "V"
+
+    return suffix
+
+
 def read_version() -> str:
     with open(HERE.parent / "source" / "version.h") as version_file:
         for line in version_file:
@@ -1247,11 +1327,7 @@ def read_version() -> str:
                 matches = re.findall(r"\"(.+?)\"", line)
                 if matches:
                     version = matches[0]
-                    try:
-                        version += f".{subprocess.check_output(['git', 'rev-parse', '--short=7', 'HEAD']).strip().decode('ascii').upper()}"
-                    # --short=7: the shorted hash with 7 digits. Increase/decrease if needed!
-                    except OSError:
-                        version += " git"
+                    version += get_version_suffix(version)
     return version
 
 
@@ -1286,6 +1362,13 @@ def parse_args() -> argparse.Namespace:
         dest="compress_font",
     )
     parser.add_argument(
+        "--macros",
+        help="Extracted macros to filter translation strings by",
+        type=argparse.FileType("r"),
+        required=True,
+        dest="macros",
+    )
+    parser.add_argument(
         "--output", "-o", help="Target file", type=argparse.FileType("w"), required=True
     )
     parser.add_argument(
@@ -1304,6 +1387,12 @@ def main() -> None:
     if args.input_pickled and args.output_pickled:
         logging.error("error: Both --output-pickled and --input-pickled are specified")
         sys.exit(1)
+
+    macros = (
+        frozenset(re.findall(r"#define ([^ ]+)", args.macros.read()))
+        if args.macros
+        else frozenset()
+    )
 
     language_data: LanguageData
     if args.input_pickled:
@@ -1329,11 +1418,13 @@ def main() -> None:
 
         defs_ = load_json(os.path.join(json_dir, "translations_definitions.json"))
         if len(args.languageCodes) == 1:
-            lang_ = read_translation(json_dir, args.languageCodes[0])
+            lang_ = filter_translation(
+                read_translation(json_dir, args.languageCodes[0]), defs_, macros
+            )
             language_data = prepare_language(lang_, defs_, build_version)
         else:
             langs_ = [
-                read_translation(json_dir, lang_code)
+                filter_translation(read_translation(json_dir, lang_code), defs_, macros)
                 for lang_code in args.languageCodes
             ]
             language_data = prepare_languages(langs_, defs_, build_version)

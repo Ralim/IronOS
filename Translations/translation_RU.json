@@ -3,20 +3,20 @@
     "languageLocalName": "Русский",
     "tempUnitFahrenheit": false,
     "messagesWarn": {
-        "CJCCalibrationDone": {
+        "CalibrationDone": {
             "message": "Калибровка\nзавершена!"
         },
         "ResetOKMessage": {
-            "message": "Сброс OK"
+            "message": "Готово!"
         },
         "SettingsResetMessage": {
             "message": "Настройки\nсброшены!"
         },
         "NoAccelerometerMessage": {
-            "message": "Не определен\nакселерометр!"
+            "message": "Акселерометр\nне обнаружен!"
         },
         "NoPowerDeliveryMessage": {
-            "message": "USB-PD питание\nне обнаружено"
+            "message": "Питание по USB-PD\nне обнаружено"
         },
         "LockingKeysString": {
             "message": "ЗАБЛОК"
@@ -28,7 +28,10 @@
             "message": "!ЗАБЛОК!"
         },
         "WarningThermalRunaway": {
-            "message": "Неуправляемый\nРазогрев"
+            "message": "Неуправляемый\nразогрев"
+        },
+        "WarningTipShorted": {
+            "message": "!КЗ на жале!"
         },
         "SettingsCalibrationWarning": {
             "message": "Пожалуйста, убедитесь, что жало и корпус имеют комнатную температуру при следующей загрузке!"
@@ -40,28 +43,37 @@
             "message": "Вы уверены, что хотите сбросить настройки к значениям по умолчанию?"
         },
         "UVLOWarningString": {
-            "message": "НАПРЯЖ--"
+            "message": "НИЗ.НАПР"
         },
         "UndervoltageString": {
             "message": "Низ. напряжение\n"
         },
         "InputVoltageString": {
-            "message": "Питание В: \n"
+            "message": "Питание(В):\n"
         },
         "SleepingSimpleString": {
-            "message": "Zzzz"
+            "message": "Хххррп"
         },
         "SleepingAdvancedString": {
-            "message": "Ожидание...\n"
+            "message": "Сон...\n"
         },
         "SleepingTipAdvancedString": {
             "message": "Жало: \n"
         },
         "OffString": {
-            "message": "Вык"
+            "message": "Выкл"
+        },
+        "ProfilePreheatString": {
+            "message": "Преднагрев\n"
+        },
+        "ProfileCooldownString": {
+            "message": "Остывание\n"
         },
         "DeviceFailedValidationWarning": {
-            "message": "Скорее всего, это устройство подделка!"
+            "message": "Вероятно, это поддельное устройство!"
+        },
+        "TooHotToStartProfileWarning": {
+            "message": "Слишком горячо для\nстарта профиля"
         }
     },
     "characters": {
@@ -72,9 +84,9 @@
         "SettingSlowChar": "М",
         "SettingMediumChar": "С",
         "SettingFastChar": "Б",
-        "SettingStartNoneChar": "В",
+        "SettingStartNoneChar": "О",
         "SettingStartSolderingChar": "П",
-        "SettingStartSleepChar": "О",
+        "SettingStartSleepChar": "С",
         "SettingStartSleepOffChar": "К",
         "SettingLockDisableChar": "О",
         "SettingLockBoostChar": "Т",
@@ -82,110 +94,166 @@
     },
     "menuGroups": {
         "PowerMenu": {
-            "displayText": "Параметры\nпитания",
+            "displayText": "Настройки\nпитания",
             "description": ""
         },
         "SolderingMenu": {
-            "displayText": "Параметры\nпайки",
+            "displayText": "Настройки\nпайки",
             "description": ""
         },
         "PowerSavingMenu": {
-            "displayText": "Режимы\nсна",
+            "displayText": "Авто\nвыключение",
             "description": ""
         },
         "UIMenu": {
-            "displayText": "Параметры\nинтерфейса",
+            "displayText": "Интерфейс\n",
             "description": ""
         },
         "AdvancedMenu": {
-            "displayText": "Дополнител.\nнастройки",
+            "displayText": "Доп.\nнастройки",
             "description": ""
         }
     },
     "menuOptions": {
         "DCInCutoff": {
-            "displayText": "Источник\nпитания",
-            "description": "Источник питания. Устанавливает напряжение отсечки. (DC 10В) (S 3,3В на ячейку, без лимита мощности)"
+            "displayText": "Предельное\nнапряжение",
+            "description": "Установка минимально предельного напряжения от аккумулятора для предотвращения глубокого разряда (DC 10В | S 3,3В на ячейку, без ограничения мощности)"
         },
         "MinVolCell": {
-            "displayText": "Мин.\nнапр.",
-            "description": "Минимальное разрешенное напряжение на ячейку (3S: 3 - 3,7V | 4S-6S: 2,4 - 3,7V)"
+            "displayText": "Мин.\nнапряжение",
+            "description": "Минимально разрешённое напряжение на ячейку (3S: 3 - 3,7В | 4S-6S: 2,4 - 3,7В)"
         },
         "QCMaxVoltage": {
-            "displayText": "Ограничение\nнапряжения QC",
-            "description": "Максимальное напряжение для согласования с QC источником питания"
+            "displayText": "Напр-е\nдля QC",
+            "description": "Максимальное напряжение для согласования с источником питания по QC"
         },
         "PDNegTimeout": {
-            "displayText": "PD\nтайм-аут",
-            "description": "Power Delivery тайм-аут согласования с шагом 100 мс для совместимости с некоторыми быстрыми зарядными QC (0: отключено)"
+            "displayText": "PD\nинтервал",
+            "description": "Интервал согласования питания по Power Delivery с шагом 100 мс для совместимости с некоторыми источниками питания по QC (0=Откл.)"
         },
         "PDVpdo": {
             "displayText": "PD\nVPDO",
-            "description": "Включает режимы PPS & EPR."
+            "description": "Включить режимы PPS & EPR"
         },
         "BoostTemperature": {
             "displayText": "t° турбо\nрежима",
             "description": "Температура жала в турбо-режиме"
         },
         "AutoStart": {
-            "displayText": "Авто\nстарт",
-            "description": "Режим, в котором запускается паяльник при подаче питания (В=Выкл. | П=Пайка | О=Ожидание | К=Ожидание при комн. темп.)"
+            "displayText": "Режим при\nвключении",
+            "description": "Режим, в котором включается паяльник (О=Откл. | П=Пайка | С=Сон | К=Ожидание при комн. темп.)"
         },
         "TempChangeShortStep": {
-            "displayText": "Шаг темп.\nкор. наж.",
+            "displayText": "Шаг t° при\nкор.наж-ии",
             "description": "Шаг изменения температуры при коротком нажатии кнопок"
         },
         "TempChangeLongStep": {
-            "displayText": "Шаг темп.\nдлин. наж.",
-            "description": "Шаг изменения температуры при длинном нажатии кнопок"
+            "displayText": "Шаг t° при\nдол.наж-ии",
+            "description": "Шаг изменения температуры при долгом нажатии кнопок"
         },
         "LockingMode": {
             "displayText": "Разрешить\nблок. кнопок",
-            "description": "При работе длинное нажатие обеих кнопок блокирует их (О=Отключено | Т=Только турбо | П=Полная блокировка)"
+            "description": "Блокировать кнопки при их долгом нажатии в режиме пайки (О=Откл. | Т=Только турбо | П=Полная блокировка)"
+        },
+        "ProfilePhases": {
+            "displayText": "Этапы\nпрофиля",
+            "description": "Количество этапов в режиме профиля"
+        },
+        "ProfilePreheatTemp": {
+            "displayText": "Температура\nпреднагрева",
+            "description": "Температура предварительного нагрева в начале режима термопрофиля"
+        },
+        "ProfilePreheatSpeed": {
+            "displayText": "Скорость\nпреднагрева",
+            "description": "Скорость предварительного нагрева в начале режима термопрофиля (в градусах в секунду)"
+        },
+        "ProfilePhase1Temp": {
+            "displayText": "Температура\n1-го этапа",
+            "description": "Необходимая температура в конце 1-го этапа"
+        },
+        "ProfilePhase1Duration": {
+            "displayText": "Длительность\n1-го этапа",
+            "description": "Необходимая длительность 1-го этапа (в секундах)"
+        },
+        "ProfilePhase2Temp": {
+            "displayText": "Температура\n2-го этапа",
+            "description": ""
+        },
+        "ProfilePhase2Duration": {
+            "displayText": "Длительность\n2-го этапа",
+            "description": ""
+        },
+        "ProfilePhase3Temp": {
+            "displayText": "Температура\n3-го этапа",
+            "description": ""
+        },
+        "ProfilePhase3Duration": {
+            "displayText": "Длительность\n3-го этапа",
+            "description": ""
+        },
+        "ProfilePhase4Temp": {
+            "displayText": "Температура\n4-го этапа",
+            "description": ""
+        },
+        "ProfilePhase4Duration": {
+            "displayText": "Длительность\n4-го этапа",
+            "description": ""
+        },
+        "ProfilePhase5Temp": {
+            "displayText": "Температура\n5-го этапа",
+            "description": ""
+        },
+        "ProfilePhase5Duration": {
+            "displayText": "Длительность\n5-го этапа",
+            "description": ""
+        },
+        "ProfileCooldownSpeed": {
+            "displayText": "Скорость\nостывания",
+            "description": "Скорость остывания в конце режима термопрофиля (в градусах в секунду)"
         },
         "MotionSensitivity": {
             "displayText": "Чувствительн.\nакселерометра",
-            "description": "Чувствительность акселерометра (0=Выкл. | 1=мин. | ... | 9=макс.)"
+            "description": "Чувствительность акселерометра (0=Откл. | 1=мин. | ... | 9=макс.)"
         },
         "SleepTemperature": {
-            "displayText": "Темп.\nожидания",
-            "description": "Температура жала в режиме ожидания"
+            "displayText": "t° при\nсне",
+            "description": "Температура жала в режиме сна"
         },
         "SleepTimeout": {
-            "displayText": "Таймаут\nожидания",
-            "description": "Время до перехода в режим ожидания (Минуты | Секунды)"
+            "displayText": "Интервал\nсна",
+            "description": "Время до перехода в режим сна (секунды | минуты)"
         },
         "ShutdownTimeout": {
-            "displayText": "Таймаут\nвыключения",
-            "description": "Время до выключения паяльника (минуты)"
+            "displayText": "Интервал\nотключ-я",
+            "description": "Время до выключения паяльника (в минутах)"
         },
         "HallEffSensitivity": {
             "displayText": "Датчик\nХолла",
-            "description": "Чувствительность датчика Холла к переходу в спящий режим (0=Выкл. | 1=мин. | ... | 9=макс.)"
+            "description": "Чувствительность датчика Холла к магнитному полю (0=Откл. | 1=мин. | ... | 9=макс.)"
         },
         "TemperatureUnit": {
-            "displayText": "Единицы\nтемпературы",
+            "displayText": "Единицы\nизмерения",
             "description": "Единицы измерения температуры (C=°Цельcия | F=°Фаренгейта)"
         },
         "DisplayRotation": {
-            "displayText": "Ориентация\nэкрана",
-            "description": "Ориентация экрана (П=Правая рука | Л=Левая рука | А=Авто)"
+            "displayText": "Поворот\nэкрана",
+            "description": "Поворот экрана (П=Правша | Л=Левша | А=Авто)"
         },
         "CooldownBlink": {
             "displayText": "Мигание t°\nпри остывании",
-            "description": "Мигать температурой на экране охлаждения, пока жало еще горячее"
+            "description": "Мигать температурой на экране при остывании, пока жало ещё горячее"
         },
         "ScrollingSpeed": {
             "displayText": "Скорость\nтекста",
-            "description": "Скорость прокрутки текста (М=медленно | Б=быстро)"
+            "description": "Скорость прокрутки текста (М=Медленная | Б=Быстрая)"
         },
         "ReverseButtonTempChange": {
-            "displayText": "Поменять\nкнопки+-",
+            "displayText": "Поменять\nкнопки +/-",
             "description": "Поменять кнопки изменения температуры"
         },
         "AnimSpeed": {
             "displayText": "Скорость\nанимации",
-            "description": "Скорость анимации иконок в главном меню (Милисекунды) (О=Отключено | Н=Низкий | С=Средний | В=Высокий)"
+            "description": "Скорость анимации иконок в главном меню (О=Откл. | М=Медленная| С=Средняя | Б=Быстрая)"
         },
         "AnimLoop": {
             "displayText": "Зацикленная\nанимация",
@@ -193,31 +261,31 @@
         },
         "Brightness": {
             "displayText": "Яркость\nэкрана",
-            "description": "Настройки контраста/яркости OLED экрана"
+            "description": "Уровень яркости пикселей на экране"
         },
         "ColourInversion": {
             "displayText": "Инверсия\nэкрана",
-            "description": "Инвертировать цвета на OLED экране"
+            "description": "Инвертировать пиксели на экране"
         },
         "LOGOTime": {
-            "displayText": "Длительность\nпоказа логотипа",
+            "displayText": "Длит-ть\nлоготипа",
             "description": "Длительность отображения логотипа (в секундах)"
         },
         "AdvancedIdle": {
-            "displayText": "Подробный\nреж. ожидания",
-            "description": "Отображать детальную информацию уменьшенным шрифтом на экране ожидания"
+            "displayText": "Подробный\nэкран ожидания",
+            "description": "Показывать дополнительную информацию на экране ожидания уменьшенным шрифтом"
         },
         "AdvancedSoldering": {
             "displayText": "Подробный\nэкран пайки",
-            "description": "Показывать детальную информацию на экране пайки"
+            "description": "Показывать дополнительную информацию на экране пайки уменьшенным шрифтом"
         },
         "BluetoothLE": {
             "displayText": "Bluetooth\n",
-            "description": "Enables BLE"
+            "description": "Включить BLE"
         },
         "PowerLimit": {
-            "displayText": "Предел\nмощности",
-            "description": "Максимальная мощность, которую может использовать паяльник (Ватт)"
+            "displayText": "Предел\nмощ-ти",
+            "description": "Максимальная мощность, которую может использовать паяльник (в ваттах)"
         },
         "CalibrateCJC": {
             "displayText": "Калибровка\nтемпературы",
@@ -228,20 +296,20 @@
             "description": "Калибровка входного напряжения (долгое нажатие для выхода)"
         },
         "PowerPulsePower": {
-            "displayText": "Сила имп.\nпитания Вт",
-            "description": "Сила импульса удерживающего от сна повербанк или другой источник питания"
+            "displayText": "Сила имп.\nпитания",
+            "description": "Сила импульса, удерживающего от автовыключения источник питания (в ваттах)"
         },
         "PowerPulseWait": {
-            "displayText": "Пауза имп.\nпитания с",
-            "description": "Пауза между импульсами удерживающими источник питания от сна (x 2,5с)"
+            "displayText": "Пауза имп.\nпитания (К)",
+            "description": "Коэффициент паузы между импульсами, удерживающими от автовыключения источник питания (К x 2,5 с)"
         },
         "PowerPulseDuration": {
-            "displayText": "Длина имп.\nпитания мс",
-            "description": "Длина импульса удерживающего от сна источник питания (x 250мс)"
+            "displayText": "Длина имп.\nпитания (К)",
+            "description": "Коэффициент длины импульса, удерживающего от автовыключения источник питания (К x 250 мс)"
         },
         "SettingsReset": {
-            "displayText": "Сброс\nНастроек",
-            "description": "Сброс настроек к значеням по умолчанию"
+            "displayText": "Сброс\nнастроек",
+            "description": "Сброс настроек к значениям по умолчанию"
         },
         "LanguageSwitch": {
             "displayText": "Язык:\n RU     Русский",

@@ -40,18 +40,19 @@ enum class i2c_step {
   Wait_stop,               // Wait for stop to send and we are done
   Done,                    // Finished
   Error_occured,           // Error occured on the bus
-
 };
+
 struct i2c_state {
   i2c_step             currentStep;
   bool                 isMemoryWrite;
   bool                 wakePart;
   uint8_t              deviceAddress;
   uint8_t              memoryAddress;
-  uint8_t *            buffer;
+  uint8_t             *buffer;
   uint16_t             numberOfBytes;
   dma_parameter_struct dma_init_struct;
 };
+
 i2c_state currentState;
 
 void perform_i2c_step() {

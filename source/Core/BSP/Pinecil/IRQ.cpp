@@ -93,7 +93,7 @@ void setTipPWM(const uint8_t pulse, const bool shouldUseFastModePWM) {
 extern osThreadId POWTaskHandle;
 
 void EXTI5_9_IRQHandler(void) {
-#if POW_PD
+#ifdef POW_PD
   if (RESET != exti_interrupt_flag_get(EXTI_5)) {
     exti_interrupt_flag_clear(EXTI_5);
 

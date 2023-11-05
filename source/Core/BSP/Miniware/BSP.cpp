@@ -1,10 +1,12 @@
 // BSP mapping functions
 
 #include "BSP.h"
+#include "BootLogo.h"
 #include "I2C_Wrapper.hpp"
 #include "Pins.h"
 #include "Setup.h"
 #include "TipThermoModel.h"
+#include "USBPD.h"
 #include "configuration.h"
 #include "history.hpp"
 #include "main.hpp"
@@ -17,7 +19,7 @@ const uint16_t       powerPWM         = 255;
 static const uint8_t holdoffTicks     = 14; // delay of 8 ms
 static const uint8_t tempMeasureTicks = 14;
 
-uint16_t totalPWM; // htim2.Init.Period, the full PWM cycle
+uint16_t totalPWM; // htimADC.Init.Period, the full PWM cycle
 
 static bool fastPWM;
 static bool infastPWM;
@@ -99,20 +101,20 @@ uint16_t getInputVoltageX10(uint16_t divisor, uint8_t sample) {
 
 static void switchToFastPWM(void) {
   // 10Hz
-  infastPWM            = true;
-  totalPWM             = powerPWM + tempMeasureTicks + holdoffTicks;
-  htim2.Instance->ARR  = totalPWM;
-  htim2.Instance->CCR1 = powerPWM + holdoffTicks;
-  htim2.Instance->PSC  = 2690;
+  infastPWM              = true;
+  totalPWM               = powerPWM + tempMeasureTicks + holdoffTicks;
+  htimADC.Instance->ARR  = totalPWM;
+  htimADC.Instance->CCR1 = powerPWM + holdoffTicks;
+  htimADC.Instance->PSC  = 2690;
 }
 
 static void switchToSlowPWM(void) {
   // 5Hz
-  infastPWM            = false;
-  totalPWM             = powerPWM + tempMeasureTicks / 2 + holdoffTicks / 2;
-  htim2.Instance->ARR  = totalPWM;
-  htim2.Instance->CCR1 = powerPWM + holdoffTicks / 2;
-  htim2.Instance->PSC  = 2690 * 2;
+  infastPWM              = false;
+  totalPWM               = powerPWM + tempMeasureTicks / 2 + holdoffTicks / 2;
+  htimADC.Instance->ARR  = totalPWM;
+  htimADC.Instance->CCR1 = powerPWM + holdoffTicks / 2;
+  htimADC.Instance->PSC  = 2690 * 2;
 }
 
 void setTipPWM(const uint8_t pulse, const bool shouldUseFastModePWM) {
@@ -126,20 +128,30 @@ void setTipPWM(const uint8_t pulse, const bool shouldUseFastModePWM) {
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
   // Period has elapsed
-  if (htim->Instance == TIM2) {
+  if (htim->Instance == ADC_CONTROL_TIMER) {
     // we want to turn on the output again
     PWMSafetyTimer--;
-    // We decrement this safety value so that lockups in the
-    // scheduler will not cause the PWM to become locked in an
-    // active driving state.
-    // While we could assume this could never happen, its a small price for
-    // increased safety
-    htim2.Instance->CCR4 = pendingPWM;
-    if (htim2.Instance->CCR4 && PWMSafetyTimer) {
-      HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
+// We decrement this safety value so that lockups in the
+// scheduler will not cause the PWM to become locked in an
+// active driving state.
+// While we could assume this could never happen, its a small price for
+// increased safety
+#ifdef TIP_HAS_DIRECT_PWM
+    htimADC.Instance->CCR4 = powerPWM;
+    if (pendingPWM && PWMSafetyTimer) {
+      htimTip.Instance->CCR1 = pendingPWM;
+      HAL_TIM_PWM_Start(&htimTip, PWM_Out_CHANNEL);
     } else {
-      HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_1);
+      HAL_TIM_PWM_Stop(&htimTip, PWM_Out_CHANNEL);
     }
+#else
+    htimADC.Instance->CCR4 = pendingPWM;
+    if (htimADC.Instance->CCR4 && PWMSafetyTimer) {
+      HAL_TIM_PWM_Start(&htimTip, PWM_Out_CHANNEL);
+    } else {
+      HAL_TIM_PWM_Stop(&htimTip, PWM_Out_CHANNEL);
+    }
+#endif
     if (fastPWM != infastPWM) {
       if (fastPWM) {
         switchToFastPWM();
@@ -157,10 +169,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim) {
   // This was a when the PWM for the output has timed out
   if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_4) {
-    HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_1);
+    HAL_TIM_PWM_Stop(&htimTip, PWM_Out_CHANNEL);
   }
 }
 void unstick_I2C() {
+#ifndef I2C_SOFT_BUS_1
   GPIO_InitTypeDef GPIO_InitStruct;
   int              timeout     = 100;
   int              timeout_cnt = 0;
@@ -227,6 +240,7 @@ void unstick_I2C() {
 
   // Call initialization function.
   HAL_I2C_Init(&hi2c1);
+#endif
 }
 
 uint8_t getButtonA() { return HAL_GPIO_ReadPin(KEY_A_GPIO_Port, KEY_A_Pin) == GPIO_PIN_RESET ? 1 : 0; }
@@ -238,22 +252,169 @@ void reboot() { NVIC_SystemReset(); }
 
 void delay_ms(uint16_t count) { HAL_Delay(count); }
 
-bool isTipDisconnected() {
+uint8_t       lastTipResistance        = 0; // default to unknown
+const uint8_t numTipResistanceReadings = 3;
+uint32_t      tipResistanceReadings[3] = {0, 0, 0};
+uint8_t       tipResistanceReadingSlot = 0;
+bool          isTipDisconnected() {
 
   uint16_t tipDisconnectedThres = TipThermoModel::getTipMaxInC() - 5;
   uint32_t tipTemp              = TipThermoModel::getTipInC();
   return tipTemp > tipDisconnectedThres;
 }
 
-void     setStatusLED(const enum StatusLED state) {}
-uint8_t  preStartChecks() { return 1; }
+void setStatusLED(const enum StatusLED state) {}
+void setBuzzer(bool on) {}
+#ifdef TIP_RESISTANCE_SENSE_Pin
+// We want to calculate lastTipResistance
+// If tip is connected, and the tip is cold and the tip is not being heated
+// We can use the GPIO to inject a small current into the tip and measure this
+// The gpio is 100k -> diode -> tip -> gnd
+// Source is 3.3V-0.5V
+// Which is around 0.028mA this will induce:
+// 6 ohm tip -> 3.24mV (Real world ~= 3320)
+// 8 ohm tip -> 4.32mV (Real world ~= 4500)
+// Which is definitely measureable
+// Taking shortcuts here as we know we only really have to pick apart 6 and 8 ohm tips
+// These are reported as 60 and 75 respectively
+void performTipResistanceSampleReading() {
+  // 0 = read then turn on pullup, 1 = read then turn off pullup, 2 = read again
+  tipResistanceReadings[tipResistanceReadingSlot] = TipThermoModel::convertTipRawADCTouV(getTipRawTemp(1));
+
+  HAL_GPIO_WritePin(TIP_RESISTANCE_SENSE_GPIO_Port, TIP_RESISTANCE_SENSE_Pin, (tipResistanceReadingSlot == 0) ? GPIO_PIN_SET : GPIO_PIN_RESET);
+
+  tipResistanceReadingSlot++;
+}
+bool tipShorted = false;
+void FinishMeasureTipResistance() {
+
+  // Otherwise we now have the 4 samples;
+  //  _^_ order, 2 delta's, combine these
+
+  int32_t calculatedSkew = tipResistanceReadings[0] - tipResistanceReadings[2]; // If positive tip is cooling
+  calculatedSkew /= 2;                                                          // divide by two to get offset per time constant
+
+  int32_t reading = (((tipResistanceReadings[1] - tipResistanceReadings[0]) + calculatedSkew) // jump 1 - skew
+                     +                                                                        // +
+                     ((tipResistanceReadings[1] - tipResistanceReadings[2]) + calculatedSkew) // jump 2 - skew
+                     )                                                                        //
+                    / 2;                                                                      // Take average
+  // // As we are only detecting two resistances; we can split the difference for now
+  uint8_t newRes = 0;
+  if (reading > 1200) {
+    // return; // Change nothing as probably disconnected tip
+    tipResistanceReadingSlot = lastTipResistance = 0;
+    return;
+  } else if (reading < 200) {
+    tipShorted = true;
+  } else if (reading < 800) {
+    newRes = 62;
+  } else {
+    newRes = 80;
+  }
+  lastTipResistance = newRes;
+}
+volatile bool       tipMeasurementOccuring = true;
+volatile TickType_t nextTipMeasurement     = 100;
+
+void performTipMeasurementStep() {
+
+  // Wait 200ms for settle time
+  if (xTaskGetTickCount() < (nextTipMeasurement)) {
+    return;
+  }
+  nextTipMeasurement = xTaskGetTickCount() + (TICKS_100MS * 5);
+  if (tipResistanceReadingSlot < numTipResistanceReadings) {
+    performTipResistanceSampleReading();
+    return;
+  }
+
+  // We are sensing the resistance
+  FinishMeasureTipResistance();
+
+  tipMeasurementOccuring = false;
+}
+#endif
+uint8_t preStartChecks() {
+#ifdef TIP_RESISTANCE_SENSE_Pin
+  performTipMeasurementStep();
+  if (preStartChecksDone() != 1) {
+    return 0;
+  }
+#endif
+#ifdef HAS_SPLIT_POWER_PATH
+
+  // We want to enable the power path that has the highest voltage
+  // Nominally one will be ~=0 and one will be high. Unless you jamb both in, then both _may_ be high, or device may be dead
+  {
+    uint16_t dc = getRawDCVin();
+    uint16_t pd = getRawPDVin();
+    if (dc > pd) {
+      HAL_GPIO_WritePin(DC_SELECT_GPIO_Port, DC_SELECT_Pin, GPIO_PIN_SET);
+      HAL_GPIO_WritePin(PD_SELECT_GPIO_Port, PD_SELECT_Pin, GPIO_PIN_RESET);
+    } else {
+      HAL_GPIO_WritePin(PD_SELECT_GPIO_Port, PD_SELECT_Pin, GPIO_PIN_SET);
+      HAL_GPIO_WritePin(DC_SELECT_GPIO_Port, DC_SELECT_Pin, GPIO_PIN_RESET);
+    }
+  }
+
+#endif
+#ifdef POW_PD
+  // If we are in the middle of negotiating PD, wait until timeout
+  // Before turning on the heater
+  if (!USBPowerDelivery::negotiationComplete()) {
+    return 0;
+  }
+
+#endif
+  return 1;
+}
 uint64_t getDeviceID() {
   //
   return HAL_GetUIDw0() | ((uint64_t)HAL_GetUIDw1() << 32);
 }
 
-uint8_t getTipResistanceX10() { return TIP_RESISTANCE; }
+uint8_t preStartChecksDone() {
+#ifdef TIP_RESISTANCE_SENSE_Pin
+  return (lastTipResistance == 0 || tipResistanceReadingSlot < numTipResistanceReadings || tipMeasurementOccuring || tipShorted) ? 0 : 1;
+#else
+  return 1;
+#endif
+}
 
-uint8_t preStartChecksDone() { return 1; }
+uint8_t getTipResistanceX10() {
+#ifdef TIP_RESISTANCE_SENSE_Pin
+  // Return tip resistance in x10 ohms
+  // We can measure this using the op-amp
+  return lastTipResistance;
+#else
+  return TIP_RESISTANCE;
+#endif
+}
+#ifdef TIP_RESISTANCE_SENSE_Pin
+bool isTipShorted() { return tipShorted; }
+#else
+bool isTipShorted() { return false; }
+#endif
+uint16_t getTipThermalMass() {
+#ifdef TIP_RESISTANCE_SENSE_Pin
+  if (lastTipResistance >= 80) {
+    return TIP_THERMAL_MASS;
+  }
+  return 45;
+#else
+  return TIP_THERMAL_MASS;
+#endif
+}
+uint16_t getTipInertia() {
+#ifdef TIP_RESISTANCE_SENSE_Pin
+  if (lastTipResistance >= 80) {
+    return TIP_THERMAL_MASS;
+  }
+  return 10;
+#else
+  return TIP_THERMAL_MASS;
+#endif
+}
 
-uint8_t getTipThermalMass() { return TIP_THERMAL_MASS; }
+void showBootLogo(void) { BootLogo::handleShowingLogo((uint8_t *)FLASH_LOGOADDR); }

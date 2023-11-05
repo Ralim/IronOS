@@ -3,7 +3,7 @@
     "languageLocalName": "Українська",
     "tempUnitFahrenheit": false,
     "messagesWarn": {
-        "CJCCalibrationDone": {
+        "CalibrationDone": {
             "message": "КХС\nвідкалібровано!"
         },
         "ResetOKMessage": {
@@ -29,6 +29,9 @@
         },
         "WarningThermalRunaway": {
             "message": "Некерований\nрозігрів"
+        },
+        "WarningTipShorted": {
+            "message": "!Tip Shorted!"
         },
         "SettingsCalibrationWarning": {
             "message": "Під час наступного завантаження переконайтеся, що жало і ручка мають кімнатну температуру!"
@@ -60,8 +63,17 @@
         "OffString": {
             "message": "Вимк"
         },
+        "ProfilePreheatString": {
+            "message": "Попередній\nрозігрів"
+        },
+        "ProfileCooldownString": {
+            "message": "Охолодження\n"
+        },
         "DeviceFailedValidationWarning": {
             "message": "Вірогідно ваш пристрій підробний!"
+        },
+        "TooHotToStartProfileWarning": {
+            "message": "Занадто гараче для\nзміни профілів"
         }
     },
     "characters": {
@@ -70,7 +82,7 @@
         "SettingAutoChar": "A",
         "SettingOffChar": "B",
         "SettingSlowChar": "Н",
-        "SettingMediumChar": "M",
+        "SettingMediumChar": "С",
         "SettingFastChar": "М",
         "SettingStartNoneChar": "В",
         "SettingStartSolderingChar": "П",
@@ -143,6 +155,62 @@
             "displayText": "Дозволити\nблок. кнопок",
             "description": "Під час пайки тривале натискання обох кнопок заблокує їх (В=Вимк | Т=Тільки турбо | П=Повне)"
         },
+        "ProfilePhases": {
+            "displayText": "Етапи\nпрофілів",
+            "description": "Кількість етапів в режимі профілів"
+        },
+        "ProfilePreheatTemp": {
+            "displayText": "Температура\nПоп.Розігріву",
+            "description": "Попередньо розігріти до цієї температури на початку режимку профілів"
+        },
+        "ProfilePreheatSpeed": {
+            "displayText": "Швидкість\nПоп.Розігріву",
+            "description": "Розігрівати з такою швидкістю (градусів в секунду)"
+        },
+        "ProfilePhase1Temp": {
+            "displayText": "Етап 1\nТемпература",
+            "description": "Температура в кінці цього етапу"
+        },
+        "ProfilePhase1Duration": {
+            "displayText": "Етап 1\nТривалість",
+            "description": "Тривалість цього етапу (секунд)"
+        },
+        "ProfilePhase2Temp": {
+            "displayText": "Етап 2\nТемпература",
+            "description": ""
+        },
+        "ProfilePhase2Duration": {
+            "displayText": "Етап 2\nТривалість",
+            "description": ""
+        },
+        "ProfilePhase3Temp": {
+            "displayText": "Етап 3\nТемпература",
+            "description": ""
+        },
+        "ProfilePhase3Duration": {
+            "displayText": "Етап 3\nТривалість",
+            "description": ""
+        },
+        "ProfilePhase4Temp": {
+            "displayText": "Етап 4\nТемпература",
+            "description": ""
+        },
+        "ProfilePhase4Duration": {
+            "displayText": "Етап 4\nТривалість",
+            "description": ""
+        },
+        "ProfilePhase5Temp": {
+            "displayText": "Етап 5\nТемпература",
+            "description": ""
+        },
+        "ProfilePhase5Duration": {
+            "displayText": "Етап 5\nТривалість",
+            "description": ""
+        },
+        "ProfileCooldownSpeed": {
+            "displayText": "Швидкість\nОхолодження",
+            "description": "Швидкість охолодження в кінці режиму профілів (градусів в секунду)"
+        },
         "MotionSensitivity": {
             "displayText": "Чутливість\nсенсору руху",
             "description": "Акселерометр (0=Вимк. | 1=мін. чутливості | ... | 9=макс. чутливості)"
@@ -177,7 +245,7 @@
         },
         "ScrollingSpeed": {
             "displayText": "Швидкість\nтексту",
-            "description": "Швидкість прокрутки тексту (П=повільно | Ш=швидко)"
+            "description": "Швидкість прокрутки тексту (Н=Низькa | М=Максимальна)"
         },
         "ReverseButtonTempChange": {
             "displayText": "Інвертувати\nкнопки +-?",
@@ -185,7 +253,7 @@
         },
         "AnimSpeed": {
             "displayText": "Швидкість\nанімації",
-            "description": "Швидкість анімації іконок у головному меню (Мілісекунди) (В=Вимк | Н=Низькa | С=Середня | М=Макс)"
+            "description": "Швидкість анімації іконок у головному меню (В=Вимк | Н=Низькa | С=Середня | М=Максимальна)"
         },
         "AnimLoop": {
             "displayText": "Циклічна\nанімація",
@@ -213,7 +281,7 @@
         },
         "BluetoothLE": {
             "displayText": "Bluetooth\n",
-            "description": "Enables BLE"
+            "description": "Увімкнути BLE"
         },
         "PowerLimit": {
             "displayText": "Макс.\nпотуж.",

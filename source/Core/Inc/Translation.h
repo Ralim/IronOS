@@ -23,6 +23,8 @@ extern const char *SmallSymbolAmps;
 extern const char *LargeSymbolAmps;
 extern const char *SmallSymbolDot;
 extern const char *LargeSymbolDot;
+extern const char *SmallSymbolSlash;
+extern const char *SmallSymbolColon;
 extern const char *SmallSymbolDegC;
 extern const char *LargeSymbolDegC;
 extern const char *SmallSymbolDegF;
@@ -61,6 +63,20 @@ enum class SettingsItemIndex : uint8_t {
   TempChangeShortStep,
   TempChangeLongStep,
   LockingMode,
+  ProfilePhases,
+  ProfilePreheatTemp,
+  ProfilePreheatSpeed,
+  ProfilePhase1Temp,
+  ProfilePhase1Duration,
+  ProfilePhase2Temp,
+  ProfilePhase2Duration,
+  ProfilePhase3Temp,
+  ProfilePhase3Duration,
+  ProfilePhase4Temp,
+  ProfilePhase4Duration,
+  ProfilePhase5Temp,
+  ProfilePhase5Duration,
+  ProfileCooldownSpeed,
   MotionSensitivity,
   SleepTemperature,
   SleepTimeout,
@@ -91,7 +107,7 @@ enum class SettingsItemIndex : uint8_t {
 };
 
 struct TranslationIndexTable {
-  uint16_t CJCCalibrationDone;
+  uint16_t CalibrationDone;
   uint16_t ResetOKMessage;
   uint16_t SettingsResetMessage;
   uint16_t NoAccelerometerMessage;
@@ -100,6 +116,7 @@ struct TranslationIndexTable {
   uint16_t UnlockingKeysString;
   uint16_t WarningKeysLockedString;
   uint16_t WarningThermalRunaway;
+  uint16_t WarningTipShorted;
 
   uint16_t SettingsCalibrationWarning;
   uint16_t CJCCalibrating;
@@ -107,12 +124,15 @@ struct TranslationIndexTable {
   uint16_t UVLOWarningString;
   uint16_t UndervoltageString;
   uint16_t InputVoltageString;
+  uint16_t ProfilePreheatString;
+  uint16_t ProfileCooldownString;
 
   uint16_t SleepingSimpleString;
   uint16_t SleepingAdvancedString;
   uint16_t SleepingTipAdvancedString;
   uint16_t OffString;
   uint16_t DeviceFailedValidationWarning;
+  uint16_t TooHotToStartProfileWarning;
 
   uint16_t SettingRightChar;
   uint16_t SettingLeftChar;

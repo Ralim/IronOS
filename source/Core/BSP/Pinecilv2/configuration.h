@@ -4,7 +4,7 @@
 #include <stdint.h>
 /**
  * Configuration.h
- * Define here your default pre settings for Pinecil
+ * Define here your default pre settings for Pinecilv2
  *
  */
 
@@ -63,10 +63,10 @@
  * OLED Brightness
  *
  */
-#define MIN_BRIGHTNESS             1   // Min OLED brightness selectable
-#define MAX_BRIGHTNESS             101 // Max OLED brightness selectable
-#define BRIGHTNESS_STEP            25  // OLED brightness increment
-#define DEFAULT_BRIGHTNESS         26  // default OLED brightness
+#define MIN_BRIGHTNESS     1   // Min OLED brightness selectable
+#define MAX_BRIGHTNESS     101 // Max OLED brightness selectable
+#define BRIGHTNESS_STEP    25  // OLED brightness increment
+#define DEFAULT_BRIGHTNESS 26  // default OLED brightness
 
 /**
  * Temp change settings
@@ -87,7 +87,7 @@
 #define POWER_PULSE_DEFAULT 0
 #else
 #define POWER_PULSE_DEFAULT 5
-#endif
+#endif                                 /* Pinecil */
 #define POWER_PULSE_WAIT_DEFAULT     4 // Default rate of the power pulse: 4*2500 = 10000 ms = 10 s
 #define POWER_PULSE_DURATION_DEFAULT 1 // Default duration of the power pulse: 1*250 = 250 ms
 
@@ -146,6 +146,7 @@
 #define MIN_BOOST_TEMP_F           480                       // The min settable temp for boost mode °F
 #define DEVICE_HAS_VALIDATION_CODE                           // We have 2 digit validations
 #define POW_PD                     1                         // Supported features
+#define POW_PD_EXT                 0                         // Future-proof macro for other models with other PD modes
 #define POW_QC                     1                         // Supported features
 #define POW_DC                     1                         // Supported features
 #define POW_QC_20V                 1                         // Supported features
@@ -159,12 +160,22 @@
 #define HALL_SI7210
 #define DEBUG_UART_OUTPUT
 #define HAS_POWER_DEBUG_MENU
-#define HARDWARE_MAX_WATTAGE_X10 750
-#define TIP_THERMAL_MASS         65 // X10 watts to raise 1 deg C in 1 second
-#define BLE_ENABLED
-#define NEEDS_VBUS_PROBE 0
+#define HARDWARE_MAX_WATTAGE_X10  750
+#define BLE_ENABLED                   // We have a BLE stack
+#define NEEDS_VBUS_PROBE          0   // No vbus probe, its not connected in pcb
+#define CANT_DIRECT_READ_SETTINGS     // We cant memcpy settings due to flash cache
+#define TIP_CONTROL_PID               // We use PID rather than integrator
+#define TIP_PID_KP                45  // Reasonable compromise for most tips so far
+#define TIP_PID_KI                9   // About as high for stability across tips
+#define TIP_PID_KD                200 // Helps dampen smaller tips; ~= nothing for larger tips
+#define FILTER_DISPLAYED_TIP_TEMP 8   // Filtering for GUI display
 
-#endif
-#endif
+#endif /* Pinecilv2 */
 
-#define FLASH_LOGOADDR (0x23000000 + (1022 * 1024))
+#define FLASH_PAGE_SIZE (1024) // Read pages
+// Erase is 4 or 8 k size, so we pad these apart for now
+// If we ever get low on flash, will need better solution
+#define FLASH_LOGOADDR      (0x23000000 + (1016 * FLASH_PAGE_SIZE))
+#define SETTINGS_START_PAGE (1023 * FLASH_PAGE_SIZE) // Hal auto offsets base addr
+
+#endif /* CONFIGURATION_H_ */

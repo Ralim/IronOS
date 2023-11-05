@@ -11,6 +11,7 @@
 #define LIS2DH_I2C_ADDRESS (25 << 1)
 #define LIS2DH_WHOAMI_REG  0x0F
 #define LIS2DH_WHOAMI_ID   (0b00110011)
+#define LIS2DH_CLONE_WHOAMI_ID 0x11
 #define LIS_CTRL_REG1      0x20 | 0x80
 #define LIS_CTRL_REG2      0x21 | 0x80
 #define LIS_CTRL_REG3      0x22 | 0x80

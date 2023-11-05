@@ -1,6 +1,7 @@
 // BSP mapping functions
 
 #include "BSP.h"
+#include "BootLogo.h"
 #include "I2C_Wrapper.hpp"
 #include "Pins.h"
 #include "Setup.h"
@@ -455,8 +456,6 @@ void setStatusLED(const enum StatusLED state) {
     } break;
     case LED_HOT:
       ws2812.led_set_color(0, 0xFF, 0, 0); // red
-      // We have hit the right temp, run buzzer for a short period
-      buzzerEnd = xTaskGetTickCount() + TICKS_SECOND / 3;
       break;
     case LED_COOLING_STILL_HOT:
       ws2812.led_set_color(0, 0xFF, 0x8C, 0x00); // Orange
@@ -464,11 +463,6 @@ void setStatusLED(const enum StatusLED state) {
     }
     ws2812.led_update();
     lastState = state;
-  }
-  if (state == LED_HOT && xTaskGetTickCount() < buzzerEnd) {
-    setBuzzer(true);
-  } else {
-    setBuzzer(false);
   }
 }
 uint64_t getDeviceID() {
@@ -478,4 +472,7 @@ uint64_t getDeviceID() {
 
 uint8_t preStartChecksDone() { return 1; }
 
-uint8_t getTipThermalMass() { return TIP_THERMAL_MASS; }
+uint16_t getTipThermalMass() { return TIP_THERMAL_MASS; }
+uint16_t getTipInertia() { return TIP_THERMAL_MASS; }
+
+void showBootLogo(void) { BootLogo::handleShowingLogo((uint8_t *)FLASH_LOGOADDR); }

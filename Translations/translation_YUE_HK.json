@@ -3,7 +3,7 @@
     "languageLocalName": "廣東話 (香港)",
     "tempUnitFahrenheit": true,
     "messagesWarn": {
-        "CJCCalibrationDone": {
+        "CalibrationDone": {
             "message": "Calibration done!"
         },
         "ResetOKMessage": {
@@ -29,6 +29,9 @@
         },
         "WarningThermalRunaway": {
             "message": "加熱失控"
+        },
+        "WarningTipShorted": {
+            "message": "!Tip Shorted!"
         },
         "SettingsCalibrationWarning": {
             "message": "Before rebooting, make sure tip & handle are at room temperature!"
@@ -60,8 +63,17 @@
         "OffString": {
             "message": "關"
         },
+        "ProfilePreheatString": {
+            "message": "Preheat"
+        },
+        "ProfileCooldownString": {
+            "message": "Cooldown"
+        },
         "DeviceFailedValidationWarning": {
             "message": "依支焫雞好有可能係冒牌貨！"
+        },
+        "TooHotToStartProfileWarning": {
+            "message": "Too hot to start profile"
         }
     },
     "characters": {
@@ -142,6 +154,62 @@
         "LockingMode": {
             "displayText": "撳掣鎖定",
             "description": "喺焊接模式時，同時長撳兩粒掣啓用撳掣鎖定 <無=停用 | 增=淨係容許增熱模式 | 全=鎖定全部>"
+        },
+        "ProfilePhases": {
+            "displayText": "Profile Phases",
+            "description": "Number of phases in profile mode"
+        },
+        "ProfilePreheatTemp": {
+            "displayText": "Preheat Temp",
+            "description": "Preheat to this temperature at the start of profile mode"
+        },
+        "ProfilePreheatSpeed": {
+            "displayText": "Preheat Speed",
+            "description": "Preheat at this rate (degrees per second)"
+        },
+        "ProfilePhase1Temp": {
+            "displayText": "Phase 1 Temp",
+            "description": "Target temperature for the end of this phase"
+        },
+        "ProfilePhase1Duration": {
+            "displayText": "Phase 1 Duration",
+            "description": "Target duration of this phase (seconds)"
+        },
+        "ProfilePhase2Temp": {
+            "displayText": "Phase 2 Temp",
+            "description": ""
+        },
+        "ProfilePhase2Duration": {
+            "displayText": "Phase 2 Duration",
+            "description": ""
+        },
+        "ProfilePhase3Temp": {
+            "displayText": "Phase 3 Temp",
+            "description": ""
+        },
+        "ProfilePhase3Duration": {
+            "displayText": "Phase 3 Duration",
+            "description": ""
+        },
+        "ProfilePhase4Temp": {
+            "displayText": "Phase 4 Temp",
+            "description": ""
+        },
+        "ProfilePhase4Duration": {
+            "displayText": "Phase 4 Duration",
+            "description": ""
+        },
+        "ProfilePhase5Temp": {
+            "displayText": "Phase 5 Temp",
+            "description": ""
+        },
+        "ProfilePhase5Duration": {
+            "displayText": "Phase 5 Duration",
+            "description": ""
+        },
+        "ProfileCooldownSpeed": {
+            "displayText": "Cooldown Speed",
+            "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
         },
         "MotionSensitivity": {
             "displayText": "動作敏感度",

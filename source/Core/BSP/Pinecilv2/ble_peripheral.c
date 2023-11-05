@@ -164,6 +164,7 @@ static struct bt_gatt_attr ble_attrs_declaration[] = {
     BT_GATT_CHARACTERISTIC(BT_UUID_CHAR_BLE_LIVE_BULK_LIVE_DATA, BT_GATT_CHRC_READ, BT_GATT_PERM_READ, ble_char_read_bulk_value_callback, NULL, NULL),
     BT_GATT_CHARACTERISTIC(BT_UUID_CHAR_BLE_LIVE_ACCEL_NAME, BT_GATT_CHRC_READ, BT_GATT_PERM_READ, ble_char_read_bulk_value_callback, NULL, NULL),
     BT_GATT_CHARACTERISTIC(BT_UUID_CHAR_BLE_LIVE_BUILD, BT_GATT_CHRC_READ, BT_GATT_PERM_READ, ble_char_read_bulk_value_callback, NULL, NULL),
+    BT_GATT_CHARACTERISTIC(BT_UUID_CHAR_BLE_LIVE_DEV_SN, BT_GATT_CHRC_READ, BT_GATT_PERM_READ, ble_char_read_bulk_value_callback, NULL, NULL),
     BT_GATT_CHARACTERISTIC(BT_UUID_CHAR_BLE_LIVE_DEV_ID, BT_GATT_CHRC_READ, BT_GATT_PERM_READ, ble_char_read_bulk_value_callback, NULL, NULL),
 
     BT_GATT_PRIMARY_SERVICE(BT_UUID_SVC_SETTINGS_DATA),
@@ -257,7 +258,9 @@ static struct bt_gatt_attr ble_attrs_declaration[] = {
 NAME
     get_attr
 */
-struct bt_gatt_attr *get_attr(u8_t index) { return &ble_attrs_declaration[index]; }
+struct bt_gatt_attr *get_attr(u8_t index) {
+  return &ble_attrs_declaration[index];
+}
 
 static struct bt_gatt_service ble_tp_server = BT_GATT_SERVICE(ble_attrs_declaration);
 

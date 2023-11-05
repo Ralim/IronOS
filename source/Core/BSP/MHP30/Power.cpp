@@ -7,7 +7,7 @@
 #include "configuration.h"
 
 void power_check() {
-#if POW_PD
+#ifdef POW_PD
 
   // Cant start QC until either PD works or fails
   if (USBPowerDelivery::negotiationComplete()) {
@@ -19,3 +19,4 @@ void power_check() {
 bool getIsPoweredByDCIN() { return false; }
 
 uint8_t getTipResistanceX10() { return TIP_RESISTANCE; }
+bool    isTipShorted() { return false; }

@@ -20,8 +20,9 @@ void performCJCC(void) {
         OLED::print(translatedString(Tr->CJCCalibrating), FontStyle::SMALL);
         OLED::setCursor(0, 8);
         OLED::print(SmallSymbolDot, FontStyle::SMALL);
-        for (uint8_t x = 0; x < (i / 4); x++)
+        for (uint8_t x = 0; x < (i / 4); x++) {
           OLED::print(SmallSymbolDot, FontStyle::SMALL);
+        }
         OLED::refresh();
         osDelay(100);
       }
@@ -29,7 +30,7 @@ void performCJCC(void) {
     }
     setSettingValue(SettingsOptions::CalibrationOffset, setoffset);
     OLED::clearScreen();
-    warnUser(translatedString(Tr->CJCCalibrationDone), 3 * TICKS_SECOND);
+    warnUser(translatedString(Tr->CalibrationDone), 3 * TICKS_SECOND);
     OLED::refresh();
     // Preventing to repeat calibration at boot automatically (only one shot).
     setSettingValue(SettingsOptions::CalibrateCJC, 0);

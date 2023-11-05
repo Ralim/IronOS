@@ -35,39 +35,8 @@ void showDebugMenu(void) {
       OLED::print(AccelTypeNames[(int)DetectedAccelerometerVersion], FontStyle::SMALL);
       break;
     case 3: // Power Negotiation Status
-    {
-      int sourceNumber = 0;
-      if (getIsPoweredByDCIN()) {
-        sourceNumber = 0;
-      } else {
-        // We are not powered via DC, so want to display the appropriate state for PD or QC
-        bool poweredbyPD        = false;
-        bool pdHasVBUSConnected = false;
-#if POW_PD
-        if (USBPowerDelivery::fusbPresent()) {
-          // We are PD capable
-          if (USBPowerDelivery::negotiationComplete()) {
-            // We are powered via PD
-            poweredbyPD = true;
-#ifdef VBUS_MOD_TEST
-            pdHasVBUSConnected = USBPowerDelivery::isVBUSConnected();
-#endif
-          }
-        }
-#endif
-        if (poweredbyPD) {
-
-          if (pdHasVBUSConnected) {
-            sourceNumber = 2;
-          } else {
-            sourceNumber = 3;
-          }
-        } else {
-          sourceNumber = 1;
-        }
-      }
-      OLED::print(PowerSourceNames[sourceNumber], FontStyle::SMALL);
-    } break;
+      OLED::print(PowerSourceNames[getPowerSourceNumber()], FontStyle::SMALL);
+      break;
     case 4: // Input Voltage
       printVoltage();
       break;
@@ -88,8 +57,8 @@ void showDebugMenu(void) {
     case 9: // Movement Timestamp
       OLED::printNumber(lastMovementTime / TICKS_100MS, 8, FontStyle::SMALL);
       break;
-    case 10:                                                              // Tip Resistance in Ω
-      OLED::printNumber(getTipResistanceX10() / 10, 6, FontStyle::SMALL); // large to pad over so that we cover ID left overs
+    case 10: // Tip Resistance in Ω large to pad over so that we cover ID left overs
+      OLED::printNumber(getTipResistanceX10() / 10, 6, FontStyle::SMALL);
       OLED::print(SmallSymbolDot, FontStyle::SMALL);
       OLED::printNumber(getTipResistanceX10() % 10, 1, FontStyle::SMALL);
       break;
@@ -113,8 +82,9 @@ void showDebugMenu(void) {
     case 16: // Raw Hall Effect Value
     {
       int16_t hallEffectStrength = getRawHallEffect();
-      if (hallEffectStrength < 0)
+      if (hallEffectStrength < 0) {
         hallEffectStrength = -hallEffectStrength;
+      }
       OLED::printNumber(hallEffectStrength, 6, FontStyle::SMALL);
     } break;
 #endif
@@ -125,9 +95,9 @@ void showDebugMenu(void) {
 
     OLED::refresh();
     b = getButtonState();
-    if (b == BUTTON_B_SHORT)
+    if (b == BUTTON_B_SHORT) {
       return;
-    else if (b == BUTTON_F_SHORT) {
+    } else if (b == BUTTON_F_SHORT) {
       screen++;
 #ifdef HALL_SENSOR
       screen = screen % 17;
@@ -135,6 +105,7 @@ void showDebugMenu(void) {
       screen = screen % 16;
 #endif
     }
+
     GUIDelay();
   }
 }

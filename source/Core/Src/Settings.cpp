@@ -11,6 +11,7 @@
 #include "Settings.h"
 #include "BSP.h"
 #include "Setup.h"
+#include "Translation.h"
 #include "configuration.h"
 #include <string.h> // for memset
 bool sanitiseSettings();
@@ -19,7 +20,7 @@ bool sanitiseSettings();
 #define QC_VOLTAGE_MAX 220
 #else
 #define QC_VOLTAGE_MAX 140
-#endif
+#endif /* POW_QC_20V */
 
 /*
  * This struct must be a multiple of 2 bytes as it is saved / restored from
@@ -36,6 +37,7 @@ typedef struct {
 
 //~1024 is common programming size, setting threshold to be lower so we have warning
 static_assert(sizeof(systemSettingsType) < 512);
+
 // char (*__kaboom)[sizeof(systemSettingsType)] = 1; // Uncomment to print size at compile time
 volatile systemSettingsType systemSettings;
 
@@ -64,7 +66,7 @@ static const SettingConstants settingsConstants[(int)SettingsOptions::SettingsOp
     {0, 1, 1, COOLING_TEMP_BLINK},                                         // CoolingTempBlink
     {0, 1, 1, DETAILED_IDLE},                                              // DetailedIDLE
     {0, 1, 1, DETAILED_SOLDERING},                                         // DetailedSoldering
-    {0, 1, 1, TEMPERATURE_INF},                                            // TemperatureInF
+    {0, (uint16_t)(HasFahrenheit ? 1 : 0), 1, TEMPERATURE_INF},            // TemperatureInF
     {0, 1, 1, DESCRIPTION_SCROLL_SPEED},                                   // DescriptionScrollSpeed
     {0, 2, 1, LOCKING_MODE},                                               // LockingMode
     {0, 99, 1, POWER_PULSE_DEFAULT},                                       // KeepAwakePulse
@@ -88,10 +90,39 @@ static const SettingConstants settingsConstants[(int)SettingsOptions::SettingsOp
     {0, 1, 1, 0},                                                          // CalibrateCJC
     {0, 1, 1, 1},                                                          // BluetoothLE
     {0, 1, 1, 1},                                                          // PDVpdo
+    {1, 5, 1, 4},                                                          // ProfilePhases
+    {MIN_TEMP_C, MAX_TEMP_F, 5, 90},                                       // ProfilePreheatTemp
+    {1, 10, 1, 1},                                                         // ProfilePreheatSpeed
+    {MIN_TEMP_C, MAX_TEMP_F, 5, 130},                                      // ProfilePhase1Temp
+    {10, 180, 5, 90},                                                      // ProfilePhase1Duration
+    {MIN_TEMP_C, MAX_TEMP_F, 5, 140},                                      // ProfilePhase2Temp
+    {10, 180, 5, 30},                                                      // ProfilePhase2Duration
+    {MIN_TEMP_C, MAX_TEMP_F, 5, 165},                                      // ProfilePhase3Temp
+    {10, 180, 5, 30},                                                      // ProfilePhase3Duration
+    {MIN_TEMP_C, MAX_TEMP_F, 5, 140},                                      // ProfilePhase4Temp
+    {10, 180, 5, 30},                                                      // ProfilePhase4Duration
+    {MIN_TEMP_C, MAX_TEMP_F, 5, 90},                                       // ProfilePhase5Temp
+    {10, 180, 5, 30},                                                      // ProfilePhase5Duration
+    {1, 10, 1, 2},                                                         // ProfileCooldownSpeed
 };
 static_assert((sizeof(settingsConstants) / sizeof(SettingConstants)) == ((int)SettingsOptions::SettingsOptionsLength));
 
-void saveSettings() { flash_save_buffer((uint8_t *)&systemSettings, sizeof(systemSettingsType)); }
+void saveSettings() {
+#ifdef CANT_DIRECT_READ_SETTINGS
+  // For these devices flash is not 1:1 mapped, so need to read into staging buffer
+  systemSettingsType settings;
+  flash_read_buffer((uint8_t *)&settings, sizeof(systemSettingsType));
+  if (memcmp((void *)&settings, (void *)&systemSettings, sizeof(systemSettingsType))) {
+    flash_save_buffer((uint8_t *)&systemSettings, sizeof(systemSettingsType));
+  }
+
+#else
+  if (memcmp((void *)SETTINGS_START_PAGE, (void *)&systemSettings, sizeof(systemSettingsType))) {
+    flash_save_buffer((uint8_t *)&systemSettings, sizeof(systemSettingsType));
+  }
+
+#endif /* CANT_DIRECT_READ_SETTINGS */
+}
 
 bool loadSettings() {
   // We read the flash
@@ -132,6 +163,7 @@ bool sanitiseSettings() {
   }
   return dirty;
 }
+
 void resetSettings() {
   memset((void *)&systemSettings, 0xFF, sizeof(systemSettingsType));
   sanitiseSettings();
@@ -139,18 +171,18 @@ void resetSettings() {
 }
 
 void setSettingValue(const enum SettingsOptions option, const uint16_t newValue) {
-  const auto constants                       = settingsConstants[(int)option];
-  uint16_t constrainedValue = newValue;
+  const auto constants        = settingsConstants[(int)option];
+  uint16_t   constrainedValue = newValue;
   if (constrainedValue < constants.min) {
     // If less than min, constrain
     constrainedValue = constants.min;
-  }
-  else if (constrainedValue > constants.max) {
+  } else if (constrainedValue > constants.max) {
     // If hit max, constrain
     constrainedValue = constants.max;
   }
   systemSettings.settingsValues[(int)option] = constrainedValue;
 }
+
 // Lookup wrapper for ease of use (with typing)
 uint16_t getSettingValue(const enum SettingsOptions option) { return systemSettings.settingsValues[(int)option]; }
 
@@ -189,6 +221,7 @@ bool prevSettingValue(const enum SettingsOptions option) {
   // Return if we are at the min
   return constants.min == systemSettings.settingsValues[(int)option];
 }
+
 uint16_t lookupHallEffectThreshold() {
   // Return the threshold above which the hall effect sensor is "activated"
   // We want this to be roughly exponentially mapped from 0-1000
@@ -217,6 +250,7 @@ uint16_t lookupHallEffectThreshold() {
     return 0; // Off
   }
 }
+
 // Lookup function for cutoff setting -> X10 voltage
 /*
  * 0=DC
@@ -228,8 +262,9 @@ uint16_t lookupHallEffectThreshold() {
 uint8_t lookupVoltageLevel() {
   auto minVoltageOnCell    = getSettingValue(SettingsOptions::MinDCVoltageCells);
   auto minVoltageCellCount = getSettingValue(SettingsOptions::MinVoltageCells);
-  if (minVoltageOnCell == 0)
+  if (minVoltageOnCell == 0) {
     return 90; // 9V since iron does not function effectively below this
-  else
+  } else {
     return (minVoltageOnCell * minVoltageCellCount) + (minVoltageCellCount * 2);
+  }
 }
