@@ -232,6 +232,8 @@
 #define CALIBRATION_OFFSET 900 // the adc offset in uV
 #define PID_POWER_LIMIT    35  // Sets the max pwm power limit
 #define POWER_LIMIT        32  // 24 watts default power limit
+#define OLED_I2CBB1        1
+#define ACCEL_I2CBB1       1
 
 #define HARDWARE_MAX_WATTAGE_X10 320
 
@@ -247,6 +249,8 @@
 #define POWER_LIMIT              32   // 30 watts default power limit
 #define I2C_SOFT_BUS_2           1
 #define HARDWARE_MAX_WATTAGE_X10 320
+#define OLED_I2CBB1              1
+#define ACCEL_I2CBB1             1
 
 #define POW_PD 1
 #define POW_QC 1
