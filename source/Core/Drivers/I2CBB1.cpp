@@ -314,4 +314,15 @@ bool I2CBB1::writeRegistersBulk(const uint8_t address, const I2C_REG *registers,
   }
   return true;
 }
+
+bool I2CBB1::wakePart(uint16_t DevAddress) {
+  // wakepart is a special case  where only the device address is sent
+  if (!lock())
+    return false;
+  start();
+  bool ack = send(DevAddress);
+  stop();
+  unlock();
+  return ack;
+}
 #endif
