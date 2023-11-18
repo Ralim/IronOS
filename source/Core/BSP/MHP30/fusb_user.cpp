@@ -1,13 +1,13 @@
 #include "configuration.h"
 #ifdef POW_PD
 #include "BSP.h"
-#include "I2C_Wrapper.hpp"
+#include "I2CBB1.hpp"
 #include "Pins.h"
 #include "Setup.h"
 #include "USBPD.h"
-bool fusb_read_buf(const uint8_t deviceAddr, const uint8_t registerAdd, const uint8_t size, uint8_t *buf) { return FRToSI2C::Mem_Read(deviceAddr, registerAdd, buf, size); }
+bool fusb_read_buf(const uint8_t deviceAddr, const uint8_t registerAdd, const uint8_t size, uint8_t *buf) { return I2CBB1::Mem_Read(deviceAddr, registerAdd, buf, size); }
 
-bool fusb_write_buf(const uint8_t deviceAddr, const uint8_t registerAdd, const uint8_t size, uint8_t *buf) { return FRToSI2C::Mem_Write(deviceAddr, registerAdd, (uint8_t *)buf, size); }
+bool fusb_write_buf(const uint8_t deviceAddr, const uint8_t registerAdd, const uint8_t size, uint8_t *buf) { return I2CBB1::Mem_Write(deviceAddr, registerAdd, (uint8_t *)buf, size); }
 
 void setupFUSBIRQ() {
   GPIO_InitTypeDef GPIO_InitStruct;

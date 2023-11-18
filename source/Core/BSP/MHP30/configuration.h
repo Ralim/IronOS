@@ -155,7 +155,10 @@
 #define POW_PD     1
 #define POW_PD_EXT 0
 #define TEMP_NTC
-#define I2C_SOFT_BUS_2
+#define I2C_SOFT_BUS_2  1
+#define I2C_SOFT_BUS_1  1
+#define OLED_I2CBB1     1
+#define ACCEL_I2CBB1    1
 #define BATTFILTERDEPTH 8
 #define OLED_I2CBB2
 #define ACCEL_EXITS_ON_MOVEMENT
