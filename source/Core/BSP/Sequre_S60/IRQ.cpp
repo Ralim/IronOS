@@ -23,12 +23,6 @@ void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef *hadc) {
     }
   }
 }
-void HAL_I2C_MasterRxCpltCallback(I2C_HandleTypeDef *hi2c __unused) { FRToSI2C::CpltCallback(); }
-void HAL_I2C_MasterTxCpltCallback(I2C_HandleTypeDef *hi2c __unused) { FRToSI2C::CpltCallback(); }
-void HAL_I2C_MemTxCpltCallback(I2C_HandleTypeDef *hi2c __unused) { FRToSI2C::CpltCallback(); }
-void HAL_I2C_ErrorCallback(I2C_HandleTypeDef *hi2c __unused) { FRToSI2C::CpltCallback(); }
-void HAL_I2C_AbortCpltCallback(I2C_HandleTypeDef *hi2c __unused) { FRToSI2C::CpltCallback(); }
-void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c __unused) { FRToSI2C::CpltCallback(); }
 
 extern osThreadId POWTaskHandle;
 

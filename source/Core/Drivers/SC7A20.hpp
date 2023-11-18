@@ -10,6 +10,7 @@
 #include "BSP.h"
 #include "I2C_Wrapper.hpp"
 #include "SC7A20_defines.h"
+#include "accelerometers_common.h"
 
 class SC7A20 {
 public:
@@ -17,7 +18,7 @@ public:
   static bool initalize();
   // 1 = rh, 2,=lh, 8=flat
   static Orientation getOrientation() {
-    uint8_t val = ((FRToSI2C::I2C_RegisterRead(isInImitationMode ? SC7A20_ADDRESS2 : SC7A20_ADDRESS, SC7A20_INT2_SOURCE) >> 2) - 1);
+    uint8_t val = ((ACCEL_I2C_CLASS::I2C_RegisterRead(isInImitationMode ? SC7A20_ADDRESS2 : SC7A20_ADDRESS, SC7A20_INT2_SOURCE) >> 2) - 1);
     if (val == 1) {
 #ifdef SC7_ORI_FLIP
       return Orientation::ORIENTATION_RIGHT_HAND;

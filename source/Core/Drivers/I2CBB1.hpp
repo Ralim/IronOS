@@ -36,6 +36,7 @@ public:
     const uint8_t pause_ms; // How many ms to pause _after_ writing this reg
   } I2C_REG;
   static bool writeRegistersBulk(const uint8_t address, const I2C_REG *registers, const uint8_t registersLength);
+  static bool wakePart(uint16_t DevAddress);
 
 private:
   static SemaphoreHandle_t I2CSemaphore;

@@ -25,7 +25,4 @@ void preRToSInit() {
 #ifdef I2C_SOFT_BUS_1
   I2CBB1::init();
 #endif
-
-  /* Init the IPC objects */
-  FRToSI2C::FRToSInit();
 }
