@@ -10,17 +10,17 @@
  *      This class is licensed as MIT to match this code base
  */
 
-#include "I2C_Wrapper.hpp"
 #include "Si7210_defines.h"
+#include "accelerometers_common.h"
 #include <Si7210.h>
-bool Si7210::detect() { return FRToSI2C::wakePart(SI7210_ADDRESS); }
+bool Si7210::detect() { return ACCEL_I2C_CLASS::wakePart(SI7210_ADDRESS); }
 
 bool Si7210::init() {
   // Turn on auto increment and sanity check ID
   // Load OTP cal
 
   uint8_t temp;
-  if (FRToSI2C::Mem_Read(SI7210_ADDRESS, SI7210_REG_ID, &temp, 1)) {
+  if (ACCEL_I2C_CLASS::Mem_Read(SI7210_ADDRESS, SI7210_REG_ID, &temp, 1)) {
     // We don't really care what model it is etc, just probing to check its probably this iC
     if (temp != 0x00 && temp != 0xFF) {
       temp = 0x00;
@@ -77,10 +77,10 @@ bool Si7210::write_reg(const uint8_t reg, const uint8_t mask, const uint8_t val)
     temp &= mask;
   }
   temp |= val;
-  return FRToSI2C::Mem_Write(SI7210_ADDRESS, reg, &temp, 1);
+  return ACCEL_I2C_CLASS::Mem_Write(SI7210_ADDRESS, reg, &temp, 1);
 }
 
-bool Si7210::read_reg(const uint8_t reg, uint8_t *val) { return FRToSI2C::Mem_Read(SI7210_ADDRESS, reg, val, 1); }
+bool Si7210::read_reg(const uint8_t reg, uint8_t *val) { return ACCEL_I2C_CLASS::Mem_Read(SI7210_ADDRESS, reg, val, 1); }
 
 bool Si7210::start_periodic_measurement() {
   /* Enable periodic wakeup */
@@ -95,7 +95,7 @@ bool Si7210::start_periodic_measurement() {
 bool Si7210::get_field_strength(int16_t *field) {
   *field      = 0;
   uint8_t val = 0;
-  FRToSI2C::wakePart(SI7210_ADDRESS);
+  ACCEL_I2C_CLASS::wakePart(SI7210_ADDRESS);
 
   if (!write_reg(SI7210_POWER_CTRL, MEAS_MASK | USESTORE_MASK, STOP_MASK))
     return false;

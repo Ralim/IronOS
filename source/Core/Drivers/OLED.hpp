@@ -46,9 +46,9 @@ extern "C" {
 #define OLED_GRAM_START_FLIP 0
 #define OLED_GRAM_END_FLIP   0x7F
 
-#define OLED_VCOM_LAYOUT     0x12
+#define OLED_VCOM_LAYOUT 0x12
 #define OLED_SEGMENT_MAP_REVERSED
-#define OLED_DIVIDER         0xD3
+#define OLED_DIVIDER 0xD3
 
 #else
 
@@ -59,14 +59,14 @@ extern "C" {
 #define OLED_GRAM_START_FLIP 0
 #define OLED_GRAM_END_FLIP   95
 
-#define OLED_VCOM_LAYOUT     0x02
-#define OLED_SEGMENT_MAP     0xA0
-#define OLED_DIVIDER         0xD5
+#define OLED_VCOM_LAYOUT 0x02
+#define OLED_SEGMENT_MAP 0xA0
+#define OLED_DIVIDER     0xD5
 
 #endif /* OLED_128x32 */
 
-#define OLED_ON   0xAF
-#define OLED_OFF  0xAE
+#define OLED_ON  0xAF
+#define OLED_OFF 0xAE
 
 #define FRAMEBUFFER_START 17
 
@@ -78,7 +78,10 @@ enum class FontStyle {
 
 class OLED {
 public:
-  enum DisplayState : bool { OFF = false, ON = true };
+  enum DisplayState : bool {
+    OFF = false,
+    ON  = true
+  };
 
   static void initialize(); // Startup the I2C coms (brings screen out of reset etc)
   static bool isInitDone();
@@ -117,10 +120,10 @@ public:
   static void    setInverseDisplay(bool inverted);
   static int16_t getCursorX() { return cursor_x; }
   // Draw a string to the current location, with selected font; optionally - with MAX length only
-  static void    print(const char *string, FontStyle fontStyle, uint8_t length = 255);
-  static void    printWholeScreen(const char *string);
+  static void print(const char *string, FontStyle fontStyle, uint8_t length = 255);
+  static void printWholeScreen(const char *string);
   // Print *F or *C - in font style of Small, Large (by default) or Extra based on input arg
-  static void    printSymbolDeg(FontStyle fontStyle = FontStyle::LARGE);
+  static void printSymbolDeg(FontStyle fontStyle = FontStyle::LARGE);
   // Set the cursor location by pixels
   static void setCursor(int16_t x, int16_t y) {
     cursor_x = x;
