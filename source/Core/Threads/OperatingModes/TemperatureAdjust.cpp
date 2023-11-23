@@ -25,6 +25,7 @@ OperatingMode gui_solderingTempAdjust(const ButtonState buttonIn, guiContext *cx
     break;
   case BUTTON_BOTH:
     // exit
+    saveSettings();
     cxt->transitionMode = TransitionAnimation::Right;
     return cxt->previousMode;
   case BUTTON_B_LONG:
@@ -81,6 +82,7 @@ OperatingMode gui_solderingTempAdjust(const ButtonState buttonIn, guiContext *cx
     setSettingValue(SettingsOptions::SolderingTemp, (uint16_t)newTemp);
   }
   if (xTaskGetTickCount() - lastButtonTime > (TICKS_SECOND * 3)) {
+    saveSettings();
     cxt->transitionMode = TransitionAnimation::Right;
     return cxt->previousMode; // exit if user just doesn't press anything for a bit
   }
