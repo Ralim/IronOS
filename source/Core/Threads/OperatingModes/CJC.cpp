@@ -25,7 +25,7 @@ OperatingMode performCJCC(const ButtonState buttons, guiContext *cxt) {
 
     uint16_t setOffset = TipThermoModel::convertTipRawADCTouV(cxt->scratch_state.state3 / 16, true);
     setSettingValue(SettingsOptions::CalibrationOffset, setOffset);
-    if (warnUser(translatedString(Tr->CJCCalibrationDone), buttons)) {
+    if (warnUser(translatedString(Tr->CalibrationDone), buttons)) {
       // Preventing to repeat calibration at boot automatically (only one shot).
       setSettingValue(SettingsOptions::CalibrateCJC, 0);
       saveSettings();

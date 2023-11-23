@@ -4,6 +4,7 @@
 
 #include "SolderingCommon.h"
 #include "OperatingModes.h"
+#include "Types.h"
 #include "configuration.h"
 #include "history.hpp"
 
