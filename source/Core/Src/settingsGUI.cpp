@@ -842,10 +842,10 @@ static void displayLogoTime(void) {
     OLED::print(translatedString(Tr->OffString), FontStyle::LARGE);
     break;
   case logoMode_t::ONETIME:
-    OLED::drawArea((OLED_WIDTH - 24 - 2) + 12, 0, 24, 16, infinityIcon);
+    OLED::drawArea(OLED_WIDTH - 16 - 2, 0, 16, 16, RepeatOnce);
     break;
   case logoMode_t::INFINITY:
-    OLED::drawArea(OLED_WIDTH - 24 - 2, 0, 24, 16, infinityIcon);
+    OLED::drawArea(OLED_WIDTH - 16 - 2, 0, 16, 16, RepeatInf);
     break;
   default:
     OLED::printNumber(getSettingValue(SettingsOptions::LOGOTime), 2, FontStyle::LARGE);
