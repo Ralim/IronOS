@@ -45,24 +45,24 @@ OperatingMode guiHandleDraw(void) {
   // Read button state
   ButtonState buttons = getButtonState();
   // Enforce screen on if buttons pressed, movement, hot tip etc
-  // if (buttons != BUTTON_NONE) {
-  //   OLED::setDisplayState(OLED::DisplayState::ON);
-  // } else {
-  //   // Buttons are none; check if we can sleep display
-  //   uint32_t tipTemp = TipThermoModel::getTipInC();
-  //   if ((tipTemp < 50) && getSettingValue(SettingsOptions::Sensitivity)
-  //       && (((xTaskGetTickCount() - lastMovementTime) > MOVEMENT_INACTIVITY_TIME) && ((xTaskGetTickCount() - lastButtonTime) > BUTTON_INACTIVITY_TIME))) {
-  //     OLED::setDisplayState(OLED::DisplayState::OFF);
-  //     setStatusLED(LED_OFF);
-  //   } else {
-  //     OLED::setDisplayState(OLED::DisplayState::ON);
-  //     if (tipTemp > 55) {
-  //       setStatusLED(LED_COOLING_STILL_HOT);
-  //     } else {
-  //       setStatusLED(LED_STANDBY);
-  //     }
-  //   }
-  // }
+  if (buttons != BUTTON_NONE) {
+    OLED::setDisplayState(OLED::DisplayState::ON);
+  } else {
+    // Buttons are none; check if we can sleep display
+    uint32_t tipTemp = TipThermoModel::getTipInC();
+    if ((tipTemp < 50) && getSettingValue(SettingsOptions::Sensitivity)
+        && (((xTaskGetTickCount() - lastMovementTime) > MOVEMENT_INACTIVITY_TIME) && ((xTaskGetTickCount() - lastButtonTime) > BUTTON_INACTIVITY_TIME))) {
+      OLED::setDisplayState(OLED::DisplayState::OFF);
+      setStatusLED(LED_OFF);
+    } else {
+      OLED::setDisplayState(OLED::DisplayState::ON);
+      if (tipTemp > 55) {
+        setStatusLED(LED_COOLING_STILL_HOT);
+      } else {
+        setStatusLED(LED_STANDBY);
+      }
+    }
+  }
   // Dispatch button state to gui mode
   OperatingMode newMode = currentOperatingMode;
   switch (currentOperatingMode) {
