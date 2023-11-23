@@ -26,7 +26,7 @@ Then this works the same as a production release (use the correct file).
 
 # TS80 / TS80P
 
-This is completely safe, but if it goes wrong just put the corresponding `.hex` file from [the official website](https://e-design.com.cn/en/NewsDetail/4203645.html)([mirror backup](https://github.com/Ralim/IronOS-Meta/tree/main/Firmware/Miniware)) onto the unit and you're back to the old firmware. Downloads for the `.hex` files to flash are available on the [releases page.](https://github.com/Ralim/IronOS/releases) The file you want is called TS80.zip or TS80P.zip. Inside the zip file (make sure to extract the file before flashing with it) will be a file called `TS80_{Language-Code}.hex`/`TS80P_{Language-Code}.hex`.
+This is completely safe, but if it goes wrong just put the corresponding `.hex` file from [the official website](https://e-design.com.cn/en/NewsDetail/4203645.html) ([mirror backup](https://github.com/Ralim/IronOS-Meta/tree/main/Firmware/Miniware)) onto the unit and you're back to the old firmware. Downloads for the `.hex` files to flash are available on the [releases page.](https://github.com/Ralim/IronOS/releases) The file you want is called TS80.zip or TS80P.zip. Inside the zip file (make sure to extract the file before flashing with it) will be a file called `TS80_{Language-Code}.hex`/`TS80P_{Language-Code}.hex`.
 
 Officially the bootloader on the devices only works under Windows (use the built-in File Explorer, as alternative file managers or copy handlers like Teracopy will fail). However, users have reported that it does work under [Mac](#mac), and can be made to work under [Linux](#linux) _sometimes_ (look for details below).
 
