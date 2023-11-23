@@ -86,7 +86,7 @@ static const SettingConstants settingsConstants[(int)SettingsOptions::SettingsOp
     {0, 50, 1, 20},                                                        // PDNegTimeout
     {0, 1, 1, 0},                                                          // OLEDInversion
     {MIN_BRIGHTNESS, MAX_BRIGHTNESS, BRIGHTNESS_STEP, DEFAULT_BRIGHTNESS}, // OLEDBrightness
-    {0, 5, 1, 1},                                                          // LOGOTime
+    {0, 6, 1, 1},                                                          // LOGOTime
     {0, 1, 1, 0},                                                          // CalibrateCJC
     {0, 1, 1, 1},                                                          // BluetoothLE
     {0, 1, 1, 1},                                                          // PDVpdo
