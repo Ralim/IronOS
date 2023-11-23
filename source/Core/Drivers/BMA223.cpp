@@ -9,7 +9,6 @@
 #include <BMA223.hpp>
 #include <array>
 
-
 bool BMA223::detect() {
   if (ACCEL_I2C_CLASS::probe(BMA223_ADDRESS)) {
     // Read chip id to ensure its not an address collision
