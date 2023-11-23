@@ -8,7 +8,7 @@ TS100\* is a neat soldering iron:
 - can run from 9-25V DC;
 - provides a power range that is determined by the input voltage;
 - voltages below 12V don't overly work well for any substantial mass;
-- the original firmware can be found [here](https://e-design.com.cn/en/NewsDetail/4203645.html).
+- the original firmware can be found [here](https://e-design.com.cn/en/NewsDetail/4203645.html)([mirror backup](https://github.com/Ralim/IronOS-Meta/tree/main/Firmware/Miniware)).
 
 ![](https://brushlesswhoop.com/images/ts100-og.jpg)
 
@@ -19,7 +19,7 @@ TS80\* is a successor to TS100:
 
 - uses _Quick Charge 3.0_ / _QC3_ capable charger only (18W max);
 - doesn't support PD as it is not designed on the hardware level;
-- the original firmware can be found [here](https://e-design.com.cn/en/NewsDetail/4203645.html).
+- the original firmware can be found [here](https://e-design.com.cn/en/NewsDetail/4203645.html)([mirror backup](https://github.com/Ralim/IronOS-Meta/tree/main/Firmware/Miniware)).
 
 ![](https://core-electronics.com.au/media/catalog/product/4/2/4244-01.jpg)
 
@@ -30,7 +30,7 @@ TS80P\* is a successor to TS80:
 
 - supports _Quick Charge 3.0_ (_QC3_: 9V/3A, 18W max);
 - supports _Power Delivery_ (_PD_: 9V/3A & 12V/3A, 30W max)\*\*;
-- the original firmware can be found [here](https://e-design.com.cn/en/NewsDetail/4203645.html).
+- the original firmware can be found [here](https://e-design.com.cn/en/NewsDetail/4203645.html)([mirror backup](https://github.com/Ralim/IronOS-Meta/tree/main/Firmware/Miniware)).
 
 \*\*: use valid PD device that supports 12V/3A as power source to get full 30W potential, otherwise the iron will fall back to 9V/18W power mode.
 
@@ -45,7 +45,7 @@ MHP30 is a **M**ini **H**ot **P**late:
 - USB-PD is using the FUSB302;
 - the hardware I2C bus on PB6/7 is used for the MSA301 and FUSB302;
 - the OLED is the same SSD1306 as everything else, but it’s on a bit-banged bus;
-- the original firmware can be found [here](https://e-design.com.cn/en/NewsDetail/4203645.html).
+- the original firmware can be found [here](https://e-design.com.cn/en/NewsDetail/4203645.html)([mirror backup](https://github.com/Ralim/IronOS-Meta/tree/main/Firmware/Miniware)).
 
 
 ### Pinecil
