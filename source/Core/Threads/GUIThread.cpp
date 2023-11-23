@@ -30,6 +30,7 @@ extern "C" {
 #include "USBPD.h"
 #include "pd.h"
 #endif
+
 // File local variables
 
 extern bool heaterThermalRunaway;
@@ -63,14 +64,13 @@ void startGUITask(void const *argument) {
     performCJCC();
   }
 
+  uint16_t logoMode  = getSettingValue(SettingsOptions::LOGOTime);
+  uint16_t startMode = getSettingValue(SettingsOptions::AutoStartMode);
   // If the boot logo is enabled (but it times out) and the autostart mode is enabled (but not set to sleep w/o heat), start heating during boot logo
-  if (getSettingValue(SettingsOptions::LOGOTime) > 0 && getSettingValue(SettingsOptions::LOGOTime) < 5 && getSettingValue(SettingsOptions::AutoStartMode) > 0
-      && getSettingValue(SettingsOptions::AutoStartMode) < 3) {
-    uint16_t sleepTempDegC;
+  if (logoMode && logoMode < logoMode_t::ONETIME && startMode && startMode < autoStartMode_t::ZERO) {
+    uint16_t sleepTempDegC = getSettingValue(SettingsOptions::SleepTemp);
     if (getSettingValue(SettingsOptions::TemperatureInF)) {
-      sleepTempDegC = TipThermoModel::convertFtoC(getSettingValue(SettingsOptions::SleepTemp));
-    } else {
-      sleepTempDegC = getSettingValue(SettingsOptions::SleepTemp);
+      sleepTempDegC = TipThermoModel::convertFtoC(sleepTempDegC);
     }
     // Only heat to sleep temperature (but no higher than 75°C for safety)
     currentTempTargetDegC = min(sleepTempDegC, 75);
