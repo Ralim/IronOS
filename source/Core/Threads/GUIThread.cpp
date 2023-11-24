@@ -117,9 +117,11 @@ OperatingMode guiHandleDraw(void) {
     newMode = handle_post_init_state();
     break;
   case OperatingMode::Hibernating:
+    /*TODO*/
     newMode = OperatingMode::HomeScreen;
     break;
   case OperatingMode::ThermalRunaway:
+    /*TODO*/
     newMode = OperatingMode::HomeScreen;
     break;
   };
@@ -133,6 +135,13 @@ void guiRenderLoop(void) {
   if (newMode != currentOperatingMode) {
     context.viewEnterTime = xTaskGetTickCount();
     context.previousMode  = currentOperatingMode;
+    // If the previous mode is the startup logo; we dont want to return to it, but instead dispatch out to either home or soldering
+    if (currentOperatingMode == OperatingMode::StartupLogo) {
+      if (getSettingValue(SettingsOptions::AutoStartMode)) {
+        context.previousMode = OperatingMode::Soldering;
+      }
+      newMode = OperatingMode::HomeScreen;
+    }
     memset(&context.scratch_state, 0, sizeof(context.scratch_state));
     currentOperatingMode = newMode;
   }
