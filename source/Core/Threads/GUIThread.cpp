@@ -78,14 +78,21 @@ OperatingMode guiHandleDraw(void) {
 #endif
   case OperatingMode::StartupLogo:
     BootLogo::handleShowingLogo((uint8_t *)FLASH_LOGOADDR); // TODO needs refactor
-    if (getSettingValue(SettingsOptions::AutoStartMode) == 1) {
+
+    if (getSettingValue(SettingsOptions::AutoStartMode) == autoStartMode_t::SLEEP) {
       // jump directly to the autostart mode
+      lastMovementTime = lastButtonTime = 0; // We mask the values so that sleep goes until user moves again or presses a button
+
       newMode = OperatingMode::Sleeping;
-    } else if (getSettingValue(SettingsOptions::AutoStartMode) == 2) {
+    } else if (getSettingValue(SettingsOptions::AutoStartMode) == autoStartMode_t::SOLDER) {
+      // jump directly to the autostart mode
+      newMode = OperatingMode::Soldering;
+    } else if (getSettingValue(SettingsOptions::AutoStartMode) == autoStartMode_t::ZERO) {
       newMode = OperatingMode::Hibernating;
     } else {
       newMode = OperatingMode::HomeScreen;
     }
+
     break;
   default:
     /* Fallthrough */
@@ -118,7 +125,7 @@ OperatingMode guiHandleDraw(void) {
     break;
   case OperatingMode::Hibernating:
     /*TODO*/
-    newMode = OperatingMode::HomeScreen;
+    newMode = OperatingMode::Soldering;
     break;
   case OperatingMode::ThermalRunaway:
     /*TODO*/
@@ -139,8 +146,9 @@ void guiRenderLoop(void) {
     if (currentOperatingMode == OperatingMode::StartupLogo) {
       if (getSettingValue(SettingsOptions::AutoStartMode)) {
         context.previousMode = OperatingMode::Soldering;
+      } else {
+        newMode = OperatingMode::HomeScreen;
       }
-      newMode = OperatingMode::HomeScreen;
     }
     memset(&context.scratch_state, 0, sizeof(context.scratch_state));
     currentOperatingMode = newMode;
