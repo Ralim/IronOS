@@ -292,15 +292,9 @@ void setPlatePullup(bool pullingUp) {
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   GPIO_InitStruct.Pin   = PLATE_SENSOR_PULLUP_Pin;
   GPIO_InitStruct.Pull  = GPIO_NOPULL;
-  if (pullingUp) {
-    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-    HAL_GPIO_WritePin(PLATE_SENSOR_PULLUP_GPIO_Port, PLATE_SENSOR_PULLUP_Pin, GPIO_PIN_SET);
-  } else {
-    // Hi-z
-    GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
-    HAL_GPIO_WritePin(PLATE_SENSOR_PULLUP_GPIO_Port, PLATE_SENSOR_PULLUP_Pin, GPIO_PIN_RESET);
-  }
+  GPIO_InitStruct.Mode  = pullingUp ? GPIO_MODE_OUTPUT_PP : GPIO_MODE_INPUT;
   HAL_GPIO_Init(PLATE_SENSOR_PULLUP_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_WritePin(PLATE_SENSOR_PULLUP_GPIO_Port, PLATE_SENSOR_PULLUP_Pin, pullingUp ? GPIO_PIN_SET : GPIO_PIN_RESET);
 }
 
 void performTipMeasurementStep(bool start) {
