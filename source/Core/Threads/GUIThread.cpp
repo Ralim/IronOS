@@ -80,15 +80,14 @@ OperatingMode guiHandleDraw(void) {
     BootLogo::handleShowingLogo((uint8_t *)FLASH_LOGOADDR); // TODO needs refactor
 
     if (getSettingValue(SettingsOptions::AutoStartMode) == autoStartMode_t::SLEEP) {
-      // jump directly to the autostart mode
       lastMovementTime = lastButtonTime = 0; // We mask the values so that sleep goes until user moves again or presses a button
-
-      newMode = OperatingMode::Sleeping;
+      newMode                           = OperatingMode::Sleeping;
     } else if (getSettingValue(SettingsOptions::AutoStartMode) == autoStartMode_t::SOLDER) {
-      // jump directly to the autostart mode
-      newMode = OperatingMode::Soldering;
+      lastMovementTime = lastButtonTime = xTaskGetTickCount(); // Move forward so we dont go to sleep
+      newMode                           = OperatingMode::Soldering;
     } else if (getSettingValue(SettingsOptions::AutoStartMode) == autoStartMode_t::ZERO) {
-      newMode = OperatingMode::Hibernating;
+      lastMovementTime = lastButtonTime = xTaskGetTickCount(); // Move forward so we dont go to sleep
+      newMode                           = OperatingMode::Hibernating;
     } else {
       newMode = OperatingMode::HomeScreen;
     }
@@ -100,7 +99,8 @@ OperatingMode guiHandleDraw(void) {
     newMode = drawHomeScreen(buttons, &context);
     break;
   case OperatingMode::Soldering:
-    newMode = gui_solderingMode(buttons, &context);
+    context.scratch_state.state4 = 0;
+    newMode                      = gui_solderingMode(buttons, &context);
     break;
   case OperatingMode::SolderingProfile:
     newMode = gui_solderingProfileMode(buttons, &context);
@@ -124,8 +124,11 @@ OperatingMode guiHandleDraw(void) {
     newMode = handle_post_init_state();
     break;
   case OperatingMode::Hibernating:
-    /*TODO*/
-    newMode = OperatingMode::Soldering;
+    context.scratch_state.state4 = 1;
+    gui_solderingMode(buttons, &context);
+    if (lastButtonTime > 0 || lastMovementTime > 0) {
+      newMode = OperatingMode::Soldering;
+    }
     break;
   case OperatingMode::ThermalRunaway:
     /*TODO*/
