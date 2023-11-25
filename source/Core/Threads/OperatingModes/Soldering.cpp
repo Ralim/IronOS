@@ -73,22 +73,17 @@ OperatingMode gui_solderingMode(const ButtonState buttons, guiContext *cxt) {
    */
 
   // Update the setpoints for the temperature
-  if (cxt->scratch_state.state4) {
-    // Hibernating mode
-    currentTempTargetDegC = 0;
-  } else {
-    if (cxt->scratch_state.state2) {
-      if (getSettingValue(SettingsOptions::TemperatureInF)) {
-        currentTempTargetDegC = TipThermoModel::convertFtoC(getSettingValue(SettingsOptions::BoostTemp));
-      } else {
-        currentTempTargetDegC = (getSettingValue(SettingsOptions::BoostTemp));
-      }
+  if (cxt->scratch_state.state2) {
+    if (getSettingValue(SettingsOptions::TemperatureInF)) {
+      currentTempTargetDegC = TipThermoModel::convertFtoC(getSettingValue(SettingsOptions::BoostTemp));
     } else {
-      if (getSettingValue(SettingsOptions::TemperatureInF)) {
-        currentTempTargetDegC = TipThermoModel::convertFtoC(getSettingValue(SettingsOptions::SolderingTemp));
-      } else {
-        currentTempTargetDegC = (getSettingValue(SettingsOptions::SolderingTemp));
-      }
+      currentTempTargetDegC = (getSettingValue(SettingsOptions::BoostTemp));
+    }
+  } else {
+    if (getSettingValue(SettingsOptions::TemperatureInF)) {
+      currentTempTargetDegC = TipThermoModel::convertFtoC(getSettingValue(SettingsOptions::SolderingTemp));
+    } else {
+      currentTempTargetDegC = (getSettingValue(SettingsOptions::SolderingTemp));
     }
   }
 

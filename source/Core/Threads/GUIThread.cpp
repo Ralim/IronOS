@@ -125,7 +125,7 @@ OperatingMode guiHandleDraw(void) {
     break;
   case OperatingMode::Hibernating:
     context.scratch_state.state4 = 1;
-    gui_solderingMode(buttons, &context);
+    gui_SolderingSleepingMode(buttons, &context);
     if (lastButtonTime > 0 || lastMovementTime > 0) {
       newMode = OperatingMode::Soldering;
     }

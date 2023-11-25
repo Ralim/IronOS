@@ -14,10 +14,16 @@ OperatingMode gui_SolderingSleepingMode(const ButtonState buttons, guiContext *c
     return OperatingMode::HomeScreen; // return non-zero on error
   }
 #endif
-  if (getSettingValue(SettingsOptions::TemperatureInF)) {
-    currentTempTargetDegC = TipThermoModel::convertFtoC(min(getSettingValue(SettingsOptions::SleepTemp), getSettingValue(SettingsOptions::SolderingTemp)));
+
+  if (cxt->scratch_state.state4) {
+    // Hibernating mode
+    currentTempTargetDegC = 0;
   } else {
-    currentTempTargetDegC = min(getSettingValue(SettingsOptions::SleepTemp), getSettingValue(SettingsOptions::SolderingTemp));
+    if (getSettingValue(SettingsOptions::TemperatureInF)) {
+      currentTempTargetDegC = TipThermoModel::convertFtoC(min(getSettingValue(SettingsOptions::SleepTemp), getSettingValue(SettingsOptions::SolderingTemp)));
+    } else {
+      currentTempTargetDegC = min(getSettingValue(SettingsOptions::SleepTemp), getSettingValue(SettingsOptions::SolderingTemp));
+    }
   }
   // draw the lcd
   uint16_t tipTemp = getSettingValue(SettingsOptions::TemperatureInF) ? TipThermoModel::getTipInF() : TipThermoModel::getTipInC();
