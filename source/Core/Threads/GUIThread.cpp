@@ -203,7 +203,7 @@ OperatingMode handle_post_init_state() {
     return OperatingMode::CJCCalibration;
   }
 
-  return OperatingMode::StartupLogo;
+  return OperatingMode::StartupWarnings;
 }
 
 /* StartGUITask function */

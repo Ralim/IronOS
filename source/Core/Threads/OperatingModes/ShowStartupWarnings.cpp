@@ -10,6 +10,8 @@ OperatingMode showWarnings(const ButtonState buttons, guiContext *cxt) {
         settingsWereReset         = false;
         cxt->scratch_state.state1 = 1;
       }
+    } else {
+      cxt->scratch_state.state1 = 1;
     }
     break;
   case 1: // Device validations
@@ -19,6 +21,8 @@ OperatingMode showWarnings(const ButtonState buttons, guiContext *cxt) {
       if (warnUser(translatedString(Tr->DeviceFailedValidationWarning), buttons)) {
         cxt->scratch_state.state1 = 2;
       }
+    } else {
+      cxt->scratch_state.state1 = 2;
     }
 #else
     cxt->scratch_state.state1 = 2;
@@ -31,12 +35,17 @@ OperatingMode showWarnings(const ButtonState buttons, guiContext *cxt) {
     // Display alert if accelerometer is not detected
     if (DetectedAccelerometerVersion == AccelType::None) {
       if (getSettingValue(SettingsOptions::AccelMissingWarningCounter) < 2) {
-        nextSettingValue(SettingsOptions::AccelMissingWarningCounter);
-        saveSettings();
+
         if (warnUser(translatedString(Tr->NoAccelerometerMessage), buttons)) {
           cxt->scratch_state.state1 = 3;
+          nextSettingValue(SettingsOptions::AccelMissingWarningCounter);
+          saveSettings();
         }
+      } else {
+        cxt->scratch_state.state1 = 3;
       }
+    } else {
+      cxt->scratch_state.state1 = 3;
     }
     break;
   case 3:
@@ -45,23 +54,31 @@ OperatingMode showWarnings(const ButtonState buttons, guiContext *cxt) {
     // We expect pd to be present
     if (!USBPowerDelivery::fusbPresent()) {
       if (getSettingValue(SettingsOptions::PDMissingWarningCounter) < 2) {
-        nextSettingValue(SettingsOptions::PDMissingWarningCounter);
-        saveSettings();
         if (warnUser(translatedString(Tr->NoPowerDeliveryMessage), buttons)) {
+          nextSettingValue(SettingsOptions::PDMissingWarningCounter);
+          saveSettings();
           cxt->scratch_state.state1 = 4;
         }
+      } else {
+        cxt->scratch_state.state1 = 4;
       }
+    } else {
+      cxt->scratch_state.state1 = 4;
     }
 #else
 #if POW_PD_EXT == 1
     if (!hub238_probe()) {
       if (getSettingValue(SettingsOptions::PDMissingWarningCounter) < 2) {
-        nextSettingValue(SettingsOptions::PDMissingWarningCounter);
-        saveSettings();
         if (warnUser(translatedString(Tr->NoPowerDeliveryMessage), buttons)) {
           cxt->scratch_state.state1 = 4;
+          nextSettingValue(SettingsOptions::PDMissingWarningCounter);
+          saveSettings();
         }
+      } else {
+        cxt->scratch_state.state1 = 4;
       }
+    } else {
+      cxt->scratch_state.state1 = 4;
     }
 #else
     cxt->scratch_state.state1 = 4;
@@ -71,7 +88,7 @@ OperatingMode showWarnings(const ButtonState buttons, guiContext *cxt) {
     break;
   default:
     // We are off the end, warnings done
-    return OperatingMode::InitialisationDone;
+    return OperatingMode::StartupLogo;
   }
 
   return OperatingMode::StartupWarnings; // Stay in warnings

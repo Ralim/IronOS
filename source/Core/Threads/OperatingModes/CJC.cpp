@@ -34,5 +34,5 @@ OperatingMode performCJCC(const ButtonState buttons, guiContext *cxt) {
     return OperatingMode::CJCCalibration;
   }
   // Cant run calibration without the tip and for temps to be close
-  return OperatingMode::StartupLogo;
+  return OperatingMode::StartupWarnings;
 }
