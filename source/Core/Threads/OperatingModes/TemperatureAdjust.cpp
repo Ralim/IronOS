@@ -81,11 +81,6 @@ OperatingMode gui_solderingTempAdjust(const ButtonState buttonIn, guiContext *cx
     }
     setSettingValue(SettingsOptions::SolderingTemp, (uint16_t)newTemp);
   }
-  if (xTaskGetTickCount() - lastButtonTime > (TICKS_SECOND * 3)) {
-    saveSettings();
-    cxt->transitionMode = TransitionAnimation::Right;
-    return cxt->previousMode; // exit if user just doesn't press anything for a bit
-  }
   if (OLED::getRotation()) {
     OLED::print(getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled) ? LargeSymbolPlus : LargeSymbolMinus, FontStyle::LARGE);
   } else {
@@ -102,5 +97,10 @@ OperatingMode gui_solderingTempAdjust(const ButtonState buttonIn, guiContext *cx
     OLED::print(getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled) ? LargeSymbolPlus : LargeSymbolMinus, FontStyle::LARGE);
   }
 
+  if (xTaskGetTickCount() - lastButtonTime > (TICKS_SECOND * 3)) {
+    saveSettings();
+    cxt->transitionMode = TransitionAnimation::Right;
+    return cxt->previousMode; // exit if user just doesn't press anything for a bit
+  }
   return OperatingMode::TemperatureAdjust; // Stay in temp adjust
 }
