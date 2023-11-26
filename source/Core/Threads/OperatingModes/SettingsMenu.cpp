@@ -53,9 +53,11 @@ uint16_t getMenuLength(const menuitem *menu, const uint16_t stop) {
   // walk this menu to find the length
   uint16_t counter = 0;
   for (uint16_t pos = 0; pos < stop; pos++) {
+    // End of list
     if (menu[pos].draw == nullptr) {
       return counter;
     }
+    // Otherwise increment for each visible item (null == always, or if not check function)
     if (menu[pos].isVisible == nullptr || menu[pos].isVisible()) {
       counter++;
     }
@@ -64,17 +66,21 @@ uint16_t getMenuLength(const menuitem *menu, const uint16_t stop) {
 }
 
 OperatingMode moveToNextEntry(guiContext *cxt) {
-  uint16_t *mainEntry       = &(cxt->scratch_state.state1);
-  uint16_t *subEntry        = &(cxt->scratch_state.state2);
-  uint16_t *isRenderingHelp = &(cxt->scratch_state.state6);
+  uint16_t *mainEntry         = &(cxt->scratch_state.state1);
+  uint16_t *subEntry          = &(cxt->scratch_state.state2);
+  uint16_t *currentMenuLength = &(cxt->scratch_state.state5);
+  uint16_t *isRenderingHelp   = &(cxt->scratch_state.state6);
+
   if (*isRenderingHelp) {
     *isRenderingHelp = 0;
   } else {
+    *currentMenuLength = 0; // Reset menu length
     // Scroll down
     // We can increment freely _once_
     cxt->transitionMode = TransitionAnimation::Down;
     if (*subEntry == 0) {
       (*mainEntry) += 1;
+
       if (rootSettingsMenu[*mainEntry].draw == nullptr) {
         // We are off the end of the menu now
         saveSettings();
@@ -136,17 +142,24 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
   // Update the cached menu length if unknown
   if (*currentMenuLength == 0) {
     // We walk the current menu to find the length
-    *currentMenuLength = getMenuLength(currentMenu, 64);
+    *currentMenuLength = getMenuLength(currentMenu, 128 /* Max length of any menu*/);
   }
   if (*isRenderingHelp == 0) {
     //  Draw scroll
+
+    // Get virtual pos by counting entries from start to _here_
     uint16_t currentVirtualPosition = getMenuLength(currentMenu, currentScreen + 1) - 1;
 
+    // The height of the indicator is screen res height / total menu entries
     uint8_t indicatorHeight = OLED_HEIGHT / *currentMenuLength;
-    uint8_t position        = (OLED_HEIGHT * currentVirtualPosition) / *currentMenuLength;
-    // Draw if not last item
-    if ((*currentMenuLength != currentVirtualPosition) || xTaskGetTickCount() % 1000 < 500) {
-      OLED::drawScrollIndicator(position, indicatorHeight);
+    if (indicatorHeight == 0) {
+      indicatorHeight = 1; // always at least 1 pixel
+    }
+
+    uint16_t position = (OLED_HEIGHT * (uint16_t)currentVirtualPosition) / *currentMenuLength;
+    // Draw if not last item || flash if it is
+    if ((*currentMenuLength != currentVirtualPosition) || (xTaskGetTickCount() % 1000 < 500)) {
+      OLED::drawScrollIndicator((uint8_t)position, indicatorHeight);
     }
   }
   // Now handle user button input
