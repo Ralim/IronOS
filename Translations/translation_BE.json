@@ -31,7 +31,7 @@
             "message": "Некантралюемае\nразаграванне"
         },
         "WarningTipShorted": {
-            "message": "!Tip Shorted!"
+            "message": "!Кароткае замыканне на джале!"
         },
         "SettingsCalibrationWarning": {
             "message": "Пераканайцеся, што пры наступнай загрузцы наканечнік і ручка маюць пакаёвую тэмпературу!"
@@ -64,16 +64,16 @@
             "message": "Выкл."
         },
         "ProfilePreheatString": {
-            "message": "Preheat\n"
+            "message": "Разагрэць\n"
         },
         "ProfileCooldownString": {
-            "message": "Cooldown\n"
+            "message": "Астудзіць\n"
         },
         "DeviceFailedValidationWarning": {
             "message": "Ваша прылада, хутчэй за ўсё, падробка!"
         },
         "TooHotToStartProfileWarning": {
-            "message": "Too hot to\nstart profile"
+            "message": "Занадта горача\nкаб запусціць профіль"
         }
     },
     "characters": {
@@ -157,23 +157,23 @@
         },
         "ProfilePhases": {
             "displayText": "Profile\nPhases",
-            "description": "Number of phases in profile mode"
+            "description": "Колькасць фаз у рэжыме профілю"
         },
         "ProfilePreheatTemp": {
             "displayText": "Preheat\nTemp",
-            "description": "Preheat to this temperature at the start of profile mode"
+            "description": "Разагрэйце да гэтай тэмпературы ў пачатку профільнага рэжыму"
         },
         "ProfilePreheatSpeed": {
             "displayText": "Preheat\nSpeed",
-            "description": "Preheat at this rate (degrees per second)"
+            "description": "Разагрэйце з гэтай хуткасцю (градусы ў секунду)"
         },
         "ProfilePhase1Temp": {
             "displayText": "Phase 1\nTemp",
-            "description": "Target temperature for the end of this phase"
+            "description": "Мэтавая тэмпература ў канцы гэтай фазы"
         },
         "ProfilePhase1Duration": {
             "displayText": "Phase 1\nDuration",
-            "description": "Target duration of this phase (seconds)"
+            "description": "Мэтавая працягласць гэтай фазы (секунды)"
         },
         "ProfilePhase2Temp": {
             "displayText": "Phase 2\nTemp",
@@ -209,7 +209,7 @@
         },
         "ProfileCooldownSpeed": {
             "displayText": "Cooldown\nSpeed",
-            "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
+            "description": "Астуджаць з гэтай хуткасцю ў канцы профільнага рэжыму (градусы ў секунду)"
         },
         "MotionSensitivity": {
             "displayText": "Адчувальнасць\nакселерометра",
@@ -281,7 +281,7 @@
         },
         "BluetoothLE": {
             "displayText": "Bluetooth\n",
-            "description": "Enables BLE"
+            "description": "Уключыць BLE"
         },
         "PowerLimit": {
             "displayText": "Межы\nмагутнасці",
