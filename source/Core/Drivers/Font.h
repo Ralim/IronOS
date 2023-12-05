@@ -1520,7 +1520,8 @@ const uint8_t SettingsMenuIcons[][53 * 3] = {
         0x04, 
         0x02, 
         0x01,
-    },
+    }
+},
 #else
 
   #if defined(MODEL_TS100) + defined(MODEL_Pinecil) + defined(MODEL_Pinecilv2) > 0
