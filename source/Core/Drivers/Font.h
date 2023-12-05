@@ -1522,7 +1522,9 @@ const uint8_t SettingsMenuIcons[][53 * 3] = {
         0x01,
     }
 };
-#else
+#endif
+
+#if defined(MODEL_TS100) + defined(MODEL_Pinecil) + defined(MODEL_Pinecilv2) + defined(MODEL_TS80) + defined(MODEL_TS80P) + defined(MODEL_MHP30) > 0
 
   #if defined(MODEL_TS100) + defined(MODEL_Pinecil) + defined(MODEL_Pinecilv2) > 0
   const uint8_t buttonA[] = {
@@ -2280,7 +2282,7 @@ const uint8_t SettingsMenuIcons[][53 * 3] = {
           0x00,
       }
   };
-#endif
+  #endif
 #endif
 
 #endif /* FONT_H_ */
