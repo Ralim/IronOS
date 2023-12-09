@@ -198,6 +198,7 @@
 #define TIP_HAS_DIRECT_PWM   1
 #define POW_DC               1
 #define POW_PD               1
+#define USB_PD_EPR_WATTAGE   140 /* EPR Supported */
 #define I2C_SOFT_BUS_2       1
 #define OLED_I2CBB1          1
 #define USB_PD_I2CBB2        1
@@ -252,8 +253,9 @@
 #define OLED_I2CBB1              1
 #define ACCEL_I2CBB1             1
 
-#define POW_PD 1
-#define POW_QC 1
+#define POW_PD             1
+#define USB_PD_EPR_WATTAGE 0 /*No EPR*/
+#define POW_QC             1
 #define TEMP_NTC
 #define SC7_ORI_FLIP
 #endif /* TS80P */
