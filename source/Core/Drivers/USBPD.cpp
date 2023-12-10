@@ -27,7 +27,7 @@ bool         pdbs_dpm_evaluate_capability(const pd_msg *capabilities, pd_msg *re
 void         pdbs_dpm_get_sink_capability(pd_msg *cap, const bool isPD3);
 bool         EPREvaluateCapabilityFunc(const epr_pd_msg *capabilities, pd_msg *request);
 FUSB302      fusb((0x22 << 1), fusb_read_buf, fusb_write_buf, ms_delay); // Create FUSB driver
-PolicyEngine pe(fusb, get_ms_timestamp, ms_delay, pdbs_dpm_get_sink_capability, pdbs_dpm_evaluate_capability, EPREvaluateCapabilityFunc, 140);
+PolicyEngine pe(fusb, get_ms_timestamp, ms_delay, pdbs_dpm_get_sink_capability, pdbs_dpm_evaluate_capability, EPREvaluateCapabilityFunc, USB_PD_EPR_WATTAGE);
 int          USBPowerDelivery::detectionState = 0;
 uint16_t     requested_voltage_mv             = 0;
 

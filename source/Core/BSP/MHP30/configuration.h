@@ -152,8 +152,9 @@
 
 #define PROFILE_SUPPORT
 
-#define POW_PD     1
-#define POW_PD_EXT 0
+#define POW_PD             1
+#define POW_PD_EXT         0
+#define USB_PD_EPR_WATTAGE 0 /*No EPR*/
 #define TEMP_NTC
 #define I2C_SOFT_BUS_2  1
 #define I2C_SOFT_BUS_1  1

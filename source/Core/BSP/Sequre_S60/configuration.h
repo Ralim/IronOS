@@ -156,6 +156,7 @@
 #define OLED_128x32
 #define GPIO_VIBRATION
 #define POW_PD_EXT                1
+#define USB_PD_EPR_WATTAGE        0 /*No EPR*/
 #define DEBUG_POWER_MENU_BUTTON_B 1
 #define HAS_POWER_DEBUG_MENU
 #define TEMP_NTC
