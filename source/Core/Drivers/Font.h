@@ -178,9 +178,9 @@
     
     /*
      * 21x32 icons
-     * 53 * 3 = Frame size * Frame count
+     * 84 * 3 = Frame size * Frame count
      * */
-    const uint8_t SettingsMenuIcons[][53 * 3] = {
+    const uint8_t SettingsMenuIcons[][84 * 3] = {
       // Power
       // 3 frames
       {
