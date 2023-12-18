@@ -38,7 +38,7 @@ jobs:
         run: cp LICENSE scripts/LICENSE_RELEASE.md  source/Hexfile/
 
       - name: Archive ${{ matrix.model }} artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.model }}
           path: |
@@ -53,7 +53,7 @@ jobs:
         run: ./source/metadata.py ${{ matrix.model }}.json
 
       - name: Archive ${{ matrix.model }} index file
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: metadata
           path: source/Hexfile/${{ matrix.model }}.json
@@ -91,7 +91,7 @@ jobs:
         run: cp LICENSE scripts/LICENSE_RELEASE.md  source/Hexfile/
 
       - name: Archive ${{ matrix.model }} artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.model }}_multi-lang
           path: |
@@ -106,7 +106,7 @@ jobs:
         run: ./source/metadata.py ${{ matrix.model }}_multi-lang.json
 
       - name: Archive ${{ matrix.model }} index file
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: metadata
           path: source/Hexfile/${{ matrix.model }}_multi-lang.json
