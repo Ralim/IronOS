@@ -86,7 +86,7 @@
 #define POWER_PULSE_DEFAULT 0
 #else
 #define POWER_PULSE_DEFAULT 5
-#endif /* Pinecil */
+#endif                                 /* Pinecil */
 #define POWER_PULSE_WAIT_DEFAULT     4 // Default rate of the power pulse: 4*2500 = 10000 ms = 10 s
 #define POWER_PULSE_DURATION_DEFAULT 1 // Default duration of the power pulse: 1*250 = 250 ms
 
@@ -145,12 +145,13 @@
 #define MIN_BOOST_TEMP_C       250                       // The min settable temp for boost mode °C
 #define MIN_BOOST_TEMP_F       480                       // The min settable temp for boost mode °F
 
-#define POW_PD     1
-#define POW_PD_EXT 0
-#define POW_QC     1
-#define POW_DC     1
-#define POW_QC_20V 1
-#define ENABLE_QC2 1
+#define POW_PD             1
+#define USB_PD_EPR_WATTAGE 0 /*No EPR (Yet?) */
+#define POW_PD_EXT         0
+#define POW_QC             1
+#define POW_DC             1
+#define POW_QC_20V         1
+#define ENABLE_QC2         1
 #define TEMP_TMP36
 #define ACCEL_BMA
 #define ACCEL_SC7

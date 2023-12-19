@@ -146,6 +146,7 @@
 #define MIN_BOOST_TEMP_F           480                       // The min settable temp for boost mode °F
 #define DEVICE_HAS_VALIDATION_CODE                           // We have 2 digit validations
 #define POW_PD                     1                         // Supported features
+#define USB_PD_EPR_WATTAGE         140                       // USB PD EPR Wattage
 #define POW_PD_EXT                 0                         // Future-proof macro for other models with other PD modes
 #define POW_QC                     1                         // Supported features
 #define POW_DC                     1                         // Supported features
