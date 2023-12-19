@@ -123,7 +123,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: metadata
-          pattern: metadata-*
+          pattern: .metadata-*
           merge-multiple: true
       - run: ls -R metadata
 
