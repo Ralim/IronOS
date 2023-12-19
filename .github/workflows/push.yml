@@ -13,6 +13,8 @@ jobs:
       matrix:
         model: ["TS100", "TS80", "TS80P", "Pinecil", "MHP30", "Pinecilv2", "S60", "TS101"]
       fail-fast: true
+    outputs:
+      current_date: ${{ steps.get_date.outputs.CURRENT_DATE }}
 
     steps:
       - name: Install dependencies (apk)
@@ -52,11 +54,17 @@ jobs:
       - name: Generate json index file
         run: ./source/metadata.py ${{ matrix.model }}.json
 
-      - name: Archive ${{ matrix.model }} index file
-        uses: actions/upload-artifact@v4
+      - name: Get date to tag cache with unique key
+        id: get_date
+        run: |
+          echo "CURRENT_DATE=$(date +'%Y-%m-%d %H:%M:%S.%N')" >> $GITHUB_OUTPUT
+
+      - name: Cache ${{ matrix.model }} index file
+        uses: actions/cache/save@v3
         with:
           name: metadata-${{ matrix.model }}
           path: source/Hexfile/${{ matrix.model }}.json
+          key: metadata-${{ matrix.model }}-${{ steps.get_date.outputs.CURRENT_DATE }}
 
 
   build_multi-lang:
@@ -105,11 +113,17 @@ jobs:
       - name: Generate json index file
         run: ./source/metadata.py ${{ matrix.model }}_multi-lang.json
 
-      - name: Archive ${{ matrix.model }} index file
-        uses: actions/upload-artifact@v4
+      - name: Get date to tag cache with unique key
+        id: get_date
+        run: |
+          echo "CURRENT_DATE=$(date +'%Y-%m-%d %H:%M:%S.%N')" >> $GITHUB_OUTPUT
+
+      - name: Cache ${{ matrix.model }} index file
+        uses: actions/cache/save@v3
         with:
           name: metadata-${{ matrix.model }}_multi-lang
           path: source/Hexfile/${{ matrix.model }}_multi-lang.json
+          key: metadata-${{ matrix.model }}_multi-lang-${{ steps.get_date.outputs.CURRENT_DATE }}
 
 
   upload_metadata:
@@ -117,15 +131,15 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
 
-      - name: Download All JSONs
-        uses: actions/download-artifact@v4
+      - name: Restore cached source
+        uses: actions/cache/restore@v3
         with:
+          name: metadata-*
           path: metadata
-          pattern: metadata-*
-          merge-multiple: true
-      - run: ls -R metadata
+          key: metadata-*-${{ needs.save-files.outputs.current_date }}
+      - run: ls -R ; ls -R metadata
 
-      - name: Re-upload JSONs in bulk
+      - name: Upload JSONs in bulk
         uses: actions/upload-artifact@v4
         with:
           name: metadata
