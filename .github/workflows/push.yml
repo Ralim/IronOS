@@ -130,6 +130,7 @@ jobs:
         with:
           name: metadata
           path: metadata/*
+          if-no-files-found: error
 
 
   tests:
