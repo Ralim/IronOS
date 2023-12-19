@@ -74,6 +74,8 @@ jobs:
       matrix:
         model: ["Pinecil", "Pinecilv2"]
       fail-fast: true
+    outputs:
+      current_date: ${{ steps.get_date.outputs.CURRENT_DATE }}
 
     steps:
       - name: Install dependencies (apk)
@@ -142,6 +144,13 @@ jobs:
           path: metadata
           key: metadata-*-${{ needs.build_multi-lang.outputs.current_date }}
       - run: ls -R ; ls -R metadata || true
+
+      - name: Restore cached JSONs by key wildcar
+        uses: actions/cache/restore@v3
+        with:
+          path: metadata_test
+          key: metadata-*
+      - run: ls -R ; ls -R metadata_test || true
 
       - name: Upload JSONs in bulk
         uses: actions/upload-artifact@v4
