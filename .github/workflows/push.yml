@@ -112,7 +112,7 @@ jobs:
           path: source/Hexfile/${{ matrix.model }}_multi-lang.json
 
 
-  upload-metadata:
+  upload_metadata:
     needs: [build, build_multi-lang]
     runs-on: ubuntu-20.04
     steps:
