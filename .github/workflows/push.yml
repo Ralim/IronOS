@@ -18,7 +18,7 @@ jobs:
 
     steps:
       - name: Install dependencies (apk)
-        run: apk add --no-cache gcc-riscv-none-elf gcc-arm-none-eabi newlib-riscv-none-elf newlib-arm-none-eabi findutils python3 py3-pip make git bash
+        run: apk add --no-cache gcc-riscv-none-elf gcc-arm-none-eabi newlib-riscv-none-elf newlib-arm-none-eabi findutils python3 py3-pip make git bash tar
 
       - name: Install dependencies (python)
         run: python3 -m pip install bdflib
@@ -77,7 +77,7 @@ jobs:
 
     steps:
       - name: Install dependencies (apk)
-        run: apk add --no-cache gcc-riscv-none-elf newlib-riscv-none-elf findutils python3 py3-pip make git bash musl-dev
+        run: apk add --no-cache gcc-riscv-none-elf newlib-riscv-none-elf findutils python3 py3-pip make git bash musl-dev tar
       - name: Install dependencies (python)
         run: python3 -m pip install bdflib
 
