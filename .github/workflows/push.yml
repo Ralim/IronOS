@@ -134,8 +134,7 @@ jobs:
           path: metadata/*
           if-no-files-found: error
 
-      - name: Delete temp artifacts
-        uses: geekyeggo/delete-artifact@v2
+      - uses: geekyeggo/delete-artifact@v2
         with:
           name: .metadata-*
 
