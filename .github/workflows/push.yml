@@ -129,11 +129,18 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
 
-      - name: Restore cached source
+      - name: Restore cached JSONs from build
         uses: actions/cache/restore@v3
         with:
           path: metadata
-          key: metadata-*-${{ needs.save-files.outputs.current_date }}
+          key: metadata-*-${{ needs.build.outputs.current_date }}
+      - run: ls -R ; ls -R metadata || true
+
+      - name: Restore cached JSONs from build_multi-lang
+        uses: actions/cache/restore@v3
+        with:
+          path: metadata
+          key: metadata-*-${{ needs.build_multi-lang.outputs.current_date }}
       - run: ls -R ; ls -R metadata || true
 
       - name: Upload JSONs in bulk
