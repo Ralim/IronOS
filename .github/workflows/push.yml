@@ -59,26 +59,6 @@ jobs:
           path: source/Hexfile/${{ matrix.model }}.json
 
 
-  upload-metadata:
-    needs: build
-    runs-on: ubuntu-20.04
-    steps:
-
-      - name: Download All JSONs
-        uses: actions/download-artifact@v4
-        with:
-          path: metadata
-          pattern: metadata-*
-          merge-multiple: true
-      - run: ls -R metadata
-
-      - name: Re-upload JSONs
-        uses: actions/upload-artifact@v4
-        with:
-          name: metadata
-          path: metadata/*
-
-
   build_multi-lang:
     runs-on: ubuntu-20.04
     container:
@@ -130,6 +110,26 @@ jobs:
         with:
           name: metadata-${{ matrix.model }}_multi-lang
           path: source/Hexfile/${{ matrix.model }}_multi-lang.json
+
+
+  upload-metadata:
+    needs: [build, build_multi-lang]
+    runs-on: ubuntu-20.04
+    steps:
+
+      - name: Download All JSONs
+        uses: actions/download-artifact@v4
+        with:
+          path: metadata
+          pattern: metadata-*
+          merge-multiple: true
+      - run: ls -R metadata
+
+      - name: Re-upload JSONs in bulk
+        uses: actions/upload-artifact@v4
+        with:
+          name: metadata
+          path: metadata/*
 
 
   tests:
