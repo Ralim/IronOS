@@ -62,7 +62,6 @@ jobs:
       - name: Cache ${{ matrix.model }} index file
         uses: actions/cache/save@v3
         with:
-          name: metadata-${{ matrix.model }}
           path: source/Hexfile/${{ matrix.model }}.json
           key: metadata-${{ matrix.model }}-${{ steps.get_date.outputs.CURRENT_DATE }}
 
@@ -121,7 +120,6 @@ jobs:
       - name: Cache ${{ matrix.model }} index file
         uses: actions/cache/save@v3
         with:
-          name: metadata-${{ matrix.model }}_multi-lang
           path: source/Hexfile/${{ matrix.model }}_multi-lang.json
           key: metadata-${{ matrix.model }}_multi-lang-${{ steps.get_date.outputs.CURRENT_DATE }}
 
@@ -134,10 +132,9 @@ jobs:
       - name: Restore cached source
         uses: actions/cache/restore@v3
         with:
-          name: metadata-*
           path: metadata
           key: metadata-*-${{ needs.save-files.outputs.current_date }}
-      - run: ls -R ; ls -R metadata
+      - run: ls -R ; ls -R metadata || true
 
       - name: Upload JSONs in bulk
         uses: actions/upload-artifact@v4
