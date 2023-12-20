@@ -146,7 +146,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: source/Hexfile/
-          pattern: *
+          pattern: ${{ matrix.model }}
           merge-multiple: true
       - run: ls -R source/Hexfile
 
