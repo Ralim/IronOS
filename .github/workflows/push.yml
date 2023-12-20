@@ -53,13 +53,6 @@ jobs:
             source/Hexfile/LICENSE_RELEASE.md
           if-no-files-found: error
 
-      - name: Archive ${{ matrix.model }} index file
-        uses: actions/upload-artifact@v4
-        with:
-          name: .metadata-${{ matrix.model }}
-          path: source/Hexfile/${{ matrix.model }}.json
-          retention-days: 1
-
 
   build_multi-lang:
     runs-on: ubuntu-20.04
@@ -108,13 +101,6 @@ jobs:
             source/Hexfile/LICENSE
             source/Hexfile/LICENSE_RELEASE.md
           if-no-files-found: error
-
-      - name: Archive ${{ matrix.model }} index file
-        uses: actions/upload-artifact@v4
-        with:
-          name: .metadata-${{ matrix.model }}_multi-lang
-          path: source/Hexfile/${{ matrix.model }}_multi-lang.json
-          retention-days: 1
 
 
   upload_metadata:
