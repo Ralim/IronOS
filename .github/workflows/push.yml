@@ -120,10 +120,6 @@ jobs:
     runs-on: ubuntu-20.04
     container:
       image: alpine:3.16
-    strategy:
-      matrix:
-        model: ["TS100", "TS80", "TS80P", "Pinecil", "MHP30", "Pinecilv2", "S60", "TS101", "Pinecil_multi-lang", "Pinecilv2_multi-lang"]
-      fail-fast: true
 
     steps:
       - name: Install dependencies (apk)
@@ -151,7 +147,7 @@ jobs:
       - run: ls -R source/Hexfile
 
       - name: Generate JSON files
-        run: ./source/metadata.py ${{ matrix.model }}.json
+        run: for m in "TS100 TS80 TS80P Pinecil MHP30 Pinecilv2 S60 TS101 Pinecil_multi-lang Pinecilv2_multi-lang"; do ./source/metadata.py ${m}.json; done;
 
       - name: Upload JSONs in bulk as metadata
         uses: actions/upload-artifact@v4
