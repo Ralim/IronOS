@@ -106,35 +106,14 @@ jobs:
   upload_metadata:
     needs: [build, build_multi-lang]
     runs-on: ubuntu-20.04
-    container:
-      image: alpine:3.16
 
     steps:
-      - name: Install dependencies (apk)
-        run: apk add --no-cache findutils python3 py3-pip make git bash
-
-      - name: Install dependencies (python)
-        run: python3 -m pip install bdflib
-
-      - uses: actions/checkout@v4
-        with:
-          submodules: true
-
-      - name: Git ownership exception
-        run: git config --global --add safe.directory /__w/IronOS/IronOS && git config --global safe.directory "$GITHUB_WORKSPACE"
-
-      - name: Git meta info
-        run: echo "GITHUB_CI_PR_SHA=${{github.event.pull_request.head.sha}}" >> "${GITHUB_ENV}"
-
       - name: Download all prebuilts
         uses: actions/download-artifact@v4
         with:
           path: source/Hexfile/
           merge-multiple: true
       - run: ls -R source/Hexfile
-
-      - name: Generate JSON files
-        run: for m in "TS100 TS80 TS80P Pinecil MHP30 Pinecilv2 S60 TS101 Pinecil_multi-lang Pinecilv2_multi-lang"; do ./source/metadata.py ${m}.json; done;
 
       - name: Upload JSONs in bulk as metadata
         uses: actions/upload-artifact@v4
