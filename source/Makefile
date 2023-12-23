@@ -334,7 +334,7 @@ flash_size=128k
 bootldr_size=0x0
 
 # Flags
-CPUFLAGS=-march=rv32imac \
+CPUFLAGS=-march=rv32imaczicsr \
          -mabi=ilp32     \
          -mcmodel=medany \
          -fsigned-char   \
@@ -410,7 +410,7 @@ LDSCRIPT=./Core/BSP/Pinecilv2/bl_mcu_sdk/drivers/bl702_driver/bl702_flash.ld
 DEVICE_DFU_ADDRESS=0x23000000
 # DFU starts at the beginning of flash
 # Flags
-CPUFLAGS=-march=rv32imafc                                     \
+CPUFLAGS=-march=rv32imafczicsr                                     \
          -mabi=ilp32f                                         \
          -mcmodel=medany                                      \
          -fsigned-char                                        \
