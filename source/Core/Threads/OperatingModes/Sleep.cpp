@@ -62,5 +62,9 @@ OperatingMode gui_SolderingSleepingMode(const ButtonState buttons, guiContext *c
     currentTempTargetDegC = 0;
     return OperatingMode::HomeScreen;
   }
-  return OperatingMode::Sleeping;
+  if (cxt->scratch_state.state4) {
+    return OperatingMode::Hibernating;
+  } else {
+    return OperatingMode::Sleeping;
+  }
 }
