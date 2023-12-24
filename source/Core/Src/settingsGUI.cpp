@@ -947,7 +947,7 @@ static void displayPowerPulseDuration(void) { OLED::printNumber(getSettingValue(
 static bool setResetSettings(void) {
   if (userConfirmation(translatedString(Tr->SettingsResetWarning))) {
     resetSettings();
-    // warnUser(translatedString(Tr->ResetOKMessage), buttons); //TODO
+    warnUser(translatedString(Tr->ResetOKMessage), getButtonState());
     reboot();
   }
   return false;
