@@ -45,7 +45,7 @@ void render_menu(const menuitem *item, guiContext *cxt) {
     *isRenderingHelp          = 1;
     // Draw description
     const char *description = translatedString(Tr->SettingsDescriptions[item->description - 1]);
-    drawScrollingText(description, xTaskGetTickCount() - lastButtonTime);
+    drawScrollingText(description, (xTaskGetTickCount() - lastButtonTime) - HELP_TEXT_TIMEOUT_TICKS);
   }
 }
 
