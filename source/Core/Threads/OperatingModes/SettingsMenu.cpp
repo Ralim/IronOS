@@ -148,8 +148,10 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
     //  Draw scroll
 
     // Get virtual pos by counting entries from start to _here_
-    uint16_t currentVirtualPosition = getMenuLength(currentMenu, currentScreen + 1) - 1;
-
+    uint16_t currentVirtualPosition = getMenuLength(currentMenu, currentScreen + 1);
+    if (currentVirtualPosition > 0) {
+      currentVirtualPosition--;
+    }
     // The height of the indicator is screen res height / total menu entries
     uint8_t indicatorHeight = OLED_HEIGHT / *currentMenuLength;
     if (indicatorHeight == 0) {
@@ -208,6 +210,8 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
     if (*isRenderingHelp) {
       *isRenderingHelp = 0;
     } else {
+      uint16_t *currentMenuLength = &(cxt->scratch_state.state5);
+      *currentMenuLength          = 0;
       if (*subEntry == 0) {
         // In a root menu, if its null handler we enter the menu
         if (currentMenu[currentScreen].incrementHandler != nullptr) {
