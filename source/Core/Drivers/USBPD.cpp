@@ -29,6 +29,7 @@ bool         EPREvaluateCapabilityFunc(const epr_pd_msg *capabilities, pd_msg *r
 FUSB302      fusb((0x22 << 1), fusb_read_buf, fusb_write_buf, ms_delay); // Create FUSB driver
 PolicyEngine pe(fusb, get_ms_timestamp, ms_delay, pdbs_dpm_get_sink_capability, pdbs_dpm_evaluate_capability, EPREvaluateCapabilityFunc, USB_PD_EPR_WATTAGE);
 int          USBPowerDelivery::detectionState = 0;
+bool         haveSeenCapabilityOffer          = false;
 uint16_t     requested_voltage_mv             = 0;
 
 /* The current draw when the output is disabled */
@@ -51,6 +52,15 @@ void    USBPowerDelivery::step() {
 }
 
 void USBPowerDelivery::PPSTimerCallback() { pe.TimersCallback(); }
+bool USBPowerDelivery::negotiationInProgress() {
+  if (USBPowerDelivery::negotiationComplete()) {
+    return true;
+  }
+  if (haveSeenCapabilityOffer) {
+    return false;
+  }
+  return true;
+}
 bool USBPowerDelivery::negotiationComplete() {
   if (!fusbPresent()) {
     return true;
@@ -268,6 +278,7 @@ bool EPREvaluateCapabilityFunc(const epr_pd_msg *capabilities, pd_msg *request) 
 bool pdbs_dpm_evaluate_capability(const pd_msg *capabilities, pd_msg *request) {
   memset(lastCapabilities, 0, sizeof(lastCapabilities));
   memcpy(lastCapabilities, capabilities->obj, sizeof(uint32_t) * 7);
+  haveSeenCapabilityOffer = true;
   /* Get the number of PDOs */
   uint8_t numobj = PD_NUMOBJ_GET(capabilities);
 
