@@ -4,9 +4,13 @@
 OperatingMode performCJCC(const ButtonState buttons, guiContext *cxt) {
   // Calibrate Cold Junction Compensation directly at boot, before internal components get warm.
   if (!isTipDisconnected() && abs(int(TipThermoModel::getTipInC() - getHandleTemperature(0) / 10)) < 10) {
-    // Take 16 samples
+    // Take 16 samples, only sample
     if (cxt->scratch_state.state1 < 16) {
-      cxt->scratch_state.state3 += getTipRawTemp(1);
+      if ((xTaskGetTickCount() - cxt->scratch_state.state4) > TICKS_100MS) {
+        cxt->scratch_state.state3 += getTipRawTemp(1);
+        cxt->scratch_state.state1++;
+        cxt->scratch_state.state4 = xTaskGetTickCount();
+      }
       OLED::setCursor(0, 0);
       OLED::print(translatedString(Tr->CJCCalibrating), FontStyle::SMALL);
       OLED::setCursor(0, 8);
@@ -15,7 +19,6 @@ OperatingMode performCJCC(const ButtonState buttons, guiContext *cxt) {
         OLED::print(SmallSymbolDot, FontStyle::SMALL);
       }
 
-      cxt->scratch_state.state1++;
       return OperatingMode::CJCCalibration;
     }
 
