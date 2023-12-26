@@ -332,7 +332,7 @@ OPTIM=-Os                             \
       -fdevirtualize-at-ltrans        \
       -fmerge-all-constants           \
       -fshort-wchar                   \
-      -flto                           \
+      -flto=auto                           \
       -finline-small-functions        \
       -finline-functions              \
       -findirect-inlining             \
@@ -557,12 +557,12 @@ Core/Gen/macros.txt: Makefile
 $(OUTPUT_DIR)/Core/Gen/translation.files/%.o: Core/Gen/Translation.%.cpp
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Generating $@
-	@$(CPP) -c $(filter-out -flto ,$(CXXFLAGS)) $< -o $@
+	@$(CPP) -c $(filter-out -flto=auto ,$(CXXFLAGS)) $< -o $@
 
 $(OUTPUT_DIR)/Core/Gen/translation.files/multi.%.o: Core/Gen/Translation_multi.%.cpp
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Generating $@
-	@$(CPP) -c $(filter-out -flto ,$(CXXFLAGS)) $< -o $@
+	@$(CPP) -c $(filter-out -flto=auto ,$(CXXFLAGS)) $< -o $@
 
 $(HOST_OUTPUT_DIR)/brieflz/libbrieflz.so: Core/brieflz/brieflz.c Core/brieflz/depack.c
 	@test -d $(@D) || mkdir -p $(@D)
