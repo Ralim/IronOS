@@ -41,61 +41,57 @@ frame length and bitrate.
 
 #if defined(SBC_DEC_INCLUDED)
 
-OI_UINT32 OI_SBC_MaxBitpool(OI_CODEC_SBC_FRAME_INFO *frame)
-{
-    switch (frame->mode) {
-        case SBC_MONO:
-        case SBC_DUAL_CHANNEL:
-            return 16 * frame->nrof_subbands;
-        case SBC_STEREO:
-        case SBC_JOINT_STEREO:
-            return 32 * frame->nrof_subbands;
-    }
+OI_UINT32 OI_SBC_MaxBitpool(OI_CODEC_SBC_FRAME_INFO *frame) {
+  switch (frame->mode) {
+  case SBC_MONO:
+  case SBC_DUAL_CHANNEL:
+    return 16 * frame->nrof_subbands;
+  case SBC_STEREO:
+  case SBC_JOINT_STEREO:
+    return 32 * frame->nrof_subbands;
+  }
 
-    ERROR(("Invalid frame mode %d", frame->mode));
-    OI_ASSERT(FALSE);
-    return 0; /* Should never be reached */
+  ERROR(("Invalid frame mode %d", frame->mode));
+  OI_ASSERT(FALSE);
+  return 0; /* Should never be reached */
 }
 
-PRIVATE OI_UINT16 internal_CalculateFramelen(OI_CODEC_SBC_FRAME_INFO *frame)
-{
-    OI_UINT16 nbits = frame->nrof_blocks * frame->bitpool;
-    OI_UINT16 nrof_subbands = frame->nrof_subbands;
-    OI_UINT16 result = nbits;
+PRIVATE OI_UINT16 internal_CalculateFramelen(OI_CODEC_SBC_FRAME_INFO *frame) {
+  OI_UINT16 nbits         = frame->nrof_blocks * frame->bitpool;
+  OI_UINT16 nrof_subbands = frame->nrof_subbands;
+  OI_UINT16 result        = nbits;
 
-    if (frame->mode == SBC_JOINT_STEREO) {
-        result += nrof_subbands + (8 * nrof_subbands);
+  if (frame->mode == SBC_JOINT_STEREO) {
+    result += nrof_subbands + (8 * nrof_subbands);
+  } else {
+    if (frame->mode == SBC_DUAL_CHANNEL) {
+      result += nbits;
+    }
+    if (frame->mode == SBC_MONO) {
+      result += 4 * nrof_subbands;
     } else {
-        if (frame->mode == SBC_DUAL_CHANNEL) {
-            result += nbits;
-        }
-        if (frame->mode == SBC_MONO) {
-            result += 4 * nrof_subbands;
-        } else {
-            result += 8 * nrof_subbands;
-        }
+      result += 8 * nrof_subbands;
     }
-    return SBC_HEADER_LEN + (result + 7) / 8;
+  }
+  return SBC_HEADER_LEN + (result + 7) / 8;
 }
 
-PRIVATE OI_UINT32 internal_CalculateBitrate(OI_CODEC_SBC_FRAME_INFO *frame)
-{
-    OI_UINT blocksbands;
-    blocksbands = frame->nrof_subbands * frame->nrof_blocks;
+PRIVATE OI_UINT32 internal_CalculateBitrate(OI_CODEC_SBC_FRAME_INFO *frame) {
+  OI_UINT blocksbands;
+  blocksbands = frame->nrof_subbands * frame->nrof_blocks;
 
-    return DIVIDE(8 * internal_CalculateFramelen(frame) * frame->frequency, blocksbands);
+  return DIVIDE(8 * internal_CalculateFramelen(frame) * frame->frequency, blocksbands);
 }
 
-INLINE OI_UINT16 OI_SBC_CalculateFrameAndHeaderlen(OI_CODEC_SBC_FRAME_INFO *frame, OI_UINT *headerLen_)
-{
-    OI_UINT headerLen = SBC_HEADER_LEN + frame->nrof_subbands * frame->nrof_channels / 2;
+INLINE OI_UINT16 OI_SBC_CalculateFrameAndHeaderlen(OI_CODEC_SBC_FRAME_INFO *frame, OI_UINT *headerLen_) {
+  OI_UINT headerLen = SBC_HEADER_LEN + frame->nrof_subbands * frame->nrof_channels / 2;
 
-    if (frame->mode == SBC_JOINT_STEREO) {
-        headerLen++;
-    }
+  if (frame->mode == SBC_JOINT_STEREO) {
+    headerLen++;
+  }
 
-    *headerLen_ = headerLen;
-    return internal_CalculateFramelen(frame);
+  *headerLen_ = headerLen;
+  return internal_CalculateFramelen(frame);
 }
 
 #define MIN(x, y) ((x) < (y) ? (x) : (y))
@@ -120,71 +116,67 @@ INLINE OI_UINT16 OI_SBC_CalculateFrameAndHeaderlen(OI_CODEC_SBC_FRAME_INFO *fram
  * @return              The SBC bit need
  *
  */
-OI_UINT computeBitneed(OI_CODEC_SBC_COMMON_CONTEXT *common,
-                       OI_UINT8 *bitneeds,
-                       OI_UINT ch,
-                       OI_UINT *preferredBitpool)
-{
-    static const OI_INT8 offset4[4][4] = {
-        { -1, 0, 0, 0 },
-        { -2, 0, 0, 1 },
-        { -2, 0, 0, 1 },
-        { -2, 0, 0, 1 }
-    };
+OI_UINT computeBitneed(OI_CODEC_SBC_COMMON_CONTEXT *common, OI_UINT8 *bitneeds, OI_UINT ch, OI_UINT *preferredBitpool) {
+  static const OI_INT8 offset4[4][4] = {
+      {-1, 0, 0, 0},
+      {-2, 0, 0, 1},
+      {-2, 0, 0, 1},
+      {-2, 0, 0, 1}
+  };
 
-    static const OI_INT8 offset8[4][8] = {
-        { -2, 0, 0, 0, 0, 0, 0, 1 },
-        { -3, 0, 0, 0, 0, 0, 1, 2 },
-        { -4, 0, 0, 0, 0, 0, 1, 2 },
-        { -4, 0, 0, 0, 0, 0, 1, 2 }
-    };
+  static const OI_INT8 offset8[4][8] = {
+      {-2, 0, 0, 0, 0, 0, 0, 1},
+      {-3, 0, 0, 0, 0, 0, 1, 2},
+      {-4, 0, 0, 0, 0, 0, 1, 2},
+      {-4, 0, 0, 0, 0, 0, 1, 2}
+  };
 
-    const OI_UINT nrof_subbands = common->frameInfo.nrof_subbands;
-    OI_UINT sb;
-    OI_INT8 *scale_factor = &common->scale_factor[ch ? nrof_subbands : 0];
-    OI_UINT bitcount = 0;
-    OI_UINT8 maxBits = 0;
-    OI_UINT8 prefBits = 0;
+  const OI_UINT nrof_subbands = common->frameInfo.nrof_subbands;
+  OI_UINT       sb;
+  OI_INT8      *scale_factor = &common->scale_factor[ch ? nrof_subbands : 0];
+  OI_UINT       bitcount     = 0;
+  OI_UINT8      maxBits      = 0;
+  OI_UINT8      prefBits     = 0;
 
-    if (common->frameInfo.alloc == SBC_SNR) {
-        for (sb = 0; sb < nrof_subbands; sb++) {
-            OI_INT bits = scale_factor[sb];
-            if (bits > maxBits) {
-                maxBits = bits;
-            }
-            if ((bitneeds[sb] = bits) > 1) {
-                bitcount += bits;
-            }
-            prefBits += 2 + bits;
-        }
-    } else {
-        const OI_INT8 *offset;
-        if (nrof_subbands == 4) {
-            offset = offset4[common->frameInfo.freqIndex];
-        } else {
-            offset = offset8[common->frameInfo.freqIndex];
-        }
-        for (sb = 0; sb < nrof_subbands; sb++) {
-            OI_INT bits = scale_factor[sb];
-            if (bits > maxBits) {
-                maxBits = bits;
-            }
-            prefBits += 2 + bits;
-            if (bits) {
-                bits -= offset[sb];
-                if (bits > 0) {
-                    bits /= 2;
-                }
-                bits += 5;
-            }
-            if ((bitneeds[sb] = bits) > 1) {
-                bitcount += bits;
-            }
-        }
+  if (common->frameInfo.alloc == SBC_SNR) {
+    for (sb = 0; sb < nrof_subbands; sb++) {
+      OI_INT bits = scale_factor[sb];
+      if (bits > maxBits) {
+        maxBits = bits;
+      }
+      if ((bitneeds[sb] = bits) > 1) {
+        bitcount += bits;
+      }
+      prefBits += 2 + bits;
     }
-    common->maxBitneed = OI_MAX(maxBits, common->maxBitneed);
-    *preferredBitpool += prefBits;
-    return bitcount;
+  } else {
+    const OI_INT8 *offset;
+    if (nrof_subbands == 4) {
+      offset = offset4[common->frameInfo.freqIndex];
+    } else {
+      offset = offset8[common->frameInfo.freqIndex];
+    }
+    for (sb = 0; sb < nrof_subbands; sb++) {
+      OI_INT bits = scale_factor[sb];
+      if (bits > maxBits) {
+        maxBits = bits;
+      }
+      prefBits += 2 + bits;
+      if (bits) {
+        bits -= offset[sb];
+        if (bits > 0) {
+          bits /= 2;
+        }
+        bits += 5;
+      }
+      if ((bitneeds[sb] = bits) > 1) {
+        bitcount += bits;
+      }
+    }
+  }
+  common->maxBitneed = OI_MAX(maxBits, common->maxBitneed);
+  *preferredBitpool += prefBits;
+  return bitcount;
 }
 
 /*
@@ -246,144 +238,129 @@ OI_UINT computeBitneed(OI_CODEC_SBC_COMMON_CONTEXT *common,
  *
  * @return   The adjustment.
  */
-OI_INT adjustToFitBitpool(const OI_UINT bitpool,
-                          OI_UINT32 *bitneeds,
-                          const OI_UINT subbands,
-                          OI_UINT bitcount,
-                          OI_UINT *excess)
-{
-    OI_INT maxBitadjust = 0;
-    OI_INT bitadjust = (bitcount > bitpool) ? -8 : 8;
-    OI_INT chop = 8;
+OI_INT adjustToFitBitpool(const OI_UINT bitpool, OI_UINT32 *bitneeds, const OI_UINT subbands, OI_UINT bitcount, OI_UINT *excess) {
+  OI_INT maxBitadjust = 0;
+  OI_INT bitadjust    = (bitcount > bitpool) ? -8 : 8;
+  OI_INT chop         = 8;
 
-    /*
-     * This is essentially a binary search for the optimal adjustment value.
-     */
-    while ((bitcount != bitpool) && chop) {
-        OI_UINT32 total = 0;
-        OI_UINT count;
-        OI_UINT32 adjust4;
-        OI_INT i;
+  /*
+   * This is essentially a binary search for the optimal adjustment value.
+   */
+  while ((bitcount != bitpool) && chop) {
+    OI_UINT32 total = 0;
+    OI_UINT   count;
+    OI_UINT32 adjust4;
+    OI_INT    i;
 
-        adjust4 = bitadjust & 0x7F;
-        adjust4 |= (adjust4 << 8);
-        adjust4 |= (adjust4 << 16);
+    adjust4 = bitadjust & 0x7F;
+    adjust4 |= (adjust4 << 8);
+    adjust4 |= (adjust4 << 16);
 
-        for (i = (subbands / 4 - 1); i >= 0; --i) {
-            OI_UINT32 mask;
-            OI_UINT32 n = bitneeds[i] + adjust4;
-            mask = 0x7F7F7F7F + ((n & 0x40404040) >> 6);
-            n &= mask;
-            mask = 0x0F0F0F0F + ((n & 0x10101010) >> 4);
-            n &= mask;
-            mask = (((n + 0x0E0E0E0E) >> 4) | 0x1E1E1E1E);
-            n &= mask;
-            total += n;
-        }
-
-        count = (total & 0xFFFF) + (total >> 16);
-        count = (count & 0xFF) + (count >> 8);
-
-        chop >>= 1;
-        if (count > bitpool) {
-            bitadjust -= chop;
-        } else {
-            maxBitadjust = bitadjust;
-            bitcount = count;
-            bitadjust += chop;
-        }
+    for (i = (subbands / 4 - 1); i >= 0; --i) {
+      OI_UINT32 mask;
+      OI_UINT32 n = bitneeds[i] + adjust4;
+      mask        = 0x7F7F7F7F + ((n & 0x40404040) >> 6);
+      n &= mask;
+      mask = 0x0F0F0F0F + ((n & 0x10101010) >> 4);
+      n &= mask;
+      mask = (((n + 0x0E0E0E0E) >> 4) | 0x1E1E1E1E);
+      n &= mask;
+      total += n;
     }
 
-    *excess = bitpool - bitcount;
+    count = (total & 0xFFFF) + (total >> 16);
+    count = (count & 0xFF) + (count >> 8);
 
-    return maxBitadjust;
+    chop >>= 1;
+    if (count > bitpool) {
+      bitadjust -= chop;
+    } else {
+      maxBitadjust = bitadjust;
+      bitcount     = count;
+      bitadjust += chop;
+    }
+  }
+
+  *excess = bitpool - bitcount;
+
+  return maxBitadjust;
 }
 
 /*
  * The bit allocator trys to avoid single bit allocations except as a last resort. So in the case
  * where a bitneed of 1 was passed over during the adsjustment phase 2 bits are now allocated.
  */
-INLINE OI_INT allocAdjustedBits(OI_UINT8 *dest,
-                                OI_INT bits,
-                                OI_INT excess)
-{
-    if (bits < 16) {
-        if (bits > 1) {
-            if (excess) {
-                ++bits;
-                --excess;
-            }
-        } else if ((bits == 1) && (excess > 1)) {
-            bits = 2;
-            excess -= 2;
-        } else {
-            bits = 0;
-        }
+INLINE OI_INT allocAdjustedBits(OI_UINT8 *dest, OI_INT bits, OI_INT excess) {
+  if (bits < 16) {
+    if (bits > 1) {
+      if (excess) {
+        ++bits;
+        --excess;
+      }
+    } else if ((bits == 1) && (excess > 1)) {
+      bits = 2;
+      excess -= 2;
     } else {
-        bits = 16;
+      bits = 0;
     }
-    *dest = (OI_UINT8)bits;
-    return excess;
+  } else {
+    bits = 16;
+  }
+  *dest = (OI_UINT8)bits;
+  return excess;
 }
 
 /*
  * Excess bits not allocated by allocaAdjustedBits are allocated round-robin.
  */
-INLINE OI_INT allocExcessBits(OI_UINT8 *dest,
-                              OI_INT excess)
-{
-    if (*dest < 16) {
-        *dest += 1;
-        return excess - 1;
-    } else {
-        return excess;
-    }
+INLINE OI_INT allocExcessBits(OI_UINT8 *dest, OI_INT excess) {
+  if (*dest < 16) {
+    *dest += 1;
+    return excess - 1;
+  } else {
+    return excess;
+  }
 }
 
-void oneChannelBitAllocation(OI_CODEC_SBC_COMMON_CONTEXT *common,
-                             BITNEED_UNION1 *bitneeds,
-                             OI_UINT ch,
-                             OI_UINT bitcount)
-{
-    const OI_UINT8 nrof_subbands = common->frameInfo.nrof_subbands;
-    OI_UINT excess;
-    OI_UINT sb;
-    OI_INT bitadjust;
-    OI_UINT8 RESTRICT *allocBits;
+void oneChannelBitAllocation(OI_CODEC_SBC_COMMON_CONTEXT *common, BITNEED_UNION1 *bitneeds, OI_UINT ch, OI_UINT bitcount) {
+  const OI_UINT8     nrof_subbands = common->frameInfo.nrof_subbands;
+  OI_UINT            excess;
+  OI_UINT            sb;
+  OI_INT             bitadjust;
+  OI_UINT8 RESTRICT *allocBits;
 
-    {
-        OI_UINT ex;
-        bitadjust = adjustToFitBitpool(common->frameInfo.bitpool, bitneeds->uint32, nrof_subbands, bitcount, &ex);
-        /* We want the compiler to put excess into a register */
-        excess = ex;
-    }
+  {
+    OI_UINT ex;
+    bitadjust = adjustToFitBitpool(common->frameInfo.bitpool, bitneeds->uint32, nrof_subbands, bitcount, &ex);
+    /* We want the compiler to put excess into a register */
+    excess = ex;
+  }
 
-    /*
-     * Allocate adjusted bits
-     */
-    allocBits = &common->bits.uint8[ch ? nrof_subbands : 0];
+  /*
+   * Allocate adjusted bits
+   */
+  allocBits = &common->bits.uint8[ch ? nrof_subbands : 0];
 
-    sb = 0;
-    while (sb < nrof_subbands) {
-        excess = allocAdjustedBits(&allocBits[sb], bitneeds->uint8[sb] + bitadjust, excess);
-        ++sb;
-    }
-    sb = 0;
-    while (excess) {
-        excess = allocExcessBits(&allocBits[sb], excess);
-        ++sb;
-    }
+  sb = 0;
+  while (sb < nrof_subbands) {
+    excess = allocAdjustedBits(&allocBits[sb], bitneeds->uint8[sb] + bitadjust, excess);
+    ++sb;
+  }
+  sb = 0;
+  while (excess) {
+    excess = allocExcessBits(&allocBits[sb], excess);
+    ++sb;
+  }
 }
 
-void monoBitAllocation(OI_CODEC_SBC_COMMON_CONTEXT *common)
-{
-    BITNEED_UNION1 bitneeds;
-    OI_UINT bitcount;
-    OI_UINT bitpoolPreference = 0;
+void monoBitAllocation(OI_CODEC_SBC_COMMON_CONTEXT *common) {
+  BITNEED_UNION1 bitneeds;
+  OI_UINT        bitcount;
+  OI_UINT        bitpoolPreference = 0;
 
-    bitcount = computeBitneed(common, bitneeds.uint8, 0, &bitpoolPreference);
+  bitcount = computeBitneed(common, bitneeds.uint8, 0, &bitpoolPreference);
 
-    oneChannelBitAllocation(common, &bitneeds, 0, bitcount);
+  oneChannelBitAllocation(common, &bitneeds, 0, bitcount);
 }
 
 /**

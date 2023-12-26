@@ -201,14 +201,14 @@ const OI_INT32 dec_window_4[21] = {
 #endif
 
 #ifndef CLIP_INT16
-#define CLIP_INT16(x)                  \
-    do {                               \
-        if (x > OI_INT16_MAX) {        \
-            x = OI_INT16_MAX;          \
-        } else if (x < OI_INT16_MIN) { \
-            x = OI_INT16_MIN;          \
-        }                              \
-    } while (0)
+#define CLIP_INT16(x)                                                                                                                                                                                  \
+  do {                                                                                                                                                                                                 \
+    if (x > OI_INT16_MAX) {                                                                                                                                                                            \
+      x = OI_INT16_MAX;                                                                                                                                                                                \
+    } else if (x < OI_INT16_MIN) {                                                                                                                                                                     \
+      x = OI_INT16_MIN;                                                                                                                                                                                \
+    }                                                                                                                                                                                                  \
+  } while (0)
 #endif
 
 /**
@@ -221,20 +221,19 @@ const OI_INT32 dec_window_4[21] = {
  * @return  A signed 32-bit value corresponding to the 32 most significant bits
  * of the 48-bit product of u and v.
  */
-static INLINE OI_INT32 default_mul_16s_32s_hi(OI_INT16 u, OI_INT32 v)
-{
-    OI_UINT16 v0;
-    OI_INT16 v1;
+static INLINE OI_INT32 default_mul_16s_32s_hi(OI_INT16 u, OI_INT32 v) {
+  OI_UINT16 v0;
+  OI_INT16  v1;
 
-    OI_INT32 w, x;
+  OI_INT32 w, x;
 
-    v0 = (OI_UINT16)(v & 0xffff);
-    v1 = (OI_INT16)(v >> 16);
+  v0 = (OI_UINT16)(v & 0xffff);
+  v1 = (OI_INT16)(v >> 16);
 
-    w = v1 * u;
-    x = u * v0;
+  w = v1 * u;
+  x = u * v0;
 
-    return w + (x >> 16);
+  return w + (x >> 16);
 }
 
 #define MUL_16S_32S_HI(_x, _y) default_mul_16s_32s_hi(_x, _y)
@@ -248,10 +247,10 @@ PRIVATE void dct2_8(SBC_BUFFER_T *RESTRICT out, OI_INT32 const *RESTRICT x);
 typedef void (*SYNTH_FRAME)(OI_CODEC_SBC_DECODER_CONTEXT *context, OI_INT16 *pcm, OI_UINT blkstart, OI_UINT blkcount);
 
 #ifndef COPY_BACKWARD_32BIT_ALIGNED_72_HALFWORDS
-#define COPY_BACKWARD_32BIT_ALIGNED_72_HALFWORDS(dest, src) \
-    do {                                                    \
-        shift_buffer(dest, src, 72);                        \
-    } while (0)
+#define COPY_BACKWARD_32BIT_ALIGNED_72_HALFWORDS(dest, src)                                                                                                                                            \
+  do {                                                                                                                                                                                                 \
+    shift_buffer(dest, src, 72);                                                                                                                                                                       \
+  } while (0)
 #endif
 
 #ifndef DCT2_8
@@ -266,99 +265,94 @@ typedef void (*SYNTH_FRAME)(OI_CODEC_SBC_DECODER_CONTEXT *context, OI_INT16 *pcm
 #define SYNTH112 SynthWindow112_generated
 #endif
 
-PRIVATE void OI_SBC_SynthFrame_80(OI_CODEC_SBC_DECODER_CONTEXT *context, OI_INT16 *pcm, OI_UINT blkstart, OI_UINT blkcount)
-{
-    OI_UINT blk;
-    OI_UINT ch;
-    OI_UINT nrof_channels = context->common.frameInfo.nrof_channels;
-    OI_UINT pcmStrideShift = context->common.pcmStride == 1 ? 0 : 1;
-    OI_UINT offset = context->common.filterBufferOffset;
-    OI_INT32 *s = context->common.subdata + 8 * nrof_channels * blkstart;
-    OI_UINT blkstop = blkstart + blkcount;
+PRIVATE void OI_SBC_SynthFrame_80(OI_CODEC_SBC_DECODER_CONTEXT *context, OI_INT16 *pcm, OI_UINT blkstart, OI_UINT blkcount) {
+  OI_UINT   blk;
+  OI_UINT   ch;
+  OI_UINT   nrof_channels  = context->common.frameInfo.nrof_channels;
+  OI_UINT   pcmStrideShift = context->common.pcmStride == 1 ? 0 : 1;
+  OI_UINT   offset         = context->common.filterBufferOffset;
+  OI_INT32 *s              = context->common.subdata + 8 * nrof_channels * blkstart;
+  OI_UINT   blkstop        = blkstart + blkcount;
 
-    for (blk = blkstart; blk < blkstop; blk++) {
-        if (offset == 0) {
-            COPY_BACKWARD_32BIT_ALIGNED_72_HALFWORDS(context->common.filterBuffer[0] + context->common.filterBufferLen - 72, context->common.filterBuffer[0]);
-            if (nrof_channels == 2) {
-                COPY_BACKWARD_32BIT_ALIGNED_72_HALFWORDS(context->common.filterBuffer[1] + context->common.filterBufferLen - 72, context->common.filterBuffer[1]);
-            }
-            offset = context->common.filterBufferLen - 80;
-        } else {
-            offset -= 1 * 8;
-        }
-
-        for (ch = 0; ch < nrof_channels; ch++) {
-            DCT2_8(context->common.filterBuffer[ch] + offset, s);
-            SYNTH80(pcm + ch, context->common.filterBuffer[ch] + offset, pcmStrideShift);
-            s += 8;
-        }
-        pcm += (8 << pcmStrideShift);
+  for (blk = blkstart; blk < blkstop; blk++) {
+    if (offset == 0) {
+      COPY_BACKWARD_32BIT_ALIGNED_72_HALFWORDS(context->common.filterBuffer[0] + context->common.filterBufferLen - 72, context->common.filterBuffer[0]);
+      if (nrof_channels == 2) {
+        COPY_BACKWARD_32BIT_ALIGNED_72_HALFWORDS(context->common.filterBuffer[1] + context->common.filterBufferLen - 72, context->common.filterBuffer[1]);
+      }
+      offset = context->common.filterBufferLen - 80;
+    } else {
+      offset -= 1 * 8;
     }
-    context->common.filterBufferOffset = offset;
+
+    for (ch = 0; ch < nrof_channels; ch++) {
+      DCT2_8(context->common.filterBuffer[ch] + offset, s);
+      SYNTH80(pcm + ch, context->common.filterBuffer[ch] + offset, pcmStrideShift);
+      s += 8;
+    }
+    pcm += (8 << pcmStrideShift);
+  }
+  context->common.filterBufferOffset = offset;
 }
 
-PRIVATE void OI_SBC_SynthFrame_4SB(OI_CODEC_SBC_DECODER_CONTEXT *context, OI_INT16 *pcm, OI_UINT blkstart, OI_UINT blkcount)
-{
-    OI_UINT blk;
-    OI_UINT ch;
-    OI_UINT nrof_channels = context->common.frameInfo.nrof_channels;
-    OI_UINT pcmStrideShift = context->common.pcmStride == 1 ? 0 : 1;
-    OI_UINT offset = context->common.filterBufferOffset;
-    OI_INT32 *s = context->common.subdata + 8 * nrof_channels * blkstart;
-    OI_UINT blkstop = blkstart + blkcount;
+PRIVATE void OI_SBC_SynthFrame_4SB(OI_CODEC_SBC_DECODER_CONTEXT *context, OI_INT16 *pcm, OI_UINT blkstart, OI_UINT blkcount) {
+  OI_UINT   blk;
+  OI_UINT   ch;
+  OI_UINT   nrof_channels  = context->common.frameInfo.nrof_channels;
+  OI_UINT   pcmStrideShift = context->common.pcmStride == 1 ? 0 : 1;
+  OI_UINT   offset         = context->common.filterBufferOffset;
+  OI_INT32 *s              = context->common.subdata + 8 * nrof_channels * blkstart;
+  OI_UINT   blkstop        = blkstart + blkcount;
 
-    for (blk = blkstart; blk < blkstop; blk++) {
-        if (offset == 0) {
-            COPY_BACKWARD_32BIT_ALIGNED_72_HALFWORDS(context->common.filterBuffer[0] + context->common.filterBufferLen - 72, context->common.filterBuffer[0]);
-            if (nrof_channels == 2) {
-                COPY_BACKWARD_32BIT_ALIGNED_72_HALFWORDS(context->common.filterBuffer[1] + context->common.filterBufferLen - 72, context->common.filterBuffer[1]);
-            }
-            offset = context->common.filterBufferLen - 80;
-        } else {
-            offset -= 8;
-        }
-        for (ch = 0; ch < nrof_channels; ch++) {
-            cosineModulateSynth4(context->common.filterBuffer[ch] + offset, s);
-            SynthWindow40_int32_int32_symmetry_with_sum(pcm + ch,
-                                                        context->common.filterBuffer[ch] + offset,
-                                                        pcmStrideShift);
-            s += 4;
-        }
-        pcm += (4 << pcmStrideShift);
+  for (blk = blkstart; blk < blkstop; blk++) {
+    if (offset == 0) {
+      COPY_BACKWARD_32BIT_ALIGNED_72_HALFWORDS(context->common.filterBuffer[0] + context->common.filterBufferLen - 72, context->common.filterBuffer[0]);
+      if (nrof_channels == 2) {
+        COPY_BACKWARD_32BIT_ALIGNED_72_HALFWORDS(context->common.filterBuffer[1] + context->common.filterBufferLen - 72, context->common.filterBuffer[1]);
+      }
+      offset = context->common.filterBufferLen - 80;
+    } else {
+      offset -= 8;
     }
-    context->common.filterBufferOffset = offset;
+    for (ch = 0; ch < nrof_channels; ch++) {
+      cosineModulateSynth4(context->common.filterBuffer[ch] + offset, s);
+      SynthWindow40_int32_int32_symmetry_with_sum(pcm + ch, context->common.filterBuffer[ch] + offset, pcmStrideShift);
+      s += 4;
+    }
+    pcm += (4 << pcmStrideShift);
+  }
+  context->common.filterBufferOffset = offset;
 }
 
 #ifdef SBC_ENHANCED
 
-PRIVATE void OI_SBC_SynthFrame_Enhanced(OI_CODEC_SBC_DECODER_CONTEXT *context, OI_INT16 *pcm, OI_UINT blkstart, OI_UINT blkcount)
-{
-    OI_UINT blk;
-    OI_UINT ch;
-    OI_UINT nrof_channels = context->common.frameInfo.nrof_channels;
-    OI_UINT pcmStrideShift = context->common.pcmStride == 1 ? 0 : 1;
-    OI_UINT offset = context->common.filterBufferOffset;
-    OI_INT32 *s = context->common.subdata + 8 * nrof_channels * blkstart;
-    OI_UINT blkstop = blkstart + blkcount;
+PRIVATE void OI_SBC_SynthFrame_Enhanced(OI_CODEC_SBC_DECODER_CONTEXT *context, OI_INT16 *pcm, OI_UINT blkstart, OI_UINT blkcount) {
+  OI_UINT   blk;
+  OI_UINT   ch;
+  OI_UINT   nrof_channels  = context->common.frameInfo.nrof_channels;
+  OI_UINT   pcmStrideShift = context->common.pcmStride == 1 ? 0 : 1;
+  OI_UINT   offset         = context->common.filterBufferOffset;
+  OI_INT32 *s              = context->common.subdata + 8 * nrof_channels * blkstart;
+  OI_UINT   blkstop        = blkstart + blkcount;
 
-    for (blk = blkstart; blk < blkstop; blk++) {
-        if (offset == 0) {
-            COPY_BACKWARD_32BIT_ALIGNED_104_HALFWORDS(context->common.filterBuffer[0] + context->common.filterBufferLen - 104, context->common.filterBuffer[0]);
-            if (nrof_channels == 2) {
-                COPY_BACKWARD_32BIT_ALIGNED_104_HALFWORDS(context->common.filterBuffer[1] + context->common.filterBufferLen - 104, context->common.filterBuffer[1]);
-            }
-            offset = context->common.filterBufferLen - 112;
-        } else {
-            offset -= 8;
-        }
-        for (ch = 0; ch < nrof_channels; ++ch) {
-            DCT2_8(context->common.filterBuffer[ch] + offset, s);
-            SYNTH112(pcm + ch, context->common.filterBuffer[ch] + offset, pcmStrideShift);
-            s += 8;
-        }
-        pcm += (8 << pcmStrideShift);
+  for (blk = blkstart; blk < blkstop; blk++) {
+    if (offset == 0) {
+      COPY_BACKWARD_32BIT_ALIGNED_104_HALFWORDS(context->common.filterBuffer[0] + context->common.filterBufferLen - 104, context->common.filterBuffer[0]);
+      if (nrof_channels == 2) {
+        COPY_BACKWARD_32BIT_ALIGNED_104_HALFWORDS(context->common.filterBuffer[1] + context->common.filterBufferLen - 104, context->common.filterBuffer[1]);
+      }
+      offset = context->common.filterBufferLen - 112;
+    } else {
+      offset -= 8;
     }
-    context->common.filterBufferOffset = offset;
+    for (ch = 0; ch < nrof_channels; ++ch) {
+      DCT2_8(context->common.filterBuffer[ch] + offset, s);
+      SYNTH112(pcm + ch, context->common.filterBuffer[ch] + offset, pcmStrideShift);
+      s += 8;
+    }
+    pcm += (8 << pcmStrideShift);
+  }
+  context->common.filterBufferOffset = offset;
 }
 
 static const SYNTH_FRAME SynthFrameEnhanced[] = {
@@ -381,85 +375,83 @@ static const SYNTH_FRAME SynthFrame4SB[] = {
     OI_SBC_SynthFrame_4SB  /* stereo */
 };
 
-PRIVATE void OI_SBC_SynthFrame(OI_CODEC_SBC_DECODER_CONTEXT *context, OI_INT16 *pcm, OI_UINT start_block, OI_UINT nrof_blocks)
-{
-    OI_UINT nrof_subbands = context->common.frameInfo.nrof_subbands;
-    OI_UINT nrof_channels = context->common.frameInfo.nrof_channels;
+PRIVATE void OI_SBC_SynthFrame(OI_CODEC_SBC_DECODER_CONTEXT *context, OI_INT16 *pcm, OI_UINT start_block, OI_UINT nrof_blocks) {
+  OI_UINT nrof_subbands = context->common.frameInfo.nrof_subbands;
+  OI_UINT nrof_channels = context->common.frameInfo.nrof_channels;
 
-    OI_ASSERT(nrof_subbands == 4 || nrof_subbands == 8);
-    if (nrof_subbands == 4) {
-        SynthFrame4SB[nrof_channels](context, pcm, start_block, nrof_blocks);
+  OI_ASSERT(nrof_subbands == 4 || nrof_subbands == 8);
+  if (nrof_subbands == 4) {
+    SynthFrame4SB[nrof_channels](context, pcm, start_block, nrof_blocks);
 #ifdef SBC_ENHANCED
-    } else if (context->common.frameInfo.enhanced) {
-        SynthFrameEnhanced[nrof_channels](context, pcm, start_block, nrof_blocks);
+  } else if (context->common.frameInfo.enhanced) {
+    SynthFrameEnhanced[nrof_channels](context, pcm, start_block, nrof_blocks);
 #endif /* SBC_ENHANCED */
-    } else {
-        SynthFrame8SB[nrof_channels](context, pcm, start_block, nrof_blocks);
-    }
+  } else {
+    SynthFrame8SB[nrof_channels](context, pcm, start_block, nrof_blocks);
+  }
 }
 
-void SynthWindow40_int32_int32_symmetry_with_sum(OI_INT16 *pcm, SBC_BUFFER_T buffer[80], OI_UINT strideShift)
-{
-    OI_INT32 pa;
-    OI_INT32 pb;
+void SynthWindow40_int32_int32_symmetry_with_sum(OI_INT16 *pcm, SBC_BUFFER_T buffer[80], OI_UINT strideShift) {
+  OI_INT32 pa;
+  OI_INT32 pb;
 
-    /* These values should be zero, since out[2] of the 4-band cosine modulation
-     * is always zero. */
-    OI_ASSERT(buffer[2] == 0);
-    OI_ASSERT(buffer[10] == 0);
-    OI_ASSERT(buffer[18] == 0);
-    OI_ASSERT(buffer[26] == 0);
-    OI_ASSERT(buffer[34] == 0);
-    OI_ASSERT(buffer[42] == 0);
-    OI_ASSERT(buffer[50] == 0);
-    OI_ASSERT(buffer[58] == 0);
-    OI_ASSERT(buffer[66] == 0);
-    OI_ASSERT(buffer[74] == 0);
+  /* These values should be zero, since out[2] of the 4-band cosine modulation
+   * is always zero. */
+  OI_ASSERT(buffer[2] == 0);
+  OI_ASSERT(buffer[10] == 0);
+  OI_ASSERT(buffer[18] == 0);
+  OI_ASSERT(buffer[26] == 0);
+  OI_ASSERT(buffer[34] == 0);
+  OI_ASSERT(buffer[42] == 0);
+  OI_ASSERT(buffer[50] == 0);
+  OI_ASSERT(buffer[58] == 0);
+  OI_ASSERT(buffer[66] == 0);
+  OI_ASSERT(buffer[74] == 0);
 
-    pa = dec_window_4[4] * (buffer[12] + buffer[76]);
-    pa += dec_window_4[8] * (buffer[16] - buffer[64]);
-    pa += dec_window_4[12] * (buffer[28] + buffer[60]);
-    pa += dec_window_4[16] * (buffer[32] - buffer[48]);
-    pa += dec_window_4[20] * buffer[44];
-    pa = SCALE(-pa, 15);
-    CLIP_INT16(pa);
-    pcm[0 << strideShift] = (OI_INT16)pa;
+  pa = dec_window_4[4] * (buffer[12] + buffer[76]);
+  pa += dec_window_4[8] * (buffer[16] - buffer[64]);
+  pa += dec_window_4[12] * (buffer[28] + buffer[60]);
+  pa += dec_window_4[16] * (buffer[32] - buffer[48]);
+  pa += dec_window_4[20] * buffer[44];
+  pa = SCALE(-pa, 15);
+  CLIP_INT16(pa);
+  pcm[0 << strideShift] = (OI_INT16)pa;
 
-    pa = dec_window_4[1] * buffer[1];
-    pb = dec_window_4[1] * buffer[79];
-    pb += dec_window_4[3] * buffer[3];
-    pa += dec_window_4[3] * buffer[77];
-    pa += dec_window_4[5] * buffer[13];
-    pb += dec_window_4[5] * buffer[67];
-    pb += dec_window_4[7] * buffer[15];
-    pa += dec_window_4[7] * buffer[65];
-    pa += dec_window_4[9] * buffer[17];
-    pb += dec_window_4[9] * buffer[63];
-    pb += dec_window_4[11] * buffer[19];
-    pa += dec_window_4[11] * buffer[61];
-    pa += dec_window_4[13] * buffer[29];
-    pb += dec_window_4[13] * buffer[51];
-    pb += dec_window_4[15] * buffer[31];
-    pa += dec_window_4[15] * buffer[49];
-    pa += dec_window_4[17] * buffer[33];
-    pb += dec_window_4[17] * buffer[47];
-    pb += dec_window_4[19] * buffer[35];
-    pa += dec_window_4[19] * buffer[45];
-    pa = SCALE(-pa, 15);
-    CLIP_INT16(pa);
-    pcm[1 << strideShift] = (OI_INT16)(pa);
-    pb = SCALE(-pb, 15);
-    CLIP_INT16(pb);
-    pcm[3 << strideShift] = (OI_INT16)(pb);
+  pa = dec_window_4[1] * buffer[1];
+  pb = dec_window_4[1] * buffer[79];
+  pb += dec_window_4[3] * buffer[3];
+  pa += dec_window_4[3] * buffer[77];
+  pa += dec_window_4[5] * buffer[13];
+  pb += dec_window_4[5] * buffer[67];
+  pb += dec_window_4[7] * buffer[15];
+  pa += dec_window_4[7] * buffer[65];
+  pa += dec_window_4[9] * buffer[17];
+  pb += dec_window_4[9] * buffer[63];
+  pb += dec_window_4[11] * buffer[19];
+  pa += dec_window_4[11] * buffer[61];
+  pa += dec_window_4[13] * buffer[29];
+  pb += dec_window_4[13] * buffer[51];
+  pb += dec_window_4[15] * buffer[31];
+  pa += dec_window_4[15] * buffer[49];
+  pa += dec_window_4[17] * buffer[33];
+  pb += dec_window_4[17] * buffer[47];
+  pb += dec_window_4[19] * buffer[35];
+  pa += dec_window_4[19] * buffer[45];
+  pa = SCALE(-pa, 15);
+  CLIP_INT16(pa);
+  pcm[1 << strideShift] = (OI_INT16)(pa);
+  pb                    = SCALE(-pb, 15);
+  CLIP_INT16(pb);
+  pcm[3 << strideShift] = (OI_INT16)(pb);
 
-    pa = dec_window_4[2] * (/*buffer[ 2] + */ buffer[78]);   /* buffer[ 2] is always zero */
-    pa += dec_window_4[6] * (buffer[14] /* + buffer[66]*/);  /* buffer[66] is always zero */
-    pa += dec_window_4[10] * (/*buffer[18] + */ buffer[62]); /* buffer[18] is always zero */
-    pa += dec_window_4[14] * (buffer[30] /* + buffer[50]*/); /* buffer[50] is always zero */
-    pa += dec_window_4[18] * (/*buffer[34] + */ buffer[46]); /* buffer[34] is always zero */
-    pa = SCALE(-pa, 15);
-    CLIP_INT16(pa);
-    pcm[2 << strideShift] = (OI_INT16)(pa);
+  pa = dec_window_4[2] * (/*buffer[ 2] + */ buffer[78]);   /* buffer[ 2] is always zero */
+  pa += dec_window_4[6] * (buffer[14] /* + buffer[66]*/);  /* buffer[66] is always zero */
+  pa += dec_window_4[10] * (/*buffer[18] + */ buffer[62]); /* buffer[18] is always zero */
+  pa += dec_window_4[14] * (buffer[30] /* + buffer[50]*/); /* buffer[50] is always zero */
+  pa += dec_window_4[18] * (/*buffer[34] + */ buffer[46]); /* buffer[34] is always zero */
+  pa = SCALE(-pa, 15);
+  CLIP_INT16(pa);
+  pcm[2 << strideShift] = (OI_INT16)(pa);
 }
 
 /**
@@ -487,35 +479,34 @@ void SynthWindow40_int32_int32_symmetry_with_sum(OI_INT16 *pcm, SBC_BUFFER_T buf
   algebra system, manually converted to fixed-point arithmetic. S4 can be
   implemented using only assignment and negation.
   */
-PRIVATE void cosineModulateSynth4(SBC_BUFFER_T *RESTRICT out, OI_INT32 const *RESTRICT in)
-{
-    OI_INT32 f0, f1, f2, f3, f4, f7, f8, f9, f10;
-    OI_INT32 y0, y1, y2, y3;
+PRIVATE void cosineModulateSynth4(SBC_BUFFER_T *RESTRICT out, OI_INT32 const *RESTRICT in) {
+  OI_INT32 f0, f1, f2, f3, f4, f7, f8, f9, f10;
+  OI_INT32 y0, y1, y2, y3;
 
-    f0 = (in[0] - in[3]);
-    f1 = (in[0] + in[3]);
-    f2 = (in[1] - in[2]);
-    f3 = (in[1] + in[2]);
+  f0 = (in[0] - in[3]);
+  f1 = (in[0] + in[3]);
+  f2 = (in[1] - in[2]);
+  f3 = (in[1] + in[2]);
 
-    f4 = f1 - f3;
+  f4 = f1 - f3;
 
-    y0 = -SCALE(f1 + f3, DCT_SHIFT);
-    y2 = -SCALE(LONG_MULT_DCT(DCTII_4_K06_FIX, f4), DCT_SHIFT);
-    f7 = f0 + f2;
-    f8 = LONG_MULT_DCT(DCTII_4_K08_FIX, f0);
-    f9 = LONG_MULT_DCT(DCTII_4_K09_FIX, f7);
-    f10 = LONG_MULT_DCT(DCTII_4_K10_FIX, f2);
-    y3 = -SCALE(f8 + f9, DCT_SHIFT);
-    y1 = -SCALE(f10 - f9, DCT_SHIFT);
+  y0  = -SCALE(f1 + f3, DCT_SHIFT);
+  y2  = -SCALE(LONG_MULT_DCT(DCTII_4_K06_FIX, f4), DCT_SHIFT);
+  f7  = f0 + f2;
+  f8  = LONG_MULT_DCT(DCTII_4_K08_FIX, f0);
+  f9  = LONG_MULT_DCT(DCTII_4_K09_FIX, f7);
+  f10 = LONG_MULT_DCT(DCTII_4_K10_FIX, f2);
+  y3  = -SCALE(f8 + f9, DCT_SHIFT);
+  y1  = -SCALE(f10 - f9, DCT_SHIFT);
 
-    out[0] = (OI_INT16)-y2;
-    out[1] = (OI_INT16)-y3;
-    out[2] = (OI_INT16)0;
-    out[3] = (OI_INT16)y3;
-    out[4] = (OI_INT16)y2;
-    out[5] = (OI_INT16)y1;
-    out[6] = (OI_INT16)y0;
-    out[7] = (OI_INT16)y1;
+  out[0] = (OI_INT16)-y2;
+  out[1] = (OI_INT16)-y3;
+  out[2] = (OI_INT16)0;
+  out[3] = (OI_INT16)y3;
+  out[4] = (OI_INT16)y2;
+  out[5] = (OI_INT16)y1;
+  out[6] = (OI_INT16)y0;
+  out[7] = (OI_INT16)y1;
 }
 
 /**

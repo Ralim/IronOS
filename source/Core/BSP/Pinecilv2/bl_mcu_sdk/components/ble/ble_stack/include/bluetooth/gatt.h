@@ -26,6 +26,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+#include "conn_internal.h"
 
 /* GATT attribute permission bit field values */
 enum {

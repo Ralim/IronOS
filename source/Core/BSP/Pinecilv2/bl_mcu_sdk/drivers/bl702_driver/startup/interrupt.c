@@ -20,12 +20,12 @@
  * under the License.
  *
  */
-#include "bl702_common.h"
 #include "bflb_platform.h"
+#include "bl702_common.h"
 #include "risc-v/Core/Include/clic.h"
 #include "risc-v/Core/Include/riscv_encoding.h"
 
-pFunc __Interrupt_Handlers[IRQn_LAST] = { 0 };
+pFunc __Interrupt_Handlers[IRQn_LAST] = {0};
 
 void Interrupt_Handler_Stub(void);
 
@@ -91,17 +91,18 @@ void MAC_PORT_TRG_IRQHandler_Wrapper(void) __attribute__((weak, alias("Interrupt
 void WIFI_IPC_PUBLIC_IRQHandler_Wrapper(void) __attribute__((weak, alias("Interrupt_Handler_Stub")));
 
 const pFunc __Vectors[] __attribute__((section(".init"), aligned(64))) = {
-    0,                                   /*         */
-    0,                                   /*         */
-    0,                                   /*         */
-    clic_msip_handler_Wrapper,           /* 3       */
-    0,                                   /*         */
-    0,                                   /*         */
-    0,                                   /*         */
-    clic_mtimer_handler_Wrapper,         /* 7       */
-    (pFunc)0x00000001,                   /*         */
-    0,                                   /*         */
-    (pFunc)0x00000102, /*         */     //disable log as default
+    0,                           /*         */
+    0,                           /*         */
+    0,                           /*         */
+    clic_msip_handler_Wrapper,   /* 3       */
+    0,                           /*         */
+    0,                           /*         */
+    0,                           /*         */
+    clic_mtimer_handler_Wrapper, /* 7       */
+    (pFunc)0x00000001,           /*         */
+    0,                           /*         */
+    (pFunc)0x00000102,
+    /*         */                        // disable log as default
     clic_mext_handler_Wrapper,           /* 11      */
     clic_csoft_handler_Wrapper,          /* 12      */
     0,                                   /*         */
@@ -180,204 +181,162 @@ void vAssertCalled(void) {
   epc = get_pc();
   MSG("mepc:0x%08x\r\n", (uint32_t)epc);
 
-//   PWM_Channel_Disable(PWM_Channel);
-//   gpio_set_mode(PWM_Out_Pin, GPIO_INPUT_PD_MODE);
+  //   PWM_Channel_Disable(PWM_Channel);
+  //   gpio_set_mode(PWM_Out_Pin, GPIO_INPUT_PD_MODE);
 
-  while (1)
-    ;
+  while (1) {
+  }
 }
 
+void Trap_Handler(void) {
+  unsigned long cause;
+  unsigned long epc;
+  unsigned long tval;
+  uint8_t       isecall = 0;
 
-void Trap_Handler(void)
-{
-    unsigned long cause;
-    unsigned long epc;
-    unsigned long tval;
-    uint8_t isecall = 0;
+  MSG("Trap_Handler\r\n");
 
-    MSG("Trap_Handler\r\n");
+  cause = read_csr(mcause);
+  MSG("mcause=%08x\r\n", (uint32_t)cause);
+  epc = get_pc();
+  MSG("mepc:%08x\r\n", (uint32_t)epc);
+  tval = read_csr(mtval);
+  MSG("mtval:%08x\r\n", (uint32_t)tval);
 
-    cause = read_csr(mcause);
-    MSG("mcause=%08x\r\n", (uint32_t)cause);
-    epc = get_pc();
-    MSG("mepc:%08x\r\n", (uint32_t)epc);
-    tval = read_csr(mtval);
-    MSG("mtval:%08x\r\n", (uint32_t)tval);
+  cause = (cause & 0x3ff);
 
-    cause = (cause & 0x3ff);
+  switch (cause) {
+  case 1:
+    MSG("Instruction access fault\r\n");
+    break;
 
-    switch (cause) {
-        case 1:
-            MSG("Instruction access fault\r\n");
-            break;
+  case 2:
+    MSG("Illegal instruction\r\n");
+    break;
 
-        case 2:
-            MSG("Illegal instruction\r\n");
-            break;
+  case 3:
+    MSG("Breakpoint\r\n");
+    break;
 
-        case 3:
-            MSG("Breakpoint\r\n");
-            break;
+  case 4:
+    MSG("Load address misaligned\r\n");
+    break;
 
-        case 4:
-            MSG("Load address misaligned\r\n");
-            break;
+  case 5:
+    MSG("Load access fault\r\n");
+    break;
 
-        case 5:
-            MSG("Load access fault\r\n");
-            break;
+  case 6:
+    MSG("Store/AMO address misaligned\r\n");
+    break;
 
-        case 6:
-            MSG("Store/AMO address misaligned\r\n");
-            break;
+  case 7:
+    MSG("Store/AMO access fault\r\n");
+    break;
 
-        case 7:
-            MSG("Store/AMO access fault\r\n");
-            break;
+  case 8:
+    MSG("Environment call from U-mode\r\n");
+    epc += 4;
+    write_csr(mepc, epc);
+    break;
 
-        case 8:
-            MSG("Environment call from U-mode\r\n");
-            epc += 4;
-            write_csr(mepc, epc);
-            break;
+  case 11:
+    MSG("Environment call from M-mode\r\n");
+    epc += 4;
+    write_csr(mepc, epc);
+    isecall = 1;
+    break;
 
-        case 11:
-            MSG("Environment call from M-mode\r\n");
-            epc += 4;
-            write_csr(mepc, epc);
-            isecall = 1;
-            break;
+  default:
+    MSG("Cause num=%d\r\n", (uint32_t)cause);
+    epc += 4;
+    write_csr(mepc, epc);
+    break;
+  }
 
-        default:
-            MSG("Cause num=%d\r\n", (uint32_t)cause);
-            epc += 4;
-            write_csr(mepc, epc);
-            break;
+  if (!isecall) {
+    while (1) {
     }
-
-    if (!isecall) {
-        while (1)
-            ;
-    }
+  }
 }
 
-void Interrupt_Handler(void)
-{
-    pFunc interruptFun;
-    uint32_t num = 0;
-    volatile uint32_t ulMEPC = 0UL, ulMCAUSE = 0UL;
+void Interrupt_Handler(void) {
+  pFunc             interruptFun;
+  uint32_t          num    = 0;
+  volatile uint32_t ulMEPC = 0UL, ulMCAUSE = 0UL;
 
-    /* Store a few register values that might be useful when determining why this
-    function was called. */
-    __asm volatile("csrr %0, mepc"
-                   : "=r"(ulMEPC));
-    __asm volatile("csrr %0, mcause"
-                   : "=r"(ulMCAUSE));
+  /* Store a few register values that might be useful when determining why this
+  function was called. */
+  __asm volatile("csrr %0, mepc" : "=r"(ulMEPC));
+  __asm volatile("csrr %0, mcause" : "=r"(ulMCAUSE));
 
-    if ((ulMCAUSE & 0x80000000) == 0) {
-        /*Exception*/
-        MSG("Exception should not be here\r\n");
-    } else {
-        num = ulMCAUSE & 0x3FF;
+  if ((ulMCAUSE & 0x80000000) == 0) {
+    /*Exception*/
+    MSG("Exception should not be here\r\n");
+  } else {
+    num = ulMCAUSE & 0x3FF;
 
-        if (num < IRQn_LAST) {
-            interruptFun = __Interrupt_Handlers[num];
+    if (num < IRQn_LAST) {
+      interruptFun = __Interrupt_Handlers[num];
 
-            if (NULL != interruptFun) {
-                interruptFun();
-            } else {
-                MSG("Interrupt num:%d IRQHandler not installed\r\n", (unsigned int)num);
+      if (NULL != interruptFun) {
+        interruptFun();
+      } else {
+        MSG("Interrupt num:%d IRQHandler not installed\r\n", (unsigned int)num);
 
-                if (num >= IRQ_NUM_BASE) {
-                    MSG("Peripheral Interrupt num:%d \r\n", (unsigned int)num - IRQ_NUM_BASE);
-                }
-
-                while (1)
-                    ;
-            }
-        } else {
-            MSG("Unexpected interrupt num:%d\r\n", (unsigned int)num);
+        if (num >= IRQ_NUM_BASE) {
+          MSG("Peripheral Interrupt num:%d \r\n", (unsigned int)num - IRQ_NUM_BASE);
         }
+
+        while (1) {
+        }
+      }
+    } else {
+      MSG("Unexpected interrupt num:%d\r\n", (unsigned int)num);
     }
+  }
 }
 
-void handle_trap(void)
-{
+void handle_trap(void) {
 #define MCAUSE_INT_MASK  0x80000000 // [31]=1 interrupt, else exception
 #define MCAUSE_CODE_MASK 0x7FFFFFFF // low bits show code
 
-    unsigned long mcause_value = read_csr(mcause);
-    if (mcause_value & MCAUSE_INT_MASK) {
-        // Branch to interrupt handler here
-        Interrupt_Handler();
-    } else {
-        // Branch to exception handle
-        Trap_Handler();
-    }
-}
-
-void __IRQ_ALIGN64 Trap_Handler_Stub(void)
-{
+  unsigned long mcause_value = read_csr(mcause);
+  if (mcause_value & MCAUSE_INT_MASK) {
+    // Branch to interrupt handler here
+    Interrupt_Handler();
+  } else {
+    // Branch to exception handle
     Trap_Handler();
+  }
 }
 
-void __IRQ Interrupt_Handler_Stub(void)
-{
-    Interrupt_Handler();
+void __IRQ_ALIGN64 Trap_Handler_Stub(void) { Trap_Handler(); }
+
+void __IRQ Interrupt_Handler_Stub(void) { Interrupt_Handler(); }
+
+void FreeRTOS_Interrupt_Handler(void) { Interrupt_Handler(); }
+
+void Interrupt_Handler_Register(IRQn_Type irq, pFunc interruptFun) {
+  if (irq < IRQn_LAST) {
+    __Interrupt_Handlers[irq] = interruptFun;
+  }
 }
 
-void FreeRTOS_Interrupt_Handler(void)
-{
-    Interrupt_Handler();
-}
+void System_NVIC_SetPriority(IRQn_Type IRQn, uint32_t PreemptPriority, uint32_t SubPriority) {}
 
-void Interrupt_Handler_Register(IRQn_Type irq, pFunc interruptFun)
-{
-    if (irq < IRQn_LAST) {
-        __Interrupt_Handlers[irq] = interruptFun;
-    }
-}
+void clic_enable_interrupt(uint32_t source) { *(volatile uint8_t *)(CLIC_HART0_ADDR + CLIC_INTIE + source) = 1; }
 
-void System_NVIC_SetPriority(IRQn_Type IRQn, uint32_t PreemptPriority, uint32_t SubPriority)
-{
-}
+void clic_disable_interrupt(uint32_t source) { *(volatile uint8_t *)(CLIC_HART0_ADDR + CLIC_INTIE + source) = 0; }
 
-void clic_enable_interrupt(uint32_t source)
-{
-    *(volatile uint8_t *)(CLIC_HART0_ADDR + CLIC_INTIE + source) = 1;
-}
+void clic_clear_pending(uint32_t source) { *(volatile uint8_t *)(CLIC_HART0_ADDR + CLIC_INTIP + source) = 0; }
 
-void clic_disable_interrupt(uint32_t source)
-{
-    *(volatile uint8_t *)(CLIC_HART0_ADDR + CLIC_INTIE + source) = 0;
-}
+void clic_set_pending(uint32_t source) { *(volatile uint8_t *)(CLIC_HART0_ADDR + CLIC_INTIP + source) = 1; }
 
-void clic_clear_pending(uint32_t source)
-{
-    *(volatile uint8_t *)(CLIC_HART0_ADDR + CLIC_INTIP + source) = 0;
-}
+void clic_set_intcfg(uint32_t source, uint32_t intcfg) { *(volatile uint8_t *)(CLIC_HART0_ADDR + CLIC_INTCFG + source) = intcfg; }
 
-void clic_set_pending(uint32_t source)
-{
-    *(volatile uint8_t *)(CLIC_HART0_ADDR + CLIC_INTIP + source) = 1;
-}
+uint8_t clic_get_intcfg(uint32_t source) { return *(volatile uint8_t *)(CLIC_HART0_ADDR + CLIC_INTCFG + source); }
 
-void clic_set_intcfg(uint32_t source, uint32_t intcfg)
-{
-    *(volatile uint8_t *)(CLIC_HART0_ADDR + CLIC_INTCFG + source) = intcfg;
-}
+void clic_set_cliccfg(uint32_t cfg) { *(volatile uint8_t *)(CLIC_HART0_ADDR + CLIC_CFG) = cfg; }
 
-uint8_t clic_get_intcfg(uint32_t source)
-{
-    return *(volatile uint8_t *)(CLIC_HART0_ADDR + CLIC_INTCFG + source);
-}
-
-void clic_set_cliccfg(uint32_t cfg)
-{
-    *(volatile uint8_t *)(CLIC_HART0_ADDR + CLIC_CFG) = cfg;
-}
-
-uint8_t clic_get_cliccfg(void)
-{
-    return *(volatile uint8_t *)(CLIC_HART0_ADDR + CLIC_CFG);
-}
+uint8_t clic_get_cliccfg(void) { return *(volatile uint8_t *)(CLIC_HART0_ADDR + CLIC_CFG); }

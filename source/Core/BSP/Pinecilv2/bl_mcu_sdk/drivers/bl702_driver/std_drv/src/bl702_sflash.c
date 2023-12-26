@@ -39,7 +39,6 @@
 #include "bl702_sf_ctrl.h"
 #include "string.h"
 
-
 /** @addtogroup  BL702_Peripheral_Driver
  *  @{
  */
@@ -671,8 +670,8 @@ BL_Err_Type ATTR_TCM_SECTION SFlash_Erase(SPI_Flash_Cfg_Type *flashCfg, uint32_t
       /* 64K margin address,and length > 64K-sector size, erase one first */
       ret      = SFlash_Blk64_Erase(flashCfg, startaddr / BFLB_SPIFLASH_BLK64K_SIZE);
       eraseLen = BFLB_SPIFLASH_BLK64K_SIZE;
-    } else if (flashCfg->blk32EraseCmd != BFLB_SPIFLASH_CMD_INVALID && (startaddr & (BFLB_SPIFLASH_BLK32K_SIZE - 1)) == 0
-               && len > (uint32_t)(BFLB_SPIFLASH_BLK32K_SIZE - flashCfg->sectorSize * 1024)) {
+    } else if (flashCfg->blk32EraseCmd != BFLB_SPIFLASH_CMD_INVALID && (startaddr & (BFLB_SPIFLASH_BLK32K_SIZE - 1)) == 0 &&
+               len > (uint32_t)(BFLB_SPIFLASH_BLK32K_SIZE - flashCfg->sectorSize * 1024)) {
       /* 32K margin address,and length > 32K-sector size, erase one first */
       ret      = SFlash_Blk32_Erase(flashCfg, startaddr / BFLB_SPIFLASH_BLK32K_SIZE);
       eraseLen = BFLB_SPIFLASH_BLK32K_SIZE;

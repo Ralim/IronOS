@@ -15,8 +15,8 @@
 extern "C" {
 #endif
 
+#include <stdbool.h>
 #include <zephyr/types.h>
-
 bool scps_init(u16_t scan_itvl, u16_t scan_win);
 
 #ifdef __cplusplus

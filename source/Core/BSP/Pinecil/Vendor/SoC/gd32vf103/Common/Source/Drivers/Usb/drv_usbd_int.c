@@ -32,7 +32,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
 OF SUCH DAMAGE.
 */
 #include "gd32vf103_libopt.h"
-//#include "usbd_conf.h"
+// #include "usbd_conf.h"
 #include "drv_usbd_int.h"
 #include "usbd_transc.h"
 
@@ -45,8 +45,8 @@ static uint32_t usbd_int_suspend(usb_core_driver *udev);
 
 static uint32_t usbd_emptytxfifo_write(usb_core_driver *udev, uint32_t ep_num);
 
-static const uint8_t USB_SPEED[4]
-    = {[DSTAT_EM_HS_PHY_30MHZ_60MHZ] = USB_SPEED_HIGH, [DSTAT_EM_FS_PHY_30MHZ_60MHZ] = USB_SPEED_FULL, [DSTAT_EM_FS_PHY_48MHZ] = USB_SPEED_FULL, [DSTAT_EM_LS_PHY_6MHZ] = USB_SPEED_LOW};
+static const uint8_t USB_SPEED[4] = {
+    [DSTAT_EM_HS_PHY_30MHZ_60MHZ] = USB_SPEED_HIGH, [DSTAT_EM_FS_PHY_30MHZ_60MHZ] = USB_SPEED_FULL, [DSTAT_EM_FS_PHY_48MHZ] = USB_SPEED_FULL, [DSTAT_EM_LS_PHY_6MHZ] = USB_SPEED_LOW};
 
 __IO uint8_t setupc_flag = 0U;
 
@@ -230,7 +230,8 @@ void usbd_isr(usb_core_driver *udev) {
 
     /* OTG mode interrupt */
     if (intr & GINTF_OTGIF) {
-      if (udev->regs.gr->GOTGINTF & GOTGINTF_SESEND) {}
+      if (udev->regs.gr->GOTGINTF & GOTGINTF_SESEND) {
+      }
 
       /* Clear OTG interrupt */
       udev->regs.gr->GINTF = GINTF_OTGIF;
