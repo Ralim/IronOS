@@ -258,9 +258,7 @@ static struct bt_gatt_attr ble_attrs_declaration[] = {
 NAME
     get_attr
 */
-struct bt_gatt_attr *get_attr(u8_t index) {
-  return &ble_attrs_declaration[index];
-}
+struct bt_gatt_attr *get_attr(u8_t index) { return &ble_attrs_declaration[index]; }
 
 static struct bt_gatt_service ble_tp_server = BT_GATT_SERVICE(ble_attrs_declaration);
 
