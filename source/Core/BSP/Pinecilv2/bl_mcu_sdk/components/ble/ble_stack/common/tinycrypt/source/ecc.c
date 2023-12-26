@@ -52,10 +52,10 @@
  *  POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "ecc.h"
-#include "ecc_platform_specific.h"
+#include "../include/tinycrypt/ecc.h"
+#include "../include/tinycrypt/ecc_platform_specific.h"
 #include <string.h>
-
+#include <stdint.h>
 /* IMPORTANT: Make sure a cryptographically-secure PRNG is set and the platform
  * has access to enough entropy in order to feed the PRNG regularly. */
 #if default_RNG_defined

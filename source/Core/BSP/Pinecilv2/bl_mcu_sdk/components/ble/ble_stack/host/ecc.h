@@ -1,5 +1,5 @@
 /* ecc.h - ECDH helpers */
-
+#include "types.h"
 /*
  * Copyright (c) 2016 Intel Corporation
  *
