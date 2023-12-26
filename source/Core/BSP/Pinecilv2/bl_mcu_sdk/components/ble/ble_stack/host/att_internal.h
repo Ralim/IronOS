@@ -5,7 +5,7 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  */
-
+#include "conn_internal.h"
 #define BT_ATT_DEFAULT_LE_MTU 23
 
 #if BT_L2CAP_RX_MTU < CONFIG_BT_L2CAP_TX_MTU

@@ -44,8 +44,9 @@ uint64_t get_timer_value(void) {
   while (1) {
     uint32_t hi = mtime_hi();
     uint32_t lo = mtime_lo();
-    if (hi == mtime_hi())
+    if (hi == mtime_hi()) {
       return ((uint64_t)hi << 32) | lo;
+    }
   }
 }
 
@@ -278,8 +279,8 @@ void eclic_mode_enable() {
   write_csr(CSR_MTVEC, mtvec_value);
 #elif defined(__GNUC__)
   uint32_t mtvec_value = read_csr(mtvec);
-  mtvec_value = mtvec_value & 0xFFFFFFC0;
-  mtvec_value = mtvec_value | 0x00000003;
+  mtvec_value          = mtvec_value & 0xFFFFFFC0;
+  mtvec_value          = mtvec_value | 0x00000003;
   write_csr(mtvec, mtvec_value);
 #endif
 }

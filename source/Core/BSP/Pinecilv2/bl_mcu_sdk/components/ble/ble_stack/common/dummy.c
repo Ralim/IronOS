@@ -33,8 +33,7 @@ BUILD_ASSERT(CONFIG_BT_CTLR_RX_PRIO < CONFIG_BT_HCI_TX_PRIO);
  * since it introduces ISR latency due to outputting log messages with
  * interrupts disabled.
  */
-#if !defined(CONFIG_TEST) && !defined(CONFIG_ARCH_POSIX) && \
-    (defined(CONFIG_BT_LL_SW_SPLIT) || defined(CONFIG_BT_LL_SW_LEGACY))
+#if !defined(CONFIG_TEST) && !defined(CONFIG_ARCH_POSIX) && (defined(CONFIG_BT_LL_SW_SPLIT) || defined(CONFIG_BT_LL_SW_LEGACY))
 BUILD_ASSERT_MSG(!IS_ENABLED(CONFIG_LOG_IMMEDIATE), "Immediate logging not "
                                                     "supported with the software Link Layer");
 #endif

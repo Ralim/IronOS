@@ -145,11 +145,13 @@ void perform_i2c_step() {
       if (currentState.numberOfBytes == 1) {
         /* disable acknowledge */
         i2c_master_addressing(I2C0, currentState.deviceAddress, I2C_RECEIVER);
-        while (!i2c_flag_get(I2C0, I2C_FLAG_ADDSEND)) {}
+        while (!i2c_flag_get(I2C0, I2C_FLAG_ADDSEND)) {
+        }
         i2c_ack_config(I2C0, I2C_ACK_DISABLE);
         i2c_flag_clear(I2C0, I2C_FLAG_ADDSEND);
         /* wait for the byte to be received */
-        while (!i2c_flag_get(I2C0, I2C_FLAG_RBNE)) {}
+        while (!i2c_flag_get(I2C0, I2C_FLAG_RBNE)) {
+        }
         /* read the byte received from the EEPROM */
         *currentState.buffer = i2c_data_receive(I2C0);
         while (i2c_flag_get(I2C0, I2C_FLAG_RBNE)) {
@@ -163,10 +165,12 @@ void perform_i2c_step() {
       } else if (currentState.numberOfBytes == 2) {
         /* disable acknowledge */
         i2c_master_addressing(I2C0, currentState.deviceAddress, I2C_RECEIVER);
-        while (!i2c_flag_get(I2C0, I2C_FLAG_ADDSEND)) {}
+        while (!i2c_flag_get(I2C0, I2C_FLAG_ADDSEND)) {
+        }
         i2c_flag_clear(I2C0, I2C_FLAG_ADDSEND);
         /* wait for the byte to be received */
-        while (!i2c_flag_get(I2C0, I2C_FLAG_RBNE)) {}
+        while (!i2c_flag_get(I2C0, I2C_FLAG_RBNE)) {
+        }
         i2c_ackpos_config(I2C0, I2C_ACKPOS_CURRENT);
         i2c_ack_config(I2C0, I2C_ACK_DISABLE);
 
@@ -175,7 +179,8 @@ void perform_i2c_step() {
         currentState.buffer++;
 
         /* wait for the byte to be received */
-        while (!i2c_flag_get(I2C0, I2C_FLAG_RBNE)) {}
+        while (!i2c_flag_get(I2C0, I2C_FLAG_RBNE)) {
+        }
         /* read the byte received from the EEPROM */
         *currentState.buffer = i2c_data_receive(I2C0);
         while (i2c_flag_get(I2C0, I2C_FLAG_RBNE)) {
@@ -204,20 +209,23 @@ void perform_i2c_step() {
 
           if (3 == currentState.numberOfBytes) {
             /* wait until BTC bit is set */
-            while (!i2c_flag_get(I2C0, I2C_FLAG_BTC)) {}
+            while (!i2c_flag_get(I2C0, I2C_FLAG_BTC)) {
+            }
             i2c_ackpos_config(I2C0, I2C_ACKPOS_CURRENT);
             /* disable acknowledge */
             i2c_ack_config(I2C0, I2C_ACK_DISABLE);
           } else if (2 == currentState.numberOfBytes) {
             /* wait until BTC bit is set */
-            while (!i2c_flag_get(I2C0, I2C_FLAG_BTC)) {}
+            while (!i2c_flag_get(I2C0, I2C_FLAG_BTC)) {
+            }
             /* disable acknowledge */
             i2c_ack_config(I2C0, I2C_ACK_DISABLE);
             /* send a stop condition to I2C bus */
             i2c_stop_on_bus(I2C0);
           }
           /* wait until RBNE bit is set */
-          while (!i2c_flag_get(I2C0, I2C_FLAG_RBNE)) {}
+          while (!i2c_flag_get(I2C0, I2C_FLAG_RBNE)) {
+          }
           /* read a byte from the EEPROM */
           *currentState.buffer = i2c_data_receive(I2C0);
 
@@ -296,8 +304,9 @@ bool perform_i2c_transaction(uint16_t DevAddress, uint16_t memory_address, uint8
 }
 
 bool FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t read_address, uint8_t *p_buffer, uint16_t number_of_byte) {
-  if (!lock())
+  if (!lock()) {
     return false;
+  }
   bool res = perform_i2c_transaction(DevAddress, read_address, p_buffer, number_of_byte, false, false);
   if (!res) {
     I2C_Unstick();
@@ -307,8 +316,9 @@ bool FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t read_address, uint8_t *p_b
 }
 
 bool FRToSI2C::Mem_Write(uint16_t DevAddress, uint16_t MemAddress, uint8_t *p_buffer, uint16_t number_of_byte) {
-  if (!lock())
+  if (!lock()) {
     return false;
+  }
   bool res = perform_i2c_transaction(DevAddress, MemAddress, p_buffer, number_of_byte, true, false);
   if (!res) {
     I2C_Unstick();
@@ -349,8 +359,9 @@ bool FRToSI2C::writeRegistersBulk(const uint8_t address, const I2C_REG *register
 
 bool FRToSI2C::wakePart(uint16_t DevAddress) {
   // wakepart is a special case  where only the device address is sent
-  if (!lock())
+  if (!lock()) {
     return false;
+  }
   bool res = perform_i2c_transaction(DevAddress, 0, NULL, 0, false, true);
   if (!res) {
     I2C_Unstick();

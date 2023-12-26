@@ -28,11 +28,10 @@ static void (*systick_callback)(void);
 static uint64_t next_compare_tick = 0;
 static uint64_t current_set_ticks = 0;
 
-static void Systick_Handler(void)
-{
-    *(volatile uint64_t *)(CLIC_CTRL_ADDR + CLIC_MTIMECMP) = next_compare_tick;
-    systick_callback();
-    next_compare_tick += current_set_ticks;
+static void Systick_Handler(void) {
+  *(volatile uint64_t *)(CLIC_CTRL_ADDR + CLIC_MTIMECMP) = next_compare_tick;
+  systick_callback();
+  next_compare_tick += current_set_ticks;
 }
 
 /**
@@ -41,38 +40,36 @@ static void Systick_Handler(void)
  * @param time
  * @param interruptFun
  */
-void mtimer_set_alarm_time(uint64_t ticks, void (*interruptfun)(void))
-{
-    CPU_Interrupt_Disable(MTIME_IRQn);
+void mtimer_set_alarm_time(uint64_t ticks, void (*interruptfun)(void)) {
+  CPU_Interrupt_Disable(MTIME_IRQn);
 
-    uint32_t ulCurrentTimeHigh, ulCurrentTimeLow;
-    volatile uint32_t *const pulTimeHigh = (volatile uint32_t *const)(CLIC_CTRL_ADDR + CLIC_MTIME + 4);
-    volatile uint32_t *const pulTimeLow = (volatile uint32_t *const)(CLIC_CTRL_ADDR + CLIC_MTIME);
-    volatile uint32_t ulHartId = 0;
+  uint32_t                 ulCurrentTimeHigh, ulCurrentTimeLow;
+  volatile uint32_t *const pulTimeHigh = (volatile uint32_t *const)(CLIC_CTRL_ADDR + CLIC_MTIME + 4);
+  volatile uint32_t *const pulTimeLow  = (volatile uint32_t *const)(CLIC_CTRL_ADDR + CLIC_MTIME);
+  volatile uint32_t        ulHartId    = 0;
 
-    current_set_ticks = ticks;
-    systick_callback = interruptfun;
+  current_set_ticks = ticks;
+  systick_callback  = interruptfun;
 
-    __asm volatile("csrr %0, mhartid"
-                   : "=r"(ulHartId));
+  __asm volatile("csrr %0, mhartid" : "=r"(ulHartId));
 
-    do {
-        ulCurrentTimeHigh = *pulTimeHigh;
-        ulCurrentTimeLow = *pulTimeLow;
-    } while (ulCurrentTimeHigh != *pulTimeHigh);
+  do {
+    ulCurrentTimeHigh = *pulTimeHigh;
+    ulCurrentTimeLow  = *pulTimeLow;
+  } while (ulCurrentTimeHigh != *pulTimeHigh);
 
-    next_compare_tick = (uint64_t)ulCurrentTimeHigh;
-    next_compare_tick <<= 32ULL;
-    next_compare_tick |= (uint64_t)ulCurrentTimeLow;
-    next_compare_tick += (uint64_t)current_set_ticks;
+  next_compare_tick = (uint64_t)ulCurrentTimeHigh;
+  next_compare_tick <<= 32ULL;
+  next_compare_tick |= (uint64_t)ulCurrentTimeLow;
+  next_compare_tick += (uint64_t)current_set_ticks;
 
-    *(volatile uint64_t *)(CLIC_CTRL_ADDR + CLIC_MTIMECMP) = next_compare_tick;
+  *(volatile uint64_t *)(CLIC_CTRL_ADDR + CLIC_MTIMECMP) = next_compare_tick;
 
-    /* Prepare the time to use after the next tick interrupt. */
-    next_compare_tick += (uint64_t)current_set_ticks;
+  /* Prepare the time to use after the next tick interrupt. */
+  next_compare_tick += (uint64_t)current_set_ticks;
 
-    Interrupt_Handler_Register(MTIME_IRQn, Systick_Handler);
-    CPU_Interrupt_Enable(MTIME_IRQn);
+  Interrupt_Handler_Register(MTIME_IRQn, Systick_Handler);
+  CPU_Interrupt_Enable(MTIME_IRQn);
 }
 
 /**
@@ -80,64 +77,58 @@ void mtimer_set_alarm_time(uint64_t ticks, void (*interruptfun)(void))
  *
  * @return uint64_t
  */
-uint64_t mtimer_get_time_ms()
-{
-    return mtimer_get_time_us() / 1000;
-}
+uint64_t mtimer_get_time_ms() { return mtimer_get_time_us() / 1000; }
 /**
  * @brief
  *
  * @return uint64_t
  */
-uint64_t mtimer_get_time_us()
-{
-    uint32_t tmpValLow, tmpValHigh, tmpValHigh1;
+uint64_t mtimer_get_time_us() {
+  uint32_t tmpValLow, tmpValHigh, tmpValHigh1;
 
-    do {
-        tmpValLow = *(volatile uint32_t *)(CLIC_CTRL_ADDR + CLIC_MTIME);
-        tmpValHigh = *(volatile uint32_t *)(CLIC_CTRL_ADDR + CLIC_MTIME + 4);
-        tmpValHigh1 = *(volatile uint32_t *)(CLIC_CTRL_ADDR + CLIC_MTIME + 4);
-    } while (tmpValHigh != tmpValHigh1);
+  do {
+    tmpValLow   = *(volatile uint32_t *)(CLIC_CTRL_ADDR + CLIC_MTIME);
+    tmpValHigh  = *(volatile uint32_t *)(CLIC_CTRL_ADDR + CLIC_MTIME + 4);
+    tmpValHigh1 = *(volatile uint32_t *)(CLIC_CTRL_ADDR + CLIC_MTIME + 4);
+  } while (tmpValHigh != tmpValHigh1);
 
-    return (((uint64_t)tmpValHigh << 32) + tmpValLow);
+  return (((uint64_t)tmpValHigh << 32) + tmpValLow);
 }
 /**
  * @brief
  *
  * @param time
  */
-void mtimer_delay_ms(uint32_t time)
-{
-    uint64_t cnt = 0;
-    uint32_t clock = SystemCoreClockGet();
-    uint64_t startTime = mtimer_get_time_ms();
+void mtimer_delay_ms(uint32_t time) {
+  uint64_t cnt       = 0;
+  uint32_t clock     = SystemCoreClockGet();
+  uint64_t startTime = mtimer_get_time_ms();
 
-    while (mtimer_get_time_ms() - startTime < time) {
-        cnt++;
+  while (mtimer_get_time_ms() - startTime < time) {
+    cnt++;
 
-        /* assume BFLB_BSP_Get_Time_Ms take 32 cycles*/
-        if (cnt > (time * (clock >> (10 + 5))) * 2) {
-            break;
-        }
+    /* assume BFLB_BSP_Get_Time_Ms take 32 cycles*/
+    if (cnt > (time * (clock >> (10 + 5))) * 2) {
+      break;
     }
+  }
 }
 /**
  * @brief
  *
  * @param time
  */
-void mtimer_delay_us(uint32_t time)
-{
-    uint64_t cnt = 0;
-    uint32_t clock = SystemCoreClockGet();
-    uint64_t startTime = mtimer_get_time_us();
+void mtimer_delay_us(uint32_t time) {
+  uint64_t cnt       = 0;
+  uint32_t clock     = SystemCoreClockGet();
+  uint64_t startTime = mtimer_get_time_us();
 
-    while (mtimer_get_time_us() - startTime < time) {
-        cnt++;
+  while (mtimer_get_time_us() - startTime < time) {
+    cnt++;
 
-        /* assume BFLB_BSP_Get_Time_Ms take 32 cycles*/
-        if (cnt > (time * (clock >> (10 + 5))) * 2) {
-            break;
-        }
+    /* assume BFLB_BSP_Get_Time_Ms take 32 cycles*/
+    if (cnt > (time * (clock >> (10 + 5))) * 2) {
+      break;
     }
+  }
 }

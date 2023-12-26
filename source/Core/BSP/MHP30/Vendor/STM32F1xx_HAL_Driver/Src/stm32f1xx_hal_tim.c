@@ -2450,8 +2450,8 @@ HAL_StatusTypeDef HAL_TIM_OnePulse_Start(TIM_HandleTypeDef *htim, uint32_t Outpu
   UNUSED(OutputChannel);
 
   /* Check the TIM channels state */
-  if ((channel_1_state != HAL_TIM_CHANNEL_STATE_READY) || (channel_2_state != HAL_TIM_CHANNEL_STATE_READY) || (complementary_channel_1_state != HAL_TIM_CHANNEL_STATE_READY)
-      || (complementary_channel_2_state != HAL_TIM_CHANNEL_STATE_READY)) {
+  if ((channel_1_state != HAL_TIM_CHANNEL_STATE_READY) || (channel_2_state != HAL_TIM_CHANNEL_STATE_READY) || (complementary_channel_1_state != HAL_TIM_CHANNEL_STATE_READY) ||
+      (complementary_channel_2_state != HAL_TIM_CHANNEL_STATE_READY)) {
     return HAL_ERROR;
   }
 
@@ -2541,8 +2541,8 @@ HAL_StatusTypeDef HAL_TIM_OnePulse_Start_IT(TIM_HandleTypeDef *htim, uint32_t Ou
   UNUSED(OutputChannel);
 
   /* Check the TIM channels state */
-  if ((channel_1_state != HAL_TIM_CHANNEL_STATE_READY) || (channel_2_state != HAL_TIM_CHANNEL_STATE_READY) || (complementary_channel_1_state != HAL_TIM_CHANNEL_STATE_READY)
-      || (complementary_channel_2_state != HAL_TIM_CHANNEL_STATE_READY)) {
+  if ((channel_1_state != HAL_TIM_CHANNEL_STATE_READY) || (channel_2_state != HAL_TIM_CHANNEL_STATE_READY) || (complementary_channel_1_state != HAL_TIM_CHANNEL_STATE_READY) ||
+      (complementary_channel_2_state != HAL_TIM_CHANNEL_STATE_READY)) {
     return HAL_ERROR;
   }
 
@@ -2874,8 +2874,8 @@ HAL_StatusTypeDef HAL_TIM_Encoder_Start(TIM_HandleTypeDef *htim, uint32_t Channe
       TIM_CHANNEL_N_STATE_SET(htim, TIM_CHANNEL_2, HAL_TIM_CHANNEL_STATE_BUSY);
     }
   } else {
-    if ((channel_1_state != HAL_TIM_CHANNEL_STATE_READY) || (channel_2_state != HAL_TIM_CHANNEL_STATE_READY) || (complementary_channel_1_state != HAL_TIM_CHANNEL_STATE_READY)
-        || (complementary_channel_2_state != HAL_TIM_CHANNEL_STATE_READY)) {
+    if ((channel_1_state != HAL_TIM_CHANNEL_STATE_READY) || (channel_2_state != HAL_TIM_CHANNEL_STATE_READY) || (complementary_channel_1_state != HAL_TIM_CHANNEL_STATE_READY) ||
+        (complementary_channel_2_state != HAL_TIM_CHANNEL_STATE_READY)) {
       return HAL_ERROR;
     } else {
       TIM_CHANNEL_STATE_SET(htim, TIM_CHANNEL_1, HAL_TIM_CHANNEL_STATE_BUSY);
@@ -2997,8 +2997,8 @@ HAL_StatusTypeDef HAL_TIM_Encoder_Start_IT(TIM_HandleTypeDef *htim, uint32_t Cha
       TIM_CHANNEL_N_STATE_SET(htim, TIM_CHANNEL_2, HAL_TIM_CHANNEL_STATE_BUSY);
     }
   } else {
-    if ((channel_1_state != HAL_TIM_CHANNEL_STATE_READY) || (channel_2_state != HAL_TIM_CHANNEL_STATE_READY) || (complementary_channel_1_state != HAL_TIM_CHANNEL_STATE_READY)
-        || (complementary_channel_2_state != HAL_TIM_CHANNEL_STATE_READY)) {
+    if ((channel_1_state != HAL_TIM_CHANNEL_STATE_READY) || (channel_2_state != HAL_TIM_CHANNEL_STATE_READY) || (complementary_channel_1_state != HAL_TIM_CHANNEL_STATE_READY) ||
+        (complementary_channel_2_state != HAL_TIM_CHANNEL_STATE_READY)) {
       return HAL_ERROR;
     } else {
       TIM_CHANNEL_STATE_SET(htim, TIM_CHANNEL_1, HAL_TIM_CHANNEL_STATE_BUSY);
@@ -3142,11 +3142,11 @@ HAL_StatusTypeDef HAL_TIM_Encoder_Start_DMA(TIM_HandleTypeDef *htim, uint32_t Ch
       return HAL_ERROR;
     }
   } else {
-    if ((channel_1_state == HAL_TIM_CHANNEL_STATE_BUSY) || (channel_2_state == HAL_TIM_CHANNEL_STATE_BUSY) || (complementary_channel_1_state == HAL_TIM_CHANNEL_STATE_BUSY)
-        || (complementary_channel_2_state == HAL_TIM_CHANNEL_STATE_BUSY)) {
+    if ((channel_1_state == HAL_TIM_CHANNEL_STATE_BUSY) || (channel_2_state == HAL_TIM_CHANNEL_STATE_BUSY) || (complementary_channel_1_state == HAL_TIM_CHANNEL_STATE_BUSY) ||
+        (complementary_channel_2_state == HAL_TIM_CHANNEL_STATE_BUSY)) {
       return HAL_BUSY;
-    } else if ((channel_1_state == HAL_TIM_CHANNEL_STATE_READY) && (channel_2_state == HAL_TIM_CHANNEL_STATE_READY) && (complementary_channel_1_state == HAL_TIM_CHANNEL_STATE_READY)
-               && (complementary_channel_2_state == HAL_TIM_CHANNEL_STATE_READY)) {
+    } else if ((channel_1_state == HAL_TIM_CHANNEL_STATE_READY) && (channel_2_state == HAL_TIM_CHANNEL_STATE_READY) && (complementary_channel_1_state == HAL_TIM_CHANNEL_STATE_READY) &&
+               (complementary_channel_2_state == HAL_TIM_CHANNEL_STATE_READY)) {
       if ((((pData1 == NULL) || (pData2 == NULL))) && (Length > 0U)) {
         return HAL_ERROR;
       } else {

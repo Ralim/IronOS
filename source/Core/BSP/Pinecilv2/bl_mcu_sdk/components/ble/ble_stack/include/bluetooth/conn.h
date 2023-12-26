@@ -21,6 +21,7 @@
 #include <bluetooth.h>
 #include <hci_host.h>
 #include <hci_err.h>
+#include "conn_internal.h"
 
 #ifdef __cplusplus
 extern "C" {

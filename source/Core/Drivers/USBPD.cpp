@@ -46,7 +46,8 @@ void    USBPowerDelivery::IRQOccured() { pe.IRQOccured(); }
 bool    USBPowerDelivery::negotiationHasWorked() { return pe.pdHasNegotiated(); }
 uint8_t USBPowerDelivery::getStateNumber() { return pe.currentStateCode(true); }
 void    USBPowerDelivery::step() {
-  while (pe.thread()) {}
+  while (pe.thread()) {
+  }
 }
 
 void USBPowerDelivery::PPSTimerCallback() { pe.TimersCallback(); }

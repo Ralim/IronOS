@@ -31,23 +31,27 @@ ButtonState getButtonState() {
   currentState = (getButtonA()) << 0;
   currentState |= (getButtonB()) << 1;
 
-  if (currentState)
+  if (currentState) {
     lastButtonTime = xTaskGetTickCount();
+  }
   if (currentState == previousState) {
-    if (currentState == 0)
+    if (currentState == 0) {
       return BUTTON_NONE;
+    }
     if ((xTaskGetTickCount() - previousStateChange) >= timeout) {
       // User has been holding the button down
       // We want to send a button is held message
       longPressed = true;
-      if (currentState == 0x01)
+      if (currentState == 0x01) {
         return BUTTON_F_LONG;
-      else if (currentState == 0x02)
+      } else if (currentState == 0x02) {
         return BUTTON_B_LONG;
-      else
+      } else {
         return BUTTON_BOTH_LONG; // Both being held case
-    } else
+      }
+    } else {
       return BUTTON_NONE;
+    }
   } else {
     // A change in button state has occurred
     ButtonState retVal = BUTTON_NONE;
@@ -65,12 +69,13 @@ ButtonState getButtonState() {
         // The user didn't hold the button for long
         // So we send button press
 
-        if (previousState == 0x01)
+        if (previousState == 0x01) {
           retVal = BUTTON_F_SHORT;
-        else if (previousState == 0x02)
+        } else if (previousState == 0x02) {
           retVal = BUTTON_B_SHORT;
-        else
+        } else {
           retVal = BUTTON_BOTH; // Both being held case
+        }
       }
       previousState = 0;
       longPressed   = false;
@@ -103,13 +108,15 @@ void waitForButtonPressOrTimeout(TickType_t timeout) {
   while (buttons) {
     buttons = getButtonState();
     GUIDelay();
-    if (xTaskGetTickCount() > timeout)
+    if (xTaskGetTickCount() > timeout) {
       return;
+    }
   }
   while (!buttons) {
     buttons = getButtonState();
     GUIDelay();
-    if (xTaskGetTickCount() > timeout)
+    if (xTaskGetTickCount() > timeout) {
       return;
+    }
   }
 }

@@ -7,6 +7,9 @@
  */
 
 #include <avdtp.h>
+#include "l2cap.h"
+#ifndef BLE_STACK_HOST_AVDTP_INTERNAL_H_
+#define BLE_STACK_HOST_AVDTP_INTERNAL_H_
 
 /* @brief A2DP ROLE's */
 #define A2DP_SRC_ROLE 0x00
@@ -173,3 +176,5 @@ int bt_avdtp_register_sep(uint8_t media_type, uint8_t role,
 /* AVDTP Discover Request */
 int bt_avdtp_discover(struct bt_avdtp *session,
                       struct bt_avdtp_discover_params *param);
+
+#endif
