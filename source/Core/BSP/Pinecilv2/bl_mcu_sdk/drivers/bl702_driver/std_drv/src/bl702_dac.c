@@ -47,16 +47,16 @@
 /** @defgroup  DAC_Private_Macros
  *  @{
  */
-#define GPIP_CLK_SET_DUMMY_WAIT \
-  {                             \
-    __NOP();                    \
-    __NOP();                    \
-    __NOP();                    \
-    __NOP();                    \
-    __NOP();                    \
-    __NOP();                    \
-    __NOP();                    \
-    __NOP();                    \
+#define GPIP_CLK_SET_DUMMY_WAIT                                                                                                                                                                        \
+  {                                                                                                                                                                                                    \
+    __NOP();                                                                                                                                                                                           \
+    __NOP();                                                                                                                                                                                           \
+    __NOP();                                                                                                                                                                                           \
+    __NOP();                                                                                                                                                                                           \
+    __NOP();                                                                                                                                                                                           \
+    __NOP();                                                                                                                                                                                           \
+    __NOP();                                                                                                                                                                                           \
+    __NOP();                                                                                                                                                                                           \
   }
 
 /*@} end of group DAC_Private_Macros */

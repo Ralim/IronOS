@@ -201,13 +201,13 @@ const OI_INT32 dec_window_4[21] = {
 #endif
 
 #ifndef CLIP_INT16
-#define CLIP_INT16(x)              \
-  do {                             \
-    if (x > OI_INT16_MAX) {        \
-      x = OI_INT16_MAX;            \
-    } else if (x < OI_INT16_MIN) { \
-      x = OI_INT16_MIN;            \
-    }                              \
+#define CLIP_INT16(x)                                                                                                                                                                                  \
+  do {                                                                                                                                                                                                 \
+    if (x > OI_INT16_MAX) {                                                                                                                                                                            \
+      x = OI_INT16_MAX;                                                                                                                                                                                \
+    } else if (x < OI_INT16_MIN) {                                                                                                                                                                     \
+      x = OI_INT16_MIN;                                                                                                                                                                                \
+    }                                                                                                                                                                                                  \
   } while (0)
 #endif
 
@@ -247,9 +247,9 @@ PRIVATE void dct2_8(SBC_BUFFER_T *RESTRICT out, OI_INT32 const *RESTRICT x);
 typedef void (*SYNTH_FRAME)(OI_CODEC_SBC_DECODER_CONTEXT *context, OI_INT16 *pcm, OI_UINT blkstart, OI_UINT blkcount);
 
 #ifndef COPY_BACKWARD_32BIT_ALIGNED_72_HALFWORDS
-#define COPY_BACKWARD_32BIT_ALIGNED_72_HALFWORDS(dest, src) \
-  do {                                                      \
-    shift_buffer(dest, src, 72);                            \
+#define COPY_BACKWARD_32BIT_ALIGNED_72_HALFWORDS(dest, src)                                                                                                                                            \
+  do {                                                                                                                                                                                                 \
+    shift_buffer(dest, src, 72);                                                                                                                                                                       \
   } while (0)
 #endif
 

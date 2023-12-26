@@ -35,13 +35,13 @@
 #if defined(SBC_DEC_INCLUDED)
 
 #ifndef CLIP_INT16
-#define CLIP_INT16(x)              \
-  do {                             \
-    if (x > OI_INT16_MAX) {        \
-      x = OI_INT16_MAX;            \
-    } else if (x < OI_INT16_MIN) { \
-      x = OI_INT16_MIN;            \
-    }                              \
+#define CLIP_INT16(x)                                                                                                                                                                                  \
+  do {                                                                                                                                                                                                 \
+    if (x > OI_INT16_MAX) {                                                                                                                                                                            \
+      x = OI_INT16_MAX;                                                                                                                                                                                \
+    } else if (x < OI_INT16_MIN) {                                                                                                                                                                     \
+      x = OI_INT16_MIN;                                                                                                                                                                                \
+    }                                                                                                                                                                                                  \
   } while (0)
 #endif
 

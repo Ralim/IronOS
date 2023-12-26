@@ -30,8 +30,18 @@
 #if defined(SBC_ENC_INCLUDED)
 
 /*global arrays*/
-const SINT16 sbc_enc_as16Offset4[4][4] = {{-1, 0, 0, 0}, {-2, 0, 0, 1}, {-2, 0, 0, 1}, {-2, 0, 0, 1}};
-const SINT16 sbc_enc_as16Offset8[4][8] = {{-2, 0, 0, 0, 0, 0, 0, 1}, {-3, 0, 0, 0, 0, 0, 1, 2}, {-4, 0, 0, 0, 0, 0, 1, 2}, {-4, 0, 0, 0, 0, 0, 1, 2}};
+const SINT16 sbc_enc_as16Offset4[4][4] = {
+    {-1, 0, 0, 0},
+    {-2, 0, 0, 1},
+    {-2, 0, 0, 1},
+    {-2, 0, 0, 1}
+};
+const SINT16 sbc_enc_as16Offset8[4][8] = {
+    {-2, 0, 0, 0, 0, 0, 0, 1},
+    {-3, 0, 0, 0, 0, 0, 1, 2},
+    {-4, 0, 0, 0, 0, 0, 1, 2},
+    {-4, 0, 0, 0, 0, 0, 1, 2}
+};
 
 /****************************************************************************
  * BitAlloc - Calculates the required number of bits for the given scale factor

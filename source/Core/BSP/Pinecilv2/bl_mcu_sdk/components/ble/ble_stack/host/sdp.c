@@ -1233,8 +1233,8 @@ static const struct {
   uint8_t op_code;
   uint16_t (*func)(struct bt_sdp *sdp, struct net_buf *buf, uint16_t tid);
 } handlers[] = {
-    {BT_SDP_SVC_SEARCH_REQ, sdp_svc_search_req},
-    {BT_SDP_SVC_ATTR_REQ, sdp_svc_att_req},
+    {     BT_SDP_SVC_SEARCH_REQ,     sdp_svc_search_req},
+    {       BT_SDP_SVC_ATTR_REQ,        sdp_svc_att_req},
     {BT_SDP_SVC_SEARCH_ATTR_REQ, sdp_svc_search_att_req},
 };
 

@@ -350,7 +350,8 @@ void I2S_Disable(void) {
                                                                                 *
                                                                                 *******************************************************************************/
 uint32_t I2S_Read(void) {
-  while (0 == BL_GET_REG_BITS_VAL(BL_RD_REG(I2S_BASE, I2S_FIFO_CONFIG_1), I2S_RX_FIFO_CNT)) {};
+  while (0 == BL_GET_REG_BITS_VAL(BL_RD_REG(I2S_BASE, I2S_FIFO_CONFIG_1), I2S_RX_FIFO_CNT)) {
+  };
 
   return BL_RD_REG(I2S_BASE, I2S_FIFO_RDATA);
 }
@@ -364,7 +365,8 @@ uint32_t I2S_Read(void) {
                                                                                 *
                                                                                 *******************************************************************************/
 void I2S_Write(uint32_t data) {
-  while (0 == BL_GET_REG_BITS_VAL(BL_RD_REG(I2S_BASE, I2S_FIFO_CONFIG_1), I2S_TX_FIFO_CNT)) {};
+  while (0 == BL_GET_REG_BITS_VAL(BL_RD_REG(I2S_BASE, I2S_FIFO_CONFIG_1), I2S_TX_FIFO_CNT)) {
+  };
 
   BL_WR_REG(I2S_BASE, I2S_FIFO_WDATA, data);
 }

@@ -28,25 +28,25 @@
 #if defined(SBC_ENC_INCLUDED)
 
 #if (SBC_ARM_ASM_OPT == TRUE)
-#define Mult32(s32In1, s32In2, s32OutLow)  \
-  {                                        \
+#define Mult32(s32In1, s32In2, s32OutLow)                                                                                                                                                              \
+  {                                                                                                                                                                                                    \
     __asm {                                                                                    \
-        MUL s32OutLow,s32In1,s32In2; } \
+        MUL s32OutLow,s32In1,s32In2; }                                                                                                                                                             \
   }
-#define Mult64(s32In1, s32In2, s32OutLow, s32OutHi)  \
-  {                                                  \
+#define Mult64(s32In1, s32In2, s32OutLow, s32OutHi)                                                                                                                                                    \
+  {                                                                                                                                                                                                    \
     __asm {                                                                                   \
-        SMULL s32OutLow,s32OutHi,s32In1,s32In2 } \
+        SMULL s32OutLow,s32OutHi,s32In1,s32In2 }                                                                                                                                                   \
   }
 #else
 #define Mult32(s32In1, s32In2, s32OutLow) s32OutLow = (SINT32)s32In1 * (SINT32)s32In2;
-#define Mult64(s32In1, s32In2, s32OutLow, s32OutHi)                                         \
-  {                                                                                         \
-    s32OutLow   = ((SINT32)(UINT16)s32In1 * (UINT16)s32In2);                                \
-    s32TempVal2 = (SINT32)((s32In1 >> 16) * (UINT16)s32In2);                                \
-    s32Carry    = ((((UINT32)(s32OutLow) >> 16) & 0xFFFF) + +(s32TempVal2 & 0xFFFF)) >> 16; \
-    s32OutLow += (s32TempVal2 << 16);                                                       \
-    s32OutHi = (s32TempVal2 >> 16) + s32Carry;                                              \
+#define Mult64(s32In1, s32In2, s32OutLow, s32OutHi)                                                                                                                                                    \
+  {                                                                                                                                                                                                    \
+    s32OutLow   = ((SINT32)(UINT16)s32In1 * (UINT16)s32In2);                                                                                                                                           \
+    s32TempVal2 = (SINT32)((s32In1 >> 16) * (UINT16)s32In2);                                                                                                                                           \
+    s32Carry    = ((((UINT32)(s32OutLow) >> 16) & 0xFFFF) + +(s32TempVal2 & 0xFFFF)) >> 16;                                                                                                            \
+    s32OutLow += (s32TempVal2 << 16);                                                                                                                                                                  \
+    s32OutHi = (s32TempVal2 >> 16) + s32Carry;                                                                                                                                                         \
   }
 #endif
 

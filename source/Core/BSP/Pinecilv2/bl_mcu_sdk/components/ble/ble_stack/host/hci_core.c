@@ -228,7 +228,7 @@ struct event_handler {
   void (*handler)(struct net_buf *buf);
 };
 
-#define EVENT_HANDLER(_evt, _handler, _min_len) \
+#define EVENT_HANDLER(_evt, _handler, _min_len)                                                                                                                                                        \
   { .event = _evt, .handler = _handler, .min_len = _min_len, }
 
 static inline void handle_event(u8_t event, struct net_buf *buf, const struct event_handler *handlers, size_t num_handlers) {
@@ -4843,8 +4843,8 @@ static void hci_vs_init(void) {
    * a static random address yet at this point, so the identity will
    * either be zeroes or a valid public address.
    */
-  if (IS_ENABLED(CONFIG_BT_HCI_VS_EXT_DETECT)
-      && (bt_dev.hci_version < BT_HCI_VERSION_5_0 || (!atomic_test_bit(bt_dev.flags, BT_DEV_USER_ID_ADDR) && bt_addr_le_cmp(&bt_dev.id_addr[0], BT_ADDR_LE_ANY)))) {
+  if (IS_ENABLED(CONFIG_BT_HCI_VS_EXT_DETECT) &&
+      (bt_dev.hci_version < BT_HCI_VERSION_5_0 || (!atomic_test_bit(bt_dev.flags, BT_DEV_USER_ID_ADDR) && bt_addr_le_cmp(&bt_dev.id_addr[0], BT_ADDR_LE_ANY)))) {
     BT_WARN("Controller doesn't seem to support Zephyr vendor HCI");
     return;
   }

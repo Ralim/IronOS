@@ -122,8 +122,8 @@ void unixtime2bejingtime(uint32_t unixtime, rtc_time *beijing_time) {
 
   /*利用基姆拉尔森计算日期公式  w=(d+2*m+3*(m+1)/5+y+y/4-y/100+y/400)*/
 
-  beijing_time->week
-      = beijing_time->day + 2 * beijing_time->month + 3 * (beijing_time->month + 1) / 5 + beijing_time->year + beijing_time->year / 4 - beijing_time->year / 100 + beijing_time->year / 400;
+  beijing_time->week =
+      beijing_time->day + 2 * beijing_time->month + 3 * (beijing_time->month + 1) / 5 + beijing_time->year + beijing_time->year / 4 - beijing_time->year / 100 + beijing_time->year / 400;
 
   cal_weekday(beijing_time);
 }

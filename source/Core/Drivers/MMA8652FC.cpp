@@ -11,19 +11,19 @@
 #include <array>
 
 static const ACCEL_I2C_CLASS::I2C_REG i2c_registers[] = {
-    {CTRL_REG2, 0, 0},                // Normal mode
-    {CTRL_REG2, 0x40, 2},             // Reset all registers to POR values
-    {FF_MT_CFG_REG, 0x78, 0},         // Enable motion detection for X, Y, Z axis, latch disabled
-    {PL_CFG_REG, 0x40, 0},            // Enable the orientation detection
-    {PL_COUNT_REG, 200, 0},           // 200 count debounce
-    {PL_BF_ZCOMP_REG, 0b01000111, 0}, // Set the threshold to 42 degrees
-    {P_L_THS_REG, 0b10011100, 0},     // Up the trip angles
-    {CTRL_REG4, 0x01 | (1 << 4), 0},  // Enable dataready interrupt & orientation interrupt
-    {CTRL_REG5, 0x01, 0},             // Route data ready interrupts to INT1 ->PB5 ->EXTI5, leaving orientation routed to INT2
-    {CTRL_REG2, 0x12, 0},             // Set maximum resolution oversampling
-    {XYZ_DATA_CFG_REG, (1 << 4), 0},  // select high pass filtered data
-    {HP_FILTER_CUTOFF_REG, 0x03, 0},  // select high pass filtered data
-    {CTRL_REG1, 0x19, 0}              // ODR=12 Hz, Active mode
+    {           CTRL_REG2,               0, 0}, // Normal mode
+    {           CTRL_REG2,            0x40, 2}, // Reset all registers to POR values
+    {       FF_MT_CFG_REG,            0x78, 0}, // Enable motion detection for X, Y, Z axis, latch disabled
+    {          PL_CFG_REG,            0x40, 0}, // Enable the orientation detection
+    {        PL_COUNT_REG,             200, 0}, // 200 count debounce
+    {     PL_BF_ZCOMP_REG,      0b01000111, 0}, // Set the threshold to 42 degrees
+    {         P_L_THS_REG,      0b10011100, 0}, // Up the trip angles
+    {           CTRL_REG4, 0x01 | (1 << 4), 0}, // Enable dataready interrupt & orientation interrupt
+    {           CTRL_REG5,            0x01, 0}, // Route data ready interrupts to INT1 ->PB5 ->EXTI5, leaving orientation routed to INT2
+    {           CTRL_REG2,            0x12, 0}, // Set maximum resolution oversampling
+    {    XYZ_DATA_CFG_REG,        (1 << 4), 0}, // select high pass filtered data
+    {HP_FILTER_CUTOFF_REG,            0x03, 0}, // select high pass filtered data
+    {           CTRL_REG1,            0x19, 0}  // ODR=12 Hz, Active mode
 };
 
 bool MMA8652FC::initalize() { return ACCEL_I2C_CLASS::writeRegistersBulk(MMA8652FC_I2C_ADDRESS, i2c_registers, sizeof(i2c_registers) / sizeof(i2c_registers[0])); }

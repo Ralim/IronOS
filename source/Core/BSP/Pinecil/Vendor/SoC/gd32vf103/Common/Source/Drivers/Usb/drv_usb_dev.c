@@ -46,8 +46,8 @@ static uint16_t USBFS_TX_FIFO_SIZE[USBFS_MAX_EP_COUNT] = {(uint16_t)TX0_FIFO_FS_
 
 #elif defined(USB_HS_CORE)
 
-uint16_t USBHS_TX_FIFO_SIZE[USBHS_MAX_EP_COUNT]
-    = {(uint16_t)TX0_FIFO_HS_SIZE, (uint16_t)TX1_FIFO_HS_SIZE, (uint16_t)TX2_FIFO_HS_SIZE, (uint16_t)TX3_FIFO_HS_SIZE, (uint16_t)TX4_FIFO_HS_SIZE, (uint16_t)TX5_FIFO_HS_SIZE};
+uint16_t USBHS_TX_FIFO_SIZE[USBHS_MAX_EP_COUNT] = {(uint16_t)TX0_FIFO_HS_SIZE, (uint16_t)TX1_FIFO_HS_SIZE, (uint16_t)TX2_FIFO_HS_SIZE,
+                                                   (uint16_t)TX3_FIFO_HS_SIZE, (uint16_t)TX4_FIFO_HS_SIZE, (uint16_t)TX5_FIFO_HS_SIZE};
 
 #endif /* USBFS_CORE */
 

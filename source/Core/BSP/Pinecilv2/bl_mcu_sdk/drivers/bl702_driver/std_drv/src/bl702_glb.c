@@ -48,16 +48,16 @@
 /** @defgroup  GLB_Private_Macros
  *  @{
  */
-#define GLB_CLK_SET_DUMMY_WAIT \
-  {                            \
-    __NOP();                   \
-    __NOP();                   \
-    __NOP();                   \
-    __NOP();                   \
-    __NOP();                   \
-    __NOP();                   \
-    __NOP();                   \
-    __NOP();                   \
+#define GLB_CLK_SET_DUMMY_WAIT                                                                                                                                                                         \
+  {                                                                                                                                                                                                    \
+    __NOP();                                                                                                                                                                                           \
+    __NOP();                                                                                                                                                                                           \
+    __NOP();                                                                                                                                                                                           \
+    __NOP();                                                                                                                                                                                           \
+    __NOP();                                                                                                                                                                                           \
+    __NOP();                                                                                                                                                                                           \
+    __NOP();                                                                                                                                                                                           \
+    __NOP();                                                                                                                                                                                           \
   }
 #define GLB_GPIO_Get_Reg(pin)       (glb_gpio_reg_t *)(GLB_BASE + GLB_GPIO_OFFSET + (pin / 2) * 4)
 #define GLB_GPIO_INT0_NUM           (32)
@@ -76,12 +76,12 @@
 /** @defgroup  GLB_Private_Variables
  *  @{
  */
-static intCallback_Type *glbBmxErrIntCbfArra[BMX_ERR_INT_ALL] = {NULL};
-static intCallback_Type *glbBmxToIntCbfArra[BMX_TO_INT_ALL]   = {NULL};
-static intCallback_Type *glbGpioInt0CbfArra[GLB_GPIO_INT0_NUM]
-    = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL};
-static intCallback_Type *glbGpioInt0CbfArra2[GLB_GPIO_INT0_NUM]
-    = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL};
+static intCallback_Type *glbBmxErrIntCbfArra[BMX_ERR_INT_ALL]   = {NULL};
+static intCallback_Type *glbBmxToIntCbfArra[BMX_TO_INT_ALL]     = {NULL};
+static intCallback_Type *glbGpioInt0CbfArra[GLB_GPIO_INT0_NUM]  = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+                                                                   NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL};
+static intCallback_Type *glbGpioInt0CbfArra2[GLB_GPIO_INT0_NUM] = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+                                                                   NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL};
 
 /*@} end of group GLB_Private_Variables */
 

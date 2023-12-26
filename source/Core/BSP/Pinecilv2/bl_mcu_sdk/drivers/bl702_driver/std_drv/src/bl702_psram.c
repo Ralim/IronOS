@@ -144,7 +144,8 @@ void ATTR_TCM_SECTION Psram_ReadReg(SPI_Psram_Cfg_Type *psramCfg, uint8_t *regVa
 
   SF_Ctrl_SendCmd(&psramCmd);
 
-  while (SET == SF_Ctrl_GetBusyState()) {}
+  while (SET == SF_Ctrl_GetBusyState()) {
+  }
 
   BL702_MemCpy(regValue, psramCtrlBuf, 1);
 }
@@ -294,7 +295,8 @@ void ATTR_TCM_SECTION Psram_ReadId(SPI_Psram_Cfg_Type *psramCfg, uint8_t *data) 
 
   SF_Ctrl_SendCmd(&psramCmd);
 
-  while (SET == SF_Ctrl_GetBusyState()) {}
+  while (SET == SF_Ctrl_GetBusyState()) {
+  }
 
   BL702_MemCpy(data, psramCtrlBuf, 8);
 }
@@ -324,7 +326,8 @@ BL_Err_Type ATTR_TCM_SECTION Psram_EnterQuadMode(SPI_Psram_Cfg_Type *psramCfg) {
 
   SF_Ctrl_SendCmd(&psramCmd);
 
-  while (SET == SF_Ctrl_GetBusyState()) {}
+  while (SET == SF_Ctrl_GetBusyState()) {
+  }
 
   return SUCCESS;
 }
@@ -358,7 +361,8 @@ BL_Err_Type ATTR_TCM_SECTION Psram_ExitQuadMode(SPI_Psram_Cfg_Type *psramCfg) {
 
   SF_Ctrl_SendCmd(&psramCmd);
 
-  while (SET == SF_Ctrl_GetBusyState()) {}
+  while (SET == SF_Ctrl_GetBusyState()) {
+  }
 
   return SUCCESS;
 }
@@ -397,7 +401,8 @@ BL_Err_Type ATTR_TCM_SECTION Psram_ToggleBurstLength(SPI_Psram_Cfg_Type *psramCf
 
   SF_Ctrl_SendCmd(&psramCmd);
 
-  while (SET == SF_Ctrl_GetBusyState()) {}
+  while (SET == SF_Ctrl_GetBusyState()) {
+  }
 
   return SUCCESS;
 }
@@ -439,7 +444,8 @@ BL_Err_Type ATTR_TCM_SECTION Psram_SoftwareReset(SPI_Psram_Cfg_Type *psramCfg, P
 
   SF_Ctrl_SendCmd(&psramCmd);
 
-  while (SET == SF_Ctrl_GetBusyState()) {}
+  while (SET == SF_Ctrl_GetBusyState()) {
+  }
 
   /* Reset */
   psramCmd.cmdBuf[0] = (psramCfg->resetCmd) << 24;
@@ -447,7 +453,8 @@ BL_Err_Type ATTR_TCM_SECTION Psram_SoftwareReset(SPI_Psram_Cfg_Type *psramCfg, P
   psramCmd.rwFlag = SF_CTRL_READ;
   SF_Ctrl_SendCmd(&psramCmd);
 
-  while (SET == SF_Ctrl_GetBusyState()) {}
+  while (SET == SF_Ctrl_GetBusyState()) {
+  }
 
   BL702_Delay_US(50);
   return SUCCESS;
@@ -718,7 +725,8 @@ BL_Err_Type ATTR_TCM_SECTION Psram_Read(SPI_Psram_Cfg_Type *psramCfg, SF_Ctrl_IO
 
     SF_Ctrl_SendCmd(&psramCmd);
 
-    while (SET == SF_Ctrl_GetBusyState()) {}
+    while (SET == SF_Ctrl_GetBusyState()) {
+    }
 
     BL702_MemCpy_Fast(data, psramCtrlBuf, curLen);
 

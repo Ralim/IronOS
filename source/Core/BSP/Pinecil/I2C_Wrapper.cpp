@@ -145,11 +145,13 @@ void perform_i2c_step() {
       if (currentState.numberOfBytes == 1) {
         /* disable acknowledge */
         i2c_master_addressing(I2C0, currentState.deviceAddress, I2C_RECEIVER);
-        while (!i2c_flag_get(I2C0, I2C_FLAG_ADDSEND)) {}
+        while (!i2c_flag_get(I2C0, I2C_FLAG_ADDSEND)) {
+        }
         i2c_ack_config(I2C0, I2C_ACK_DISABLE);
         i2c_flag_clear(I2C0, I2C_FLAG_ADDSEND);
         /* wait for the byte to be received */
-        while (!i2c_flag_get(I2C0, I2C_FLAG_RBNE)) {}
+        while (!i2c_flag_get(I2C0, I2C_FLAG_RBNE)) {
+        }
         /* read the byte received from the EEPROM */
         *currentState.buffer = i2c_data_receive(I2C0);
         while (i2c_flag_get(I2C0, I2C_FLAG_RBNE)) {
@@ -163,10 +165,12 @@ void perform_i2c_step() {
       } else if (currentState.numberOfBytes == 2) {
         /* disable acknowledge */
         i2c_master_addressing(I2C0, currentState.deviceAddress, I2C_RECEIVER);
-        while (!i2c_flag_get(I2C0, I2C_FLAG_ADDSEND)) {}
+        while (!i2c_flag_get(I2C0, I2C_FLAG_ADDSEND)) {
+        }
         i2c_flag_clear(I2C0, I2C_FLAG_ADDSEND);
         /* wait for the byte to be received */
-        while (!i2c_flag_get(I2C0, I2C_FLAG_RBNE)) {}
+        while (!i2c_flag_get(I2C0, I2C_FLAG_RBNE)) {
+        }
         i2c_ackpos_config(I2C0, I2C_ACKPOS_CURRENT);
         i2c_ack_config(I2C0, I2C_ACK_DISABLE);
 
@@ -175,7 +179,8 @@ void perform_i2c_step() {
         currentState.buffer++;
 
         /* wait for the byte to be received */
-        while (!i2c_flag_get(I2C0, I2C_FLAG_RBNE)) {}
+        while (!i2c_flag_get(I2C0, I2C_FLAG_RBNE)) {
+        }
         /* read the byte received from the EEPROM */
         *currentState.buffer = i2c_data_receive(I2C0);
         while (i2c_flag_get(I2C0, I2C_FLAG_RBNE)) {
@@ -204,20 +209,23 @@ void perform_i2c_step() {
 
           if (3 == currentState.numberOfBytes) {
             /* wait until BTC bit is set */
-            while (!i2c_flag_get(I2C0, I2C_FLAG_BTC)) {}
+            while (!i2c_flag_get(I2C0, I2C_FLAG_BTC)) {
+            }
             i2c_ackpos_config(I2C0, I2C_ACKPOS_CURRENT);
             /* disable acknowledge */
             i2c_ack_config(I2C0, I2C_ACK_DISABLE);
           } else if (2 == currentState.numberOfBytes) {
             /* wait until BTC bit is set */
-            while (!i2c_flag_get(I2C0, I2C_FLAG_BTC)) {}
+            while (!i2c_flag_get(I2C0, I2C_FLAG_BTC)) {
+            }
             /* disable acknowledge */
             i2c_ack_config(I2C0, I2C_ACK_DISABLE);
             /* send a stop condition to I2C bus */
             i2c_stop_on_bus(I2C0);
           }
           /* wait until RBNE bit is set */
-          while (!i2c_flag_get(I2C0, I2C_FLAG_RBNE)) {}
+          while (!i2c_flag_get(I2C0, I2C_FLAG_RBNE)) {
+          }
           /* read a byte from the EEPROM */
           *currentState.buffer = i2c_data_receive(I2C0);
 

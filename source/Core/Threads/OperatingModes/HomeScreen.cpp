@@ -197,8 +197,8 @@ void drawHomeScreen(bool buttonLockout) {
     // This is zero cost really as state is only changed on display updates
     OLED::setDisplayState(OLED::DisplayState::ON);
 
-    if ((tipTemp < 50) && getSettingValue(SettingsOptions::Sensitivity)
-        && (((xTaskGetTickCount() - lastMovementTime) > MOVEMENT_INACTIVITY_TIME) && ((xTaskGetTickCount() - lastButtonTime) > BUTTON_INACTIVITY_TIME))) {
+    if ((tipTemp < 50) && getSettingValue(SettingsOptions::Sensitivity) &&
+        (((xTaskGetTickCount() - lastMovementTime) > MOVEMENT_INACTIVITY_TIME) && ((xTaskGetTickCount() - lastButtonTime) > BUTTON_INACTIVITY_TIME))) {
       OLED::setDisplayState(OLED::DisplayState::OFF);
       setStatusLED(LED_OFF);
     } else {

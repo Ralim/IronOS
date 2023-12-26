@@ -229,8 +229,8 @@ BL_Err_Type ATTR_TCM_SECTION SFlash_Clear_Status_Register(SPI_Flash_Cfg_Type *pF
   SFlash_Read_Reg(pFlashCfg, 0, (uint8_t *)&readRegValue0, 1);
   SFlash_Read_Reg(pFlashCfg, 1, (uint8_t *)&readRegValue1, 1);
   readValue = (readRegValue0 | (readRegValue1 << 8));
-  if ((readValue & (~((1 << (pFlashCfg->qeIndex * 8 + pFlashCfg->qeBit)) | (1 << (pFlashCfg->busyIndex * 8 + pFlashCfg->busyBit)) | (1 << (pFlashCfg->wrEnableIndex * 8 + pFlashCfg->wrEnableBit)))))
-      == 0) {
+  if ((readValue & (~((1 << (pFlashCfg->qeIndex * 8 + pFlashCfg->qeBit)) | (1 << (pFlashCfg->busyIndex * 8 + pFlashCfg->busyBit)) | (1 << (pFlashCfg->wrEnableIndex * 8 + pFlashCfg->wrEnableBit))))) ==
+      0) {
     return SUCCESS;
   }
 

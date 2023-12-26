@@ -52,7 +52,12 @@
  */
 #define DMA_CHANNEL_OFFSET  0x100
 #define DMA_Get_Channel(ch) (DMA_BASE + DMA_CHANNEL_OFFSET + (ch) * 0x100)
-static intCallback_Type *dmaIntCbfArra[DMA_CH_MAX][DMA_INT_ALL] = {{NULL, NULL}, {NULL, NULL}, {NULL, NULL}, {NULL, NULL}};
+static intCallback_Type *dmaIntCbfArra[DMA_CH_MAX][DMA_INT_ALL] = {
+    {NULL, NULL},
+    {NULL, NULL},
+    {NULL, NULL},
+    {NULL, NULL}
+};
 static DMA_LLI_Ctrl_Type PingPongListArra[DMA_CH_MAX][2];
 
 /*@} end of group DMA_Private_Macros */

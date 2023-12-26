@@ -221,12 +221,12 @@ void SBC_Encoder_Init(SBC_ENC_PARAMS *pstrEncParams) {
     }
 
     if ((pstrEncParams->s16ChannelMode == SBC_JOINT_STEREO) || (pstrEncParams->s16ChannelMode == SBC_STEREO)) {
-      s16Bitpool = (SINT16)((pstrEncParams->u16BitRate * pstrEncParams->s16NumOfSubBands * 1000 / s16SamplingFreq)
-                            - ((32 + (4 * pstrEncParams->s16NumOfSubBands * pstrEncParams->s16NumOfChannels) + ((pstrEncParams->s16ChannelMode - 2) * pstrEncParams->s16NumOfSubBands))
-                               / pstrEncParams->s16NumOfBlocks));
+      s16Bitpool = (SINT16)((pstrEncParams->u16BitRate * pstrEncParams->s16NumOfSubBands * 1000 / s16SamplingFreq) -
+                            ((32 + (4 * pstrEncParams->s16NumOfSubBands * pstrEncParams->s16NumOfChannels) + ((pstrEncParams->s16ChannelMode - 2) * pstrEncParams->s16NumOfSubBands)) /
+                             pstrEncParams->s16NumOfBlocks));
 
-      s16FrameLen = 4 + (4 * pstrEncParams->s16NumOfSubBands * pstrEncParams->s16NumOfChannels) / 8
-                    + (((pstrEncParams->s16ChannelMode - 2) * pstrEncParams->s16NumOfSubBands) + (pstrEncParams->s16NumOfBlocks * s16Bitpool)) / 8;
+      s16FrameLen = 4 + (4 * pstrEncParams->s16NumOfSubBands * pstrEncParams->s16NumOfChannels) / 8 +
+                    (((pstrEncParams->s16ChannelMode - 2) * pstrEncParams->s16NumOfSubBands) + (pstrEncParams->s16NumOfBlocks * s16Bitpool)) / 8;
 
       s16BitRate = (8 * s16FrameLen * s16SamplingFreq) / (pstrEncParams->s16NumOfSubBands * pstrEncParams->s16NumOfBlocks * 1000);
 
@@ -240,8 +240,8 @@ void SBC_Encoder_Init(SBC_ENC_PARAMS *pstrEncParams) {
         pstrEncParams->s16BitPool = (s16Bitpool > 128) ? 128 : s16Bitpool;
       }
     } else {
-      s16Bitpool = (SINT16)(((pstrEncParams->s16NumOfSubBands * pstrEncParams->u16BitRate * 1000) / (s16SamplingFreq * pstrEncParams->s16NumOfChannels))
-                            - (((32 / pstrEncParams->s16NumOfChannels) + (4 * pstrEncParams->s16NumOfSubBands)) / pstrEncParams->s16NumOfBlocks));
+      s16Bitpool = (SINT16)(((pstrEncParams->s16NumOfSubBands * pstrEncParams->u16BitRate * 1000) / (s16SamplingFreq * pstrEncParams->s16NumOfChannels)) -
+                            (((32 / pstrEncParams->s16NumOfChannels) + (4 * pstrEncParams->s16NumOfSubBands)) / pstrEncParams->s16NumOfBlocks));
 
       pstrEncParams->s16BitPool = (s16Bitpool > (16 * pstrEncParams->s16NumOfSubBands)) ? (16 * pstrEncParams->s16NumOfSubBands) : s16Bitpool;
     }

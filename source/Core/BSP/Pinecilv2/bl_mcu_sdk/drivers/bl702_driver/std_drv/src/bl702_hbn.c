@@ -49,16 +49,16 @@
 /** @defgroup  HBN_Private_Macros
  *  @{
  */
-#define HBN_CLK_SET_DUMMY_WAIT \
-  {                            \
-    __NOP();                   \
-    __NOP();                   \
-    __NOP();                   \
-    __NOP();                   \
-    __NOP();                   \
-    __NOP();                   \
-    __NOP();                   \
-    __NOP();                   \
+#define HBN_CLK_SET_DUMMY_WAIT                                                                                                                                                                         \
+  {                                                                                                                                                                                                    \
+    __NOP();                                                                                                                                                                                           \
+    __NOP();                                                                                                                                                                                           \
+    __NOP();                                                                                                                                                                                           \
+    __NOP();                                                                                                                                                                                           \
+    __NOP();                                                                                                                                                                                           \
+    __NOP();                                                                                                                                                                                           \
+    __NOP();                                                                                                                                                                                           \
+    __NOP();                                                                                                                                                                                           \
   }
 
 /*@} end of group HBN_Private_Macros */

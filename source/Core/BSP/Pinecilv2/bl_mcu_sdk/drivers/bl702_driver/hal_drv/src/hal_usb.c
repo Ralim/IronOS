@@ -1107,7 +1107,8 @@ void usb_dc_isr(usb_dc_device_t *device) {
   if (USB_Get_IntStatus(USB_INT_LPM_PACKET)) {
     /*************************************/
     /* Force low-power mode in the macrocell */
-    if (USB_Get_IntStatus(USB_INT_LPM_WAKEUP) == 0) {}
+    if (USB_Get_IntStatus(USB_INT_LPM_WAKEUP) == 0) {
+    }
 
     /*************************************/
     USB_Clr_IntStatus(USB_INT_LPM_PACKET);

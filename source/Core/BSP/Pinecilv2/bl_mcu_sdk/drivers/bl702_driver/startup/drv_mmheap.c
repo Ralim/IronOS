@@ -47,7 +47,8 @@ static inline void mmheap_insert_node_to_freelist(struct heap_info *pRoot, struc
   struct heap_node *pPriv_Node;
   struct heap_node *pNext_Node;
   /*Find the node with an address similar to pNode*/
-  for (pPriv_Node = pRoot->pStart; pPriv_Node->next_node < pNode; pPriv_Node = pPriv_Node->next_node) {}
+  for (pPriv_Node = pRoot->pStart; pPriv_Node->next_node < pNode; pPriv_Node = pPriv_Node->next_node) {
+  }
 
   pNext_Node = pPriv_Node->next_node;
   /*Try to merge the pNode with the previous block*/
@@ -248,7 +249,8 @@ void *mmheap_realloc(struct heap_info *pRoot, void *src_addr, size_t want_size) 
     return pReturn;
   }
   /*Start looking in the free list for blocks similar to this block*/
-  for (pPriv_Node = pRoot->pStart; pPriv_Node->next_node < pSrc_Node; pPriv_Node = pPriv_Node->next_node) {}
+  for (pPriv_Node = pRoot->pStart; pPriv_Node->next_node < pSrc_Node; pPriv_Node = pPriv_Node->next_node) {
+  }
   pNext_Node = pPriv_Node->next_node;
 
   if (pNext_Node != pRoot->pEnd && ((uint8_t *)src_addr + pSrc_Node->mem_size == (uint8_t *)pNext_Node) && (pSrc_Node->mem_size + pNext_Node->mem_size + MEM_MANAGE_MEM_STRUCT_SIZE >= want_size)) {

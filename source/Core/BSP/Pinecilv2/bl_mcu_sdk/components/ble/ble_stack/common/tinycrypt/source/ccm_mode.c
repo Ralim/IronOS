@@ -121,8 +121,8 @@ static int ccm_ctr_mode(uint8_t *out, unsigned int outlen, const uint8_t *in, un
 
 int tc_ccm_generation_encryption(uint8_t *out, unsigned int olen, const uint8_t *associated_data, unsigned int alen, const uint8_t *payload, unsigned int plen, TCCcmMode_t c) {
   /* input sanity check: */
-  if ((out == (uint8_t *)0) || (c == (TCCcmMode_t)0) || ((plen > 0) && (payload == (uint8_t *)0)) || ((alen > 0) && (associated_data == (uint8_t *)0)) || (alen >= TC_CCM_AAD_MAX_BYTES)
-      ||                                    /* associated data size unsupported */
+  if ((out == (uint8_t *)0) || (c == (TCCcmMode_t)0) || ((plen > 0) && (payload == (uint8_t *)0)) || ((alen > 0) && (associated_data == (uint8_t *)0)) ||
+      (alen >= TC_CCM_AAD_MAX_BYTES) ||     /* associated data size unsupported */
       (plen >= TC_CCM_PAYLOAD_MAX_BYTES) || /* payload size unsupported */
       (olen < (plen + c->mlen))) {          /* invalid output buffer size */
     return TC_CRYPTO_FAIL;
@@ -174,8 +174,8 @@ int tc_ccm_generation_encryption(uint8_t *out, unsigned int olen, const uint8_t 
 
 int tc_ccm_decryption_verification(uint8_t *out, unsigned int olen, const uint8_t *associated_data, unsigned int alen, const uint8_t *payload, unsigned int plen, TCCcmMode_t c) {
   /* input sanity check: */
-  if ((out == (uint8_t *)0) || (c == (TCCcmMode_t)0) || ((plen > 0) && (payload == (uint8_t *)0)) || ((alen > 0) && (associated_data == (uint8_t *)0)) || (alen >= TC_CCM_AAD_MAX_BYTES)
-      ||                                    /* associated data size unsupported */
+  if ((out == (uint8_t *)0) || (c == (TCCcmMode_t)0) || ((plen > 0) && (payload == (uint8_t *)0)) || ((alen > 0) && (associated_data == (uint8_t *)0)) ||
+      (alen >= TC_CCM_AAD_MAX_BYTES) ||     /* associated data size unsupported */
       (plen >= TC_CCM_PAYLOAD_MAX_BYTES) || /* payload size unsupported */
       (olen < plen - c->mlen)) {            /* invalid output buffer size */
     return TC_CRYPTO_FAIL;

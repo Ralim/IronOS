@@ -117,9 +117,19 @@ INLINE OI_UINT16 OI_SBC_CalculateFrameAndHeaderlen(OI_CODEC_SBC_FRAME_INFO *fram
  *
  */
 OI_UINT computeBitneed(OI_CODEC_SBC_COMMON_CONTEXT *common, OI_UINT8 *bitneeds, OI_UINT ch, OI_UINT *preferredBitpool) {
-  static const OI_INT8 offset4[4][4] = {{-1, 0, 0, 0}, {-2, 0, 0, 1}, {-2, 0, 0, 1}, {-2, 0, 0, 1}};
+  static const OI_INT8 offset4[4][4] = {
+      {-1, 0, 0, 0},
+      {-2, 0, 0, 1},
+      {-2, 0, 0, 1},
+      {-2, 0, 0, 1}
+  };
 
-  static const OI_INT8 offset8[4][8] = {{-2, 0, 0, 0, 0, 0, 0, 1}, {-3, 0, 0, 0, 0, 0, 1, 2}, {-4, 0, 0, 0, 0, 0, 1, 2}, {-4, 0, 0, 0, 0, 0, 1, 2}};
+  static const OI_INT8 offset8[4][8] = {
+      {-2, 0, 0, 0, 0, 0, 0, 1},
+      {-3, 0, 0, 0, 0, 0, 1, 2},
+      {-4, 0, 0, 0, 0, 0, 1, 2},
+      {-4, 0, 0, 0, 0, 0, 1, 2}
+  };
 
   const OI_UINT nrof_subbands = common->frameInfo.nrof_subbands;
   OI_UINT       sb;

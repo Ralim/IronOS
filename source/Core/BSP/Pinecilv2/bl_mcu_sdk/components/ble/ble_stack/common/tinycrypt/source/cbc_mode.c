@@ -39,8 +39,8 @@ int tc_cbc_mode_encrypt(uint8_t *out, unsigned int outlen, const uint8_t *in, un
   unsigned int n, m;
 
   /* input sanity check: */
-  if (out == (uint8_t *)0 || in == (const uint8_t *)0 || sched == (TCAesKeySched_t)0 || inlen == 0 || outlen == 0 || (inlen % TC_AES_BLOCK_SIZE) != 0 || (outlen % TC_AES_BLOCK_SIZE) != 0
-      || outlen != inlen + TC_AES_BLOCK_SIZE) {
+  if (out == (uint8_t *)0 || in == (const uint8_t *)0 || sched == (TCAesKeySched_t)0 || inlen == 0 || outlen == 0 || (inlen % TC_AES_BLOCK_SIZE) != 0 || (outlen % TC_AES_BLOCK_SIZE) != 0 ||
+      outlen != inlen + TC_AES_BLOCK_SIZE) {
     return TC_CRYPTO_FAIL;
   }
 
@@ -69,8 +69,8 @@ int tc_cbc_mode_decrypt(uint8_t *out, unsigned int outlen, const uint8_t *in, un
   unsigned int   n, m;
 
   /* sanity check the inputs */
-  if (out == (uint8_t *)0 || in == (const uint8_t *)0 || sched == (TCAesKeySched_t)0 || inlen == 0 || outlen == 0 || (inlen % TC_AES_BLOCK_SIZE) != 0 || (outlen % TC_AES_BLOCK_SIZE) != 0
-      || outlen != inlen) {
+  if (out == (uint8_t *)0 || in == (const uint8_t *)0 || sched == (TCAesKeySched_t)0 || inlen == 0 || outlen == 0 || (inlen % TC_AES_BLOCK_SIZE) != 0 || (outlen % TC_AES_BLOCK_SIZE) != 0 ||
+      outlen != inlen) {
     return TC_CRYPTO_FAIL;
   }
 

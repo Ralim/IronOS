@@ -952,7 +952,8 @@ BL_Err_Type UART_SendDataBlock(UART_ID_Type uartId, uint8_t *data, uint32_t len)
     }
   }
 
-  while (UART_GetTxBusBusyStatus(uartId) == SET) {}
+  while (UART_GetTxBusBusyStatus(uartId) == SET) {
+  }
 
   return SUCCESS;
 }

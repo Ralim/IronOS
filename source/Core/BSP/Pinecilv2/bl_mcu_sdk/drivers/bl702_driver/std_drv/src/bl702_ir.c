@@ -904,8 +904,8 @@ IR_RxMode_Type IR_LearnToInit(uint32_t *data, uint8_t *length) {
   *length = IR_SWMReceiveData((uint16_t *)data, *length);
 
   /* Judge protocol type */
-  if (NEC_HEAD_H_MIN < (data[0] & 0xffff) && (data[0] & 0xffff) < NEC_HEAD_H_MAX && NEC_HEAD_L_MIN < (data[0] >> 16) && (data[0] >> 16) < NEC_HEAD_L_MAX && NEC_BIT0_H_MIN < (data[1] & 0xffff)
-      && (data[1] & 0xffff) < NEC_BIT0_H_MAX) {
+  if (NEC_HEAD_H_MIN < (data[0] & 0xffff) && (data[0] & 0xffff) < NEC_HEAD_H_MAX && NEC_HEAD_L_MIN < (data[0] >> 16) && (data[0] >> 16) < NEC_HEAD_L_MAX && NEC_BIT0_H_MIN < (data[1] & 0xffff) &&
+      (data[1] & 0xffff) < NEC_BIT0_H_MAX) {
     /* Set rx in NEC mode */
     tmpVal = BL_RD_REG(IR_BASE, IRRX_CONFIG);
     BL_WR_REG(IR_BASE, IRRX_CONFIG, BL_SET_REG_BITS_VAL(tmpVal, IR_CR_IRRX_MODE, 0x0));
@@ -920,9 +920,9 @@ IR_RxMode_Type IR_LearnToInit(uint32_t *data, uint8_t *length) {
     BL_WR_REG(IR_BASE, IRTX_PULSE_WIDTH, 0x22110464);
 
     return IR_RX_NEC;
-  } else if (RC5_ONE_PLUSE_MIN < (data[0] & 0xffff) && (data[0] & 0xffff) < RC5_ONE_PLUSE_MAX
-             && ((RC5_ONE_PLUSE_MIN < (data[0] >> 16) && (data[0] >> 16) < RC5_ONE_PLUSE_MAX) || (RC5_TWO_PLUSE_MIN < (data[0] >> 16) && (data[0] >> 16) < RC5_TWO_PLUSE_MAX))
-             && ((RC5_ONE_PLUSE_MIN < (data[1] & 0xffff) && (data[1] & 0xffff) < RC5_ONE_PLUSE_MAX) || (RC5_TWO_PLUSE_MIN < (data[1] & 0xffff) && (data[1] & 0xffff) < RC5_TWO_PLUSE_MAX))) {
+  } else if (RC5_ONE_PLUSE_MIN < (data[0] & 0xffff) && (data[0] & 0xffff) < RC5_ONE_PLUSE_MAX &&
+             ((RC5_ONE_PLUSE_MIN < (data[0] >> 16) && (data[0] >> 16) < RC5_ONE_PLUSE_MAX) || (RC5_TWO_PLUSE_MIN < (data[0] >> 16) && (data[0] >> 16) < RC5_TWO_PLUSE_MAX)) &&
+             ((RC5_ONE_PLUSE_MIN < (data[1] & 0xffff) && (data[1] & 0xffff) < RC5_ONE_PLUSE_MAX) || (RC5_TWO_PLUSE_MIN < (data[1] & 0xffff) && (data[1] & 0xffff) < RC5_TWO_PLUSE_MAX))) {
     /* Set rx in RC-5 mode */
     tmpVal = BL_RD_REG(IR_BASE, IRRX_CONFIG);
     BL_WR_REG(IR_BASE, IRRX_CONFIG, BL_SET_REG_BITS_VAL(tmpVal, IR_CR_IRRX_MODE, 0x1));

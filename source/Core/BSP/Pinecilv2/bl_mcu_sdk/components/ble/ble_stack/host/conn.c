@@ -99,10 +99,10 @@ enum pairing_method {
 
 /* based on table 5.7, Core Spec 4.2, Vol.3 Part C, 5.2.2.6 */
 static const u8_t ssp_method[4 /* remote */][4 /* local */] = {
-    {JUST_WORKS, JUST_WORKS, PASSKEY_INPUT, JUST_WORKS},
-    {JUST_WORKS, PASSKEY_CONFIRM, PASSKEY_INPUT, JUST_WORKS},
+    {     JUST_WORKS,      JUST_WORKS, PASSKEY_INPUT, JUST_WORKS},
+    {     JUST_WORKS, PASSKEY_CONFIRM, PASSKEY_INPUT, JUST_WORKS},
     {PASSKEY_DISPLAY, PASSKEY_DISPLAY, PASSKEY_INPUT, JUST_WORKS},
-    {JUST_WORKS, JUST_WORKS, JUST_WORKS, JUST_WORKS},
+    {     JUST_WORKS,      JUST_WORKS,    JUST_WORKS, JUST_WORKS},
 };
 #endif /* CONFIG_BT_BREDR */
 
@@ -187,8 +187,8 @@ void notify_le_param_updated(struct bt_conn *conn) {
   /* If new connection parameters meet requirement of pending
    * parameters don't send slave conn param request anymore on timeout
    */
-  if (atomic_test_bit(conn->flags, BT_CONN_SLAVE_PARAM_SET) && conn->le.interval >= conn->le.interval_min && conn->le.interval <= conn->le.interval_max && conn->le.latency == conn->le.pending_latency
-      && conn->le.timeout == conn->le.pending_timeout) {
+  if (atomic_test_bit(conn->flags, BT_CONN_SLAVE_PARAM_SET) && conn->le.interval >= conn->le.interval_min && conn->le.interval <= conn->le.interval_max &&
+      conn->le.latency == conn->le.pending_latency && conn->le.timeout == conn->le.pending_timeout) {
     atomic_clear_bit(conn->flags, BT_CONN_SLAVE_PARAM_SET);
   }
 
@@ -233,8 +233,8 @@ static int send_conn_le_param_update(struct bt_conn *conn, const struct bt_le_co
   /* Use LE connection parameter request if both local and remote support
    * it; or if local role is master then use LE connection update.
    */
-  if ((BT_FEAT_LE_CONN_PARAM_REQ_PROC(bt_dev.le.features) && BT_FEAT_LE_CONN_PARAM_REQ_PROC(conn->le.features) && !atomic_test_bit(conn->flags, BT_CONN_SLAVE_PARAM_L2CAP))
-      || (conn->role == BT_HCI_ROLE_MASTER)) {
+  if ((BT_FEAT_LE_CONN_PARAM_REQ_PROC(bt_dev.le.features) && BT_FEAT_LE_CONN_PARAM_REQ_PROC(conn->le.features) && !atomic_test_bit(conn->flags, BT_CONN_SLAVE_PARAM_L2CAP)) ||
+      (conn->role == BT_HCI_ROLE_MASTER)) {
     int rc;
 
     rc = bt_conn_le_conn_update(conn, param);
@@ -2303,12 +2303,11 @@ int bt_conn_auth_cb_register(const struct bt_conn_auth_cb *cb) {
   /* The cancel callback must always be provided if the app provides
    * interactive callbacks.
    */
-  if (!cb->cancel
-      && (cb->passkey_display || cb->passkey_entry || cb->passkey_confirm ||
+  if (!cb->cancel && (cb->passkey_display || cb->passkey_entry || cb->passkey_confirm ||
 #if defined(CONFIG_BT_BREDR)
-          cb->pincode_entry ||
+                      cb->pincode_entry ||
 #endif
-          cb->pairing_confirm)) {
+                      cb->pairing_confirm)) {
     return -EINVAL;
   }
 

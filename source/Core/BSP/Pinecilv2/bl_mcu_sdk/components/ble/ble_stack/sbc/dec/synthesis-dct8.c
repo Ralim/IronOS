@@ -82,10 +82,10 @@ static INLINE OI_INT32 default_mul_32s_32s_hi(OI_INT32 u, OI_INT32 v) {
 #ifdef DEBUG_DCT
 PRIVATE void float_dct2_8(float *RESTRICT out, OI_INT32 const *RESTRICT in) {
 #define FIX(x, bits) (((int)floor(0.5f + ((x) * ((float)(1 << bits))))) / ((float)(1 << bits)))
-#define FLOAT_BUTTERFLY(x, y) \
-  x += y;                     \
-  y = x - (y * 2);            \
-  OI_ASSERT(VALID_INT32(x));  \
+#define FLOAT_BUTTERFLY(x, y)                                                                                                                                                                          \
+  x += y;                                                                                                                                                                                              \
+  y = x - (y * 2);                                                                                                                                                                                     \
+  OI_ASSERT(VALID_INT32(x));                                                                                                                                                                           \
   OI_ASSERT(VALID_INT32(y));
 #define FLOAT_MULT_DCT(K, sample) (FIX(K, 20) * sample)
 #define FLOAT_SCALE(x, y)         (((x) / (double)(1 << (y))))
@@ -246,8 +246,8 @@ PRIVATE void float_dct2_8(float *RESTRICT out, OI_INT32 const *RESTRICT in) {
  *
  */
 PRIVATE void dct2_8(SBC_BUFFER_T *RESTRICT out, OI_INT32 const *RESTRICT in) {
-#define BUTTERFLY(x, y) \
-  x += y;               \
+#define BUTTERFLY(x, y)                                                                                                                                                                                \
+  x += y;                                                                                                                                                                                              \
   y = x - (y << 1);
 #define FIX_MULT_DCT(K, x) (MUL_32S_32S_HI(K, x) << 2)
 

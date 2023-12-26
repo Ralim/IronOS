@@ -3181,8 +3181,8 @@ void HAL_I2C_ER_IRQHandler(I2C_HandleTypeDef *hi2c) {
     tmp2 = hi2c->XferCount;
     tmp3 = hi2c->State;
     tmp4 = hi2c->PreviousState;
-    if ((tmp1 == HAL_I2C_MODE_SLAVE) && (tmp2 == 0U)
-        && ((tmp3 == HAL_I2C_STATE_BUSY_TX) || (tmp3 == HAL_I2C_STATE_BUSY_TX_LISTEN) || ((tmp3 == HAL_I2C_STATE_LISTEN) && (tmp4 == I2C_STATE_SLAVE_BUSY_TX)))) {
+    if ((tmp1 == HAL_I2C_MODE_SLAVE) && (tmp2 == 0U) &&
+        ((tmp3 == HAL_I2C_STATE_BUSY_TX) || (tmp3 == HAL_I2C_STATE_BUSY_TX_LISTEN) || ((tmp3 == HAL_I2C_STATE_LISTEN) && (tmp4 == I2C_STATE_SLAVE_BUSY_TX)))) {
     } else {
       hi2c->ErrorCode |= HAL_I2C_ERROR_AF;
 

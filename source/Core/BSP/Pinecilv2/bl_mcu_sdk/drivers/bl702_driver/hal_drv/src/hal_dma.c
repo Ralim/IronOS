@@ -25,17 +25,17 @@
 
 #define DMA_CHANNEL_BASE(id_base, ch) ((id_base) + DMA_CHANNEL_OFFSET + (ch) * 0x100)
 
-static const uint32_t dma_channel_base[][8] = {{
-    DMA_CHANNEL_BASE(DMA_BASE, 0),
-    DMA_CHANNEL_BASE(DMA_BASE, 1),
-    DMA_CHANNEL_BASE(DMA_BASE, 2),
-    DMA_CHANNEL_BASE(DMA_BASE, 3),
-    DMA_CHANNEL_BASE(DMA_BASE, 4),
-    DMA_CHANNEL_BASE(DMA_BASE, 5),
-    DMA_CHANNEL_BASE(DMA_BASE, 6),
-    DMA_CHANNEL_BASE(DMA_BASE, 7),
-}
-
+static const uint32_t dma_channel_base[][8] = {
+    {
+     DMA_CHANNEL_BASE(DMA_BASE, 0),
+     DMA_CHANNEL_BASE(DMA_BASE, 1),
+     DMA_CHANNEL_BASE(DMA_BASE, 2),
+     DMA_CHANNEL_BASE(DMA_BASE, 3),
+     DMA_CHANNEL_BASE(DMA_BASE, 4),
+     DMA_CHANNEL_BASE(DMA_BASE, 5),
+     DMA_CHANNEL_BASE(DMA_BASE, 6),
+     DMA_CHANNEL_BASE(DMA_BASE, 7),
+     }
 };
 
 static void DMA0_IRQ(void);
@@ -271,8 +271,8 @@ int dma_allocate_register(const char *name) {
  * @return int
  */
 int dma_reload(struct device *dev, uint32_t src_addr, uint32_t dst_addr, uint32_t transfer_size) {
-#if defined(BSP_USING_DMA0_CH0) || defined(BSP_USING_DMA0_CH1) || defined(BSP_USING_DMA0_CH2) || defined(BSP_USING_DMA0_CH3) || defined(BSP_USING_DMA0_CH4) || defined(BSP_USING_DMA0_CH5) \
-    || defined(BSP_USING_DMA0_CH6) || defined(BSP_USING_DMA0_CH7)
+#if defined(BSP_USING_DMA0_CH0) || defined(BSP_USING_DMA0_CH1) || defined(BSP_USING_DMA0_CH2) || defined(BSP_USING_DMA0_CH3) || defined(BSP_USING_DMA0_CH4) || defined(BSP_USING_DMA0_CH5) ||          \
+    defined(BSP_USING_DMA0_CH6) || defined(BSP_USING_DMA0_CH7)
 
   uint32_t           malloc_count;
   uint32_t           remain_len;

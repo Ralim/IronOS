@@ -60,7 +60,11 @@
 /** @defgroup  TIMER_Private_Variables
  *  @{
  */
-intCallback_Type *timerIntCbfArra[3][TIMER_INT_ALL] = {{NULL, NULL, NULL}, {NULL, NULL, NULL}, {NULL, NULL, NULL}};
+intCallback_Type *timerIntCbfArra[3][TIMER_INT_ALL] = {
+    {NULL, NULL, NULL},
+    {NULL, NULL, NULL},
+    {NULL, NULL, NULL}
+};
 
 /*@} end of group TIMER_Private_Variables */
 

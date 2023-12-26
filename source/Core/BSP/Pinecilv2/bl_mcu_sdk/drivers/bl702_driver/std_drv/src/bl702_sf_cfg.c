@@ -1830,226 +1830,228 @@ static const ATTR_TCM_CONST_SECTION SPI_Flash_Cfg_Type flashCfg_FT_VQ80 = {
     .qeData      = 0,
 };
 
-static const ATTR_TCM_CONST_SECTION Flash_Info_t flashInfos[] = {{
-                                                                     .jedecID = 0x1440ef,
-                                                                     .name    = "Winb_80DV_08_33",
-                                                                     .cfg     = &flashCfg_Winb_80DV,
-                                                                 },
-                                                                 {
-                                                                     .jedecID = 0x1540ef,
-                                                                     .name    = "Winb_16DV_16_33",
-                                                                     .cfg     = &flashCfg_Winb_16DV,
-                                                                 },
-                                                                 {
-                                                                     .jedecID = 0x1640ef,
-                                                                     .name    = "Winb_32FV_32_33",
-                                                                     .cfg     = &flashCfg_Winb_80EW_16FW_32JW_32FW_32FV,
-                                                                 },
-                                                                 {
-                                                                     .jedecID = 0x1460ef,
-                                                                     .name    = "Winb_80EW_08_18",
-                                                                     .cfg     = &flashCfg_Winb_80EW_16FW_32JW_32FW_32FV,
-                                                                 },
-                                                                 {
-                                                                     .jedecID = 0x1560ef,
-                                                                     .name    = "Winb_16FW_16_18",
-                                                                     .cfg     = &flashCfg_Winb_80EW_16FW_32JW_32FW_32FV,
-                                                                 },
-                                                                 {
-                                                                     .jedecID = 0x1660ef,
-                                                                     .name    = "Winb_32FW_32_18",
-                                                                     .cfg     = &flashCfg_Winb_80EW_16FW_32JW_32FW_32FV,
-                                                                 },
-                                                                 {
-                                                                     .jedecID = 0x1860ef,
-                                                                     .name    = "Winb_128FW_128_18",
-                                                                     .cfg     = &flashCfg_Winb_80EW_16FW_32JW_32FW_32FV,
-                                                                 },
-                                                                 {
-                                                                     .jedecID = 0x1680ef,
-                                                                     .name    = "Winb_32JW_32_18",
-                                                                     .cfg     = &flashCfg_Winb_80EW_16FW_32JW_32FW_32FV,
-                                                                 },
-                                                                 {
-                                                                     .jedecID = 0x13605e,
-                                                                     .name    = "Zbit_04_33",
-                                                                     .cfg     = &flashCfg_Winb_80EW_16FW_32JW_32FW_32FV,
-                                                                 },
-                                                                 {
-                                                                     .jedecID = 0x14605e,
-                                                                     .name    = "Zbit_08_33",
-                                                                     .cfg     = &flashCfg_Winb_80EW_16FW_32JW_32FW_32FV,
-                                                                 },
-                                                                 {
-                                                                     .jedecID = 0x14609d,
-                                                                     .name    = "ISSI_08_33",
-                                                                     .cfg     = &flashCfg_Issi,
-                                                                 },
-                                                                 {
-                                                                     .jedecID = 0x15609d,
-                                                                     .name    = "ISSI_16_33",
-                                                                     .cfg     = &flashCfg_Issi,
-                                                                 },
-                                                                 {
-                                                                     .jedecID = 0x16609d,
-                                                                     .name    = "ISSI_32_33",
-                                                                     .cfg     = &flashCfg_Issi,
-                                                                 },
-                                                                 {
-                                                                     .jedecID = 0x14709d,
-                                                                     .name    = "ISSI_08_18",
-                                                                     .cfg     = &flashCfg_Issi,
-                                                                 },
-                                                                 {
-                                                                     .jedecID = 0x15709d,
-                                                                     .name    = "ISSI_16_18",
-                                                                     .cfg     = &flashCfg_Issi,
-                                                                 },
-                                                                 {
-                                                                     .jedecID = 0x16709d,
-                                                                     .name    = "ISSI_32_18",
-                                                                     .cfg     = &flashCfg_Issi,
-                                                                 },
-                                                                 {
-                                                                     .jedecID = 0x134051,
-                                                                     .name    = "GD_MD04D_04_33",
-                                                                     .cfg     = &flashCfg_Gd_Md_40D,
-                                                                 },
-                                                                 {
-                                                                     .jedecID = 0x1440C8,
-                                                                     .name    = "GD_Q08E_08_33",
-                                                                     .cfg     = &flashCfg_Gd_Q80E_Q16E,
-                                                                 },
-                                                                 {
-                                                                     .jedecID = 0x1540C8,
-                                                                     .name    = "GD_Q16E_16_33",
-                                                                     .cfg     = &flashCfg_Gd_Q80E_Q16E,
-                                                                 },
-                                                                 {
-                                                                     .jedecID = 0x1640C8,
-                                                                     .name    = "GD_Q32C_32_33",
-                                                                     .cfg     = &flashCfg_Gd_Q32C,
-                                                                 },
-                                                                 {
-                                                                     .jedecID = 0x1460C8,
-                                                                     .name    = "GD_LQ08C_08_18",
-                                                                     .cfg     = &flashCfg_Gd_LQ08C_LE16C_LQ32D_WQ32E,
-                                                                 },
-                                                                 {
-                                                                     .jedecID = 0x1560C8,
-                                                                     .name    = "GD_LE16C_16_18",
-                                                                     .cfg     = &flashCfg_Gd_LQ08C_LE16C_LQ32D_WQ32E,
-                                                                 },
-                                                                 {
-                                                                     .jedecID = 0x1660C8,
-                                                                     .name    = "GD_LQ32D_32_18",
-                                                                     .cfg     = &flashCfg_Gd_LQ08C_LE16C_LQ32D_WQ32E,
-                                                                 },
-                                                                 {
-                                                                     .jedecID = 0x1465C8,
-                                                                     .name    = "GD_WQ80E_80_33",
-                                                                     .cfg     = &flashCfg_Gd_WQ80E_WQ16E,
-                                                                 },
-                                                                 {
-                                                                     .jedecID = 0x1565C8,
-                                                                     .name    = "GD_WQ16E_16_33",
-                                                                     .cfg     = &flashCfg_Gd_WQ80E_WQ16E,
-                                                                 },
-                                                                 {
-                                                                     .jedecID = 0x1665C8,
-                                                                     .name    = "GD_WQ32E_32_33",
-                                                                     .cfg     = &flashCfg_Gd_LQ08C_LE16C_LQ32D_WQ32E,
-                                                                 },
-                                                                 {
-                                                                     .jedecID = 0x3425C2,
-                                                                     .name    = "MX_25V80_08_18",
-                                                                     .cfg     = &flashCfg_Mxic,
-                                                                 },
-                                                                 {
-                                                                     .jedecID = 0x3525C2,
-                                                                     .name    = "MX_25U16_35_18",
-                                                                     .cfg     = &flashCfg_Mxic_1635F,
-                                                                 },
-                                                                 {
-                                                                     .jedecID = 0x3625C2,
-                                                                     .name    = "MX_25V32_32_18",
-                                                                     .cfg     = &flashCfg_Mxic,
-                                                                 },
-                                                                 {
-                                                                     .jedecID = 0x13400B,
-                                                                     .name    = "XT_25F04D_04_33",
-                                                                     .cfg     = &flashCfg_Xtx40,
-                                                                 },
-                                                                 {
-                                                                     .jedecID = 0x15400B,
-                                                                     .name    = "XT_25F16B_16_33",
-                                                                     .cfg     = &flashCfg_Xtx,
-                                                                 },
-                                                                 {
-                                                                     .jedecID = 0x16400B,
-                                                                     .name    = "XT_25F32B_32_33",
-                                                                     .cfg     = &flashCfg_Xtx,
-                                                                 },
-                                                                 {
-                                                                     .jedecID = 0x14600B,
-                                                                     .name    = "XT_25Q80B_08_18",
-                                                                     .cfg     = &flashCfg_Xtx,
-                                                                 },
-                                                                 {
-                                                                     .jedecID = 0x16600B,
-                                                                     .name    = "XT_25Q32B_32_18",
-                                                                     .cfg     = &flashCfg_Xtx,
-                                                                 },
-                                                                 {
-                                                                     .jedecID = 0x146085,
-                                                                     .name    = "Puya_Q80L/H_08_18/33",
-                                                                     .cfg     = &flashCfg_Puya_Q80L_Q80H_Q16H,
-                                                                 },
-                                                                 {
-                                                                     .jedecID = 0x156085,
-                                                                     .name    = "Puya_Q16H_16_33",
-                                                                     .cfg     = &flashCfg_Puya_Q80L_Q80H_Q16H,
-                                                                 },
-                                                                 {
-                                                                     .jedecID = 0x166085,
-                                                                     .name    = "Puya_Q32H_32_33",
-                                                                     .cfg     = &flashCfg_Puya_Q32H,
-                                                                 },
-                                                                 {
-                                                                     .jedecID = 0x134068,
-                                                                     .name    = "Boya_Q04B_04_33",
-                                                                     .cfg     = &flashCfg_Boya40,
-                                                                 },
-                                                                 {
-                                                                     .jedecID = 0x144068,
-                                                                     .name    = "Boya_Q08B_08_33",
-                                                                     .cfg     = &flashCfg_Boya,
-                                                                 },
-                                                                 {
-                                                                     .jedecID = 0x154068,
-                                                                     .name    = "Boya_Q16B_16_33",
-                                                                     .cfg     = &flashCfg_Boya,
-                                                                 },
-                                                                 {
-                                                                     .jedecID = 0x164068,
-                                                                     .name    = "Boya_Q32B_32_33",
-                                                                     .cfg     = &flashCfg_Boya,
-                                                                 },
-                                                                 {
-                                                                     .jedecID = 0x174068,
-                                                                     .name    = "Boya_Q64A_64_33",
-                                                                     .cfg     = &flashCfg_Boya,
-                                                                 },
-                                                                 {
-                                                                     .jedecID = 0x184068,
-                                                                     .name    = "Boya_Q128A_128_33",
-                                                                     .cfg     = &flashCfg_Boya,
-                                                                 },
-                                                                 {
-                                                                     .jedecID = 0x14605E,
-                                                                     .name    = "FT_VQ80",
-                                                                     .cfg     = &flashCfg_FT_VQ80,
-                                                                 }};
+static const ATTR_TCM_CONST_SECTION Flash_Info_t flashInfos[] = {
+    {
+     .jedecID = 0x1440ef,
+     .name    = "Winb_80DV_08_33",
+     .cfg     = &flashCfg_Winb_80DV,
+     },
+    {
+     .jedecID = 0x1540ef,
+     .name    = "Winb_16DV_16_33",
+     .cfg     = &flashCfg_Winb_16DV,
+     },
+    {
+     .jedecID = 0x1640ef,
+     .name    = "Winb_32FV_32_33",
+     .cfg     = &flashCfg_Winb_80EW_16FW_32JW_32FW_32FV,
+     },
+    {
+     .jedecID = 0x1460ef,
+     .name    = "Winb_80EW_08_18",
+     .cfg     = &flashCfg_Winb_80EW_16FW_32JW_32FW_32FV,
+     },
+    {
+     .jedecID = 0x1560ef,
+     .name    = "Winb_16FW_16_18",
+     .cfg     = &flashCfg_Winb_80EW_16FW_32JW_32FW_32FV,
+     },
+    {
+     .jedecID = 0x1660ef,
+     .name    = "Winb_32FW_32_18",
+     .cfg     = &flashCfg_Winb_80EW_16FW_32JW_32FW_32FV,
+     },
+    {
+     .jedecID = 0x1860ef,
+     .name    = "Winb_128FW_128_18",
+     .cfg     = &flashCfg_Winb_80EW_16FW_32JW_32FW_32FV,
+     },
+    {
+     .jedecID = 0x1680ef,
+     .name    = "Winb_32JW_32_18",
+     .cfg     = &flashCfg_Winb_80EW_16FW_32JW_32FW_32FV,
+     },
+    {
+     .jedecID = 0x13605e,
+     .name    = "Zbit_04_33",
+     .cfg     = &flashCfg_Winb_80EW_16FW_32JW_32FW_32FV,
+     },
+    {
+     .jedecID = 0x14605e,
+     .name    = "Zbit_08_33",
+     .cfg     = &flashCfg_Winb_80EW_16FW_32JW_32FW_32FV,
+     },
+    {
+     .jedecID = 0x14609d,
+     .name    = "ISSI_08_33",
+     .cfg     = &flashCfg_Issi,
+     },
+    {
+     .jedecID = 0x15609d,
+     .name    = "ISSI_16_33",
+     .cfg     = &flashCfg_Issi,
+     },
+    {
+     .jedecID = 0x16609d,
+     .name    = "ISSI_32_33",
+     .cfg     = &flashCfg_Issi,
+     },
+    {
+     .jedecID = 0x14709d,
+     .name    = "ISSI_08_18",
+     .cfg     = &flashCfg_Issi,
+     },
+    {
+     .jedecID = 0x15709d,
+     .name    = "ISSI_16_18",
+     .cfg     = &flashCfg_Issi,
+     },
+    {
+     .jedecID = 0x16709d,
+     .name    = "ISSI_32_18",
+     .cfg     = &flashCfg_Issi,
+     },
+    {
+     .jedecID = 0x134051,
+     .name    = "GD_MD04D_04_33",
+     .cfg     = &flashCfg_Gd_Md_40D,
+     },
+    {
+     .jedecID = 0x1440C8,
+     .name    = "GD_Q08E_08_33",
+     .cfg     = &flashCfg_Gd_Q80E_Q16E,
+     },
+    {
+     .jedecID = 0x1540C8,
+     .name    = "GD_Q16E_16_33",
+     .cfg     = &flashCfg_Gd_Q80E_Q16E,
+     },
+    {
+     .jedecID = 0x1640C8,
+     .name    = "GD_Q32C_32_33",
+     .cfg     = &flashCfg_Gd_Q32C,
+     },
+    {
+     .jedecID = 0x1460C8,
+     .name    = "GD_LQ08C_08_18",
+     .cfg     = &flashCfg_Gd_LQ08C_LE16C_LQ32D_WQ32E,
+     },
+    {
+     .jedecID = 0x1560C8,
+     .name    = "GD_LE16C_16_18",
+     .cfg     = &flashCfg_Gd_LQ08C_LE16C_LQ32D_WQ32E,
+     },
+    {
+     .jedecID = 0x1660C8,
+     .name    = "GD_LQ32D_32_18",
+     .cfg     = &flashCfg_Gd_LQ08C_LE16C_LQ32D_WQ32E,
+     },
+    {
+     .jedecID = 0x1465C8,
+     .name    = "GD_WQ80E_80_33",
+     .cfg     = &flashCfg_Gd_WQ80E_WQ16E,
+     },
+    {
+     .jedecID = 0x1565C8,
+     .name    = "GD_WQ16E_16_33",
+     .cfg     = &flashCfg_Gd_WQ80E_WQ16E,
+     },
+    {
+     .jedecID = 0x1665C8,
+     .name    = "GD_WQ32E_32_33",
+     .cfg     = &flashCfg_Gd_LQ08C_LE16C_LQ32D_WQ32E,
+     },
+    {
+     .jedecID = 0x3425C2,
+     .name    = "MX_25V80_08_18",
+     .cfg     = &flashCfg_Mxic,
+     },
+    {
+     .jedecID = 0x3525C2,
+     .name    = "MX_25U16_35_18",
+     .cfg     = &flashCfg_Mxic_1635F,
+     },
+    {
+     .jedecID = 0x3625C2,
+     .name    = "MX_25V32_32_18",
+     .cfg     = &flashCfg_Mxic,
+     },
+    {
+     .jedecID = 0x13400B,
+     .name    = "XT_25F04D_04_33",
+     .cfg     = &flashCfg_Xtx40,
+     },
+    {
+     .jedecID = 0x15400B,
+     .name    = "XT_25F16B_16_33",
+     .cfg     = &flashCfg_Xtx,
+     },
+    {
+     .jedecID = 0x16400B,
+     .name    = "XT_25F32B_32_33",
+     .cfg     = &flashCfg_Xtx,
+     },
+    {
+     .jedecID = 0x14600B,
+     .name    = "XT_25Q80B_08_18",
+     .cfg     = &flashCfg_Xtx,
+     },
+    {
+     .jedecID = 0x16600B,
+     .name    = "XT_25Q32B_32_18",
+     .cfg     = &flashCfg_Xtx,
+     },
+    {
+     .jedecID = 0x146085,
+     .name    = "Puya_Q80L/H_08_18/33",
+     .cfg     = &flashCfg_Puya_Q80L_Q80H_Q16H,
+     },
+    {
+     .jedecID = 0x156085,
+     .name    = "Puya_Q16H_16_33",
+     .cfg     = &flashCfg_Puya_Q80L_Q80H_Q16H,
+     },
+    {
+     .jedecID = 0x166085,
+     .name    = "Puya_Q32H_32_33",
+     .cfg     = &flashCfg_Puya_Q32H,
+     },
+    {
+     .jedecID = 0x134068,
+     .name    = "Boya_Q04B_04_33",
+     .cfg     = &flashCfg_Boya40,
+     },
+    {
+     .jedecID = 0x144068,
+     .name    = "Boya_Q08B_08_33",
+     .cfg     = &flashCfg_Boya,
+     },
+    {
+     .jedecID = 0x154068,
+     .name    = "Boya_Q16B_16_33",
+     .cfg     = &flashCfg_Boya,
+     },
+    {
+     .jedecID = 0x164068,
+     .name    = "Boya_Q32B_32_33",
+     .cfg     = &flashCfg_Boya,
+     },
+    {
+     .jedecID = 0x174068,
+     .name    = "Boya_Q64A_64_33",
+     .cfg     = &flashCfg_Boya,
+     },
+    {
+     .jedecID = 0x184068,
+     .name    = "Boya_Q128A_128_33",
+     .cfg     = &flashCfg_Boya,
+     },
+    {
+     .jedecID = 0x14605E,
+     .name    = "FT_VQ80",
+     .cfg     = &flashCfg_FT_VQ80,
+     }
+};
 #endif
 
 /*@} end of group SF_CFG_Private_Variables */

@@ -60,7 +60,11 @@
  *  @{
  */
 static const uint32_t    qdecAddr[QDEC_ID_MAX]                     = {QDEC0_BASE, QDEC1_BASE, QDEC2_BASE};
-static intCallback_Type *qdecIntCbfArra[QDEC_ID_MAX][QDEC_INT_ALL] = {{NULL, NULL, NULL, NULL}, {NULL, NULL, NULL, NULL}, {NULL, NULL, NULL, NULL}};
+static intCallback_Type *qdecIntCbfArra[QDEC_ID_MAX][QDEC_INT_ALL] = {
+    {NULL, NULL, NULL, NULL},
+    {NULL, NULL, NULL, NULL},
+    {NULL, NULL, NULL, NULL}
+};
 
 /*@} end of group QDEC_Private_Variables */
 

@@ -90,7 +90,8 @@ int uart_open(struct device *dev, uint16_t oflag) {
   fifoCfg.rxFifoDmaThreshold = uart_device->fifo_threshold;
   fifoCfg.rxFifoDmaEnable    = DISABLE;
 
-  if (oflag & DEVICE_OFLAG_STREAM_TX) {}
+  if (oflag & DEVICE_OFLAG_STREAM_TX) {
+  }
   if ((oflag & DEVICE_OFLAG_INT_TX) || (oflag & DEVICE_OFLAG_INT_RX)) {
 #ifdef BSP_USING_UART0
     if (uart_device->id == UART0_ID) {

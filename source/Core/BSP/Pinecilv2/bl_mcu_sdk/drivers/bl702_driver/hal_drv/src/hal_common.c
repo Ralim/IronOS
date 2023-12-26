@@ -64,7 +64,8 @@ void ATTR_TCM_SECTION hal_jump2app(uint32_t flash_offset) {
     L1C_Cache_Flush_Ext();
     app_main();
   } else {
-    while (1) {}
+    while (1) {
+    }
   }
 }
 

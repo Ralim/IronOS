@@ -135,8 +135,8 @@ struct hids_remote_key {
 
 static struct hids_remote_key remote_kbd_map_tab[] = {
     {HID_PAGE_KBD, Key_a_or_A2},
-    {HID_PAGE_KBD, Key_b_or_B},
-    {HID_PAGE_KBD, Key_c_or_C},
+    {HID_PAGE_KBD,  Key_b_or_B},
+    {HID_PAGE_KBD,  Key_c_or_C},
 };
 
 int hog_notify(struct bt_conn *conn, uint16_t hid_usage, uint8_t press) {

@@ -48,23 +48,23 @@
 /** @defgroup  SEC_ENG_Private_Macros
  *  @{
  */
-#define PUT_UINT32_BE(n, b, i)           \
-  {                                      \
-    (b)[(i)]     = (uint8_t)((n) >> 24); \
-    (b)[(i) + 1] = (uint8_t)((n) >> 16); \
-    (b)[(i) + 2] = (uint8_t)((n) >> 8);  \
-    (b)[(i) + 3] = (uint8_t)((n));       \
+#define PUT_UINT32_BE(n, b, i)                                                                                                                                                                         \
+  {                                                                                                                                                                                                    \
+    (b)[(i)]     = (uint8_t)((n) >> 24);                                                                                                                                                               \
+    (b)[(i) + 1] = (uint8_t)((n) >> 16);                                                                                                                                                               \
+    (b)[(i) + 2] = (uint8_t)((n) >> 8);                                                                                                                                                                \
+    (b)[(i) + 3] = (uint8_t)((n));                                                                                                                                                                     \
   }
-#define PUT_UINT64_BE(n, b, i)           \
-  {                                      \
-    (b)[(i)]     = (uint8_t)((n) >> 56); \
-    (b)[(i) + 1] = (uint8_t)((n) >> 48); \
-    (b)[(i) + 2] = (uint8_t)((n) >> 40); \
-    (b)[(i) + 3] = (uint8_t)((n) >> 32); \
-    (b)[(i) + 4] = (uint8_t)((n) >> 24); \
-    (b)[(i) + 5] = (uint8_t)((n) >> 16); \
-    (b)[(i) + 6] = (uint8_t)((n) >> 8);  \
-    (b)[(i) + 7] = (uint8_t)((n));       \
+#define PUT_UINT64_BE(n, b, i)                                                                                                                                                                         \
+  {                                                                                                                                                                                                    \
+    (b)[(i)]     = (uint8_t)((n) >> 56);                                                                                                                                                               \
+    (b)[(i) + 1] = (uint8_t)((n) >> 48);                                                                                                                                                               \
+    (b)[(i) + 2] = (uint8_t)((n) >> 40);                                                                                                                                                               \
+    (b)[(i) + 3] = (uint8_t)((n) >> 32);                                                                                                                                                               \
+    (b)[(i) + 4] = (uint8_t)((n) >> 24);                                                                                                                                                               \
+    (b)[(i) + 5] = (uint8_t)((n) >> 16);                                                                                                                                                               \
+    (b)[(i) + 6] = (uint8_t)((n) >> 8);                                                                                                                                                                \
+    (b)[(i) + 7] = (uint8_t)((n));                                                                                                                                                                     \
   }
 #define SEC_ENG_SHA_BUSY_TIMEOUT_COUNT  (100 * 160 * 1000)
 #define SEC_ENG_AES_BUSY_TIMEOUT_COUNT  (100 * 160 * 1000)
@@ -80,11 +80,11 @@
 struct pka0_pld_cfg {
   union {
     struct {
-      uint32_t size : 12;       /*[11: 0],       r/w,        0x0 */
-      uint32_t d_reg_index : 8; /*[19:12],        r/w,        0x0 */
-      uint32_t d_reg_type : 4;  /*[23:20],        r/w,        0x0 */
-      uint32_t op : 7;          /*[30:24],        r/w,        0x0 */
-      uint32_t last_op : 1;     /*[31:31],        r/w,        0x0 */
+      uint32_t size        : 12; /*[11: 0],       r/w,        0x0 */
+      uint32_t d_reg_index : 8;  /*[19:12],        r/w,        0x0 */
+      uint32_t d_reg_type  : 4;  /*[23:20],        r/w,        0x0 */
+      uint32_t op          : 7;  /*[30:24],        r/w,        0x0 */
+      uint32_t last_op     : 1;  /*[31:31],        r/w,        0x0 */
     } BF;
     uint32_t WORD;
   } value;
@@ -93,11 +93,11 @@ struct pka0_pld_cfg {
 struct pka0_pldi_cfg {
   union {
     struct {
-      uint32_t rsvd : 12;       /*[11: 0],       r/w,        0x0 */
-      uint32_t d_reg_index : 8; /*[19:12],        r/w,        0x0 */
-      uint32_t d_reg_type : 4;  /*[23:20],        r/w,        0x0 */
-      uint32_t op : 7;          /*[30:24],        r/w,        0x0 */
-      uint32_t last_op : 1;     /*[31:31],        r/w,        0x0 */
+      uint32_t rsvd        : 12; /*[11: 0],       r/w,        0x0 */
+      uint32_t d_reg_index : 8;  /*[19:12],        r/w,        0x0 */
+      uint32_t d_reg_type  : 4;  /*[23:20],        r/w,        0x0 */
+      uint32_t op          : 7;  /*[30:24],        r/w,        0x0 */
+      uint32_t last_op     : 1;  /*[31:31],        r/w,        0x0 */
     } BF;
     uint32_t WORD;
   } value;
@@ -106,12 +106,12 @@ struct pka0_pldi_cfg {
 struct pka0_common_op_first_cfg {
   union {
     struct {
-      uint32_t s0_reg_idx : 8;  /*[7: 0],       r/w,        0x0 */
+      uint32_t s0_reg_idx  : 8; /*[7: 0],       r/w,        0x0 */
       uint32_t s0_reg_type : 4; /*[11:8],       r/w,        0x0 */
-      uint32_t d_reg_idx : 8;   /*[19:12],      r/w,        0x0 */
-      uint32_t d_reg_type : 4;  /*[23:20],      r/w,        0x0 */
-      uint32_t op : 7;          /*[30:24],      r/w,        0x0 */
-      uint32_t last_op : 1;     /*[31:31],      r/w,        0x0 */
+      uint32_t d_reg_idx   : 8; /*[19:12],      r/w,        0x0 */
+      uint32_t d_reg_type  : 4; /*[23:20],      r/w,        0x0 */
+      uint32_t op          : 7; /*[30:24],      r/w,        0x0 */
+      uint32_t last_op     : 1; /*[31:31],      r/w,        0x0 */
     } BF;
     uint32_t WORD;
   } value;
@@ -120,10 +120,10 @@ struct pka0_common_op_first_cfg {
 struct pka0_common_op_snd_cfg_S1_only {
   union {
     struct {
-      uint32_t reserved_0_11 : 12; /*[11: 0],       rsvd,       0x0 */
-      uint32_t s1_reg_idx : 8;     /*[19:12],       r/w,        0x0 */
-      uint32_t s1_reg_type : 4;    /*[23:20],       r/w,        0x0 */
-      uint32_t reserved_24_31 : 8; /*[31:24],       rsvd,       0x0 */
+      uint32_t reserved_0_11  : 12; /*[11: 0],       rsvd,       0x0 */
+      uint32_t s1_reg_idx     : 8;  /*[19:12],       r/w,        0x0 */
+      uint32_t s1_reg_type    : 4;  /*[23:20],       r/w,        0x0 */
+      uint32_t reserved_24_31 : 8;  /*[31:24],       rsvd,       0x0 */
     } BF;
     uint32_t WORD;
   } value;
@@ -132,8 +132,8 @@ struct pka0_common_op_snd_cfg_S1_only {
 struct pka0_common_op_snd_cfg_S2_only {
   union {
     struct {
-      uint32_t s2_reg_idx : 8;      /*[7 : 0],       r/w,        0x0 */
-      uint32_t s2_reg_type : 4;     /*[11: 8],       r/w,        0x0 */
+      uint32_t s2_reg_idx     : 8;  /*[7 : 0],       r/w,        0x0 */
+      uint32_t s2_reg_type    : 4;  /*[11: 8],       r/w,        0x0 */
       uint32_t reserved_12_31 : 20; /*[31:12],       rsvd,       0x0 */
     } BF;
     uint32_t WORD;
@@ -143,10 +143,10 @@ struct pka0_common_op_snd_cfg_S2_only {
 struct pka0_common_op_snd_cfg_S1_S2 {
   union {
     struct {
-      uint32_t s2_reg_idx : 8;     /*[7 : 0],       r/w,        0x0 */
-      uint32_t s2_reg_type : 4;    /*[11: 8],       r/w,        0x0 */
-      uint32_t s1_reg_idx : 8;     /*[19:12],       r/w,        0x0 */
-      uint32_t s1_reg_type : 4;    /*[23:20],       r/w,        0x0 */
+      uint32_t s2_reg_idx     : 8; /*[7 : 0],       r/w,        0x0 */
+      uint32_t s2_reg_type    : 4; /*[11: 8],       r/w,        0x0 */
+      uint32_t s1_reg_idx     : 8; /*[19:12],       r/w,        0x0 */
+      uint32_t s1_reg_type    : 4; /*[23:20],       r/w,        0x0 */
       uint32_t reserved_24_31 : 8; /*[31:24],       rsvd,       0x0 */
     } BF;
     uint32_t WORD;
@@ -156,7 +156,7 @@ struct pka0_common_op_snd_cfg_S1_S2 {
 struct pka0_bit_shift_op_cfg {
   union {
     struct {
-      uint32_t bit_shift : 15;      /*[14: 0],       r/w,        0x0 */
+      uint32_t bit_shift      : 15; /*[14: 0],       r/w,        0x0 */
       uint32_t reserved_24_31 : 17; /*[31:15],       rsvd,        0x0 */
     } BF;
     uint32_t WORD;

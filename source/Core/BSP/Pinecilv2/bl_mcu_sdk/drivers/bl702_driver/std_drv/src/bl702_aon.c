@@ -47,16 +47,16 @@
 /** @defgroup  AON_Private_Macros
  *  @{
  */
-#define AON_CLK_SET_DUMMY_WAIT \
-  {                            \
-    __NOP();                   \
-    __NOP();                   \
-    __NOP();                   \
-    __NOP();                   \
-    __NOP();                   \
-    __NOP();                   \
-    __NOP();                   \
-    __NOP();                   \
+#define AON_CLK_SET_DUMMY_WAIT                                                                                                                                                                         \
+  {                                                                                                                                                                                                    \
+    __NOP();                                                                                                                                                                                           \
+    __NOP();                                                                                                                                                                                           \
+    __NOP();                                                                                                                                                                                           \
+    __NOP();                                                                                                                                                                                           \
+    __NOP();                                                                                                                                                                                           \
+    __NOP();                                                                                                                                                                                           \
+    __NOP();                                                                                                                                                                                           \
+    __NOP();                                                                                                                                                                                           \
   }
 
 /*@} end of group AON_Private_Macros */

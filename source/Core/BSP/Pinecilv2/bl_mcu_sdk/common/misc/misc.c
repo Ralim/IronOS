@@ -231,7 +231,8 @@ int arch_clzll(uint64_t *val, uint32_t *bit) {
 *******************************************************************************/
 void check_failed(uint8_t *file, uint32_t line) {
   /* Infinite loop */
-  while (1) {}
+  while (1) {
+  }
 }
 #endif /* DEBUG */
 

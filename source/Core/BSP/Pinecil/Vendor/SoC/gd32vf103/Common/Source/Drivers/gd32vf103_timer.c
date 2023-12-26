@@ -482,8 +482,8 @@ void timer_break_struct_para_init(timer_break_parameter_struct *breakpara) {
     \retval     none
 */
 void timer_break_config(uint32_t timer_periph, timer_break_parameter_struct *breakpara) {
-  TIMER_CCHP(timer_periph) = (uint32_t)(((uint32_t)(breakpara->runoffstate)) | ((uint32_t)(breakpara->ideloffstate)) | ((uint32_t)(breakpara->deadtime)) | ((uint32_t)(breakpara->breakpolarity))
-                                        | ((uint32_t)(breakpara->outputautostate)) | ((uint32_t)(breakpara->protectmode)) | ((uint32_t)(breakpara->breakstate)));
+  TIMER_CCHP(timer_periph) = (uint32_t)(((uint32_t)(breakpara->runoffstate)) | ((uint32_t)(breakpara->ideloffstate)) | ((uint32_t)(breakpara->deadtime)) | ((uint32_t)(breakpara->breakpolarity)) |
+                                        ((uint32_t)(breakpara->outputautostate)) | ((uint32_t)(breakpara->protectmode)) | ((uint32_t)(breakpara->breakstate)));
 }
 
 /*!

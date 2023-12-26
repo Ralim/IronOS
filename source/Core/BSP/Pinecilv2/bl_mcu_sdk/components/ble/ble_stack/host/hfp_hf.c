@@ -77,13 +77,13 @@ static const struct {
   uint32_t min;
   uint32_t max;
 } ag_ind[] = {
-    {"service", 0, 1},   /* HF_SERVICE_IND */
-    {"call", 0, 1},      /* HF_CALL_IND */
+    {  "service", 0, 1}, /* HF_SERVICE_IND */
+    {     "call", 0, 1}, /* HF_CALL_IND */
     {"callsetup", 0, 3}, /* HF_CALL_SETUP_IND */
-    {"callheld", 0, 2},  /* HF_CALL_HELD_IND */
-    {"signal", 0, 5},    /* HF_SINGNAL_IND */
-    {"roam", 0, 1},      /* HF_ROAM_IND */
-    {"battchg", 0, 5}    /* HF_BATTERY_IND */
+    { "callheld", 0, 2}, /* HF_CALL_HELD_IND */
+    {   "signal", 0, 5}, /* HF_SINGNAL_IND */
+    {     "roam", 0, 1}, /* HF_ROAM_IND */
+    {  "battchg", 0, 5}  /* HF_BATTERY_IND */
 };
 
 static void connected(struct bt_conn *conn) { BT_DBG("HFP HF Connected!"); }
@@ -437,7 +437,11 @@ static const struct unsolicited {
   const char      *cmd;
   enum at_cmd_type type;
   int (*func)(struct at_client *hf_at);
-} handlers[] = {{"CIEV", AT_CMD_TYPE_UNSOLICITED, ciev_handle}, {"RING", AT_CMD_TYPE_OTHER, ring_handle}, {"BCS", AT_CMD_TYPE_UNSOLICITED, bcs_handle}};
+} handlers[] = {
+    {"CIEV", AT_CMD_TYPE_UNSOLICITED, ciev_handle},
+    {"RING",       AT_CMD_TYPE_OTHER, ring_handle},
+    { "BCS", AT_CMD_TYPE_UNSOLICITED,  bcs_handle}
+};
 
 static const struct unsolicited *hfp_hf_unsol_lookup(struct at_client *hf_at) {
   int i;

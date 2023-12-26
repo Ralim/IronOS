@@ -1136,12 +1136,12 @@ void ATTR_TCM_SECTION PDS_Auto_Enable(PDS_AUTO_POWER_DOWN_CFG_Type *powerCfg, PD
   CHECK_PARAM(IS_PDS_LDO_VOLTAGE_TYPE(normalCfg->vddcoreVol));
 
   /* power config */
-  pdsCtl |= (powerCfg->mbgPower << 31) | (powerCfg->ldo18rfPower << 30) | (powerCfg->sfregPower << 29) | (powerCfg->pllPower << 28) | (powerCfg->cpu0Power << 19) | (powerCfg->rc32mPower << 17)
-            | (powerCfg->xtalPower << 14) | (powerCfg->allPower << 13) | (powerCfg->isoPower << 11) | (powerCfg->bzPower << 10) | (powerCfg->sramDisStanby << 9) | (powerCfg->cgPower << 8)
-            | (powerCfg->cpu1Power << 7) | (powerCfg->usbPower << 3);
+  pdsCtl |= (powerCfg->mbgPower << 31) | (powerCfg->ldo18rfPower << 30) | (powerCfg->sfregPower << 29) | (powerCfg->pllPower << 28) | (powerCfg->cpu0Power << 19) | (powerCfg->rc32mPower << 17) |
+            (powerCfg->xtalPower << 14) | (powerCfg->allPower << 13) | (powerCfg->isoPower << 11) | (powerCfg->bzPower << 10) | (powerCfg->sramDisStanby << 9) | (powerCfg->cgPower << 8) |
+            (powerCfg->cpu1Power << 7) | (powerCfg->usbPower << 3);
   pdsCtl = BL_SET_REG_BITS_VAL(pdsCtl, PDS_CR_PDS_LDO_VOL, normalCfg->vddcoreVol);
-  pdsCtl |= (normalCfg->vddcoreVolEn << 18) | (normalCfg->cpu0NotNeedWFI << 21) | (normalCfg->cpu1NotNeedWFI << 20) | (normalCfg->busReset << 16) | (normalCfg->disIrqWakeUp << 15)
-            | (normalCfg->powerOffXtalForever << 2) | (normalCfg->sleepForever << 1);
+  pdsCtl |= (normalCfg->vddcoreVolEn << 18) | (normalCfg->cpu0NotNeedWFI << 21) | (normalCfg->cpu1NotNeedWFI << 20) | (normalCfg->busReset << 16) | (normalCfg->disIrqWakeUp << 15) |
+            (normalCfg->powerOffXtalForever << 2) | (normalCfg->sleepForever << 1);
   BL_WR_REG(PDS_BASE, PDS_CTL, pdsCtl);
 
   pdsCtl = BL_RD_REG(PDS_BASE, PDS_CTL);

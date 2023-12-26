@@ -33,11 +33,11 @@
 #define NET_BUF_ERR(fmt, ...)  LOG_ERR(fmt, ##__VA_ARGS__)
 #define NET_BUF_WARN(fmt, ...) LOG_WRN(fmt, ##__VA_ARGS__)
 #define NET_BUF_INFO(fmt, ...) LOG_INF(fmt, ##__VA_ARGS__)
-#define NET_BUF_ASSERT(cond)                     \
-  do {                                           \
-    if (!(cond)) {                               \
-      NET_BUF_ERR("assert: '" #cond "' failed"); \
-    }                                            \
+#define NET_BUF_ASSERT(cond)                                                                                                                                                                           \
+  do {                                                                                                                                                                                                 \
+    if (!(cond)) {                                                                                                                                                                                     \
+      NET_BUF_ERR("assert: '" #cond "' failed");                                                                                                                                                       \
+    }                                                                                                                                                                                                  \
   } while (0)
 #else
 

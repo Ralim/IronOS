@@ -2457,12 +2457,12 @@ done:
   return 0;
 }
 
-#define BT_GATT_CHRC(_uuid, _handle, _props)                                            \
-  BT_GATT_ATTRIBUTE(BT_UUID_GATT_CHRC, BT_GATT_PERM_READ, bt_gatt_attr_read_chrc, NULL, \
-                    (&(struct bt_gatt_chrc){                                            \
-                        .uuid         = _uuid,                                          \
-                        .value_handle = _handle,                                        \
-                        .properties   = _props,                                         \
+#define BT_GATT_CHRC(_uuid, _handle, _props)                                                                                                                                                           \
+  BT_GATT_ATTRIBUTE(BT_UUID_GATT_CHRC, BT_GATT_PERM_READ, bt_gatt_attr_read_chrc, NULL,                                                                                                                \
+                    (&(struct bt_gatt_chrc){                                                                                                                                                           \
+                        .uuid         = _uuid,                                                                                                                                                         \
+                        .value_handle = _handle,                                                                                                                                                       \
+                        .properties   = _props,                                                                                                                                                        \
                     }))
 
 static u16_t parse_characteristic(struct bt_conn *conn, const void *pdu, struct bt_gatt_discover_params *params, u16_t length) {
@@ -2856,9 +2856,8 @@ int bt_gatt_discover(struct bt_conn *conn, struct bt_gatt_discover_params *param
     return gatt_read_type(conn, params);
   case BT_GATT_DISCOVER_DESCRIPTOR:
     /* Only descriptors can be filtered */
-    if (params->uuid
-        && (!bt_uuid_cmp(params->uuid, BT_UUID_GATT_PRIMARY) || !bt_uuid_cmp(params->uuid, BT_UUID_GATT_SECONDARY) || !bt_uuid_cmp(params->uuid, BT_UUID_GATT_INCLUDE)
-            || !bt_uuid_cmp(params->uuid, BT_UUID_GATT_CHRC))) {
+    if (params->uuid && (!bt_uuid_cmp(params->uuid, BT_UUID_GATT_PRIMARY) || !bt_uuid_cmp(params->uuid, BT_UUID_GATT_SECONDARY) || !bt_uuid_cmp(params->uuid, BT_UUID_GATT_INCLUDE) ||
+                         !bt_uuid_cmp(params->uuid, BT_UUID_GATT_CHRC))) {
       return -EINVAL;
     }
 

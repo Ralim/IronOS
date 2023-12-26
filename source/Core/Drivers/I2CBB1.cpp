@@ -287,7 +287,8 @@ uint8_t I2CBB1::read_bit() {
 void I2CBB1::unlock() { xSemaphoreGive(I2CSemaphore); }
 
 bool I2CBB1::lock() {
-  if (I2CSemaphore == NULL) {}
+  if (I2CSemaphore == NULL) {
+  }
   bool a = xSemaphoreTake(I2CSemaphore, (TickType_t)100) == pdTRUE;
   return a;
 }

@@ -36,8 +36,8 @@ static ssize_t scan_intvl_win_write(struct bt_conn *conn, const struct bt_gatt_a
   return len;
 }
 
-static struct bt_gatt_attr attrs[]
-    = {BT_GATT_PRIMARY_SERVICE(BT_UUID_SCPS), BT_GATT_CHARACTERISTIC(BT_UUID_SCPS_SCAN_INTVL_WIN, BT_GATT_CHRC_WRITE_WITHOUT_RESP, BT_GATT_PERM_NONE, NULL, NULL, &intvl_win)};
+static struct bt_gatt_attr attrs[] = {BT_GATT_PRIMARY_SERVICE(BT_UUID_SCPS),
+                                      BT_GATT_CHARACTERISTIC(BT_UUID_SCPS_SCAN_INTVL_WIN, BT_GATT_CHRC_WRITE_WITHOUT_RESP, BT_GATT_PERM_NONE, NULL, NULL, &intvl_win)};
 
 static struct bt_gatt_service scps = BT_GATT_SERVICE(attrs);
 
