@@ -257,8 +257,9 @@ static void bl_onchiphci_rx_packet_handler(uint8_t pkt_type, uint16_t src_id, ui
       return;
     }
     buf = bt_buf_get_rx(BT_BUF_ACL_IN, K_NO_WAIT);
-    if (buf)
+    if (buf) {
       bl_packet_to_host(pkt_type, src_id, param, param_len, buf);
+    }
     return;
   } else {
     if (pkt_type != BT_HCI_ACL_DATA) {

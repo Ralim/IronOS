@@ -1159,13 +1159,15 @@ ATTR_TCM_SECTION void pm_hbn_mode_enter(enum pm_hbn_sleep_level hbn_level, uint8
   /* To make it simple and safe*/
   cpu_global_irq_disable();
 
-  if (sleep_time && (hbn_level < PM_HBN_LEVEL_2))
+  if (sleep_time && (hbn_level < PM_HBN_LEVEL_2)) {
     rtc_init(sleep_time); // sleep time,unit is second
+  }
 
-  if (hbn_level >= PM_HBN_LEVEL_2)
+  if (hbn_level >= PM_HBN_LEVEL_2) {
     HBN_Power_Off_RC32K();
-  else
+  } else {
     HBN_Power_On_RC32K();
+  }
 
   HBN_Power_Down_Flash(NULL);
   /* SF io select from efuse value */
@@ -1237,9 +1239,10 @@ ATTR_HBN_RAM_SECTION void pm_hbn_enter_again(bool reset) {
   BL_WR_REG(HBN_BASE, HBN_IRQ_CLR, 0xffffffff);
   BL_WR_REG(HBN_BASE, HBN_IRQ_CLR, 0);
 
-  if (!reset)
+  if (!reset) {
     /* Enable HBN mode */
     BL_WR_REG(HBN_BASE, HBN_RSV0, HBN_STATUS_ENTER_FLAG);
+  }
 
   tmpVal = BL_RD_REG(HBN_BASE, HBN_CTL);
   tmpVal = BL_SET_REG_BIT(tmpVal, HBN_MODE);

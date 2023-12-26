@@ -184,8 +184,7 @@ void vAssertCalled(void) {
   //   PWM_Channel_Disable(PWM_Channel);
   //   gpio_set_mode(PWM_Out_Pin, GPIO_INPUT_PD_MODE);
 
-  while (1)
-    ;
+  while (1) {}
 }
 
 void Trap_Handler(void) {
@@ -255,8 +254,7 @@ void Trap_Handler(void) {
   }
 
   if (!isecall) {
-    while (1)
-      ;
+    while (1) {}
   }
 }
 
@@ -288,8 +286,7 @@ void Interrupt_Handler(void) {
           MSG("Peripheral Interrupt num:%d \r\n", (unsigned int)num - IRQ_NUM_BASE);
         }
 
-        while (1)
-          ;
+        while (1) {}
       }
     } else {
       MSG("Unexpected interrupt num:%d\r\n", (unsigned int)num);

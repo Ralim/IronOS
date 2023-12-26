@@ -94,7 +94,7 @@ int uart_open(struct device *dev, uint16_t oflag) {
   if ((oflag & DEVICE_OFLAG_INT_TX) || (oflag & DEVICE_OFLAG_INT_RX)) {
 #ifdef BSP_USING_UART0
     if (uart_device->id == UART0_ID)
-      Interrupt_Handler_Register(UART0_IRQn, UART0_IRQ);
+      {Interrupt_Handler_Register(UART0_IRQn, UART0_IRQ);}
 #endif
 #ifdef BSP_USING_UART1
     if (uart_device->id == UART1_ID)
@@ -151,9 +151,9 @@ int uart_control(struct device *dev, int cmd, void *args) {
       offset++;
     }
     if (uart_device->id == UART0_ID)
-      CPU_Interrupt_Enable(UART0_IRQn);
+      {CPU_Interrupt_Enable(UART0_IRQn);}
     else if (uart_device->id == UART1_ID)
-      CPU_Interrupt_Enable(UART1_IRQn);
+      {CPU_Interrupt_Enable(UART1_IRQn);}
 
     break;
   }
@@ -166,9 +166,9 @@ int uart_control(struct device *dev, int cmd, void *args) {
       offset++;
     }
     if (uart_device->id == UART0_ID)
-      CPU_Interrupt_Disable(UART0_IRQn);
+      {CPU_Interrupt_Disable(UART0_IRQn);}
     else if (uart_device->id == UART1_ID)
-      CPU_Interrupt_Disable(UART1_IRQn);
+      {CPU_Interrupt_Disable(UART1_IRQn);}
 
     break;
   }
@@ -270,7 +270,7 @@ int uart_write(struct device *dev, uint32_t pos, const void *buffer, uint32_t si
   if (dev->oflag & DEVICE_OFLAG_DMA_TX) {
     struct device *dma_ch = (struct device *)uart_device->tx_dma;
     if (!dma_ch)
-      return -1;
+{      return -1;}
 
     if (uart_device->id == 0) {
       ret = dma_reload(dma_ch, (uint32_t)buffer, (uint32_t)DMA_ADDR_UART0_TDR, size);
@@ -282,8 +282,9 @@ int uart_write(struct device *dev, uint32_t pos, const void *buffer, uint32_t si
     return ret;
   } else if (dev->oflag & DEVICE_OFLAG_INT_TX) {
     return -2;
-  } else
+  } else {
     return UART_SendData(uart_device->id, (uint8_t *)buffer, size);
+  }
 }
 /**
  * @brief
@@ -299,8 +300,9 @@ int uart_read(struct device *dev, uint32_t pos, void *buffer, uint32_t size) {
   uart_device_t *uart_device = (uart_device_t *)dev;
   if (dev->oflag & DEVICE_OFLAG_DMA_RX) {
     struct device *dma_ch = (struct device *)uart_device->rx_dma;
-    if (!dma_ch)
+    if (!dma_ch) {
       return -1;
+    }
 
     if (uart_device->id == 0) {
       ret = dma_reload(dma_ch, (uint32_t)DMA_ADDR_UART0_RDR, (uint32_t)buffer, size);
@@ -327,8 +329,9 @@ int uart_read(struct device *dev, uint32_t pos, void *buffer, uint32_t size) {
 int uart_register(enum uart_index_type index, const char *name) {
   struct device *dev;
 
-  if (UART_MAX_INDEX == 0)
+  if (UART_MAX_INDEX == 0) {
     return -DEVICE_EINVAL;
+  }
 
   dev = &(uartx_device[index].parent);
 
@@ -356,8 +359,9 @@ void uart_isr(uart_device_t *handle) {
   tmpVal  = BL_RD_REG(UARTx, UART_INT_STS);
   maskVal = BL_RD_REG(UARTx, UART_INT_MASK);
 
-  if (!handle->parent.callback)
+  if (!handle->parent.callback) {
     return;
+  }
 
   /* Length of uart tx data transfer arrived interrupt */
   if (BL_IS_REG_BIT_SET(tmpVal, UART_UTX_END_INT) && !BL_IS_REG_BIT_SET(maskVal, UART_CR_UTX_END_MASK)) {

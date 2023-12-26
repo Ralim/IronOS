@@ -200,8 +200,9 @@ int arch_ffsll(uint64_t *val, uint32_t *bit) {
 }
 
 int arch_ctzll(uint64_t *val, uint32_t *bit) {
-  if (!*val)
+  if (!*val) {
     return -1;
+  }
 
   *bit = __builtin_ctzll(*val);
   *val &= ~((1ULL) << (*bit));
@@ -209,8 +210,9 @@ int arch_ctzll(uint64_t *val, uint32_t *bit) {
 }
 
 int arch_clzll(uint64_t *val, uint32_t *bit) {
-  if (!*val)
+  if (!*val) {
     return -1;
+  }
 
   *bit = __builtin_clzll(*val);
   *val &= ~((1ULL) << (*bit));
@@ -229,8 +231,7 @@ int arch_clzll(uint64_t *val, uint32_t *bit) {
 *******************************************************************************/
 void check_failed(uint8_t *file, uint32_t line) {
   /* Infinite loop */
-  while (1)
-    ;
+  while (1) {}
 }
 #endif /* DEBUG */
 
