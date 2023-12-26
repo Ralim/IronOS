@@ -75,6 +75,7 @@ struct blz_state {
   int            bits_left;
 };
 
+// clang-format off
 #if !defined(BLZ_NO_LUT)
 static const unsigned short blz_gamma_lookup[512][2] = {
     {0, 0},       {0, 0},
@@ -129,6 +130,7 @@ static const unsigned short blz_gamma_lookup[512][2] = {
     {0xFDFC, 16}, {0xFDFE, 16}, {0xFF54, 16}, {0xFF56, 16}, {0xFF5C, 16}, {0xFF5E, 16}, {0xFF74, 16}, {0xFF76, 16}, {0xFF7C, 16}, {0xFF7E, 16}, {0xFFD4, 16}, {0xFFD6, 16}, {0xFFDC, 16}, {0xFFDE, 16},
     {0xFFF4, 16}, {0xFFF6, 16}, {0xFFFC, 16}, {0xFFFE, 16}};
 #endif
+// clang-format on
 
 static int blz_log2(unsigned long n) {
   assert(n > 0);
