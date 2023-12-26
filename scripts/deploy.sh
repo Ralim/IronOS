@@ -91,21 +91,6 @@ check_style_file()
 		fi;
 		ret=1
 	fi;
-	# - clang-format has neat option for { } in condition blocks but it's available only since version 15:
-	#   * https://clang.llvm.org/docs/ClangFormatStyleOptions.html#insertbraces
-	# - since reference env is alpine 3.16 with clang-format 13, implement custom parser to do the similar thing here with grep:
-	#   it used to trace missing { and } for if/else/do/while/for BUT IT'S VERY SPECULATIVE, very-very hacky & dirty.
-	# - if file is problematic but filename only requested make final grep in pipe silent ... UPD: make code messy but shellcheck happy
-	if [ -z "${LIST}" ]; then
-		grep -H -n  -e "^ .*if .*)$"  -e "^ .*else$"  -e "^ .* do$"  -e "^ .*while .*)$"  -e "^ .*for .*)$"  "${src}" | grep -v  -e "^.*//"  -e "^.*:.*: .*if ((.*[^)])$" | sed 's,^,\n\n,; s,: ,:1: error: probably missing { or } for conditional or loop block:\n>>>,;' | grep -e "^.*$"
-	else
-		grep -H -n  -e "^ .*if .*)$"  -e "^ .*else$"  -e "^ .* do$"  -e "^ .*while .*)$"  -e "^ .*for .*)$"  "${src}" | grep -v  -e "^.*//"  -e "^.*:.*: .*if ((.*[^)])$" | sed 's,^,\n\n,; s,: ,:1: error: probably missing { or } for conditional or loop block:\n>>>,;' | grep -q -e "^.*$"
-	fi;
-	if [ "${?}" -ne 1 ]; then
-		# ... and only print the filename
-		test -z "${LIST}" || echo "${src}"
-		ret=1;
-	fi;
 	return "${ret}"
 }
 
