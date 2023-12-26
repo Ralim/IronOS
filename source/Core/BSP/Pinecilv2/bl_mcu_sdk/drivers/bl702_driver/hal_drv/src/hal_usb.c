@@ -817,8 +817,9 @@ int usb_dc_ep_write(struct device *dev, const uint8_t ep, const uint8_t *data, u
 
   memcopy_to_fifo((void *)ep_tx_fifo_addr, (uint8_t *)data, data_len);
   /* Clear NAK and enable ep */
-  if (USB_EP_GET_IDX(ep) != 0)
+  if (USB_EP_GET_IDX(ep) != 0) {
     USB_Set_EPx_Rdy(USB_EP_GET_IDX(ep));
+  }
   USB_DC_LOG_DBG("EP%d write %u bytes\r\n", ep_idx, data_len);
 
   if (ret_bytes) {

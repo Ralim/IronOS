@@ -216,8 +216,9 @@ void bl_trigger_queued_msg() {
       break;
     }
 
-    if (bt_buf_get_rx_avail_cnt() <= CONFIG_BT_RX_BUF_RSV_COUNT)
+    if (bt_buf_get_rx_avail_cnt() <= CONFIG_BT_RX_BUF_RSV_COUNT) {
       break;
+    }
 
     buf = bt_buf_get_rx(BT_BUF_ACL_IN, K_NO_WAIT);
     if (!buf) {

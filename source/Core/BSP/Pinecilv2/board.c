@@ -146,8 +146,9 @@ static void board_pin_mux_init(void) {
 
     /*if using gpio9-gpio12 and func is not analog and output ,should set reg_aon_pad_ie_smt corresponding bit = 1*/
     if ((af_pin_table[i].pin > GPIO_PIN_8) && (af_pin_table[i].pin < GPIO_PIN_13)) {
-      if ((af_pin_table[i].func != 10) && ((af_pin_table[i].func < GPIO_FUN_GPIO_OUTPUT_UP) || (af_pin_table[i].func > GPIO_FUN_GPIO_OUTPUT_NONE)))
+      if ((af_pin_table[i].func != 10) && ((af_pin_table[i].func < GPIO_FUN_GPIO_OUTPUT_UP) || (af_pin_table[i].func > GPIO_FUN_GPIO_OUTPUT_NONE))) {
         hbn_aon_ie |= (1 << (af_pin_table[i].pin - 9));
+      }
     }
 
     /*if reset state*/

@@ -44,8 +44,9 @@ uint64_t get_timer_value(void) {
   while (1) {
     uint32_t hi = mtime_hi();
     uint32_t lo = mtime_lo();
-    if (hi == mtime_hi())
+    if (hi == mtime_hi()) {
       return ((uint64_t)hi << 32) | lo;
+    }
   }
 }
 

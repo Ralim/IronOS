@@ -283,8 +283,9 @@ static u8_t att_mtu_req(struct bt_att *att, struct net_buf *buf) {
   BT_DBG("Negotiated MTU %u", att->chan.rx.mtu);
 
 #if defined(BFLB_BLE_MTU_CHANGE_CB)
-  if (att->chan.chan.ops->mtu_changed)
+  if (att->chan.chan.ops->mtu_changed) {
     att->chan.chan.ops->mtu_changed(&(att->chan.chan), att->chan.rx.mtu);
+  }
 #endif
 
   return 0;
@@ -827,8 +828,9 @@ static u8_t att_read_type_rsp(struct bt_att *att, struct bt_uuid *uuid, u16_t st
   }
 
 #if defined(CONFIG_BT_STACK_PTS)
-  if (event_flag == att_read_by_type_ind)
+  if (event_flag == att_read_by_type_ind) {
     BT_PTS("handle : [0x%04x]\r\n", data.rsp->data->handle);
+  }
 #endif
 
   (void)bt_l2cap_send_cb(conn, BT_L2CAP_CID_ATT, data.buf, att_rsp_sent, NULL);
@@ -1489,8 +1491,9 @@ static int att_change_security(struct bt_conn *conn, u8_t err) {
 
   switch (err) {
   case BT_ATT_ERR_INSUFFICIENT_ENCRYPTION:
-    if (conn->sec_level >= BT_SECURITY_L2)
+    if (conn->sec_level >= BT_SECURITY_L2) {
       return -EALREADY;
+    }
     sec = BT_SECURITY_L2;
     break;
   case BT_ATT_ERR_AUTHENTICATION:
@@ -1978,8 +1981,9 @@ static void bt_att_disconnected(struct bt_l2cap_chan *chan) {
   bt_gatt_disconnected(ch->chan.conn);
 
 #ifdef BFLB_BLE_PATCH_FREE_ALLOCATED_BUFFER_IN_OS
-  if (att->timeout_work.timer.timer.hdl)
+  if (att->timeout_work.timer.timer.hdl) {
     k_delayed_work_del_timer(&att->timeout_work);
+  }
 
   if (att->tx_queue._queue.hdl) {
     k_queue_free(&att->tx_queue._queue);
@@ -1993,8 +1997,9 @@ static void bt_att_disconnected(struct bt_l2cap_chan *chan) {
   }
 #endif
 
-  if (att->tx_sem.sem.hdl)
+  if (att->tx_sem.sem.hdl) {
     k_sem_delete(&att->tx_sem);
+  }
 #endif
 }
 

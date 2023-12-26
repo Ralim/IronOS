@@ -56,8 +56,9 @@ static void internal_rc32m_init(void) {
     tmpVal = BL_RD_REG(AON_BASE, AON_XTAL_CFG);
     tmpVal = BL_CLR_REG_BIT(tmpVal, AON_XTAL_EXT_SEL_AON);
     BL_WR_REG(AON_BASE, AON_XTAL_CFG, tmpVal);
-    if (BL_IS_REG_BIT_SET(BL_RD_REG(GLB_BASE, GLB_CLK_CFG0), GLB_CHIP_RDY))
+    if (BL_IS_REG_BIT_SET(BL_RD_REG(GLB_BASE, GLB_CLK_CFG0), GLB_CHIP_RDY)) {
       break;
+    }
   }
 }
 #endif
@@ -464,9 +465,9 @@ uint32_t system_clock_get(enum system_clock_type type) {
   case SYSTEM_CLOCK_ROOT_CLOCK:
     if (GLB_Get_Root_CLK_Sel() == 0) {
       return 32 * 1000 * 1000;
-    } else if (GLB_Get_Root_CLK_Sel() == 1)
+    } else if (GLB_Get_Root_CLK_Sel() == 1) {
       return 32 * 1000 * 1000;
-    else {
+    } else {
       uint32_t tmpVal = BL_RD_REG(GLB_BASE, GLB_CLK_CFG0);
       tmpVal          = BL_GET_REG_BITS_VAL(tmpVal, GLB_REG_PLL_SEL);
       if (tmpVal == 0) {

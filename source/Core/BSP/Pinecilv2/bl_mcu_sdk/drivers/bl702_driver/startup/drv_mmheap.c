@@ -94,10 +94,12 @@ void mmheap_get_state(struct heap_info *pRoot, struct heap_state *pState) {
   for (struct heap_node *pNode = pRoot->pStart->next_node; pNode->next_node != NULL; pNode = pNode->next_node) {
     pState->remain_size += pNode->mem_size;
     pState->free_node_num++;
-    if (pNode->mem_size > pState->max_node_size)
+    if (pNode->mem_size > pState->max_node_size) {
       pState->max_node_size = pNode->mem_size;
-    if (pNode->mem_size < pState->min_node_size)
+    }
+    if (pNode->mem_size < pState->min_node_size) {
       pState->min_node_size = pNode->mem_size;
+    }
   }
   MMHEAP_UNLOCK();
 }
@@ -131,10 +133,12 @@ void *mmheap_align_alloc(struct heap_info *pRoot, size_t align_size, size_t want
   }
 
   MMHEAP_LOCK();
-  if (want_size < MEM_MANAGE_MINUM_MEM_SIZE)
+  if (want_size < MEM_MANAGE_MINUM_MEM_SIZE) {
     want_size = MEM_MANAGE_MINUM_MEM_SIZE;
-  if (align_size < MEM_MANAGE_ALIGNMENT_BYTE_DEFAULT)
+  }
+  if (align_size < MEM_MANAGE_ALIGNMENT_BYTE_DEFAULT) {
     align_size = MEM_MANAGE_ALIGNMENT_BYTE_DEFAULT;
+  }
 
   want_size = mmheap_align_up(want_size, MEM_MANAGE_ALIGNMENT_BYTE_DEFAULT);
 
@@ -346,11 +350,13 @@ void mmheap_init(struct heap_info *pRoot, const struct heap_region *pRegion) {
 
   for (; pRegion->addr != NULL; pRegion++) {
     align_addr = (struct heap_node *)mmheap_align_up((size_t)pRegion->addr, MEM_MANAGE_ALIGNMENT_BYTE_DEFAULT); /*Calculate the aligned address*/
-    if ((uint8_t *)align_addr > pRegion->mem_size + (uint8_t *)pRegion->addr)                                   /*Alignment consumes more memory than the memory area*/
+    if ((uint8_t *)align_addr > pRegion->mem_size + (uint8_t *)pRegion->addr) {                                 /*Alignment consumes more memory than the memory area*/
       continue;
+    }
     align_size = pRegion->mem_size - ((uint8_t *)align_addr - (uint8_t *)pRegion->addr); /*Calculate the size of memory left after alignment*/
-    if (align_size < MEM_MANAGE_MINUM_MEM_SIZE + MEM_MANAGE_MEM_STRUCT_SIZE)             /*if Aligning the remaining memory is too small*/
+    if (align_size < MEM_MANAGE_MINUM_MEM_SIZE + MEM_MANAGE_MEM_STRUCT_SIZE) {           /*if Aligning the remaining memory is too small*/
       continue;
+    }
     align_size -= MEM_MANAGE_MEM_STRUCT_SIZE; /*Find the size of the memory block after removing the table header*/
     align_addr->mem_size  = align_size;
     align_addr->next_node = NULL;

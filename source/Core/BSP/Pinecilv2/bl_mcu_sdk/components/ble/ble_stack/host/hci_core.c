@@ -1390,10 +1390,11 @@ static void enh_conn_complete(struct bt_hci_evt_le_enh_conn_complete *evt) {
 
     if (IS_ENABLED(CONFIG_BT_PRIVACY)) {
 #if defined(BFLB_BLE_PATCH_DHKEY_CHECK_FAILED)
-      if (memcmp(&evt->local_rpa, BT_ADDR_ANY, sizeof(bt_addr_t)))
+      if (memcmp(&evt->local_rpa, BT_ADDR_ANY, sizeof(bt_addr_t))) {
         bt_addr_copy(&conn->le.resp_addr.a, &evt->local_rpa);
-      else
+      } else {
         bt_addr_copy(&conn->le.resp_addr.a, &bt_dev.random_addr.a);
+      }
 #else
       bt_addr_copy(&conn->le.resp_addr.a, &evt->local_rpa);
 #endif
@@ -1432,10 +1433,11 @@ static void enh_conn_complete(struct bt_hci_evt_le_enh_conn_complete *evt) {
 
     if (IS_ENABLED(CONFIG_BT_PRIVACY)) {
 #if defined(BFLB_BLE_PATCH_DHKEY_CHECK_FAILED)
-      if (memcmp(&evt->local_rpa, BT_ADDR_ANY, sizeof(bt_addr_t)))
+      if (memcmp(&evt->local_rpa, BT_ADDR_ANY, sizeof(bt_addr_t))) {
         bt_addr_copy(&conn->le.init_addr.a, &evt->local_rpa);
-      else
+      } else {
         bt_addr_copy(&conn->le.init_addr.a, &bt_dev.random_addr.a);
+      }
 #else
       bt_addr_copy(&conn->le.init_addr.a, &evt->local_rpa);
 #endif
@@ -3636,21 +3638,24 @@ static int start_le_scan_with_isrpa(u8_t scan_type, u16_t interval, u16_t window
   set_param.filter_policy = 0x00;
 
   if (IS_ENABLED(CONFIG_BT_PRIVACY)) {
-    if (addre_type == 1)
+    if (addre_type == 1) {
       err = le_set_private_addr(BT_ID_DEFAULT);
-    else if (addre_type == 0)
+    } else if (addre_type == 0) {
       err = le_set_non_resolv_private_addr(BT_ID_DEFAULT);
+    }
     if (err) {
       return err;
     }
 
     if (BT_FEAT_LE_PRIVACY(bt_dev.le.features)) {
-      if (addre_type == 2)
+      if (addre_type == 2) {
         set_param.addr_type = BT_ADDR_LE_PUBLIC;
-      if (addre_type == 1)
+      }
+      if (addre_type == 1) {
         set_param.addr_type = BT_HCI_OWN_ADDR_RPA_OR_RANDOM;
-      else if (addre_type == 0)
+      } else if (addre_type == 0) {
         set_param.addr_type = BT_ADDR_LE_RANDOM;
+      }
     } else {
       set_param.addr_type = BT_ADDR_LE_RANDOM;
     }
@@ -5024,8 +5029,9 @@ static int irk_init(void) {
   int  err;
   /*local irk has been loaded from flash in bt_enable, check if irk is null*/
   memset(empty_irk, 0, 16);
-  if (memcmp(bt_dev.irk[0], empty_irk, 16) != 0)
+  if (memcmp(bt_dev.irk[0], empty_irk, 16) != 0) {
     return 0;
+  }
 
   err = bt_rand(&bt_dev.irk[0], 16);
 
@@ -5071,8 +5077,9 @@ static int bt_init(void) {
   char empty_name[CONFIG_BT_DEVICE_NAME_MAX];
   memset(empty_name, 0, CONFIG_BT_DEVICE_NAME_MAX);
 
-  if (!memcmp(bt_dev.name, empty_name, CONFIG_BT_DEVICE_NAME_MAX))
+  if (!memcmp(bt_dev.name, empty_name, CONFIG_BT_DEVICE_NAME_MAX)) {
     bt_set_name(CONFIG_BT_DEVICE_NAME);
+  }
 #endif
 
 #if defined(BFLB_BLE)
@@ -5115,8 +5122,9 @@ static int bt_init(void) {
   if (HBN_Get_Status_Flag() == 0)
 #endif
   {
-    if (!bt_keys_load())
+    if (!bt_keys_load()) {
       keys_commit();
+    }
   }
 #endif
 #endif // CONFIG_BT_SMP
@@ -5393,8 +5401,9 @@ int bt_disable_action(void) {
 int bt_disable(void) {
   if (le_check_valid_conn() || atomic_test_bit(bt_dev.flags, BT_DEV_EXPLICIT_SCAN) || atomic_test_bit(bt_dev.flags, BT_DEV_ADVERTISING)) {
     return -1;
-  } else
+  } else {
     return bt_disable_action();
+  }
 }
 #endif
 
@@ -5912,10 +5921,11 @@ int bt_le_adv_start_internal(const struct bt_le_adv_param *param, const struct b
   if (param->options & BT_LE_ADV_OPT_CONNECTABLE) {
     if (IS_ENABLED(CONFIG_BT_PRIVACY) && !(param->options & BT_LE_ADV_OPT_USE_IDENTITY)) {
 #if defined(CONFIG_BT_STACK_PTS)
-      if (param->addr_type == BT_ADDR_TYPE_RPA)
+      if (param->addr_type == BT_ADDR_TYPE_RPA) {
         err = le_set_private_addr(param->id);
-      else if (param->addr_type == BT_ADDR_TYPE_NON_RPA)
+      } else if (param->addr_type == BT_ADDR_TYPE_NON_RPA) {
         err = le_set_non_resolv_private_addr(param->id);
+      }
 #else
       err = le_set_private_addr(param->id);
 #endif
@@ -5925,12 +5935,14 @@ int bt_le_adv_start_internal(const struct bt_le_adv_param *param, const struct b
 
       if (BT_FEAT_LE_PRIVACY(bt_dev.le.features)) {
 #if defined(CONFIG_BT_STACK_PTS)
-        if (param->addr_type == BT_ADDR_LE_PUBLIC)
+        if (param->addr_type == BT_ADDR_LE_PUBLIC) {
           set_param.own_addr_type = BT_ADDR_LE_PUBLIC;
-        if (param->addr_type == BT_ADDR_TYPE_RPA)
+        }
+        if (param->addr_type == BT_ADDR_TYPE_RPA) {
           set_param.own_addr_type = BT_HCI_OWN_ADDR_RPA_OR_RANDOM;
-        else if (param->addr_type == BT_ADDR_TYPE_NON_RPA)
+        } else if (param->addr_type == BT_ADDR_TYPE_NON_RPA) {
           set_param.own_addr_type = BT_ADDR_LE_RANDOM;
+        }
 #else
         set_param.own_addr_type = BT_HCI_OWN_ADDR_RPA_OR_RANDOM;
 #endif
@@ -5982,19 +5994,20 @@ int bt_le_adv_start_internal(const struct bt_le_adv_param *param, const struct b
     } else {
 #if defined(BFLB_BLE) && !defined(CONFIG_BT_MESH)
 #if defined(CONFIG_BT_STACK_PTS)
-      if (param->addr_type == BT_ADDR_TYPE_RPA)
+      if (param->addr_type == BT_ADDR_TYPE_RPA) {
         err = le_set_private_addr(param->id);
-      else if (param->addr_type == BT_ADDR_TYPE_NON_RPA)
+      } else if (param->addr_type == BT_ADDR_TYPE_NON_RPA) {
         err = le_set_non_resolv_private_addr(param->id);
+      }
 #else
 // #if !defined(CONFIG_BT_ADV_WITH_PUBLIC_ADDR)
 // err = le_set_private_addr(param->id);
 // #endif
 #endif // CONFIG_BT_STACK_PTS
 #if defined(CONFIG_BT_STACK_PTS)
-      if (param->addr_type == BT_ADDR_LE_PUBLIC)
+      if (param->addr_type == BT_ADDR_LE_PUBLIC) {
         set_param.own_addr_type = BT_ADDR_LE_PUBLIC;
-      else
+      } else
 #endif
         // set_param.own_addr_type = BT_ADDR_LE_RANDOM;
         // #if defined(CONFIG_BT_ADV_WITH_PUBLIC_ADDR)
@@ -6051,8 +6064,9 @@ int bt_le_adv_start_internal(const struct bt_le_adv_param *param, const struct b
   atomic_set_bit_to(bt_dev.flags, BT_DEV_ADVERTISING_CONNECTABLE, param->options & BT_LE_ADV_OPT_CONNECTABLE);
 
 #if defined(BFLB_HOST_ASSISTANT)
-  if (!atomic_test_bit(bt_dev.flags, BT_DEV_ASSIST_RUN) && host_assist_cb && host_assist_cb->le_adv_cb)
+  if (!atomic_test_bit(bt_dev.flags, BT_DEV_ASSIST_RUN) && host_assist_cb && host_assist_cb->le_adv_cb) {
     host_assist_cb->le_adv_cb(param, ad, ad_len, sd, sd_len);
+  }
 #endif
 
   return 0;
@@ -6144,10 +6158,11 @@ int set_adv_param(const struct bt_le_adv_param *param) {
   if (param->options & BT_LE_ADV_OPT_CONNECTABLE) {
     if (IS_ENABLED(CONFIG_BT_PRIVACY) && !(param->options & BT_LE_ADV_OPT_USE_IDENTITY)) {
 #if defined(CONFIG_BT_STACK_PTS)
-      if (param->addr_type == BT_ADDR_TYPE_RPA)
+      if (param->addr_type == BT_ADDR_TYPE_RPA) {
         err = le_set_private_addr(param->id);
-      else if (param->addr_type == BT_ADDR_TYPE_NON_RPA)
+      } else if (param->addr_type == BT_ADDR_TYPE_NON_RPA) {
         err = le_set_non_resolv_private_addr(param->id);
+      }
 #else
       err = le_set_private_addr(param->id);
 #endif
@@ -6157,12 +6172,14 @@ int set_adv_param(const struct bt_le_adv_param *param) {
 
       if (BT_FEAT_LE_PRIVACY(bt_dev.le.features)) {
 #if defined(CONFIG_BT_STACK_PTS)
-        if (param->addr_type == BT_ADDR_LE_PUBLIC)
+        if (param->addr_type == BT_ADDR_LE_PUBLIC) {
           set_param.own_addr_type = BT_ADDR_LE_PUBLIC;
-        if (param->addr_type == BT_ADDR_TYPE_RPA)
+        }
+        if (param->addr_type == BT_ADDR_TYPE_RPA) {
           set_param.own_addr_type = BT_HCI_OWN_ADDR_RPA_OR_RANDOM;
-        else if (param->addr_type == BT_ADDR_TYPE_NON_RPA)
+        } else if (param->addr_type == BT_ADDR_TYPE_NON_RPA) {
           set_param.own_addr_type = BT_ADDR_LE_RANDOM;
+        }
 #else
         set_param.own_addr_type = BT_HCI_OWN_ADDR_RPA_OR_RANDOM;
 #endif
@@ -6198,17 +6215,18 @@ int set_adv_param(const struct bt_le_adv_param *param) {
     } else {
 #if defined(BFLB_BLE) && !defined(CONFIG_BT_MESH)
 #if defined(CONFIG_BT_STACK_PTS)
-      if (param->addr_type == BT_ADDR_TYPE_RPA)
+      if (param->addr_type == BT_ADDR_TYPE_RPA) {
         err = le_set_private_addr(param->id);
-      else if (param->addr_type == BT_ADDR_TYPE_NON_RPA)
+      } else if (param->addr_type == BT_ADDR_TYPE_NON_RPA) {
         err = le_set_non_resolv_private_addr(param->id);
+      }
 #else
       err = le_set_private_addr(param->id);
 #endif // CONFIG_BT_STACK_PTS
 #if defined(CONFIG_BT_STACK_PTS)
-      if (param->addr_type == BT_ADDR_LE_PUBLIC)
+      if (param->addr_type == BT_ADDR_LE_PUBLIC) {
         set_param.own_addr_type = BT_ADDR_LE_PUBLIC;
-      else
+      } else
 #endif
         set_param.own_addr_type = BT_ADDR_LE_RANDOM;
 #endif
@@ -6253,8 +6271,9 @@ int set_ad_and_rsp_d(u16_t hci_op, u8_t *data, u32_t ad_len) {
   } else if (BT_HCI_OP_LE_SET_SCAN_RSP_DATA == hci_op) {
     size = sizeof(struct bt_hci_cp_le_set_scan_rsp_data);
 
-  } else
+  } else {
     return -ENOTSUP;
+  }
 
   buf = bt_hci_cmd_create(hci_op, size);
   if (!buf) {
@@ -6292,8 +6311,9 @@ int set_ad_and_rsp_d(u16_t hci_op, u8_t *data, u32_t ad_len) {
 
     memcpy(set_data->data, data, set_data->len);
 
-  } else
+  } else {
     return -ENOBUFS;
+  }
 
   return bt_hci_cmd_send_sync(hci_op, buf, NULL);
 }
@@ -6370,8 +6390,9 @@ static int set_ad_data(u16_t hci_op, const uint8_t *ad_data, int ad_len) {
     return -ENOBUFS;
   }
 
-  if (ad_len > 31)
+  if (ad_len > 31) {
     return -EINVAL;
+  }
 
   set_data = net_buf_add(buf, sizeof(*set_data));
 
@@ -6605,8 +6626,9 @@ int bt_le_scan_start(const struct bt_le_scan_param *param, bt_le_scan_cb_t cb)
   scan_dev_found_cb = cb;
 
 #if defined(BFLB_HOST_ASSISTANT)
-  if (!atomic_test_bit(bt_dev.flags, BT_DEV_ASSIST_RUN) && host_assist_cb && host_assist_cb->le_scan_cb)
+  if (!atomic_test_bit(bt_dev.flags, BT_DEV_ASSIST_RUN) && host_assist_cb && host_assist_cb->le_scan_cb) {
     host_assist_cb->le_scan_cb(param, cb);
+  }
 #endif
 
   return 0;
@@ -6722,8 +6744,9 @@ int bt_set_tx_pwr(int8_t power) {
   struct net_buf                *buf;
   int                            err;
 
-  if (power < 0 || power > 20)
+  if (power < 0 || power > 20) {
     return BT_HCI_ERR_INVALID_PARAM;
+  }
 
   memset(&set_param, 0, sizeof(set_param));
 

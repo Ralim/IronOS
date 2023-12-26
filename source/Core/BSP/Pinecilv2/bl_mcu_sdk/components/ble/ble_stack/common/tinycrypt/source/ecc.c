@@ -751,8 +751,9 @@ int uECC_valid_point(const uECC_word_t *point, uECC_Curve curve) {
   curve->x_side(tmp2, point, curve); /* tmp2 = x^3 + ax + b */
 
   /* Make sure that y^2 == x^3 + ax + b */
-  if (uECC_vli_equal(tmp1, tmp2, num_words) != 0)
+  if (uECC_vli_equal(tmp1, tmp2, num_words) != 0) {
     return -3;
+  }
 
   return 0;
 }

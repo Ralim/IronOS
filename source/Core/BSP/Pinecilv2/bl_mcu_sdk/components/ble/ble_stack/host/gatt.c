@@ -480,8 +480,9 @@ static u8_t gen_hash_m(const struct bt_gatt_attr *attr, void *user_data) {
   ssize_t                len;
   u16_t                  value;
 
-  if (attr->uuid->type != BT_UUID_TYPE_16)
+  if (attr->uuid->type != BT_UUID_TYPE_16) {
     return BT_GATT_ITER_CONTINUE;
+  }
 
   u16 = (struct bt_uuid_16 *)attr->uuid;
 
@@ -2187,8 +2188,9 @@ int bt_gatt_exchange_mtu(struct bt_conn *conn, struct bt_gatt_exchange_params *p
 
 static void gatt_discover_next(struct bt_conn *conn, u16_t last_handle, struct bt_gatt_discover_params *params) {
   /* Skip if last_handle is not set */
-  if (!last_handle)
+  if (!last_handle) {
     goto discover;
+  }
 
   /* Continue from the last found handle */
   params->start_handle = last_handle;
@@ -2511,8 +2513,9 @@ static u16_t parse_characteristic(struct bt_conn *conn, const void *pdu, struct 
 #if defined(CONFIG_BT_STACK_PTS)
     if (event_flag != gatt_discover_chara) {
       /* Skip if UUID is set but doesn't match */
-      if (params->uuid && bt_uuid_cmp(&u.uuid, params->uuid))
+      if (params->uuid && bt_uuid_cmp(&u.uuid, params->uuid)) {
         continue;
+      }
     }
 #else
     /* Skip if UUID is set but doesn't match */
@@ -3129,10 +3132,11 @@ static int gatt_exec_write(struct bt_conn *conn, struct bt_gatt_write_params *pa
 
   req = net_buf_add(buf, sizeof(*req));
 #if defined(CONFIG_BT_STACK_PTS)
-  if (event_flag == gatt_cancel_write_req)
+  if (event_flag == gatt_cancel_write_req) {
     req->flags = BT_ATT_FLAG_CANCEL;
-  else
+  } else {
     req->flags = BT_ATT_FLAG_EXEC;
+  }
 #else
   req->flags = BT_ATT_FLAG_EXEC;
 #endif
@@ -3511,8 +3515,9 @@ static int ccc_set(const char *name, size_t len_rd, settings_read_cb read_cb, vo
 
 #if defined(BFLB_BLE)
     err = bt_settings_get_bin(key, (u8_t *)ccc_store, CCC_STORE_MAX, &len);
-    if (err)
+    if (err) {
       return err;
+    }
 
     load.addr_with_id.id   = id;
     load.addr_with_id.addr = addr;
@@ -3793,8 +3798,9 @@ void bt_gatt_disconnected(struct bt_conn *conn) {
 
 #if defined(BFLB_BLE_MTU_CHANGE_CB)
 void bt_gatt_mtu_changed(struct bt_conn *conn, u16_t mtu) {
-  if (gatt_mtu_changed_cb)
+  if (gatt_mtu_changed_cb) {
     gatt_mtu_changed_cb(conn, (int)mtu);
+  }
 }
 
 void bt_gatt_register_mtu_callback(bt_gatt_mtu_changed_cb_t cb) { gatt_mtu_changed_cb = cb; }
@@ -4057,8 +4063,9 @@ static int sc_set(const char *name, size_t len_rd, settings_read_cb read_cb, voi
   }
 
   err = bt_settings_get_bin(key, (u8_t *)cfg, sizeof(*cfg), NULL);
-  if (err)
+  if (err) {
     memset(cfg, 0, sizeof(*cfg));
+  }
   return err;
 #else
   if (!name) {

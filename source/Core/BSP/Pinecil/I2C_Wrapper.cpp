@@ -296,8 +296,9 @@ bool perform_i2c_transaction(uint16_t DevAddress, uint16_t memory_address, uint8
 }
 
 bool FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t read_address, uint8_t *p_buffer, uint16_t number_of_byte) {
-  if (!lock())
+  if (!lock()) {
     return false;
+  }
   bool res = perform_i2c_transaction(DevAddress, read_address, p_buffer, number_of_byte, false, false);
   if (!res) {
     I2C_Unstick();
@@ -307,8 +308,9 @@ bool FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t read_address, uint8_t *p_b
 }
 
 bool FRToSI2C::Mem_Write(uint16_t DevAddress, uint16_t MemAddress, uint8_t *p_buffer, uint16_t number_of_byte) {
-  if (!lock())
+  if (!lock()) {
     return false;
+  }
   bool res = perform_i2c_transaction(DevAddress, MemAddress, p_buffer, number_of_byte, true, false);
   if (!res) {
     I2C_Unstick();
@@ -349,8 +351,9 @@ bool FRToSI2C::writeRegistersBulk(const uint8_t address, const I2C_REG *register
 
 bool FRToSI2C::wakePart(uint16_t DevAddress) {
   // wakepart is a special case  where only the device address is sent
-  if (!lock())
+  if (!lock()) {
     return false;
+  }
   bool res = perform_i2c_transaction(DevAddress, 0, NULL, 0, false, true);
   if (!res) {
     I2C_Unstick();

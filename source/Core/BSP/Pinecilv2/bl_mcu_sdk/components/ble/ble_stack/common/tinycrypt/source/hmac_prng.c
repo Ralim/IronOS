@@ -87,10 +87,12 @@ static void update(TCHmacPrng_t prng, const uint8_t *data, unsigned int datalen,
   (void)tc_hmac_update(&prng->h, prng->v, sizeof(prng->v));
   (void)tc_hmac_update(&prng->h, &separator0, sizeof(separator0));
 
-  if (data && datalen)
+  if (data && datalen) {
     (void)tc_hmac_update(&prng->h, data, datalen);
-  if (additional_data && additional_datalen)
+  }
+  if (additional_data && additional_datalen) {
     (void)tc_hmac_update(&prng->h, additional_data, additional_datalen);
+  }
 
   (void)tc_hmac_final(prng->key, sizeof(prng->key), &prng->h);
 
@@ -102,8 +104,9 @@ static void update(TCHmacPrng_t prng, const uint8_t *data, unsigned int datalen,
   (void)tc_hmac_update(&prng->h, prng->v, sizeof(prng->v));
   (void)tc_hmac_final(prng->v, sizeof(prng->v), &prng->h);
 
-  if (data == 0 || datalen == 0)
+  if (data == 0 || datalen == 0) {
     return;
+  }
 
   /* configure the new prng key into the prng's instance of hmac */
   tc_hmac_set_key(&prng->h, prng->key, sizeof(prng->key));
@@ -113,8 +116,9 @@ static void update(TCHmacPrng_t prng, const uint8_t *data, unsigned int datalen,
   (void)tc_hmac_update(&prng->h, prng->v, sizeof(prng->v));
   (void)tc_hmac_update(&prng->h, &separator1, sizeof(separator1));
   (void)tc_hmac_update(&prng->h, data, datalen);
-  if (additional_data && additional_datalen)
+  if (additional_data && additional_datalen) {
     (void)tc_hmac_update(&prng->h, additional_data, additional_datalen);
+  }
   (void)tc_hmac_final(prng->key, sizeof(prng->key), &prng->h);
 
   /* configure the new prng key into the prng's instance of hmac */

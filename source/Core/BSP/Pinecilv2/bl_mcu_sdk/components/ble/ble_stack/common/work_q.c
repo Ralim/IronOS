@@ -170,8 +170,9 @@ s32_t k_delayed_work_remaining_get(struct k_delayed_work *work) {
 }
 
 void k_delayed_work_del_timer(struct k_delayed_work *work) {
-  if (NULL == work || NULL == work->timer.timer.hdl)
+  if (NULL == work || NULL == work->timer.timer.hdl) {
     return;
+  }
 
   k_timer_delete(&work->timer);
   work->timer.timer.hdl = NULL;

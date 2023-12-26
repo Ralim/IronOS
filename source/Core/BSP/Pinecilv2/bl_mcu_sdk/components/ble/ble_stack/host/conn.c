@@ -1446,8 +1446,9 @@ static void conn_cleanup(struct bt_conn *conn) {
   // k_queue_free(&conn->tx_notify._queue);
   conn->tx_queue._queue.hdl = NULL;
   // conn->tx_notify._queue.hdl = NULL;
-  if (conn->update_work.timer.timer.hdl)
+  if (conn->update_work.timer.timer.hdl) {
     k_delayed_work_del_timer(&conn->update_work);
+  }
 #endif
 }
 
