@@ -199,11 +199,13 @@ void adc_calibration_enable(uint32_t adc_periph) {
   /* reset the selected ADC1 calibration registers */
   ADC_CTL1(adc_periph) |= (uint32_t)ADC_CTL1_RSTCLB;
   /* check the RSTCLB bit state */
-  while ((uint32_t)RESET != (ADC_CTL1(adc_periph) & ADC_CTL1_RSTCLB)) {}
+  while ((uint32_t)RESET != (ADC_CTL1(adc_periph) & ADC_CTL1_RSTCLB)) {
+  }
   /* enable ADC calibration process */
   ADC_CTL1(adc_periph) |= ADC_CTL1_CLB;
   /* check the CLB bit state */
-  while ((uint32_t)RESET != (ADC_CTL1(adc_periph) & ADC_CTL1_CLB)) {}
+  while ((uint32_t)RESET != (ADC_CTL1(adc_periph) & ADC_CTL1_CLB)) {
+  }
 }
 
 /*!

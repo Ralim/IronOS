@@ -33,34 +33,34 @@ struct pin_mux_cfg {
 
 static const struct pin_mux_cfg af_pin_table[] = {
 #ifdef CONFIG_GPIO0_FUNC
-    {.pin = GPIO_PIN_0, .func = CONFIG_GPIO0_FUNC},
+    { .pin = GPIO_PIN_0,  .func = CONFIG_GPIO0_FUNC},
 #endif
 #ifdef CONFIG_GPIO1_FUNC
-    {.pin = GPIO_PIN_1, .func = CONFIG_GPIO1_FUNC},
+    { .pin = GPIO_PIN_1,  .func = CONFIG_GPIO1_FUNC},
 #endif
 #ifdef CONFIG_GPIO2_FUNC
-    {.pin = GPIO_PIN_2, .func = CONFIG_GPIO2_FUNC},
+    { .pin = GPIO_PIN_2,  .func = CONFIG_GPIO2_FUNC},
 #endif
 #ifdef CONFIG_GPIO3_FUNC
-    {.pin = GPIO_PIN_3, .func = CONFIG_GPIO3_FUNC},
+    { .pin = GPIO_PIN_3,  .func = CONFIG_GPIO3_FUNC},
 #endif
 #ifdef CONFIG_GPIO4_FUNC
-    {.pin = GPIO_PIN_4, .func = CONFIG_GPIO4_FUNC},
+    { .pin = GPIO_PIN_4,  .func = CONFIG_GPIO4_FUNC},
 #endif
 #ifdef CONFIG_GPIO5_FUNC
-    {.pin = GPIO_PIN_5, .func = CONFIG_GPIO5_FUNC},
+    { .pin = GPIO_PIN_5,  .func = CONFIG_GPIO5_FUNC},
 #endif
 #ifdef CONFIG_GPIO6_FUNC
-    {.pin = GPIO_PIN_6, .func = CONFIG_GPIO6_FUNC},
+    { .pin = GPIO_PIN_6,  .func = CONFIG_GPIO6_FUNC},
 #endif
 #ifdef CONFIG_GPIO7_FUNC
-    {.pin = GPIO_PIN_7, .func = CONFIG_GPIO7_FUNC},
+    { .pin = GPIO_PIN_7,  .func = CONFIG_GPIO7_FUNC},
 #endif
 #ifdef CONFIG_GPIO8_FUNC
-    {.pin = GPIO_PIN_8, .func = CONFIG_GPIO8_FUNC},
+    { .pin = GPIO_PIN_8,  .func = CONFIG_GPIO8_FUNC},
 #endif
 #ifdef CONFIG_GPIO9_FUNC
-    {.pin = GPIO_PIN_9, .func = CONFIG_GPIO9_FUNC},
+    { .pin = GPIO_PIN_9,  .func = CONFIG_GPIO9_FUNC},
 #endif
 #ifdef CONFIG_GPIO10_FUNC
     {.pin = GPIO_PIN_10, .func = CONFIG_GPIO10_FUNC},
@@ -146,8 +146,9 @@ static void board_pin_mux_init(void) {
 
     /*if using gpio9-gpio12 and func is not analog and output ,should set reg_aon_pad_ie_smt corresponding bit = 1*/
     if ((af_pin_table[i].pin > GPIO_PIN_8) && (af_pin_table[i].pin < GPIO_PIN_13)) {
-      if ((af_pin_table[i].func != 10) && ((af_pin_table[i].func < GPIO_FUN_GPIO_OUTPUT_UP) || (af_pin_table[i].func > GPIO_FUN_GPIO_OUTPUT_NONE)))
+      if ((af_pin_table[i].func != 10) && ((af_pin_table[i].func < GPIO_FUN_GPIO_OUTPUT_UP) || (af_pin_table[i].func > GPIO_FUN_GPIO_OUTPUT_NONE))) {
         hbn_aon_ie |= (1 << (af_pin_table[i].pin - 9));
+      }
     }
 
     /*if reset state*/

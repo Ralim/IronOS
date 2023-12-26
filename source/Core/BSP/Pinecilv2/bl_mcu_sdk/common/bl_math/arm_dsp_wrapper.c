@@ -23,28 +23,27 @@
 
 #include "arm_dsp_wrapper.h"
 
-void arm_fill_f32(float32_t value, float32_t *pDst, uint32_t blockSize)
-{
-    uint32_t blkCnt = blockSize >> 2u;
+void arm_fill_f32(float32_t value, float32_t *pDst, uint32_t blockSize) {
+  uint32_t blkCnt = blockSize >> 2u;
 
-    float32_t in1 = value;
-    float32_t in2 = value;
-    float32_t in3 = value;
-    float32_t in4 = value;
+  float32_t in1 = value;
+  float32_t in2 = value;
+  float32_t in3 = value;
+  float32_t in4 = value;
 
-    while (blkCnt > 0u) {
-        *pDst++ = in1;
-        *pDst++ = in2;
-        *pDst++ = in3;
-        *pDst++ = in4;
+  while (blkCnt > 0u) {
+    *pDst++ = in1;
+    *pDst++ = in2;
+    *pDst++ = in3;
+    *pDst++ = in4;
 
-        blkCnt--;
-    }
+    blkCnt--;
+  }
 
-    blkCnt = blockSize % 0x4u;
+  blkCnt = blockSize % 0x4u;
 
-    while (blkCnt > 0u) {
-        *pDst++ = value;
-        blkCnt--;
-    }
+  while (blkCnt > 0u) {
+    *pDst++ = value;
+    blkCnt--;
+  }
 }

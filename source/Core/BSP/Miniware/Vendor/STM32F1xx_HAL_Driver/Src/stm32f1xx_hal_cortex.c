@@ -321,9 +321,9 @@ void HAL_MPU_ConfigRegion(MPU_Region_InitTypeDef *MPU_Init) {
     assert_param(IS_MPU_REGION_SIZE(MPU_Init->Size));
 
     MPU->RBAR = MPU_Init->BaseAddress;
-    MPU->RASR = ((uint32_t)MPU_Init->DisableExec << MPU_RASR_XN_Pos) | ((uint32_t)MPU_Init->AccessPermission << MPU_RASR_AP_Pos) | ((uint32_t)MPU_Init->TypeExtField << MPU_RASR_TEX_Pos)
-                | ((uint32_t)MPU_Init->IsShareable << MPU_RASR_S_Pos) | ((uint32_t)MPU_Init->IsCacheable << MPU_RASR_C_Pos) | ((uint32_t)MPU_Init->IsBufferable << MPU_RASR_B_Pos)
-                | ((uint32_t)MPU_Init->SubRegionDisable << MPU_RASR_SRD_Pos) | ((uint32_t)MPU_Init->Size << MPU_RASR_SIZE_Pos) | ((uint32_t)MPU_Init->Enable << MPU_RASR_ENABLE_Pos);
+    MPU->RASR = ((uint32_t)MPU_Init->DisableExec << MPU_RASR_XN_Pos) | ((uint32_t)MPU_Init->AccessPermission << MPU_RASR_AP_Pos) | ((uint32_t)MPU_Init->TypeExtField << MPU_RASR_TEX_Pos) |
+                ((uint32_t)MPU_Init->IsShareable << MPU_RASR_S_Pos) | ((uint32_t)MPU_Init->IsCacheable << MPU_RASR_C_Pos) | ((uint32_t)MPU_Init->IsBufferable << MPU_RASR_B_Pos) |
+                ((uint32_t)MPU_Init->SubRegionDisable << MPU_RASR_SRD_Pos) | ((uint32_t)MPU_Init->Size << MPU_RASR_SIZE_Pos) | ((uint32_t)MPU_Init->Enable << MPU_RASR_ENABLE_Pos);
   } else {
     MPU->RBAR = 0x00U;
     MPU->RASR = 0x00U;

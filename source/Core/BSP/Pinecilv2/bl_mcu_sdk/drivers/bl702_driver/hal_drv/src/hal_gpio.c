@@ -144,10 +144,11 @@ void gpio_set_mode(uint32_t pin, uint32_t mode) {
 void gpio_write(uint32_t pin, uint32_t value) {
   uint32_t tmp = BL_RD_REG(GLB_BASE, GLB_GPIO_OUTPUT);
 
-  if (value)
+  if (value) {
     tmp |= (1 << pin);
-  else
+  } else {
     tmp &= ~(1 << pin);
+  }
 
   BL_WR_REG(GLB_BASE, GLB_GPIO_OUTPUT, tmp);
 }

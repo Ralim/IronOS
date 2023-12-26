@@ -25,9 +25,7 @@
 
 void SEC_SHA_IRQHandler(void);
 
-static sec_hash_device_t sec_hashx_device[SEC_HASH_MAX_INDEX] = {
-    0
-};
+static sec_hash_device_t sec_hashx_device[SEC_HASH_MAX_INDEX] = {0};
 
 static SEC_Eng_SHA256_Ctx shaCtx;
 
@@ -40,37 +38,36 @@ static SEC_Eng_SHA256_Ctx sha256Ctx;
  * @param oflag
  * @return int
  */
-int sec_hash_open(struct device *dev, uint16_t oflag)
-{
-    sec_hash_device_t *sec_hash_device = (sec_hash_device_t *)dev;
-    int ret = 0;
+int sec_hash_open(struct device *dev, uint16_t oflag) {
+  sec_hash_device_t *sec_hash_device = (sec_hash_device_t *)dev;
+  int                ret             = 0;
 
-    switch (sec_hash_device->type) {
-        case SEC_HASH_SHA1:
-            ret = -1;
-            break;
+  switch (sec_hash_device->type) {
+  case SEC_HASH_SHA1:
+    ret = -1;
+    break;
 
-        case SEC_HASH_SHA224:
-            Sec_Eng_SHA256_Init(&shaCtx, SEC_ENG_SHA_ID0, SEC_ENG_SHA224, sec_hash_device->shaBuf, sec_hash_device->shaPadding);
-            Sec_Eng_SHA_Start(SEC_ENG_SHA_ID0);
-            break;
+  case SEC_HASH_SHA224:
+    Sec_Eng_SHA256_Init(&shaCtx, SEC_ENG_SHA_ID0, SEC_ENG_SHA224, sec_hash_device->shaBuf, sec_hash_device->shaPadding);
+    Sec_Eng_SHA_Start(SEC_ENG_SHA_ID0);
+    break;
 
-        case SEC_HASH_SHA256:
-            Sec_Eng_SHA256_Init(&shaCtx, SEC_ENG_SHA_ID0, SEC_ENG_SHA256, sec_hash_device->shaBuf, sec_hash_device->shaPadding);
-            Sec_Eng_SHA_Start(SEC_ENG_SHA_ID0);
-            break;
+  case SEC_HASH_SHA256:
+    Sec_Eng_SHA256_Init(&shaCtx, SEC_ENG_SHA_ID0, SEC_ENG_SHA256, sec_hash_device->shaBuf, sec_hash_device->shaPadding);
+    Sec_Eng_SHA_Start(SEC_ENG_SHA_ID0);
+    break;
 
-        case SEC_HASH_SHA384:
-        case SEC_HASH_SHA512:
-            ret = -1;
-            break;
+  case SEC_HASH_SHA384:
+  case SEC_HASH_SHA512:
+    ret = -1;
+    break;
 
-        default:
-            ret = -1;
-            break;
-    }
+  default:
+    ret = -1;
+    break;
+  }
 
-    return ret;
+  return ret;
 }
 /**
  * @brief
@@ -78,11 +75,10 @@ int sec_hash_open(struct device *dev, uint16_t oflag)
  * @param dev
  * @return int
  */
-int sec_hash_close(struct device *dev)
-{
-    //sec_hash_device_t *sec_hash_device = (sec_hash_device_t *)dev;
-    //memset(sec_hash_device, 0, sizeof(sec_hash_device_t)); //will cause crash
-    return 0;
+int sec_hash_close(struct device *dev) {
+  // sec_hash_device_t *sec_hash_device = (sec_hash_device_t *)dev;
+  // memset(sec_hash_device, 0, sizeof(sec_hash_device_t)); //will cause crash
+  return 0;
 }
 /**
  * @brief
@@ -92,9 +88,45 @@ int sec_hash_close(struct device *dev)
  * @param args
  * @return int
  */
-int sec_hash_control(struct device *dev, int cmd, void *args)
-{
-    return 0;
+int sec_hash_control(struct device *dev, int cmd, void *args) { return 0; }
+
+/**
+ * @brief
+ *
+ * @param dev
+ * @param pos
+ * @param buffer
+ * @param size
+ * @return int
+ */
+int sec_hash_write(struct device *dev, uint32_t pos, const void *buffer, uint32_t size) {
+  sec_hash_device_t *sec_hash_device = (sec_hash_device_t *)dev;
+  int                ret             = 0;
+
+  switch (sec_hash_device->type) {
+  case SEC_HASH_SHA1:
+    ret = -1;
+    break;
+
+  case SEC_HASH_SHA224:
+    Sec_Eng_SHA256_Update(&shaCtx, SEC_ENG_SHA_ID0, (uint8_t *)buffer, size);
+    break;
+
+  case SEC_HASH_SHA256:
+    Sec_Eng_SHA256_Update(&shaCtx, SEC_ENG_SHA_ID0, (uint8_t *)buffer, size);
+    break;
+
+  case SEC_HASH_SHA384:
+  case SEC_HASH_SHA512:
+    ret = -1;
+    break;
+
+  default:
+    ret = -1;
+    break;
+  }
+
+  return ret;
 }
 
 /**
@@ -106,77 +138,36 @@ int sec_hash_control(struct device *dev, int cmd, void *args)
  * @param size
  * @return int
  */
-int sec_hash_write(struct device *dev, uint32_t pos, const void *buffer, uint32_t size)
-{
-    sec_hash_device_t *sec_hash_device = (sec_hash_device_t *)dev;
-    int ret = 0;
+int sec_hash_read(struct device *dev, uint32_t pos, void *buffer, uint32_t size) {
+  sec_hash_device_t *sec_hash_device = (sec_hash_device_t *)dev;
+  int                ret             = 0;
 
-    switch (sec_hash_device->type) {
-        case SEC_HASH_SHA1:
-            ret = -1;
-            break;
+  switch (sec_hash_device->type) {
+  case SEC_HASH_SHA1:
+    ret = -1;
+    break;
 
-        case SEC_HASH_SHA224:
-            Sec_Eng_SHA256_Update(&shaCtx, SEC_ENG_SHA_ID0, (uint8_t *)buffer, size);
-            break;
+  case SEC_HASH_SHA224:
+    Sec_Eng_SHA256_Finish(&shaCtx, SEC_ENG_SHA_ID0, (uint8_t *)buffer);
+    ret = 28;
+    break;
 
-        case SEC_HASH_SHA256:
-            Sec_Eng_SHA256_Update(&shaCtx, SEC_ENG_SHA_ID0, (uint8_t *)buffer, size);
-            break;
+  case SEC_HASH_SHA256:
+    Sec_Eng_SHA256_Finish(&shaCtx, SEC_ENG_SHA_ID0, (uint8_t *)buffer);
+    ret = 32;
+    break;
 
-        case SEC_HASH_SHA384:
-        case SEC_HASH_SHA512:
-            ret = -1;
-            break;
+  case SEC_HASH_SHA384:
+  case SEC_HASH_SHA512:
+    ret = -1;
+    break;
 
-        default:
-            ret = -1;
-            break;
-    }
+  default:
+    ret = -1;
+    break;
+  }
 
-    return ret;
-}
-
-/**
- * @brief
- *
- * @param dev
- * @param pos
- * @param buffer
- * @param size
- * @return int
- */
-int sec_hash_read(struct device *dev, uint32_t pos, void *buffer, uint32_t size)
-{
-    sec_hash_device_t *sec_hash_device = (sec_hash_device_t *)dev;
-    int ret = 0;
-
-    switch (sec_hash_device->type) {
-        case SEC_HASH_SHA1:
-            ret = -1;
-            break;
-
-        case SEC_HASH_SHA224:
-            Sec_Eng_SHA256_Finish(&shaCtx, SEC_ENG_SHA_ID0, (uint8_t *)buffer);
-            ret = 28;
-            break;
-
-        case SEC_HASH_SHA256:
-            Sec_Eng_SHA256_Finish(&shaCtx, SEC_ENG_SHA_ID0, (uint8_t *)buffer);
-            ret = 32;
-            break;
-
-        case SEC_HASH_SHA384:
-        case SEC_HASH_SHA512:
-            ret = -1;
-            break;
-
-        default:
-            ret = -1;
-            break;
-    }
-
-    return ret;
+  return ret;
 }
 
 /**
@@ -186,38 +177,37 @@ int sec_hash_read(struct device *dev, uint32_t pos, void *buffer, uint32_t size)
  * @param type
  * @return int
  */
-int sec_hash_init(sec_hash_handle_t *handle, uint8_t type)
-{
-    int ret = 0;
+int sec_hash_init(sec_hash_handle_t *handle, uint8_t type) {
+  int ret = 0;
 
-    switch (type) {
-        case SEC_HASH_SHA1:
-            ret = -1;
-            break;
+  switch (type) {
+  case SEC_HASH_SHA1:
+    ret = -1;
+    break;
 
-        case SEC_HASH_SHA224:
-            handle->type = type;
-            Sec_Eng_SHA256_Init(&sha256Ctx, SEC_ENG_SHA_ID0, SEC_ENG_SHA224, handle->shaBuf, handle->shaPadding);
-            Sec_Eng_SHA_Start(SEC_ENG_SHA_ID0);
-            break;
+  case SEC_HASH_SHA224:
+    handle->type = type;
+    Sec_Eng_SHA256_Init(&sha256Ctx, SEC_ENG_SHA_ID0, SEC_ENG_SHA224, handle->shaBuf, handle->shaPadding);
+    Sec_Eng_SHA_Start(SEC_ENG_SHA_ID0);
+    break;
 
-        case SEC_HASH_SHA256:
-            handle->type = type;
-            Sec_Eng_SHA256_Init(&sha256Ctx, SEC_ENG_SHA_ID0, SEC_ENG_SHA256, handle->shaBuf, handle->shaPadding);
-            Sec_Eng_SHA_Start(SEC_ENG_SHA_ID0);
-            break;
+  case SEC_HASH_SHA256:
+    handle->type = type;
+    Sec_Eng_SHA256_Init(&sha256Ctx, SEC_ENG_SHA_ID0, SEC_ENG_SHA256, handle->shaBuf, handle->shaPadding);
+    Sec_Eng_SHA_Start(SEC_ENG_SHA_ID0);
+    break;
 
-        case SEC_HASH_SHA384:
-        case SEC_HASH_SHA512:
-            ret = -1;
-            break;
+  case SEC_HASH_SHA384:
+  case SEC_HASH_SHA512:
+    ret = -1;
+    break;
 
-        default:
-            ret = -1;
-            break;
-    }
+  default:
+    ret = -1;
+    break;
+  }
 
-    return ret;
+  return ret;
 }
 /**
  * @brief
@@ -225,12 +215,11 @@ int sec_hash_init(sec_hash_handle_t *handle, uint8_t type)
  * @param handle
  * @return int
  */
-int sec_hash_deinit(sec_hash_handle_t *handle)
-{
-    memset(handle->shaBuf, 0, sizeof(handle->shaBuf));
-    memset(handle->shaPadding, 0, sizeof(handle->shaPadding));
+int sec_hash_deinit(sec_hash_handle_t *handle) {
+  memset(handle->shaBuf, 0, sizeof(handle->shaBuf));
+  memset(handle->shaPadding, 0, sizeof(handle->shaPadding));
 
-    return 0;
+  return 0;
 }
 
 /**
@@ -241,34 +230,33 @@ int sec_hash_deinit(sec_hash_handle_t *handle)
  * @param size
  * @return int
  */
-int sec_hash_update(sec_hash_handle_t *handle, const void *buffer, uint32_t size)
-{
-    int ret = 0;
+int sec_hash_update(sec_hash_handle_t *handle, const void *buffer, uint32_t size) {
+  int ret = 0;
 
-    switch (handle->type) {
-        case SEC_HASH_SHA1:
-            ret = -1;
-            break;
+  switch (handle->type) {
+  case SEC_HASH_SHA1:
+    ret = -1;
+    break;
 
-        case SEC_HASH_SHA224:
-            Sec_Eng_SHA256_Update(&sha256Ctx, SEC_ENG_SHA_ID0, (uint8_t *)buffer, size);
-            break;
+  case SEC_HASH_SHA224:
+    Sec_Eng_SHA256_Update(&sha256Ctx, SEC_ENG_SHA_ID0, (uint8_t *)buffer, size);
+    break;
 
-        case SEC_HASH_SHA256:
-            Sec_Eng_SHA256_Update(&sha256Ctx, SEC_ENG_SHA_ID0, (uint8_t *)buffer, size);
-            break;
+  case SEC_HASH_SHA256:
+    Sec_Eng_SHA256_Update(&sha256Ctx, SEC_ENG_SHA_ID0, (uint8_t *)buffer, size);
+    break;
 
-        case SEC_HASH_SHA384:
-        case SEC_HASH_SHA512:
-            ret = -1;
-            break;
+  case SEC_HASH_SHA384:
+  case SEC_HASH_SHA512:
+    ret = -1;
+    break;
 
-        default:
-            ret = -1;
-            break;
-    }
+  default:
+    ret = -1;
+    break;
+  }
 
-    return ret;
+  return ret;
 }
 
 /**
@@ -278,36 +266,35 @@ int sec_hash_update(sec_hash_handle_t *handle, const void *buffer, uint32_t size
  * @param buffer
  * @return int
  */
-int sec_hash_finish(sec_hash_handle_t *handle, void *buffer)
-{
-    int ret = 0;
+int sec_hash_finish(sec_hash_handle_t *handle, void *buffer) {
+  int ret = 0;
 
-    switch (handle->type) {
-        case SEC_HASH_SHA1:
-            ret = -1;
-            break;
+  switch (handle->type) {
+  case SEC_HASH_SHA1:
+    ret = -1;
+    break;
 
-        case SEC_HASH_SHA224:
-            Sec_Eng_SHA256_Finish(&sha256Ctx, SEC_ENG_SHA_ID0, (uint8_t *)buffer);
-            ret = 28;
-            break;
+  case SEC_HASH_SHA224:
+    Sec_Eng_SHA256_Finish(&sha256Ctx, SEC_ENG_SHA_ID0, (uint8_t *)buffer);
+    ret = 28;
+    break;
 
-        case SEC_HASH_SHA256:
-            Sec_Eng_SHA256_Finish(&sha256Ctx, SEC_ENG_SHA_ID0, (uint8_t *)buffer);
-            ret = 32;
-            break;
+  case SEC_HASH_SHA256:
+    Sec_Eng_SHA256_Finish(&sha256Ctx, SEC_ENG_SHA_ID0, (uint8_t *)buffer);
+    ret = 32;
+    break;
 
-        case SEC_HASH_SHA384:
-        case SEC_HASH_SHA512:
-            ret = -1;
-            break;
+  case SEC_HASH_SHA384:
+  case SEC_HASH_SHA512:
+    ret = -1;
+    break;
 
-        default:
-            ret = -1;
-            break;
-    }
+  default:
+    ret = -1;
+    break;
+  }
 
-    return ret;
+  return ret;
 }
 
 /**
@@ -319,27 +306,26 @@ int sec_hash_finish(sec_hash_handle_t *handle, void *buffer)
  * @param flag
  * @return int
  */
-static int sec_hash_sha_register(enum sec_hash_index_type index, enum sec_hash_type type, const char *name)
-{
-    struct device *dev;
+static int sec_hash_sha_register(enum sec_hash_index_type index, enum sec_hash_type type, const char *name) {
+  struct device *dev;
 
-    if (SEC_HASH_MAX_INDEX == 0) {
-        return -DEVICE_EINVAL;
-    }
+  if (SEC_HASH_MAX_INDEX == 0) {
+    return -DEVICE_EINVAL;
+  }
 
-    dev = &(sec_hashx_device[index].parent);
-    sec_hashx_device[index].type = type;
+  dev                          = &(sec_hashx_device[index].parent);
+  sec_hashx_device[index].type = type;
 
-    dev->open = sec_hash_open;
-    dev->close = sec_hash_close;
-    dev->control = sec_hash_control;
-    dev->write = sec_hash_write;
-    dev->read = sec_hash_read;
+  dev->open    = sec_hash_open;
+  dev->close   = sec_hash_close;
+  dev->control = sec_hash_control;
+  dev->write   = sec_hash_write;
+  dev->read    = sec_hash_read;
 
-    dev->type = DEVICE_CLASS_SEC_HASH;
-    dev->handle = NULL;
+  dev->type   = DEVICE_CLASS_SEC_HASH;
+  dev->handle = NULL;
 
-    return device_register(dev, name);
+  return device_register(dev, name);
 }
 
 /**
@@ -350,10 +336,7 @@ static int sec_hash_sha_register(enum sec_hash_index_type index, enum sec_hash_t
  * @param flag
  * @return int
  */
-int sec_hash_sha256_register(enum sec_hash_index_type index, const char *name)
-{
-    return sec_hash_sha_register(index, SEC_HASH_SHA256, name);
-}
+int sec_hash_sha256_register(enum sec_hash_index_type index, const char *name) { return sec_hash_sha_register(index, SEC_HASH_SHA256, name); }
 
 /**
  * @brief
@@ -363,25 +346,17 @@ int sec_hash_sha256_register(enum sec_hash_index_type index, const char *name)
  * @param flag
  * @return int
  */
-int sec_hash_sha224_register(enum sec_hash_index_type index, const char *name)
-{
-    return sec_hash_sha_register(index, SEC_HASH_SHA224, name);
-}
+int sec_hash_sha224_register(enum sec_hash_index_type index, const char *name) { return sec_hash_sha_register(index, SEC_HASH_SHA224, name); }
 
 /**
  * @brief
  *
  * @param handle
  */
-void sec_hash_isr(void)
-{
-}
+void sec_hash_isr(void) {}
 
 /**
  * @brief
  *
  */
-void SEC_SHA_IRQ(void)
-{
-    sec_hash_isr();
-}
+void SEC_SHA_IRQ(void) { sec_hash_isr(); }

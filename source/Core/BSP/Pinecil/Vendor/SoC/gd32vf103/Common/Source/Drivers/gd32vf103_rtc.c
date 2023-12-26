@@ -97,7 +97,8 @@ void rtc_prescaler_set(uint32_t psc) {
 */
 void rtc_lwoff_wait(void) {
   /* loop until LWOFF flag is set */
-  while (RESET == (RTC_CTL & RTC_CTL_LWOFF)) {}
+  while (RESET == (RTC_CTL & RTC_CTL_LWOFF)) {
+  }
 }
 
 /*!
@@ -110,7 +111,8 @@ void rtc_register_sync_wait(void) {
   /* clear RSYNF flag */
   RTC_CTL &= ~RTC_CTL_RSYNF;
   /* loop until RSYNF flag is set */
-  while (RESET == (RTC_CTL & RTC_CTL_RSYNF)) {}
+  while (RESET == (RTC_CTL & RTC_CTL_RSYNF)) {
+  }
 }
 
 /*!
