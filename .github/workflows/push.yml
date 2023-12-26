@@ -45,26 +45,22 @@ jobs:
       - name: Copy license files
         run: cp LICENSE scripts/LICENSE_RELEASE.md  source/Hexfile/
 
+      - name: Generate json index file
+        run: ./source/metadata.py ${{ matrix.model }}.json
+
       - name: Archive ${{ matrix.model }} artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.model }}
           path: |
             source/Hexfile/${{ matrix.model }}_*.hex
             source/Hexfile/${{ matrix.model }}_*.dfu
             source/Hexfile/${{ matrix.model }}_*.bin
+            source/Hexfile/${{ matrix.model }}.json
             source/Hexfile/LICENSE
             source/Hexfile/LICENSE_RELEASE.md
           if-no-files-found: error
 
-      - name: Generate json index file
-        run: ./source/metadata.py ${{ matrix.model }}.json
-
-      - name: Archive ${{ matrix.model }} index file
-        uses: actions/upload-artifact@v3
-        with:
-          name: metadata
-          path: source/Hexfile/${{ matrix.model }}.json
 
   build_multi-lang:
     runs-on: ubuntu-22.04
@@ -97,26 +93,42 @@ jobs:
       - name: Copy license files
         run: cp LICENSE scripts/LICENSE_RELEASE.md  source/Hexfile/
 
+      - name: Generate json index file
+        run: ./source/metadata.py ${{ matrix.model }}_multi-lang.json
+
       - name: Archive ${{ matrix.model }} artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.model }}_multi-lang
           path: |
             source/Hexfile/${{ matrix.model }}_*.hex
             source/Hexfile/${{ matrix.model }}_*.dfu
             source/Hexfile/${{ matrix.model }}_*.bin
+            source/Hexfile/${{ matrix.model }}_multi-lang.json
             source/Hexfile/LICENSE
             source/Hexfile/LICENSE_RELEASE.md
           if-no-files-found: error
 
-      - name: Generate json index file
-        run: ./source/metadata.py ${{ matrix.model }}_multi-lang.json
 
-      - name: Archive ${{ matrix.model }} index file
-        uses: actions/upload-artifact@v3
+  upload_metadata:
+    needs: [build, build_multi-lang]
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Download all prebuilts
+        uses: actions/download-artifact@v4
+        with:
+          path: source/Hexfile/
+          merge-multiple: true
+      - run: ls -R source/Hexfile
+
+      - name: Upload JSONs in bulk as metadata
+        uses: actions/upload-artifact@v4
         with:
           name: metadata
-          path: source/Hexfile/${{ matrix.model }}_multi-lang.json
+          path: source/Hexfile/*.json
+          if-no-files-found: error
+
 
   tests:
     runs-on: ubuntu-22.04
