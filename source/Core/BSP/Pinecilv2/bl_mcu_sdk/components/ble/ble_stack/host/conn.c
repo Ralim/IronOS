@@ -28,12 +28,13 @@
 #include "log.h"
 
 #include "att_internal.h"
-#include "conn_internal.h"
 #include "gatt_internal.h"
 #include "hci_core.h"
 #include "keys.h"
 #include "l2cap_internal.h"
 #include "smp.h"
+
+#include "conn_internal.h"
 #if defined(BFLB_BLE)
 #include "ble_config.h"
 
@@ -405,7 +406,7 @@ static struct bt_conn *conn_new(void) {
 
 #if defined(BFLB_BLE)
 bool le_check_valid_conn(void) {
-  int i;
+  size_t i;
 
   for (i = 0; i < ARRAY_SIZE(conns); i++) {
     if (atomic_get(&conns[i].ref)) {
@@ -418,7 +419,7 @@ bool le_check_valid_conn(void) {
 
 #if defined(BFLB_HOST_ASSISTANT)
 void bt_notify_disconnected(void) {
-  int i;
+  size_t i;
 
   for (i = 0; i < ARRAY_SIZE(conns); i++) {
     if (atomic_get(&conns[i].ref)) {
@@ -568,7 +569,7 @@ struct bt_conn *bt_conn_create_sco(const bt_addr_t *peer) {
 }
 
 struct bt_conn *bt_conn_lookup_addr_sco(const bt_addr_t *peer) {
-  int i;
+  size_t i;
 
   for (i = 0; i < ARRAY_SIZE(sco_conns); i++) {
     if (!atomic_get(&sco_conns[i].ref)) {
@@ -588,7 +589,7 @@ struct bt_conn *bt_conn_lookup_addr_sco(const bt_addr_t *peer) {
 }
 
 struct bt_conn *bt_conn_lookup_addr_br(const bt_addr_t *peer) {
-  int i;
+  size_t i;
 
   for (i = 0; i < ARRAY_SIZE(conns); i++) {
     if (!atomic_get(&conns[i].ref)) {
@@ -1674,7 +1675,7 @@ void bt_conn_set_state(struct bt_conn *conn, bt_conn_state_t state) {
 }
 
 struct bt_conn *bt_conn_lookup_handle(u16_t handle) {
-  int i;
+  size_t i;
 
   for (i = 0; i < ARRAY_SIZE(conns); i++) {
     if (!atomic_get(&conns[i].ref)) {
@@ -1726,7 +1727,7 @@ int bt_conn_addr_le_cmp(const struct bt_conn *conn, const bt_addr_le_t *peer) {
 }
 
 struct bt_conn *bt_conn_lookup_addr_le(u8_t id, const bt_addr_le_t *peer) {
-  int i;
+  size_t i;
 
   for (i = 0; i < ARRAY_SIZE(conns); i++) {
     if (!atomic_get(&conns[i].ref)) {
@@ -1746,7 +1747,7 @@ struct bt_conn *bt_conn_lookup_addr_le(u8_t id, const bt_addr_le_t *peer) {
 }
 
 struct bt_conn *bt_conn_lookup_state_le(const bt_addr_le_t *peer, const bt_conn_state_t state) {
-  int i;
+  size_t i;
 
   for (i = 0; i < ARRAY_SIZE(conns); i++) {
     if (!atomic_get(&conns[i].ref)) {
@@ -1770,7 +1771,7 @@ struct bt_conn *bt_conn_lookup_state_le(const bt_addr_le_t *peer, const bt_conn_
 }
 
 void bt_conn_foreach(int type, void (*func)(struct bt_conn *conn, void *data), void *data) {
-  int i;
+  size_t i;
 
   for (i = 0; i < ARRAY_SIZE(conns); i++) {
     if (!atomic_get(&conns[i].ref)) {
@@ -1855,7 +1856,7 @@ int bt_conn_get_info(const struct bt_conn *conn, struct bt_conn_info *info) {
 int bt_conn_get_remote_dev_info(struct bt_conn_info *info) {
   int link_num = 0;
 
-  for (int i = 0; i < ARRAY_SIZE(conns); i++) {
+  for (size_t i = 0; i < ARRAY_SIZE(conns); i++) {
     if (!atomic_get(&conns[i].ref)) {
       continue;
     }
@@ -2445,7 +2446,7 @@ int bt_conn_init(void) {
 #if defined(CONFIG_BT_SMP)
   int err;
 #endif
-  int i;
+  size_t i;
 
 #if defined(BFLB_BLE)
 #if defined(BFLB_DYNAMIC_ALLOC_MEM)
