@@ -28,55 +28,27 @@
 struct device *usb;
 
 #ifdef USB_INDEX
-static void usb_dc_event_callback(struct device *dev, void *args, uint32_t size, uint32_t state)
-{
-    usbd_event_notify_handler(state, args);
-}
+static void usb_dc_event_callback(struct device *dev, void *args, uint32_t size, uint32_t state) { usbd_event_notify_handler(state, args); }
 #endif
-struct device *usb_dc_init(void)
-{
+struct device *usb_dc_init(void) {
 #ifdef USB_INDEX
-    usb_dc_register(USB_INDEX, "usb");
-    usb = device_find("usb");
-    device_set_callback(usb, usb_dc_event_callback);
-    device_open(usb, 0);
-    return usb;
+  usb_dc_register(USB_INDEX, "usb");
+  usb = device_find("usb");
+  device_set_callback(usb, usb_dc_event_callback);
+  device_open(usb, 0);
+  return usb;
 #endif
-    return NULL;
+  return NULL;
 }
 
-int usbd_set_address(const uint8_t addr)
-{
-    return usb_dc_set_dev_address(addr);
-}
+int usbd_set_address(const uint8_t addr) { return usb_dc_set_dev_address(addr); }
 
-int usbd_ep_open(const struct usbd_endpoint_cfg *ep_cfg)
-{
-    return usb_dc_ep_open(usb, (const struct usb_dc_ep_cfg *)ep_cfg);
-}
-int usbd_ep_close(const uint8_t ep)
-{
-    return usb_dc_ep_close(ep);
-}
-int usbd_ep_set_stall(const uint8_t ep)
-{
-    return usb_dc_ep_set_stall(ep);
-}
-int usbd_ep_clear_stall(const uint8_t ep)
-{
-    return usb_dc_ep_clear_stall(ep);
-}
-int usbd_ep_is_stalled(const uint8_t ep, uint8_t *stalled)
-{
-    return usb_dc_ep_is_stalled(usb, ep, stalled);
-}
+int usbd_ep_open(const struct usbd_endpoint_cfg *ep_cfg) { return usb_dc_ep_open(usb, (const struct usb_dc_ep_cfg *)ep_cfg); }
+int usbd_ep_close(const uint8_t ep) { return usb_dc_ep_close(ep); }
+int usbd_ep_set_stall(const uint8_t ep) { return usb_dc_ep_set_stall(ep); }
+int usbd_ep_clear_stall(const uint8_t ep) { return usb_dc_ep_clear_stall(ep); }
+int usbd_ep_is_stalled(const uint8_t ep, uint8_t *stalled) { return usb_dc_ep_is_stalled(usb, ep, stalled); }
 
-int usbd_ep_write(const uint8_t ep, const uint8_t *data, uint32_t data_len, uint32_t *ret_bytes)
-{
-    return usb_dc_ep_write(usb, ep, data, data_len, ret_bytes);
-}
+int usbd_ep_write(const uint8_t ep, const uint8_t *data, uint32_t data_len, uint32_t *ret_bytes) { return usb_dc_ep_write(usb, ep, data, data_len, ret_bytes); }
 
-int usbd_ep_read(const uint8_t ep, uint8_t *data, uint32_t max_data_len, uint32_t *read_bytes)
-{
-    return usb_dc_ep_read(usb, ep, data, max_data_len, read_bytes);
-}
+int usbd_ep_read(const uint8_t ep, uint8_t *data, uint32_t max_data_len, uint32_t *read_bytes) { return usb_dc_ep_read(usb, ep, data, max_data_len, read_bytes); }

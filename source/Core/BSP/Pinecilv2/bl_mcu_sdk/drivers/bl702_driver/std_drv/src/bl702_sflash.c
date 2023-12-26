@@ -39,7 +39,6 @@
 #include "bl702_sf_ctrl.h"
 #include "string.h"
 
-
 /** @addtogroup  BL702_Peripheral_Driver
  *  @{
  */

@@ -318,7 +318,7 @@ static void usbh_cfgdesc_parse(usb_desc_config *cfg_desc, uint8_t *buf) {
     \retval     operation status
 */
 static void usbh_cfgset_parse(usb_dev_prop *udev, uint8_t *buf) {
-  usb_desc_ep * ep  = NULL;
+  usb_desc_ep  *ep  = NULL;
   usb_desc_itf *itf = NULL, itf_value;
 
   usb_desc_header *pdesc = (usb_desc_header *)buf;

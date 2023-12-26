@@ -1194,7 +1194,6 @@ HAL_StatusTypeDef HAL_ADC_Start_DMA(ADC_HandleTypeDef *hadc, uint32_t *pData, ui
       /* Set the DMA transfer complete callback */
       hadc->DMA_Handle->XferCpltCallback = ADC_DMAConvCplt;
 
-
       /* Manage ADC and DMA start: ADC overrun interruption, DMA start, ADC   */
       /* start (in case of SW start):                                         */
 
@@ -1352,7 +1351,6 @@ void HAL_ADC_IRQHandler(ADC_HandleTypeDef *hadc) {
         }
       }
 
-
       /* Clear regular group conversion flag */
       __HAL_ADC_CLEAR_FLAG(hadc, ADC_FLAG_STRT | ADC_FLAG_EOC);
     }
@@ -1393,11 +1391,7 @@ void HAL_ADC_IRQHandler(ADC_HandleTypeDef *hadc) {
       __HAL_ADC_CLEAR_FLAG(hadc, (ADC_FLAG_JSTRT | ADC_FLAG_JEOC));
     }
   }
-
-
 }
-
-
 
 /**
  * @}
@@ -1438,7 +1432,7 @@ void HAL_ADC_IRQHandler(ADC_HandleTypeDef *hadc) {
  * @retval HAL status
  */
 HAL_StatusTypeDef HAL_ADC_ConfigChannel(ADC_HandleTypeDef *hadc, ADC_ChannelConfTypeDef *sConfig) {
-  HAL_StatusTypeDef tmp_hal_status  = HAL_OK;
+  HAL_StatusTypeDef tmp_hal_status = HAL_OK;
 
   /* Check the parameters */
   assert_param(IS_ADC_ALL_INSTANCE(hadc->Instance));
@@ -1471,8 +1465,6 @@ HAL_StatusTypeDef HAL_ADC_ConfigChannel(ADC_HandleTypeDef *hadc, ADC_ChannelConf
   {
     MODIFY_REG(hadc->Instance->SMPR2, ADC_SMPR2(ADC_SMPR2_SMP0, sConfig->Channel), ADC_SMPR2(sConfig->SamplingTime, sConfig->Channel));
   }
-
- 
 
   /* Process unlocked */
   __HAL_UNLOCK(hadc);
@@ -1711,11 +1703,6 @@ void ADC_DMAConvCplt(DMA_HandleTypeDef *hdma) {
     hadc->DMA_Handle->XferErrorCallback(hdma);
   }
 }
-
-
-
-
-
 
 /**
  * @}

@@ -124,54 +124,51 @@ const OI_UINT32 dequant_long_unscaled[17];
 
 #include <math.h>
 
-static INLINE float dequant_float(OI_UINT32 raw, OI_UINT scale_factor, OI_UINT bits)
-{
-    float result = (1 << (scale_factor + 1)) * ((raw * 2.0f + 1.0f) / ((1 << bits) - 1.0f) - 1.0f);
+static INLINE float dequant_float(OI_UINT32 raw, OI_UINT scale_factor, OI_UINT bits) {
+  float result = (1 << (scale_factor + 1)) * ((raw * 2.0f + 1.0f) / ((1 << bits) - 1.0f) - 1.0f);
 
-    result /= SBC_DEQUANT_SCALING_FACTOR;
+  result /= SBC_DEQUANT_SCALING_FACTOR;
 
-    /* Unless the encoder screwed up, all correct dequantized values should
-     * satisfy this inequality. Non-compliant encoders which generate quantized
-     * values with all 1-bits set can, theoretically, trigger this assert. This
-     * is unlikely, however, and only an issue in debug mode.
-     */
-    OI_ASSERT(fabs(result) < 32768 * 1.6);
+  /* Unless the encoder screwed up, all correct dequantized values should
+   * satisfy this inequality. Non-compliant encoders which generate quantized
+   * values with all 1-bits set can, theoretically, trigger this assert. This
+   * is unlikely, however, and only an issue in debug mode.
+   */
+  OI_ASSERT(fabs(result) < 32768 * 1.6);
 
-    return result;
+  return result;
 }
 
 #endif
 
-INLINE OI_INT32 OI_SBC_Dequant(OI_UINT32 raw, OI_UINT scale_factor, OI_UINT bits)
-{
-    OI_UINT32 d;
-    OI_INT32 result;
+INLINE OI_INT32 OI_SBC_Dequant(OI_UINT32 raw, OI_UINT scale_factor, OI_UINT bits) {
+  OI_UINT32 d;
+  OI_INT32  result;
 
-    OI_ASSERT(scale_factor <= 15);
-    OI_ASSERT(bits <= 16);
+  OI_ASSERT(scale_factor <= 15);
+  OI_ASSERT(bits <= 16);
 
-    if (bits <= 1) {
-        return 0;
-    }
+  if (bits <= 1) {
+    return 0;
+  }
 
-    d = (raw * 2) + 1;
-    d *= dequant_long_scaled[bits];
-    result = d - SBC_DEQUANT_LONG_SCALED_OFFSET;
+  d = (raw * 2) + 1;
+  d *= dequant_long_scaled[bits];
+  result = d - SBC_DEQUANT_LONG_SCALED_OFFSET;
 
 #ifdef DEBUG_DEQUANTIZATION
-    {
-        OI_INT32 integerized_float_result;
-        float float_result;
+  {
+    OI_INT32 integerized_float_result;
+    float    float_result;
 
-        float_result = dequant_float(raw, scale_factor, bits);
-        integerized_float_result = (OI_INT32)floor(0.5f + float_result * (1 << 15));
+    float_result             = dequant_float(raw, scale_factor, bits);
+    integerized_float_result = (OI_INT32)floor(0.5f + float_result * (1 << 15));
 
-        /* This detects overflow */
-        OI_ASSERT(((result >= 0) && (integerized_float_result >= 0)) ||
-                  ((result <= 0) && (integerized_float_result <= 0)));
-    }
+    /* This detects overflow */
+    OI_ASSERT(((result >= 0) && (integerized_float_result >= 0)) || ((result <= 0) && (integerized_float_result <= 0)));
+  }
 #endif
-    return result >> (15 - scale_factor);
+  return result >> (15 - scale_factor);
 }
 
 /* This version of Dequant does not incorporate the scaling factor of 1.38. It
@@ -181,27 +178,26 @@ INLINE OI_INT32 OI_SBC_Dequant(OI_UINT32 raw, OI_UINT scale_factor, OI_UINT bits
  * the encoder is conformant) the result will fit a 24 bit fixed point signed
  * value.*/
 
-INLINE OI_INT32 OI_SBC_Dequant_Unscaled(OI_UINT32 raw, OI_UINT scale_factor, OI_UINT bits)
-{
-    OI_UINT32 d;
-    OI_INT32 result;
+INLINE OI_INT32 OI_SBC_Dequant_Unscaled(OI_UINT32 raw, OI_UINT scale_factor, OI_UINT bits) {
+  OI_UINT32 d;
+  OI_INT32  result;
 
-    OI_ASSERT(scale_factor <= 15);
-    OI_ASSERT(bits <= 16);
+  OI_ASSERT(scale_factor <= 15);
+  OI_ASSERT(bits <= 16);
 
-    if (bits <= 1) {
-        return 0;
-    }
-    if (bits == 16) {
-        result = (raw << 16) + raw - 0x7fff7fff;
-        return SCALE(result, 24 - scale_factor);
-    }
-
-    d = (raw * 2) + 1;
-    d *= dequant_long_unscaled[bits];
-    result = d - 0x80000000;
-
+  if (bits <= 1) {
+    return 0;
+  }
+  if (bits == 16) {
+    result = (raw << 16) + raw - 0x7fff7fff;
     return SCALE(result, 24 - scale_factor);
+  }
+
+  d = (raw * 2) + 1;
+  d *= dequant_long_unscaled[bits];
+  result = d - 0x80000000;
+
+  return SCALE(result, 24 - scale_factor);
 }
 
 /**

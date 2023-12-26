@@ -278,8 +278,8 @@ void eclic_mode_enable() {
   write_csr(CSR_MTVEC, mtvec_value);
 #elif defined(__GNUC__)
   uint32_t mtvec_value = read_csr(mtvec);
-  mtvec_value = mtvec_value & 0xFFFFFFC0;
-  mtvec_value = mtvec_value | 0x00000003;
+  mtvec_value          = mtvec_value & 0xFFFFFFC0;
+  mtvec_value          = mtvec_value | 0x00000003;
   write_csr(mtvec, mtvec_value);
 #endif
 }
