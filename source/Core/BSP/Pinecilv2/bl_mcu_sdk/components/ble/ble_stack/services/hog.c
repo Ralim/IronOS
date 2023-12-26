@@ -144,7 +144,7 @@ int hog_notify(struct bt_conn *conn, uint16_t hid_usage, uint8_t press) {
   struct hids_remote_key *remote_key = NULL;
   u8_t                    len        = 4, data[4];
 
-  for (int i = 0; i < (sizeof(remote_kbd_map_tab) / sizeof(remote_kbd_map_tab[0])); i++) {
+  for (size_t i = 0; i < (sizeof(remote_kbd_map_tab) / sizeof(remote_kbd_map_tab[0])); i++) {
     if (remote_kbd_map_tab[i].hid_usage == hid_usage) {
       remote_key = &remote_kbd_map_tab[i];
       break;

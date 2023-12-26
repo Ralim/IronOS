@@ -1404,7 +1404,8 @@ BL_Sts_Type ATTR_TCM_SECTION SF_Ctrl_GetBusyState(void) {
                                                                                 *
                                                                                 *******************************************************************************/
 #ifndef BFLB_USE_HAL_DRIVER
-void SF_Ctrl_IRQHandler(void) { /* TODO: Not implemented */ }
+void SF_Ctrl_IRQHandler(void) { /* TODO: Not implemented */
+}
 #endif
 
 /*@} end of group SF_CTRL_Public_Functions */

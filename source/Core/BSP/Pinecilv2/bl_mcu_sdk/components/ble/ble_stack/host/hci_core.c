@@ -5401,7 +5401,7 @@ int bt_disable(void) {
 static int set_ad(u16_t hci_op, const struct bt_ad *ad, size_t ad_len) {
   struct bt_hci_cp_le_set_adv_data *set_data;
   struct net_buf                   *buf;
-  size_t                               c, i;
+  size_t                            c, i;
 
   buf = bt_hci_cmd_create(hci_op, sizeof(*set_data));
   if (!buf) {

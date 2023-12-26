@@ -21,12 +21,12 @@
 #include <bluetooth.h>
 #include <hci_host.h>
 #include <hci_err.h>
+#include "conn_internal.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include "conn_internal.h"
 /** Opaque type representing a connection to a remote device */
 struct bt_conn;
 
