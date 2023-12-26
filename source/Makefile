@@ -64,7 +64,7 @@ THREADS_DIR=./Core/Threads/
 SOURCE_CORE_DIR=./Core/Src/
 BRIEFLZ_DIR=./Core/brieflz/
 DRIVERS_DIR=./Core/Drivers/
-
+PD_DRIVER_DIR=./Core/Drivers/usb-pd
 # Exclude USB-PD tests
 PD_DRIVER_TESTS_DIR=./Core/Drivers/usb-pd/tests
 
