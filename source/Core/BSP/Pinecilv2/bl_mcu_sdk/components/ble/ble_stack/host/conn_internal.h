@@ -8,6 +8,8 @@
 #include "work_q.h"
 #include <stddef.h>
 #include <stdint.h>
+#ifndef BLE_STACK_HOST_CONN_INTERNAL_H_
+#define BLE_STACK_HOST_CONN_INTERNAL_H_
 /*
  * Copyright (c) 2015 Intel Corporation
  *
@@ -324,3 +326,5 @@ void bt_conn_process_tx(struct bt_conn *conn);
  */
 int bt_hci_get_conn_handle(const struct bt_conn *conn, u16_t *conn_handle);
 #endif
+
+#endif //BLE_STACK_HOST_CONN_INTERNAL_H_

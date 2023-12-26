@@ -26,6 +26,7 @@
 extern "C" {
 #endif
 
+#include "conn_internal.h"
 /** Opaque type representing a connection to a remote device */
 struct bt_conn;
 
