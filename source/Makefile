@@ -222,6 +222,12 @@ CPUFLAGS=-march=rv32imafczicsr                                     \
          -DBL702                                              \
          -DBFLB_USE_ROM_DRIVER=1                              \
 
+# Binary blobs suck and they should be ashamed
+PINECILV2_SDK_DIR=$(DEVICE_BSP_DIR)/bl_mcu_sdk
+PINECILV2_COMPONENTS_DIR=$(PINECILV2_SDK_DIR)/components
+PINECILV2_BLE_CRAPWARE_BLOB_DIR=$(PINECILV2_COMPONENTS_DIR)/ble/blecontroller/lib
+PINECILV2_RF_CRAPWARE_BLOB_DIR=$(PINECILV2_COMPONENTS_DIR)/ble/bl702_rf/lib
+
 DEV_LDFLAGS=-nostartfiles                         \
             -L $(PINECILV2_BLE_CRAPWARE_BLOB_DIR) \
             -L $(PINECILV2_RF_CRAPWARE_BLOB_DIR)  \
