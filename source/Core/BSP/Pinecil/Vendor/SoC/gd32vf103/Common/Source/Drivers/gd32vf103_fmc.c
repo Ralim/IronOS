@@ -188,7 +188,8 @@ void ob_unlock(void) {
   }
 
   /* wait until OBWEN bit is set by hardware */
-  while (RESET == (FMC_CTL & FMC_CTL_OBWEN)) {}
+  while (RESET == (FMC_CTL & FMC_CTL_OBWEN)) {
+  }
 }
 
 /*!

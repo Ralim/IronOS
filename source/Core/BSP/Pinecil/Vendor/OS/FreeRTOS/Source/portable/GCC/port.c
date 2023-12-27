@@ -34,7 +34,7 @@
 #include "task.h"
 #include <stdio.h>
 
-//#define ENABLE_KERNEL_DEBUG
+// #define ENABLE_KERNEL_DEBUG
 
 #ifdef ENABLE_KERNEL_DEBUG
 #define FREERTOS_PORT_DEBUG(...) printf(__VA_ARGS__)

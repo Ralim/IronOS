@@ -38,10 +38,7 @@ dlist_t device_head = DLIST_OBJECT_INIT(device_head);
  *
  * @return device header
  */
-dlist_t *device_get_list_header(void)
-{
-    return &device_head;
-}
+dlist_t *device_get_list_header(void) { return &device_head; }
 
 /**
  * This function registers a device driver with specified name.
@@ -52,25 +49,23 @@ dlist_t *device_get_list_header(void)
  *
  * @return the error code, DEVICE_EOK on initialization successfully.
  */
-int device_register(struct device *dev, const char *name)
-{
-    dlist_t *node;
+int device_register(struct device *dev, const char *name) {
+  dlist_t *node;
 
-    dlist_for_each(node, &device_head)
-    {
-        struct device *dev_obj;
-        dev_obj = dlist_entry(node, struct device, list);
+  dlist_for_each(node, &device_head) {
+    struct device *dev_obj;
+    dev_obj = dlist_entry(node, struct device, list);
 
-        if (dev_obj == dev) {
-            return -DEVICE_EEXIST;
-        }
+    if (dev_obj == dev) {
+      return -DEVICE_EEXIST;
     }
+  }
 
-    strcpy(dev->name, name);
+  strcpy(dev->name, name);
 
-    dlist_insert_after(&device_head, &(dev->list));
-    dev->status = DEVICE_REGISTERED;
-    return DEVICE_EOK;
+  dlist_insert_after(&device_head, &(dev->list));
+  dev->status = DEVICE_REGISTERED;
+  return DEVICE_EOK;
 }
 
 /**
@@ -82,17 +77,16 @@ int device_register(struct device *dev, const char *name)
  *
  * @return the error code, DEVICE_EOK on initialization successfully.
  */
-int device_unregister(const char *name)
-{
-    struct device *dev = device_find(name);
+int device_unregister(const char *name) {
+  struct device *dev = device_find(name);
 
-    if (!dev) {
-        return -DEVICE_ENODEV;
-    }
-    dev->status = DEVICE_UNREGISTER;
-    /* remove from old list */
-    dlist_remove(&(dev->list));
-    return DEVICE_EOK;
+  if (!dev) {
+    return -DEVICE_ENODEV;
+  }
+  dev->status = DEVICE_UNREGISTER;
+  /* remove from old list */
+  dlist_remove(&(dev->list));
+  return DEVICE_EOK;
 }
 
 /**
@@ -102,20 +96,18 @@ int device_unregister(const char *name)
  *
  * @return the registered device driver on successful, or NULL on failure.
  */
-struct device *device_find(const char *name)
-{
-    struct device *dev;
-    dlist_t *node;
+struct device *device_find(const char *name) {
+  struct device *dev;
+  dlist_t       *node;
 
-    dlist_for_each(node, &device_head)
-    {
-        dev = dlist_entry(node, struct device, list);
+  dlist_for_each(node, &device_head) {
+    dev = dlist_entry(node, struct device, list);
 
-        if (strncmp(dev->name, name, DEVICE_NAME_MAX) == 0) {
-            return dev;
-        }
+    if (strncmp(dev->name, name, DEVICE_NAME_MAX) == 0) {
+      return dev;
     }
-    return NULL;
+  }
+  return NULL;
 }
 
 /**
@@ -126,26 +118,25 @@ struct device *device_find(const char *name)
  *
  * @return the result
  */
-int device_open(struct device *dev, uint16_t oflag)
-{
+int device_open(struct device *dev, uint16_t oflag) {
 #ifdef DEVICE_CHECK_PARAM
-    int retval = DEVICE_EOK;
+  int retval = DEVICE_EOK;
 
-    if ((dev->status == DEVICE_REGISTERED) || (dev->status == DEVICE_CLOSED)) {
-        if (dev_open != NULL) {
-            retval = dev_open(dev, oflag);
-            dev->status = DEVICE_OPENED;
-            dev->oflag |= oflag;
-        } else {
-            retval = -DEVICE_EFAULT;
-        }
+  if ((dev->status == DEVICE_REGISTERED) || (dev->status == DEVICE_CLOSED)) {
+    if (dev_open != NULL) {
+      retval      = dev_open(dev, oflag);
+      dev->status = DEVICE_OPENED;
+      dev->oflag |= oflag;
     } else {
-        retval = -DEVICE_EINVAL;
+      retval = -DEVICE_EFAULT;
     }
+  } else {
+    retval = -DEVICE_EINVAL;
+  }
 
-    return retval;
+  return retval;
 #else
-    return dev_open(dev, oflag);
+  return dev_open(dev, oflag);
 #endif
 }
 /**
@@ -155,26 +146,25 @@ int device_open(struct device *dev, uint16_t oflag)
  *
  * @return the result
  */
-int device_close(struct device *dev)
-{
+int device_close(struct device *dev) {
 #ifdef DEVICE_CHECK_PARAM
-    int retval = DEVICE_EOK;
+  int retval = DEVICE_EOK;
 
-    if (dev->status == DEVICE_OPENED) {
-        if (dev_close != NULL) {
-            retval = dev_close(dev);
-            dev->status = DEVICE_CLOSED;
-            dev->oflag = 0;
-        } else {
-            retval = -DEVICE_EFAULT;
-        }
+  if (dev->status == DEVICE_OPENED) {
+    if (dev_close != NULL) {
+      retval      = dev_close(dev);
+      dev->status = DEVICE_CLOSED;
+      dev->oflag  = 0;
     } else {
-        retval = -DEVICE_EINVAL;
+      retval = -DEVICE_EFAULT;
     }
+  } else {
+    retval = -DEVICE_EINVAL;
+  }
 
-    return retval;
+  return retval;
 #else
-    return dev_close(dev);
+  return dev_close(dev);
 #endif
 }
 /**
@@ -186,24 +176,23 @@ int device_close(struct device *dev)
  *
  * @return the result
  */
-int device_control(struct device *dev, int cmd, void *args)
-{
+int device_control(struct device *dev, int cmd, void *args) {
 #ifdef DEVICE_CHECK_PARAM
-    int retval = DEVICE_EOK;
+  int retval = DEVICE_EOK;
 
-    if (dev->status > DEVICE_UNREGISTER) {
-        if (dev_control != NULL) {
-            retval = dev_control(dev, cmd, args);
-        } else {
-            retval = -DEVICE_EFAULT;
-        }
+  if (dev->status > DEVICE_UNREGISTER) {
+    if (dev_control != NULL) {
+      retval = dev_control(dev, cmd, args);
     } else {
-        retval = -DEVICE_EINVAL;
+      retval = -DEVICE_EFAULT;
     }
+  } else {
+    retval = -DEVICE_EINVAL;
+  }
 
-    return retval;
+  return retval;
 #else
-    return dev_control(dev, cmd, args);
+  return dev_control(dev, cmd, args);
 #endif
 }
 /**
@@ -216,24 +205,23 @@ int device_control(struct device *dev, int cmd, void *args)
  *
  * @return the actually written size on successful, otherwise negative returned.
  */
-int device_write(struct device *dev, uint32_t pos, const void *buffer, uint32_t size)
-{
+int device_write(struct device *dev, uint32_t pos, const void *buffer, uint32_t size) {
 #ifdef DEVICE_CHECK_PARAM
-    int retval = DEVICE_EOK;
+  int retval = DEVICE_EOK;
 
-    if (dev->status == DEVICE_OPENED) {
-        if (dev_write != NULL) {
-            retval = dev_write(dev, pos, buffer, size);
-        } else {
-            retval = -DEVICE_EFAULT;
-        }
+  if (dev->status == DEVICE_OPENED) {
+    if (dev_write != NULL) {
+      retval = dev_write(dev, pos, buffer, size);
     } else {
-        retval = -DEVICE_EINVAL;
+      retval = -DEVICE_EFAULT;
     }
+  } else {
+    retval = -DEVICE_EINVAL;
+  }
 
-    return retval;
+  return retval;
 #else
-    return dev_write(dev, pos, buffer, size);
+  return dev_write(dev, pos, buffer, size);
 #endif
 }
 /**
@@ -246,24 +234,23 @@ int device_write(struct device *dev, uint32_t pos, const void *buffer, uint32_t 
  *
  * @return the actually read size on successful, otherwise negative returned.
  */
-int device_read(struct device *dev, uint32_t pos, void *buffer, uint32_t size)
-{
+int device_read(struct device *dev, uint32_t pos, void *buffer, uint32_t size) {
 #ifdef DEVICE_CHECK_PARAM
-    int retval = DEVICE_EOK;
+  int retval = DEVICE_EOK;
 
-    if (dev->status == DEVICE_OPENED) {
-        if (dev_read != NULL) {
-            retval = dev_read(dev, pos, buffer, size);
-        } else {
-            retval = -DEVICE_EFAULT;
-        }
+  if (dev->status == DEVICE_OPENED) {
+    if (dev_read != NULL) {
+      retval = dev_read(dev, pos, buffer, size);
     } else {
-        retval = -DEVICE_EINVAL;
+      retval = -DEVICE_EFAULT;
     }
+  } else {
+    retval = -DEVICE_EINVAL;
+  }
 
-    return retval;
+  return retval;
 #else
-    return dev_read(dev, pos, buffer, size);
+  return dev_read(dev, pos, buffer, size);
 #endif
 }
 /**
@@ -276,19 +263,18 @@ int device_read(struct device *dev, uint32_t pos, void *buffer, uint32_t size)
  *
  * @return the actually read size on successful, otherwise negative returned.
  */
-int device_set_callback(struct device *dev, void (*callback)(struct device *dev, void *args, uint32_t size, uint32_t event))
-{
-    int retval = DEVICE_EOK;
+int device_set_callback(struct device *dev, void (*callback)(struct device *dev, void *args, uint32_t size, uint32_t event)) {
+  int retval = DEVICE_EOK;
 
-    if (dev->status > DEVICE_UNREGISTER) {
-        if (callback != NULL) {
-            dev->callback = callback;
-        } else {
-            retval = -DEVICE_EFAULT;
-        }
+  if (dev->status > DEVICE_UNREGISTER) {
+    if (callback != NULL) {
+      dev->callback = callback;
     } else {
-        retval = -DEVICE_EINVAL;
+      retval = -DEVICE_EFAULT;
     }
+  } else {
+    retval = -DEVICE_EINVAL;
+  }
 
-    return retval;
+  return retval;
 }

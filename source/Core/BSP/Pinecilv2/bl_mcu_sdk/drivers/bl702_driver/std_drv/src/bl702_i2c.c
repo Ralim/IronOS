@@ -50,12 +50,12 @@
  *  @{
  */
 #define I2C_FIFO_STATUS_TIMEOUT (160 * 1000 * 2)
-#define PUT_UINT32_LE(n, b, i)           \
-  {                                      \
-    (b)[(i)]     = (uint8_t)((n));       \
-    (b)[(i) + 1] = (uint8_t)((n) >> 8);  \
-    (b)[(i) + 2] = (uint8_t)((n) >> 16); \
-    (b)[(i) + 3] = (uint8_t)((n) >> 24); \
+#define PUT_UINT32_LE(n, b, i)                                                                                                                                                                         \
+  {                                                                                                                                                                                                    \
+    (b)[(i)]     = (uint8_t)((n));                                                                                                                                                                     \
+    (b)[(i) + 1] = (uint8_t)((n) >> 8);                                                                                                                                                                \
+    (b)[(i) + 2] = (uint8_t)((n) >> 16);                                                                                                                                                               \
+    (b)[(i) + 3] = (uint8_t)((n) >> 24);                                                                                                                                                               \
   }
 
 /*@} end of group I2C_Private_Macros */

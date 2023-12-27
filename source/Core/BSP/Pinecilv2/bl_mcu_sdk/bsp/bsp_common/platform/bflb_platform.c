@@ -36,7 +36,8 @@ static uint8_t uart_dbg_disable = 0;
 struct heap_info mmheap_root;
 
 static struct heap_region system_mmheap[] = {
-    {NULL, 0}, {NULL, 0}, /* Terminates the array. */
+    {NULL, 0},
+    {NULL, 0}, /* Terminates the array. */
 };
 __WEAK__ void board_init(void) {}
 

@@ -114,14 +114,14 @@ void exmc_norsram_init(exmc_norsram_parameter_struct *exmc_norsram_init_struct) 
   /* clear relative bits */
   snctl &= ((uint32_t) ~(EXMC_SNCTL_NREN | EXMC_SNCTL_NRTP | EXMC_SNCTL_NRW | EXMC_SNCTL_NRWTPOL | EXMC_SNCTL_WREN | EXMC_SNCTL_NRWTEN | EXMC_SNCTL_ASYNCWAIT | EXMC_SNCTL_NRMUX));
 
-  snctl |= (uint32_t)((uint32_t)exmc_norsram_init_struct->address_data_mux << SNCTL_NRMUX_OFFSET) | exmc_norsram_init_struct->memory_type | exmc_norsram_init_struct->databus_width
-           | exmc_norsram_init_struct->nwait_polarity | ((uint32_t)exmc_norsram_init_struct->memory_write << SNCTL_WREN_OFFSET)
-           | ((uint32_t)exmc_norsram_init_struct->nwait_signal << SNCTL_NRWTEN_OFFSET) | ((uint32_t)exmc_norsram_init_struct->asyn_wait << SNCTL_ASYNCWAIT_OFFSET);
+  snctl |= (uint32_t)((uint32_t)exmc_norsram_init_struct->address_data_mux << SNCTL_NRMUX_OFFSET) | exmc_norsram_init_struct->memory_type | exmc_norsram_init_struct->databus_width |
+           exmc_norsram_init_struct->nwait_polarity | ((uint32_t)exmc_norsram_init_struct->memory_write << SNCTL_WREN_OFFSET) |
+           ((uint32_t)exmc_norsram_init_struct->nwait_signal << SNCTL_NRWTEN_OFFSET) | ((uint32_t)exmc_norsram_init_struct->asyn_wait << SNCTL_ASYNCWAIT_OFFSET);
 
-  sntcfg = (uint32_t)((exmc_norsram_init_struct->read_write_timing->asyn_address_setuptime - 1U) & EXMC_SNTCFG_ASET)
-           | (((exmc_norsram_init_struct->read_write_timing->asyn_address_holdtime - 1U) << SNTCFG_AHLD_OFFSET) & EXMC_SNTCFG_AHLD)
-           | (((exmc_norsram_init_struct->read_write_timing->asyn_data_setuptime - 1U) << SNTCFG_DSET_OFFSET) & EXMC_SNTCFG_DSET)
-           | (((exmc_norsram_init_struct->read_write_timing->bus_latency - 1U) << SNTCFG_BUSLAT_OFFSET) & EXMC_SNTCFG_BUSLAT);
+  sntcfg = (uint32_t)((exmc_norsram_init_struct->read_write_timing->asyn_address_setuptime - 1U) & EXMC_SNTCFG_ASET) |
+           (((exmc_norsram_init_struct->read_write_timing->asyn_address_holdtime - 1U) << SNTCFG_AHLD_OFFSET) & EXMC_SNTCFG_AHLD) |
+           (((exmc_norsram_init_struct->read_write_timing->asyn_data_setuptime - 1U) << SNTCFG_DSET_OFFSET) & EXMC_SNTCFG_DSET) |
+           (((exmc_norsram_init_struct->read_write_timing->bus_latency - 1U) << SNTCFG_BUSLAT_OFFSET) & EXMC_SNTCFG_BUSLAT);
 
   /* nor flash access enable */
   if (EXMC_MEMORY_TYPE_NOR == exmc_norsram_init_struct->memory_type) {

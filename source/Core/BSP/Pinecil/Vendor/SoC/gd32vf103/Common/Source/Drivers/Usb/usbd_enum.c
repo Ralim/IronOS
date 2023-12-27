@@ -70,8 +70,8 @@ static usb_reqsta (*_std_dev_req[])(usb_core_driver *udev, usb_req *req) = {
 };
 
 /* get standard descriptor handler */
-static uint8_t *(*std_desc_get[])(usb_core_driver *udev, uint8_t index, uint16_t *len)
-    = {[USB_DESCTYPE_DEV - 1] = _usb_dev_desc_get, [USB_DESCTYPE_CONFIG - 1] = _usb_config_desc_get, [USB_DESCTYPE_STR - 1] = _usb_str_desc_get};
+static uint8_t *(*std_desc_get[])(usb_core_driver *udev, uint8_t index,
+                                  uint16_t *len) = {[USB_DESCTYPE_DEV - 1] = _usb_dev_desc_get, [USB_DESCTYPE_CONFIG - 1] = _usb_config_desc_get, [USB_DESCTYPE_STR - 1] = _usb_str_desc_get};
 
 /*!
     \brief      handle USB standard device request

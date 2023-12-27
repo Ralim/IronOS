@@ -37,8 +37,9 @@ OF SUCH DAMAGE.
 #include "gd32vf103_dma.h"
 #include "gd32vf103_rcu.h"
 
-#define DMA_WRONG_HANDLE \
-  while (1) {}
+#define DMA_WRONG_HANDLE                                                                                                                                                                               \
+  while (1) {                                                                                                                                                                                          \
+  }
 
 /* check whether peripheral matches channels or not */
 static ErrStatus dma_periph_and_channel_check(uint32_t dma_periph, dma_channel_enum channelx);

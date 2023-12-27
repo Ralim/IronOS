@@ -48,7 +48,7 @@
 /** @defgroup  PWM_Private_Macros
  *  @{
  */
-#define PWM_Get_Channel_Reg(ch) (PWM_BASE + PWM_CHANNEL_OFFSET + (ch)*0x20)
+#define PWM_Get_Channel_Reg(ch) (PWM_BASE + PWM_CHANNEL_OFFSET + (ch) * 0x20)
 #define PWM_INT_TIMEOUT_COUNT   (160 * 1000)
 #define PWM_STOP_TIMEOUT_COUNT  (160 * 1000)
 
