@@ -3,8 +3,8 @@
 #include "stm32f1xx.h"
 
 #if !defined(HSI_VALUE)
-#define HSI_VALUE                                               \
-  8000000U /*!< Default value of the Internal oscillator in Hz. \
+#define HSI_VALUE                                                                                                                                                                                      \
+  8000000U /*!< Default value of the Internal oscillator in Hz.                                                                                                                                        \
                 This value can be provided and adapted by the user application. */
 #endif     /* HSI_VALUE */
 
@@ -86,7 +86,7 @@ void SystemInit(void) {
 #ifdef VECT_TAB_SRAM
   SCB->VTOR = SRAM_BASE | VECT_TAB_OFFSET; /* Vector Table Relocation in Internal SRAM. */
 #else
-  SCB->VTOR  = FLASH_BASE | VECT_TAB_OFFSET; /* Vector Table Relocation in Internal FLASH. */
+  SCB->VTOR = FLASH_BASE | VECT_TAB_OFFSET; /* Vector Table Relocation in Internal FLASH. */
 #endif
 }
 

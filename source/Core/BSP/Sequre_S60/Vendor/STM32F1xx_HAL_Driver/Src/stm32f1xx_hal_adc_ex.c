@@ -661,7 +661,6 @@ HAL_StatusTypeDef HAL_ADCEx_MultiModeStart_DMA(ADC_HandleTypeDef *hadc, uint32_t
     /* Set the DMA transfer complete callback */
     hadc->DMA_Handle->XferCpltCallback = ADC_DMAConvCplt;
 
-
     /* Manage ADC and DMA start: ADC overrun interruption, DMA start, ADC     */
     /* start (in case of SW start):                                           */
 
@@ -899,7 +898,7 @@ __weak void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef *hadc) {
  * @retval None
  */
 HAL_StatusTypeDef HAL_ADCEx_InjectedConfigChannel(ADC_HandleTypeDef *hadc, ADC_InjectionConfTypeDef *sConfigInjected) {
-  HAL_StatusTypeDef tmp_hal_status  = HAL_OK;
+  HAL_StatusTypeDef tmp_hal_status = HAL_OK;
 
   /* Check the parameters */
   assert_param(IS_ADC_ALL_INSTANCE(hadc->Instance));
@@ -964,8 +963,8 @@ HAL_StatusTypeDef HAL_ADCEx_InjectedConfigChannel(ADC_HandleTypeDef *hadc, ADC_I
 
                  ADC_JSQR_JL | ADC_JSQR_RK_JL(ADC_JSQR_JSQ1, sConfigInjected->InjectedRank, sConfigInjected->InjectedNbrOfConversion),
 
-                 ADC_JSQR_JL_SHIFT(sConfigInjected->InjectedNbrOfConversion)
-                     | ADC_JSQR_RK_JL(sConfigInjected->InjectedChannel, sConfigInjected->InjectedRank, sConfigInjected->InjectedNbrOfConversion));
+                 ADC_JSQR_JL_SHIFT(sConfigInjected->InjectedNbrOfConversion) |
+                     ADC_JSQR_RK_JL(sConfigInjected->InjectedChannel, sConfigInjected->InjectedRank, sConfigInjected->InjectedNbrOfConversion));
     } else {
       /* Clear the old SQx bits for the selected rank */
       MODIFY_REG(hadc->Instance->JSQR,
@@ -1028,9 +1027,6 @@ HAL_StatusTypeDef HAL_ADCEx_InjectedConfigChannel(ADC_HandleTypeDef *hadc, ADC_I
     MODIFY_REG(hadc->Instance->SMPR2, ADC_SMPR2(ADC_SMPR2_SMP0, sConfigInjected->InjectedChannel), ADC_SMPR2(sConfigInjected->InjectedSamplingTime, sConfigInjected->InjectedChannel));
   }
 
-
-
-
   /* Configure the offset: offset enable/disable, InjectedChannel, offset value */
   switch (sConfigInjected->InjectedRank) {
   case 1:
@@ -1051,7 +1047,6 @@ HAL_StatusTypeDef HAL_ADCEx_InjectedConfigChannel(ADC_HandleTypeDef *hadc, ADC_I
     break;
   }
 
- 
   /* Process unlocked */
   __HAL_UNLOCK(hadc);
 

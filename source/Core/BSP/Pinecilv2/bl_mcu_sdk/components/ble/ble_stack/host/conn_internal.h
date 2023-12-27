@@ -1,6 +1,9 @@
 /** @file
  *  @brief Internal APIs for Bluetooth connection handling.
  */
+#ifndef BLE_STACK_HOST_CONN_INTERNAL_H_
+#define BLE_STACK_HOST_CONN_INTERNAL_H_
+
 #include "addr.h"
 #include "atomic.h"
 #include "slist.h"
@@ -8,6 +11,12 @@
 #include "work_q.h"
 #include <stddef.h>
 #include <stdint.h>
+#include "conn.h"
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 /*
  * Copyright (c) 2015 Intel Corporation
  *
@@ -324,3 +333,9 @@ void bt_conn_process_tx(struct bt_conn *conn);
  */
 int bt_hci_get_conn_handle(const struct bt_conn *conn, u16_t *conn_handle);
 #endif
+
+#ifdef __cplusplus
+};
+#endif
+
+#endif //BLE_STACK_HOST_CONN_INTERNAL_H_

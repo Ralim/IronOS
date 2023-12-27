@@ -620,12 +620,12 @@ HAL_StatusTypeDef HAL_ADC_DeInit(ADC_HandleTypeDef *hadc) {
     __HAL_ADC_CLEAR_FLAG(hadc, (ADC_FLAG_AWD | ADC_FLAG_JEOC | ADC_FLAG_EOC | ADC_FLAG_JSTRT | ADC_FLAG_STRT));
 
     /* Reset register CR1 */
-    CLEAR_BIT(hadc->Instance->CR1, (ADC_CR1_AWDEN | ADC_CR1_JAWDEN | ADC_CR1_DISCNUM | ADC_CR1_JDISCEN | ADC_CR1_DISCEN | ADC_CR1_JAUTO | ADC_CR1_AWDSGL | ADC_CR1_SCAN | ADC_CR1_JEOCIE | ADC_CR1_AWDIE
-                                    | ADC_CR1_EOCIE | ADC_CR1_AWDCH));
+    CLEAR_BIT(hadc->Instance->CR1, (ADC_CR1_AWDEN | ADC_CR1_JAWDEN | ADC_CR1_DISCNUM | ADC_CR1_JDISCEN | ADC_CR1_DISCEN | ADC_CR1_JAUTO | ADC_CR1_AWDSGL | ADC_CR1_SCAN | ADC_CR1_JEOCIE |
+                                    ADC_CR1_AWDIE | ADC_CR1_EOCIE | ADC_CR1_AWDCH));
 
     /* Reset register CR2 */
-    CLEAR_BIT(hadc->Instance->CR2, (ADC_CR2_TSVREFE | ADC_CR2_SWSTART | ADC_CR2_JSWSTART | ADC_CR2_EXTTRIG | ADC_CR2_EXTSEL | ADC_CR2_JEXTTRIG | ADC_CR2_JEXTSEL | ADC_CR2_ALIGN | ADC_CR2_DMA
-                                    | ADC_CR2_RSTCAL | ADC_CR2_CAL | ADC_CR2_CONT | ADC_CR2_ADON));
+    CLEAR_BIT(hadc->Instance->CR2, (ADC_CR2_TSVREFE | ADC_CR2_SWSTART | ADC_CR2_JSWSTART | ADC_CR2_EXTTRIG | ADC_CR2_EXTSEL | ADC_CR2_JEXTTRIG | ADC_CR2_JEXTSEL | ADC_CR2_ALIGN | ADC_CR2_DMA |
+                                    ADC_CR2_RSTCAL | ADC_CR2_CAL | ADC_CR2_CONT | ADC_CR2_ADON));
 
     /* Reset register SMPR1 */
     CLEAR_BIT(hadc->Instance->SMPR1, (ADC_SMPR1_SMP17 | ADC_SMPR1_SMP16 | ADC_SMPR1_SMP15 | ADC_SMPR1_SMP14 | ADC_SMPR1_SMP13 | ADC_SMPR1_SMP12 | ADC_SMPR1_SMP11 | ADC_SMPR1_SMP10));
@@ -1874,8 +1874,8 @@ HAL_StatusTypeDef HAL_ADC_AnalogWDGConfig(ADC_HandleTypeDef *hadc, ADC_AnalogWDG
   assert_param(IS_ADC_RANGE(AnalogWDGConfig->HighThreshold));
   assert_param(IS_ADC_RANGE(AnalogWDGConfig->LowThreshold));
 
-  if ((AnalogWDGConfig->WatchdogMode == ADC_ANALOGWATCHDOG_SINGLE_REG) || (AnalogWDGConfig->WatchdogMode == ADC_ANALOGWATCHDOG_SINGLE_INJEC)
-      || (AnalogWDGConfig->WatchdogMode == ADC_ANALOGWATCHDOG_SINGLE_REGINJEC)) {
+  if ((AnalogWDGConfig->WatchdogMode == ADC_ANALOGWATCHDOG_SINGLE_REG) || (AnalogWDGConfig->WatchdogMode == ADC_ANALOGWATCHDOG_SINGLE_INJEC) ||
+      (AnalogWDGConfig->WatchdogMode == ADC_ANALOGWATCHDOG_SINGLE_REGINJEC)) {
     assert_param(IS_ADC_CHANNEL(AnalogWDGConfig->Channel));
   }
 

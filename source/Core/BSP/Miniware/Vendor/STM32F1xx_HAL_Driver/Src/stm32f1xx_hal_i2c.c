@@ -956,8 +956,6 @@ HAL_StatusTypeDef HAL_I2C_Slave_Transmit(I2C_HandleTypeDef *hi2c, uint8_t *pData
     /* Clear ADDR flag */
     __HAL_I2C_CLEAR_ADDRFLAG(hi2c);
 
-  
-
     while (hi2c->XferSize > 0U) {
       /* Wait until TXE flag is set */
       if (I2C_WaitOnTXEFlagUntilTimeout(hi2c, Timeout, tickstart) != HAL_OK) {
@@ -3183,8 +3181,8 @@ void HAL_I2C_ER_IRQHandler(I2C_HandleTypeDef *hi2c) {
     tmp2 = hi2c->XferCount;
     tmp3 = hi2c->State;
     tmp4 = hi2c->PreviousState;
-    if ((tmp1 == HAL_I2C_MODE_SLAVE) && (tmp2 == 0U)
-        && ((tmp3 == HAL_I2C_STATE_BUSY_TX) || (tmp3 == HAL_I2C_STATE_BUSY_TX_LISTEN) || ((tmp3 == HAL_I2C_STATE_LISTEN) && (tmp4 == I2C_STATE_SLAVE_BUSY_TX)))) {
+    if ((tmp1 == HAL_I2C_MODE_SLAVE) && (tmp2 == 0U) &&
+        ((tmp3 == HAL_I2C_STATE_BUSY_TX) || (tmp3 == HAL_I2C_STATE_BUSY_TX_LISTEN) || ((tmp3 == HAL_I2C_STATE_LISTEN) && (tmp4 == I2C_STATE_SLAVE_BUSY_TX)))) {
     } else {
       hi2c->ErrorCode |= HAL_I2C_ERROR_AF;
 
@@ -3717,7 +3715,6 @@ static HAL_StatusTypeDef I2C_Master_SB(I2C_HandleTypeDef *hi2c) {
   return HAL_OK;
 }
 
-
 /**
  * @brief  Handle ADDR flag for Master
  * @param  hi2c Pointer to a I2C_HandleTypeDef structure that contains
@@ -3963,7 +3960,6 @@ static HAL_StatusTypeDef I2C_MasterRequestWrite(I2C_HandleTypeDef *hi2c, uint16_
     /* Send slave address */
     hi2c->Instance->DR = I2C_7BIT_ADD_WRITE(DevAddress);
   }
-  
 
   /* Wait until ADDR flag is set */
   if (I2C_WaitOnMasterAddressFlagUntilTimeout(hi2c, I2C_FLAG_ADDR, Timeout, Tickstart) != HAL_OK) {
@@ -4012,7 +4008,6 @@ static HAL_StatusTypeDef I2C_MasterRequestRead(I2C_HandleTypeDef *hi2c, uint16_t
     /* Send slave address */
     hi2c->Instance->DR = I2C_7BIT_ADD_READ(DevAddress);
   }
-  
 
   /* Wait until ADDR flag is set */
   if (I2C_WaitOnMasterAddressFlagUntilTimeout(hi2c, I2C_FLAG_ADDR, Timeout, Tickstart) != HAL_OK) {

@@ -13,14 +13,13 @@
 bool MSA301::detect() { return ACCEL_I2C_CLASS::probe(MSA301_I2C_ADDRESS); }
 
 static const ACCEL_I2C_CLASS::I2C_REG i2c_registers[] = {
-    //
-    //
-    {MSA301_REG_ODR, 0b00001000, 1},       // X/Y/Z enabled @ 250Hz
-    {MSA301_REG_POWERMODE, 0b0001001, 1},  // Normal mode
-    {MSA301_REG_RESRANGE, 0b00000001, 0},  // 14bit resolution @ 4G range
+  //
+  //
+    {      MSA301_REG_ODR, 0b00001000, 1}, // X/Y/Z enabled @ 250Hz
+    {MSA301_REG_POWERMODE,  0b0001001, 1}, // Normal mode
+    { MSA301_REG_RESRANGE, 0b00000001, 0}, // 14bit resolution @ 4G range
     {MSA301_REG_ORIENT_HY, 0b01000000, 0}, // 4*62.5mg hyst, no blocking, symmetrical
-    {MSA301_REG_INTSET0, 1 << 6, 0},       // Turn on orientation detection (by enabling its interrupt)
-
+    {  MSA301_REG_INTSET0,     1 << 6, 0}, // Turn on orientation detection (by enabling its interrupt)
 };
 
 bool MSA301::initalize() { return ACCEL_I2C_CLASS::writeRegistersBulk(MSA301_I2C_ADDRESS, i2c_registers, sizeof(i2c_registers) / sizeof(i2c_registers[0])); }

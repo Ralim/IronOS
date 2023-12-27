@@ -155,8 +155,9 @@ void unstick_I2C() {
     HAL_GPIO_WritePin(SCL_GPIO_Port, SCL_Pin, GPIO_PIN_SET);
 
     timeout_cnt++;
-    if (timeout_cnt > timeout)
+    if (timeout_cnt > timeout) {
       return;
+    }
   }
 
   // 12. Configure the SCL and SDA I/Os as Alternate function Open-Drain.

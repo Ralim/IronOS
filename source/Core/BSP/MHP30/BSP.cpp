@@ -230,8 +230,9 @@ uint16_t getInputVoltageX10(uint16_t divisor, uint8_t sample) {
   static uint32_t samples[BATTFILTERDEPTH];
   static uint8_t  index = 0;
   if (preFillneeded) {
-    for (uint8_t i = 0; i < BATTFILTERDEPTH; i++)
+    for (uint8_t i = 0; i < BATTFILTERDEPTH; i++) {
       samples[i] = getADC(1);
+    }
     preFillneeded--;
   }
   if (sample) {
@@ -240,8 +241,9 @@ uint16_t getInputVoltageX10(uint16_t divisor, uint8_t sample) {
   }
   uint32_t sum = 0;
 
-  for (uint8_t i = 0; i < BATTFILTERDEPTH; i++)
+  for (uint8_t i = 0; i < BATTFILTERDEPTH; i++) {
     sum += samples[i];
+  }
 
   sum /= BATTFILTERDEPTH;
   if (divisor == 0) {
@@ -273,8 +275,9 @@ void unstick_I2C() {
     HAL_GPIO_WritePin(SCL_GPIO_Port, SCL_Pin, GPIO_PIN_SET);
 
     timeout_cnt++;
-    if (timeout_cnt > timeout)
+    if (timeout_cnt > timeout) {
       return;
+    }
   }
 }
 

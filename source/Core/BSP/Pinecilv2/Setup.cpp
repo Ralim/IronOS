@@ -23,8 +23,8 @@ extern uint8_t      _heap_start;
 extern uint8_t      _heap_size; // @suppress("Type cannot be resolved")
 static HeapRegion_t xHeapRegions[] = {
     {&_heap_start, (unsigned int)&_heap_size},
-    {NULL, 0}, /* Terminates the array. */
-    {NULL, 0}  /* Terminates the array. */
+    {        NULL,                         0}, /* Terminates the array. */
+    {        NULL,                         0}  /* Terminates the array. */
 };
 // Functions
 
@@ -86,8 +86,8 @@ void setup_pwm(void) {
   PWM_Channel_Disable(PWM_Channel);
 }
 
-const ADC_Chan_Type adc_tip_pos_chans[]
-    = {TIP_TEMP_ADC_CHANNEL, TMP36_ADC_CHANNEL, TIP_TEMP_ADC_CHANNEL, VIN_ADC_CHANNEL, TIP_TEMP_ADC_CHANNEL, TMP36_ADC_CHANNEL, TIP_TEMP_ADC_CHANNEL, VIN_ADC_CHANNEL};
+const ADC_Chan_Type adc_tip_pos_chans[] = {TIP_TEMP_ADC_CHANNEL, TMP36_ADC_CHANNEL, TIP_TEMP_ADC_CHANNEL, VIN_ADC_CHANNEL,
+                                           TIP_TEMP_ADC_CHANNEL, TMP36_ADC_CHANNEL, TIP_TEMP_ADC_CHANNEL, VIN_ADC_CHANNEL};
 const ADC_Chan_Type adc_tip_neg_chans[] = {ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND};
 static_assert(sizeof(adc_tip_pos_chans) == sizeof(adc_tip_neg_chans));
 

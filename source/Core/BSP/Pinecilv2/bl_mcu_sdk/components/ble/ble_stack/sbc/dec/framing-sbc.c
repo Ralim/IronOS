@@ -32,24 +32,23 @@
 
 #if defined(SBC_DEC_INCLUDED)
 
-const OI_CHAR *const OI_CODEC_SBC_FreqText[] = { "SBC_FREQ_16000", "SBC_FREQ_32000", "SBC_FREQ_44100", "SBC_FREQ_48000" };
-const OI_CHAR *const OI_CODEC_SBC_ModeText[] = { "SBC_MONO", "SBC_DUAL_CHANNEL", "SBC_STEREO", "SBC_JOINT_STEREO" };
-const OI_CHAR *const OI_CODEC_SBC_SubbandsText[] = { "SBC_SUBBANDS_4", "SBC_SUBBANDS_8" };
-const OI_CHAR *const OI_CODEC_SBC_BlocksText[] = { "SBC_BLOCKS_4", "SBC_BLOCKS_8", "SBC_BLOCKS_12", "SBC_BLOCKS_16" };
-const OI_CHAR *const OI_CODEC_SBC_AllocText[] = { "SBC_LOUDNESS", "SBC_SNR" };
+const OI_CHAR *const OI_CODEC_SBC_FreqText[]     = {"SBC_FREQ_16000", "SBC_FREQ_32000", "SBC_FREQ_44100", "SBC_FREQ_48000"};
+const OI_CHAR *const OI_CODEC_SBC_ModeText[]     = {"SBC_MONO", "SBC_DUAL_CHANNEL", "SBC_STEREO", "SBC_JOINT_STEREO"};
+const OI_CHAR *const OI_CODEC_SBC_SubbandsText[] = {"SBC_SUBBANDS_4", "SBC_SUBBANDS_8"};
+const OI_CHAR *const OI_CODEC_SBC_BlocksText[]   = {"SBC_BLOCKS_4", "SBC_BLOCKS_8", "SBC_BLOCKS_12", "SBC_BLOCKS_16"};
+const OI_CHAR *const OI_CODEC_SBC_AllocText[]    = {"SBC_LOUDNESS", "SBC_SNR"};
 
 #ifdef OI_DEBUG
-void OI_CODEC_SBC_DumpConfig(OI_CODEC_SBC_FRAME_INFO *frameInfo)
-{
-    BT_WARN("SBC configuration\n");
-    BT_WARN("  enhanced:  %s\n", frameInfo->enhanced ? "TRUE" : "FALSE");
-    BT_WARN("  frequency: %d\n", frameInfo->frequency);
-    BT_WARN("  subbands:  %d\n", frameInfo->nrof_subbands);
-    BT_WARN("  blocks:    %d\n", frameInfo->nrof_blocks);
-    BT_WARN("  channels:  %d\n", frameInfo->nrof_channels);
-    BT_WARN("  mode:      %s\n", OI_CODEC_SBC_ModeText[frameInfo->mode]);
-    BT_WARN("  alloc:     %s\n", OI_CODEC_SBC_AllocText[frameInfo->alloc]);
-    BT_WARN("  bitpool:   %d\n", frameInfo->bitpool);
+void OI_CODEC_SBC_DumpConfig(OI_CODEC_SBC_FRAME_INFO *frameInfo) {
+  BT_WARN("SBC configuration\n");
+  BT_WARN("  enhanced:  %s\n", frameInfo->enhanced ? "TRUE" : "FALSE");
+  BT_WARN("  frequency: %d\n", frameInfo->frequency);
+  BT_WARN("  subbands:  %d\n", frameInfo->nrof_subbands);
+  BT_WARN("  blocks:    %d\n", frameInfo->nrof_blocks);
+  BT_WARN("  channels:  %d\n", frameInfo->nrof_channels);
+  BT_WARN("  mode:      %s\n", OI_CODEC_SBC_ModeText[frameInfo->mode]);
+  BT_WARN("  alloc:     %s\n", OI_CODEC_SBC_AllocText[frameInfo->alloc]);
+  BT_WARN("  bitpool:   %d\n", frameInfo->bitpool);
 }
 #endif /* OI_DEBUG */
 

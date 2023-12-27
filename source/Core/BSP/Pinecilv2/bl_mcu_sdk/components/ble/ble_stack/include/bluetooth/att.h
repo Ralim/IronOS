@@ -13,8 +13,10 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
+#include "buf.h"
 #include <misc/slist.h>
+#include "conn_internal.h"
+#include "conn.h"
 
 /* Error codes for Error response PDU */
 #define BT_ATT_ERR_INVALID_HANDLE          0x01
@@ -43,20 +45,18 @@ extern "C" {
 #define BT_ATT_ERR_PROCEDURE_IN_PROGRESS 0xfe
 #define BT_ATT_ERR_OUT_OF_RANGE          0xff
 
-typedef void (*bt_att_func_t)(struct bt_conn *conn, u8_t err,
-                              const void *pdu, u16_t length,
-                              void *user_data);
+typedef void (*bt_att_func_t)(struct bt_conn *conn, u8_t err, const void *pdu, u16_t length, void *user_data);
 typedef void (*bt_att_destroy_t)(void *user_data);
 
 /* ATT request context */
 struct bt_att_req {
-    sys_snode_t node;
-    bt_att_func_t func;
-    bt_att_destroy_t destroy;
-    struct net_buf_simple_state state;
-    struct net_buf *buf;
+  sys_snode_t                 node;
+  bt_att_func_t               func;
+  bt_att_destroy_t            destroy;
+  struct net_buf_simple_state state;
+  struct net_buf             *buf;
 #if defined(CONFIG_BT_SMP)
-    bool retrying;
+  bool retrying;
 #endif /* CONFIG_BT_SMP */
 };
 

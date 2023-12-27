@@ -23,46 +23,43 @@
 
 #include "pid.h"
 
-void pid_init(pid_alg_t *pid)
-{
-    pid->set_val = 0.0f;
-    pid->out_val = 0.0f;
+void pid_init(pid_alg_t *pid) {
+  pid->set_val = 0.0f;
+  pid->out_val = 0.0f;
 
-    pid->last_error = 0.0f;
-    pid->prev_error = 0.0f;
+  pid->last_error = 0.0f;
+  pid->prev_error = 0.0f;
 
-    pid->kp = 3.0f;
-    pid->ki = 0.0f;
-    pid->kd = 0.0f;
+  pid->kp = 3.0f;
+  pid->ki = 0.0f;
+  pid->kd = 0.0f;
 
-    pid->i_error = 0.0f;
-    pid->sum_error = 0.0f;
+  pid->i_error   = 0.0f;
+  pid->sum_error = 0.0f;
 
-    pid->max_val = 32;
-    pid->min_val = -32;
+  pid->max_val = 32;
+  pid->min_val = -32;
 }
 
 // standard pid
-float standard_pid_cal(pid_alg_t *pid, float next_val)
-{
-    pid->set_val = next_val;
-    pid->i_error = pid->set_val - pid->out_val;
-    pid->sum_error += pid->i_error;
-    pid->out_val = pid->kp * pid->i_error + pid->ki * pid->sum_error + pid->kd * (pid->i_error - pid->last_error);
-    pid->last_error = pid->i_error;
+float standard_pid_cal(pid_alg_t *pid, float next_val) {
+  pid->set_val = next_val;
+  pid->i_error = pid->set_val - pid->out_val;
+  pid->sum_error += pid->i_error;
+  pid->out_val    = pid->kp * pid->i_error + pid->ki * pid->sum_error + pid->kd * (pid->i_error - pid->last_error);
+  pid->last_error = pid->i_error;
 
-    return pid->out_val;
+  return pid->out_val;
 }
 
 // increment pid
-float increment_pid_cal(pid_alg_t *pid, float next_val)
-{
-    pid->set_val = next_val;
-    pid->i_error = pid->set_val - pid->out_val;
-    float increment = pid->kp * (pid->i_error - pid->prev_error) + pid->ki * pid->i_error + pid->kd * (pid->i_error - 2 * pid->prev_error + pid->last_error);
-    pid->out_val += increment;
-    pid->last_error = pid->prev_error;
-    pid->prev_error = pid->i_error;
+float increment_pid_cal(pid_alg_t *pid, float next_val) {
+  pid->set_val    = next_val;
+  pid->i_error    = pid->set_val - pid->out_val;
+  float increment = pid->kp * (pid->i_error - pid->prev_error) + pid->ki * pid->i_error + pid->kd * (pid->i_error - 2 * pid->prev_error + pid->last_error);
+  pid->out_val += increment;
+  pid->last_error = pid->prev_error;
+  pid->prev_error = pid->i_error;
 
-    return pid->out_val;
+  return pid->out_val;
 }

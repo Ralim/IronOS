@@ -124,10 +124,11 @@ template <class T, T Kp, T Ki, T Kd, T integral_limit_scale> struct PID {
     T output = kp_result + ki_result + kd_result;
 
     // Restrict to max / 0
-    if (output > max_output)
+    if (output > max_output) {
       output = max_output;
-    else if (output < 0)
+    } else if (output < 0) {
       output = 0;
+    }
 
     // Save target_delta to previous target_delta
     previous_error_term = target_delta;
