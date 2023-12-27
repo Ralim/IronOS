@@ -10,7 +10,7 @@
             "message": "Vaikesätted\ntaastatud"
         },
         "SettingsResetMessage": {
-            "message": "Teatud seadistused\non muutunud!"
+            "message": "Osad seadistused\non muutunud!"
         },
         "NoAccelerometerMessage": {
             "message": "Kiirendusandurit\nei tuvastatud!"
@@ -82,9 +82,9 @@
         "SettingAutoChar": "A",
         "SettingOffChar": "V",
         "SettingSlowChar": "A",
-        "SettingMediumChar": "V",
-        "SettingFastChar": "K",
-        "SettingStartNoneChar": "O",
+        "SettingMediumChar": "K",
+        "SettingFastChar": "T",
+        "SettingStartNoneChar": "V",
         "SettingStartSolderingChar": "J",
         "SettingStartSleepChar": "Z",
         "SettingStartSleepOffChar": "P",
@@ -106,7 +106,7 @@
             "description": ""
         },
         "UIMenu": {
-            "displayText": "Kasutajaliides\n",
+            "displayText": "Kasutaja-\nliides",
             "description": ""
         },
         "AdvancedMenu": {
@@ -220,11 +220,11 @@
             "description": "Kolviotsiku temperatuur \"unerežiimis\""
         },
         "SleepTimeout": {
-            "displayText": "Unerežiimi\nkäivitamine",
+            "displayText": "Unerežiimi\nviide",
             "description": "Aeg enne \"unerežiimi\" algust (s=sekundid | m=minutid)"
         },
         "ShutdownTimeout": {
-            "displayText": "Shutdown\ntimeout",
+            "displayText": "Seiskumise\nviide",
             "description": "Aeg enne jootekolvi välja lülitamist (m=minutid)"
         },
         "HallEffSensitivity": {
@@ -253,7 +253,7 @@
         },
         "AnimSpeed": {
             "displayText": "Anim.\nkiirus",
-            "description": "Menüüikoonide animatsiooni kiirus (V=väljas | A=aeglane | V=vahepealne | K=kiire)"
+            "description": "Menüüikoonide animatsiooni kiirus (V=väljas | A=aeglane | K=keskmine | T=tempokas)"
         },
         "AnimLoop": {
             "displayText": "Pidevad\nanim.",
@@ -268,8 +268,8 @@
             "description": "Inverteeri OLED ekraani värvid"
         },
         "LOGOTime": {
-            "displayText": "Käivituslogo\nkestus",
-            "description": "Seadista käivituslogo kestus (s=sekundites)"
+            "displayText": "Alguslogo\nkestus",
+            "description": "Aeg, mille jooksul näidatakse logo peale kolvi käivitamist (s=sekundites)"
         },
         "AdvancedIdle": {
             "displayText": "Andmed\npuhkeolekus",
@@ -284,11 +284,11 @@
             "description": "Luba BLE"
         },
         "PowerLimit": {
-            "displayText": "Võimsuspiirang\n",
+            "displayText": "Võimsus-\npiirang",
             "description": "Suurim lubatud võimsus mida kolb võib kasutada (W=vatti)"
         },
         "CalibrateCJC": {
-            "displayText": "Kalibreeri CJC\njärgmisel käivitamisel",
+            "displayText": "Kalibr. CJC\ntuleval käivit.",
             "description": "Kalibreeri külmaühenduse kompensatsioon (CJC) järgmisel käivitamisel (ei ole vajalik, kui Delta T on < 5°C)"
         },
         "VoltageCalibration": {
@@ -296,15 +296,15 @@
             "description": "Sisendpinge (VIN) kalibreerimine (väljumiseks vajutage pikalt)"
         },
         "PowerPulsePower": {
-            "displayText": "Ärkvelolekuimpulsi\ntugevus",
-            "description": "Ärkvelolekuimpulsi tugevus (vattides)"
+            "displayText": "Impulsi\ntugevus",
+            "description": "Ärkvelolekuimpulsi tugevus (vattides). Vajalik, vältimaks akupanga uinumist."
         },
         "PowerPulseWait": {
-            "displayText": "Pulsi\nviivitus",
+            "displayText": "Impulsi\nviivitus",
             "description": "Viivitus enne ärkvelolekuimpulsi käivitumist (x 2,5s)"
         },
         "PowerPulseDuration": {
-            "displayText": "Ärkvelolekuimpulsi\nkestus",
+            "displayText": "Impulsi\nkestus",
             "description": "Ärkvelolekuimpulsi kestus (x 250ms)"
         },
         "SettingsReset": {
