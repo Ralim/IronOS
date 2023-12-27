@@ -14,6 +14,8 @@
 extern "C" {
 #endif
 
+#include "avdtp_internal.h"
+
 /** @brief AVDTP SEID Information */
 struct bt_avdtp_seid_info {
     /** Stream End Point ID */

@@ -56,8 +56,9 @@ static void internal_rc32m_init(void) {
     tmpVal = BL_RD_REG(AON_BASE, AON_XTAL_CFG);
     tmpVal = BL_CLR_REG_BIT(tmpVal, AON_XTAL_EXT_SEL_AON);
     BL_WR_REG(AON_BASE, AON_XTAL_CFG, tmpVal);
-    if (BL_IS_REG_BIT_SET(BL_RD_REG(GLB_BASE, GLB_CLK_CFG0), GLB_CHIP_RDY))
+    if (BL_IS_REG_BIT_SET(BL_RD_REG(GLB_BASE, GLB_CLK_CFG0), GLB_CHIP_RDY)) {
       break;
+    }
   }
 }
 #endif
@@ -323,7 +324,7 @@ void peripheral_clock_init(void) {
 #if BSP_PWM_CLOCK_SOURCE == ROOT_CLOCK_SOURCE_32K_CLK
 
   for (int i = 0; i < 5; i++) {
-    PWMx    = PWM_BASE + PWM_CHANNEL_OFFSET + (i)*0x20;
+    PWMx    = PWM_BASE + PWM_CHANNEL_OFFSET + (i) * 0x20;
     tmp_pwm = BL_RD_REG(PWMx, PWM_CONFIG);
     BL_WR_REG(PWMx, PWM_CONFIG, BL_SET_REG_BIT(tmp_pwm, PWM_STOP_EN));
 
@@ -343,7 +344,7 @@ void peripheral_clock_init(void) {
 #elif BSP_PWM_CLOCK_SOURCE == ROOT_CLOCK_SOURCE_BCLK
 
   for (int i = 0; i < 5; i++) {
-    PWMx    = PWM_BASE + PWM_CHANNEL_OFFSET + (i)*0x20;
+    PWMx    = PWM_BASE + PWM_CHANNEL_OFFSET + (i) * 0x20;
     tmp_pwm = BL_RD_REG(PWMx, PWM_CONFIG);
     BL_WR_REG(PWMx, PWM_CONFIG, BL_SET_REG_BIT(tmp_pwm, PWM_STOP_EN));
 
@@ -363,7 +364,7 @@ void peripheral_clock_init(void) {
 #elif BSP_PWM_CLOCK_SOURCE == ROOT_CLOCK_SOURCE_XCLK
 
   for (int i = 0; i < 5; i++) {
-    PWMx    = PWM_BASE + PWM_CHANNEL_OFFSET + (i)*0x20;
+    PWMx    = PWM_BASE + PWM_CHANNEL_OFFSET + (i) * 0x20;
     tmp_pwm = BL_RD_REG(PWMx, PWM_CONFIG);
     BL_WR_REG(PWMx, PWM_CONFIG, BL_SET_REG_BIT(tmp_pwm, PWM_STOP_EN));
 
@@ -464,9 +465,9 @@ uint32_t system_clock_get(enum system_clock_type type) {
   case SYSTEM_CLOCK_ROOT_CLOCK:
     if (GLB_Get_Root_CLK_Sel() == 0) {
       return 32 * 1000 * 1000;
-    } else if (GLB_Get_Root_CLK_Sel() == 1)
+    } else if (GLB_Get_Root_CLK_Sel() == 1) {
       return 32 * 1000 * 1000;
-    else {
+    } else {
       uint32_t tmpVal = BL_RD_REG(GLB_BASE, GLB_CLK_CFG0);
       tmpVal          = BL_GET_REG_BITS_VAL(tmpVal, GLB_REG_PLL_SEL);
       if (tmpVal == 0) {

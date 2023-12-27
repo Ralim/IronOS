@@ -42,37 +42,39 @@ bool SC7A20::detect() {
 }
 
 static const ACCEL_I2C_CLASS::I2C_REG i2c_registers[] = {
-    //
-    //
-    {SC7A20_CTRL_REG1, 0b01100111, 0}, // 200Hz, XYZ enabled
-    {SC7A20_CTRL_REG2, 0b00000000, 0}, // Setup filter to 0x00 ??
-    {SC7A20_CTRL_REG3, 0b00000000, 0}, // int1 off
-    {SC7A20_CTRL_REG4, 0b01001000, 0}, // Block mode off,little-endian,2G,High-pres,self test off
-    {SC7A20_CTRL_REG5, 0b00000100, 0}, // fifo off, D4D on int1
-    {SC7A20_CTRL_REG6, 0x00, 0},       // INT2 off
-    // Basically setup the unit to run, and enable 4D orientation detection
-    {SC7A20_INT2_CFG, 0b01111110, 0}, // setup for movement detection
-    {SC7A20_INT2_THS, 0x28, 0},       //
-    {SC7A20_INT2_DURATION, 64, 0},    //
-    {SC7A20_INT1_CFG, 0b01111110, 0}, //
-    {SC7A20_INT1_THS, 0x28, 0},       //
-    {SC7A20_INT1_DURATION, 64, 0}
+  //
+  //
+    {    SC7A20_CTRL_REG1, 0b01100111, 0}, // 200Hz, XYZ enabled
+    {    SC7A20_CTRL_REG2, 0b00000000, 0}, // Setup filter to 0x00 ??
+    {    SC7A20_CTRL_REG3, 0b00000000, 0}, // int1 off
+    {    SC7A20_CTRL_REG4, 0b01001000, 0}, // Block mode off,little-endian,2G,High-pres,self test off
+    {    SC7A20_CTRL_REG5, 0b00000100, 0}, // fifo off, D4D on int1
+    {    SC7A20_CTRL_REG6,       0x00, 0}, // INT2 off
+  // Basically setup the unit to run, and enable 4D orientation detection
+    {     SC7A20_INT2_CFG, 0b01111110, 0}, // setup for movement detection
+    {     SC7A20_INT2_THS,       0x28, 0}, //
+    {SC7A20_INT2_DURATION,         64, 0}, //
+    {     SC7A20_INT1_CFG, 0b01111110, 0}, //
+    {     SC7A20_INT1_THS,       0x28, 0}, //
+    {SC7A20_INT1_DURATION,         64, 0}
 
-    //
+  //
 };
-static const ACCEL_I2C_CLASS::I2C_REG i2c_registers_alt[] = {{LIS_CTRL_REG1, 0b00110111, 0}, // 200Hz XYZ
-                                                             {LIS_CTRL_REG2, 0b00000000, 0}, //
-                                                             {LIS_CTRL_REG3, 0b01100000, 0}, // Setup interrupt pins
-                                                             {LIS_CTRL_REG4, 0b00001000, 0}, // Block update mode off, HR on
-                                                             {LIS_CTRL_REG5, 0b00000010, 0}, //
-                                                             {LIS_CTRL_REG6, 0b01100010, 0},
-                                                             // Basically setup the unit to run, and enable 4D orientation detection
-                                                             {LIS_INT2_CFG, 0b01111110, 0}, // setup for movement detection
-                                                             {LIS_INT2_THS, 0x28, 0},       //
-                                                             {LIS_INT2_DURATION, 64, 0},    //
-                                                             {LIS_INT1_CFG, 0b01111110, 0}, //
-                                                             {LIS_INT1_THS, 0x28, 0},       //
-                                                             {LIS_INT1_DURATION, 64, 0}};
+static const ACCEL_I2C_CLASS::I2C_REG i2c_registers_alt[] = {
+    {    LIS_CTRL_REG1, 0b00110111, 0}, // 200Hz XYZ
+    {    LIS_CTRL_REG2, 0b00000000, 0}, //
+    {    LIS_CTRL_REG3, 0b01100000, 0}, // Setup interrupt pins
+    {    LIS_CTRL_REG4, 0b00001000, 0}, // Block update mode off, HR on
+    {    LIS_CTRL_REG5, 0b00000010, 0}, //
+    {    LIS_CTRL_REG6, 0b01100010, 0},
+ // Basically setup the unit to run, and enable 4D orientation detection
+    {     LIS_INT2_CFG, 0b01111110, 0}, // setup for movement detection
+    {     LIS_INT2_THS,       0x28, 0}, //
+    {LIS_INT2_DURATION,         64, 0}, //
+    {     LIS_INT1_CFG, 0b01111110, 0}, //
+    {     LIS_INT1_THS,       0x28, 0}, //
+    {LIS_INT1_DURATION,         64, 0}
+};
 
 bool SC7A20::initalize() {
   // Setup acceleration readings

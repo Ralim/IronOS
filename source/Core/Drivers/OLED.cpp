@@ -32,36 +32,36 @@ uint32_t           OLED::displayChecksum;
  * Data packets are prefixed with 0x40
  */
 I2C_CLASS::I2C_REG OLED_Setup_Array[] = {
-    /**/
-    {0x80, OLED_OFF, 0},        /* Display off */
-    {0x80, OLED_DIVIDER, 0},    /* Set display clock divide ratio / osc freq */
-    {0x80, 0x52, 0},            /* Divide ratios */
-    {0x80, 0xA8, 0},            /* Set Multiplex Ratio */
-    {0x80, OLED_HEIGHT - 1, 0}, /* Multiplex ratio adjusts how far down the matrix it scans */
-    {0x80, 0xC0, 0},            /* Set COM Scan direction */
-    {0x80, 0xD3, 0},            /* Set vertical Display offset */
-    {0x80, 0x00, 0},            /* 0 Offset */
-    {0x80, 0x40, 0},            /* Set Display start line to 0 */
+  /**/
+    {0x80,         OLED_OFF, 0}, /* Display off */
+    {0x80,     OLED_DIVIDER, 0}, /* Set display clock divide ratio / osc freq */
+    {0x80,             0x52, 0}, /* Divide ratios */
+    {0x80,             0xA8, 0}, /* Set Multiplex Ratio */
+    {0x80,  OLED_HEIGHT - 1, 0}, /* Multiplex ratio adjusts how far down the matrix it scans */
+    {0x80,             0xC0, 0}, /* Set COM Scan direction */
+    {0x80,             0xD3, 0}, /* Set vertical Display offset */
+    {0x80,             0x00, 0}, /* 0 Offset */
+    {0x80,             0x40, 0}, /* Set Display start line to 0 */
 #ifdef OLED_SEGMENT_MAP_REVERSED
-    {0x80, 0xA1, 0}, /* Set Segment remap to normal */
+    {0x80,             0xA1, 0}, /* Set Segment remap to normal */
 #else
     {0x80, 0xA0, 0}, /* Set Segment remap to normal */
 #endif
-    {0x80, 0x8D, 0},             /* Charge Pump */
-    {0x80, 0x14, 0},             /* Charge Pump settings */
-    {0x80, 0xDA, 0},             /* Set VCOM Pins hardware config */
+    {0x80,             0x8D, 0}, /* Charge Pump */
+    {0x80,             0x14, 0}, /* Charge Pump settings */
+    {0x80,             0xDA, 0}, /* Set VCOM Pins hardware config */
     {0x80, OLED_VCOM_LAYOUT, 0}, /* Combination 0x2 or 0x12 depending on OLED model */
-    {0x80, 0x81, 0},             /* Brightness */
-    {0x80, 0x00, 0},             /* ^0 */
-    {0x80, 0xD9, 0},             /* Set pre-charge period */
-    {0x80, 0xF1, 0},             /* Pre charge period */
-    {0x80, 0xDB, 0},             /* Adjust VCOMH regulator ouput */
-    {0x80, 0x30, 0},             /* VCOM level */
-    {0x80, 0xA4, 0},             /* Enable the display GDDR */
-    {0x80, 0xA6, 0},             /* Normal display */
-    {0x80, 0x20, 0},             /* Memory Mode */
-    {0x80, 0x00, 0},             /* Wrap memory */
-    {0x80, OLED_ON, 0},          /* Display on */
+    {0x80,             0x81, 0}, /* Brightness */
+    {0x80,             0x00, 0}, /* ^0 */
+    {0x80,             0xD9, 0}, /* Set pre-charge period */
+    {0x80,             0xF1, 0}, /* Pre charge period */
+    {0x80,             0xDB, 0}, /* Adjust VCOMH regulator ouput */
+    {0x80,             0x30, 0}, /* VCOM level */
+    {0x80,             0xA4, 0}, /* Enable the display GDDR */
+    {0x80,             0xA6, 0}, /* Normal display */
+    {0x80,             0x20, 0}, /* Memory Mode */
+    {0x80,             0x00, 0}, /* Wrap memory */
+    {0x80,          OLED_ON, 0}, /* Display on */
 };
 // Setup based on the SSD1307 and modified for the SSD1306
 
