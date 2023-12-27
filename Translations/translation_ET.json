@@ -304,7 +304,7 @@
             "description": "Viivitus enne ärkvelolekuimpulsi käivitumist (x 2,5s)"
         },
         "PowerPulseDuration": {
-            "displayText": "Ärkvelolekuimpulsi\nkestus,
+            "displayText": "Ärkvelolekuimpulsi\nkestus",
             "description": "Ärkvelolekuimpulsi kestus (x 250ms)"
         },
         "SettingsReset": {
