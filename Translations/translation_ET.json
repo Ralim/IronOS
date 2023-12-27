@@ -120,7 +120,7 @@
             "description": "Määrab katkestuspinge, et vältida aku liigset tühjenemist. (DC 10V) (S=3,3V elemendi kohta, eemaldab voolupiirangud)"
         },
         "MinVolCell": {
-            "displayText": "Minimaalne\pinge",
+            "displayText": "Minimaalne\npinge",
             "description": "Minimaalne lubatud pinge akuelemendi kohta (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
         },
         "QCMaxVoltage": {
