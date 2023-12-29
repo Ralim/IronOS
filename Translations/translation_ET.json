@@ -1,0 +1,319 @@
+{
+    "languageCode": "ET",
+    "languageLocalName": "Eesti",
+    "tempUnitFahrenheit": false,
+    "messagesWarn": {
+        "CalibrationDone": {
+            "message": "Kalibreerimine\ntehtud!"
+        },
+        "ResetOKMessage": {
+            "message": "Vaikesätted\ntaastatud"
+        },
+        "SettingsResetMessage": {
+            "message": "Osad seadistused\non muutunud!"
+        },
+        "NoAccelerometerMessage": {
+            "message": "Kiirendusandurit\nei tuvastatud!"
+        },
+        "NoPowerDeliveryMessage": {
+            "message": "USB-PD IC\nei tuvastatud!"
+        },
+        "LockingKeysString": {
+            "message": "LUKUS"
+        },
+        "UnlockingKeysString": {
+            "message": "AVATUD"
+        },
+        "WarningKeysLockedString": {
+            "message": "!LUKUS!"
+        },
+        "WarningThermalRunaway": {
+            "message": "Termiline\närajooks"
+        },
+        "WarningTipShorted": {
+            "message": "!Otsik lühises!"
+        },
+        "SettingsCalibrationWarning": {
+            "message": "Enne taaskäivitamist veenduge, et otsik ja käepide on toatemperatuuril!"
+        },
+        "CJCCalibrating": {
+            "message": "kalibreerimine\n"
+        },
+        "SettingsResetWarning": {
+            "message": "Kas olete kindel, et soovite taastada vaikesätted?"
+        },
+        "UVLOWarningString": {
+            "message": "DC MADAL"
+        },
+        "UndervoltageString": {
+            "message": "Alapinge\n"
+        },
+        "InputVoltageString": {
+            "message": "Sisend V: \n"
+        },
+        "SleepingSimpleString": {
+            "message": "Zzzz"
+        },
+        "SleepingAdvancedString": {
+            "message": "Unerežiim...\n"
+        },
+        "SleepingTipAdvancedString": {
+            "message": "Otsik: \n"
+        },
+        "OffString": {
+            "message": "Väljas"
+        },
+        "ProfilePreheatString": {
+            "message": "Eelkuumutus\n"
+        },
+        "ProfileCooldownString": {
+            "message": "Jahtumine\n"
+        },
+        "DeviceFailedValidationWarning": {
+            "message": "Teie seade on tõenäoliselt võltsing!"
+        },
+        "TooHotToStartProfileWarning": {
+            "message": "Liiga kuum,\net alustada profiili"
+        }
+    },
+    "characters": {
+        "SettingRightChar": "P",
+        "SettingLeftChar": "V",
+        "SettingAutoChar": "A",
+        "SettingOffChar": "V",
+        "SettingSlowChar": "A",
+        "SettingMediumChar": "K",
+        "SettingFastChar": "T",
+        "SettingStartNoneChar": "V",
+        "SettingStartSolderingChar": "J",
+        "SettingStartSleepChar": "Z",
+        "SettingStartSleepOffChar": "P",
+        "SettingLockDisableChar": "V",
+        "SettingLockBoostChar": "B",
+        "SettingLockFullChar": "T"
+    },
+    "menuGroups": {
+        "PowerMenu": {
+            "displayText": "Toiteseaded\n",
+            "description": ""
+        },
+        "SolderingMenu": {
+            "displayText": "Jootmise\nseaded",
+            "description": ""
+        },
+        "PowerSavingMenu": {
+            "displayText": "Unerežiimi\nseaded",
+            "description": ""
+        },
+        "UIMenu": {
+            "displayText": "Kasutaja-\nliides",
+            "description": ""
+        },
+        "AdvancedMenu": {
+            "displayText": "Täpsemad\nseaded",
+            "description": ""
+        }
+    },
+    "menuOptions": {
+        "DCInCutoff": {
+            "displayText": "Toiteallikas\nDC",
+            "description": "Määrab katkestuspinge, et vältida aku liigset tühjenemist. (DC 10V) (S=3,3V elemendi kohta, eemaldab voolupiirangud)"
+        },
+        "MinVolCell": {
+            "displayText": "Minimaalne\npinge",
+            "description": "Minimaalne lubatud pinge akuelemendi kohta (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+        },
+        "QCMaxVoltage": {
+            "displayText": "QC\npinge",
+            "description": "Maks. QC pinge, mida jootekolb läbirääkima peaks"
+        },
+        "PDNegTimeout": {
+            "displayText": "PD\naegumine",
+            "description": "PD läbirääkimise aegumine 100ms sammudena, et tagada ühilduvus osade QC laadijatega"
+        },
+        "PDVpdo": {
+            "displayText": "PD\nVPDO",
+            "description": "Võimaldab PPS- ja EPR-režiimi"
+        },
+        "BoostTemperature": {
+            "displayText": "Boost\ntemp",
+            "description": "Kolviotsiku temperatuur \"boost režiimis\""
+        },
+        "AutoStart": {
+            "displayText": "Käitumine\nkäivitusel",
+            "description": "V=väljas | J=kuumuta jootmistemperatuurini | Z=unerežiim, kuni seadet liigutatakse | P=unerežiim toatemperatuuril, kuni seadet liigutatakse"
+        },
+        "TempChangeShortStep": {
+            "displayText": "Temp. muut\nlühike",
+            "description": "Temperatuuri muutmine lühikese vajutusega"
+        },
+        "TempChangeLongStep": {
+            "displayText": "Temp. muut\npikk",
+            "description": "Temperatuuri muutmine pika vajutusega"
+        },
+        "LockingMode": {
+            "displayText": "Luba nuppude\nlukustamine",
+            "description": "Hoidke jootmise ajal mõlemad nupud all, et lülitada nende lukustamist (V=väljas | B=ainult boostrežiimis | T=täielik lukustamine)."
+        },
+        "ProfilePhases": {
+            "displayText": "Profiil\nfaasid",
+            "description": "Faaside arv profiilirežiimis"
+        },
+        "ProfilePreheatTemp": {
+            "displayText": "Eelkuumutus\ntemp.",
+            "description": "Eelkuumuta sellele temperatuurile profiilirežiimi alguses"
+        },
+        "ProfilePreheatSpeed": {
+            "displayText": "Eelkuumutus\nkiirus",
+            "description": "Eelkuumuta sellise kiirusega (kraadi sekundis)."
+        },
+        "ProfilePhase1Temp": {
+            "displayText": "Faas 1\ntemp.",
+            "description": "Selle faasi lõpu sihttemperatuur"
+        },
+        "ProfilePhase1Duration": {
+            "displayText": "Faas 1\nkestus",
+            "description": "Selle faasi sihtkestus (sekundites)"
+        },
+        "ProfilePhase2Temp": {
+            "displayText": "Faas 2\ntemp.",
+            "description": ""
+        },
+        "ProfilePhase2Duration": {
+            "displayText": "Faas 2\nkestus",
+            "description": ""
+        },
+        "ProfilePhase3Temp": {
+            "displayText": "Faas 3\ntemp.",
+            "description": ""
+        },
+        "ProfilePhase3Duration": {
+            "displayText": "Faas 3\nkestus",
+            "description": ""
+        },
+        "ProfilePhase4Temp": {
+            "displayText": "Faas 4\ntemp.",
+            "description": ""
+        },
+        "ProfilePhase4Duration": {
+            "displayText": "Faas 4\nkestus",
+            "description": ""
+        },
+        "ProfilePhase5Temp": {
+            "displayText": "Faas 5\ntemp.",
+            "description": ""
+        },
+        "ProfilePhase5Duration": {
+            "displayText": "Faas 5\nkestus",
+            "description": ""
+        },
+        "ProfileCooldownSpeed": {
+            "displayText": "Jahtumise\nkiirus",
+            "description": "Jahtumine selle kiirusega profiilirežiimi lõpus (kraadi sekundis)"
+        },
+        "MotionSensitivity": {
+            "displayText": "Liikumise\ntundlikkus",
+            "description": "0=väljas | 1=vähetundlikuim | ... | 9=kõige tundlikum"
+        },
+        "SleepTemperature": {
+            "displayText": "Unerežiimi\ntemp",
+            "description": "Kolviotsiku temperatuur \"unerežiimis\""
+        },
+        "SleepTimeout": {
+            "displayText": "Unerežiimi\nviide",
+            "description": "Aeg enne \"unerežiimi\" algust (s=sekundid | m=minutid)"
+        },
+        "ShutdownTimeout": {
+            "displayText": "Seiskumise\nviide",
+            "description": "Aeg enne jootekolvi välja lülitamist (m=minutid)"
+        },
+        "HallEffSensitivity": {
+            "displayText": "Halli anduri\ntundlikkus",
+            "description": "Tundlikkus magnetite suhtes (0=väljas | 1=vähetundlikum | ... | 9=kõige tundlikum)"
+        },
+        "TemperatureUnit": {
+            "displayText": "Temperatuuri\nühik",
+            "description": "C=°Celsius | F=°Fahrenheit"
+        },
+        "DisplayRotation": {
+            "displayText": "Ekraani\norienteeritus",
+            "description": "P=paremakäeline | V=vasakukäeline | A=automaatne"
+        },
+        "CooldownBlink": {
+            "displayText": "Jahtumisel\nvilkumine",
+            "description": "Vilguta otsiku temperatuuri, kui see jahtub ja on veel ohtlikult kuum"
+        },
+        "ScrollingSpeed": {
+            "displayText": "Kerimise\nkiirus",
+            "description": "Infoteksti kerimise kiirus (A = aeglane | K = kiire)"
+        },
+        "ReverseButtonTempChange": {
+            "displayText": "Vaheta\n+ - nupud",
+            "description": "Temperatuurinuppude asukohtade vahetus"
+        },
+        "AnimSpeed": {
+            "displayText": "Anim.\nkiirus",
+            "description": "Menüüikoonide animatsiooni kiirus (V=väljas | A=aeglane | K=keskmine | T=tempokas)"
+        },
+        "AnimLoop": {
+            "displayText": "Pidevad\nanim.",
+            "description": "Esitage menüüs pidevalt animatsioone"
+        },
+        "Brightness": {
+            "displayText": "Ekraani\nheledus",
+            "description": "Seadista OLED ekraani heledust"
+        },
+        "ColourInversion": {
+            "displayText": "Ekraani\ninverteerimine",
+            "description": "Inverteeri OLED ekraani värvid"
+        },
+        "LOGOTime": {
+            "displayText": "Alguslogo\nkestus",
+            "description": "Aeg, mille jooksul näidatakse logo peale kolvi käivitamist (s=sekundites)"
+        },
+        "AdvancedIdle": {
+            "displayText": "Andmed\npuhkeolekus",
+            "description": "Näita unerežiimis üksikasjalikumat teavet väiksemas kirjas"
+        },
+        "AdvancedSoldering": {
+            "displayText": "Andmed\njootmisel",
+            "description": "Näita jootmisel üksikasjalikumat teavet väiksemas kirjas"
+        },
+        "BluetoothLE": {
+            "displayText": "Bluetooth\n",
+            "description": "Luba BLE"
+        },
+        "PowerLimit": {
+            "displayText": "Võimsus-\npiirang",
+            "description": "Suurim lubatud võimsus mida kolb võib kasutada (W=vatti)"
+        },
+        "CalibrateCJC": {
+            "displayText": "Kalibr. CJC\ntuleval käivit.",
+            "description": "Kalibreeri külmaühenduse kompensatsioon (CJC) järgmisel käivitamisel (ei ole vajalik, kui Delta T on < 5°C)"
+        },
+        "VoltageCalibration": {
+            "displayText": "Kalibreeri\nsisendpinge",
+            "description": "Sisendpinge (VIN) kalibreerimine (väljumiseks vajutage pikalt)"
+        },
+        "PowerPulsePower": {
+            "displayText": "Impulsi\ntugevus",
+            "description": "Ärkvelolekuimpulsi tugevus (vattides). Vajalik, vältimaks akupanga uinumist."
+        },
+        "PowerPulseWait": {
+            "displayText": "Impulsi\nviivitus",
+            "description": "Viivitus enne ärkvelolekuimpulsi käivitumist (x 2,5s)"
+        },
+        "PowerPulseDuration": {
+            "displayText": "Impulsi\nkestus",
+            "description": "Ärkvelolekuimpulsi kestus (x 250ms)"
+        },
+        "SettingsReset": {
+            "displayText": "Taasta\nvaikesätted",
+            "description": "Nulli kõik seadistused vaikesätetele"
+        },
+        "LanguageSwitch": {
+            "displayText": "Keel:\n ET     Eesti",
+            "description": ""
+        }
+    }
+}
