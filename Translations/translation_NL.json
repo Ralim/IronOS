@@ -4,7 +4,7 @@
     "tempUnitFahrenheit": false,
     "messagesWarn": {
         "CalibrationDone": {
-            "message": "Kalibratie\ngedaan!"
+            "message": "Kalibratie\nklaar!"
         },
         "ResetOKMessage": {
             "message": "Reset OK"
@@ -16,7 +16,7 @@
             "message": "Geen accelerometer\ngedetecteerd!"
         },
         "NoPowerDeliveryMessage": {
-            "message": "Geen USB-PD chip\ngedetecteerd!"
+            "message": "Geen USB-PD IC\ngedetecteerd!"
         },
         "LockingKeysString": {
             "message": "GEBLOKKEERD"
@@ -128,7 +128,7 @@
             "description": "Maximale QC spanning de soldeerbout zou moeten aanvragen"
         },
         "PDNegTimeout": {
-            "displayText": "PD\nverloop tijd",
+            "displayText": "PD ver-\nloop tijd",
             "description": "PD onderhandelings verlooptijd, afstemmingsduur in stappen van 100 ms (voor compatibiliteit met sommige QC laders)"
         },
         "PDVpdo": {
@@ -137,7 +137,7 @@
         },
         "BoostTemperature": {
             "displayText": "Boost\ntemp",
-            "description": "Tip temperatuur tijdens \"boost-mode\""
+            "description": "Tip temperatuur tijdens \"boost-modus\""
         },
         "AutoStart": {
             "displayText": "start-\ngedrag",
@@ -220,11 +220,11 @@
             "description": "Temperatuur in slaapstand (°C)"
         },
         "SleepTimeout": {
-            "displayText": "Slaap\nvertraging",
-            "description": "Interval voor \"sleep mode\" start (Minuten | Seconden)"
+            "displayText": "Slaap ver-\ntraging",
+            "description": "Interval voor \"slaap stand\" start (Minuten | Seconden)"
         },
         "ShutdownTimeout": {
-            "displayText": "Uitschakel\nvertraging",
+            "displayText": "Uitschakel\nna",
             "description": "Automatisch afsluiten na (Minuten)"
         },
         "HallEffSensitivity": {
@@ -241,7 +241,7 @@
         },
         "CooldownBlink": {
             "displayText": "Afkoel\nknipper",
-            "description": "Temperatuur knippert in hoofdmenu tijdens afkoeling."
+            "description": "Temperatuur knippert in hoofdmenu tijdens afkoeling"
         },
         "ScrollingSpeed": {
             "displayText": "Scroll\nsnelheid",
@@ -272,19 +272,19 @@
             "description": "Zet het duur van het opstart logo (s=seconden)"
         },
         "AdvancedIdle": {
-            "displayText": "Gedetailleerd\nslaapscherm",
+            "displayText": "Detail\nslaapscherm",
             "description": "Gedetailleerde informatie in een kleiner lettertype in het slaapscherm"
         },
         "AdvancedSoldering": {
-            "displayText": "Gedetailleerd\nsoldeerscherm",
+            "displayText": "Detail\nsoldeerscherm",
             "description": "Gedetailleerde informatie in kleiner lettertype in soldeerscherm"
         },
         "BluetoothLE": {
-            "displayText": "Bluetooth\n",
+            "displayText": "Blue-\ntooth",
             "description": "Zet Bluetooth aan"
         },
         "PowerLimit": {
-            "displayText": "Vermogens\\nlimiet",
+            "displayText": "P\nlimiet",
             "description": "Gemiddelde maximale vermogen dat de soldeerbout mag gebruiken (W=watt)"
         },
         "CalibrateCJC": {
