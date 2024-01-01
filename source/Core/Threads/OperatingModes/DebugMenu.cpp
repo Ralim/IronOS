@@ -94,15 +94,15 @@ void showDebugMenu(void) {
     } break;
 #endif
 #ifdef MODEL_Pinecilv2
-     case 17: {
-       if (adcGainCoeffCal.adcGainCoeffEnable) {
-         const int32_t coe_x10000 = (int)(adcGainCoeffCal.coe * 10000 + 0.5);
-         OLED::printNumber(coe_x10000 / 10000, 3, FontStyle::SMALL);
-         OLED::print(SymbolDot, FontStyle::SMALL);
-         OLED::printNumber(coe_x10000 % 10000, 4, FontStyle::SMALL, false);
-       } else {
-         OLED::print(translatedString(Tr->OffString), FontStyle::SMALL);
-       }
+    case 17: {
+      if (adcGainCoeffCal.adcGainCoeffEnable) {
+        const int32_t coe_x10000 = (int)(adcGainCoeffCal.coe * 10000 + 0.5);
+        OLED::printNumber(coe_x10000 / 10000, 3, FontStyle::SMALL);
+        OLED::print(SymbolDot, FontStyle::SMALL);
+        OLED::printNumber(coe_x10000 % 10000, 4, FontStyle::SMALL, false);
+      } else {
+        OLED::print(translatedString(Tr->OffString), FontStyle::SMALL);
+      }
     } break;
 #endif
 
