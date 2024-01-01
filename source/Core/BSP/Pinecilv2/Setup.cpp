@@ -100,41 +100,41 @@ void setup_adc(void) {
 
   ADC_IntMask(ADC_INT_ALL, MASK);
 
-/*
-    A note on ADC settings
+  /*
+      A note on ADC settings
 
-    The bl70x ADC seems to be very sensitive to various analog settings.
-    It has been a challenge to determine what is the most correct way to
-    configure it in order to get accurate readings that can be transformed
-    into millivolts, for accurate measurements.
-
-    This latest set of ADC parameters, matches the latest configuration from
-    the upstream bl_mcu_sdk repository from commit hash:
-    9e189b69cbc0a75ffa170f600a28820848d56432
-    except for one difference.
-    (Note: bl_mcu_sdk has been heavily refactored since it has been imported into IronOS.)
-
-    You can make it match exactly by defining ENABLE_MIC2_DIFF, see the code
-    #ifdef ENABLE_MIC2_DIFF below.
-    I have decided to not apply this change because it appeared to make the
-    lower end of the input less precise.
-
-    Note that this configuration uses an ADC trimming value that is stored in the Efuse
-    of the bl70x chip. The actual reading is divided by this "coe" value.
-    We have found the following coe values on 3 different chips:
-    0.9629, 0.9438, 0.9876
-
-    Additional note for posterity:
-    PGA = programmable gain amplifier.
-    We would have expected to achieve the highest accuracy by disabling this amplifier,
-    however we found that not to be the case, and in almost all cases we have found
-    that there is a scaling error compared to the ideal Vref.
-    The only other configuration we have found to be accurate was if we had:
-    PGA disabled + Vref=2V + biasSel=AON + without trimming from the efuse.
-    But we can't use it because a Vref=2V limits the higher end of temperature and voltage readings.
-    Also we don't know if this other configuration is really accurate on all chips, or only
-    happened to be accurate on the one chip on which it has been found.
-*/
+      The bl70x ADC seems to be very sensitive to various analog settings.
+      It has been a challenge to determine what is the most correct way to
+      configure it in order to get accurate readings that can be transformed
+      into millivolts, for accurate measurements.
+  
+      This latest set of ADC parameters, matches the latest configuration from
+      the upstream bl_mcu_sdk repository from commit hash:
+      9e189b69cbc0a75ffa170f600a28820848d56432
+      except for one difference.
+      (Note: bl_mcu_sdk has been heavily refactored since it has been imported into IronOS.)
+  
+      You can make it match exactly by defining ENABLE_MIC2_DIFF, see the code
+      #ifdef ENABLE_MIC2_DIFF below.
+      I have decided to not apply this change because it appeared to make the
+      lower end of the input less precise.
+  
+      Note that this configuration uses an ADC trimming value that is stored in the Efuse
+      of the bl70x chip. The actual reading is divided by this "coe" value.
+      We have found the following coe values on 3 different chips:
+      0.9629, 0.9438, 0.9876
+  
+      Additional note for posterity:
+      PGA = programmable gain amplifier.
+      We would have expected to achieve the highest accuracy by disabling this amplifier,
+      however we found that not to be the case, and in almost all cases we have found
+      that there is a scaling error compared to the ideal Vref.
+      The only other configuration we have found to be accurate was if we had:
+      PGA disabled + Vref=2V + biasSel=AON + without trimming from the efuse.
+      But we can't use it because a Vref=2V limits the higher end of temperature and voltage readings.
+      Also we don't know if this other configuration is really accurate on all chips, or only
+      happened to be accurate on the one chip on which it has been found.
+  */
 
   adc_cfg.clkDiv         = ADC_CLK_DIV_4;
   adc_cfg.vref           = ADC_VREF_3P2V;
@@ -159,9 +159,9 @@ void setup_adc(void) {
   // This is the change that enables MIC2_DIFF, for now deciding not to enable it, since it seems to make results slightly worse
   {
     uint32_t tmpVal;
-    tmpVal = BL_RD_REG(AON_BASE,AON_GPADC_REG_CMD);
-    tmpVal = BL_SET_REG_BITS_VAL(tmpVal,AON_GPADC_MIC2_DIFF,1);
-    BL_WR_REG(AON_BASE,AON_GPADC_REG_CMD,tmpVal);
+    tmpVal = BL_RD_REG(AON_BASE, AON_GPADC_REG_CMD);
+    tmpVal = BL_SET_REG_BITS_VAL(tmpVal, AON_GPADC_MIC2_DIFF, 1);
+    BL_WR_REG(AON_BASE, AON_GPADC_REG_CMD, tmpVal);
   }
 #endif
 
