@@ -10,17 +10,17 @@
  *      This class is licensed as MIT to match this code base
  */
 
-#include "I2C_Wrapper.hpp"
 #include "Si7210_defines.h"
+#include "accelerometers_common.h"
 #include <Si7210.h>
-bool Si7210::detect() { return FRToSI2C::wakePart(SI7210_ADDRESS); }
+bool Si7210::detect() { return ACCEL_I2C_CLASS::wakePart(SI7210_ADDRESS); }
 
 bool Si7210::init() {
   // Turn on auto increment and sanity check ID
   // Load OTP cal
 
   uint8_t temp;
-  if (FRToSI2C::Mem_Read(SI7210_ADDRESS, SI7210_REG_ID, &temp, 1)) {
+  if (ACCEL_I2C_CLASS::Mem_Read(SI7210_ADDRESS, SI7210_REG_ID, &temp, 1)) {
     // We don't really care what model it is etc, just probing to check its probably this iC
     if (temp != 0x00 && temp != 0xFF) {
       temp = 0x00;
@@ -31,27 +31,33 @@ bool Si7210::init() {
       }
 
       /* Disable periodic auto-wakeup by device, and tamper detect. */
-      if ((!write_reg(SI7210_CTRL3, (uint8_t)~SL_TIMEENA_MASK, 0)))
+      if ((!write_reg(SI7210_CTRL3, (uint8_t)~SL_TIMEENA_MASK, 0))) {
         return false;
+      }
 
       /* Disable tamper detection by setting sw_tamper to 63 */
-      if (!write_reg(SI7210_CTRL3, SL_FAST_MASK | SL_TIMEENA_MASK, 63 << 2))
+      if (!write_reg(SI7210_CTRL3, SL_FAST_MASK | SL_TIMEENA_MASK, 63 << 2)) {
         return false;
+      }
 
-      if (!set_high_range())
+      if (!set_high_range()) {
         return false;
+      }
 
       /* Stop the control loop by setting stop bit */
-      if (!write_reg(SI7210_POWER_CTRL, MEAS_MASK | USESTORE_MASK, STOP_MASK)) /* WARNING: Removed USE_STORE MASK */
+      if (!write_reg(SI7210_POWER_CTRL, MEAS_MASK | USESTORE_MASK, STOP_MASK)) { /* WARNING: Removed USE_STORE MASK */
         return false;
+      }
 
       /* Use a burst size of 128/4096 samples in FIR and IIR modes */
-      if (!write_reg(SI7210_CTRL4, 0, DF_BURSTSIZE_128 | DF_BW_4096))
+      if (!write_reg(SI7210_CTRL4, 0, DF_BURSTSIZE_128 | DF_BW_4096)) {
         return false;
+      }
 
       /* Select field strength measurement */
-      if (!write_reg(SI7210_DSPSIGSEL, 0, DSP_SIGSEL_FIELD_MASK))
+      if (!write_reg(SI7210_DSPSIGSEL, 0, DSP_SIGSEL_FIELD_MASK)) {
         return false;
+      }
 
       return true; // start_periodic_measurement();
     }
@@ -77,15 +83,16 @@ bool Si7210::write_reg(const uint8_t reg, const uint8_t mask, const uint8_t val)
     temp &= mask;
   }
   temp |= val;
-  return FRToSI2C::Mem_Write(SI7210_ADDRESS, reg, &temp, 1);
+  return ACCEL_I2C_CLASS::Mem_Write(SI7210_ADDRESS, reg, &temp, 1);
 }
 
-bool Si7210::read_reg(const uint8_t reg, uint8_t *val) { return FRToSI2C::Mem_Read(SI7210_ADDRESS, reg, val, 1); }
+bool Si7210::read_reg(const uint8_t reg, uint8_t *val) { return ACCEL_I2C_CLASS::Mem_Read(SI7210_ADDRESS, reg, val, 1); }
 
 bool Si7210::start_periodic_measurement() {
   /* Enable periodic wakeup */
-  if (!write_reg(SI7210_CTRL3, (uint8_t)~SL_TIMEENA_MASK, SL_TIMEENA_MASK))
+  if (!write_reg(SI7210_CTRL3, (uint8_t)~SL_TIMEENA_MASK, SL_TIMEENA_MASK)) {
     return false;
+  }
 
   /* Start measurement */
   /* Change to ~STOP_MASK with STOP_MASK */
@@ -95,19 +102,22 @@ bool Si7210::start_periodic_measurement() {
 bool Si7210::get_field_strength(int16_t *field) {
   *field      = 0;
   uint8_t val = 0;
-  FRToSI2C::wakePart(SI7210_ADDRESS);
+  ACCEL_I2C_CLASS::wakePart(SI7210_ADDRESS);
 
-  if (!write_reg(SI7210_POWER_CTRL, MEAS_MASK | USESTORE_MASK, STOP_MASK))
+  if (!write_reg(SI7210_POWER_CTRL, MEAS_MASK | USESTORE_MASK, STOP_MASK)) {
     return false;
+  }
 
   /* Read most-significant byte */
-  if (!read_reg(SI7210_DSPSIGM, &val))
+  if (!read_reg(SI7210_DSPSIGM, &val)) {
     return false;
+  }
   *field = (val & DSP_SIGM_DATA_MASK) << 8;
 
   /* Read least-significant byte of data */
-  if (!read_reg(SI7210_DSPSIGL, &val))
+  if (!read_reg(SI7210_DSPSIGL, &val)) {
     return false;
+  }
 
   *field += val;
   *field -= 16384U;

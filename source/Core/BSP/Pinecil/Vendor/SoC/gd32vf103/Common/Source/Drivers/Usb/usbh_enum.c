@@ -72,8 +72,8 @@ usbh_status usbh_devdesc_get(usb_core_driver *pudev, usbh_host *puhost, uint8_t 
   usbh_control *usb_ctl = &puhost->control;
 
   if (CTL_IDLE == usb_ctl->ctl_state) {
-    usb_ctl->setup.req
-        = (usb_req){.bmRequestType = USB_TRX_IN | USB_RECPTYPE_DEV | USB_REQTYPE_STRD, .bRequest = USB_GET_DESCRIPTOR, .wValue = USBH_DESC(USB_DESCTYPE_DEV), .wIndex = 0U, .wLength = len};
+    usb_ctl->setup.req =
+        (usb_req){.bmRequestType = USB_TRX_IN | USB_RECPTYPE_DEV | USB_REQTYPE_STRD, .bRequest = USB_GET_DESCRIPTOR, .wValue = USBH_DESC(USB_DESCTYPE_DEV), .wIndex = 0U, .wLength = len};
 
     usbh_ctlstate_config(puhost, pudev->host.rx_buf, len);
   }
@@ -102,8 +102,8 @@ usbh_status usbh_cfgdesc_get(usb_core_driver *pudev, usbh_host *puhost, uint16_t
   usbh_control *usb_ctl = &puhost->control;
 
   if (CTL_IDLE == usb_ctl->ctl_state) {
-    usb_ctl->setup.req
-        = (usb_req){.bmRequestType = USB_TRX_IN | USB_RECPTYPE_DEV | USB_REQTYPE_STRD, .bRequest = USB_GET_DESCRIPTOR, .wValue = USBH_DESC(USB_DESCTYPE_CONFIG), .wIndex = 0U, .wLength = len};
+    usb_ctl->setup.req =
+        (usb_req){.bmRequestType = USB_TRX_IN | USB_RECPTYPE_DEV | USB_REQTYPE_STRD, .bRequest = USB_GET_DESCRIPTOR, .wValue = USBH_DESC(USB_DESCTYPE_CONFIG), .wIndex = 0U, .wLength = len};
 
     usbh_ctlstate_config(puhost, pudev->host.rx_buf, len);
   }
@@ -266,13 +266,15 @@ usbh_status usbh_clrfeature(usb_core_driver *pudev, usbh_host *puhost, uint8_t e
     \retval     operation status
 */
 static void usbh_devdesc_parse(usb_desc_dev *dev_desc, uint8_t *buf, uint16_t len) {
-  *dev_desc = (usb_desc_dev){.header = {.bLength = *(uint8_t *)(buf + 0U), .bDescriptorType = *(uint8_t *)(buf + 1U)},
+  *dev_desc = (usb_desc_dev){
+      .header = {.bLength = *(uint8_t *)(buf + 0U), .bDescriptorType = *(uint8_t *)(buf + 1U)},
 
-                             .bcdUSB          = BYTE_SWAP(buf + 2U),
-                             .bDeviceClass    = *(uint8_t *)(buf + 4U),
-                             .bDeviceSubClass = *(uint8_t *)(buf + 5U),
-                             .bDeviceProtocol = *(uint8_t *)(buf + 6U),
-                             .bMaxPacketSize0 = *(uint8_t *)(buf + 7U)};
+      .bcdUSB          = BYTE_SWAP(buf + 2U),
+      .bDeviceClass    = *(uint8_t *)(buf + 4U),
+      .bDeviceSubClass = *(uint8_t *)(buf + 5U),
+      .bDeviceProtocol = *(uint8_t *)(buf + 6U),
+      .bMaxPacketSize0 = *(uint8_t *)(buf + 7U)
+  };
 
   if (len > 8U) {
     /* for 1st time after device connection, host may issue only 8 bytes for device descriptor length  */
@@ -295,19 +297,20 @@ static void usbh_devdesc_parse(usb_desc_dev *dev_desc, uint8_t *buf, uint16_t le
 */
 static void usbh_cfgdesc_parse(usb_desc_config *cfg_desc, uint8_t *buf) {
   /* parse configuration descriptor */
-  *cfg_desc = (usb_desc_config) {
-        .header = {
-            .bLength         = *(uint8_t *)(buf + 0U),
-            .bDescriptorType = *(uint8_t *)(buf + 1U),
-        },
+  *cfg_desc = (usb_desc_config){
+      .header =
+          {
+                   .bLength         = *(uint8_t *)(buf + 0U),
+                   .bDescriptorType = *(uint8_t *)(buf + 1U),
+                   },
 
-        .wTotalLength        = BYTE_SWAP(buf + 2U),
-        .bNumInterfaces      = *(uint8_t *)(buf + 4U),
-        .bConfigurationValue = *(uint8_t *)(buf + 5U),
-        .iConfiguration      = *(uint8_t *)(buf + 6U),
-        .bmAttributes        = *(uint8_t *)(buf + 7U),
-        .bMaxPower           = *(uint8_t *)(buf + 8U)
-    };
+      .wTotalLength        = BYTE_SWAP(buf + 2U),
+      .bNumInterfaces      = *(uint8_t *)(buf + 4U),
+      .bConfigurationValue = *(uint8_t *)(buf + 5U),
+      .iConfiguration      = *(uint8_t *)(buf + 6U),
+      .bmAttributes        = *(uint8_t *)(buf + 7U),
+      .bMaxPower           = *(uint8_t *)(buf + 8U)
+  };
 }
 
 /*!
@@ -318,7 +321,7 @@ static void usbh_cfgdesc_parse(usb_desc_config *cfg_desc, uint8_t *buf) {
     \retval     operation status
 */
 static void usbh_cfgset_parse(usb_dev_prop *udev, uint8_t *buf) {
-  usb_desc_ep * ep  = NULL;
+  usb_desc_ep  *ep  = NULL;
   usb_desc_itf *itf = NULL, itf_value;
 
   usb_desc_header *pdesc = (usb_desc_header *)buf;
@@ -388,20 +391,21 @@ static void usbh_cfgset_parse(usb_dev_prop *udev, uint8_t *buf) {
     \retval     operation status
 */
 static void usbh_itfdesc_parse(usb_desc_itf *itf_desc, uint8_t *buf) {
-  *itf_desc = (usb_desc_itf) {
-        .header = {
-            .bLength         = *(uint8_t *)(buf + 0U),
-            .bDescriptorType = *(uint8_t *)(buf + 1U),
-        },
+  *itf_desc = (usb_desc_itf){
+      .header =
+          {
+                   .bLength         = *(uint8_t *)(buf + 0U),
+                   .bDescriptorType = *(uint8_t *)(buf + 1U),
+                   },
 
-        .bInterfaceNumber    = *(uint8_t *)(buf + 2U),
-        .bAlternateSetting   = *(uint8_t *)(buf + 3U),
-        .bNumEndpoints       = *(uint8_t *)(buf + 4U),
-        .bInterfaceClass     = *(uint8_t *)(buf + 5U),
-        .bInterfaceSubClass  = *(uint8_t *)(buf + 6U),
-        .bInterfaceProtocol  = *(uint8_t *)(buf + 7U),
-        .iInterface          = *(uint8_t *)(buf + 8U)
-    };
+      .bInterfaceNumber   = *(uint8_t *)(buf + 2U),
+      .bAlternateSetting  = *(uint8_t *)(buf + 3U),
+      .bNumEndpoints      = *(uint8_t *)(buf + 4U),
+      .bInterfaceClass    = *(uint8_t *)(buf + 5U),
+      .bInterfaceSubClass = *(uint8_t *)(buf + 6U),
+      .bInterfaceProtocol = *(uint8_t *)(buf + 7U),
+      .iInterface         = *(uint8_t *)(buf + 8U)
+  };
 }
 
 /*!
@@ -412,12 +416,14 @@ static void usbh_itfdesc_parse(usb_desc_itf *itf_desc, uint8_t *buf) {
     \retval     operation status
 */
 static void usbh_epdesc_parse(usb_desc_ep *ep_desc, uint8_t *buf) {
-  *ep_desc = (usb_desc_ep){.header = {.bLength = *(uint8_t *)(buf + 0U), .bDescriptorType = *(uint8_t *)(buf + 1U)},
+  *ep_desc = (usb_desc_ep){
+      .header = {.bLength = *(uint8_t *)(buf + 0U), .bDescriptorType = *(uint8_t *)(buf + 1U)},
 
-                           .bEndpointAddress = *(uint8_t *)(buf + 2U),
-                           .bmAttributes     = *(uint8_t *)(buf + 3U),
-                           .wMaxPacketSize   = BYTE_SWAP(buf + 4U),
-                           .bInterval        = *(uint8_t *)(buf + 6U)};
+      .bEndpointAddress = *(uint8_t *)(buf + 2U),
+      .bmAttributes     = *(uint8_t *)(buf + 3U),
+      .wMaxPacketSize   = BYTE_SWAP(buf + 4U),
+      .bInterval        = *(uint8_t *)(buf + 6U)
+  };
 }
 
 /*!

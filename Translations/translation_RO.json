@@ -2,44 +2,79 @@
     "languageCode": "RO",
     "languageLocalName": "Română",
     "tempUnitFahrenheit": true,
-    "messages": {
-        "SettingsCalibrationWarning": "Before rebooting, make sure tip & handle are at room temperature!",
-        "CJCCalibrating": "calibrating",
-        "SettingsResetWarning": "Sigur doriti să restaurati la setările implicite?",
-        "UVLOWarningString": "DC LOW",
-        "UndervoltageString": "Sub tensiune",
-        "InputVoltageString": "Intrare V: ",
-        "SleepingSimpleString": "Zzzz",
-        "SleepingAdvancedString": "Adormit...",
-        "SleepingTipAdvancedString": "Tip:",
-        "OffString": "Nu",
-        "DeviceFailedValidationWarning": "Your device is most likely a counterfeit!"
-    },
     "messagesWarn": {
-        "CJCCalibrationDone": [
-            "Calibration",
-            "done!"
-        ],
-        "ResetOKMessage": "Reset OK",
-        "SettingsResetMessage": [
-            "Setările au fost",
-            "resetate!"
-        ],
-        "NoAccelerometerMessage": [
-            "Nu accelerometru",
-            "detectat!"
-        ],
-        "NoPowerDeliveryMessage": [
-            "Fără USB-PD IC",
-            "detectat!"
-        ],
-        "LockingKeysString": "BLOCAT",
-        "UnlockingKeysString": "DEBLOCAT",
-        "WarningKeysLockedString": "!BLOCAT!",
-        "WarningThermalRunaway": [
-            "Incalzire",
-            "Esuata"
-        ]
+        "CalibrationDone": {
+            "message": "Calibration\ndone!"
+        },
+        "ResetOKMessage": {
+            "message": "Reset OK"
+        },
+        "SettingsResetMessage": {
+            "message": "Setările au fost\nresetate!"
+        },
+        "NoAccelerometerMessage": {
+            "message": "Fără accelerometru\ndetectat!"
+        },
+        "NoPowerDeliveryMessage": {
+            "message": "Fără USB-PD IC\ndetectat!"
+        },
+        "LockingKeysString": {
+            "message": "BLOCAT"
+        },
+        "UnlockingKeysString": {
+            "message": "DEBLOCAT"
+        },
+        "WarningKeysLockedString": {
+            "message": "!BLOCAT!"
+        },
+        "WarningThermalRunaway": {
+            "message": "Încălzire\nEşuată"
+        },
+        "WarningTipShorted": {
+            "message": "!Tip Shorted!"
+        },
+        "SettingsCalibrationWarning": {
+            "message": "Înainte de repornire, asiguraţi-vă că vârful şi mânerul sunt la temperatura camerei!"
+        },
+        "CJCCalibrating": {
+            "message": "calibrare\n"
+        },
+        "SettingsResetWarning": {
+            "message": "Sigur doriţi să restauraţi la setările implicite?"
+        },
+        "UVLOWarningString": {
+            "message": "DC SCĂZUT"
+        },
+        "UndervoltageString": {
+            "message": "Voltaj scăzut\n"
+        },
+        "InputVoltageString": {
+            "message": "Intrare V: \n"
+        },
+        "SleepingSimpleString": {
+            "message": "Zzzz"
+        },
+        "SleepingAdvancedString": {
+            "message": "Adormit...\n"
+        },
+        "SleepingTipAdvancedString": {
+            "message": "Tip: \n"
+        },
+        "OffString": {
+            "message": "Nu"
+        },
+        "ProfilePreheatString": {
+            "message": "Preheat\n"
+        },
+        "ProfileCooldownString": {
+            "message": "Cooldown\n"
+        },
+        "DeviceFailedValidationWarning": {
+            "message": "Dispozitivul dvs. este cel mai probabil un fals!"
+        },
+        "TooHotToStartProfileWarning": {
+            "message": "Too hot to\nstart profile"
+        }
     },
     "characters": {
         "SettingRightChar": "D",
@@ -59,279 +94,226 @@
     },
     "menuGroups": {
         "PowerMenu": {
-            "text2": [
-                "Setări de",
-                "alimentare"
-            ],
-            "desc": ""
+            "displayText": "Setări de\nalimentare",
+            "description": ""
         },
         "SolderingMenu": {
-            "text2": [
-                "Setări de",
-                "lipire"
-            ],
-            "desc": ""
+            "displayText": "Setări de\nlipire",
+            "description": ""
         },
         "PowerSavingMenu": {
-            "text2": [
-                "Modul",
-                "repaus"
-            ],
-            "desc": ""
+            "displayText": "Modul\nrepaus",
+            "description": ""
         },
         "UIMenu": {
-            "text2": [
-                "Interfată",
-                "utilizator"
-            ],
-            "desc": ""
+            "displayText": "Interfaţă\nutilizator",
+            "description": ""
         },
         "AdvancedMenu": {
-            "text2": [
-                "Optiuni",
-                "avansate"
-            ],
-            "desc": ""
+            "displayText": "Opţiuni\navansate",
+            "description": ""
         }
     },
     "menuOptions": {
         "DCInCutoff": {
-            "text2": [
-                "Sursa de",
-                "alimentare"
-            ],
-            "desc": "Sursa de alimentare. Setează tensiunea de întrerupere. (DC 10V) (S 3.3V per celulă, dezactivati limita de alimentare)"
+            "displayText": "Sursa de\nalimentare",
+            "description": "Sursa de alimentare. Setează tensiunea de întrerupere. (DC 10V) (S 3.3V per celulă, dezactivaţi limita de alimentare)"
         },
         "MinVolCell": {
-            "text2": [
-                "Voltaj",
-                "minim"
-            ],
-            "desc": "Tensiunea minimă admisă pe celulă (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+            "displayText": "Voltaj\nminim",
+            "description": "Tensiunea minimă admisă pe celulă (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
         },
         "QCMaxVoltage": {
-            "text2": [
-                "QC",
-                "voltaj"
-            ],
-            "desc": "Tensiunea maximă QC dorită pentru care negociază letconul"
+            "displayText": "QC\nvoltaj",
+            "description": "Tensiunea maximă QC dorită pentru care negociază letconul"
         },
         "PDNegTimeout": {
-            "text2": [
-                "PD",
-                "timeout"
-            ],
-            "desc": "Timp limita de negociere pentru tranzactia PD, in pasi de 100ms, pentru compatibilitate cu alimentatoarele QC"
+            "displayText": "PD\ntimeout",
+            "description": "Timp limită de negociere pentru tranzacţia PD, în paşi de 100ms, pentru compatibilitate cu alimentatoarele QC"
+        },
+        "PDVpdo": {
+            "displayText": "PD\nVPDO",
+            "description": "Enables PPS & EPR modes"
         },
         "BoostTemperature": {
-            "text2": [
-                "Boost",
-                "temp"
-            ],
-            "desc": "Temperatura utilizată în \"modul boost\""
+            "displayText": "Modifică\ntemp. impuls",
+            "description": "Temperatura utilizată în \"modul de impuls\""
         },
         "AutoStart": {
-            "text2": [
-                "Auto",
-                "start"
-            ],
-            "desc": "Start letcon în modul de lipire la pornire (O=oprit | S=lipire | Z=repaus | R=repaus la temperatura camerei)"
+            "displayText": "Auto\nstart",
+            "description": "Start letcon în modul de lipire la pornire (O=oprit | S=lipire | Z=repaus | R=repaus la temperatura camerei)"
         },
         "TempChangeShortStep": {
-            "text2": [
-                "Schimbare temp.",
-                "apăsare scută"
-            ],
-            "desc": "Schimbarea temperaturii la apăsarea scurtă a butonului"
+            "displayText": "Schimbare temp.\napăsare scută",
+            "description": "Schimbarea temperaturii la apăsarea scurtă a butonului"
         },
         "TempChangeLongStep": {
-            "text2": [
-                "Schimbare temp.",
-                "apăsare lungă"
-            ],
-            "desc": "Schimbarea temperaturii la apăsarea lungă a butonului"
+            "displayText": "Schimbare temp.\napăsare lungă",
+            "description": "Schimbarea temperaturii la apăsarea lungă a butonului"
         },
         "LockingMode": {
-            "text2": [
-                "Blocare",
-                "butoane"
-            ],
-            "desc": "Când lipiti, apăsati lung ambele butoane, pentru a le bloca (D=dezactivare | B=numai \"modul boost\" | F=blocare completă)"
+            "displayText": "Blocare\nbutoane",
+            "description": "Când lipiţi, apăsaţi lung ambele butoane, pentru a le bloca (D=dezactivare | B=numai \"modul boost\" | F=blocare completă)"
+        },
+        "ProfilePhases": {
+            "displayText": "Profile\nPhases",
+            "description": "Number of phases in profile mode"
+        },
+        "ProfilePreheatTemp": {
+            "displayText": "Preheat\nTemp",
+            "description": "Preheat to this temperature at the start of profile mode"
+        },
+        "ProfilePreheatSpeed": {
+            "displayText": "Preheat\nSpeed",
+            "description": "Preheat at this rate (degrees per second)"
+        },
+        "ProfilePhase1Temp": {
+            "displayText": "Phase 1\nTemp",
+            "description": "Target temperature for the end of this phase"
+        },
+        "ProfilePhase1Duration": {
+            "displayText": "Phase 1\nDuration",
+            "description": "Target duration of this phase (seconds)"
+        },
+        "ProfilePhase2Temp": {
+            "displayText": "Phase 2\nTemp",
+            "description": ""
+        },
+        "ProfilePhase2Duration": {
+            "displayText": "Phase 2\nDuration",
+            "description": ""
+        },
+        "ProfilePhase3Temp": {
+            "displayText": "Phase 3\nTemp",
+            "description": ""
+        },
+        "ProfilePhase3Duration": {
+            "displayText": "Phase 3\nDuration",
+            "description": ""
+        },
+        "ProfilePhase4Temp": {
+            "displayText": "Phase 4\nTemp",
+            "description": ""
+        },
+        "ProfilePhase4Duration": {
+            "displayText": "Phase 4\nDuration",
+            "description": ""
+        },
+        "ProfilePhase5Temp": {
+            "displayText": "Phase 5\nTemp",
+            "description": ""
+        },
+        "ProfilePhase5Duration": {
+            "displayText": "Phase 5\nDuration",
+            "description": ""
+        },
+        "ProfileCooldownSpeed": {
+            "displayText": "Cooldown\nSpeed",
+            "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
         },
         "MotionSensitivity": {
-            "text2": [
-                "Sensibilitate",
-                "la miscare"
-            ],
-            "desc": "Sensibilitate senzor miscare (0=oprit | 1=putin sensibil | ... | 9=cel mai sensibil)"
+            "displayText": "Sensibilitate\nla miscare",
+            "description": "Sensibilitate senzor miscare (0=oprit | 1=puţin sensibil | ... | 9=cel mai sensibil)"
         },
         "SleepTemperature": {
-            "text2": [
-                "Temp",
-                "repaus"
-            ],
-            "desc": "Temperatura vârfului în \"modul repaus\""
+            "displayText": "Temp\nrepaus",
+            "description": "Temperatura vârfului în \"modul repaus\""
         },
         "SleepTimeout": {
-            "text2": [
-                "Expirare",
-                "repaus"
-            ],
-            "desc": "Interval înainte de lansarea \"modului de repaus\" în (s=secunde | m=minute)"
+            "displayText": "Expirare\nrepaus",
+            "description": "Interval înainte de lansarea \"modului de repaus\" în (s=secunde | m=minute)"
         },
         "ShutdownTimeout": {
-            "text2": [
-                "Expirare",
-                "oprire"
-            ],
-            "desc": "Interval înainte ca letconul să se oprească (m=minute)"
+            "displayText": "Expirare\noprire",
+            "description": "Interval înainte ca letconul să se oprească (m=minute)"
         },
         "HallEffSensitivity": {
-            "text2": [
-                "Sensibilitate",
-                "senzor Hall"
-            ],
-            "desc": "Sensibilitate senzor cu efect Hall pentru a detecta repausul (0=oprit | 1=putin sensibil | ... | 9=cel mai sensibil)"
+            "displayText": "Sensibilitate\nsenzor Hall",
+            "description": "Sensibilitate senzor cu efect Hall pentru a detecta repausul (0=oprit | 1=putin sensibil | ... | 9=cel mai sensibil)"
         },
         "TemperatureUnit": {
-            "text2": [
-                "Unitate de",
-                "temperatură"
-            ],
-            "desc": "C=Celsius | F=Fahrenheit"
+            "displayText": "Unitate de\ntemperatură",
+            "description": "C=Celsius | F=Fahrenheit"
         },
         "DisplayRotation": {
-            "text2": [
-                "Orientare",
-                "ecran"
-            ],
-            "desc": "R=dreptaci | L=stângaci | A=auto"
+            "displayText": "Orientare\necran",
+            "description": "R=dreptaci | L=stângaci | A=auto"
         },
         "CooldownBlink": {
-            "text2": [
-                "Clipeste",
-                "la răcire"
-            ],
-            "desc": "Clipeste temperatura după oprirea încălzirii, în timp ce vârful este încă fierbinte"
+            "displayText": "Clipeşte\nla răcire",
+            "description": "Clipeşte temperatura după oprirea încălzirii, în timp ce vârful este încă fierbinte"
         },
         "ScrollingSpeed": {
-            "text2": [
-                "Viteză",
-                "derulare"
-            ],
-            "desc": "Viteză derulare text cu informatii la (S=lent | F=rapid)"
+            "displayText": "Viteză\nderulare",
+            "description": "Viteză derulare text cu informatii la (S=lent | F=rapid)"
         },
         "ReverseButtonTempChange": {
-            "text2": [
-                "Inversare",
-                "+ - butoane"
-            ],
-            "desc": "Inversarea butoanelor de reglare a temperaturii"
+            "displayText": "Inversare\n+ - butoane",
+            "description": "Inversarea butoanelor de reglare a temperaturii"
         },
         "AnimSpeed": {
-            "text2": [
-                "Animatii",
-                "viteză"
-            ],
-            "desc": "Ritmul animatiilor pictogramei din meniu (O=oprit | Î=încet | M=mediu | R=rapid)"
+            "displayText": "Animaţii\nviteză",
+            "description": "Ritmul animaţiilor pictogramei din meniu (O=oprit | Î=încet | M=mediu | R=rapid)"
         },
         "AnimLoop": {
-            "text2": [
-                "Animatii",
-                "buclă"
-            ],
-            "desc": "Animatii de pictograme în meniul principal"
+            "displayText": "Animaţii\nbuclă",
+            "description": "Animaţii de pictograme în meniul principal"
         },
         "Brightness": {
-            "text2": [
-                "Ecranului",
-                "luminozitatea"
-            ],
-            "desc": "Ajusteaza luminozitatea ecranului"
+            "displayText": "Ecranului\nluminozitatea",
+            "description": "Ajusteaza luminozitatea ecranului"
         },
         "ColourInversion": {
-            "text2": [
-                "Inverseaza",
-                "culoarea"
-            ],
-            "desc": "Inverseaza culoarea ecranului"
+            "displayText": "Inversează\nculoarea",
+            "description": "Inversează culoarea ecranului"
         },
         "LOGOTime": {
-            "text2": [
-                "Durată",
-                "logo încărcare"
-            ],
-            "desc": "Setati durata logo de pornire (s=secunde)"
+            "displayText": "Durată\nlogo încărcare",
+            "description": "Setaţi durată logo de pornire (s=secunde)"
         },
         "AdvancedIdle": {
-            "text2": [
-                "Detalii,",
-                "ecran inactiv"
-            ],
-            "desc": "Afisati informatii detaliate într-un font mai mic pe ecranul de repaus"
+            "displayText": "Detalii,\necran inactiv",
+            "description": "Afisaţi informaţii detaliate într-un font mai mic pe ecranul de repaus"
         },
         "AdvancedSoldering": {
-            "text2": [
-                "Detalii",
-                "ecran lipire"
-            ],
-            "desc": "Afisati informatii detaliate într-un font mai mic pe ecranul de lipire"
+            "displayText": "Detalii\necran lipire",
+            "description": "Afisaţi informaţii detaliate într-un font mai mic pe ecranul de lipire"
+        },
+        "BluetoothLE": {
+            "displayText": "Bluetooth\n",
+            "description": "Activează BLE"
         },
         "PowerLimit": {
-            "text2": [
-                "Putere",
-                "limită"
-            ],
-            "desc": "Puterea maximă pe care letconul o poate folosi (W=watt)"
+            "displayText": "Putere\nlimită",
+            "description": "Puterea maximă pe care letconul o poate folosi (W=watt)"
         },
         "CalibrateCJC": {
-            "text2": [
-                "Calibrare CJC",
-                "la următoarea pornire"
-            ],
-            "desc": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
+            "displayText": "Calibrare CJC\nla următoarea pornire",
+            "description": "La următorul vârf de pornire, compensarea joncţiunii reci va fi calibrată (nu este necesară dacă Delta T este < 5°C)"
         },
         "VoltageCalibration": {
-            "text2": [
-                "Calibrare tens.",
-                "de intrare?"
-            ],
-            "desc": "Porniti calibrarea VIN (apăsati lung pentru a iesi)"
+            "displayText": "Calibrare tens.\nde intrare?",
+            "description": "Porniţi calibrarea VIN (apăsaţi lung pentru a ieşi)"
         },
         "PowerPulsePower": {
-            "text2": [
-                "Putere",
-                "puls"
-            ],
-            "desc": "Puterea pulsului de mentinere activa a blocului de alimentare (watt)"
+            "displayText": "Putere\npuls",
+            "description": "Puterea pulsului de menţinere activă a blocului de alimentare (watt)"
         },
         "PowerPulseWait": {
-            "text2": [
-                "Întârziere",
-                "puls putere"
-            ],
-            "desc": "Perioada pulsului de mentinere (x 2.5s)"
+            "displayText": "Întârziere\npuls putere",
+            "description": "Perioada pulsului de mentinere (x 2.5s)"
         },
         "PowerPulseDuration": {
-            "text2": [
-                "Durată",
-                "puls putere"
-            ],
-            "desc": "Durata pulsului de mentinere (x 250ms)"
+            "displayText": "Durată\npuls putere",
+            "description": "Durata pulsului de menţinere (x 250ms)"
         },
         "SettingsReset": {
-            "text2": [
-                "Setări",
-                "din fabrică"
-            ],
-            "desc": "Reveniti la setările din fabrică"
+            "displayText": "Setări\ndin fabrică",
+            "description": "Reveniţi la setările din fabrică"
         },
         "LanguageSwitch": {
-            "text2": [
-                "Limbă:",
-                " RO      Română"
-            ],
-            "desc": ""
+            "displayText": "Limbă:\n RO      Română",
+            "description": ""
         }
     }
 }

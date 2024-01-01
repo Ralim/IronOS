@@ -8,6 +8,7 @@
 #ifndef BSP_PINE64_PINS_H_
 #define BSP_PINE64_PINS_H_
 #include "bl702_adc.h"
+#include "bl702_pwm.h"
 #include "hal_gpio.h"
 
 #define KEY_B_Pin            GPIO_PIN_28

@@ -2,47 +2,79 @@
     "languageCode": "EL",
     "languageLocalName": "Greek",
     "tempUnitFahrenheit": true,
-    "messages": {
-        "SettingsCalibrationWarning": "Before rebooting, make sure tip & handle are at room temperature!",
-        "CJCCalibrating": "calibrating",
-        "SettingsResetWarning": "Σίγουρα θέλετε επαναφορά αρχικών ρυθμίσεων;",
-        "UVLOWarningString": "Χαμηλ DC",
-        "UndervoltageString": "Υπόταση",
-        "InputVoltageString": "Είσοδος V: ",
-        "SleepingSimpleString": "Zzzz",
-        "SleepingAdvancedString": "Υπνος...",
-        "SleepingTipAdvancedString": "Μύτη:",
-        "OffString": "Απ.",
-        "DeviceFailedValidationWarning": "Your device is most likely a counterfeit!"
-    },
     "messagesWarn": {
-        "CJCCalibrationDone": [
-            "Calibration",
-            "done!"
-        ],
-        "ResetOKMessage": "Επαν. OK",
-        "SettingsResetMessage": [
-            "Κάποιες ρυθμ.",
-            "άλλαξαν"
-        ],
-        "NoAccelerometerMessage": [
-            "Δεν εντοπίστηκε",
-            "επιταχυνσιόμετρο"
-        ],
-        "NoPowerDeliveryMessage": [
-            "Δεν εντοπίστηκε",
-            "κύκλωμα USB-PD"
-        ],
-        "LockingKeysString": "ΚΛΕΙΔ.",
-        "UnlockingKeysString": "ΞΕΚΛΕΙΔ.",
-        "WarningKeysLockedString": [
-            "ΚΛΕΙΔΩΜΕΝΑ",
-            "ΠΛΗΚΤΡΑ!"
-        ],
-        "WarningThermalRunaway": [
-            "Θερμική",
-            "Φυγή"
-        ]
+        "CalibrationDone": {
+            "message": "Βαθμονόμηση\nολοκληρώθηκε!"
+        },
+        "ResetOKMessage": {
+            "message": "Επαν. OK"
+        },
+        "SettingsResetMessage": {
+            "message": "Κάποιες ρυθμ.\nάλλαξαν"
+        },
+        "NoAccelerometerMessage": {
+            "message": "Δεν εντοπίστηκε\nεπιταχυνσιόμετρο"
+        },
+        "NoPowerDeliveryMessage": {
+            "message": "Δεν εντοπίστηκε\nκύκλωμα USB-PD"
+        },
+        "LockingKeysString": {
+            "message": "ΚΛΕΙΔ."
+        },
+        "UnlockingKeysString": {
+            "message": "ΞΕΚΛΕΙΔ."
+        },
+        "WarningKeysLockedString": {
+            "message": "ΚΛΕΙΔΩΜΕΝΑ\nΠΛΗΚΤΡΑ!"
+        },
+        "WarningThermalRunaway": {
+            "message": "Θερμική\nΦυγή"
+        },
+        "WarningTipShorted": {
+            "message": "!Tip Shorted!"
+        },
+        "SettingsCalibrationWarning": {
+            "message": "Πριν την επανεκκίνηση, βεβαιωθείτε ότι η μύτη και η συσκ. είναι σε θερμ. δωματίου!"
+        },
+        "CJCCalibrating": {
+            "message": "βαθμονόμηση\n"
+        },
+        "SettingsResetWarning": {
+            "message": "Σίγουρα θέλετε επαναφορά αρχικών ρυθμίσεων;"
+        },
+        "UVLOWarningString": {
+            "message": "Χαμηλ DC"
+        },
+        "UndervoltageString": {
+            "message": "Υπόταση\n"
+        },
+        "InputVoltageString": {
+            "message": "Είσοδος V: \n"
+        },
+        "SleepingSimpleString": {
+            "message": "Zzzz"
+        },
+        "SleepingAdvancedString": {
+            "message": "Υπνος...\n"
+        },
+        "SleepingTipAdvancedString": {
+            "message": "Μύτη: \n"
+        },
+        "OffString": {
+            "message": "Απ."
+        },
+        "ProfilePreheatString": {
+            "message": "Preheat\n"
+        },
+        "ProfileCooldownString": {
+            "message": "Cooldown\n"
+        },
+        "DeviceFailedValidationWarning": {
+            "message": "Η συσκευή σας ίσως να μην είναι αυθεντική!"
+        },
+        "TooHotToStartProfileWarning": {
+            "message": "Too hot to\nstart profile"
+        }
     },
     "characters": {
         "SettingRightChar": "R",
@@ -62,279 +94,226 @@
     },
     "menuGroups": {
         "PowerMenu": {
-            "text2": [
-                "Ρυθμίσεις",
-                "ενέργειας"
-            ],
-            "desc": ""
+            "displayText": "Ρυθμίσεις\nενέργειας",
+            "description": ""
         },
         "SolderingMenu": {
-            "text2": [
-                "Ρυθμίσεις",
-                "κόλλησης"
-            ],
-            "desc": ""
+            "displayText": "Ρυθμίσεις\nκόλλησης",
+            "description": ""
         },
         "PowerSavingMenu": {
-            "text2": [
-                "Λειτουργία",
-                "ύπνου"
-            ],
-            "desc": ""
+            "displayText": "Λειτουργία\nύπνου",
+            "description": ""
         },
         "UIMenu": {
-            "text2": [
-                "Διεπαφή",
-                "χρήστη"
-            ],
-            "desc": ""
+            "displayText": "Διεπαφή\nχρήστη",
+            "description": ""
         },
         "AdvancedMenu": {
-            "text2": [
-                "Προηγμένες",
-                "ρυθμίσεις"
-            ],
-            "desc": ""
+            "displayText": "Προηγμένες\nρυθμίσεις",
+            "description": ""
         }
     },
     "menuOptions": {
         "DCInCutoff": {
-            "text2": [
-                "Πηγή",
-                "ενέργειας"
-            ],
-            "desc": "Πηγή ενέργειας. Oρισμός τάσης απενεργοποίησης. (DC 10V) (S 3.3V ανα κυψέλη, απενεργοποίηση ενεργειακού ορίου)"
+            "displayText": "Πηγή\nενέργειας",
+            "description": "Πηγή ενέργειας. Oρισμός τάσης απενεργοποίησης. (DC 10V) (S 3.3V ανα μπαταρία, απενεργοποίηση ενεργειακού ορίου)"
         },
         "MinVolCell": {
-            "text2": [
-                "Ελάχιστη",
-                "τάση"
-            ],
-            "desc": "Ελάχιστη επιτρεπτή τάση ανα κυψέλη (3 σε σειρά: 3 - 3.7V | 4-6 σε σειρά: 2.4 - 3.7V)"
+            "displayText": "Ελάχιστη\nτάση",
+            "description": "Ελάχιστη επιτρεπτή τάση ανα μπαταρία (3 σε σειρά: 3 - 3.7V | 4-6 σε σειρά: 2.4 - 3.7V)"
         },
         "QCMaxVoltage": {
-            "text2": [
-                "Τάση",
-                "QC"
-            ],
-            "desc": "Μέγιστη τάση QC που να ζητά το κολλητήρι από το τροφοδοτικό"
+            "displayText": "Τάση\nQC",
+            "description": "Μέγιστη τάση QC που να ζητείται από το τροφοδοτικό"
         },
         "PDNegTimeout": {
-            "text2": [
-                "χρονικό όριο",
-                "PD"
-            ],
-            "desc": "Χρονικό όριο διαπραγμάτευσης PD σε βήματα 100ms για συμβατότητα με κάποιους φορτιστές QC"
+            "displayText": "χρονικό όριο\nPD",
+            "description": "Χρονικό όριο διαπραγμάτευσης PD σε βήματα 100ms για συμβατότητα με κάποιους φορτιστές QC"
+        },
+        "PDVpdo": {
+            "displayText": "PD\nVPDO",
+            "description": "Ενεργοποιεί λειτουργίες PPS & EPR."
         },
         "BoostTemperature": {
-            "text2": [
-                "Θερμοκ.",
-                "boost"
-            ],
-            "desc": "Θερμοκρασία στη \"λειτουργία boost\""
+            "displayText": "Θερμοκ.\nboost",
+            "description": "Θερμοκρασία στη \"λειτουργία boost\""
         },
         "AutoStart": {
-            "text2": [
-                "Ζέσταμα",
-                "κατά την εν."
-            ],
-            "desc": "0=off | Κ=θερμ. κόλλησης | Z=αναμονή σε θερμοκρασία ύπνου μέχρι την κίνηση | Υ=αναμονή χωρίς ζέσταμα μέχρι την κίνηση"
+            "displayText": "Ζέσταμα\nκατά την εν.",
+            "description": "0=off | Κ=θερμ. κόλλησης | Z=αναμονή σε θερμοκρασία ύπνου μέχρι την κίνηση | Υ=αναμονή χωρίς ζέσταμα μέχρι την κίνηση"
         },
         "TempChangeShortStep": {
-            "text2": [
-                "Αλλαγή θερμοκ.",
-                "στιγμιαίο"
-            ],
-            "desc": "Βήμα αλλαγής θερμοκρασίας σε στιγμιαίο πάτημα πλήκτρου"
+            "displayText": "Αλλαγή θερμοκ.\nστιγμιαίο",
+            "description": "Βήμα αλλαγής θερμοκρασίας σε στιγμιαίο πάτημα πλήκτρου"
         },
         "TempChangeLongStep": {
-            "text2": [
-                "Αλλαγή θερμοκ.",
-                "παρατεταμένο"
-            ],
-            "desc": "Βήμα αλλαγής θερμοκρασίας σε παρατεταμένο πάτημα πλήκτρου"
+            "displayText": "Αλλαγή θερμοκ.\nπαρατεταμένο",
+            "description": "Βήμα αλλαγής θερμοκρασίας σε παρατεταμένο πάτημα πλήκτρου"
         },
         "LockingMode": {
-            "text2": [
-                "Κλείδωμα",
-                "πλήκτρων"
-            ],
-            "desc": "Κατά την κόλληση, κρατήστε και τα δύο πλήκτρα για κλείδωμα (A=απενεργοποίηση | B=μόνο λειτ. boost | Π=πλήρες κλείδωμα)"
+            "displayText": "Κλείδωμα\nπλήκτρων",
+            "description": "Κατά την κόλληση, κρατήστε και τα δύο πλήκτρα για κλείδωμα (A=απενεργοποίηση | B=μόνο λειτ. boost | Π=πλήρες κλείδωμα)"
+        },
+        "ProfilePhases": {
+            "displayText": "Profile\nPhases",
+            "description": "Number of phases in profile mode"
+        },
+        "ProfilePreheatTemp": {
+            "displayText": "Preheat\nTemp",
+            "description": "Preheat to this temperature at the start of profile mode"
+        },
+        "ProfilePreheatSpeed": {
+            "displayText": "Preheat\nSpeed",
+            "description": "Preheat at this rate (degrees per second)"
+        },
+        "ProfilePhase1Temp": {
+            "displayText": "Phase 1\nTemp",
+            "description": "Target temperature for the end of this phase"
+        },
+        "ProfilePhase1Duration": {
+            "displayText": "Phase 1\nDuration",
+            "description": "Target duration of this phase (seconds)"
+        },
+        "ProfilePhase2Temp": {
+            "displayText": "Phase 2\nTemp",
+            "description": ""
+        },
+        "ProfilePhase2Duration": {
+            "displayText": "Phase 2\nDuration",
+            "description": ""
+        },
+        "ProfilePhase3Temp": {
+            "displayText": "Phase 3\nTemp",
+            "description": ""
+        },
+        "ProfilePhase3Duration": {
+            "displayText": "Phase 3\nDuration",
+            "description": ""
+        },
+        "ProfilePhase4Temp": {
+            "displayText": "Phase 4\nTemp",
+            "description": ""
+        },
+        "ProfilePhase4Duration": {
+            "displayText": "Phase 4\nDuration",
+            "description": ""
+        },
+        "ProfilePhase5Temp": {
+            "displayText": "Phase 5\nTemp",
+            "description": ""
+        },
+        "ProfilePhase5Duration": {
+            "displayText": "Phase 5\nDuration",
+            "description": ""
+        },
+        "ProfileCooldownSpeed": {
+            "displayText": "Cooldown\nSpeed",
+            "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
         },
         "MotionSensitivity": {
-            "text2": [
-                "Ευαισθησία",
-                "κίνησης"
-            ],
-            "desc": "0=off | 1=λιγότερο ευαίσθητο | ... | 9=περισσότερο ευαίσθητο"
+            "displayText": "Ευαισθησία\nκίνησης",
+            "description": "0=off | 1=λιγότερο ευαίσθητο | ... | 9=περισσότερο ευαίσθητο"
         },
         "SleepTemperature": {
-            "text2": [
-                "Θερμοκρ.",
-                "ύπνου"
-            ],
-            "desc": "Θερμοκρασία μύτης σε λειτ. ύπνου"
+            "displayText": "Θερμοκρ.\nύπνου",
+            "description": "Θερμοκρασία μύτης σε λειτ. ύπνου"
         },
         "SleepTimeout": {
-            "text2": [
-                "Έναρξη",
-                "ύπνου"
-            ],
-            "desc": "Χρονικό διάστημα πρίν την ενεργοποίηση λειτουργίας ύπνου (Δ=δευτ. | Λ=λεπτά)"
+            "displayText": "Έναρξη\nύπνου",
+            "description": "Χρονικό διάστημα πρίν την ενεργοποίηση λειτουργίας ύπνου (Δ=δευτ. | Λ=λεπτά)"
         },
         "ShutdownTimeout": {
-            "text2": [
-                "Έναρξη",
-                "απενεργ."
-            ],
-            "desc": "Χρονικό διάστημα πρίν την απενεργοποίηση του κολλητηριού (Λ=λεπτά)"
+            "displayText": "Έναρξη\nαπενεργ.",
+            "description": "Χρονικό διάστημα πρίν την απενεργοποίηση του κολλητηριού (Λ=λεπτά)"
         },
         "HallEffSensitivity": {
-            "text2": [
-                "Ευαισθ. αισθ. ",
-                "φαιν. Hall"
-            ],
-            "desc": "Ευαισθησία του αισθητήρα φαινομένου Hall για εντοπισμό αδράνειας (0=off | 1=λιγότερο ευαίσθητο | ... | 9=περισσότερο ευαίσθητο)"
+            "displayText": "Ευαισθ. αισθ. \nφαιν. Hall",
+            "description": "Ευαισθησία του αισθητήρα φαινομένου Hall για εντοπισμό αδράνειας (0=off | 1=λιγότερο ευαίσθητο | ... | 9=περισσότερο ευαίσθητο)"
         },
         "TemperatureUnit": {
-            "text2": [
-                "Μονάδες",
-                "θερμοκρασίας"
-            ],
-            "desc": "C=Κελσίου | F=Φαρενάιτ"
+            "displayText": "Μονάδες\nθερμοκρασίας",
+            "description": "C=Κελσίου | F=Φαρενάιτ"
         },
         "DisplayRotation": {
-            "text2": [
-                "Διάταξη",
-                "οθόνης"
-            ],
-            "desc": "R=δεξιόχειρες | L=αριστερόχειρες | Α=αυτόματο"
+            "displayText": "Διάταξη\nοθόνης",
+            "description": "R=δεξιόχειρες | L=αριστερόχειρες | Α=αυτόματο"
         },
         "CooldownBlink": {
-            "text2": [
-                "Αναβοσβήσιμο",
-                "ψύξης"
-            ],
-            "desc": "Αναβοσβήσιμο της ενδειξης θερμοκρασίας κατά την παύση θέρμανσης όταν η μύτη είναι ακόμα καυτή"
+            "displayText": "Αναβοσβήσιμο\nψύξης",
+            "description": "Αναβοσβήσιμο της ενδειξης θερμοκρασίας κατά την παύση θέρμανσης όταν η μύτη είναι ακόμα καυτή"
         },
         "ScrollingSpeed": {
-            "text2": [
-                "Ταχύτητα",
-                "κύλισης"
-            ],
-            "desc": "Ταχύτητα κύλισης κειμένου (Α=αργά | Γ=γρήγορα)"
+            "displayText": "Ταχύτητα\nκύλισης",
+            "description": "Ταχύτητα κύλισης κειμένου (Α=αργά | Γ=γρήγορα)"
         },
         "ReverseButtonTempChange": {
-            "text2": [
-                "Αντιστροφή",
-                "πλήκτρων + -"
-            ],
-            "desc": "Αντιστροφή διάταξης πλήκτρων στη ρύθμιση θερμοκρασίας"
+            "displayText": "Αντιστροφή\nπλήκτρων + -",
+            "description": "Αντιστροφή διάταξης πλήκτρων στη ρύθμιση θερμοκρασίας"
         },
         "AnimSpeed": {
-            "text2": [
-                "Ταχύτητα",
-                "κιν. εικονιδ."
-            ],
-            "desc": "Ρυθμός κίνησης εικονιδίων στο μενού (0=off | Α=αργός | Μ=μέτριος | Γ=γρήγορος)"
+            "displayText": "Ταχύτητα\nκιν. εικονιδ.",
+            "description": "Ρυθμός κίνησης εικονιδίων στο μενού (0=off | Α=αργός | Μ=μέτριος | Γ=γρήγορος)"
         },
         "AnimLoop": {
-            "text2": [
-                "Επανάληψη",
-                "κιν. εικονιδ."
-            ],
-            "desc": "Επανάληψη κίνησης εικονιδίων στο αρχικό μενού"
+            "displayText": "Επανάληψη\nκιν. εικονιδ.",
+            "description": "Επανάληψη κίνησης εικονιδίων στο αρχικό μενού"
         },
         "Brightness": {
-            "text2": [
-                "Αντίθεση",
-                "οθόνης"
-            ],
-            "desc": "Ρύθμιση φωτεινότητας οθόνης OLED"
+            "displayText": "Αντίθεση\nοθόνης",
+            "description": "Ρύθμιση φωτεινότητας οθόνης OLED"
         },
         "ColourInversion": {
-            "text2": [
-                "Αντιστροφή",
-                "χρωμάτων"
-            ],
-            "desc": "Αντιστροφή χρωμάτων οθόνης OLED"
+            "displayText": "Αντιστροφή\nχρωμάτων",
+            "description": "Αντιστροφή χρωμάτων οθόνης OLED"
         },
         "LOGOTime": {
-            "text2": [
-                "Boot logo",
-                "duration"
-            ],
-            "desc": "Sets the duration for the boot logo (s=seconds)"
+            "displayText": "Διάρκεια\nlogo εκκίνησης",
+            "description": "Διάρκεια εμφάνισης της εικόνας εκκίνησης (s=seconds)"
         },
         "AdvancedIdle": {
-            "text2": [
-                "Λεπτομερής",
-                "οθ. αδράνειας"
-            ],
-            "desc": "Προβολή λεπτομερών πληροφοριών σε μικρότερη γραμματοσειρά στην οθόνη αδράνειας"
+            "displayText": "Λεπτομερής\nοθ. αδράνειας",
+            "description": "Προβολή λεπτομερών πληροφοριών σε μικρότερη γραμματοσειρά στην οθόνη αδράνειας"
         },
         "AdvancedSoldering": {
-            "text2": [
-                "Λεπτομερής",
-                "οθ. κόλλησης"
-            ],
-            "desc": "Προβολή λεπτομερών πληροφοριών σε μικρότερη γραμματοσειρά στην οθόνη κόλλησης"
+            "displayText": "Λεπτομερής\nοθ. κόλλησης",
+            "description": "Προβολή λεπτομερών πληροφοριών σε μικρότερη γραμματοσειρά στην οθόνη κόλλησης"
+        },
+        "BluetoothLE": {
+            "displayText": "Bluetooth\n",
+            "description": "Enables BLE"
         },
         "PowerLimit": {
-            "text2": [
-                "Ενεργειακό",
-                "όριο"
-            ],
-            "desc": "Μέγιστη ενέργεια που μπορεί να χρησιμοποιεί το κολλητήρι (W=watt)"
+            "displayText": "Ενεργειακό\nόριο",
+            "description": "Μέγιστη ενέργεια που μπορεί να χρησιμοποιεί το κολλητήρι (W=watt)"
         },
         "CalibrateCJC": {
-            "text2": [
-                "Calibrate CJC",
-                "at next boot"
-            ],
-            "desc": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5 C)"
+            "displayText": "Βαθμονόμηση CJC\nσε επόμενη έναρξη",
+            "description": "Στην επόμενη εκκίνηση θα γίνει βαθμονόμηση θερμοκρασίας (δεν απαιτείται αν Δθερμ < 5 C)"
         },
         "VoltageCalibration": {
-            "text2": [
-                "Βαθμονόμηση",
-                "τάσης εισόδου;"
-            ],
-            "desc": "Έναρξη βαθμονόμησης τάσης εισόδου (κράτημα για έξοδο)"
+            "displayText": "Βαθμονόμηση\nτάσης εισόδου;",
+            "description": "Έναρξη βαθμονόμησης τάσης εισόδου (κράτημα για έξοδο)"
         },
         "PowerPulsePower": {
-            "text2": [
-                "Παλμός",
-                "ενέργειας"
-            ],
-            "desc": "Ένταση ενέργειας παλμού διατήρησης λειτουργίας (W=watt)"
+            "displayText": "Παλμός\nενέργειας",
+            "description": "Ένταση ενέργειας παλμού διατήρησης λειτουργίας (W=watt)"
         },
         "PowerPulseWait": {
-            "text2": [
-                "Καθυστέρηση",
-                "παλμού ενέργ."
-            ],
-            "desc": "Καθυστέρηση πριν την ενεργοποίση παλμού διατήρησης λειτουργίας (x 2.5s)"
+            "displayText": "Καθυστέρηση\nπαλμού ενέργ.",
+            "description": "Καθυστέρηση πριν την ενεργοποίση παλμού διατήρησης λειτουργίας (x 2.5s)"
         },
         "PowerPulseDuration": {
-            "text2": [
-                "Διάρκεια",
-                "παλμού ενέργ."
-            ],
-            "desc": "Διάρκεια παλμού διατήρησης ενέργειας (x 250ms)"
+            "displayText": "Διάρκεια\nπαλμού ενέργ.",
+            "description": "Διάρκεια παλμού διατήρησης ενέργειας (x 250ms)"
         },
         "SettingsReset": {
-            "text2": [
-                "Επαναφορά",
-                "εργ. ρυθμίσεων;"
-            ],
-            "desc": "Επαναφορά στις προεπιλεγμένες ρυθμίσεις"
+            "displayText": "Επαναφορά\nεργ. ρυθμίσεων;",
+            "description": "Επαναφορά στις προεπιλεγμένες ρυθμίσεις"
         },
         "LanguageSwitch": {
-            "text2": [
-                "Γλώσσα:",
-                " GR    Ελληνικά"
-            ],
-            "desc": ""
+            "displayText": "Γλώσσα:\n EL    Ελληνικά",
+            "description": ""
         }
     }
 }

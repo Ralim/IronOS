@@ -2,44 +2,79 @@
     "languageCode": "TR",
     "languageLocalName": "Türkçe",
     "tempUnitFahrenheit": false,
-    "messages": {
-        "SettingsCalibrationWarning": "Before rebooting, make sure tip & handle are at room temperature!",
-        "CJCCalibrating": "calibrating",
-        "SettingsResetWarning": "Ayarları varsayılan değerlere sıfırlamak istediğinizden emin misiniz?",
-        "UVLOWarningString": "Güç Az",
-        "UndervoltageString": "Düşük Voltaj",
-        "InputVoltageString": "Giriş V: ",
-        "SleepingSimpleString": "Zzzz",
-        "SleepingAdvancedString": "Bekleme Modu ...",
-        "SleepingTipAdvancedString": "Uç:",
-        "OffString": "Kapalı",
-        "DeviceFailedValidationWarning": "Your device is most likely a counterfeit!"
-    },
     "messagesWarn": {
-        "CJCCalibrationDone": [
-            "Calibration",
-            "done!"
-        ],
-        "ResetOKMessage": "Sıfırlama Tamam",
-        "SettingsResetMessage": [
-            "Ayarlar",
-            "Sıfırlandı"
-        ],
-        "NoAccelerometerMessage": [
-            "No accelerometer",
-            "detected!"
-        ],
-        "NoPowerDeliveryMessage": [
-            "No USB-PD IC",
-            "detected!"
-        ],
-        "LockingKeysString": "LOCKED",
-        "UnlockingKeysString": "UNLOCKED",
-        "WarningKeysLockedString": "!LOCKED!",
-        "WarningThermalRunaway": [
-            "Thermal",
-            "Runaway"
-        ]
+        "CalibrationDone": {
+            "message": "Calibration\ndone!"
+        },
+        "ResetOKMessage": {
+            "message": "Sıfırlama Tamam"
+        },
+        "SettingsResetMessage": {
+            "message": "Ayarlar\nSıfırlandı"
+        },
+        "NoAccelerometerMessage": {
+            "message": "No accelerometer\ndetected!"
+        },
+        "NoPowerDeliveryMessage": {
+            "message": "No USB-PD IC\ndetected!"
+        },
+        "LockingKeysString": {
+            "message": "LOCKED"
+        },
+        "UnlockingKeysString": {
+            "message": "UNLOCKED"
+        },
+        "WarningKeysLockedString": {
+            "message": "!LOCKED!"
+        },
+        "WarningThermalRunaway": {
+            "message": "Thermal\nRunaway"
+        },
+        "WarningTipShorted": {
+            "message": "!Tip Shorted!"
+        },
+        "SettingsCalibrationWarning": {
+            "message": "Before rebooting, make sure tip & handle are at room temperature!"
+        },
+        "CJCCalibrating": {
+            "message": "calibrating\n"
+        },
+        "SettingsResetWarning": {
+            "message": "Ayarları varsayılan değerlere sıfırlamak istediğinizden emin misiniz?"
+        },
+        "UVLOWarningString": {
+            "message": "Güç Az"
+        },
+        "UndervoltageString": {
+            "message": "Düşük Voltaj\n"
+        },
+        "InputVoltageString": {
+            "message": "Giriş V: \n"
+        },
+        "SleepingSimpleString": {
+            "message": "Zzzz"
+        },
+        "SleepingAdvancedString": {
+            "message": "Bekleme Modu...\n"
+        },
+        "SleepingTipAdvancedString": {
+            "message": "Uç: \n"
+        },
+        "OffString": {
+            "message": "Kapalı"
+        },
+        "ProfilePreheatString": {
+            "message": "Preheat\n"
+        },
+        "ProfileCooldownString": {
+            "message": "Cooldown\n"
+        },
+        "DeviceFailedValidationWarning": {
+            "message": "Your device is most likely a counterfeit!"
+        },
+        "TooHotToStartProfileWarning": {
+            "message": "Too hot to\nstart profile"
+        }
     },
     "characters": {
         "SettingRightChar": "R",
@@ -59,279 +94,226 @@
     },
     "menuGroups": {
         "PowerMenu": {
-            "text2": [
-                "Power",
-                "settings"
-            ],
-            "desc": ""
+            "displayText": "Power\nsettings",
+            "description": ""
         },
         "SolderingMenu": {
-            "text2": [
-                "Lehimleme",
-                "Ayarları"
-            ],
-            "desc": ""
+            "displayText": "Lehimleme\nAyarları",
+            "description": ""
         },
         "PowerSavingMenu": {
-            "text2": [
-                "Uyku",
-                "Modları"
-            ],
-            "desc": ""
+            "displayText": "Uyku\nModları",
+            "description": ""
         },
         "UIMenu": {
-            "text2": [
-                "Kullanıcı",
-                "Arayüzü"
-            ],
-            "desc": ""
+            "displayText": "Kullanıcı\nArayüzü",
+            "description": ""
         },
         "AdvancedMenu": {
-            "text2": [
-                "Gelişmiş",
-                "Ayarlar"
-            ],
-            "desc": ""
+            "displayText": "Gelişmiş\nAyarlar",
+            "description": ""
         }
     },
     "menuOptions": {
         "DCInCutoff": {
-            "text2": [
-                "GÇKYN",
-                ""
-            ],
-            "desc": "\"Güç Kaynağı\". En düşük çalışma voltajını ayarlar. (DC 10V) (S 3.3V hücre başına)"
+            "displayText": "GÇKYN\n",
+            "description": "\"Güç Kaynağı\". En düşük çalışma voltajını ayarlar. (DC 10V) (S 3.3V hücre başına)"
         },
         "MinVolCell": {
-            "text2": [
-                "Minimum",
-                "voltage"
-            ],
-            "desc": "Minimum allowed voltage per battery cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+            "displayText": "Minimum\nvoltage",
+            "description": "Minimum allowed voltage per battery cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
         },
         "QCMaxVoltage": {
-            "text2": [
-                "QC",
-                "voltage"
-            ],
-            "desc": "Max QC voltage the iron should negotiate for"
+            "displayText": "QC\nvoltage",
+            "description": "Max QC voltage the iron should negotiate for"
         },
         "PDNegTimeout": {
-            "text2": [
-                "PD",
-                "timeout"
-            ],
-            "desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers"
+            "displayText": "PD\ntimeout",
+            "description": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers"
+        },
+        "PDVpdo": {
+            "displayText": "PD\nVPDO",
+            "description": "Enables PPS & EPR modes"
         },
         "BoostTemperature": {
-            "text2": [
-                "YKSC",
-                ""
-            ],
-            "desc": "Yüksek Performans Modu Sıcaklığı"
+            "displayText": "YKSC\n",
+            "description": "Yüksek Performans Modu Sıcaklığı"
         },
         "AutoStart": {
-            "text2": [
-                "OTOBAŞ",
-                ""
-            ],
-            "desc": "Güç verildiğinde otomatik olarak lehimleme modunda başlat. (K=Kapalı | L=Lehimleme Modu | U=Uyku Modu | S=Uyku Modu Oda Sıcaklığı)"
+            "displayText": "OTOBAŞ\n",
+            "description": "Güç verildiğinde otomatik olarak lehimleme modunda başlat. (K=Kapalı | L=Lehimleme Modu | U=Uyku Modu | S=Uyku Modu Oda Sıcaklığı)"
         },
         "TempChangeShortStep": {
-            "text2": [
-                "Temp change",
-                "short"
-            ],
-            "desc": "Kısa basışlardaki sıcaklık derecesi atlama oranı"
+            "displayText": "Temp change\nshort",
+            "description": "Kısa basışlardaki sıcaklık derecesi atlama oranı"
         },
         "TempChangeLongStep": {
-            "text2": [
-                "Temp change",
-                "long"
-            ],
-            "desc": "Uzun başışlardaki sıcaklık derecesi atlama oranı"
+            "displayText": "Temp change\nlong",
+            "description": "Uzun başışlardaki sıcaklık derecesi atlama oranı"
         },
         "LockingMode": {
-            "text2": [
-                "Allow locking",
-                "buttons"
-            ],
-            "desc": "While soldering, hold down both buttons to toggle locking them (K=Kapalı | B=boost mode only | F=full locking)"
+            "displayText": "Allow locking\nbuttons",
+            "description": "While soldering, hold down both buttons to toggle locking them (K=Kapalı | B=boost mode only | F=full locking)"
+        },
+        "ProfilePhases": {
+            "displayText": "Profile\nPhases",
+            "description": "Number of phases in profile mode"
+        },
+        "ProfilePreheatTemp": {
+            "displayText": "Preheat\nTemp",
+            "description": "Preheat to this temperature at the start of profile mode"
+        },
+        "ProfilePreheatSpeed": {
+            "displayText": "Preheat\nSpeed",
+            "description": "Preheat at this rate (degrees per second)"
+        },
+        "ProfilePhase1Temp": {
+            "displayText": "Phase 1\nTemp",
+            "description": "Target temperature for the end of this phase"
+        },
+        "ProfilePhase1Duration": {
+            "displayText": "Phase 1\nDuration",
+            "description": "Target duration of this phase (seconds)"
+        },
+        "ProfilePhase2Temp": {
+            "displayText": "Phase 2\nTemp",
+            "description": ""
+        },
+        "ProfilePhase2Duration": {
+            "displayText": "Phase 2\nDuration",
+            "description": ""
+        },
+        "ProfilePhase3Temp": {
+            "displayText": "Phase 3\nTemp",
+            "description": ""
+        },
+        "ProfilePhase3Duration": {
+            "displayText": "Phase 3\nDuration",
+            "description": ""
+        },
+        "ProfilePhase4Temp": {
+            "displayText": "Phase 4\nTemp",
+            "description": ""
+        },
+        "ProfilePhase4Duration": {
+            "displayText": "Phase 4\nDuration",
+            "description": ""
+        },
+        "ProfilePhase5Temp": {
+            "displayText": "Phase 5\nTemp",
+            "description": ""
+        },
+        "ProfilePhase5Duration": {
+            "displayText": "Phase 5\nDuration",
+            "description": ""
+        },
+        "ProfileCooldownSpeed": {
+            "displayText": "Cooldown\nSpeed",
+            "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
         },
         "MotionSensitivity": {
-            "text2": [
-                "HARHAS",
-                ""
-            ],
-            "desc": "Hareket Hassasiyeti (0=Kapalı | 1=En az duyarlı | ... | 9=En duyarlı)"
+            "displayText": "HARHAS\n",
+            "description": "Hareket Hassasiyeti (0=Kapalı | 1=En az duyarlı | ... | 9=En duyarlı)"
         },
         "SleepTemperature": {
-            "text2": [
-                "BKSC",
-                ""
-            ],
-            "desc": "Bekleme Modu Sıcaklığı (C)"
+            "displayText": "BKSC\n",
+            "description": "Bekleme Modu Sıcaklığı (C)"
         },
         "SleepTimeout": {
-            "text2": [
-                "BMZA",
-                ""
-            ],
-            "desc": "Bekleme Modu Zaman Aşımı (Dakika | Saniye)"
+            "displayText": "BMZA\n",
+            "description": "Bekleme Modu Zaman Aşımı (Dakika | Saniye)"
         },
         "ShutdownTimeout": {
-            "text2": [
-                "KPTZA",
-                ""
-            ],
-            "desc": "Kapatma Zaman Aşımı (Dakika)"
+            "displayText": "KPTZA\n",
+            "description": "Kapatma Zaman Aşımı (Dakika)"
         },
         "HallEffSensitivity": {
-            "text2": [
-                "Hall sensor",
-                "sensitivity"
-            ],
-            "desc": "Sensitivity to magnets (0=Kapalı | 1=En az duyarlı | ... | 9=En duyarlı)"
+            "displayText": "Hall sensor\nsensitivity",
+            "description": "Sensitivity to magnets (0=Kapalı | 1=En az duyarlı | ... | 9=En duyarlı)"
         },
         "TemperatureUnit": {
-            "text2": [
-                "SCKBRM",
-                ""
-            ],
-            "desc": "Sıcaklık Birimi (C=Celsius | F=Fahrenheit)"
+            "displayText": "SCKBRM\n",
+            "description": "Sıcaklık Birimi (C=Celsius | F=Fahrenheit)"
         },
         "DisplayRotation": {
-            "text2": [
-                "GRNYÖN",
-                ""
-            ],
-            "desc": "Görüntü Yönlendirme (R=Sağlak | L=Solak | O=Otomatik)"
+            "displayText": "GRNYÖN\n",
+            "description": "Görüntü Yönlendirme (R=Sağlak | L=Solak | O=Otomatik)"
         },
         "CooldownBlink": {
-            "text2": [
-                "SĞGÖST",
-                ""
-            ],
-            "desc": "Soğutma ekranında uç hala sıcakken derece gösterilsin."
+            "displayText": "SĞGÖST\n",
+            "description": "Soğutma ekranında uç hala sıcakken derece gösterilsin."
         },
         "ScrollingSpeed": {
-            "text2": [
-                "YZKYHZ",
-                ""
-            ],
-            "desc": "Bu yazının kayma hızı (Y=Yavaş | H=Hızlı)"
+            "displayText": "YZKYHZ\n",
+            "description": "Bu yazının kayma hızı (Y=Yavaş | H=Hızlı)"
         },
         "ReverseButtonTempChange": {
-            "text2": [
-                "Swap",
-                "+ - keys"
-            ],
-            "desc": "\"Düğme Yerleri Rotasyonu\" Sıcaklık ayar düğmelerinin yerini değiştirin"
+            "displayText": "Swap\n+ - keys",
+            "description": "\"Düğme Yerleri Rotasyonu\" Sıcaklık ayar düğmelerinin yerini değiştirin"
         },
         "AnimSpeed": {
-            "text2": [
-                "Anim.",
-                "speed"
-            ],
-            "desc": "Pace of icon animations in menu (K=Kapalı | Y=Yavaş | O=Orta | H=Hızlı)"
+            "displayText": "Anim.\nspeed",
+            "description": "Pace of icon animations in menu (K=Kapalı | Y=Yavaş | O=Orta | H=Hızlı)"
         },
         "AnimLoop": {
-            "text2": [
-                "Anim.",
-                "loop"
-            ],
-            "desc": "Loop icon animations in main menu"
+            "displayText": "Anim.\nloop",
+            "description": "Loop icon animations in main menu"
         },
         "Brightness": {
-            "text2": [
-                "Screen",
-                "brightness"
-            ],
-            "desc": "Adjust the OLED screen brightness"
+            "displayText": "Screen\nbrightness",
+            "description": "Adjust the OLED screen brightness"
         },
         "ColourInversion": {
-            "text2": [
-                "Invert",
-                "screen"
-            ],
-            "desc": "Invert the OLED screen colors"
+            "displayText": "Invert\nscreen",
+            "description": "Invert the OLED screen colors"
         },
         "LOGOTime": {
-            "text2": [
-                "Boot logo",
-                "duration"
-            ],
-            "desc": "Set boot logo duration (s=seconds)"
+            "displayText": "Boot logo\nduration",
+            "description": "Set boot logo duration (s=seconds)"
         },
         "AdvancedIdle": {
-            "text2": [
-                "AYRBİL",
-                ""
-            ],
-            "desc": "Boş ekranda ayrıntılı bilgileri daha küçük bir yazı tipi ile göster."
+            "displayText": "AYRBİL\n",
+            "description": "Boş ekranda ayrıntılı bilgileri daha küçük bir yazı tipi ile göster."
         },
         "AdvancedSoldering": {
-            "text2": [
-                "GELLHM",
-                ""
-            ],
-            "desc": "\"Gelişmiş Lehimleme\" Lehimleme yaparken detaylı bilgi göster"
+            "displayText": "GELLHM\n",
+            "description": "\"Gelişmiş Lehimleme\" Lehimleme yaparken detaylı bilgi göster"
+        },
+        "BluetoothLE": {
+            "displayText": "Bluetooth\n",
+            "description": "Enables BLE"
         },
         "PowerLimit": {
-            "text2": [
-                "Power",
-                "limit"
-            ],
-            "desc": "Havyanın kullanacağı en yüksek güç (W=Watts)"
+            "displayText": "Power\nlimit",
+            "description": "Havyanın kullanacağı en yüksek güç (W=Watts)"
         },
         "CalibrateCJC": {
-            "text2": [
-                "Calibrate CJC",
-                "at next boot"
-            ],
-            "desc": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
+            "displayText": "Calibrate CJC\nat next boot",
+            "description": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
         },
         "VoltageCalibration": {
-            "text2": [
-                "VOL KAL?",
-                ""
-            ],
-            "desc": "Voltaj Girişi Kalibrasyonu. Düğmeler ayarlar, çıkmak için uzun bas."
+            "displayText": "VOL KAL?\n",
+            "description": "Voltaj Girişi Kalibrasyonu. Düğmeler ayarlar, çıkmak için uzun bas."
         },
         "PowerPulsePower": {
-            "text2": [
-                "Power",
-                "pulse"
-            ],
-            "desc": "Güç girişi voltajı ölçüm yoğunluğunu sık tut."
+            "displayText": "Power\npulse",
+            "description": "Güç girişi voltajı ölçüm yoğunluğunu sık tut."
         },
         "PowerPulseWait": {
-            "text2": [
-                "Power pulse",
-                "delay"
-            ],
-            "desc": "Delay before keep-awake-pulse is triggered (x 2.5s)"
+            "displayText": "Power pulse\ndelay",
+            "description": "Delay before keep-awake-pulse is triggered (x 2.5s)"
         },
         "PowerPulseDuration": {
-            "text2": [
-                "Power pulse",
-                "duration"
-            ],
-            "desc": "Keep-awake-pulse duration (x 250ms)"
+            "displayText": "Power pulse\nduration",
+            "description": "Keep-awake-pulse duration (x 250ms)"
         },
         "SettingsReset": {
-            "text2": [
-                "SIFIRLA?",
-                ""
-            ],
-            "desc": "Bütün ayarları sıfırlar"
+            "displayText": "SIFIRLA?\n",
+            "description": "Bütün ayarları sıfırlar"
         },
         "LanguageSwitch": {
-            "text2": [
-                "Dil:",
-                " TR      Türkçe"
-            ],
-            "desc": ""
+            "displayText": "Dil:\n TR      Türkçe",
+            "description": ""
         }
     }
 }

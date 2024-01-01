@@ -1,6 +1,6 @@
 #include "USBPD.h"
 #include "configuration.h"
-#if POW_PD
+#ifdef POW_PD
 
 #include "BSP_PD.h"
 #include "FreeRTOS.h"
@@ -27,7 +27,7 @@ bool         pdbs_dpm_evaluate_capability(const pd_msg *capabilities, pd_msg *re
 void         pdbs_dpm_get_sink_capability(pd_msg *cap, const bool isPD3);
 bool         EPREvaluateCapabilityFunc(const epr_pd_msg *capabilities, pd_msg *request);
 FUSB302      fusb((0x22 << 1), fusb_read_buf, fusb_write_buf, ms_delay); // Create FUSB driver
-PolicyEngine pe(fusb, get_ms_timestamp, ms_delay, pdbs_dpm_get_sink_capability, pdbs_dpm_evaluate_capability, EPREvaluateCapabilityFunc, 140);
+PolicyEngine pe(fusb, get_ms_timestamp, ms_delay, pdbs_dpm_get_sink_capability, pdbs_dpm_evaluate_capability, EPREvaluateCapabilityFunc, USB_PD_EPR_WATTAGE);
 int          USBPowerDelivery::detectionState = 0;
 uint16_t     requested_voltage_mv             = 0;
 
@@ -46,7 +46,8 @@ void    USBPowerDelivery::IRQOccured() { pe.IRQOccured(); }
 bool    USBPowerDelivery::negotiationHasWorked() { return pe.pdHasNegotiated(); }
 uint8_t USBPowerDelivery::getStateNumber() { return pe.currentStateCode(true); }
 void    USBPowerDelivery::step() {
-     while (pe.thread()) {}
+  while (pe.thread()) {
+  }
 }
 
 void USBPowerDelivery::PPSTimerCallback() { pe.TimersCallback(); }
@@ -93,18 +94,22 @@ uint32_t *USBPowerDelivery::getLastSeenCapabilities() { return lastCapabilities;
 static unsigned int sqrtI(unsigned long sqrtArg) {
   unsigned int  answer, x;
   unsigned long temp;
-  if (sqrtArg == 0)
+  if (sqrtArg == 0) {
     return 0; // undefined result
-  if (sqrtArg == 1)
-    return 1;                           // identity
+  }
+  if (sqrtArg == 1) {
+    return 1; // identity
+  }
   answer = 0;                           // integer square root
   for (x = 0x8000; x > 0; x = x >> 1) { // 16 bit shift
     answer |= x;                        // possible bit in root
     temp = answer * answer;             //
-    if (temp == sqrtArg)
+    if (temp == sqrtArg) {
       break; // exact, found it
-    if (temp > sqrtArg)
+    }
+    if (temp > sqrtArg) {
       answer ^= x; // too large, reverse bit
+    }
   }
   return answer; // approximate root
 }
@@ -152,7 +157,7 @@ bool parseCapabilitiesArray(const uint8_t numCaps, uint8_t *bestIndex, uint16_t 
           }
         }
       }
-    } else if ((lastCapabilities[i] & PD_PDO_TYPE) == PD_PDO_TYPE_AUGMENTED && (((lastCapabilities[i] & PD_APDO_TYPE) == PD_APDO_TYPE_PPS))) {
+    } else if ((lastCapabilities[i] & PD_PDO_TYPE) == PD_PDO_TYPE_AUGMENTED && (((lastCapabilities[i] & PD_APDO_TYPE) == PD_APDO_TYPE_PPS)) && getSettingValue(SettingsOptions::PDVpdo)) {
       // If this is a PPS slot, calculate the max voltage in the PPS range that can we be used and maintain
       uint16_t max_voltage = PD_PAV2MV(PD_APDO_PPS_MAX_VOLTAGE_GET(lastCapabilities[i]));
       // uint16_t min_voltage = PD_PAV2MV(PD_APDO_PPS_MIN_VOLTAGE_GET(lastCapabilities[i]));
@@ -179,7 +184,7 @@ bool parseCapabilitiesArray(const uint8_t numCaps, uint8_t *bestIndex, uint16_t 
       }
     }
 #ifdef POW_EPR
-    else if ((lastCapabilities[i] & PD_PDO_TYPE) == PD_PDO_TYPE_AUGMENTED && (((lastCapabilities[i] & PD_APDO_TYPE) == PD_APDO_TYPE_AVS))) {
+    else if ((lastCapabilities[i] & PD_PDO_TYPE) == PD_PDO_TYPE_AUGMENTED && (((lastCapabilities[i] & PD_APDO_TYPE) == PD_APDO_TYPE_AVS)) && getSettingValue(SettingsOptions::PDVpdo)) {
       uint16_t max_voltage = PD_PAV2MV(PD_APDO_AVS_MAX_VOLTAGE_GET(lastCapabilities[i]));
       uint8_t  max_wattage = PD_APDO_AVS_MAX_POWER_GET(lastCapabilities[i]);
 
@@ -225,7 +230,6 @@ bool EPREvaluateCapabilityFunc(const epr_pd_msg *capabilities, pd_msg *request) 
     /* We got what we wanted, so build a request for that */
     request->hdr    = PD_MSGTYPE_EPR_REQUEST | PD_NUMOBJ(2);
     request->obj[1] = lastCapabilities[bestIndex]; // Copy PDO into slot 2
-
 
     if (bestIsAVS) {
       request->obj[0] = PD_RDO_PROG_CURRENT_SET(PD_CA2PAI(bestIndexCurrent)) | PD_RDO_PROG_VOLTAGE_SET(PD_MV2APS(bestIndexVoltage));

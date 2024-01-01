@@ -221,6 +221,7 @@
 #define rdtime()    read_csr(time)
 #define rdcycle()   read_csr(cycle)
 #define rdinstret() read_csr(instret)
+#define get_pc() read_csr(mepc)
 
 #endif
 

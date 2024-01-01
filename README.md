@@ -1,6 +1,7 @@
-![CI](https://github.com/Ralim/ts100/workflows/CI%20Build%20all/badge.svg)
-![GitHub all](https://img.shields.io/github/downloads/ralim/IronOS/total)
-![Latest Release](https://img.shields.io/github/v/release/ralim/IronOS)
+[![CI Build](https://github.com/Ralim/IronOS/actions/workflows/push.yml/badge.svg)](https://github.com/Ralim/IronOS/actions/workflows/push.yml)
+[![Total Downloads](https://img.shields.io/github/downloads/ralim/IronOS/total)](https://github.com/Ralim/IronOS)
+[![Contributors](https://img.shields.io/github/contributors-anon/ralim/ironos?color=blue&style=flat)](https://github.com/Ralim/IronOS/graphs/contributors)
+[![Latest Release](https://img.shields.io/github/v/release/ralim/IronOS)](https://github.com/Ralim/IronOS/releases/latest)
 
 # IronOS - Flexible Soldering iron control Firmware
 
@@ -20,16 +21,28 @@ This project is considered feature complete for use as a soldering iron, _so ple
 
 _This firmware does **NOT** support the USB port while running for changing settings. This is done through the onscreen menu only. Logos are edited on a computer and flashed like firmware._
 
-|   Device   | DC  | QC  | PD  | EPR | BLE | Battery | Recommended |
-| :--------: | :-: | :-: | :-: | :-: | :-: | :-----: | :---------: |
-|   MHP30    | ❌  | ❌  | ✔️  | ❌  | ❌  |   ❌    |     ✔️      |
-| Pinecil V1 | ✔️  | ✔️  | ✔️  | ❌  | ❌  |   ✔️    |     ✔️      |
-| Pinecil V2 | ✔️  | ✔️  | ✔️  | ✔️  | ✔️  |   ✔️    |     ✔️      |
-|   TS80P    | ❌  | ✔️  | ✔️  | ❌  | ❌  |   ✔️    |     ✔️      |
-|   TS100    | ✔️  | ❌  | ❌  | ❌  | ❌  |   ✔️    |     ❌      |
-|    TS80    | ❌  | ✔️  | ❌  | ❌  | ❌  |   ✔️    |     ❌      |
+|   Device       | DC  | QC  | PD  | EPR | BLE | Tip Sense | Recommended Purchase | Notes                                         |
+| :------------: | :-: | :-: | :-: | :-: | :-: | :-----:   | :------------------: | :-------------------------------------------:|
+| Miniware MHP30 | ❌  | ❌  | ✔️  | ❌  | ❌  |   ✔️      |      ✔️              |                                              |
+| Pinecil V1     | ✔️  | ✔️  | ✔️  | ❌  | ❌  |   ❌      |      ❌ *            |                                              |
+| Pinecil V2     | ✔️  | ✔️  | ✔️  | ✔️  | ✔️  |   ✔️      |      ✔️              |                                              |
+| Miniware TS101 | ✔️  | ❌  | ✔️  | ✔️  | ❌  |   ✔️      |      ✔️              |  Full OLED resolution not yet supported.     |
+| Sequre  S60    | ❌  | ❌  | ✔️  | ❌  | ❌  |   ❌      |      ✔️              |  Full OLED resolution not yet supported.     |
+| Miniware TS80P | ❌  | ✔️  | ✔️  | ❌  | ❌  |   N/A     |      ✔️              |                                              |
+| Miniware TS100 | ✔️  | ❌  | ❌  | ❌  | ❌  |   ❌      |      ❌**            |                                              |
+| Miniware TS80  | ❌  | ✔️  | ❌  | ❌  | ❌  |   N/A     |     ❌***            |                                              |
 
-\*Please note that Miniware started shipping TS100's using cloned STM32 Chips. While these do work with IronOS, their DFU bootloader works terribly, and it is hard to get it to successfully flash larger firmware images like IronOS without timing out. This is the main reason why the TS100 is **_no longer recommended_**.
+_Tip Sense_ refers to the device being able to choose between the 'usual' TS100 or Hakko T12 style tips and Pine64's custom shorter tips which have lower resistance and allow for more power. This is N/A for TS80/TS80P as there is only one model of tip for them.
+
+_Recommended Purchase_ is only referring to if you are buying a **new** device. Of course all the devices listed are supported and will work excellently for years to come.
+
+The TS101 and S60 feature a higher resolution OLED than other devices. Work is ongoing to support this fully, for now a cropped view is usable.
+
+\*PinecilV1 stopped being manufactured a long time ago now, all models for sale online are generally clones (or old stock). Vendors are trying to sell these for more than Pine64 sells the V2 for now. Thus the V1 is **_no longer recommended_**.
+
+\**Please note that Miniware started shipping TS100's using cloned STM32 Chips. While these do work with IronOS, their DFU bootloader works terribly, and it is hard to get it to successfully flash larger firmware images like IronOS without timing out. This is the main reason why the TS100 is **_no longer recommended_**.
+
+\**\*TS80 is replaced by TS80P. Production ramped down a long time ago and it's just existing stock clearing the system. It's marked not recommended being optimistic that people might pause and buy the far superior TS80P instead. This is the main reason why the TS80 is **_no longer recommended_**.
 
 ## Getting Started
 
@@ -64,8 +77,14 @@ For notes on installation for your device, please refer to the flashing guide fo
 - Boost mode lets you temporarily change the temperature when soldering (i.e. raise the temperature for short periods)
 - (TS100/Pinecil) Battery charge level indicator if power source set to a lipo cell count
 - (TS80/TS80P/Pinecil) Power bank operating voltage is displayed
-- [Custom boot up logo support](https://ralim.github.io/IronOS/Logo/)
+- [Custom boot up logo support](https://ralim.github.io/IronOS/Logo/)[^bootlogo]
 - Automatic LCD rotation based on the orientation
+
+
+[^bootlogo]: **BOOTUP LOGO NOTICE**:
+  IronOS supports both a bootup logo _AND_ bootup animations.
+  However, _**they are no longer included in this repo**_.
+  **Please, [read the docs](https://ralim.github.io/IronOS/Logo/) for more information**.
 
 ## Menu System
 
@@ -78,6 +97,12 @@ When on the main screen and having the tip plugged in, the unit shows a pair of 
 - Holding down the button near the USB end will show the _[debug menu](https://ralim.github.io/IronOS/DebugMenu/)._ In _soldering mode_ this ends the heating.
 
 Operation details are over in the [Menu information.](https://ralim.github.io/IronOS/Menu/)
+
+## Translations
+
+Is your preferred language missing localisation of some of the text?
+Translations are stored as `json` files in the Translations folder.
+PR's are loved and accepted to enhance the firmware.
 
 ## Thanks
 

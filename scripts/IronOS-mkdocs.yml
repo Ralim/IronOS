@@ -1,0 +1,60 @@
+# Project info
+site_name: IronOS
+site_url: https://ralim.github.io/IronOS/
+site_description: "IronOS Open Source Soldering Iron firmware for Miniware and Pinecil"
+
+# Repo config
+repo_url: https://github.com/ralim/IronOS/
+
+# Dir & location config
+docs_dir: ../Documentation
+edit_uri: edit/dev/Documentation/
+
+# Theme and config
+theme:
+    name: readthedocs
+    highlightsjs: true
+    hljs_languages:
+        - yaml
+
+# Navigation structure
+nav:
+  - Home: index.md
+  - Getting Started: GettingStarted.md
+  - Flashing the firmware:
+      - MHP30: Flashing/MHP30.md
+      - Pinecil V1: Flashing/Pinecil V1.md
+      - Pinecil V2: Flashing/Pinecil V2.md
+      - TS80(P): Flashing/TS80(P).md
+      - TS100: Flashing/TS100.md
+  - Operation:
+      - Main Menu: Menu.md
+      - Settings: Settings.md
+      - Debug Menu: DebugMenu.md
+      - Power: Power.md
+      - Temperature: Temperature.md
+  - Startup Logo: Logo.md
+  - Hardware:
+      - Hall Sensor (Pinecil): HallSensor.md
+      - Bluetooth (Pinecil V2): Bluetooth.md
+      - Hardware Notes: Hardware.md
+      - Troubleshooting: Troubleshooting.md
+      - Known Hardware Issues: HardwareIssues.md
+      - Power sources: PowerSources.md
+  - Translations: Translation.md
+  - Development: Development.md
+  - Changelog: History.md
+
+# Plugins
+plugins:
+  - search
+  - autolinks
+  - awesome-pages
+  - git-revision-date
+
+# Markdown Extensions
+markdown_extensions:
+  - attr_list
+  - pymdownx.emoji:
+      emoji_index: !!python/name:pymdownx.emoji.twemoji
+      emoji_generator: !!python/name:pymdownx.emoji.to_svg

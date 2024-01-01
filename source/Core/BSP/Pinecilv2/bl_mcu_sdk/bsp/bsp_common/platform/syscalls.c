@@ -203,7 +203,8 @@ void *_sbrk_r(struct _reent *ptr, ptrdiff_t incr) { return NULL; }
 
 /* for exit() and abort() */
 void __attribute__((noreturn)) _exit(int status) {
-  while (1) {}
+  while (1) {
+  }
 }
 
 void _system(const char *s) {}

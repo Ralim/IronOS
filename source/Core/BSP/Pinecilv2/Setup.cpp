@@ -8,21 +8,45 @@
 #include "BSP.h"
 #include "Debug.h"
 #include "FreeRTOSConfig.h"
-#include "Pins.h"
-
 #include "IRQ.h"
+#include "Pins.h"
+#include "bl702_sec_eng.h"
 #include "history.hpp"
 #include <string.h>
 #define ADC_NORM_SAMPLES 16
 #define ADC_FILTER_LEN   4
 uint16_t ADCReadings[ADC_NORM_SAMPLES]; // room for 32 lots of the pair of readings
 
+// Heap
+
+extern uint8_t      _heap_start;
+extern uint8_t      _heap_size; // @suppress("Type cannot be resolved")
+static HeapRegion_t xHeapRegions[] = {
+    {&_heap_start, (unsigned int)&_heap_size},
+    {        NULL,                         0}, /* Terminates the array. */
+    {        NULL,                         0}  /* Terminates the array. */
+};
 // Functions
 
 void setup_timer_scheduler(void);
 void setup_pwm(void);
 void setup_adc(void);
 void hardware_init() {
+
+  vPortDefineHeapRegions(xHeapRegions);
+  HBN_Set_XCLK_CLK_Sel(HBN_XCLK_CLK_XTAL);
+
+  // Set capcode
+  {
+    uint32_t tmpVal = 0;
+    tmpVal          = BL_RD_REG(AON_BASE, AON_XTAL_CFG);
+    tmpVal          = BL_SET_REG_BITS_VAL(tmpVal, AON_XTAL_CAPCODE_IN_AON, 33);
+    tmpVal          = BL_SET_REG_BITS_VAL(tmpVal, AON_XTAL_CAPCODE_OUT_AON, 33);
+    BL_WR_REG(AON_BASE, AON_XTAL_CFG, tmpVal);
+  }
+
+  Sec_Eng_Trng_Enable();
+
   gpio_set_mode(OLED_RESET_Pin, GPIO_OUTPUT_MODE);
   gpio_set_mode(KEY_A_Pin, GPIO_INPUT_PD_MODE);
   gpio_set_mode(KEY_B_Pin, GPIO_INPUT_PD_MODE);
@@ -37,10 +61,10 @@ void hardware_init() {
   setup_timer_scheduler();
   setup_adc();
   setup_pwm();
-  I2C_SetSclSync(I2C0_ID,1);
-  I2C_SetDeglitchCount(I2C0_ID,1); // Turn on de-glitch
-  //Note on I2C clock rate @ 100Khz the screen update == 20ms which is too long for USB-PD to work
-  //200kHz and above works
+  I2C_SetSclSync(I2C0_ID, 1);
+  I2C_SetDeglitchCount(I2C0_ID, 1); // Turn on de-glitch
+  // Note on I2C clock rate @ 100Khz the screen update == 20ms which is too long for USB-PD to work
+  // 200kHz and above works
   I2C_ClockSet(I2C0_ID, 300000); // Sets clock to around 25 kHz less than set here
   TIMER_SetCompValue(TIMER_CH0, TIMER_COMP_ID_1, 0);
 }
@@ -62,8 +86,8 @@ void setup_pwm(void) {
   PWM_Channel_Disable(PWM_Channel);
 }
 
-const ADC_Chan_Type adc_tip_pos_chans[]
-    = {TIP_TEMP_ADC_CHANNEL, TMP36_ADC_CHANNEL, TIP_TEMP_ADC_CHANNEL, VIN_ADC_CHANNEL, TIP_TEMP_ADC_CHANNEL, TMP36_ADC_CHANNEL, TIP_TEMP_ADC_CHANNEL, VIN_ADC_CHANNEL};
+const ADC_Chan_Type adc_tip_pos_chans[] = {TIP_TEMP_ADC_CHANNEL, TMP36_ADC_CHANNEL, TIP_TEMP_ADC_CHANNEL, VIN_ADC_CHANNEL,
+                                           TIP_TEMP_ADC_CHANNEL, TMP36_ADC_CHANNEL, TIP_TEMP_ADC_CHANNEL, VIN_ADC_CHANNEL};
 const ADC_Chan_Type adc_tip_neg_chans[] = {ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND};
 static_assert(sizeof(adc_tip_pos_chans) == sizeof(adc_tip_neg_chans));
 
@@ -114,7 +138,7 @@ void setup_adc(void) {
 
   adc_cfg.clkDiv         = ADC_CLK_DIV_4;
   adc_cfg.vref           = ADC_VREF_3P2V;
-  adc_cfg.resWidth       = ADC_DATA_WIDTH_14_WITH_64_AVERAGE;
+  adc_cfg.resWidth       = ADC_DATA_WIDTH_14_WITH_16_AVERAGE;
   adc_cfg.inputMode      = ADC_INPUT_SINGLE_END;
   adc_cfg.v18Sel         = ADC_V18_SEL_1P82V;
   adc_cfg.v11Sel         = ADC_V11_SEL_1P1V;
@@ -152,7 +176,7 @@ void setup_adc(void) {
 #endif
 
   adc_fifo_cfg.dmaEn         = DISABLE;
-  adc_fifo_cfg.fifoThreshold = ADC_FIFO_THRESHOLD_8;
+  adc_fifo_cfg.fifoThreshold = ADC_FIFO_THRESHOLD_8; // Triger FIFO when all 8 measurements are done
   ADC_FIFO_Cfg(&adc_fifo_cfg);
   ADC_MIC_Bias_Disable();
   ADC_Tsen_Disable();
@@ -173,12 +197,12 @@ void setup_timer_scheduler() {
   TIMER_CFG_Type cfg = {
       TIMER_CH0,                                              // Channel
       TIMER_CLKSRC_32K,                                       // Clock source
-      TIMER_PRELOAD_TRIG_COMP2,                               // Trigger
+      TIMER_PRELOAD_TRIG_COMP2,                               // Trigger; reset after trigger 0
       TIMER_COUNT_PRELOAD,                                    // Counter mode
       22,                                                     // Clock div
       (uint16_t)(powerPWM + holdoffTicks),                    // CH0 compare (adc)
-      0,                                                      // CH1 compare (pwm out)
-      (uint16_t)(powerPWM + tempMeasureTicks + holdoffTicks), // CH2 comapre (total period)
+      (uint16_t)(powerPWM),                                   // CH1 compare (pwm out)
+      (uint16_t)(powerPWM + holdoffTicks + tempMeasureTicks), // CH2 compare end of cycle
       0,                                                      // Preload
   };
   TIMER_Init(&cfg);
@@ -196,7 +220,6 @@ void setup_timer_scheduler() {
   TIMER_IntMask(TIMER_CH0, TIMER_INT_COMP_2, UNMASK);
   CPU_Interrupt_Enable(TIMER_CH0_IRQn);
   TIMER_Enable(TIMER_CH0);
-  // switchToSlowPWM();
 }
 
 void setupFUSBIRQ() {
@@ -206,13 +229,4 @@ void setupFUSBIRQ() {
   Interrupt_Handler_Register(GPIO_INT0_IRQn, GPIO_IRQHandler);
   CPU_Interrupt_Enable(GPIO_INT0_IRQn);
   gpio_irq_enable(FUSB302_IRQ_Pin, ENABLE);
-}
-
-void vAssertCalled(void) {
-  MSG((char *)"vAssertCalled\r\n");
-  PWM_Channel_Disable(PWM_Channel);
-  gpio_set_mode(PWM_Out_Pin, GPIO_INPUT_PD_MODE);
-
-  while (1)
-    ;
 }

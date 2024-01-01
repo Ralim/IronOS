@@ -9,7 +9,7 @@ extern "C" {
 }
 #include "BootLogo.h"
 #include "Buttons.hpp"
-#include "I2CBB.hpp"
+#include "I2CBB2.hpp"
 #include "LIS2DH12.hpp"
 #include "MMA8652FC.hpp"
 #include "OLED.hpp"
@@ -26,10 +26,11 @@ extern "C" {
 #include "settingsGUI.hpp"
 #include "stdlib.h"
 #include "string.h"
-#if POW_PD
+#ifdef POW_PD
 #include "USBPD.h"
 #include "pd.h"
 #endif
+
 // File local variables
 
 extern bool heaterThermalRunaway;
@@ -49,33 +50,33 @@ void startGUITask(void const *argument) {
 
   OLED::setRotation(getSettingValue(SettingsOptions::OrientationMode) & 1);
   // If the front button is held down, on supported devices, show PD debugging metrics
-#if POW_PD
 #ifdef HAS_POWER_DEBUG_MENU
+#ifdef DEBUG_POWER_MENU_BUTTON_B
+  if (getButtonB()) {
+#else
   if (getButtonA()) {
+#endif
     showPDDebug();
   }
-#endif
 #endif
 
   if (getSettingValue(SettingsOptions::CalibrateCJC) > 0) {
     performCJCC();
   }
 
+  uint16_t logoMode  = getSettingValue(SettingsOptions::LOGOTime);
+  uint16_t startMode = getSettingValue(SettingsOptions::AutoStartMode);
   // If the boot logo is enabled (but it times out) and the autostart mode is enabled (but not set to sleep w/o heat), start heating during boot logo
-  if (getSettingValue(SettingsOptions::LOGOTime) > 0 && getSettingValue(SettingsOptions::LOGOTime) < 5 && getSettingValue(SettingsOptions::AutoStartMode) > 0
-      && getSettingValue(SettingsOptions::AutoStartMode) < 3) {
-    uint16_t sleepTempDegC;
+  if (logoMode && logoMode < logoMode_t::ONETIME && startMode && startMode < autoStartMode_t::ZERO) {
+    uint16_t sleepTempDegC = getSettingValue(SettingsOptions::SleepTemp);
     if (getSettingValue(SettingsOptions::TemperatureInF)) {
-      sleepTempDegC = TipThermoModel::convertFtoC(getSettingValue(SettingsOptions::SleepTemp));
-    } else {
-      sleepTempDegC = getSettingValue(SettingsOptions::SleepTemp);
+      sleepTempDegC = TipThermoModel::convertFtoC(sleepTempDegC);
     }
     // Only heat to sleep temperature (but no higher than 75°C for safety)
     currentTempTargetDegC = min(sleepTempDegC, 75);
   }
 
-  BootLogo::handleShowingLogo((uint8_t *)FLASH_LOGOADDR);
-
+  showBootLogo();
   showWarnings();
   if (getSettingValue(SettingsOptions::AutoStartMode)) {
     // jump directly to the autostart mode

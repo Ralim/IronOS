@@ -29,7 +29,7 @@ uint16_t getADCVin(uint8_t sample);
 #ifdef __cplusplus
 }
 #endif
-void                 setupFUSBIRQ();
-extern const uint8_t holdoffTicks;
-extern const uint8_t tempMeasureTicks;
+void           setupFUSBIRQ();
+extern uint8_t holdoffTicks;
+extern uint8_t tempMeasureTicks;
 #endif /* PINE_SETUP_H_ */

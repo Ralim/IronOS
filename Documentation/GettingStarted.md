@@ -28,7 +28,7 @@ Note that this may be drawn mirrored depending on the orientation of your screen
 
 The soldering iron symbol on the screen will appear near the tip. This is here to indicate that pressing the button closest to the front of the iron will enter soldering mode.
 
-And naturally, the spanner like icon represents that pressing the button near the rear of the soldering iron will enter the settings menu.
+And naturally, the slider controls icon (or spanner icon in older versions) represents that pressing the button near the rear of the soldering iron will enter the settings menu.
 
 In the settings, you can turn on a detailed idle screen instead. The buttons still function the same, however, the image will be swapped for a text telling you the current status of the iron with extra details.
 
@@ -42,7 +42,7 @@ This OLED screen features burn-in protection; if no buttons or movement have bee
 
 Additionally to the two icons shown, there are two "hidden" actions that can be performed on this menu.
 
-If you press and hold the button near the tip (`+/A`), this enters the temperature adjustment screen. Normally this is not required; but if you would like to adjust the set temperature _before_ the tip starts to heat, this can be useful.
+On devices that do not support profile mode, if you press and hold the button near the tip (`+/A`), this enters the temperature adjustment screen. Normally this is not required; but if you would like to adjust the set temperature _before_ the tip starts to heat, this can be useful.
 
 If you press and hold the button near the rear of the iron (`-/B`), it will take you into the [debug menu](https://ralim.github.io/IronOS/DebugMenu/).
 
@@ -73,6 +73,23 @@ Pinecil has an unpopulated footprint (U14) for a hall effect sensor (Si7210-B-00
 ### Idle Shutdown
 
 If, after entering sleep mode, the iron still does not see movement for a much longer time (default=10 minutes); it will shut down and return to the home screen.
+
+## Profile Mode (MHP30 only)
+
+On devices that support it, a long press on `(+/A)` takes you into profile mode, which initiates the profile selected in the relevant settings.
+
+Profile mode plays out as follows:
+
+1. Check if the temperature is below 55C. If not, you will get a warning and cannot enter profile mode.
+2. Preheat by raising the target temperature to the configured preheat temperature with the configured preheat speed.
+3. Wait for the device to reach the preheat temperature.
+4. Gradually move the target temperature to the configured end temperature of the first phase over the configured duration. 
+5. Wait for the device to reach the end temperature. 
+6. Repeat steps 4 and 5 for the next phases until there are no more phases configured.
+7. Cool down by lowering the target temperature to 0 with the configured cooldown speed. 
+8. Once the temperature is below 55C, sound the buzzer (if available) and exit profile mode. 
+
+You can manually exit profile mode manually in the same way as the soldering mode, by pressing and holding the rear button or pressing both buttons at once.
 
 ## Settings Menu
 

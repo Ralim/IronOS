@@ -27,12 +27,6 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc) {
     }
   }
 }
-void HAL_I2C_MasterRxCpltCallback(I2C_HandleTypeDef *hi2c __unused) { FRToSI2C::CpltCallback(); }
-void HAL_I2C_MasterTxCpltCallback(I2C_HandleTypeDef *hi2c __unused) { FRToSI2C::CpltCallback(); }
-void HAL_I2C_MemTxCpltCallback(I2C_HandleTypeDef *hi2c __unused) { FRToSI2C::CpltCallback(); }
-void HAL_I2C_ErrorCallback(I2C_HandleTypeDef *hi2c __unused) { FRToSI2C::CpltCallback(); }
-void HAL_I2C_AbortCpltCallback(I2C_HandleTypeDef *hi2c __unused) { FRToSI2C::CpltCallback(); }
-void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c __unused) { FRToSI2C::CpltCallback(); }
 
 extern osThreadId POWTaskHandle;
 void              HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
@@ -49,7 +43,7 @@ void              HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 }
 
 bool getFUS302IRQLow() {
-#if POW_PD
+#ifdef POW_PD
   // Return true if the IRQ line is still held low
   return HAL_GPIO_ReadPin(INT_PD_GPIO_Port, INT_PD_Pin) == GPIO_PIN_RESET;
 #else

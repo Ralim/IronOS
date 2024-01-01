@@ -2,44 +2,79 @@
     "languageCode": "DE",
     "languageLocalName": "Deutsch",
     "tempUnitFahrenheit": false,
-    "messages": {
-        "SettingsCalibrationWarning": "Vor dem Neustart bitte sicherstellen, dass Lötspitze & Gerät Raumtemperatur haben!",
-        "CJCCalibrating": "kalibriere",
-        "SettingsResetWarning": "Sicher, dass alle Werte zurückgesetzt werden sollen?",
-        "UVLOWarningString": "V niedr.",
-        "UndervoltageString": "Unterspannung",
-        "InputVoltageString": "V Eingang: ",
-        "SleepingSimpleString": "Zzzz",
-        "SleepingAdvancedString": "Ruhemodus...",
-        "SleepingTipAdvancedString": "Temp:",
-        "OffString": "Aus",
-        "DeviceFailedValidationWarning": "Höchstwahrscheinlich ist das Gerät eine Fälschung!"
-    },
     "messagesWarn": {
-        "CJCCalibrationDone": [
-            "Erfolgreich",
-            "kalibriert!"
-        ],
-        "ResetOKMessage": "Reset OK",
-        "SettingsResetMessage": [
-            "Einstellungen",
-            "zurückgesetzt!"
-        ],
-        "NoAccelerometerMessage": [
-            "Bewegungssensor",
-            "nicht erkannt!"
-        ],
-        "NoPowerDeliveryMessage": [
-            "USB-PD IC",
-            "nicht erkannt!"
-        ],
-        "LockingKeysString": "GESPERRT",
-        "UnlockingKeysString": "ENTSPERRT",
-        "WarningKeysLockedString": "!GESPERRT!",
-        "WarningThermalRunaway": [
-            "Thermal",
-            "Runaway"
-        ]
+        "CalibrationDone": {
+            "message": "Erfolgreich\nkalibriert!"
+        },
+        "ResetOKMessage": {
+            "message": "Reset OK"
+        },
+        "SettingsResetMessage": {
+            "message": "Einstellungen\nzurückgesetzt!"
+        },
+        "NoAccelerometerMessage": {
+            "message": "Bewegungssensor\nnicht erkannt!"
+        },
+        "NoPowerDeliveryMessage": {
+            "message": "USB-PD IC\nnicht erkannt!"
+        },
+        "LockingKeysString": {
+            "message": "GESPERRT"
+        },
+        "UnlockingKeysString": {
+            "message": "ENTSPERRT"
+        },
+        "WarningKeysLockedString": {
+            "message": "!GESPERRT!"
+        },
+        "WarningThermalRunaway": {
+            "message": "Thermal\nRunaway"
+        },
+        "WarningTipShorted": {
+            "message": "!Lötspitze\nkurzgeschlossen!"
+        },
+        "SettingsCalibrationWarning": {
+            "message": "Vor dem Neustart bitte sicherstellen, dass Lötspitze & Gerät Raumtemperatur haben!"
+        },
+        "CJCCalibrating": {
+            "message": "kalibriere\n"
+        },
+        "SettingsResetWarning": {
+            "message": "Sicher, dass alle Werte zurückgesetzt werden sollen?"
+        },
+        "UVLOWarningString": {
+            "message": "V niedr."
+        },
+        "UndervoltageString": {
+            "message": "Unterspannung\n"
+        },
+        "InputVoltageString": {
+            "message": "V Eingang: \n"
+        },
+        "SleepingSimpleString": {
+            "message": "Zzzz"
+        },
+        "SleepingAdvancedString": {
+            "message": "Ruhemodus...\n"
+        },
+        "SleepingTipAdvancedString": {
+            "message": "Temp: \n"
+        },
+        "OffString": {
+            "message": "aus"
+        },
+        "ProfilePreheatString": {
+            "message": "Vorwärmen\n"
+        },
+        "ProfileCooldownString": {
+            "message": "Abkühlen\n"
+        },
+        "DeviceFailedValidationWarning": {
+            "message": "Höchstwahrscheinlich ist das Gerät eine Fälschung!"
+        },
+        "TooHotToStartProfileWarning": {
+            "message": "Zu heiß für\nProfilstart!"
+        }
     },
     "characters": {
         "SettingRightChar": "R",
@@ -59,279 +94,226 @@
     },
     "menuGroups": {
         "PowerMenu": {
-            "text2": [
-                "Energie-",
-                "einstellungen"
-            ],
-            "desc": ""
+            "displayText": "Energie-\neinstellungen",
+            "description": ""
         },
         "SolderingMenu": {
-            "text2": [
-                "Löt-",
-                "einstellungen"
-            ],
-            "desc": ""
+            "displayText": "Löt-\neinstellungen",
+            "description": ""
         },
         "PowerSavingMenu": {
-            "text2": [
-                "Ruhe-",
-                "modus"
-            ],
-            "desc": ""
+            "displayText": "Ruhe-\nmodus",
+            "description": ""
         },
         "UIMenu": {
-            "text2": [
-                "Anzeige-",
-                "einstellungen"
-            ],
-            "desc": ""
+            "displayText": "Anzeige-\neinstellungen",
+            "description": ""
         },
         "AdvancedMenu": {
-            "text2": [
-                "Erweiterte",
-                "Einstellungen"
-            ],
-            "desc": ""
+            "displayText": "Erweiterte\nEinstellungen",
+            "description": ""
         }
     },
     "menuOptions": {
         "DCInCutoff": {
-            "text2": [
-                "Spannungs-",
-                "quelle"
-            ],
-            "desc": "Spannungsquelle (Abschaltspannung) (DC=10V | nS=n*3.3V für n LiIon-Zellen)"
+            "displayText": "Spannungs-\nquelle",
+            "description": "Spannungsquelle (Abschaltspannung) (DC=10V | nS=n*3.3V für n LiIon-Zellen)"
         },
         "MinVolCell": {
-            "text2": [
-                "Minimale",
-                "Spannung"
-            ],
-            "desc": "Minimal zulässige Spannung pro Zelle (3S: 3 - 3,7V | 4-6S: 2,4 - 3,7V)"
+            "displayText": "Minimale\nSpannung",
+            "description": "Minimal zulässige Spannung pro Zelle (3S: 3 - 3,7V | 4-6S: 2,4 - 3,7V)"
         },
         "QCMaxVoltage": {
-            "text2": [
-                "Spannungs-",
-                "maximum"
-            ],
-            "desc": "Maximal zulässige Spannung der verwendeten Spannungsversorgung (V=Volt)"
+            "displayText": "Spannungs-\nmaximum",
+            "description": "Maximal zulässige Spannung der verwendeten Spannungsversorgung (V=Volt)"
         },
         "PDNegTimeout": {
-            "text2": [
-                "PD",
-                "timeout"
-            ],
-            "desc": "PD Abfragedauer in 100ms Schritten (Kompatibilität mit best. QC-Ladegeräten)"
+            "displayText": "PD\ntimeout",
+            "description": "PD Abfragedauer in 100ms Schritten (Kompatibilität mit best. QC-Ladegeräten)"
+        },
+        "PDVpdo": {
+            "displayText": "PD\nVPDO",
+            "description": "Aktiviert PPS & EPR"
         },
         "BoostTemperature": {
-            "text2": [
-                "Boost-",
-                "temperatur"
-            ],
-            "desc": "Temperatur der Lötspitze im Boostmodus"
+            "displayText": "Boost-\ntemperatur",
+            "description": "Temperatur der Lötspitze im Boostmodus"
         },
         "AutoStart": {
-            "text2": [
-                "Start im",
-                "Lötmodus"
-            ],
-            "desc": "Heizverhalten beim Einschalten der Spannungsversorgung (A=aus | L=Lötmodus | R=Ruhemodus | K=Ruhemodus mit kalter Spitze)"
+            "displayText": "Start im\nLötmodus",
+            "description": "Heizverhalten beim Einschalten der Spannungsversorgung (A=aus | L=Lötmodus | R=Ruhemodus | K=Ruhemodus mit kalter Spitze)"
         },
         "TempChangeShortStep": {
-            "text2": [
-                "Temp-Schritt",
-                "Druck kurz"
-            ],
-            "desc": "Schrittweite für Temperaturwechsel bei kurzem Tastendruck"
+            "displayText": "Temp-Schritt\nDruck kurz",
+            "description": "Schrittweite für Temperaturänderung bei kurzem Tastendruck"
         },
         "TempChangeLongStep": {
-            "text2": [
-                "Temp-Schritt",
-                "Druck lang"
-            ],
-            "desc": "Schrittweite für Temperaturwechsel bei langem Tastendruck"
+            "displayText": "Temp-Schritt\nDruck lang",
+            "description": "Schrittweite für Temperaturänderung bei langem Tastendruck"
         },
         "LockingMode": {
-            "text2": [
-                "Tasten-",
-                "sperre"
-            ],
-            "desc": "Langes drücken beider Tasten im Lötmodus sperrt diese (A=aus | B=nur Boost | V=vollständig)"
+            "displayText": "Tasten-\nsperre",
+            "description": "Langes Drücken beider Tasten im Lötmodus sperrt diese (A=aus | B=nur Boost | V=vollständig)"
+        },
+        "ProfilePhases": {
+            "displayText": "Profile\nPhasen",
+            "description": "Anzahl an Phasen im Profilmodus"
+        },
+        "ProfilePreheatTemp": {
+            "displayText": "Vorheiz-\ntemperatur",
+            "description": "Zu Beginn des Profilmodus auf diese Temperatur vorheizen"
+        },
+        "ProfilePreheatSpeed": {
+            "displayText": "Vorheiz-\nrate",
+            "description": "Mit dieser Geschwindigkeit vorheizen (Grad pro Sekunde)"
+        },
+        "ProfilePhase1Temp": {
+            "displayText": "Phase 1\nTemperatur",
+            "description": "Zieltemperatur zum Ende dieser Phase"
+        },
+        "ProfilePhase1Duration": {
+            "displayText": "Phase 1\nDauer",
+            "description": "Dauer dieser Phase (Sekunden)"
+        },
+        "ProfilePhase2Temp": {
+            "displayText": "Phase 2\nTemperatur",
+            "description": ""
+        },
+        "ProfilePhase2Duration": {
+            "displayText": "Phase 2\nDauer",
+            "description": ""
+        },
+        "ProfilePhase3Temp": {
+            "displayText": "Phase 3\nTemperatur",
+            "description": ""
+        },
+        "ProfilePhase3Duration": {
+            "displayText": "Phase 3\nDauer",
+            "description": ""
+        },
+        "ProfilePhase4Temp": {
+            "displayText": "Phase 4\nTemperatur",
+            "description": ""
+        },
+        "ProfilePhase4Duration": {
+            "displayText": "Phase 4\nDauer",
+            "description": ""
+        },
+        "ProfilePhase5Temp": {
+            "displayText": "Phase 5\nTemperatur",
+            "description": ""
+        },
+        "ProfilePhase5Duration": {
+            "displayText": "Phase 5\nDauer",
+            "description": ""
+        },
+        "ProfileCooldownSpeed": {
+            "displayText": "Abkühl-\nrate",
+            "description": "Am Ende des Profilmodus mit dieser Geschwindigkeit abkühlen (Grad pro Sekunde)"
         },
         "MotionSensitivity": {
-            "text2": [
-                "Bewegungs-",
-                "empfindlichk."
-            ],
-            "desc": "0=aus | 1=minimal | ... | 9=maximal"
+            "displayText": "Bewegungs-\nempfindlichk.",
+            "description": "0=aus | 1=minimal | ... | 9=maximal"
         },
         "SleepTemperature": {
-            "text2": [
-                "Ruhe-",
-                "temperatur"
-            ],
-            "desc": "Ruhetemperatur der Spitze"
+            "displayText": "Ruhe-\ntemperatur",
+            "description": "Ruhetemperatur der Lötspitze"
         },
         "SleepTimeout": {
-            "text2": [
-                "Ruhever-",
-                "zögerung"
-            ],
-            "desc": "Dauer vor Übergang in den Ruhemodus (s=Sekunden | m=Minuten)"
+            "displayText": "Ruhever-\nzögerung",
+            "description": "Dauer vor Übergang in den Ruhemodus (s=Sekunden | m=Minuten)"
         },
         "ShutdownTimeout": {
-            "text2": [
-                "Abschalt-",
-                "verzög."
-            ],
-            "desc": "Dauer vor automatischer Abschaltung (m=Minuten)"
+            "displayText": "Abschalt-\nverzög.",
+            "description": "Dauer vor automatischer Abschaltung (m=Minuten)"
         },
         "HallEffSensitivity": {
-            "text2": [
-                "Empfindlichkeit",
-                "der Hall-Sonde"
-            ],
-            "desc": "Empfindlichkeit der Hall-Sonde um den Ruhemodus auszulösen (0=aus | 1=minimal | ... | 9=maximal)"
+            "displayText": "Empfindlichkeit\nder Hall-Sonde",
+            "description": "Empfindlichkeit der Hall-Sonde um den Ruhemodus auszulösen (0=aus | 1=minimal | ... | 9=maximal)"
         },
         "TemperatureUnit": {
-            "text2": [
-                "Temperatur-",
-                "einheit"
-            ],
-            "desc": "C=°Celsius | F=°Fahrenheit"
+            "displayText": "Temperatur-\neinheit",
+            "description": "C=°Celsius | F=°Fahrenheit"
         },
         "DisplayRotation": {
-            "text2": [
-                "Anzeige-",
-                "ausrichtung"
-            ],
-            "desc": "R=rechtshändig | L=linkshändig | A=automatisch"
+            "displayText": "Anzeige-\nausrichtung",
+            "description": "R=rechtshändig | L=linkshändig | A=automatisch"
         },
         "CooldownBlink": {
-            "text2": [
-                "Abkühl-",
-                "blinken"
-            ],
-            "desc": "Temperaturanzeige blinkt beim Abkühlen, solange Spitze heiß ist"
+            "displayText": "Abkühl-\nblinken",
+            "description": "Temperaturanzeige blinkt beim Abkühlen, solange Spitze heiß ist"
         },
         "ScrollingSpeed": {
-            "text2": [
-                "Scroll-",
-                "geschw."
-            ],
-            "desc": "Scrollgeschwindigkeit der Erläuterungen (L=langsam | S=schnell)"
+            "displayText": "Scroll-\ngeschw.",
+            "description": "Scrollgeschwindigkeit der Erläuterungen (L=langsam | S=schnell)"
         },
         "ReverseButtonTempChange": {
-            "text2": [
-                "+- Tasten",
-                "umkehren?"
-            ],
-            "desc": "Tastenbelegung zur Temperaturänderung umkehren"
+            "displayText": "+- Tasten\numkehren",
+            "description": "Tastenbelegung zur Temperaturänderung umkehren"
         },
         "AnimSpeed": {
-            "text2": [
-                "Anim.",
-                "Geschw."
-            ],
-            "desc": "Geschwindigkeit der Icon-Animationen im Menü (A=aus | L=langsam | M=mittel | S=schnell)"
+            "displayText": "Anim.\nGeschw.",
+            "description": "Geschwindigkeit der Icon-Animationen im Menü (A=aus | L=langsam | M=mittel | S=schnell)"
         },
         "AnimLoop": {
-            "text2": [
-                "Anim.",
-                "Schleife"
-            ],
-            "desc": "Icon-Animationen im Hauptmenü wiederholen"
+            "displayText": "Anim.\nSchleife",
+            "description": "Icon-Animationen im Hauptmenü wiederholen"
         },
         "Brightness": {
-            "text2": [
-                "Bildschirm-",
-                "kontrast"
-            ],
-            "desc": "Verändert die Helligkeit des OLED-Displays"
+            "displayText": "Bildschirm-\nhelligkeit",
+            "description": "Verändert die Helligkeit des OLED-Displays"
         },
         "ColourInversion": {
-            "text2": [
-                "Farben",
-                "umkehren"
-            ],
-            "desc": "Invertiert die Farben des OLED-Displays"
+            "displayText": "Farben\numkehren",
+            "description": "Invertiert die Farben des OLED-Displays"
         },
         "LOGOTime": {
-            "text2": [
-                "Startlogo-",
-                "dauer"
-            ],
-            "desc": "Legt die Dauer der Anzeige des Startlogos fest (s=Sekunden)"
+            "displayText": "Startlogo-\ndauer",
+            "description": "Legt die Dauer der Anzeige des Startlogos fest (s=Sekunden)"
         },
         "AdvancedIdle": {
-            "text2": [
-                "Detaillierte",
-                "Ruheansicht"
-            ],
-            "desc": "Detaillierte Anzeige im Ruhemodus"
+            "displayText": "Detaillierte\nRuheansicht",
+            "description": "Detaillierte Anzeige im Ruhemodus"
         },
         "AdvancedSoldering": {
-            "text2": [
-                "Detaillierte",
-                "Lötansicht"
-            ],
-            "desc": "Detaillierte Anzeige im Lötmodus"
+            "displayText": "Detaillierte\nLötansicht",
+            "description": "Detaillierte Anzeige im Lötmodus"
+        },
+        "BluetoothLE": {
+            "displayText": "Bluetooth\n",
+            "description": "Aktiviert Bluetooth LE"
         },
         "PowerLimit": {
-            "text2": [
-                "Leistungs-",
-                "maximum"
-            ],
-            "desc": "Maximal zulässige Leistungsaufnahme des Lötkolbens (W=Watt)"
+            "displayText": "Leistungs-\nmaximum",
+            "description": "Durchschnittliche maximal zulässige Leistungsaufnahme des Lötkolbens (W=Watt)"
         },
         "CalibrateCJC": {
-            "text2": [
-                "Temperatur",
-                "kalibrieren?"
-            ],
-            "desc": "Beim nächsten Start wird die Kaltstellenkompensation kalibriert (nicht nötig wenn Delta T < 5°C)"
+            "displayText": "Temperatur\nkalibrieren",
+            "description": "Beim nächsten Start wird die Kaltstellenkompensation kalibriert (nicht nötig wenn Delta T < 5°C)"
         },
         "VoltageCalibration": {
-            "text2": [
-                "Eingangsspannung",
-                "kalibrieren?"
-            ],
-            "desc": "Kalibrierung der Eingangsspannung (Langer Tastendruck zum Verlassen)"
+            "displayText": "Eingangsspannung\nkalibrieren",
+            "description": "Kalibrierung der Eingangsspannung (Langer Tastendruck zum Verlassen)"
         },
         "PowerPulsePower": {
-            "text2": [
-                "Leistungs-",
-                "impuls"
-            ],
-            "desc": "Powerbank mit einem Impuls wach halten (Watt)"
+            "displayText": "Leistungs-\nimpuls",
+            "description": "Powerbank mit einem Impuls wach halten (Watt)"
         },
         "PowerPulseWait": {
-            "text2": [
-                "Impuls-",
-                "verzögerung"
-            ],
-            "desc": "Dauer vor Abgabe von Wachhalteimpulsen (x 2,5s)"
+            "displayText": "Impuls-\nverzögerung",
+            "description": "Dauer vor Abgabe von Wachhalteimpulsen (x 2,5s)"
         },
         "PowerPulseDuration": {
-            "text2": [
-                "Impuls-",
-                "dauer"
-            ],
-            "desc": "Dauer des Wachhalteimpulses (x 250ms)"
+            "displayText": "Impuls-\ndauer",
+            "description": "Dauer des Wachhalteimpulses (x 250ms)"
         },
         "SettingsReset": {
-            "text2": [
-                "Einstellungen",
-                "zurücksetzen?"
-            ],
-            "desc": "Werte auf Werkseinstellungen zurücksetzen"
+            "displayText": "Einstellungen\nzurücksetzen",
+            "description": "Werte auf Werkseinstellungen zurücksetzen"
         },
         "LanguageSwitch": {
-            "text2": [
-                "Sprache:",
-                " DE     Deutsch"
-            ],
-            "desc": ""
+            "displayText": "Sprache:\n DE     Deutsch",
+            "description": ""
         }
     }
 }

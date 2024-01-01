@@ -2,29 +2,79 @@
     "languageCode": "YUE_HK",
     "languageLocalName": "廣東話 (香港)",
     "tempUnitFahrenheit": true,
-    "messages": {
-        "SettingsCalibrationWarning": "Before rebooting, make sure tip & handle are at room temperature!",
-        "CJCCalibrating": "calibrating",
-        "SettingsResetWarning": "你係咪確定要將全部設定重設到預設值？",
-        "UVLOWarningString": "電壓過低",
-        "UndervoltageString": "Undervoltage",
-        "InputVoltageString": "Input V: ",
-        "SleepingSimpleString": "Zzzz",
-        "SleepingAdvancedString": "Sleeping...",
-        "SleepingTipAdvancedString": "Tip:",
-        "OffString": "關",
-        "DeviceFailedValidationWarning": "依支焫雞好有可能係冒牌貨！"
-    },
     "messagesWarn": {
-        "CJCCalibrationDone": "Calibration done!",
-        "ResetOKMessage": "已重設！",
-        "SettingsResetMessage": "設定已被重設！",
-        "NoAccelerometerMessage": "未能偵測加速度計",
-        "NoPowerDeliveryMessage": "未能偵測PD晶片",
-        "LockingKeysString": "已鎖定",
-        "UnlockingKeysString": "已解除鎖定",
-        "WarningKeysLockedString": "!撳掣鎖定!",
-        "WarningThermalRunaway": "加熱失控"
+        "CalibrationDone": {
+            "message": "Calibration done!"
+        },
+        "ResetOKMessage": {
+            "message": "已重設！"
+        },
+        "SettingsResetMessage": {
+            "message": "設定已被重設！"
+        },
+        "NoAccelerometerMessage": {
+            "message": "未能偵測加速度計"
+        },
+        "NoPowerDeliveryMessage": {
+            "message": "未能偵測PD晶片"
+        },
+        "LockingKeysString": {
+            "message": "已鎖定"
+        },
+        "UnlockingKeysString": {
+            "message": "已解除鎖定"
+        },
+        "WarningKeysLockedString": {
+            "message": "!撳掣鎖定!"
+        },
+        "WarningThermalRunaway": {
+            "message": "加熱失控"
+        },
+        "WarningTipShorted": {
+            "message": "!Tip Shorted!"
+        },
+        "SettingsCalibrationWarning": {
+            "message": "Before rebooting, make sure tip & handle are at room temperature!"
+        },
+        "CJCCalibrating": {
+            "message": "calibrating"
+        },
+        "SettingsResetWarning": {
+            "message": "你係咪確定要將全部設定重設到預設值？"
+        },
+        "UVLOWarningString": {
+            "message": "電壓過低"
+        },
+        "UndervoltageString": {
+            "message": "Undervoltage"
+        },
+        "InputVoltageString": {
+            "message": "Input V: "
+        },
+        "SleepingSimpleString": {
+            "message": "Zzzz"
+        },
+        "SleepingAdvancedString": {
+            "message": "Sleeping..."
+        },
+        "SleepingTipAdvancedString": {
+            "message": "Tip: "
+        },
+        "OffString": {
+            "message": "關"
+        },
+        "ProfilePreheatString": {
+            "message": "Preheat"
+        },
+        "ProfileCooldownString": {
+            "message": "Cooldown"
+        },
+        "DeviceFailedValidationWarning": {
+            "message": "依支焫雞好有可能係冒牌貨！"
+        },
+        "TooHotToStartProfileWarning": {
+            "message": "Too hot to start profile"
+        }
     },
     "characters": {
         "SettingRightChar": "右",
@@ -44,162 +94,226 @@
     },
     "menuGroups": {
         "PowerMenu": {
-            "text2": "電源設定",
-            "desc": ""
+            "displayText": "電源設定",
+            "description": ""
         },
         "SolderingMenu": {
-            "text2": "焊接設定",
-            "desc": ""
+            "displayText": "焊接設定",
+            "description": ""
         },
         "PowerSavingMenu": {
-            "text2": "待機設定",
-            "desc": ""
+            "displayText": "待機設定",
+            "description": ""
         },
         "UIMenu": {
-            "text2": "使用者介面",
-            "desc": ""
+            "displayText": "使用者介面",
+            "description": ""
         },
         "AdvancedMenu": {
-            "text2": "進階設定",
-            "desc": ""
+            "displayText": "進階設定",
+            "description": ""
         }
     },
     "menuOptions": {
         "DCInCutoff": {
-            "text2": "電源",
-            "desc": "輸入電源；設定自動停機電壓 <DC 10V> <S 鋰電池，以每粒3.3V計算；依個設定會停用功率限制>"
+            "displayText": "電源",
+            "description": "輸入電源；設定自動停機電壓 <DC 10V> <S 鋰電池，以每粒3.3V計算；依個設定會停用功率限制>"
         },
         "MinVolCell": {
-            "text2": "最低電壓",
-            "desc": "每粒電池嘅最低可用電壓 <伏特> <3S: 3.0V - 3.7V, 4/5/6S: 2.4V - 3.7V>"
+            "displayText": "最低電壓",
+            "description": "每粒電池嘅最低可用電壓 <伏特> <3S: 3.0V - 3.7V, 4/5/6S: 2.4V - 3.7V>"
         },
         "QCMaxVoltage": {
-            "text2": "QC電壓",
-            "desc": "使用QC電源時請求嘅最高目標電壓"
+            "displayText": "QC電壓",
+            "description": "使用QC電源時請求嘅最高目標電壓"
         },
         "PDNegTimeout": {
-            "text2": "PD逾時",
-            "desc": "設定USB PD協定交涉嘅逾時時限；為兼容某啲QC電源而設 <x100ms（亳秒）>"
+            "displayText": "PD逾時",
+            "description": "設定USB PD協定交涉嘅逾時時限；為兼容某啲QC電源而設 <x100ms（亳秒）>"
+        },
+        "PDVpdo": {
+            "displayText": "PD VPDO",
+            "description": "Enables PPS & EPR modes"
         },
         "BoostTemperature": {
-            "text2": "增熱温度",
-            "desc": "喺增熱模式時使用嘅温度"
+            "displayText": "增熱温度",
+            "description": "喺增熱模式時使用嘅温度"
         },
         "AutoStart": {
-            "text2": "自動啓用",
-            "desc": "開機時自動啓用 <無=停用 | 焊=焊接模式 | 待=待機模式 | 室=室温待機>"
+            "displayText": "自動啓用",
+            "description": "開機時自動啓用 <無=停用 | 焊=焊接模式 | 待=待機模式 | 室=室温待機>"
         },
         "TempChangeShortStep": {
-            "text2": "温度調整 短",
-            "desc": "調校温度時短撳一下嘅温度變幅"
+            "displayText": "温度調整 短",
+            "description": "調校温度時短撳一下嘅温度變幅"
         },
         "TempChangeLongStep": {
-            "text2": "温度調整 長",
-            "desc": "調校温度時長撳嘅温度變幅"
+            "displayText": "温度調整 長",
+            "description": "調校温度時長撳嘅温度變幅"
         },
         "LockingMode": {
-            "text2": "撳掣鎖定",
-            "desc": "喺焊接模式時，同時長撳兩粒掣啓用撳掣鎖定 <無=停用 | 增=淨係容許增熱模式 | 全=鎖定全部>"
+            "displayText": "撳掣鎖定",
+            "description": "喺焊接模式時，同時長撳兩粒掣啓用撳掣鎖定 <無=停用 | 增=淨係容許增熱模式 | 全=鎖定全部>"
+        },
+        "ProfilePhases": {
+            "displayText": "Profile Phases",
+            "description": "Number of phases in profile mode"
+        },
+        "ProfilePreheatTemp": {
+            "displayText": "Preheat Temp",
+            "description": "Preheat to this temperature at the start of profile mode"
+        },
+        "ProfilePreheatSpeed": {
+            "displayText": "Preheat Speed",
+            "description": "Preheat at this rate (degrees per second)"
+        },
+        "ProfilePhase1Temp": {
+            "displayText": "Phase 1 Temp",
+            "description": "Target temperature for the end of this phase"
+        },
+        "ProfilePhase1Duration": {
+            "displayText": "Phase 1 Duration",
+            "description": "Target duration of this phase (seconds)"
+        },
+        "ProfilePhase2Temp": {
+            "displayText": "Phase 2 Temp",
+            "description": ""
+        },
+        "ProfilePhase2Duration": {
+            "displayText": "Phase 2 Duration",
+            "description": ""
+        },
+        "ProfilePhase3Temp": {
+            "displayText": "Phase 3 Temp",
+            "description": ""
+        },
+        "ProfilePhase3Duration": {
+            "displayText": "Phase 3 Duration",
+            "description": ""
+        },
+        "ProfilePhase4Temp": {
+            "displayText": "Phase 4 Temp",
+            "description": ""
+        },
+        "ProfilePhase4Duration": {
+            "displayText": "Phase 4 Duration",
+            "description": ""
+        },
+        "ProfilePhase5Temp": {
+            "displayText": "Phase 5 Temp",
+            "description": ""
+        },
+        "ProfilePhase5Duration": {
+            "displayText": "Phase 5 Duration",
+            "description": ""
+        },
+        "ProfileCooldownSpeed": {
+            "displayText": "Cooldown Speed",
+            "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
         },
         "MotionSensitivity": {
-            "text2": "動作敏感度",
-            "desc": "0=停用 | 1=最低敏感度 | ... | 9=最高敏感度"
+            "displayText": "動作敏感度",
+            "description": "0=停用 | 1=最低敏感度 | ... | 9=最高敏感度"
         },
         "SleepTemperature": {
-            "text2": "待機温度",
-            "desc": "喺待機模式時嘅焫雞咀温度"
+            "displayText": "待機温度",
+            "description": "喺待機模式時嘅焫雞咀温度"
         },
         "SleepTimeout": {
-            "text2": "待機延時",
-            "desc": "自動進入待機模式前嘅閒置等候時間 <s=秒 | m=分鐘>"
+            "displayText": "待機延時",
+            "description": "自動進入待機模式前嘅閒置等候時間 <s=秒 | m=分鐘>"
         },
         "ShutdownTimeout": {
-            "text2": "自動熄機",
-            "desc": "自動熄機前嘅閒置等候時間 <m=分鐘>"
+            "displayText": "自動熄機",
+            "description": "自動熄機前嘅閒置等候時間 <m=分鐘>"
         },
         "HallEffSensitivity": {
-            "text2": "磁場敏感度",
-            "desc": "磁場感應器用嚟啓動待機模式嘅敏感度 <0=停用 | 1=最低敏感度 | ... | 9=最高敏感度>"
+            "displayText": "磁場敏感度",
+            "description": "磁場感應器用嚟啓動待機模式嘅敏感度 <0=停用 | 1=最低敏感度 | ... | 9=最高敏感度>"
         },
         "TemperatureUnit": {
-            "text2": "温度單位",
-            "desc": "C=攝氏 | F=華氏"
+            "displayText": "温度單位",
+            "description": "C=攝氏 | F=華氏"
         },
         "DisplayRotation": {
-            "text2": "畫面方向",
-            "desc": "右=使用右手 | 左=使用左手 | 自=自動"
+            "displayText": "畫面方向",
+            "description": "右=使用右手 | 左=使用左手 | 自=自動"
         },
         "CooldownBlink": {
-            "text2": "降温時閃爍",
-            "desc": "停止加熱之後，當焫雞咀仲係熱嗰陣閃爍畫面"
+            "displayText": "降温時閃爍",
+            "description": "停止加熱之後，當焫雞咀仲係熱嗰陣閃爍畫面"
         },
         "ScrollingSpeed": {
-            "text2": "捲動速度",
-            "desc": "解說文字嘅捲動速度"
+            "displayText": "捲動速度",
+            "description": "解說文字嘅捲動速度"
         },
         "ReverseButtonTempChange": {
-            "text2": "反轉加減掣",
-            "desc": "反轉調校温度時加減掣嘅方向"
+            "displayText": "反轉加減掣",
+            "description": "反轉調校温度時加減掣嘅方向"
         },
         "AnimSpeed": {
-            "text2": "動畫速度",
-            "desc": "功能表圖示動畫嘅速度 <關=不顯示動畫 | 慢=慢速 | 中=中速 | 快=快速>"
+            "displayText": "動畫速度",
+            "description": "功能表圖示動畫嘅速度 <關=不顯示動畫 | 慢=慢速 | 中=中速 | 快=快速>"
         },
         "AnimLoop": {
-            "text2": "動畫循環",
-            "desc": "循環顯示功能表圖示動畫"
+            "displayText": "動畫循環",
+            "description": "循環顯示功能表圖示動畫"
         },
         "Brightness": {
-            "text2": "熒幕亮度",
-            "desc": "設定OLED熒幕嘅亮度"
+            "displayText": "熒幕亮度",
+            "description": "設定OLED熒幕嘅亮度"
         },
         "ColourInversion": {
-            "text2": "熒幕反轉色",
-            "desc": "反轉OLED熒幕嘅黑白色"
+            "displayText": "熒幕反轉色",
+            "description": "反轉OLED熒幕嘅黑白色"
         },
         "LOGOTime": {
-            "text2": "開機畫面",
-            "desc": "設定開機畫面顯示時長 <s=秒>"
+            "displayText": "開機畫面",
+            "description": "設定開機畫面顯示時長 <s=秒>"
         },
         "AdvancedIdle": {
-            "text2": "詳細閒置畫面",
-            "desc": "喺閒置畫面以英文細字顯示詳細嘅資料"
+            "displayText": "詳細閒置畫面",
+            "description": "喺閒置畫面以英文細字顯示詳細嘅資料"
         },
         "AdvancedSoldering": {
-            "text2": "詳細焊接畫面",
-            "desc": "喺焊接模式畫面以英文細字顯示詳細嘅資料"
+            "displayText": "詳細焊接畫面",
+            "description": "喺焊接模式畫面以英文細字顯示詳細嘅資料"
+        },
+        "BluetoothLE": {
+            "displayText": "Bluetooth",
+            "description": "Enables BLE"
         },
         "PowerLimit": {
-            "text2": "功率限制",
-            "desc": "限制焫雞可用嘅最大功率 <W=watt（火）>"
+            "displayText": "功率限制",
+            "description": "限制焫雞可用嘅最大功率 <W=watt（火）>"
         },
         "CalibrateCJC": {
-            "text2": "校正CJC",
-            "desc": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5 C)"
+            "displayText": "校正CJC",
+            "description": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5 C)"
         },
         "VoltageCalibration": {
-            "text2": "輸入電壓校正？",
-            "desc": "開始校正VIN輸入電壓 <長撳以退出>"
+            "displayText": "輸入電壓校正？",
+            "description": "開始校正VIN輸入電壓 <長撳以退出>"
         },
         "PowerPulsePower": {
-            "text2": "電源脈衝",
-            "desc": "為保持電源喚醒而通電所用嘅功率 <watt（火）>"
+            "displayText": "電源脈衝",
+            "description": "為保持電源喚醒而通電所用嘅功率 <watt（火）>"
         },
         "PowerPulseWait": {
-            "text2": "電源脈衝間隔",
-            "desc": "為保持電源喚醒，每次通電之間嘅間隔時間 <x2.5s（秒）>"
+            "displayText": "電源脈衝間隔",
+            "description": "為保持電源喚醒，每次通電之間嘅間隔時間 <x2.5s（秒）>"
         },
         "PowerPulseDuration": {
-            "text2": "電源脈衝時長",
-            "desc": "為保持電源喚醒，每次通電脈衝嘅時間長度 <x250ms（亳秒）>"
+            "displayText": "電源脈衝時長",
+            "description": "為保持電源喚醒，每次通電脈衝嘅時間長度 <x250ms（亳秒）>"
         },
         "SettingsReset": {
-            "text2": "全部重設？",
-            "desc": "將所有設定重設到預設值"
+            "displayText": "全部重設？",
+            "description": "將所有設定重設到預設值"
         },
         "LanguageSwitch": {
-            "text2": "語言： 廣東話",
-            "desc": ""
+            "displayText": "語言： 廣東話",
+            "description": ""
         }
     }
 }

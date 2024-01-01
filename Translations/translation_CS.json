@@ -2,44 +2,79 @@
     "languageCode": "CS",
     "languageLocalName": "Český",
     "tempUnitFahrenheit": false,
-    "messages": {
-        "SettingsCalibrationWarning": "Before rebooting, make sure tip & handle are at room temperature!",
-        "CJCCalibrating": "calibrating",
-        "SettingsResetWarning": "Opravdu chcete resetovat zařízení do továrního nastavení?",
-        "UVLOWarningString": "Nízké DC",
-        "UndervoltageString": "Nízké napětí",
-        "InputVoltageString": "Napětí: ",
-        "SleepingSimpleString": "Zzz ",
-        "SleepingAdvancedString": "Režim spánku...",
-        "SleepingTipAdvancedString": "Hrot:",
-        "OffString": "Vyp",
-        "DeviceFailedValidationWarning": "Your device is most likely a counterfeit!"
-    },
     "messagesWarn": {
-        "CJCCalibrationDone": [
-            "Calibration",
-            "done!"
-        ],
-        "ResetOKMessage": "Reset OK",
-        "SettingsResetMessage": [
-            "Nějaká nastavení",
-            "byla změněna!"
-        ],
-        "NoAccelerometerMessage": [
-            "Akcelerometr",
-            "nebyl detekován!"
-        ],
-        "NoPowerDeliveryMessage": [
-            "Žádný IO USB-PD",
-            "nebyl detekován!"
-        ],
-        "LockingKeysString": "ZAMČENO",
-        "UnlockingKeysString": "ODEMČENO",
-        "WarningKeysLockedString": "ZAMČENO!",
-        "WarningThermalRunaway": [
-            "Teplotní",
-            "Ochrana"
-        ]
+        "CalibrationDone": {
+            "message": "Kalibrace\ndokončena!"
+        },
+        "ResetOKMessage": {
+            "message": "Reset OK"
+        },
+        "SettingsResetMessage": {
+            "message": "Nějaká nastavení\nbyla změněna!"
+        },
+        "NoAccelerometerMessage": {
+            "message": "Akcelerometr\nnebyl detekován!"
+        },
+        "NoPowerDeliveryMessage": {
+            "message": "Žádný IO USB-PD\nnebyl detekován!"
+        },
+        "LockingKeysString": {
+            "message": "ZAMČENO"
+        },
+        "UnlockingKeysString": {
+            "message": "ODEMČENO"
+        },
+        "WarningKeysLockedString": {
+            "message": "ZAMČENO!"
+        },
+        "WarningThermalRunaway": {
+            "message": "Teplotní\nOchrana"
+        },
+        "WarningTipShorted": {
+            "message": "!Zkrat na hrotu!"
+        },
+        "SettingsCalibrationWarning": {
+            "message": "Před restartem se ujistěte, že hrot a držák mají pokojovou teplotu!"
+        },
+        "CJCCalibrating": {
+            "message": "kalibrování\n"
+        },
+        "SettingsResetWarning": {
+            "message": "Opravdu chcete resetovat zařízení do továrního nastavení?"
+        },
+        "UVLOWarningString": {
+            "message": "Nízké DC"
+        },
+        "UndervoltageString": {
+            "message": "Nízké napětí\n"
+        },
+        "InputVoltageString": {
+            "message": "Napětí: \n"
+        },
+        "SleepingSimpleString": {
+            "message": "Zzz "
+        },
+        "SleepingAdvancedString": {
+            "message": "Režim spánku...\n"
+        },
+        "SleepingTipAdvancedString": {
+            "message": "Hrot: \n"
+        },
+        "OffString": {
+            "message": "Vyp"
+        },
+        "ProfilePreheatString": {
+            "message": "Předehřívání\n"
+        },
+        "ProfileCooldownString": {
+            "message": "Zchlazování\n"
+        },
+        "DeviceFailedValidationWarning": {
+            "message": "Vaše zařízení je pravěpodobně padělek!"
+        },
+        "TooHotToStartProfileWarning": {
+            "message": "Teplota příliš vysoká pro start profilu"
+        }
     },
     "characters": {
         "SettingRightChar": "P",
@@ -59,279 +94,226 @@
     },
     "menuGroups": {
         "PowerMenu": {
-            "text2": [
-                "Napájecí",
-                "nastavení"
-            ],
-            "desc": ""
+            "displayText": "Napájecí\nnastavení",
+            "description": ""
         },
         "SolderingMenu": {
-            "text2": [
-                "Pájecí",
-                "nastavení"
-            ],
-            "desc": ""
+            "displayText": "Pájecí\nnastavení",
+            "description": ""
         },
         "PowerSavingMenu": {
-            "text2": [
-                "Režim",
-                "spánku"
-            ],
-            "desc": ""
+            "displayText": "Režim\nspánku",
+            "description": ""
         },
         "UIMenu": {
-            "text2": [
-                "Uživatelské",
-                "rozhraní"
-            ],
-            "desc": ""
+            "displayText": "Uživatelské\nrozhraní",
+            "description": ""
         },
         "AdvancedMenu": {
-            "text2": [
-                "Pokročilá",
-                "nastavení"
-            ],
-            "desc": ""
+            "displayText": "Pokročilá\nnastavení",
+            "description": ""
         }
     },
     "menuOptions": {
         "DCInCutoff": {
-            "text2": [
-                "Zdroj",
-                "napájení"
-            ],
-            "desc": "Při nižším napětí ukončit pájení (DC 10V)  (S 3,3V na článek, zakázat omezení napájení)."
+            "displayText": "Zdroj\nnapájení",
+            "description": "Při nižším napětí ukončit pájení (DC 10V)  (S 3,3V na článek, zakázat omezení napájení)."
         },
         "MinVolCell": {
-            "text2": [
-                "Minimální",
-                "napětí"
-            ],
-            "desc": "Minimální dovolené napětí po článku (3S: 3 - 3,7V | 4-6S: 2,4 - 3,7V)"
+            "displayText": "Minimální\nnapětí",
+            "description": "Minimální dovolené napětí po článku (3S: 3 - 3,7V | 4-6S: 2,4 - 3,7V)"
         },
         "QCMaxVoltage": {
-            "text2": [
-                "Napětí",
-                "QC"
-            ],
-            "desc": "Maximální napětí QC pro jednání páječkou"
+            "displayText": "Napětí\nQC",
+            "description": "Maximální napětí QC pro jednání páječkou"
         },
         "PDNegTimeout": {
-            "text2": [
-                "PD",
-                "timeout"
-            ],
-            "desc": "Maximální prodleva při jednání PD ve 100ms krocích pro kompatibilitu s některými QC nabíječkami"
+            "displayText": "PD\ntimeout",
+            "description": "Maximální prodleva při jednání PD ve 100ms krocích pro kompatibilitu s některými QC nabíječkami"
+        },
+        "PDVpdo": {
+            "displayText": "PD\nVPDO",
+            "description": "Povoluje režimy PPS & EPR"
         },
         "BoostTemperature": {
-            "text2": [
-                "Teplota",
-                "boostu"
-            ],
-            "desc": "Teplota hrotu v \"režimu boost\""
+            "displayText": "Teplota\nboostu",
+            "description": "Teplota hrotu v \"režimu boost\""
         },
         "AutoStart": {
-            "text2": [
-                "Chování",
-                "při startu"
-            ],
-            "desc": "V=vypnuto | P=pájecí teplota | S=spánková teplota | M=zahřát hrot po pohybu"
+            "displayText": "Chování\npři startu",
+            "description": "V=vypnuto | P=pájecí teplota | S=spánková teplota | M=zahřát hrot po pohybu"
         },
         "TempChangeShortStep": {
-            "text2": [
-                "Krok teploty",
-                "krátký?"
-            ],
-            "desc": "Velikost přídavku při změně teploty krátkým stiskem tlačítka"
+            "displayText": "Krok teploty\nkrátký?",
+            "description": "Velikost přídavku při změně teploty krátkým stiskem tlačítka"
         },
         "TempChangeLongStep": {
-            "text2": [
-                "Krok teploty",
-                "dlouhý?"
-            ],
-            "desc": "Velikost přídavku při změně teploty dlouhým stiskem tlačítka"
+            "displayText": "Krok teploty\ndlouhý?",
+            "description": "Velikost přídavku při změně teploty dlouhým stiskem tlačítka"
         },
         "LockingMode": {
-            "text2": [
-                "Povolit zamč.",
-                "tlačítek"
-            ],
-            "desc": "Při pájení podržte obě tlačítka pro jejich zamčení (Z=zakázáno | B=pouze v režimu boost | U=úplné zamčení)"
+            "displayText": "Povolit zamč.\ntlačítek",
+            "description": "Při pájení podržte obě tlačítka pro jejich zamčení (Z=zakázáno | B=pouze v režimu boost | U=úplné zamčení)"
+        },
+        "ProfilePhases": {
+            "displayText": "Profilové\nFáze",
+            "description": "Počet fází v profilovém režimu"
+        },
+        "ProfilePreheatTemp": {
+            "displayText": "Teplota\nPředehřátí",
+            "description": "Teplota na kterou předehřát na začátku profilového režimu"
+        },
+        "ProfilePreheatSpeed": {
+            "displayText": "Rychlost\nPředehřívání",
+            "description": "Rychlost předehřívání (stupně za sekundu)"
+        },
+        "ProfilePhase1Temp": {
+            "displayText": "Teplota\nFáze 1",
+            "description": "Cílová teplota na konci této fáze"
+        },
+        "ProfilePhase1Duration": {
+            "displayText": "Trvání\nFáze 1",
+            "description": "Doba trvání této fáze (sekundy)"
+        },
+        "ProfilePhase2Temp": {
+            "displayText": "Teplota\nFáze 2",
+            "description": ""
+        },
+        "ProfilePhase2Duration": {
+            "displayText": "Trvání\nFáze 2",
+            "description": ""
+        },
+        "ProfilePhase3Temp": {
+            "displayText": "Teplota\nFáze 3",
+            "description": ""
+        },
+        "ProfilePhase3Duration": {
+            "displayText": "Trvání\nFáze 3",
+            "description": ""
+        },
+        "ProfilePhase4Temp": {
+            "displayText": "Teplota\nFáze 4",
+            "description": ""
+        },
+        "ProfilePhase4Duration": {
+            "displayText": "Trvání\nFáze 4",
+            "description": ""
+        },
+        "ProfilePhase5Temp": {
+            "displayText": "Teplota\nFáze 5",
+            "description": ""
+        },
+        "ProfilePhase5Duration": {
+            "displayText": "Trvání\nFáze 5",
+            "description": ""
+        },
+        "ProfileCooldownSpeed": {
+            "displayText": "Rychlost\nochlazování",
+            "description": "Rychlost ochlazování na konci profilového režimu (stupně za sekundu)"
         },
         "MotionSensitivity": {
-            "text2": [
-                "Citlivost",
-                "na pohyb"
-            ],
-            "desc": "0=vyp | 1=nejméně citlivé | ... | 9=nejvíce citlivé"
+            "displayText": "Citlivost\nna pohyb",
+            "description": "0=vyp | 1=nejméně citlivé | ... | 9=nejvíce citlivé"
         },
         "SleepTemperature": {
-            "text2": [
-                "Teplota",
-                "ve spánku"
-            ],
-            "desc": "Teplota hrotu v režimu spánku."
+            "displayText": "Teplota\nve spánku",
+            "description": "Teplota hrotu v režimu spánku."
         },
         "SleepTimeout": {
-            "text2": [
-                "Čas",
-                "do spánku"
-            ],
-            "desc": "\"Režim spánku\" naběhne v (s=sekundách | m=minutách)"
+            "displayText": "Čas\ndo spánku",
+            "description": "\"Režim spánku\" naběhne v (s=sekundách | m=minutách)"
         },
         "ShutdownTimeout": {
-            "text2": [
-                "Čas do",
-                "vypnutí"
-            ],
-            "desc": "Interval automatického vypnutí (m=minut)"
+            "displayText": "Čas do\nvypnutí",
+            "description": "Interval automatického vypnutí (m=minut)"
         },
         "HallEffSensitivity": {
-            "text2": [
-                "Citlivost",
-                "Hall. čidla"
-            ],
-            "desc": "Citlivost Hallova čidla pro detekci spánku (0=vypnuto | 1=nejméně citlivé | ... | 9=nejvíce citlivé)"
+            "displayText": "Citlivost\nHall. čidla",
+            "description": "Citlivost Hallova čidla pro detekci spánku (0=vypnuto | 1=nejméně citlivé | ... | 9=nejvíce citlivé)"
         },
         "TemperatureUnit": {
-            "text2": [
-                "Jednotka",
-                "teploty"
-            ],
-            "desc": "C=Celsius | F=Fahrenheit"
+            "displayText": "Jednotka\nteploty",
+            "description": "C=Celsius | F=Fahrenheit"
         },
         "DisplayRotation": {
-            "text2": [
-                "Orientace",
-                "obrazovky"
-            ],
-            "desc": "P=pravák | L=levák | A=automaticky"
+            "displayText": "Orientace\nobrazovky",
+            "description": "P=pravák | L=levák | A=automaticky"
         },
         "CooldownBlink": {
-            "text2": [
-                "Blikáni při",
-                "chladnutí"
-            ],
-            "desc": "Blikat teplotou při chladnutí dokud je hrot horký"
+            "displayText": "Blikáni při\nchladnutí",
+            "description": "Blikat teplotou při chladnutí dokud je hrot horký"
         },
         "ScrollingSpeed": {
-            "text2": [
-                "Rychlost",
-                "posouvání"
-            ],
-            "desc": "Rychlost posouvání popisků podobných tomuto (P=pomalu | R=rychle)"
+            "displayText": "Rychlost\nposouvání",
+            "description": "Rychlost posouvání popisků podobných tomuto (P=pomalu | R=rychle)"
         },
         "ReverseButtonTempChange": {
-            "text2": [
-                "Prohodit",
-                "tl. +-?"
-            ],
-            "desc": "Prohodit tlačítka pro změnu teploty"
+            "displayText": "Prohodit\ntl. +-?",
+            "description": "Prohodit tlačítka pro změnu teploty"
         },
         "AnimSpeed": {
-            "text2": [
-                "Anim.",
-                "rychlost"
-            ],
-            "desc": "Tempo animace ikon v menu (O=vypnuto | P=pomalu | S=středně | R=rychle)"
+            "displayText": "Anim.\nrychlost",
+            "description": "Tempo animace ikon v menu (O=vypnuto | P=pomalu | S=středně | R=rychle)"
         },
         "AnimLoop": {
-            "text2": [
-                "Anim.",
-                "smyčka"
-            ],
-            "desc": "Animovat ikony hlavního menu ve smyčce"
+            "displayText": "Anim.\nsmyčka",
+            "description": "Animovat ikony hlavního menu ve smyčce"
         },
         "Brightness": {
-            "text2": [
-                "Jas",
-                "obrazovky"
-            ],
-            "desc": "Upravit jas OLED"
+            "displayText": "Jas\nobrazovky",
+            "description": "Upravit jas OLED"
         },
         "ColourInversion": {
-            "text2": [
-                "Invertovat",
-                "obrazovku"
-            ],
-            "desc": "Invertovat barvy na OLED"
+            "displayText": "Invertovat\nobrazovku",
+            "description": "Invertovat barvy na OLED"
         },
         "LOGOTime": {
-            "text2": [
-                "Trvání",
-                "boot loga"
-            ],
-            "desc": "Nastavení doby trvání boot loga (s=sekundy)"
+            "displayText": "Trvání\nboot loga",
+            "description": "Nastavení doby trvání boot loga (s=sekundy)"
         },
         "AdvancedIdle": {
-            "text2": [
-                "Podrobná obr.",
-                "nečinnosti"
-            ],
-            "desc": "Zobrazit detailní informace malým fontem na obrazovce nečinnosti"
+            "displayText": "Podrobná obr.\nnečinnosti",
+            "description": "Zobrazit detailní informace malým fontem na obrazovce nečinnosti"
         },
         "AdvancedSoldering": {
-            "text2": [
-                "Podrobná obr.",
-                "pájení"
-            ],
-            "desc": "Zobrazit detailní informace malým fontem na obrazovce pájení"
+            "displayText": "Podrobná obr.\npájení",
+            "description": "Zobrazit detailní informace malým fontem na obrazovce pájení"
+        },
+        "BluetoothLE": {
+            "displayText": "Bluetooth\n",
+            "description": "Povoluje BLE"
         },
         "PowerLimit": {
-            "text2": [
-                "Omezení",
-                "Výkonu"
-            ],
-            "desc": "Maximální příkon páječky (W=watt)"
+            "displayText": "Omezení\nVýkonu",
+            "description": "Maximální příkon páječky (W=watt)"
         },
         "CalibrateCJC": {
-            "text2": [
-                "Calibrate CJC",
-                "at next boot"
-            ],
-            "desc": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
+            "displayText": "Kalibrovat CJC\npři příštím startu",
+            "description": "Při příštím startu bude kalibrována kompenzace studeného spoje (není třeba pokud Delta T je < 5°C)"
         },
         "VoltageCalibration": {
-            "text2": [
-                "Kalibrovat",
-                "vstupní napětí?"
-            ],
-            "desc": "Začít kalibraci vstupního napětí (dlouhý stisk pro ukončení)"
+            "displayText": "Kalibrovat\nvstupní napětí?",
+            "description": "Začít kalibraci vstupního napětí (dlouhý stisk pro ukončení)"
         },
         "PowerPulsePower": {
-            "text2": [
-                "Napájecí",
-                "pulz"
-            ],
-            "desc": "Intenzita výkonu pulzu pro udržení páječky vzhůru (watt)"
+            "displayText": "Napájecí\npulz",
+            "description": "Intenzita výkonu pulzu pro udržení páječky vzhůru (watt)"
         },
         "PowerPulseWait": {
-            "text2": [
-                "Prodleva",
-                "napáj. pulzu"
-            ],
-            "desc": "Prodleva než je spuštěn pulz pro udržení páječky vzhůru pulzu pro udržení páječky vzhůru (x 2,5s)"
+            "displayText": "Prodleva\nnapáj. pulzu",
+            "description": "Prodleva než je spuštěn pulz pro udržení páječky vzhůru pulzu pro udržení páječky vzhůru (x 2,5s)"
         },
         "PowerPulseDuration": {
-            "text2": [
-                "Délka",
-                "napáj. pulzu"
-            ],
-            "desc": "Délka pulzu pro udržení páječky vzhůru (x 250ms)"
+            "displayText": "Délka\nnapáj. pulzu",
+            "description": "Délka pulzu pro udržení páječky vzhůru (x 250ms)"
         },
         "SettingsReset": {
-            "text2": [
-                "Obnovit tovární",
-                "nastavení?"
-            ],
-            "desc": "Obnovit všechna nastavení na výchozí"
+            "displayText": "Obnovit tovární\nnastavení?",
+            "description": "Obnovit všechna nastavení na výchozí"
         },
         "LanguageSwitch": {
-            "text2": [
-                "Jazyk:",
-                " CS       Český"
-            ],
-            "desc": ""
+            "displayText": "Jazyk:\n CS       Český",
+            "description": ""
         }
     }
 }

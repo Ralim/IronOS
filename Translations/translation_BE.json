@@ -2,44 +2,79 @@
     "languageCode": "BE",
     "languageLocalName": "Беларуская",
     "tempUnitFahrenheit": false,
-    "messages": {
-        "SettingsCalibrationWarning": "Пераканайцеся, што пры наступнай загрузцы наканечнік і ручка маюць пакаёвую тэмпературу!",
-        "CJCCalibrating": "каліброўка",
-        "SettingsResetWarning": "Вы ўпэннены, што жадаеце зкінуць налады да першапачатковых значэнняў?",
-        "UVLOWarningString": "НАПРУГА--",
-        "UndervoltageString": "Нізкая напруга",
-        "InputVoltageString": "Сілкаванне В: ",
-        "SleepingSimpleString": "Zzzz",
-        "SleepingAdvancedString": "Чаканне...",
-        "SleepingTipAdvancedString": "Джала:",
-        "OffString": "Выкл.",
-        "DeviceFailedValidationWarning": "Ваша прылада, хутчэй за ўсё, падробка!"
-    },
     "messagesWarn": {
-        "CJCCalibrationDone": [
-            "Каліброўка",
-            "зроблена!"
-        ],
-        "ResetOKMessage": "Скід OK",
-        "SettingsResetMessage": [
-            "Налады",
-            "зкінуты!"
-        ],
-        "NoAccelerometerMessage": [
-            "Ня вызначаны",
-            "акселерометр!"
-        ],
-        "NoPowerDeliveryMessage": [
-            "Няма USB-PD IC",
-            "выяўлены!"
-        ],
-        "LockingKeysString": "ЗАМКНУТЫ",
-        "UnlockingKeysString": "АДЫМКНУТЫ",
-        "WarningKeysLockedString": "!ЗАМКНУТЫ!",
-        "WarningThermalRunaway": [
-            "Цеплавы",
-            "Уцякач"
-        ]
+        "CalibrationDone": {
+            "message": "Каліброўка\nзроблена!"
+        },
+        "ResetOKMessage": {
+            "message": "Скід OK"
+        },
+        "SettingsResetMessage": {
+            "message": "Налады\nзкінуты!"
+        },
+        "NoAccelerometerMessage": {
+            "message": "Ня вызначаны\nакселерометр!"
+        },
+        "NoPowerDeliveryMessage": {
+            "message": "Няма USB-PD IC\nвыяўлены!"
+        },
+        "LockingKeysString": {
+            "message": "ЗАМКНУТЫ"
+        },
+        "UnlockingKeysString": {
+            "message": "АДЫМКНУТЫ"
+        },
+        "WarningKeysLockedString": {
+            "message": "!ЗАМКНУТЫ!"
+        },
+        "WarningThermalRunaway": {
+            "message": "Некантралюемае\nразаграванне"
+        },
+        "WarningTipShorted": {
+            "message": "!Кароткае замыканне на джале!"
+        },
+        "SettingsCalibrationWarning": {
+            "message": "Пераканайцеся, што пры наступнай загрузцы наканечнік і ручка маюць пакаёвую тэмпературу!"
+        },
+        "CJCCalibrating": {
+            "message": "каліброўка\n"
+        },
+        "SettingsResetWarning": {
+            "message": "Вы ўпэннены, што жадаеце зкінуць налады да першапачатковых значэнняў?"
+        },
+        "UVLOWarningString": {
+            "message": "НАПРУГА--"
+        },
+        "UndervoltageString": {
+            "message": "Нізкая напруга\n"
+        },
+        "InputVoltageString": {
+            "message": "Сілкаванне В: \n"
+        },
+        "SleepingSimpleString": {
+            "message": "Zzzz"
+        },
+        "SleepingAdvancedString": {
+            "message": "Чаканне...\n"
+        },
+        "SleepingTipAdvancedString": {
+            "message": "Джала: \n"
+        },
+        "OffString": {
+            "message": "Выкл."
+        },
+        "ProfilePreheatString": {
+            "message": "Разагрэць\n"
+        },
+        "ProfileCooldownString": {
+            "message": "Астудзіць\n"
+        },
+        "DeviceFailedValidationWarning": {
+            "message": "Ваша прылада, хутчэй за ўсё, падробка!"
+        },
+        "TooHotToStartProfileWarning": {
+            "message": "Занадта горача\nкаб запусціць профіль"
+        }
     },
     "characters": {
         "SettingRightChar": "П",
@@ -59,279 +94,226 @@
     },
     "menuGroups": {
         "PowerMenu": {
-            "text2": [
-                "Налады",
-                "сілкавання"
-            ],
-            "desc": ""
+            "displayText": "Налады\nсілкавання",
+            "description": ""
         },
         "SolderingMenu": {
-            "text2": [
-                "Налады",
-                "пайкі"
-            ],
-            "desc": ""
+            "displayText": "Налады\nпайкі",
+            "description": ""
         },
         "PowerSavingMenu": {
-            "text2": [
-                "Рэжымы",
-                "сну"
-            ],
-            "desc": ""
+            "displayText": "Рэжымы\nсну",
+            "description": ""
         },
         "UIMenu": {
-            "text2": [
-                "Налады",
-                "інтэрфейсу"
-            ],
-            "desc": ""
+            "displayText": "Налады\nінтэрфейсу",
+            "description": ""
         },
         "AdvancedMenu": {
-            "text2": [
-                "Дадатковыя",
-                "налады"
-            ],
-            "desc": ""
+            "displayText": "Дадатковыя\nналады",
+            "description": ""
         }
     },
     "menuOptions": {
         "DCInCutoff": {
-            "text2": [
-                "Крыніца",
-                "сілкавання"
-            ],
-            "desc": "Крыніца сілкавання. Усталюе напругу адсечкі. (DC 10В) (S 3,3В на ячэйку, без абмежавання магутнасці)"
+            "displayText": "Крыніца\nсілкавання",
+            "description": "Крыніца сілкавання. Усталюе напругу адсечкі. (DC 10В) (S 3,3В на ячэйку, без абмежавання магутнасці)"
         },
         "MinVolCell": {
-            "text2": [
-                "Мін.",
-                "напр."
-            ],
-            "desc": "Мінімальная дазволеная напруга на ячэйку (3S: 3 - 3,7V | 4S: 2,4 - 3,7V)"
+            "displayText": "Мін.\nнапр.",
+            "description": "Мінімальная дазволеная напруга на ячэйку (3S: 3 - 3,7V | 4S: 2,4 - 3,7V)"
         },
         "QCMaxVoltage": {
-            "text2": [
-                "Магутнасць",
-                "сілкавання"
-            ],
-            "desc": "Магутнасць выкарыстоўваемай крыніцы сілкавання"
+            "displayText": "Магутнасць\nсілкавання",
+            "description": "Магутнасць выкарыстоўваемай крыніцы сілкавання"
         },
         "PDNegTimeout": {
-            "text2": [
-                "PD",
-                "прыпынак"
-            ],
-            "desc": "Час чакання ўзгаднення PD з крокам 100 мс для сумяшчальнасці з некаторымі зараднымі зараднымі прыладамі QC (0: адключана)"
+            "displayText": "PD\nпрыпынак",
+            "description": "Час чакання ўзгаднення PD з крокам 100 мс для сумяшчальнасці з некаторымі зараднымі зараднымі прыладамі QC (0: адключана)"
+        },
+        "PDVpdo": {
+            "displayText": "PD\nVPDO",
+            "description": "Уключае рэжымы PPS & EPR."
         },
         "BoostTemperature": {
-            "text2": [
-                "t° турба",
-                "рэжыму"
-            ],
-            "desc": "Тэмпература джала ў турба-рэжыме"
+            "displayText": "t° турба\nрэжыму",
+            "description": "Тэмпература джала ў турба-рэжыме"
         },
         "AutoStart": {
-            "text2": [
-                "Аўта",
-                "старт"
-            ],
-            "desc": "Рэжым, у якім запускаецца паяльнік пры падачы сілкавання (В=Выкл. | П=Пайка | Ч=Чаканне | К=Чаканне пры комн. тэмп.)"
+            "displayText": "Аўта\nстарт",
+            "description": "Рэжым, у якім запускаецца паяльнік пры падачы сілкавання (В=Выкл. | П=Пайка | Ч=Чаканне | К=Чаканне пры комн. тэмп.)"
         },
         "TempChangeShortStep": {
-            "text2": [
-                "Крок тэмп.",
-                "кар. нац."
-            ],
-            "desc": "Крок вымярэння тэмпературы пры кароткім націску кнопак"
+            "displayText": "Крок тэмп.\nкар. нац.",
+            "description": "Крок вымярэння тэмпературы пры кароткім націску кнопак"
         },
         "TempChangeLongStep": {
-            "text2": [
-                "Крок тэмп.",
-                "пад. нац."
-            ],
-            "desc": "Крок вымярэння тэмпературы пры падоўжаным націску кнопак"
+            "displayText": "Крок тэмп.\nпад. нац.",
+            "description": "Крок вымярэння тэмпературы пры падоўжаным націску кнопак"
         },
         "LockingMode": {
-            "text2": [
-                "Дазволіць",
-                "блок. кнопак"
-            ],
-            "desc": "Пры рабоце падоўжаны націск дзьвух кнопак блакуе іх (А=Адключана | Т=Толькі турба | П=Поўная блакіроўка)"
+            "displayText": "Дазволіць\nблок. кнопак",
+            "description": "Пры рабоце падоўжаны націск дзьвух кнопак блакуе іх (А=Адключана | Т=Толькі турба | П=Поўная блакіроўка)"
+        },
+        "ProfilePhases": {
+            "displayText": "Profile\nPhases",
+            "description": "Колькасць фаз у рэжыме профілю"
+        },
+        "ProfilePreheatTemp": {
+            "displayText": "Preheat\nTemp",
+            "description": "Разагрэйце да гэтай тэмпературы ў пачатку профільнага рэжыму"
+        },
+        "ProfilePreheatSpeed": {
+            "displayText": "Preheat\nSpeed",
+            "description": "Разагрэйце з гэтай хуткасцю (градусы ў секунду)"
+        },
+        "ProfilePhase1Temp": {
+            "displayText": "Phase 1\nTemp",
+            "description": "Мэтавая тэмпература ў канцы гэтай фазы"
+        },
+        "ProfilePhase1Duration": {
+            "displayText": "Phase 1\nDuration",
+            "description": "Мэтавая працягласць гэтай фазы (секунды)"
+        },
+        "ProfilePhase2Temp": {
+            "displayText": "Phase 2\nTemp",
+            "description": ""
+        },
+        "ProfilePhase2Duration": {
+            "displayText": "Phase 2\nDuration",
+            "description": ""
+        },
+        "ProfilePhase3Temp": {
+            "displayText": "Phase 3\nTemp",
+            "description": ""
+        },
+        "ProfilePhase3Duration": {
+            "displayText": "Phase 3\nDuration",
+            "description": ""
+        },
+        "ProfilePhase4Temp": {
+            "displayText": "Phase 4\nTemp",
+            "description": ""
+        },
+        "ProfilePhase4Duration": {
+            "displayText": "Phase 4\nDuration",
+            "description": ""
+        },
+        "ProfilePhase5Temp": {
+            "displayText": "Phase 5\nTemp",
+            "description": ""
+        },
+        "ProfilePhase5Duration": {
+            "displayText": "Phase 5\nDuration",
+            "description": ""
+        },
+        "ProfileCooldownSpeed": {
+            "displayText": "Cooldown\nSpeed",
+            "description": "Астуджаць з гэтай хуткасцю ў канцы профільнага рэжыму (градусы ў секунду)"
         },
         "MotionSensitivity": {
-            "text2": [
-                "Адчувальнасць",
-                "акселерометра"
-            ],
-            "desc": "Адчувальнасць акселерометра (0=Выкл. | 1=Мін. | ... | 9=Макс.)"
+            "displayText": "Адчувальнасць\nакселерометра",
+            "description": "Адчувальнасць акселерометра (0=Выкл. | 1=Мін. | ... | 9=Макс.)"
         },
         "SleepTemperature": {
-            "text2": [
-                "Тэмп.",
-                "чакання"
-            ],
-            "desc": "Тэмпература рэжыму чакання"
+            "displayText": "Тэмп.\nчакання",
+            "description": "Тэмпература рэжыму чакання"
         },
         "SleepTimeout": {
-            "text2": [
-                "Таймаўт",
-                "чакання"
-            ],
-            "desc": "Час да пераходу ў рэжым чакання (Хвіліны | Секунды)"
+            "displayText": "Таймаўт\nчакання",
+            "description": "Час да пераходу ў рэжым чакання (Хвіліны | Секунды)"
         },
         "ShutdownTimeout": {
-            "text2": [
-                "Таймаут",
-                "выключэння"
-            ],
-            "desc": "Час да адключэння паяльніка (Хвіліны)"
+            "displayText": "Таймаут\nвыключэння",
+            "description": "Час да адключэння паяльніка (Хвіліны)"
         },
         "HallEffSensitivity": {
-            "text2": [
-                "Эфект Хола",
-                "адчувальнасць"
-            ],
-            "desc": "Узровень адчувальнасці датчыка хола ў рэжыме сну (0=Выкл. | 1=Мін. | ... | 9=Макс.)"
+            "displayText": "Эфект Хола\nадчувальнасць",
+            "description": "Узровень адчувальнасці датчыка хола ў рэжыме сну (0=Выкл. | 1=Мін. | ... | 9=Макс.)"
         },
         "TemperatureUnit": {
-            "text2": [
-                "Адзінкі",
-                "тэмпературы"
-            ],
-            "desc": "Адзінкі вымярэння тэмпературы (C=Цэльcія | F=Фарэнгейта)"
+            "displayText": "Адзінкі\nтэмпературы",
+            "description": "Адзінкі вымярэння тэмпературы (C=Цэльcія | F=Фарэнгейта)"
         },
         "DisplayRotation": {
-            "text2": [
-                "Арыентацыя",
-                "экрану"
-            ],
-            "desc": "Арыентацыя экрану (П=Правая рука | Л=Левая рука | А=Аўта)"
+            "displayText": "Арыентацыя\nэкрану",
+            "description": "Арыентацыя экрану (П=Правая рука | Л=Левая рука | А=Аўта)"
         },
         "CooldownBlink": {
-            "text2": [
-                "Мігценне t°",
-                "пры астуджэнні"
-            ],
-            "desc": "Міргаць тэмпературай на экране астуджэння, пакуль джала яшчэ гарачае"
+            "displayText": "Мігценне t°\nпры астуджэнні",
+            "description": "Міргаць тэмпературай на экране астуджэння, пакуль джала яшчэ гарачае"
         },
         "ScrollingSpeed": {
-            "text2": [
-                "Хуткацсь",
-                "тексту"
-            ],
-            "desc": "Хуткасць гартання тэксту (М=марудна | Х=хутка)"
+            "displayText": "Хуткацсь\nтексту",
+            "description": "Хуткасць гартання тэксту (М=марудна | Х=хутка)"
         },
         "ReverseButtonTempChange": {
-            "text2": [
-                "Інвертаваць",
-                "кнопкі"
-            ],
-            "desc": "Інвертаваць кнопкі вымярэння тэмпературы"
+            "displayText": "Інвертаваць\nкнопкі",
+            "description": "Інвертаваць кнопкі вымярэння тэмпературы"
         },
         "AnimSpeed": {
-            "text2": [
-                "Хуткасць",
-                "анімацыі"
-            ],
-            "desc": "Хуткасць анімацыі гузікаў у галоўным меню (Мілісекунды) (А=Адключана | Н=Нізкая | С=Сярэдняя | В=Высокая)"
+            "displayText": "Хуткасць\nанімацыі",
+            "description": "Хуткасць анімацыі гузікаў у галоўным меню (Мілісекунды) (А=Адключана | Н=Нізкая | С=Сярэдняя | В=Высокая)"
         },
         "AnimLoop": {
-            "text2": [
-                "Зацыкленая",
-                "анімацыя"
-            ],
-            "desc": "Зацыкленая анімацыя гузікаў у галоўным меню"
+            "displayText": "Зацыкленая\nанімацыя",
+            "description": "Зацыкленая анімацыя гузікаў у галоўным меню"
         },
         "Brightness": {
-            "text2": [
-                "Экран",
-                "Яркасць"
-            ],
-            "desc": "Адрэгулюйце кантраснасць / яркасць OLED-экрана"
+            "displayText": "Экран\nЯркасць",
+            "description": "Адрэгулюйце кантраснасць / яркасць OLED-экрана"
         },
         "ColourInversion": {
-            "text2": [
-                "Экран",
-                "Інвертаваць"
-            ],
-            "desc": "Інвертаваць колеры OLED-экрана"
+            "displayText": "Экран\nІнвертаваць",
+            "description": "Інвертаваць колеры OLED-экрана"
         },
         "LOGOTime": {
-            "text2": [
-                "Лагатып загрузкі",
-                "працягласць"
-            ],
-            "desc": "Усталяваць працягласць лагатыпа загрузкі (s=Секунды)"
+            "displayText": "Лагатып загрузкі\nпрацягласць",
+            "description": "Усталяваць працягласць лагатыпа загрузкі (s=Секунды)"
         },
         "AdvancedIdle": {
-            "text2": [
-                "Падрабязны",
-                "рэжым чакання"
-            ],
-            "desc": "Адлюстроўваць дэталёвую инфармацыю паменьшаным шрыфтом на экране чакання"
+            "displayText": "Падрабязны\nрэжым чакання",
+            "description": "Адлюстроўваць дэталёвую инфармацыю паменьшаным шрыфтом на экране чакання"
         },
         "AdvancedSoldering": {
-            "text2": [
-                "Падрабязны",
-                "экран пайкі"
-            ],
-            "desc": "Паказваць дэталёвую інформацыю на экране пайкі"
+            "displayText": "Падрабязны\nэкран пайкі",
+            "description": "Паказваць дэталёвую інформацыю на экране пайкі"
+        },
+        "BluetoothLE": {
+            "displayText": "Bluetooth\n",
+            "description": "Уключыць BLE"
         },
         "PowerLimit": {
-            "text2": [
-                "Межы",
-                "магутнасці"
-            ],
-            "desc": "Максімальная магутнасць, якую можа выкарыстоўваць паяльнік (Ватт)"
+            "displayText": "Межы\nмагутнасці",
+            "description": "Максімальная магутнасць, якую можа выкарыстоўваць паяльнік (Ватт)"
         },
         "CalibrateCJC": {
-            "text2": [
-                "Каліброўка тэмпературы",
-                "пры наступнай загрузцы"
-            ],
-            "desc": "Каліброўка тэмпературы пры наступным уключэнні (не патрабуецца, калі розніца тэмператур меньш за 5°C)"
+            "displayText": "Каліброўка тэмпературы\nпры наступнай загрузцы",
+            "description": "Каліброўка тэмпературы пры наступным уключэнні (не патрабуецца, калі розніца тэмператур меньш за 5°C)"
         },
         "VoltageCalibration": {
-            "text2": [
-                "Каліброўка",
-                "напругі"
-            ],
-            "desc": "Каліброўка ўваходнай напругі (падоўжаны націск для выхаду)"
+            "displayText": "Каліброўка\nнапругі",
+            "description": "Каліброўка ўваходнай напругі (падоўжаны націск для выхаду)"
         },
         "PowerPulsePower": {
-            "text2": [
-                "Сіла імп.",
-                "сілкав. Вт"
-            ],
-            "desc": "Моц імпульса ўтрымливаючага ад сну павербанку ці іншай крыніцы сілкавання"
+            "displayText": "Сіла імп.\nсілкав. Вт",
+            "description": "Моц імпульса ўтрымливаючага ад сну павербанку ці іншай крыніцы сілкавання"
         },
         "PowerPulseWait": {
-            "text2": [
-                "Імпульс магутнасці",
-                "час чакання"
-            ],
-            "desc": "Час чакання перад запускам кожнага імпульсу няспання (x 2.5 с)"
+            "displayText": "Імпульс магутнасці\nчас чакання",
+            "description": "Час чакання перад запускам кожнага імпульсу няспання (x 2.5 с)"
         },
         "PowerPulseDuration": {
-            "text2": [
-                "Імпульс магутнасці",
-                "працягласць"
-            ],
-            "desc": "Працягласць імпульсу няспання (x 250 мс)"
+            "displayText": "Імпульс магутнасці\nпрацягласць",
+            "description": "Працягласць імпульсу няспання (x 250 мс)"
         },
         "SettingsReset": {
-            "text2": [
-                "Скід",
-                "наладаў"
-            ],
-            "desc": "Скід наладаў да першапачатковых значэнняў"
+            "displayText": "Скід\nналадаў",
+            "description": "Скід наладаў да першапачатковых значэнняў"
         },
         "LanguageSwitch": {
-            "text2": [
-                "Мова:",
-                " BY  Беларуская"
-            ],
-            "desc": ""
+            "displayText": "Мова:\n BY  Беларуская",
+            "description": ""
         }
     }
 }

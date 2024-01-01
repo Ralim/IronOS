@@ -7,6 +7,7 @@
 
 #include "BSP.h"
 #include "FreeRTOS.h"
+#include "HUB238.hpp"
 #include "QC3.h"
 #include "Settings.h"
 #include "USBPD.h"
@@ -19,6 +20,7 @@
 // Small worker thread to handle power (PD + QC) related steps
 
 void startPOWTask(void const *argument __unused) {
+
   // Init any other misc sensors
   postRToSInit();
   while (preStartChecksDone() == 0) {
@@ -26,7 +28,7 @@ void startPOWTask(void const *argument __unused) {
   }
   // You have to run this once we are willing to answer PD messages
   // Setting up too early can mean that we miss the ~20ms window to respond on some chargers
-#if POW_PD
+#ifdef POW_PD
   USBPowerDelivery::start();
   // Crank the handle at boot until we are stable and waiting for IRQ
   USBPowerDelivery::step();
@@ -46,7 +48,7 @@ void startPOWTask(void const *argument __unused) {
       res = xTaskNotifyWait(0x0, 0xFFFFFF, NULL, TICKS_100MS / 2);
     }
 
-#if POW_PD
+#ifdef POW_PD
     if (res != pdFALSE || getFUS302IRQLow()) {
       USBPowerDelivery::IRQOccured();
     }
@@ -55,6 +57,9 @@ void startPOWTask(void const *argument __unused) {
 
 #else
     (void)res;
+#endif
+#if POW_PD_EXT == 1
+    hub238_check_negotiation();
 #endif
     power_check();
   }

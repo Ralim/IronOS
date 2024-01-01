@@ -60,6 +60,15 @@
 #define REVERSE_BUTTON_TEMP_CHANGE 0 // 0:Default 1:Reverse - Reverse the plus and minus button assigment for temperature change
 
 /**
+ * OLED Brightness
+ *
+ */
+#define MIN_BRIGHTNESS     0   // Min OLED brightness selectable
+#define MAX_BRIGHTNESS     100 // Max OLED brightness selectable
+#define BRIGHTNESS_STEP    25  // OLED brightness increment
+#define DEFAULT_BRIGHTNESS 25  // default OLED brightness
+
+/**
  * Temp change settings
  */
 #define TEMP_CHANGE_SHORT_STEP     1  // Default temp change short step +1
@@ -77,7 +86,7 @@
 #define POWER_PULSE_DEFAULT 0
 #else
 #define POWER_PULSE_DEFAULT 5
-#endif
+#endif                                 /* Pinecil */
 #define POWER_PULSE_WAIT_DEFAULT     4 // Default rate of the power pulse: 4*2500 = 10000 ms = 10 s
 #define POWER_PULSE_DURATION_DEFAULT 1 // Default duration of the power pulse: 1*250 = 250 ms
 
@@ -132,15 +141,17 @@
 #define MAX_TEMP_C             450                       // Max soldering temp selectable °C
 #define MAX_TEMP_F             850                       // Max soldering temp selectable °F
 #define MIN_TEMP_C             10                        // Min soldering temp selectable °C
-#define MIN_TEMP_F             60                        // Min soldering temp selectable °F
+#define MIN_TEMP_F             50                        // Min soldering temp selectable °F
 #define MIN_BOOST_TEMP_C       250                       // The min settable temp for boost mode °C
 #define MIN_BOOST_TEMP_F       480                       // The min settable temp for boost mode °F
 
-#define POW_PD     1
-#define POW_QC     1
-#define POW_DC     1
-#define POW_QC_20V 1
-#define ENABLE_QC2 1
+#define POW_PD             1
+#define USB_PD_EPR_WATTAGE 0 /*No EPR (Yet?) */
+#define POW_PD_EXT         0
+#define POW_QC             1
+#define POW_DC             1
+#define POW_QC_20V         1
+#define ENABLE_QC2         1
 #define TEMP_TMP36
 #define ACCEL_BMA
 #define ACCEL_SC7
@@ -153,9 +164,12 @@
 #define HARDWARE_MAX_WATTAGE_X10 750
 #define TIP_THERMAL_MASS         65 // X10 watts to raise 1 deg C in 1 second
 #define TIP_RESISTANCE           75 // x10 ohms, 7.5 typical for Pinecil tips
-#endif
-#endif
+#define CANT_DIRECT_READ_SETTINGS
+#endif /* Pinecil */
 
-#define FLASH_LOGOADDR (0x08000000 + (126 * 1024))
+#define FLASH_LOGOADDR      (0x08000000 + (126 * 1024))
+#define SETTINGS_START_PAGE (0x08000000 + (127 * 1024))
 
 #define HAS_POWER_DEBUG_MENU
+
+#endif /* CONFIGURATION_H_ */

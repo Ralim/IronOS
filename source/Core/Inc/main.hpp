@@ -1,16 +1,17 @@
 #ifndef __MAIN_H
 #define __MAIN_H
-#include <stdint.h>
 #include "OLED.hpp"
 #include "Setup.h"
-extern volatile uint32_t currentTempTargetDegC;
-extern bool              settingsWereReset;
-extern bool              usb_pd_available;
+#include "Types.h"
+#include <stdint.h>
+extern volatile TemperatureType_t currentTempTargetDegC;
+extern bool                       settingsWereReset;
+extern bool                       usb_pd_available;
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void vApplicationStackOverflowHook(TaskHandle_t *pxTask, signed portCHAR *pcTaskName);
+void vApplicationStackOverflowHook(TaskHandle_t xTask, char *pcTaskName);
 
 // Threads
 void                startGUITask(void const *argument);
@@ -25,13 +26,15 @@ extern TickType_t   lastMovementTime;
 }
 // Accelerometer type
 enum class AccelType {
-  Scanning = 0,
-  None     = 1,
-  MMA      = 2,
-  LIS      = 3,
-  BMA      = 4,
-  MSA      = 5,
-  SC7      = 6,
+  Scanning  = 0,
+  None      = 1,
+  MMA       = 2,
+  LIS       = 3,
+  BMA       = 4,
+  MSA       = 5,
+  SC7       = 6,
+  GPIO      = 7,
+  LIS_CLONE = 8,
 };
 extern AccelType DetectedAccelerometerVersion;
 

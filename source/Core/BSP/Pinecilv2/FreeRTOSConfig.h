@@ -4,7 +4,7 @@
 
 #define portCHAR                                char
 #define configSUPPORT_STATIC_ALLOCATION         1
-#define configSUPPORT_DYNAMIC_ALLOCATION        0
+#define configSUPPORT_DYNAMIC_ALLOCATION        1
 #define CLINT_CTRL_ADDR                         (0x02000000UL)
 #define configCLINT_BASE_ADDRESS                CLINT_CTRL_ADDR
 #define configUSE_PREEMPTION                    1
@@ -14,7 +14,7 @@
 #define configTICK_RATE_HZ                      ((TickType_t)1000)
 #define configMAX_PRIORITIES                    (7)
 #define configMINIMAL_STACK_SIZE                ((unsigned short)160) /* Only needs to be this high as some demo tasks also use this constant.  In production only the idle task would use this. */
-#define configTOTAL_HEAP_SIZE                   ((size_t)0)
+#define configTOTAL_HEAP_SIZE                   ((size_t)1024 * 8)
 #define configMAX_TASK_NAME_LEN                 (24)
 #define configUSE_TRACE_FACILITY                0
 #define configUSE_16_BIT_TICKS                  0
@@ -35,7 +35,10 @@
 #define configUSE_CO_ROUTINES 0
 
 /* Software timer definitions. */
-#define configUSE_TIMERS 0
+#define configUSE_TIMERS             1
+#define configTIMER_TASK_PRIORITY    (configMAX_PRIORITIES - 1)
+#define configTIMER_QUEUE_LENGTH     8
+#define configTIMER_TASK_STACK_DEPTH (160)
 
 /* Task priorities.  Allow these to be overridden. */
 #ifndef uartPRIMARY_PRIORITY
@@ -63,7 +66,7 @@ void vApplicationSleep(uint32_t xExpectedIdleTime);
 
 #define INCLUDE_vTaskPrioritySet            0
 #define INCLUDE_uxTaskPriorityGet           0
-#define INCLUDE_vTaskDelete                 0
+#define INCLUDE_vTaskDelete                 1
 #define INCLUDE_vTaskSuspend                1
 #define INCLUDE_xResumeFromISR              1
 #define INCLUDE_vTaskDelayUntil             1

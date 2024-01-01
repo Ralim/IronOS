@@ -26,9 +26,9 @@ Then this works the same as a production release (use the correct file).
 
 # MHP30
 
-This is completely safe, but if it goes wrong just put the `.hex` file from the official website ([MHP30](https://www.minidso.com/forum.php?mod=viewthread&tid=4385&extra=page%3D1) onto the unit and you're back to the old firmware. Downloads for the `.hex` files to flash are available on the [releases page.](https://github.com/Ralim/IronOS/releases) The file you want is called MHP30.zip. Inside the zip file (make sure to extract the file before flashing with it) will be a file called `MHP30_{Language-Code}.hex`.
+This is completely safe, but if it goes wrong just put the corresponding `.hex` file from [the official website](https://e-design.com.cn/en/NewsDetail/4203645.html) ([mirror backup](https://github.com/Ralim/IronOS-Meta/tree/main/Firmware/Miniware)) onto the unit and you're back to the old firmware. Downloads for the `.hex` files to flash are available on the [releases page.](https://github.com/Ralim/IronOS/releases) The file you want is called MHP30.zip. Inside the zip file (make sure to extract the file before flashing with it) will be a file called `MHP30_{Language-Code}.hex`.
 
-Officially the bootloader on the devices only works under Windows (use the built-in File Explorer, as alternative file managers or copy handlers like Teracopy will fail). However, users have reported that it does work under Mac, and can be made to work under Linux _sometimes_. Details over on the [wiki page](https://github.com/Ralim/IronOS/wiki/Upgrading-Firmware).
+Officially the bootloader on the devices only works under Windows (use the built-in File Explorer, as alternative file managers or copy handlers like Teracopy will fail). However, users have reported that it does work under [Mac](#mac), and can be made to work under [Linux](#linux) _sometimes_ (look for details below).
 
 1. Hold the button closest to the tip (MHP30 the left button on the back), and plug in the USB to the computer.
 2. The unit will appear as a USB drive. (Screen will say `DFU` on it.)
@@ -55,7 +55,7 @@ sgr1ff1n (Shane) commented in [issue 11](https://github.com/Ralim/IronOS/issues/
 
 While in the past there were reports of unreliable upgrades, the consensus in [issue 11](https://github.com/Ralim/IronOS/issues/11) is that things work mostly as expected in Linux.
 
-@awigen has contributed a script [flash_ts100_linux.sh](https://raw.githubusercontent.com/Ralim/IronOS/master/Flashing/flash_ts100_linux.sh) that works on Ubuntu 16.04 as well as other distros.
+@awigen has contributed a script [flash_ts100_linux.sh](https://raw.githubusercontent.com/Ralim/IronOS/dev/scripts/flash_ts100_linux.sh) that works on Ubuntu 16.04 as well as other distros.
 
 If you want to do it manually (or if the script does not work for some reason) the general procedure is the same as for Windows, the differences are in the way to mount the unit and copy the firmware.
 Remember that after flashing, the firmware filename will have changed to end in `.RDY` or `.ERR` or `.NOT` and only `.RDY` means the flashing was successful!

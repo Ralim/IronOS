@@ -6,9 +6,11 @@
  */
 
 #include "BSP.h"
-#include "I2CBB.hpp"
+#include "I2CBB1.hpp"
+#include "I2CBB2.hpp"
 #include "Pins.h"
 #include "Setup.h"
+#include "configuration.h"
 #include <I2C_Wrapper.hpp>
 
 void preRToSInit() {
@@ -17,9 +19,10 @@ void preRToSInit() {
   HAL_Init();
   Setup_HAL(); // Setup all the HAL objects
   BSPInit();
-#ifdef I2C_SOFT
-  I2CBB::init();
+#ifdef I2C_SOFT_BUS_2
+  I2CBB2::init();
 #endif
-  /* Init the IPC objects */
-  FRToSI2C::FRToSInit();
+#ifdef I2C_SOFT_BUS_1
+  I2CBB1::init();
+#endif
 }

@@ -11,7 +11,7 @@ logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
 
 HERE = Path(__file__).resolve().parent
-TRANSLATION_DEFS_PATH = os.path.join(HERE, "translations_def.js")
+TRANSLATION_DEFS_PATH = os.path.join(HERE, "translations_definitions.json")
 ENGLISH_TRANSLATION_PATH = os.path.join(HERE, "translation_EN.json")
 MENU_DOCS_FILE_PATH = os.path.join(HERE.parent, "Documentation/Settings.md")
 
@@ -99,8 +99,8 @@ def main() -> None:
     json_dir = HERE
     print(json_dir)
     logging.info("Loading translation definitions")
-    defs = load_json(TRANSLATION_DEFS_PATH, True)
-    eng_translation = load_json(ENGLISH_TRANSLATION_PATH, False)
+    defs = load_json(TRANSLATION_DEFS_PATH)
+    eng_translation = load_json(ENGLISH_TRANSLATION_PATH)
     with open(MENU_DOCS_FILE_PATH, "w") as outputf:
         write_header(outputf)
         write_menu_categories(outputf, defs, eng_translation)

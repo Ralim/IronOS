@@ -26,8 +26,9 @@ bool shouldBeSleeping(bool inAutoStart) {
   // threshold, and if so then we force sleep
   if (getHallSensorFitted() && lookupHallEffectThreshold()) {
     int16_t hallEffectStrength = getRawHallEffect();
-    if (hallEffectStrength < 0)
+    if (hallEffectStrength < 0) {
       hallEffectStrength = -hallEffectStrength;
+    }
     // Have absolute value of measure of magnetic field strength
     if (hallEffectStrength > lookupHallEffectThreshold()) {
       if (lastHallEffectSleepStart == 0) {

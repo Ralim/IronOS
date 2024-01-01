@@ -40,8 +40,8 @@ enum SettingsOptions {
   CalibrationOffset              = 23, // This stores the temperature offset for this tip in the iron.
   PowerLimit                     = 24, // Maximum power iron allowed to output
   ReverseButtonTempChangeEnabled = 25, // Change the plus and minus button assigment
-  TempChangeLongStep             = 26, // Change the plus and minus button assigment
-  TempChangeShortStep            = 27, // Change the plus and minus button assigment
+  TempChangeLongStep             = 26, // Temperature-change-increment on long button press
+  TempChangeShortStep            = 27, // Temperature-change-increment on short button press
   HallEffectSensitivity          = 28, // Operating mode of the hall effect sensor
   AccelMissingWarningCounter     = 29, // Counter of how many times we have warned we cannot detect the accelerometer
   PDMissingWarningCounter        = 30, // Counter of how many times we have warned we cannot detect the pd interface
@@ -51,9 +51,24 @@ enum SettingsOptions {
   OLEDBrightness                 = 34, // Brightness for the OLED display
   LOGOTime                       = 35, // Duration the logo will be displayed for
   CalibrateCJC                   = 36, // Toggle calibrate CJC at next boot
-
+  BluetoothLE                    = 37, // Toggle BLE if present
+  PDVpdo                         = 38, // Toggle PPS & EPR
+  ProfilePhases                  = 39, // Number of profile mode phases
+  ProfilePreheatTemp             = 40, // Temperature to preheat to before the first phase
+  ProfilePreheatSpeed            = 41, // Maximum allowed preheat speed in degrees per second
+  ProfilePhase1Temp              = 42, // Temperature to target for the end of phase 1
+  ProfilePhase1Duration          = 43, // Target duration for phase 1
+  ProfilePhase2Temp              = 44, // Temperature to target for the end of phase 2
+  ProfilePhase2Duration          = 45, // Target duration for phase 2
+  ProfilePhase3Temp              = 46, // Temperature to target for the end of phase 3
+  ProfilePhase3Duration          = 47, // Target duration for phase 3
+  ProfilePhase4Temp              = 48, // Temperature to target for the end of phase 4
+  ProfilePhase4Duration          = 49, // Target duration for phase 4
+  ProfilePhase5Temp              = 50, // Temperature to target for the end of phase 5
+  ProfilePhase5Duration          = 51, // Target duration for phase 5
+  ProfileCooldownSpeed           = 52, // Maximum allowed cooldown speed in degrees per second
   //
-  SettingsOptionsLength = 37, //
+  SettingsOptionsLength = 53, //
 };
 
 typedef enum {
@@ -63,6 +78,26 @@ typedef enum {
   FAST      = 3, //
   MAX_VALUE = 4  //
 } settingOffSpeed_t;
+
+typedef enum {
+  NO     = 0, // Disabled
+  SOLDER = 1, // Gain default soldering temp (Soldering Mode)
+  SLEEP  = 2, // Gain default sleeping temp (Idle/Standby Mode)
+  ZERO   = 3, // Power on only (No heat Mode)
+} autoStartMode_t;
+
+typedef enum {
+  RIGHT = 0, // Right-hand screen orientation
+  LEFT  = 1, // Left-hand screen orientation
+  AUTO  = 2, // Automatic screen orientation based on accel.data if presented
+} orientationMode_t;
+
+typedef enum {
+  SKIP     = 0, // Skip boot logo
+  ONETIME  = 5, // Show boot logo once (if animated) and stall until a button toggled
+  INFINITY = 6, // Show boot logo on repeat (if animated) until a button toggled
+} logoMode_t;
+
 // Settings wide operations
 void saveSettings();
 bool loadSettings();

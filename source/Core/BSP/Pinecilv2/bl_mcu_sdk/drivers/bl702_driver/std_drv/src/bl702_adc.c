@@ -50,16 +50,16 @@
  */
 #undef MSG
 #define MSG(...)
-#define AON_CLK_SET_DUMMY_WAIT \
-  {                            \
-    __NOP();                   \
-    __NOP();                   \
-    __NOP();                   \
-    __NOP();                   \
-    __NOP();                   \
-    __NOP();                   \
-    __NOP();                   \
-    __NOP();                   \
+#define AON_CLK_SET_DUMMY_WAIT                                                                                                                                                                         \
+  {                                                                                                                                                                                                    \
+    __NOP();                                                                                                                                                                                           \
+    __NOP();                                                                                                                                                                                           \
+    __NOP();                                                                                                                                                                                           \
+    __NOP();                                                                                                                                                                                           \
+    __NOP();                                                                                                                                                                                           \
+    __NOP();                                                                                                                                                                                           \
+    __NOP();                                                                                                                                                                                           \
+    __NOP();                                                                                                                                                                                           \
   }
 #define ADC_RESTART_DUMMY_WAIT BL702_Delay_US(100)
 

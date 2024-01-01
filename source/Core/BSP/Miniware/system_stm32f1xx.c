@@ -3,8 +3,8 @@
 #include "stm32f1xx.h"
 
 #if !defined(HSI_VALUE)
-#define HSI_VALUE                                               \
-  8000000U /*!< Default value of the Internal oscillator in Hz. \
+#define HSI_VALUE                                                                                                                                                                                      \
+  8000000U /*!< Default value of the Internal oscillator in Hz.                                                                                                                                        \
                 This value can be provided and adapted by the user application. */
 #endif     /* HSI_VALUE */
 
@@ -12,12 +12,8 @@
 #if defined(STM32F100xE) || defined(STM32F101xE) || defined(STM32F101xG) || defined(STM32F103xE) || defined(STM32F103xG)
 /* #define DATA_IN_ExtSRAM */
 #endif /* STM32F100xE || STM32F101xE || STM32F101xG || STM32F103xE || STM32F103xG */
-
 #ifndef VECT_TAB_OFFSET
-#define VECT_TAB_OFFSET                            \
-  0x00004000U /*!< Vector Table base offset field. \
-           This value must be a multiple of 0x200. */
-// We offset this by 0x4000 to because of the bootloader
+#error VECT_TAB_OFFSET
 #endif
 
 /*******************************************************************************
@@ -90,7 +86,7 @@ void SystemInit(void) {
 #ifdef VECT_TAB_SRAM
   SCB->VTOR = SRAM_BASE | VECT_TAB_OFFSET; /* Vector Table Relocation in Internal SRAM. */
 #else
-  SCB->VTOR  = FLASH_BASE | VECT_TAB_OFFSET; /* Vector Table Relocation in Internal FLASH. */
+  SCB->VTOR = FLASH_BASE | VECT_TAB_OFFSET; /* Vector Table Relocation in Internal FLASH. */
 #endif
 }
 

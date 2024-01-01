@@ -2,44 +2,79 @@
     "languageCode": "UK",
     "languageLocalName": "Українська",
     "tempUnitFahrenheit": false,
-    "messages": {
-        "SettingsCalibrationWarning": "Під час наступного завантаження переконайтеся, що жало і ручка мають кімнатну температуру!",
-        "CJCCalibrating": "калібрування",
-        "SettingsResetWarning": "Ви дійсно хочете скинути налаштування до значень за замовчуванням? (A=Так, В=Ні)",
-        "UVLOWarningString": "АККУМ--",
-        "UndervoltageString": "Низька напруга",
-        "InputVoltageString": "Жив.(B): ",
-        "SleepingSimpleString": "ZzZzz",
-        "SleepingAdvancedString": "Очікування...",
-        "SleepingTipAdvancedString": "Жало:",
-        "OffString": "Вимк",
-        "DeviceFailedValidationWarning": "Вірогідно ваш пристрій підробний!"
-    },
     "messagesWarn": {
-        "CJCCalibrationDone": [
-            "КХС",
-            "відкалібровано!"
-        ],
-        "ResetOKMessage": "Скид. OK",
-        "SettingsResetMessage": [
-            "Налаштування",
-            "скинуті!"
-        ],
-        "NoAccelerometerMessage": [
-            "Акселерометр",
-            "не виявлено!"
-        ],
-        "NoPowerDeliveryMessage": [
-            "USB-PD IC",
-            "не виявлено!"
-        ],
-        "LockingKeysString": "ЗАБЛОК.",
-        "UnlockingKeysString": "РОЗБЛОК.",
-        "WarningKeysLockedString": "!ЗАБЛОК!",
-        "WarningThermalRunaway": [
-            "Некерований",
-            "розігрів"
-        ]
+        "CalibrationDone": {
+            "message": "КХС\nвідкалібровано!"
+        },
+        "ResetOKMessage": {
+            "message": "Скид. OK"
+        },
+        "SettingsResetMessage": {
+            "message": "Налаштування\nскинуті!"
+        },
+        "NoAccelerometerMessage": {
+            "message": "Акселерометр\nне виявлено!"
+        },
+        "NoPowerDeliveryMessage": {
+            "message": "USB-PD IC\nне виявлено!"
+        },
+        "LockingKeysString": {
+            "message": "ЗАБЛОК."
+        },
+        "UnlockingKeysString": {
+            "message": "РОЗБЛОК."
+        },
+        "WarningKeysLockedString": {
+            "message": "!ЗАБЛОК!"
+        },
+        "WarningThermalRunaway": {
+            "message": "Некерований\nрозігрів"
+        },
+        "WarningTipShorted": {
+            "message": "!Tip Shorted!"
+        },
+        "SettingsCalibrationWarning": {
+            "message": "Під час наступного завантаження переконайтеся, що жало і ручка мають кімнатну температуру!"
+        },
+        "CJCCalibrating": {
+            "message": "калібрування\n"
+        },
+        "SettingsResetWarning": {
+            "message": "Ви дійсно хочете скинути налаштування до значень за замовчуванням? (A=Так, В=Ні)"
+        },
+        "UVLOWarningString": {
+            "message": "АККУМ--"
+        },
+        "UndervoltageString": {
+            "message": "Низька напруга\n"
+        },
+        "InputVoltageString": {
+            "message": "Жив.(B): \n"
+        },
+        "SleepingSimpleString": {
+            "message": "ZzZzz"
+        },
+        "SleepingAdvancedString": {
+            "message": "Очікування...\n"
+        },
+        "SleepingTipAdvancedString": {
+            "message": "Жало: \n"
+        },
+        "OffString": {
+            "message": "Вимк"
+        },
+        "ProfilePreheatString": {
+            "message": "Попередній\nрозігрів"
+        },
+        "ProfileCooldownString": {
+            "message": "Охолодження\n"
+        },
+        "DeviceFailedValidationWarning": {
+            "message": "Вірогідно ваш пристрій підробний!"
+        },
+        "TooHotToStartProfileWarning": {
+            "message": "Занадто гараче для\nзміни профілів"
+        }
     },
     "characters": {
         "SettingRightChar": "П",
@@ -47,7 +82,7 @@
         "SettingAutoChar": "A",
         "SettingOffChar": "B",
         "SettingSlowChar": "Н",
-        "SettingMediumChar": "M",
+        "SettingMediumChar": "С",
         "SettingFastChar": "М",
         "SettingStartNoneChar": "В",
         "SettingStartSolderingChar": "П",
@@ -59,279 +94,226 @@
     },
     "menuGroups": {
         "PowerMenu": {
-            "text2": [
-                "Параметри",
-                "живлення"
-            ],
-            "desc": ""
+            "displayText": "Параметри\nживлення",
+            "description": ""
         },
         "SolderingMenu": {
-            "text2": [
-                "Параметри",
-                "пайки"
-            ],
-            "desc": ""
+            "displayText": "Параметри\nпайки",
+            "description": ""
         },
         "PowerSavingMenu": {
-            "text2": [
-                "Режим",
-                "сну"
-            ],
-            "desc": ""
+            "displayText": "Режим\nсну",
+            "description": ""
         },
         "UIMenu": {
-            "text2": [
-                "Параметри",
-                "інтерфейсу"
-            ],
-            "desc": ""
+            "displayText": "Параметри\nінтерфейсу",
+            "description": ""
         },
         "AdvancedMenu": {
-            "text2": [
-                "Додаткові",
-                "параметри"
-            ],
-            "desc": ""
+            "displayText": "Додаткові\nпараметри",
+            "description": ""
         }
     },
     "menuOptions": {
         "DCInCutoff": {
-            "text2": [
-                "Джерело",
-                "живлення"
-            ],
-            "desc": "Встановлює напругу відсічки. (DC - 10V) (3S - 9.9V | 4S - 13.2V | 5S - 16.5V | 6S - 19.8V)"
+            "displayText": "Джерело\nживлення",
+            "description": "Встановлює напругу відсічки. (DC - 10V) (3S - 9.9V | 4S - 13.2V | 5S - 16.5V | 6S - 19.8V)"
         },
         "MinVolCell": {
-            "text2": [
-                "Мін.",
-                "напруга"
-            ],
-            "desc": "Мінімальна дозволена напруга на комірку (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+            "displayText": "Мін.\nнапруга",
+            "description": "Мінімальна дозволена напруга на комірку (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
         },
         "QCMaxVoltage": {
-            "text2": [
-                "Потужність",
-                "дж. живлення"
-            ],
-            "desc": "Потужність джерела живлення в Ватах"
+            "displayText": "Потужність\nдж. живлення",
+            "description": "Потужність джерела живлення в Ватах"
         },
         "PDNegTimeout": {
-            "text2": [
-                "PD",
-                "затримка"
-            ],
-            "desc": "Затримка у 100мс інкрементах для PD для сумісності з деякими QC зарядними пристроями (0: вимкнено)"
+            "displayText": "PD\nзатримка",
+            "description": "Затримка у 100мс інкрементах для PD для сумісності з деякими QC зарядними пристроями (0: вимкнено)"
+        },
+        "PDVpdo": {
+            "displayText": "PD\nVPDO",
+            "description": "Вмикає режими PPS & EPR."
         },
         "BoostTemperature": {
-            "text2": [
-                "Темпер.",
-                "Турбо"
-            ],
-            "desc": "Температура в \"Турбо\" режимі"
+            "displayText": "Темпер.\nТурбо",
+            "description": "Температура в \"Турбо\" режимі"
         },
         "AutoStart": {
-            "text2": [
-                "Гарячий",
-                "старт"
-            ],
-            "desc": "Режим в якому запускається паяльник при ввімкненні (В=Вимк. | П=Пайка | О=Очікування | К=Очікування при кімн. темп.)"
+            "displayText": "Гарячий\nстарт",
+            "description": "Режим в якому запускається паяльник при ввімкненні (В=Вимк. | П=Пайка | О=Очікування | К=Очікування при кімн. темп.)"
         },
         "TempChangeShortStep": {
-            "text2": [
-                "Зміна темп.",
-                "коротко?"
-            ],
-            "desc": "Змінювати температуру при короткому натисканні!"
+            "displayText": "Зміна темп.\nкоротко?",
+            "description": "Змінювати температуру при короткому натисканні!"
         },
         "TempChangeLongStep": {
-            "text2": [
-                "Зміна темп.",
-                "довго?"
-            ],
-            "desc": "Змінювати температуру при довгому натисканні!"
+            "displayText": "Зміна темп.\nдовго?",
+            "description": "Змінювати температуру при довгому натисканні!"
         },
         "LockingMode": {
-            "text2": [
-                "Дозволити",
-                "блок. кнопок"
-            ],
-            "desc": "Під час пайки тривале натискання обох кнопок заблокує їх (В=Вимк | Т=Тільки турбо | П=Повне)"
+            "displayText": "Дозволити\nблок. кнопок",
+            "description": "Під час пайки тривале натискання обох кнопок заблокує їх (В=Вимк | Т=Тільки турбо | П=Повне)"
+        },
+        "ProfilePhases": {
+            "displayText": "Етапи\nпрофілів",
+            "description": "Кількість етапів в режимі профілів"
+        },
+        "ProfilePreheatTemp": {
+            "displayText": "Температура\nПоп.Розігріву",
+            "description": "Попередньо розігріти до цієї температури на початку режимку профілів"
+        },
+        "ProfilePreheatSpeed": {
+            "displayText": "Швидкість\nПоп.Розігріву",
+            "description": "Розігрівати з такою швидкістю (градусів в секунду)"
+        },
+        "ProfilePhase1Temp": {
+            "displayText": "Етап 1\nТемпература",
+            "description": "Температура в кінці цього етапу"
+        },
+        "ProfilePhase1Duration": {
+            "displayText": "Етап 1\nТривалість",
+            "description": "Тривалість цього етапу (секунд)"
+        },
+        "ProfilePhase2Temp": {
+            "displayText": "Етап 2\nТемпература",
+            "description": ""
+        },
+        "ProfilePhase2Duration": {
+            "displayText": "Етап 2\nТривалість",
+            "description": ""
+        },
+        "ProfilePhase3Temp": {
+            "displayText": "Етап 3\nТемпература",
+            "description": ""
+        },
+        "ProfilePhase3Duration": {
+            "displayText": "Етап 3\nТривалість",
+            "description": ""
+        },
+        "ProfilePhase4Temp": {
+            "displayText": "Етап 4\nТемпература",
+            "description": ""
+        },
+        "ProfilePhase4Duration": {
+            "displayText": "Етап 4\nТривалість",
+            "description": ""
+        },
+        "ProfilePhase5Temp": {
+            "displayText": "Етап 5\nТемпература",
+            "description": ""
+        },
+        "ProfilePhase5Duration": {
+            "displayText": "Етап 5\nТривалість",
+            "description": ""
+        },
+        "ProfileCooldownSpeed": {
+            "displayText": "Швидкість\nОхолодження",
+            "description": "Швидкість охолодження в кінці режиму профілів (градусів в секунду)"
         },
         "MotionSensitivity": {
-            "text2": [
-                "Чутливість",
-                "сенсору руху"
-            ],
-            "desc": "Акселерометр (0=Вимк. | 1=мін. чутливості | ... | 9=макс. чутливості)"
+            "displayText": "Чутливість\nсенсору руху",
+            "description": "Акселерометр (0=Вимк. | 1=мін. чутливості | ... | 9=макс. чутливості)"
         },
         "SleepTemperature": {
-            "text2": [
-                "Темпер.",
-                "сну"
-            ],
-            "desc": "Температура режиму очікування (C° | F°)"
+            "displayText": "Темпер.\nсну",
+            "description": "Температура режиму очікування (C° | F°)"
         },
         "SleepTimeout": {
-            "text2": [
-                "Тайм-аут",
-                "сну"
-            ],
-            "desc": "Час до переходу в режим очікування (Хвилини | Секунди)"
+            "displayText": "Тайм-аут\nсну",
+            "description": "Час до переходу в режим очікування (Хвилини | Секунди)"
         },
         "ShutdownTimeout": {
-            "text2": [
-                "Часу до",
-                "вимкнення"
-            ],
-            "desc": "Час до вимкнення (Хвилини)"
+            "displayText": "Часу до\nвимкнення",
+            "description": "Час до вимкнення (Хвилини)"
         },
         "HallEffSensitivity": {
-            "text2": [
-                "Чутливість",
-                "Ефекту Холла"
-            ],
-            "desc": "Чутливість датчика ефекту Холла при виявленні сну (0=Вимк. | 1=мін. чутливості | ... | 9=макс. чутливості)"
+            "displayText": "Чутливість\nЕфекту Холла",
+            "description": "Чутливість датчика ефекту Холла при виявленні сну (0=Вимк. | 1=мін. чутливості | ... | 9=макс. чутливості)"
         },
         "TemperatureUnit": {
-            "text2": [
-                "Формат темпе-",
-                "ратури(C°/F°)"
-            ],
-            "desc": "Одиниця виміру температури (C=Цельсій | F=Фаренгейт)"
+            "displayText": "Формат темпе-\nратури(C°/F°)",
+            "description": "Одиниця виміру температури (C=Цельсій | F=Фаренгейт)"
         },
         "DisplayRotation": {
-            "text2": [
-                "Автоповорот",
-                "екрану"
-            ],
-            "desc": "Орієнтація дисплея (П=Правша | Л=Лівша | A=Автоповорот)"
+            "displayText": "Автоповорот\nекрану",
+            "description": "Орієнтація дисплея (П=Правша | Л=Лівша | A=Автоповорот)"
         },
         "CooldownBlink": {
-            "text2": [
-                "Показ t° при",
-                "охолодженні"
-            ],
-            "desc": "Показувати температуру на екрані охолодження, поки жало залишається гарячим, при цьому екран моргає"
+            "displayText": "Показ t° при\nохолодженні",
+            "description": "Показувати температуру на екрані охолодження, поки жало залишається гарячим, при цьому екран моргає"
         },
         "ScrollingSpeed": {
-            "text2": [
-                "Швидкість",
-                "тексту"
-            ],
-            "desc": "Швидкість прокрутки тексту (П=повільно | Ш=швидко)"
+            "displayText": "Швидкість\nтексту",
+            "description": "Швидкість прокрутки тексту (Н=Низькa | М=Максимальна)"
         },
         "ReverseButtonTempChange": {
-            "text2": [
-                "Інвертувати",
-                "кнопки +-?"
-            ],
-            "desc": "Інвертувати кнопки зміни температури."
+            "displayText": "Інвертувати\nкнопки +-?",
+            "description": "Інвертувати кнопки зміни температури."
         },
         "AnimSpeed": {
-            "text2": [
-                "Швидкість",
-                "анімації"
-            ],
-            "desc": "Швидкість анімації іконок у головному меню (Мілісекунди) (В=Вимк | Н=Низькa | С=Середня | М=Макс)"
+            "displayText": "Швидкість\nанімації",
+            "description": "Швидкість анімації іконок у головному меню (В=Вимк | Н=Низькa | С=Середня | М=Максимальна)"
         },
         "AnimLoop": {
-            "text2": [
-                "Циклічна",
-                "анімація"
-            ],
-            "desc": "Циклічна анімація іконок в головному меню"
+            "displayText": "Циклічна\nанімація",
+            "description": "Циклічна анімація іконок в головному меню"
         },
         "Brightness": {
-            "text2": [
-                "Яскравість",
-                "екрану"
-            ],
-            "desc": "Налаштування контрасту/яскравості OLED екрану"
+            "displayText": "Яскравість\nекрану",
+            "description": "Налаштування контрасту/яскравості OLED екрану"
         },
         "ColourInversion": {
-            "text2": [
-                "Інверт",
-                "екрану"
-            ],
-            "desc": "Інвертувати кольори на OLED екрані"
+            "displayText": "Інверт\nекрану",
+            "description": "Інвертувати кольори на OLED екрані"
         },
         "LOGOTime": {
-            "text2": [
-                "Тривалість",
-                "логотипу завантаження"
-            ],
-            "desc": "Встановити тривалість показу лого при завантаженні (с=секунд)"
+            "displayText": "Тривалість\nлоготипу завантаження",
+            "description": "Встановити тривалість показу лого при завантаженні (с=секунд)"
         },
         "AdvancedIdle": {
-            "text2": [
-                "Детальний ре-",
-                "жим очікуван."
-            ],
-            "desc": "Показувати детальну інформацію маленьким шрифтом на домашньому екрані"
+            "displayText": "Детальний ре-\nжим очікуван.",
+            "description": "Показувати детальну інформацію маленьким шрифтом на домашньому екрані"
         },
         "AdvancedSoldering": {
-            "text2": [
-                "Детальний",
-                "режим пайки"
-            ],
-            "desc": "Показувати детальну інформацію при пайці."
+            "displayText": "Детальний\nрежим пайки",
+            "description": "Показувати детальну інформацію при пайці."
+        },
+        "BluetoothLE": {
+            "displayText": "Bluetooth\n",
+            "description": "Увімкнути BLE"
         },
         "PowerLimit": {
-            "text2": [
-                "Макс.",
-                "потуж."
-            ],
-            "desc": "Макс. потужність, яку може використовувати паяльник (Ват)"
+            "displayText": "Макс.\nпотуж.",
+            "description": "Макс. потужність, яку може використовувати паяльник (Ват)"
         },
         "CalibrateCJC": {
-            "text2": [
-                "Калібрувати КХС",
-                "при наступному завантаженні"
-            ],
-            "desc": "При наступному завантаження буде відкалібровано Компенсацію Холодного Спаю жала (непотрібне при різниці температур < 5°C)"
+            "displayText": "Калібрувати КХС\nпри наступному завантаженні",
+            "description": "При наступному завантаження буде відкалібровано Компенсацію Холодного Спаю жала (непотрібне при різниці температур < 5°C)"
         },
         "VoltageCalibration": {
-            "text2": [
-                "Калібрування",
-                "напруги"
-            ],
-            "desc": "Калібрування напруги входу. Налаштувати кнопками, натиснути і утримати щоб завершити."
+            "displayText": "Калібрування\nнапруги",
+            "description": "Калібрування напруги входу. Налаштувати кнопками, натиснути і утримати щоб завершити."
         },
         "PowerPulsePower": {
-            "text2": [
-                "Пульс.",
-                "Навантаж."
-            ],
-            "desc": "Деякі PowerBank-и з часом вимк. живлення, якщо пристрій споживає дуже мало енергії)"
+            "displayText": "Пульс.\nНавантаж.",
+            "description": "Деякі PowerBank-и з часом вимк. живлення, якщо пристрій споживає дуже мало енергії)"
         },
         "PowerPulseWait": {
-            "text2": [
-                "Час між імп.",
-                "напруги"
-            ],
-            "desc": "Час між імпульсами напруги яка не дає PowerBank-у заснути (x 2.5с)"
+            "displayText": "Час між імп.\nнапруги",
+            "description": "Час між імпульсами напруги яка не дає PowerBank-у заснути (x 2.5с)"
         },
         "PowerPulseDuration": {
-            "text2": [
-                "Тривалість",
-                "імп. напруги"
-            ],
-            "desc": "Тривалість імпульсу напруги яка не дає PowerBank-у заснути (x 250мс)"
+            "displayText": "Тривалість\nімп. напруги",
+            "description": "Тривалість імпульсу напруги яка не дає PowerBank-у заснути (x 250мс)"
         },
         "SettingsReset": {
-            "text2": [
-                "Скинути всі",
-                "налаштування?"
-            ],
-            "desc": "Скидання всіх параметрів до стандартних значень."
+            "displayText": "Скинути всі\nналаштування?",
+            "description": "Скидання всіх параметрів до стандартних значень."
         },
         "LanguageSwitch": {
-            "text2": [
-                "Мова:",
-                " UK  Українська"
-            ],
-            "desc": ""
+            "displayText": "Мова:\n UK  Українська",
+            "description": ""
         }
     }
 }

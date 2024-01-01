@@ -2,44 +2,79 @@
     "languageCode": "EN",
     "languageLocalName": "English",
     "tempUnitFahrenheit": true,
-    "messages": {
-        "SettingsCalibrationWarning": "Before rebooting, make sure tip & handle are at room temperature!",
-        "CJCCalibrating": "calibrating",
-        "SettingsResetWarning": "Are you sure you want to restore default settings?",
-        "UVLOWarningString": "DC LOW",
-        "UndervoltageString": "Undervoltage",
-        "InputVoltageString": "Input V: ",
-        "SleepingSimpleString": "Zzzz",
-        "SleepingAdvancedString": "Sleeping...",
-        "SleepingTipAdvancedString": "Tip:",
-        "OffString": "Off",
-        "DeviceFailedValidationWarning": "Your device is most likely a counterfeit!"
-    },
     "messagesWarn": {
-        "CJCCalibrationDone": [
-            "Calibration",
-            "done!"
-        ],
-        "ResetOKMessage": "Reset OK",
-        "SettingsResetMessage": [
-            "Certain settings",
-            "changed!"
-        ],
-        "NoAccelerometerMessage": [
-            "No accelerometer",
-            "detected!"
-        ],
-        "NoPowerDeliveryMessage": [
-            "No USB-PD IC",
-            "detected!"
-        ],
-        "LockingKeysString": "LOCKED",
-        "UnlockingKeysString": "UNLOCKED",
-        "WarningKeysLockedString": "!LOCKED!",
-        "WarningThermalRunaway": [
-            "Thermal",
-            "Runaway"
-        ]
+        "CalibrationDone": {
+            "message": "Calibration\ndone!"
+        },
+        "ResetOKMessage": {
+            "message": "Reset OK"
+        },
+        "SettingsResetMessage": {
+            "message": "Certain settings\nchanged!"
+        },
+        "NoAccelerometerMessage": {
+            "message": "No accelerometer\ndetected!"
+        },
+        "NoPowerDeliveryMessage": {
+            "message": "No USB-PD IC\ndetected!"
+        },
+        "LockingKeysString": {
+            "message": "LOCKED"
+        },
+        "UnlockingKeysString": {
+            "message": "UNLOCKED"
+        },
+        "WarningKeysLockedString": {
+            "message": "!LOCKED!"
+        },
+        "WarningThermalRunaway": {
+            "message": "Thermal\nRunaway"
+        },
+        "WarningTipShorted": {
+            "message": "!Tip Shorted!"
+        },
+        "SettingsCalibrationWarning": {
+            "message": "Before rebooting, make sure tip & handle are at room temperature!"
+        },
+        "CJCCalibrating": {
+            "message": "calibrating\n"
+        },
+        "SettingsResetWarning": {
+            "message": "Are you sure you want to restore default settings?"
+        },
+        "UVLOWarningString": {
+            "message": "DC LOW"
+        },
+        "UndervoltageString": {
+            "message": "Undervoltage\n"
+        },
+        "InputVoltageString": {
+            "message": "Input V: \n"
+        },
+        "SleepingSimpleString": {
+            "message": "Zzzz"
+        },
+        "SleepingAdvancedString": {
+            "message": "Sleeping...\n"
+        },
+        "SleepingTipAdvancedString": {
+            "message": "Tip: \n"
+        },
+        "OffString": {
+            "message": "Off"
+        },
+        "ProfilePreheatString": {
+            "message": "Preheat\n"
+        },
+        "ProfileCooldownString": {
+            "message": "Cooldown\n"
+        },
+        "DeviceFailedValidationWarning": {
+            "message": "Your device is most likely a counterfeit!"
+        },
+        "TooHotToStartProfileWarning": {
+            "message": "Too hot to\nstart profile"
+        }
     },
     "characters": {
         "SettingRightChar": "R",
@@ -59,279 +94,226 @@
     },
     "menuGroups": {
         "PowerMenu": {
-            "text2": [
-                "Power",
-                "settings"
-            ],
-            "desc": ""
+            "displayText": "Power\nsettings",
+            "description": ""
         },
         "SolderingMenu": {
-            "text2": [
-                "Soldering",
-                "settings"
-            ],
-            "desc": ""
+            "displayText": "Soldering\nsettings",
+            "description": ""
         },
         "PowerSavingMenu": {
-            "text2": [
-                "Sleep",
-                "mode"
-            ],
-            "desc": ""
+            "displayText": "Sleep\nmode",
+            "description": ""
         },
         "UIMenu": {
-            "text2": [
-                "User",
-                "interface"
-            ],
-            "desc": ""
+            "displayText": "User\ninterface",
+            "description": ""
         },
         "AdvancedMenu": {
-            "text2": [
-                "Advanced",
-                "settings"
-            ],
-            "desc": ""
+            "displayText": "Advanced\nsettings",
+            "description": ""
         }
     },
     "menuOptions": {
         "DCInCutoff": {
-            "text2": [
-                "Power",
-                "source"
-            ],
-            "desc": "Set cutoff voltage to prevent battery overdrainage (DC 10V) (S=3.3V per cell, disable PWR limit)"
+            "displayText": "Power\nsource",
+            "description": "Set cutoff voltage to prevent battery overdrainage (DC 10V) (S=3.3V per cell, disable PWR limit)"
         },
         "MinVolCell": {
-            "text2": [
-                "Minimum",
-                "voltage"
-            ],
-            "desc": "Minimum allowed voltage per battery cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+            "displayText": "Minimum\nvoltage",
+            "description": "Minimum allowed voltage per battery cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
         },
         "QCMaxVoltage": {
-            "text2": [
-                "QC",
-                "voltage"
-            ],
-            "desc": "Max QC voltage the iron should negotiate for"
+            "displayText": "QC\nvoltage",
+            "description": "Max QC voltage the iron should negotiate for"
         },
         "PDNegTimeout": {
-            "text2": [
-                "PD",
-                "timeout"
-            ],
-            "desc": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers"
+            "displayText": "PD\ntimeout",
+            "description": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers"
+        },
+        "PDVpdo": {
+            "displayText": "PD\nVPDO",
+            "description": "Enables PPS & EPR modes"
         },
         "BoostTemperature": {
-            "text2": [
-                "Boost",
-                "temp"
-            ],
-            "desc": "Tip temperature used in \"boost mode\""
+            "displayText": "Boost\ntemp",
+            "description": "Tip temperature used in \"boost mode\""
         },
         "AutoStart": {
-            "text2": [
-                "Start-up",
-                "behavior"
-            ],
-            "desc": "O=off | S=heat to soldering temp | Z=standby at sleep temp until moved | R=standby without heating until moved"
+            "displayText": "Start-up\nbehavior",
+            "description": "O=off | S=heat to soldering temp | Z=standby at sleep temp until moved | R=standby without heating until moved"
         },
         "TempChangeShortStep": {
-            "text2": [
-                "Temp change",
-                "short"
-            ],
-            "desc": "Temperature-change-increment on short button press"
+            "displayText": "Temp change\nshort",
+            "description": "Temperature-change-increment on short button press"
         },
         "TempChangeLongStep": {
-            "text2": [
-                "Temp change",
-                "long"
-            ],
-            "desc": "Temperature-change-increment on long button press"
+            "displayText": "Temp change\nlong",
+            "description": "Temperature-change-increment on long button press"
         },
         "LockingMode": {
-            "text2": [
-                "Allow locking",
-                "buttons"
-            ],
-            "desc": "While soldering, hold down both buttons to toggle locking them (D=disable | B=boost mode only | F=full locking)"
+            "displayText": "Allow locking\nbuttons",
+            "description": "While soldering, hold down both buttons to toggle locking them (D=disable | B=boost mode only | F=full locking)"
+        },
+        "ProfilePhases": {
+            "displayText": "Profile\nPhases",
+            "description": "Number of phases in profile mode"
+        },
+        "ProfilePreheatTemp": {
+            "displayText": "Preheat\nTemp",
+            "description": "Preheat to this temperature at the start of profile mode"
+        },
+        "ProfilePreheatSpeed": {
+            "displayText": "Preheat\nSpeed",
+            "description": "Preheat at this rate (degrees per second)"
+        },
+        "ProfilePhase1Temp": {
+            "displayText": "Phase 1\nTemp",
+            "description": "Target temperature for the end of this phase"
+        },
+        "ProfilePhase1Duration": {
+            "displayText": "Phase 1\nDuration",
+            "description": "Target duration of this phase (seconds)"
+        },
+        "ProfilePhase2Temp": {
+            "displayText": "Phase 2\nTemp",
+            "description": ""
+        },
+        "ProfilePhase2Duration": {
+            "displayText": "Phase 2\nDuration",
+            "description": ""
+        },
+        "ProfilePhase3Temp": {
+            "displayText": "Phase 3\nTemp",
+            "description": ""
+        },
+        "ProfilePhase3Duration": {
+            "displayText": "Phase 3\nDuration",
+            "description": ""
+        },
+        "ProfilePhase4Temp": {
+            "displayText": "Phase 4\nTemp",
+            "description": ""
+        },
+        "ProfilePhase4Duration": {
+            "displayText": "Phase 4\nDuration",
+            "description": ""
+        },
+        "ProfilePhase5Temp": {
+            "displayText": "Phase 5\nTemp",
+            "description": ""
+        },
+        "ProfilePhase5Duration": {
+            "displayText": "Phase 5\nDuration",
+            "description": ""
+        },
+        "ProfileCooldownSpeed": {
+            "displayText": "Cooldown\nSpeed",
+            "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
         },
         "MotionSensitivity": {
-            "text2": [
-                "Motion",
-                "sensitivity"
-            ],
-            "desc": "0=off | 1=least sensitive | ... | 9=most sensitive"
+            "displayText": "Motion\nsensitivity",
+            "description": "0=off | 1=least sensitive | ... | 9=most sensitive"
         },
         "SleepTemperature": {
-            "text2": [
-                "Sleep",
-                "temp"
-            ],
-            "desc": "Tip temperature while in \"sleep mode\""
+            "displayText": "Sleep\ntemp",
+            "description": "Tip temperature while in \"sleep mode\""
         },
         "SleepTimeout": {
-            "text2": [
-                "Sleep",
-                "timeout"
-            ],
-            "desc": "Interval before \"sleep mode\" starts (s=seconds | m=minutes)"
+            "displayText": "Sleep\ntimeout",
+            "description": "Interval before \"sleep mode\" starts (s=seconds | m=minutes)"
         },
         "ShutdownTimeout": {
-            "text2": [
-                "Shutdown",
-                "timeout"
-            ],
-            "desc": "Interval before the iron shuts down (m=minutes)"
+            "displayText": "Shutdown\ntimeout",
+            "description": "Interval before the iron shuts down (m=minutes)"
         },
         "HallEffSensitivity": {
-            "text2": [
-                "Hall sensor",
-                "sensitivity"
-            ],
-            "desc": "Sensitivity to magnets (0=off | 1=least sensitive | ... | 9=most sensitive)"
+            "displayText": "Hall sensor\nsensitivity",
+            "description": "Sensitivity to magnets (0=off | 1=least sensitive | ... | 9=most sensitive)"
         },
         "TemperatureUnit": {
-            "text2": [
-                "Temperature",
-                "unit"
-            ],
-            "desc": "C=°Celsius | F=°Fahrenheit"
+            "displayText": "Temperature\nunit",
+            "description": "C=°Celsius | F=°Fahrenheit"
         },
         "DisplayRotation": {
-            "text2": [
-                "Display",
-                "orientation"
-            ],
-            "desc": "R=right-handed | L=left-handed | A=automatic"
+            "displayText": "Display\norientation",
+            "description": "R=right-handed | L=left-handed | A=automatic"
         },
         "CooldownBlink": {
-            "text2": [
-                "Cooldown",
-                "flashing"
-            ],
-            "desc": "Flash temp reading at idle while tip is hot"
+            "displayText": "Cooldown\nflashing",
+            "description": "Flash temp reading at idle while tip is hot"
         },
         "ScrollingSpeed": {
-            "text2": [
-                "Scrolling",
-                "speed"
-            ],
-            "desc": "Scrolling speed of info text (S=slow | F=fast)"
+            "displayText": "Scrolling\nspeed",
+            "description": "Scrolling speed of info text (S=slow | F=fast)"
         },
         "ReverseButtonTempChange": {
-            "text2": [
-                "Swap",
-                "+ - keys"
-            ],
-            "desc": "Reverse assignment of buttons for temperature adjustment"
+            "displayText": "Swap\n+ - keys",
+            "description": "Reverse assignment of buttons for temperature adjustment"
         },
         "AnimSpeed": {
-            "text2": [
-                "Anim.",
-                "speed"
-            ],
-            "desc": "Pace of icon animations in menu (O=off | S=slow | M=medium | F=fast)"
+            "displayText": "Anim.\nspeed",
+            "description": "Pace of icon animations in menu (O=off | S=slow | M=medium | F=fast)"
         },
         "AnimLoop": {
-            "text2": [
-                "Anim.",
-                "loop"
-            ],
-            "desc": "Loop icon animations in main menu"
+            "displayText": "Anim.\nloop",
+            "description": "Loop icon animations in main menu"
         },
         "Brightness": {
-            "text2": [
-                "Screen",
-                "brightness"
-            ],
-            "desc": "Adjust the OLED screen brightness"
+            "displayText": "Screen\nbrightness",
+            "description": "Adjust the OLED screen brightness"
         },
         "ColourInversion": {
-            "text2": [
-                "Invert",
-                "screen"
-            ],
-            "desc": "Invert the OLED screen colors"
+            "displayText": "Invert\nscreen",
+            "description": "Invert the OLED screen colors"
         },
         "LOGOTime": {
-            "text2": [
-                "Boot logo",
-                "duration"
-            ],
-            "desc": "Set boot logo duration (s=seconds)"
+            "displayText": "Boot logo\nduration",
+            "description": "Set boot logo duration (s=seconds)"
         },
         "AdvancedIdle": {
-            "text2": [
-                "Detailed",
-                "idle screen"
-            ],
-            "desc": "Display detailed info in a smaller font on idle screen"
+            "displayText": "Detailed\nidle screen",
+            "description": "Display detailed info in a smaller font on idle screen"
         },
         "AdvancedSoldering": {
-            "text2": [
-                "Detailed",
-                "solder screen"
-            ],
-            "desc": "Display detailed info in a smaller font on soldering screen"
+            "displayText": "Detailed\nsolder screen",
+            "description": "Display detailed info in a smaller font on soldering screen"
+        },
+        "BluetoothLE": {
+            "displayText": "Bluetooth\n",
+            "description": "Enables BLE"
         },
         "PowerLimit": {
-            "text2": [
-                "Power",
-                "limit"
-            ],
-            "desc": "Maximum power the iron can use (W=watt)"
+            "displayText": "Power\nlimit",
+            "description": "Average maximum power the iron can use (W=watt)"
         },
         "CalibrateCJC": {
-            "text2": [
-                "Calibrate CJC",
-                "at next boot"
-            ],
-            "desc": "Calbrate Cold Junction Compensation at next boot (not required if Delta T is < 5°C)"
+            "displayText": "Calibrate CJC\nat next boot",
+            "description": "Calibrate Cold Junction Compensation at next boot (not required if Delta T is < 5°C)"
         },
         "VoltageCalibration": {
-            "text2": [
-                "Calibrate",
-                "input voltage"
-            ],
-            "desc": "Start VIN calibration (long press to exit)"
+            "displayText": "Calibrate\ninput voltage",
+            "description": "Start VIN calibration (long press to exit)"
         },
         "PowerPulsePower": {
-            "text2": [
-                "Power",
-                "pulse"
-            ],
-            "desc": "Intensity of power of keep-awake-pulse (W=watt)"
+            "displayText": "Power\npulse",
+            "description": "Intensity of power of keep-awake-pulse (W=watt)"
         },
         "PowerPulseWait": {
-            "text2": [
-                "Power pulse",
-                "delay"
-            ],
-            "desc": "Delay before keep-awake-pulse is triggered (x 2.5s)"
+            "displayText": "Power pulse\ndelay",
+            "description": "Delay before keep-awake-pulse is triggered (x 2.5s)"
         },
         "PowerPulseDuration": {
-            "text2": [
-                "Power pulse",
-                "duration"
-            ],
-            "desc": "Keep-awake-pulse duration (x 250ms)"
+            "displayText": "Power pulse\nduration",
+            "description": "Keep-awake-pulse duration (x 250ms)"
         },
         "SettingsReset": {
-            "text2": [
-                "Restore default",
-                "settings"
-            ],
-            "desc": "Reset all settings to default"
+            "displayText": "Restore default\nsettings",
+            "description": "Reset all settings to default"
         },
         "LanguageSwitch": {
-            "text2": [
-                "Language:",
-                " EN     English"
-            ],
-            "desc": ""
+            "displayText": "Language:\n EN     English",
+            "description": ""
         }
     }
 }

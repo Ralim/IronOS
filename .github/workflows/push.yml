@@ -4,61 +4,68 @@ on: [push, pull_request]
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     container:
-      image: alpine:3.16
+      image: alpine:3.19
     strategy:
       matrix:
-        model: ["TS100", "TS80", "TS80P", "Pinecil", "MHP30", "Pinecilv2"]
+        model:
+          [
+            "TS100",
+            "TS80",
+            "TS80P",
+            "Pinecil",
+            "MHP30",
+            "Pinecilv2",
+            "S60",
+            "TS101",
+          ]
       fail-fast: true
 
     steps:
       - name: Install dependencies (apk)
-        run: apk add --no-cache gcc-riscv-none-elf gcc-arm-none-eabi newlib-riscv-none-elf newlib-arm-none-eabi findutils python3 py3-pip make git bash
+        run: apk add --no-cache gcc-riscv-none-elf g++-riscv-none-elf gcc-arm-none-eabi g++-arm-none-eabi newlib-riscv-none-elf newlib-arm-none-eabi findutils python3 py3-pip make git bash
 
       - name: Install dependencies (python)
-        run: python3 -m pip install bdflib
+        run: python3 -m pip install --break-system-packages bdflib
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
 
       - name: Git ownership exception
         run: git config --global --add safe.directory /__w/IronOS/IronOS && git config --global safe.directory "$GITHUB_WORKSPACE"
 
-      - name: build ${{ matrix.model }}
+      - name: Git meta info
+        run: echo "GITHUB_CI_PR_SHA=${{github.event.pull_request.head.sha}}" >> "${GITHUB_ENV}"
+
+      - name: Build ${{ matrix.model }}
         run: cd source && ./build.sh -m ${{ matrix.model }}
 
-      - name: copy license text
-        run: |
-          cp LICENSE source/Hexfile/LICENSE
-          cp LICENSE_RELEASE.md source/Hexfile/LICENSE_RELEASE.md
+      - name: Copy license files
+        run: cp LICENSE scripts/LICENSE_RELEASE.md  source/Hexfile/
+
+      - name: Generate json index file
+        run: ./source/metadata.py ${{ matrix.model }}.json
 
       - name: Archive ${{ matrix.model }} artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.model }}
           path: |
             source/Hexfile/${{ matrix.model }}_*.hex
             source/Hexfile/${{ matrix.model }}_*.dfu
             source/Hexfile/${{ matrix.model }}_*.bin
+            source/Hexfile/${{ matrix.model }}.json
             source/Hexfile/LICENSE
             source/Hexfile/LICENSE_RELEASE.md
           if-no-files-found: error
 
-      - name: Generate json index file
-        run: cd source && python3 metadata.py ${{ matrix.model }}.json
-
-      - name: Archive ${{ matrix.model }} index file
-        uses: actions/upload-artifact@v3
-        with:
-          name: metadata
-          path: source/Hexfile/${{ matrix.model }}.json
 
   build_multi-lang:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     container:
-      image: alpine:3.16
+      image: alpine:3.19
     strategy:
       matrix:
         model: ["Pinecil", "Pinecilv2"]
@@ -66,91 +73,116 @@ jobs:
 
     steps:
       - name: Install dependencies (apk)
-        run: apk add --no-cache gcc-riscv-none-elf newlib-riscv-none-elf findutils python3 py3-pip make git bash musl-dev
+        run: apk add --no-cache gcc-riscv-none-elf g++-riscv-none-elf gcc-arm-none-eabi g++-arm-none-eabi newlib-riscv-none-elf newlib-arm-none-eabi findutils python3 py3-pip make git bash musl-dev
       - name: Install dependencies (python)
-        run: python3 -m pip install bdflib
+        run: python3 -m pip install --break-system-packages bdflib
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
 
       - name: Git ownership exception
         run: git config --global --add safe.directory /__w/IronOS/IronOS && git config --global safe.directory "$GITHUB_WORKSPACE"
 
-      - name: build ${{ matrix.model }}
-        run: cd source && make -j$(nproc) model="${{ matrix.model }}" firmware-multi_compressed_European firmware-multi_compressed_Bulgarian+Russian+Serbian+Ukrainian firmware-multi_Chinese+Japanese
+      - name: Git meta info
+        run: echo "GITHUB_CI_PR_SHA=${{github.event.pull_request.head.sha}}" >> "${GITHUB_ENV}"
 
-      - name: copy license text
-        run: |
-          cp LICENSE source/Hexfile/LICENSE
-          cp LICENSE_RELEASE.md source/Hexfile/LICENSE_RELEASE.md
+      - name: Build ${{ matrix.model }}
+        run: make -C source/ -j$(nproc) model="${{ matrix.model }}" firmware-multi_compressed_European firmware-multi_compressed_Bulgarian+Russian+Serbian+Ukrainian firmware-multi_Chinese+Japanese
+
+      - name: Copy license files
+        run: cp LICENSE scripts/LICENSE_RELEASE.md  source/Hexfile/
+
+      - name: Generate json index file
+        run: ./source/metadata.py ${{ matrix.model }}_multi-lang.json
 
       - name: Archive ${{ matrix.model }} artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.model }}_multi-lang
           path: |
             source/Hexfile/${{ matrix.model }}_*.hex
             source/Hexfile/${{ matrix.model }}_*.dfu
             source/Hexfile/${{ matrix.model }}_*.bin
+            source/Hexfile/${{ matrix.model }}_multi-lang.json
             source/Hexfile/LICENSE
             source/Hexfile/LICENSE_RELEASE.md
           if-no-files-found: error
 
-      - name: Generate json index file
-        run: cd source && python3 metadata.py ${{ matrix.model }}_multi-lang.json
 
-      - name: Archive ${{ matrix.model }} index file
-        uses: actions/upload-artifact@v3
+  upload_metadata:
+    needs: [build, build_multi-lang]
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Download all prebuilts
+        uses: actions/download-artifact@v4
+        with:
+          path: source/Hexfile/
+          merge-multiple: true
+      - run: ls -R source/Hexfile
+
+      - name: Upload JSONs in bulk as metadata
+        uses: actions/upload-artifact@v4
         with:
           name: metadata
-          path: source/Hexfile/${{ matrix.model }}_multi-lang.json
+          path: source/Hexfile/*.json
+          if-no-files-found: error
+
 
   tests:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     container:
-      image: alpine:3.16
+      image: alpine:3.19
 
     steps:
-      - name: deps
+      - name: Install dependencies (apk)
         run: apk add --no-cache python3 py3-pip make git bash findutils gcc musl-dev
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
 
-      - name: install black
-        run: python3 -m pip install bdflib
+      - name: Install dependencies (python)
+        run: python3 -m pip install --break-system-packages bdflib
 
       - name: Run python tests
-        run: cd Translations && chmod +x make_translation_test.py && ./make_translation_test.py
+        run: ./Translations/make_translation_test.py
 
       - name: Run BriefLZ tests
-        run: |
-          cd source
-          make Objects/host/brieflz/libbrieflz.so
-          cd ../Translations
-          chmod +x brieflz_test.py
-          ./brieflz_test.py
+        run: make  -C source/  Objects/host/brieflz/libbrieflz.so && ./Translations/brieflz_test.py
 
-  check_formatting:
-    runs-on: ubuntu-20.04
+  check_c-cpp:
+    runs-on: ubuntu-22.04
     container:
-      image: alpine:3.16
+      image: alpine:3.19
 
     steps:
-      - name: deps
-        run: apk add --no-cache python3 py3-pip make git
+      - name: Install dependencies (apk)
+        run: apk add --no-cache make git diffutils findutils clang-extra-tools bash
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
 
-      - name: install black
-        run: python3 -m pip install bdflib black flake8
+      - name: Check format style with clang-format
+        run: make  clean  check-style
 
-      - name: Check formatting with clang-format
-        run: cd source && make clean && make check-style
+  check_python:
+    runs-on: ubuntu-22.04
+    container:
+      image: alpine:3.19
+
+    steps:
+      - name: Install dependencies (apk)
+        run: apk add --no-cache python3 py3-pip make git black
+
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Install dependencies (python)
+        run: python3 -m pip install --break-system-packages bdflib flake8
 
       - name: Check python formatting with black
         run: black --check Translations
@@ -158,11 +190,11 @@ jobs:
       - name: Check python with flake8
         run: flake8 Translations
 
-  shellcheck:
-    name: runner / shellcheck
+  check_shell:
+    name: check_shell
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: shellcheck
         uses: reviewdog/action-shellcheck@v1
         with:
@@ -170,3 +202,19 @@ jobs:
           reporter: github-pr-review # Change reporter.
           exclude: "./.git/*" # Optional.
           check_all_files_with_shebangs: "false" # Optional.
+
+  check_readme:
+    runs-on: ubuntu-22.04
+    container:
+      image: alpine:3.19
+
+    steps:
+      - name: Install dependencies (apk)
+        run: apk add --no-cache git
+
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Check autogenerated Documentation/README.md
+        run: /bin/sh ./scripts/deploy.sh docs_readme

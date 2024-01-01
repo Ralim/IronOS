@@ -3,9 +3,11 @@
 #include "BSP_Power.h"
 #include "BSP_QC.h"
 #include "Defines.h"
+#include "Types.h"
 #include "configuration.h"
 #include <stdbool.h>
 #include <stdint.h>
+
 /*
  * BSP.h -- Board Support
  *
@@ -94,11 +96,18 @@ enum StatusLED {
 };
 void setStatusLED(const enum StatusLED state);
 
+void setBuzzer(bool on);
+
 // preStartChecks are run until they return 0
 // By the PID, after each ADC sample comes in
 // For example, on the MHP30 this is used to figure out the resistance of the hotplate
 uint8_t preStartChecks();
 uint8_t preStartChecksDone();
+
+// Check if the tip or output mosfet is shorted (if possible)
+bool isTipShorted();
+// Show the boot logo
+void showBootLogo(void);
 #ifdef __cplusplus
 }
 #endif

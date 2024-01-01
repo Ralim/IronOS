@@ -5,14 +5,15 @@
  *      Author: Ralim
  */
 
+#include "accelerometers_common.h"
 #include <BMA223.hpp>
 #include <array>
 
 bool BMA223::detect() {
-  if (FRToSI2C::probe(BMA223_ADDRESS)) {
+  if (ACCEL_I2C_CLASS::probe(BMA223_ADDRESS)) {
     // Read chip id to ensure its not an address collision
     uint8_t id = 0;
-    if (FRToSI2C::Mem_Read(BMA223_ADDRESS, BMA223_BGW_CHIPID, &id, 1)) {
+    if (ACCEL_I2C_CLASS::Mem_Read(BMA223_ADDRESS, BMA223_BGW_CHIPID, &id, 1)) {
       return id == 0b11111000;
     }
   }
@@ -20,19 +21,19 @@ bool BMA223::detect() {
   return false;
 }
 
-static const FRToSI2C::I2C_REG i2c_registers[] = {
-    //
-    //
-    {BMA223_PMU_RANGE, 0b00000011, 0},     // 2G range
-    {BMA223_PMU_BW, 0b00001101, 0},        // 250Hz filter
-    {BMA223_PMU_LPW, 0b00000000, 0},       // Full power
-    {BMA223_ACCD_HBW, 0b00000000, 0},      // filtered data out
-    {BMA223_INT_OUT_CTRL, 0b00001010, 0},  // interrupt active low and OD to get it hi-z
+static const ACCEL_I2C_CLASS::I2C_REG i2c_registers[] = {
+  //
+  //
+    {    BMA223_PMU_RANGE, 0b00000011, 0}, // 2G range
+    {       BMA223_PMU_BW, 0b00001101, 0}, // 250Hz filter
+    {      BMA223_PMU_LPW, 0b00000000, 0}, // Full power
+    {     BMA223_ACCD_HBW, 0b00000000, 0}, // filtered data out
+    { BMA223_INT_OUT_CTRL, 0b00001010, 0}, // interrupt active low and OD to get it hi-z
     {BMA223_INT_RST_LATCH, 0b10000000, 0}, // interrupt active low and OD to get it hi-z
-    {BMA223_INT_EN_0, 0b01000000, 0},      // Enable orientation
-    {BMA223_INT_A, 0b00100111, 0},         // Setup orientation detection
+    {     BMA223_INT_EN_0, 0b01000000, 0}, // Enable orientation
+    {        BMA223_INT_A, 0b00100111, 0}, // Setup orientation detection
 
-    //
+  //
 };
 bool BMA223::initalize() {
   // Setup acceleration readings
@@ -44,7 +45,7 @@ bool BMA223::initalize() {
   // Hysteresis is set to ~ 16 counts
   // Theta blocking is set to 0b10
 
-  return FRToSI2C::writeRegistersBulk(BMA223_ADDRESS, i2c_registers, sizeof(i2c_registers) / sizeof(i2c_registers[0]));
+  return ACCEL_I2C_CLASS::writeRegistersBulk(BMA223_ADDRESS, i2c_registers, sizeof(i2c_registers) / sizeof(i2c_registers[0]));
 }
 
 void BMA223::getAxisReadings(int16_t &x, int16_t &y, int16_t &z) {
@@ -52,7 +53,7 @@ void BMA223::getAxisReadings(int16_t &x, int16_t &y, int16_t &z) {
   // And yet there are MSB and LSB registers _sigh_.
   uint8_t sensorData[6] = {0, 0, 0, 0, 0, 0};
 
-  if (FRToSI2C::Mem_Read(BMA223_ADDRESS, BMA223_ACCD_X_LSB, sensorData, 6) == false) {
+  if (ACCEL_I2C_CLASS::Mem_Read(BMA223_ADDRESS, BMA223_ACCD_X_LSB, sensorData, 6) == false) {
     x = y = z = 0;
     return;
   }

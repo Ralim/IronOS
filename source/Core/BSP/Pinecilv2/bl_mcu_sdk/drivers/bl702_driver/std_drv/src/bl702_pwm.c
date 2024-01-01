@@ -48,7 +48,7 @@
 /** @defgroup  PWM_Private_Macros
  *  @{
  */
-#define PWM_Get_Channel_Reg(ch) (PWM_BASE + PWM_CHANNEL_OFFSET + (ch)*0x20)
+#define PWM_Get_Channel_Reg(ch) (PWM_BASE + PWM_CHANNEL_OFFSET + (ch) * 0x20)
 #define PWM_INT_TIMEOUT_COUNT   (160 * 1000)
 #define PWM_STOP_TIMEOUT_COUNT  (160 * 1000)
 
@@ -354,7 +354,18 @@ void PWM_Channel_Enable(PWM_CH_ID_Type ch) {
   tmpVal = BL_RD_REG(PWMx, PWM_CONFIG);
   BL_WR_REG(PWMx, PWM_CONFIG, BL_CLR_REG_BIT(tmpVal, PWM_STOP_EN));
 }
+uint8_t PWM_Channel_Is_Enabled(PWM_CH_ID_Type ch) {
+  uint32_t tmpVal;
+  /* Get channel register */
+  uint32_t PWMx = PWM_Get_Channel_Reg(ch);
 
+  /* Check the parameters */
+  CHECK_PARAM(IS_PWM_CH_ID_TYPE(ch));
+
+  /* Config pwm clock to enable pwm */
+  tmpVal = BL_RD_REG(PWMx, PWM_CONFIG);
+  return BL_GET_REG_BITS_VAL(tmpVal, PWM_STOP_EN) == 0;
+}
 /****************************************************************************
  * @brief  PWM disable
  *
