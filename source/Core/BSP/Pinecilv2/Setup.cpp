@@ -107,23 +107,23 @@ void setup_adc(void) {
       It has been a challenge to determine what is the most correct way to
       configure it in order to get accurate readings that can be transformed
       into millivolts, for accurate measurements.
-  
+
       This latest set of ADC parameters, matches the latest configuration from
       the upstream bl_mcu_sdk repository from commit hash:
       9e189b69cbc0a75ffa170f600a28820848d56432
       except for one difference.
       (Note: bl_mcu_sdk has been heavily refactored since it has been imported into IronOS.)
-  
+
       You can make it match exactly by defining ENABLE_MIC2_DIFF, see the code
       #ifdef ENABLE_MIC2_DIFF below.
       I have decided to not apply this change because it appeared to make the
       lower end of the input less precise.
-  
+
       Note that this configuration uses an ADC trimming value that is stored in the Efuse
       of the bl70x chip. The actual reading is divided by this "coe" value.
       We have found the following coe values on 3 different chips:
       0.9629, 0.9438, 0.9876
-  
+
       Additional note for posterity:
       PGA = programmable gain amplifier.
       We would have expected to achieve the highest accuracy by disabling this amplifier,
