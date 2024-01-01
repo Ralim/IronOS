@@ -74,11 +74,11 @@
 /** @defgroup  ADC_Private_Variables
  *  @{
  */
-static intCallback_Type   *adcIntCbfArra[ADC_INT_ALL] = {NULL};
-ADC_Gain_Coeff_Type adcGainCoeffCal            = {
-               .adcGainCoeffEnable = DISABLE,
-               .adcgainCoeffVal    = 0,
-               .coe                = 1,
+static intCallback_Type *adcIntCbfArra[ADC_INT_ALL] = {NULL};
+ADC_Gain_Coeff_Type      adcGainCoeffCal            = {
+                    .adcGainCoeffEnable = DISABLE,
+                    .adcgainCoeffVal    = 0,
+                    .coe                = 1,
 };
 
 /*@} end of group ADC_Private_Variables */
