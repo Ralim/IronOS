@@ -29,7 +29,7 @@ void adc_fifo_irq(void) {
   if (ADC_GetIntStatus(ADC_INT_FIFO_READY) == SET) {
     // Read out all entries in the fifo
     while (ADC_Get_FIFO_Count()) {
-      uint32_t reading = ADC_Read_FIFO();
+      uint32_t        reading = ADC_Read_FIFO();
       ADC_Result_Type parsed;
       ADC_Parse_Result(&reading, 1, &parsed);
       switch (parsed.posChan) {
