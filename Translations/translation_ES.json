@@ -52,7 +52,7 @@
             "message": "Voltaje: \n"
         },
         "SleepingSimpleString": {
-            "message": "Reposo"
+            "message": "Zzzz"
         },
         "SleepingAdvancedString": {
             "message": "En reposo...\n"
