@@ -52,7 +52,7 @@
             "message": "Voedingsspanning: \n"
         },
         "SleepingSimpleString": {
-            "message": "Zzzz"
+            "message": "Zzz"
         },
         "SleepingAdvancedString": {
             "message": "Slaapstand...\n"
