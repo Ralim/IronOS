@@ -97,7 +97,7 @@
         },
         {
             "id": "SleepingSimpleString",
-            "maxLen": 4,
+            "maxLen": 3,
             "exclude": [
                 "NO_SLEEP_MODE"
             ],
