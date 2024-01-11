@@ -196,7 +196,7 @@ void FinishMeasureTipResistance() {
   // As we are only detecting three resistances; we just bin to nearest
   uint8_t newRes = 0;
   if (reading > 8000) {
-    //Let resistance be cleared to 0
+    // Let resistance be cleared to 0
   } else if (reading < 500) {
     tipShorted = true;
   } else if (reading < 2600) {
