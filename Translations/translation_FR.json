@@ -52,7 +52,7 @@
             "message": "V d'entrée: \n"
         },
         "SleepingSimpleString": {
-            "message": "Zzz"
+            "message": "Zzz "
         },
         "SleepingAdvancedString": {
             "message": "En veille...\n"

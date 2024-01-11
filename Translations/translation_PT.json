@@ -52,7 +52,7 @@
             "message": "Tensão: \n"
         },
         "SleepingSimpleString": {
-            "message": "Zzz"
+            "message": "Zzz "
         },
         "SleepingAdvancedString": {
             "message": "Repouso...\n"

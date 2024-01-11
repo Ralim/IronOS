@@ -52,7 +52,7 @@
             "message": "Жив.(B): \n"
         },
         "SleepingSimpleString": {
-            "message": "Zzz"
+            "message": "Zzz "
         },
         "SleepingAdvancedString": {
             "message": "Очікування...\n"

@@ -52,7 +52,7 @@
             "message": "VIN: "
         },
         "SleepingSimpleString": {
-            "message": "Zzz"
+            "message": "Zzz "
         },
         "SleepingAdvancedString": {
             "message": "Zzzz..."
