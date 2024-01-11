@@ -52,7 +52,7 @@
             "message": "Input V: "
         },
         "SleepingSimpleString": {
-            "message": "Zzz"
+            "message": "Zzz "
         },
         "SleepingAdvancedString": {
             "message": "Sleeping..."

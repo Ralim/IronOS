@@ -52,7 +52,7 @@
             "message": "Ул. напон: \n"
         },
         "SleepingSimpleString": {
-            "message": "Zzz"
+            "message": "Zzz "
         },
         "SleepingAdvancedString": {
             "message": "Спавање...\n"
