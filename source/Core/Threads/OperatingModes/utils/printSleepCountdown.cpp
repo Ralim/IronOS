@@ -10,10 +10,10 @@ void printCountdownUntilSleep(int sleepThres) {
   TickType_t lastEventTime = lastButtonTime < lastMovementTime ? lastMovementTime : lastButtonTime;
   TickType_t downCount     = sleepThres - xTaskGetTickCount() + lastEventTime;
   if (downCount > (99 * TICKS_SECOND)) {
-    OLED::printNumber(downCount / 60000 + 1, 2, FontStyle::SMALL);
+    OLED::printNumber(downCount / 60000 , 2, FontStyle::SMALL);
     OLED::print(SmallSymbolMinutes, FontStyle::SMALL);
   } else {
-    OLED::printNumber(downCount / 1000 + 1, 2, FontStyle::SMALL);
+    OLED::printNumber(downCount / 1000 , 2, FontStyle::SMALL);
     OLED::print(SmallSymbolSeconds, FontStyle::SMALL);
   }
 }
