@@ -115,25 +115,24 @@ OperatingMode gui_solderingMode(const ButtonState buttons, guiContext *cxt) {
 
     gui_drawTipTemp(true, FontStyle::LARGE);
 
-#ifndef NO_SLEEP_MODE
-    if (getSettingValue(SettingsOptions::Sensitivity) && getSettingValue(SettingsOptions::SleepTime)) {
-      if (OLED::getRotation()) {
-        OLED::setCursor(32, 0);
-      } else {
-        OLED::setCursor(47, 0);
-      }
-      printCountdownUntilSleep(getSleepTimeout());
-    }
-#endif
-
     if (cxt->scratch_state.state2) { // Boost mode is on
       if (OLED::getRotation()) {
-        OLED::setCursor(38, 8);
+        OLED::setCursor(41, 0);
       } else {
-        OLED::setCursor(55, 8);
+        OLED::setCursor(52, 0);
       }
-      OLED::print(SmallSymbolPlus, FontStyle::SMALL);
+      OLED::print(LargeSymbolPlus, FontStyle::LARGE);
     } else {
+#ifndef NO_SLEEP_MODE
+      if (getSettingValue(SettingsOptions::Sensitivity) && getSettingValue(SettingsOptions::SleepTime)) {
+        if (OLED::getRotation()) {
+          OLED::setCursor(32, 0);
+        } else {
+          OLED::setCursor(47, 0);
+        }
+        printCountdownUntilSleep(getSleepTimeout());
+      }
+#endif
       if (OLED::getRotation()) {
         OLED::setCursor(32, 8);
       } else {
