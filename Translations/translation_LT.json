@@ -60,8 +60,11 @@
         "SleepingTipAdvancedString": {
             "message": "Antg: \n"
         },
-        "OffString": {
-            "message": "Išj"
+        "ProfilePreheatString": {
+            "message": "Preheat\n"
+        },
+        "ProfileCooldownString": {
+            "message": "Cooldown\n"
         },
         "ProfilePreheatString": {
             "message": "Preheat\n"
@@ -80,15 +83,12 @@
         "SettingRightChar": "D",
         "SettingLeftChar": "K",
         "SettingAutoChar": "A",
-        "SettingOffChar": "I",
         "SettingSlowChar": "L",
         "SettingMediumChar": "V",
         "SettingFastChar": "G",
-        "SettingStartNoneChar": "N",
         "SettingStartSolderingChar": "T",
         "SettingStartSleepChar": "M",
         "SettingStartSleepOffChar": "K",
-        "SettingLockDisableChar": "I",
         "SettingLockBoostChar": "T",
         "SettingLockFullChar": "V"
     },
@@ -141,7 +141,7 @@
         },
         "AutoStart": {
             "displayText": "Automatinis\npaleidimas",
-            "description": "Ar pradėti kaitininti iš karto įjungus lituoklį (N=Ne | T=Taip | M=Miegas | K=Miegoti kambario temperatūroje)"
+            "description": "Ar pradėti kaitininti iš karto įjungus lituoklį (T=Taip | M=Miegas | K=Miegoti kambario temperatūroje)"
         },
         "TempChangeShortStep": {
             "displayText": "Temp.keitim.\ntrump.spust.",
@@ -153,7 +153,63 @@
         },
         "LockingMode": {
             "displayText": "Mygtukų\nužraktas",
-            "description": "Lituodami, ilgai paspauskite abu mygtukus, kad juos užrakintumėte (I=Išjungta | T=leidžiamas tik Turbo režimas | V=Visiškas užrakinimas)"
+            "description": "Lituodami, ilgai paspauskite abu mygtukus, kad juos užrakintumėte (T=leidžiamas tik Turbo režimas | V=Visiškas užrakinimas)"
+        },
+        "ProfilePhases": {
+            "displayText": "Profile\nPhases",
+            "description": "Number of phases in profile mode"
+        },
+        "ProfilePreheatTemp": {
+            "displayText": "Preheat\nTemp",
+            "description": "Preheat to this temperature at the start of profile mode"
+        },
+        "ProfilePreheatSpeed": {
+            "displayText": "Preheat\nSpeed",
+            "description": "Preheat at this rate (degrees per second)"
+        },
+        "ProfilePhase1Temp": {
+            "displayText": "Phase 1\nTemp",
+            "description": "Target temperature for the end of this phase"
+        },
+        "ProfilePhase1Duration": {
+            "displayText": "Phase 1\nDuration",
+            "description": "Target duration of this phase (seconds)"
+        },
+        "ProfilePhase2Temp": {
+            "displayText": "Phase 2\nTemp",
+            "description": ""
+        },
+        "ProfilePhase2Duration": {
+            "displayText": "Phase 2\nDuration",
+            "description": ""
+        },
+        "ProfilePhase3Temp": {
+            "displayText": "Phase 3\nTemp",
+            "description": ""
+        },
+        "ProfilePhase3Duration": {
+            "displayText": "Phase 3\nDuration",
+            "description": ""
+        },
+        "ProfilePhase4Temp": {
+            "displayText": "Phase 4\nTemp",
+            "description": ""
+        },
+        "ProfilePhase4Duration": {
+            "displayText": "Phase 4\nDuration",
+            "description": ""
+        },
+        "ProfilePhase5Temp": {
+            "displayText": "Phase 5\nTemp",
+            "description": ""
+        },
+        "ProfilePhase5Duration": {
+            "displayText": "Phase 5\nDuration",
+            "description": ""
+        },
+        "ProfileCooldownSpeed": {
+            "displayText": "Cooldown\nSpeed",
+            "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
         },
         "ProfilePhases": {
             "displayText": "Profile\nPhases",
@@ -213,7 +269,7 @@
         },
         "MotionSensitivity": {
             "displayText": "Judesio\njautrumas",
-            "description": "Judesio jautrumas (0=Išjungta | 1=Mažiausias | ... | 9=Didžiausias)"
+            "description": "Judesio jautrumas (1=Mažiausias | ... | 9=Didžiausias)"
         },
         "SleepTemperature": {
             "displayText": "Miego\ntemperat.",
@@ -229,7 +285,7 @@
         },
         "HallEffSensitivity": {
             "displayText": "Holo\njutiklis",
-            "description": "Holo jutiklio jautrumas nustatant miegą (0=Išjungta | 1=Mažiausias | ... | 9=Didžiausias)"
+            "description": "Holo jutiklio jautrumas nustatant miegą (1=Mažiausias | ... | 9=Didžiausias)"
         },
         "TemperatureUnit": {
             "displayText": "Temperatūros\nvienetai",
@@ -253,7 +309,7 @@
         },
         "AnimSpeed": {
             "displayText": "Animacijų\ngreitis",
-            "description": "Paveiksliukų animacijų greitis meniu punktuose (I=Išjungtas | L=Lėtas | V=Vidutinis | G=Greitas)"
+            "description": "Paveiksliukų animacijų greitis meniu punktuose (L=Lėtas | V=Vidutinis | G=Greitas)"
         },
         "AnimLoop": {
             "displayText": "Animacijų\npakartojimas",

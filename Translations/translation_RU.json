@@ -60,9 +60,6 @@
         "SleepingTipAdvancedString": {
             "message": "Жало: \n"
         },
-        "OffString": {
-            "message": "Выкл"
-        },
         "ProfilePreheatString": {
             "message": "Преднагрев\n"
         },
@@ -80,15 +77,12 @@
         "SettingRightChar": "П",
         "SettingLeftChar": "Л",
         "SettingAutoChar": "А",
-        "SettingOffChar": "О",
         "SettingSlowChar": "М",
         "SettingMediumChar": "С",
         "SettingFastChar": "Б",
-        "SettingStartNoneChar": "О",
         "SettingStartSolderingChar": "П",
         "SettingStartSleepChar": "С",
         "SettingStartSleepOffChar": "К",
-        "SettingLockDisableChar": "О",
         "SettingLockBoostChar": "Т",
         "SettingLockFullChar": "П"
     },
@@ -141,7 +135,7 @@
         },
         "AutoStart": {
             "displayText": "Режим при\nвключении",
-            "description": "Режим, в котором включается паяльник (О=Откл. | П=Пайка | С=Сон | К=Ожидание при комн. темп.)"
+            "description": "Режим, в котором включается паяльник (П=Пайка | С=Сон | К=Ожидание при комн. темп.)"
         },
         "TempChangeShortStep": {
             "displayText": "Шаг t° при\nкор.наж-ии",
@@ -153,7 +147,7 @@
         },
         "LockingMode": {
             "displayText": "Разрешить\nблок. кнопок",
-            "description": "Блокировать кнопки при их долгом нажатии в режиме пайки (О=Откл. | Т=Только турбо | П=Полная блокировка)"
+            "description": "Блокировать кнопки при их долгом нажатии в режиме пайки (Т=Только турбо | П=Полная блокировка)"
         },
         "ProfilePhases": {
             "displayText": "Этапы\nпрофиля",
@@ -213,7 +207,7 @@
         },
         "MotionSensitivity": {
             "displayText": "Чувствительн.\nакселерометра",
-            "description": "Чувствительность акселерометра (0=Откл. | 1=мин. | ... | 9=макс.)"
+            "description": "Чувствительность акселерометра (1=мин. | ... | 9=макс.)"
         },
         "SleepTemperature": {
             "displayText": "t° при\nсне",
@@ -229,7 +223,7 @@
         },
         "HallEffSensitivity": {
             "displayText": "Датчик\nХолла",
-            "description": "Чувствительность датчика Холла к магнитному полю (0=Откл. | 1=мин. | ... | 9=макс.)"
+            "description": "Чувствительность датчика Холла к магнитному полю (1=мин. | ... | 9=макс.)"
         },
         "TemperatureUnit": {
             "displayText": "Единицы\nизмерения",
@@ -253,7 +247,7 @@
         },
         "AnimSpeed": {
             "displayText": "Скорость\nанимации",
-            "description": "Скорость анимации иконок в главном меню (О=Откл. | М=Медленная| С=Средняя | Б=Быстрая)"
+            "description": "Скорость анимации иконок в главном меню (М=Медленная| С=Средняя | Б=Быстрая)"
         },
         "AnimLoop": {
             "displayText": "Зацикленная\nанимация",

@@ -60,8 +60,11 @@
         "SleepingTipAdvancedString": {
             "message": "Panne: \n"
         },
-        "OffString": {
-            "message": "Off"
+        "ProfilePreheatString": {
+            "message": "Preheat\n"
+        },
+        "ProfileCooldownString": {
+            "message": "Cooldown\n"
         },
         "ProfilePreheatString": {
             "message": "Preheat\n"
@@ -80,15 +83,12 @@
         "SettingRightChar": "D",
         "SettingLeftChar": "G",
         "SettingAutoChar": "A",
-        "SettingOffChar": "D",
         "SettingSlowChar": "L",
         "SettingMediumChar": "M",
         "SettingFastChar": "R",
-        "SettingStartNoneChar": "D",
         "SettingStartSolderingChar": "A",
         "SettingStartSleepChar": "V",
         "SettingStartSleepOffChar": "O",
-        "SettingLockDisableChar": "D",
         "SettingLockBoostChar": "B",
         "SettingLockFullChar": "V"
     },
@@ -141,7 +141,7 @@
         },
         "AutoStart": {
             "displayText": "Chauffer au\ndémarrage",
-            "description": "D=désactivé | A=activé | V=mode veille | O=mode veille à température ambiante"
+            "description": "A=activé | V=mode veille | O=mode veille à température ambiante"
         },
         "TempChangeShortStep": {
             "displayText": "Incrément\nappui court",
@@ -153,7 +153,63 @@
         },
         "LockingMode": {
             "displayText": "Verrouiller\nles boutons",
-            "description": "Pendant la soudure, appuyer sur les deux boutons pour les verrouiller (D=désactivé | B=boost seulement | V=verr. total)"
+            "description": "Pendant la soudure, appuyer sur les deux boutons pour les verrouiller (B=boost seulement | V=verr. total)"
+        },
+        "ProfilePhases": {
+            "displayText": "Profile\nPhases",
+            "description": "Number of phases in profile mode"
+        },
+        "ProfilePreheatTemp": {
+            "displayText": "Preheat\nTemp",
+            "description": "Preheat to this temperature at the start of profile mode"
+        },
+        "ProfilePreheatSpeed": {
+            "displayText": "Preheat\nSpeed",
+            "description": "Preheat at this rate (degrees per second)"
+        },
+        "ProfilePhase1Temp": {
+            "displayText": "Phase 1\nTemp",
+            "description": "Target temperature for the end of this phase"
+        },
+        "ProfilePhase1Duration": {
+            "displayText": "Phase 1\nDuration",
+            "description": "Target duration of this phase (seconds)"
+        },
+        "ProfilePhase2Temp": {
+            "displayText": "Phase 2\nTemp",
+            "description": ""
+        },
+        "ProfilePhase2Duration": {
+            "displayText": "Phase 2\nDuration",
+            "description": ""
+        },
+        "ProfilePhase3Temp": {
+            "displayText": "Phase 3\nTemp",
+            "description": ""
+        },
+        "ProfilePhase3Duration": {
+            "displayText": "Phase 3\nDuration",
+            "description": ""
+        },
+        "ProfilePhase4Temp": {
+            "displayText": "Phase 4\nTemp",
+            "description": ""
+        },
+        "ProfilePhase4Duration": {
+            "displayText": "Phase 4\nDuration",
+            "description": ""
+        },
+        "ProfilePhase5Temp": {
+            "displayText": "Phase 5\nTemp",
+            "description": ""
+        },
+        "ProfilePhase5Duration": {
+            "displayText": "Phase 5\nDuration",
+            "description": ""
+        },
+        "ProfileCooldownSpeed": {
+            "displayText": "Cooldown\nSpeed",
+            "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
         },
         "ProfilePhases": {
             "displayText": "Profile\nPhases",
@@ -213,7 +269,7 @@
         },
         "MotionSensitivity": {
             "displayText": "Sensibilité\nau mouvement",
-            "description": "0=désactivé | 1=peu sensible | ... | 9=très sensible"
+            "description": "1=peu sensible | ... | 9=très sensible"
         },
         "SleepTemperature": {
             "displayText": "Temp.\nveille",
@@ -229,7 +285,7 @@
         },
         "HallEffSensitivity": {
             "displayText": "Sensibilité\ncapteur effet hall",
-            "description": "Sensibilité du capteur à effet Hall pour la mise en veille (0=désactivé | 1=peu sensible | ... | 9=très sensible)"
+            "description": "Sensibilité du capteur à effet Hall pour la mise en veille (1=peu sensible | ... | 9=très sensible)"
         },
         "TemperatureUnit": {
             "displayText": "Unité de\ntempérature",
@@ -253,7 +309,7 @@
         },
         "AnimSpeed": {
             "displayText": "Vitesse\nanim. icônes",
-            "description": "Vitesse des animations des icônes dans le menu (D=désactivé | L=lente | M=moyenne | R=rapide)"
+            "description": "Vitesse des animations des icônes dans le menu (L=lente | M=moyenne | R=rapide)"
         },
         "AnimLoop": {
             "displayText": "Rejouer\nanim. icônes",

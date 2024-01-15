@@ -60,8 +60,11 @@
         "SleepingTipAdvancedString": {
             "message": "<--- "
         },
-        "OffString": {
-            "message": "关"
+        "ProfilePreheatString": {
+            "message": "Preheat"
+        },
+        "ProfileCooldownString": {
+            "message": "Cooldown"
         },
         "ProfilePreheatString": {
             "message": "Preheat"
@@ -80,15 +83,12 @@
         "SettingRightChar": "右",
         "SettingLeftChar": "左",
         "SettingAutoChar": "自",
-        "SettingOffChar": "关",
         "SettingSlowChar": "慢",
         "SettingMediumChar": "中",
         "SettingFastChar": "快",
-        "SettingStartNoneChar": "无",
         "SettingStartSolderingChar": "焊",
         "SettingStartSleepChar": "待",
         "SettingStartSleepOffChar": "室",
-        "SettingLockDisableChar": "无",
         "SettingLockBoostChar": "增",
         "SettingLockFullChar": "全"
     },
@@ -141,7 +141,7 @@
         },
         "AutoStart": {
             "displayText": "自动启动",
-            "description": "开机时自动启动 <无=禁用 | 焊=焊接模式 | 待=待机模式 | 室=室温待机>"
+            "description": "开机时自动启动 <焊=焊接模式 | 待=待机模式 | 室=室温待机>"
         },
         "TempChangeShortStep": {
             "displayText": "短按温度调整",
@@ -153,7 +153,63 @@
         },
         "LockingMode": {
             "displayText": "按键锁定",
-            "description": "焊接模式时，同时长按两个按键启用按键锁定 <无=禁用 | 增=只容许增热模式 | 全=完全锁定>"
+            "description": "焊接模式时，同时长按两个按键启用按键锁定 <增=只容许增热模式 | 全=完全锁定>"
+        },
+        "ProfilePhases": {
+            "displayText": "Profile Phases",
+            "description": "Number of phases in profile mode"
+        },
+        "ProfilePreheatTemp": {
+            "displayText": "Preheat Temp",
+            "description": "Preheat to this temperature at the start of profile mode"
+        },
+        "ProfilePreheatSpeed": {
+            "displayText": "Preheat Speed",
+            "description": "Preheat at this rate (degrees per second)"
+        },
+        "ProfilePhase1Temp": {
+            "displayText": "Phase 1 Temp",
+            "description": "Target temperature for the end of this phase"
+        },
+        "ProfilePhase1Duration": {
+            "displayText": "Phase 1 Duration",
+            "description": "Target duration of this phase (seconds)"
+        },
+        "ProfilePhase2Temp": {
+            "displayText": "Phase 2 Temp",
+            "description": ""
+        },
+        "ProfilePhase2Duration": {
+            "displayText": "Phase 2 Duration",
+            "description": ""
+        },
+        "ProfilePhase3Temp": {
+            "displayText": "Phase 3 Temp",
+            "description": ""
+        },
+        "ProfilePhase3Duration": {
+            "displayText": "Phase 3 Duration",
+            "description": ""
+        },
+        "ProfilePhase4Temp": {
+            "displayText": "Phase 4 Temp",
+            "description": ""
+        },
+        "ProfilePhase4Duration": {
+            "displayText": "Phase 4 Duration",
+            "description": ""
+        },
+        "ProfilePhase5Temp": {
+            "displayText": "Phase 5 Temp",
+            "description": ""
+        },
+        "ProfilePhase5Duration": {
+            "displayText": "Phase 5 Duration",
+            "description": ""
+        },
+        "ProfileCooldownSpeed": {
+            "displayText": "Cooldown Speed",
+            "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
         },
         "ProfilePhases": {
             "displayText": "Profile Phases",
@@ -213,7 +269,7 @@
         },
         "MotionSensitivity": {
             "displayText": "动作灵敏度",
-            "description": "0=禁用 | 1=最低灵敏度 | ... | 9=最高灵敏度"
+            "description": "1=最低灵敏度 | ... | 9=最高灵敏度"
         },
         "SleepTemperature": {
             "displayText": "待机温度",
@@ -229,7 +285,7 @@
         },
         "HallEffSensitivity": {
             "displayText": "磁场灵敏度",
-            "description": "霍尔效应传感器用作启动待机模式的灵敏度 <0=禁用 | 1=最低灵敏度 | ... | 9=最高灵敏度>"
+            "description": "霍尔效应传感器用作启动待机模式的灵敏度 <1=最低灵敏度 | ... | 9=最高灵敏度>"
         },
         "TemperatureUnit": {
             "displayText": "温度单位",
@@ -253,7 +309,7 @@
         },
         "AnimSpeed": {
             "displayText": "动画速度",
-            "description": "主菜单中功能图标动画的播放速度 <关=不显示动画 | 慢=慢速 | 中=中速 | 快=快速>"
+            "description": "主菜单中功能图标动画的播放速度 <慢=慢速 | 中=中速 | 快=快速>"
         },
         "AnimLoop": {
             "displayText": "动画循环",

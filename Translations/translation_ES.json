@@ -60,9 +60,6 @@
         "SleepingTipAdvancedString": {
             "message": "Punta: \n"
         },
-        "OffString": {
-            "message": "Apagado"
-        },
         "ProfilePreheatString": {
             "message": "Precalentado\n"
         },
@@ -80,15 +77,12 @@
         "SettingRightChar": "D",
         "SettingLeftChar": "I",
         "SettingAutoChar": "A",
-        "SettingOffChar": "O",
         "SettingSlowChar": "L",
         "SettingMediumChar": "M",
         "SettingFastChar": "R",
-        "SettingStartNoneChar": "N",
         "SettingStartSolderingChar": "S",
         "SettingStartSleepChar": "R",
         "SettingStartSleepOffChar": "F",
-        "SettingLockDisableChar": "D",
         "SettingLockBoostChar": "B",
         "SettingLockFullChar": "F"
     },
@@ -142,7 +136,7 @@
         },
         "AutoStart": {
             "displayText": "Calentar\nal enchufar",
-            "description": "Calentado automático al iniciar (N=no | S=entrar en modo soldar | R=solo entrar en reposo | F=en reposo pero mantiene la punta fría)"
+            "description": "Calentado automático al iniciar (S=entrar en modo soldar | R=solo entrar en reposo | F=en reposo pero mantiene la punta fría)"
         },
         "TempChangeShortStep": {
             "displayText": "Cambio temp.\npuls. cortas",
@@ -154,7 +148,63 @@
         },
         "LockingMode": {
             "displayText": "Permitir botones\nbloqueo",
-            "description": "Mientras suelda, mantenga pulsados ambos botones para alternar su bloqueo (D=desactivar | B=sólo modo boost | F=bloqueo total)"
+            "description": "Mientras suelda, mantenga pulsados ambos botones para alternar su bloqueo (B=sólo modo boost | F=bloqueo total)"
+        },
+        "ProfilePhases": {
+            "displayText": "Profile\nPhases",
+            "description": "Number of phases in profile mode"
+        },
+        "ProfilePreheatTemp": {
+            "displayText": "Preheat\nTemp",
+            "description": "Preheat to this temperature at the start of profile mode"
+        },
+        "ProfilePreheatSpeed": {
+            "displayText": "Preheat\nSpeed",
+            "description": "Preheat at this rate (degrees per second)"
+        },
+        "ProfilePhase1Temp": {
+            "displayText": "Phase 1\nTemp",
+            "description": "Target temperature for the end of this phase"
+        },
+        "ProfilePhase1Duration": {
+            "displayText": "Phase 1\nDuration",
+            "description": "Target duration of this phase (seconds)"
+        },
+        "ProfilePhase2Temp": {
+            "displayText": "Phase 2\nTemp",
+            "description": ""
+        },
+        "ProfilePhase2Duration": {
+            "displayText": "Phase 2\nDuration",
+            "description": ""
+        },
+        "ProfilePhase3Temp": {
+            "displayText": "Phase 3\nTemp",
+            "description": ""
+        },
+        "ProfilePhase3Duration": {
+            "displayText": "Phase 3\nDuration",
+            "description": ""
+        },
+        "ProfilePhase4Temp": {
+            "displayText": "Phase 4\nTemp",
+            "description": ""
+        },
+        "ProfilePhase4Duration": {
+            "displayText": "Phase 4\nDuration",
+            "description": ""
+        },
+        "ProfilePhase5Temp": {
+            "displayText": "Phase 5\nTemp",
+            "description": ""
+        },
+        "ProfilePhase5Duration": {
+            "displayText": "Phase 5\nDuration",
+            "description": ""
+        },
+        "ProfileCooldownSpeed": {
+            "displayText": "Cooldown\nSpeed",
+            "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
         },
         "ProfilePhases": {
             "displayText": "Fases de\nPerfil",
@@ -214,7 +264,7 @@
         },
         "MotionSensitivity": {
             "displayText": "Detección de\nmovimiento",
-            "description": "Tiempo de reacción al agarrar (0=no | 1=menos sensible | ... | 9=más sensible)"
+            "description": "Tiempo de reacción al agarrar (1=menos sensible | ... | 9=más sensible)"
         },
         "SleepTemperature": {
             "displayText": "Temperatura\nen reposo",
@@ -230,7 +280,7 @@
         },
         "HallEffSensitivity": {
             "displayText": "Hall Eff\nSensibilidad",
-            "description": "Sensibilidad del sensor de efecto Hall en la detección de reposo (0=no | 1=menos sensible | ... | 9=más sensible)"
+            "description": "Sensibilidad del sensor de efecto Hall en la detección de reposo (1=menos sensible | ... | 9=más sensible)"
         },
         "TemperatureUnit": {
             "displayText": "Unidad de\ntemperatura",
@@ -254,7 +304,7 @@
         },
         "AnimSpeed": {
             "displayText": "Anim.\nvelocidad",
-            "description": "Velocidad de animaciones de iconos en el menú (O=apagado | L=baja | M=media | R=alta)"
+            "description": "Velocidad de animaciones de iconos en el menú (L=baja | M=media | R=alta)"
         },
         "AnimLoop": {
             "displayText": "Anim.\nbucle",

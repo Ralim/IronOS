@@ -60,8 +60,11 @@
         "SleepingTipAdvancedString": {
             "message": "Grot: \n"
         },
-        "OffString": {
-            "message": "Wył"
+        "ProfilePreheatString": {
+            "message": "Preheat\n"
+        },
+        "ProfileCooldownString": {
+            "message": "Cooldown\n"
         },
         "ProfilePreheatString": {
             "message": "Preheat\n"
@@ -80,15 +83,12 @@
         "SettingRightChar": "P",
         "SettingLeftChar": "L",
         "SettingAutoChar": "A",
-        "SettingOffChar": "O",
         "SettingSlowChar": "W",
         "SettingMediumChar": "M",
         "SettingFastChar": "S",
-        "SettingStartNoneChar": "B",
         "SettingStartSolderingChar": "T",
         "SettingStartSleepChar": "Z",
         "SettingStartSleepOffChar": "O",
-        "SettingLockDisableChar": "W",
         "SettingLockBoostChar": "B",
         "SettingLockFullChar": "P"
     },
@@ -141,7 +141,7 @@
         },
         "AutoStart": {
             "displayText": "Aut. uruch.\ntr. lutowania",
-            "description": "Automatyczne uruchamianie trybu lutowania po włączeniu zasilania. (B: wyłączone | T: lutowanie | Z: uśpienie | O: uśpienie w temp. pokojowej)"
+            "description": "Automatyczne uruchamianie trybu lutowania po włączeniu zasilania. (T: lutowanie | Z: uśpienie | O: uśpienie w temp. pokojowej)"
         },
         "TempChangeShortStep": {
             "displayText": "Zm. temp.\nkr. przyc.",
@@ -153,7 +153,63 @@
         },
         "LockingMode": {
             "displayText": "Blokada\nprzycisków",
-            "description": "W trybie lutowania, wciśnij oba przyciski aby je zablokować (O=Wyłączona | B=tylko Boost | P=pełna blokada)"
+            "description": "W trybie lutowania, wciśnij oba przyciski aby je zablokować (B=tylko Boost | P=pełna blokada)"
+        },
+        "ProfilePhases": {
+            "displayText": "Profile\nPhases",
+            "description": "Number of phases in profile mode"
+        },
+        "ProfilePreheatTemp": {
+            "displayText": "Preheat\nTemp",
+            "description": "Preheat to this temperature at the start of profile mode"
+        },
+        "ProfilePreheatSpeed": {
+            "displayText": "Preheat\nSpeed",
+            "description": "Preheat at this rate (degrees per second)"
+        },
+        "ProfilePhase1Temp": {
+            "displayText": "Phase 1\nTemp",
+            "description": "Target temperature for the end of this phase"
+        },
+        "ProfilePhase1Duration": {
+            "displayText": "Phase 1\nDuration",
+            "description": "Target duration of this phase (seconds)"
+        },
+        "ProfilePhase2Temp": {
+            "displayText": "Phase 2\nTemp",
+            "description": ""
+        },
+        "ProfilePhase2Duration": {
+            "displayText": "Phase 2\nDuration",
+            "description": ""
+        },
+        "ProfilePhase3Temp": {
+            "displayText": "Phase 3\nTemp",
+            "description": ""
+        },
+        "ProfilePhase3Duration": {
+            "displayText": "Phase 3\nDuration",
+            "description": ""
+        },
+        "ProfilePhase4Temp": {
+            "displayText": "Phase 4\nTemp",
+            "description": ""
+        },
+        "ProfilePhase4Duration": {
+            "displayText": "Phase 4\nDuration",
+            "description": ""
+        },
+        "ProfilePhase5Temp": {
+            "displayText": "Phase 5\nTemp",
+            "description": ""
+        },
+        "ProfilePhase5Duration": {
+            "displayText": "Phase 5\nDuration",
+            "description": ""
+        },
+        "ProfileCooldownSpeed": {
+            "displayText": "Cooldown\nSpeed",
+            "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
         },
         "ProfilePhases": {
             "displayText": "Profile\nPhases",
@@ -213,7 +269,7 @@
         },
         "MotionSensitivity": {
             "displayText": "Czułość\nwykr. ruchu",
-            "description": "Czułość wykrywania ruchu (0: Wyłączona | 1: Minimalna | ... | 9: Maksymalna)"
+            "description": "Czułość wykrywania ruchu (1: Minimalna | ... | 9: Maksymalna)"
         },
         "SleepTemperature": {
             "displayText": "Temp.\nuśpienia",
@@ -229,7 +285,7 @@
         },
         "HallEffSensitivity": {
             "displayText": "Czułość\ncz. Halla",
-            "description": "Czułość czujnika Halla, używanego do przechodznia w tryb uśpienia (0: Wyłączona | 1: Minimalna | ... | 9: Maksymalna)"
+            "description": "Czułość czujnika Halla, używanego do przechodznia w tryb uśpienia (1: Minimalna | ... | 9: Maksymalna)"
         },
         "TemperatureUnit": {
             "displayText": "Jednostka\ntemperatury",
@@ -253,7 +309,7 @@
         },
         "AnimSpeed": {
             "displayText": "Prędkosć\nanimacji",
-            "description": "Prędkość animacji ikon w menu (O: wył. | W: mała | M: średnia | S: duża)"
+            "description": "Prędkość animacji ikon w menu (W: mała | M: średnia | S: duża)"
         },
         "AnimLoop": {
             "displayText": "Zapętlona\nanimacja",
