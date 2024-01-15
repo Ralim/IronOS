@@ -60,8 +60,11 @@
         "SleepingTipAdvancedString": {
             "message": "Hegy: \n"
         },
-        "OffString": {
-            "message": "Ki"
+        "ProfilePreheatString": {
+            "message": "Preheat\n"
+        },
+        "ProfileCooldownString": {
+            "message": "Cooldown\n"
         },
         "ProfilePreheatString": {
             "message": "Preheat\n"
@@ -80,15 +83,12 @@
         "SettingRightChar": "J",
         "SettingLeftChar": "B",
         "SettingAutoChar": "A",
-        "SettingOffChar": "0",
         "SettingSlowChar": "L",
         "SettingMediumChar": "K",
         "SettingFastChar": "Gy",
-        "SettingStartNoneChar": "K",
         "SettingStartSolderingChar": "F",
         "SettingStartSleepChar": "A",
         "SettingStartSleepOffChar": "Sz",
-        "SettingLockDisableChar": "K",
         "SettingLockBoostChar": "B",
         "SettingLockFullChar": "T"
     },
@@ -141,7 +141,7 @@
         },
         "AutoStart": {
             "displayText": "Automatikus\nindítás",
-            "description": "Bekapcsolás után automatikusan lépjen forrasztás módba (K=ki | F=forrasztás | A=alvó mód | Sz=szobahőmérséklet)"
+            "description": "Bekapcsolás után automatikusan lépjen forrasztás módba (F=forrasztás | A=alvó mód | Sz=szobahőmérséklet)"
         },
         "TempChangeShortStep": {
             "displayText": "Hőm. állítás\nrövid",
@@ -153,7 +153,63 @@
         },
         "LockingMode": {
             "displayText": "Lezárás\nengedélyezés",
-            "description": "Forrasztás közben mindkét gombot hosszan lenyomva lezárja a kezelést (K=ki | B=csak \"boost\" módban | T=teljes lezárás)"
+            "description": "Forrasztás közben mindkét gombot hosszan lenyomva lezárja a kezelést (B=csak \"boost\" módban | T=teljes lezárás)"
+        },
+        "ProfilePhases": {
+            "displayText": "Profile\nPhases",
+            "description": "Number of phases in profile mode"
+        },
+        "ProfilePreheatTemp": {
+            "displayText": "Preheat\nTemp",
+            "description": "Preheat to this temperature at the start of profile mode"
+        },
+        "ProfilePreheatSpeed": {
+            "displayText": "Preheat\nSpeed",
+            "description": "Preheat at this rate (degrees per second)"
+        },
+        "ProfilePhase1Temp": {
+            "displayText": "Phase 1\nTemp",
+            "description": "Target temperature for the end of this phase"
+        },
+        "ProfilePhase1Duration": {
+            "displayText": "Phase 1\nDuration",
+            "description": "Target duration of this phase (seconds)"
+        },
+        "ProfilePhase2Temp": {
+            "displayText": "Phase 2\nTemp",
+            "description": ""
+        },
+        "ProfilePhase2Duration": {
+            "displayText": "Phase 2\nDuration",
+            "description": ""
+        },
+        "ProfilePhase3Temp": {
+            "displayText": "Phase 3\nTemp",
+            "description": ""
+        },
+        "ProfilePhase3Duration": {
+            "displayText": "Phase 3\nDuration",
+            "description": ""
+        },
+        "ProfilePhase4Temp": {
+            "displayText": "Phase 4\nTemp",
+            "description": ""
+        },
+        "ProfilePhase4Duration": {
+            "displayText": "Phase 4\nDuration",
+            "description": ""
+        },
+        "ProfilePhase5Temp": {
+            "displayText": "Phase 5\nTemp",
+            "description": ""
+        },
+        "ProfilePhase5Duration": {
+            "displayText": "Phase 5\nDuration",
+            "description": ""
+        },
+        "ProfileCooldownSpeed": {
+            "displayText": "Cooldown\nSpeed",
+            "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
         },
         "ProfilePhases": {
             "displayText": "Profile\nPhases",
@@ -213,7 +269,7 @@
         },
         "MotionSensitivity": {
             "displayText": "Mozgás\nérzékenység",
-            "description": "Mozgás érzékenység beállítása (0=kikapcsolva | 1=legkevésbé érzékeny | ... | 9=legérzékenyebb)"
+            "description": "Mozgás érzékenység beállítása (1=legkevésbé érzékeny | ... | 9=legérzékenyebb)"
         },
         "SleepTemperature": {
             "displayText": "Alvási\nhőmérséklet",
@@ -229,7 +285,7 @@
         },
         "HallEffSensitivity": {
             "displayText": "Alvásérzékelő\nérzékenység",
-            "description": "Alvásérzékelő gyorsulásmérő érzékenysége (0=kikapcsolva | 1=legkevésbé érzékeny | ... | 9=legérzékenyebb)"
+            "description": "Alvásérzékelő gyorsulásmérő érzékenysége (1=legkevésbé érzékeny | ... | 9=legérzékenyebb)"
         },
         "TemperatureUnit": {
             "displayText": "Hőmérséklet\nmértékegysége",
@@ -253,7 +309,7 @@
         },
         "AnimSpeed": {
             "displayText": "Animáció\nsebessége",
-            "description": "Menüikonok animációjának sebessége (0=ki | L=lassú | K=közepes | Gy=gyors)"
+            "description": "Menüikonok animációjának sebessége (L=lassú | K=közepes | Gy=gyors)"
         },
         "AnimLoop": {
             "displayText": "Folytonos\nanimáció",

@@ -60,8 +60,11 @@
         "SleepingTipAdvancedString": {
             "message": "Spiss: \n"
         },
-        "OffString": {
-            "message": "Av"
+        "ProfilePreheatString": {
+            "message": "Preheat\n"
+        },
+        "ProfileCooldownString": {
+            "message": "Cooldown\n"
         },
         "ProfilePreheatString": {
             "message": "Preheat\n"
@@ -80,15 +83,12 @@
         "SettingRightChar": "H",
         "SettingLeftChar": "V",
         "SettingAutoChar": "A",
-        "SettingOffChar": "O",
         "SettingSlowChar": "S",
         "SettingMediumChar": "M",
         "SettingFastChar": "F",
-        "SettingStartNoneChar": "I",
         "SettingStartSolderingChar": "L",
         "SettingStartSleepChar": "D",
         "SettingStartSleepOffChar": "R",
-        "SettingLockDisableChar": "D",
         "SettingLockBoostChar": "B",
         "SettingLockFullChar": "F"
     },
@@ -141,7 +141,7 @@
         },
         "AutoStart": {
             "displayText": "AStart\n",
-            "description": "Start automatisk med lodding når strøm kobles til. (I=Inaktiv | L=Lodding | D=Dvale | R=Dvale romtemperatur)"
+            "description": "Start automatisk med lodding når strøm kobles til. (L=Lodding | D=Dvale | R=Dvale romtemperatur)"
         },
         "TempChangeShortStep": {
             "displayText": "Temp-endring\nkort",
@@ -153,7 +153,63 @@
         },
         "LockingMode": {
             "displayText": "Tillat å låse\nknapper",
-            "description": "Mens du lodder, hold nede begge knapper for å bytte mellom låsemodus (D=deaktiver | B=kun boost | F=full lås)"
+            "description": "Mens du lodder, hold nede begge knapper for å bytte mellom låsemodus (B=kun boost | F=full lås)"
+        },
+        "ProfilePhases": {
+            "displayText": "Profile\nPhases",
+            "description": "Number of phases in profile mode"
+        },
+        "ProfilePreheatTemp": {
+            "displayText": "Preheat\nTemp",
+            "description": "Preheat to this temperature at the start of profile mode"
+        },
+        "ProfilePreheatSpeed": {
+            "displayText": "Preheat\nSpeed",
+            "description": "Preheat at this rate (degrees per second)"
+        },
+        "ProfilePhase1Temp": {
+            "displayText": "Phase 1\nTemp",
+            "description": "Target temperature for the end of this phase"
+        },
+        "ProfilePhase1Duration": {
+            "displayText": "Phase 1\nDuration",
+            "description": "Target duration of this phase (seconds)"
+        },
+        "ProfilePhase2Temp": {
+            "displayText": "Phase 2\nTemp",
+            "description": ""
+        },
+        "ProfilePhase2Duration": {
+            "displayText": "Phase 2\nDuration",
+            "description": ""
+        },
+        "ProfilePhase3Temp": {
+            "displayText": "Phase 3\nTemp",
+            "description": ""
+        },
+        "ProfilePhase3Duration": {
+            "displayText": "Phase 3\nDuration",
+            "description": ""
+        },
+        "ProfilePhase4Temp": {
+            "displayText": "Phase 4\nTemp",
+            "description": ""
+        },
+        "ProfilePhase4Duration": {
+            "displayText": "Phase 4\nDuration",
+            "description": ""
+        },
+        "ProfilePhase5Temp": {
+            "displayText": "Phase 5\nTemp",
+            "description": ""
+        },
+        "ProfilePhase5Duration": {
+            "displayText": "Phase 5\nDuration",
+            "description": ""
+        },
+        "ProfileCooldownSpeed": {
+            "displayText": "Cooldown\nSpeed",
+            "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
         },
         "ProfilePhases": {
             "displayText": "Profile\nPhases",
@@ -213,7 +269,7 @@
         },
         "MotionSensitivity": {
             "displayText": "BSensr\n",
-            "description": "Bevegelsesfølsomhet (0=Inaktiv | 1=Minst følsom | ... | 9=Mest følsom)"
+            "description": "Bevegelsesfølsomhet (1=Minst følsom | ... | 9=Mest følsom)"
         },
         "SleepTemperature": {
             "displayText": "DTmp\n",
@@ -229,7 +285,7 @@
         },
         "HallEffSensitivity": {
             "displayText": "Hall-sensor\nfølsomhet",
-            "description": "Sensitiviteten til Hall-effekt-sensoren for å detektere inaktivitet (0=Inaktiv | 1=Minst følsom | ... | 9=Mest følsom)"
+            "description": "Sensitiviteten til Hall-effekt-sensoren for å detektere inaktivitet (1=Minst følsom | ... | 9=Mest følsom)"
         },
         "TemperatureUnit": {
             "displayText": "TmpEnh\n",
@@ -253,7 +309,7 @@
         },
         "AnimSpeed": {
             "displayText": "Anim.\nhastighet",
-            "description": "Hastigheten til animasjonene i menyen (O=off | S=slow | M=medium | F=fast)"
+            "description": "Hastigheten til animasjonene i menyen (S=slow | M=medium | F=fast)"
         },
         "AnimLoop": {
             "displayText": "Anim.\nloop",

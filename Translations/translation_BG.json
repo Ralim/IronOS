@@ -60,8 +60,11 @@
         "SleepingTipAdvancedString": {
             "message": "Човка:\n"
         },
-        "OffString": {
-            "message": "Изкл."
+        "ProfilePreheatString": {
+            "message": "Preheat\n"
+        },
+        "ProfileCooldownString": {
+            "message": "Cooldown\n"
         },
         "ProfilePreheatString": {
             "message": "Загряване\n"
@@ -80,11 +83,9 @@
         "SettingRightChar": "Д",
         "SettingLeftChar": "Л",
         "SettingAutoChar": "А",
-        "SettingOffChar": "И",
         "SettingSlowChar": "Н",
         "SettingMediumChar": "С",
         "SettingFastChar": "В",
-        "SettingStartNoneChar": "И",
         "SettingStartSolderingChar": "З",
         "SettingStartSleepChar": "С",
         "SettingStartSleepOffChar": "П",
@@ -141,7 +142,7 @@
         },
         "AutoStart": {
             "displayText": "Автоматичен\nработен режим",
-            "description": "Режим на поялника при включване на захранването (И=Изкл. | З=Запояване | С=Сън | П=Покой на стайна температурата)"
+            "description": "Режим на поялника при включване на захранването (З=Запояване | С=Сън | П=Покой на стайна температурата)"
         },
         "TempChangeShortStep": {
             "displayText": "Промяна T\nбързо",
@@ -153,7 +154,7 @@
         },
         "LockingMode": {
             "displayText": "Бутони за\nзаключване",
-            "description": "Докато запоявате, задръжте двата бутона, за да превключите заключването им (И=Изкл. | Т=Турбо режим | П=Пълно)"
+            "description": "Докато запоявате, задръжте двата бутона, за да превключите заключването им (Т=Турбо режим | П=Пълно)"
         },
         "ProfilePhases": {
             "displayText": "Брой\nетапи",
@@ -213,7 +214,7 @@
         },
         "MotionSensitivity": {
             "displayText": "Чувствител.\nна движение",
-            "description": "Чувствителност на движение на акселерометър (0=Изкл. | 1=Слабо | ... | 9=Силно)"
+            "description": "Чувствителност на движение на акселерометър (1=Слабо | ... | 9=Силно)"
         },
         "SleepTemperature": {
             "displayText": "Темп.\nсън",
@@ -229,7 +230,7 @@
         },
         "HallEffSensitivity": {
             "displayText": "Датчик\nна Хол",
-            "description": "Чувствителност на сензора към магнитно поле (0=Изкл. | 1=Слабо | ... | 9=Силно)"
+            "description": "Чувствителност на сензора към магнитно поле (1=Слабо | ... | 9=Силно)"
         },
         "TemperatureUnit": {
             "displayText": "Единици за\nтемпературата",
@@ -253,7 +254,7 @@
         },
         "AnimSpeed": {
             "displayText": "Скорост на\nанимацията",
-            "description": "Скорост на анимация на иконата в главното меню (И=Изкл. | Н=Ниска | C=Средна | B=Висока)"
+            "description": "Скорост на анимация на иконата в главното меню (Н=Ниска | C=Средна | B=Висока)"
         },
         "AnimLoop": {
             "displayText": "Анимац.\nцикъл",

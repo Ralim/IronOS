@@ -60,8 +60,11 @@
         "SleepingTipAdvancedString": {
             "message": "Tip: "
         },
-        "OffString": {
-            "message": "關"
+        "ProfilePreheatString": {
+            "message": "Preheat"
+        },
+        "ProfileCooldownString": {
+            "message": "Cooldown"
         },
         "ProfilePreheatString": {
             "message": "Preheat"
@@ -80,15 +83,12 @@
         "SettingRightChar": "右",
         "SettingLeftChar": "左",
         "SettingAutoChar": "自",
-        "SettingOffChar": "關",
         "SettingSlowChar": "慢",
         "SettingMediumChar": "中",
         "SettingFastChar": "快",
-        "SettingStartNoneChar": "無",
         "SettingStartSolderingChar": "焊",
         "SettingStartSleepChar": "待",
         "SettingStartSleepOffChar": "室",
-        "SettingLockDisableChar": "無",
         "SettingLockBoostChar": "增",
         "SettingLockFullChar": "全"
     },
@@ -141,7 +141,7 @@
         },
         "AutoStart": {
             "displayText": "自動啟用",
-            "description": "開機時自動啟用 <無=停用 | 焊=焊接模式 | 待=待機模式 | 室=室溫待機>"
+            "description": "開機時自動啟用 <焊=焊接模式 | 待=待機模式 | 室=室溫待機>"
         },
         "TempChangeShortStep": {
             "displayText": "溫度調整 短",
@@ -153,7 +153,63 @@
         },
         "LockingMode": {
             "displayText": "按鍵鎖定",
-            "description": "於焊接模式時，同時長按兩個按鍵啟用按鍵鎖定 <無=停用 | 增=只容許增熱模式 | 全=鎖定全部>"
+            "description": "於焊接模式時，同時長按兩個按鍵啟用按鍵鎖定 <增=只容許增熱模式 | 全=鎖定全部>"
+        },
+        "ProfilePhases": {
+            "displayText": "Profile Phases",
+            "description": "Number of phases in profile mode"
+        },
+        "ProfilePreheatTemp": {
+            "displayText": "Preheat Temp",
+            "description": "Preheat to this temperature at the start of profile mode"
+        },
+        "ProfilePreheatSpeed": {
+            "displayText": "Preheat Speed",
+            "description": "Preheat at this rate (degrees per second)"
+        },
+        "ProfilePhase1Temp": {
+            "displayText": "Phase 1 Temp",
+            "description": "Target temperature for the end of this phase"
+        },
+        "ProfilePhase1Duration": {
+            "displayText": "Phase 1 Duration",
+            "description": "Target duration of this phase (seconds)"
+        },
+        "ProfilePhase2Temp": {
+            "displayText": "Phase 2 Temp",
+            "description": ""
+        },
+        "ProfilePhase2Duration": {
+            "displayText": "Phase 2 Duration",
+            "description": ""
+        },
+        "ProfilePhase3Temp": {
+            "displayText": "Phase 3 Temp",
+            "description": ""
+        },
+        "ProfilePhase3Duration": {
+            "displayText": "Phase 3 Duration",
+            "description": ""
+        },
+        "ProfilePhase4Temp": {
+            "displayText": "Phase 4 Temp",
+            "description": ""
+        },
+        "ProfilePhase4Duration": {
+            "displayText": "Phase 4 Duration",
+            "description": ""
+        },
+        "ProfilePhase5Temp": {
+            "displayText": "Phase 5 Temp",
+            "description": ""
+        },
+        "ProfilePhase5Duration": {
+            "displayText": "Phase 5 Duration",
+            "description": ""
+        },
+        "ProfileCooldownSpeed": {
+            "displayText": "Cooldown Speed",
+            "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
         },
         "ProfilePhases": {
             "displayText": "Profile Phases",
@@ -213,7 +269,7 @@
         },
         "MotionSensitivity": {
             "displayText": "動作敏感度",
-            "description": "0=停用 | 1=最低敏感度 | ... | 9=最高敏感度"
+            "description": "1=最低敏感度 | ... | 9=最高敏感度"
         },
         "SleepTemperature": {
             "displayText": "待機溫度",
@@ -229,7 +285,7 @@
         },
         "HallEffSensitivity": {
             "displayText": "磁場敏感度",
-            "description": "磁場感應器用作啟動待機模式的敏感度 <0=停用 | 1=最低敏感度 | ... | 9=最高敏感度>"
+            "description": "磁場感應器用作啟動待機模式的敏感度 <1=最低敏感度 | ... | 9=最高敏感度>"
         },
         "TemperatureUnit": {
             "displayText": "溫標",
@@ -253,7 +309,7 @@
         },
         "AnimSpeed": {
             "displayText": "動畫速度",
-            "description": "功能表圖示動畫的速度 <關=不顯示動畫 | 慢=慢速 | 中=中速 | 快=快速>"
+            "description": "功能表圖示動畫的速度 <慢=慢速 | 中=中速 | 快=快速>"
         },
         "AnimLoop": {
             "displayText": "動畫循環",

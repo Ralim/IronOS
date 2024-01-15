@@ -60,8 +60,11 @@
         "SleepingTipAdvancedString": {
             "message": "Врх: \n"
         },
-        "OffString": {
-            "message": "Иск"
+        "ProfilePreheatString": {
+            "message": "Preheat\n"
+        },
+        "ProfileCooldownString": {
+            "message": "Cooldown\n"
         },
         "ProfilePreheatString": {
             "message": "Preheat\n"
@@ -80,15 +83,12 @@
         "SettingRightChar": "Д",
         "SettingLeftChar": "Л",
         "SettingAutoChar": "А",
-        "SettingOffChar": "O",
         "SettingSlowChar": "С",
         "SettingMediumChar": "M",
         "SettingFastChar": "Б",
-        "SettingStartNoneChar": "И",
         "SettingStartSolderingChar": "Л",
         "SettingStartSleepChar": "С",
         "SettingStartSleepOffChar": "X",
-        "SettingLockDisableChar": "D",
         "SettingLockBoostChar": "B",
         "SettingLockFullChar": "F"
     },
@@ -141,7 +141,7 @@
         },
         "AutoStart": {
             "displayText": "Врући\nстарт",
-            "description": "Лемилица одмах по покретању прелази у режим лемљења и греје се. (И=искључити | Л=лемљење | С=спавати | X=спавати собна температура)"
+            "description": "Лемилица одмах по покретању прелази у режим лемљења и греје се. (Л=лемљење | С=спавати | X=спавати собна температура)"
         },
         "TempChangeShortStep": {
             "displayText": "Temp change\nshort",
@@ -153,7 +153,63 @@
         },
         "LockingMode": {
             "displayText": "Allow locking\nbuttons",
-            "description": "While soldering, hold down both buttons to toggle locking them (D=disable | B=boost mode only | F=full locking)"
+            "description": "While soldering, hold down both buttons to toggle locking them (B=boost mode only | F=full locking)"
+        },
+        "ProfilePhases": {
+            "displayText": "Profile\nPhases",
+            "description": "Number of phases in profile mode"
+        },
+        "ProfilePreheatTemp": {
+            "displayText": "Preheat\nTemp",
+            "description": "Preheat to this temperature at the start of profile mode"
+        },
+        "ProfilePreheatSpeed": {
+            "displayText": "Preheat\nSpeed",
+            "description": "Preheat at this rate (degrees per second)"
+        },
+        "ProfilePhase1Temp": {
+            "displayText": "Phase 1\nTemp",
+            "description": "Target temperature for the end of this phase"
+        },
+        "ProfilePhase1Duration": {
+            "displayText": "Phase 1\nDuration",
+            "description": "Target duration of this phase (seconds)"
+        },
+        "ProfilePhase2Temp": {
+            "displayText": "Phase 2\nTemp",
+            "description": ""
+        },
+        "ProfilePhase2Duration": {
+            "displayText": "Phase 2\nDuration",
+            "description": ""
+        },
+        "ProfilePhase3Temp": {
+            "displayText": "Phase 3\nTemp",
+            "description": ""
+        },
+        "ProfilePhase3Duration": {
+            "displayText": "Phase 3\nDuration",
+            "description": ""
+        },
+        "ProfilePhase4Temp": {
+            "displayText": "Phase 4\nTemp",
+            "description": ""
+        },
+        "ProfilePhase4Duration": {
+            "displayText": "Phase 4\nDuration",
+            "description": ""
+        },
+        "ProfilePhase5Temp": {
+            "displayText": "Phase 5\nTemp",
+            "description": ""
+        },
+        "ProfilePhase5Duration": {
+            "displayText": "Phase 5\nDuration",
+            "description": ""
+        },
+        "ProfileCooldownSpeed": {
+            "displayText": "Cooldown\nSpeed",
+            "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
         },
         "ProfilePhases": {
             "displayText": "Profile\nPhases",
@@ -213,7 +269,7 @@
         },
         "MotionSensitivity": {
             "displayText": "Осетљивост\nна покрет",
-            "description": "Осетљивост сензора покрета. (0=искључено | 1=најмање осетљиво | ... | 9=најосетљивије)"
+            "description": "Осетљивост сензора покрета. (1=најмање осетљиво | ... | 9=најосетљивије)"
         },
         "SleepTemperature": {
             "displayText": "Темп.\nспавања",
@@ -229,7 +285,7 @@
         },
         "HallEffSensitivity": {
             "displayText": "Hall sensor\nsensitivity",
-            "description": "Sensitivity to magnets (0=искључено | 1=најмање осетљиво | ... | 9=најосетљивије)"
+            "description": "Sensitivity to magnets (1=најмање осетљиво | ... | 9=најосетљивије)"
         },
         "TemperatureUnit": {
             "displayText": "Јединица\nтемпературе",
@@ -253,7 +309,7 @@
         },
         "AnimSpeed": {
             "displayText": "Anim.\nspeed",
-            "description": "Pace of icon animations in menu (O=off | С=slow | M=medium | Б=fast)"
+            "description": "Pace of icon animations in menu (С=slow | M=medium | Б=fast)"
         },
         "AnimLoop": {
             "displayText": "Anim.\nloop",

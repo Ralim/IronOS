@@ -60,8 +60,11 @@
         "SleepingTipAdvancedString": {
             "message": "Tip: \n"
         },
-        "OffString": {
-            "message": "Nu"
+        "ProfilePreheatString": {
+            "message": "Preheat\n"
+        },
+        "ProfileCooldownString": {
+            "message": "Cooldown\n"
         },
         "ProfilePreheatString": {
             "message": "Preheat\n"
@@ -80,15 +83,12 @@
         "SettingRightChar": "D",
         "SettingLeftChar": "S",
         "SettingAutoChar": "A",
-        "SettingOffChar": "O",
         "SettingSlowChar": "Î",
         "SettingMediumChar": "M",
         "SettingFastChar": "R",
-        "SettingStartNoneChar": "O",
         "SettingStartSolderingChar": "S",
         "SettingStartSleepChar": "Z",
         "SettingStartSleepOffChar": "R",
-        "SettingLockDisableChar": "D",
         "SettingLockBoostChar": "B",
         "SettingLockFullChar": "F"
     },
@@ -141,7 +141,7 @@
         },
         "AutoStart": {
             "displayText": "Auto\nstart",
-            "description": "Start letcon în modul de lipire la pornire (O=oprit | S=lipire | Z=repaus | R=repaus la temperatura camerei)"
+            "description": "Start letcon în modul de lipire la pornire (S=lipire | Z=repaus | R=repaus la temperatura camerei)"
         },
         "TempChangeShortStep": {
             "displayText": "Schimbare temp.\napăsare scută",
@@ -153,7 +153,63 @@
         },
         "LockingMode": {
             "displayText": "Blocare\nbutoane",
-            "description": "Când lipiţi, apăsaţi lung ambele butoane, pentru a le bloca (D=dezactivare | B=numai \"modul boost\" | F=blocare completă)"
+            "description": "Când lipiţi, apăsaţi lung ambele butoane, pentru a le bloca (B=numai \"modul boost\" | F=blocare completă)"
+        },
+        "ProfilePhases": {
+            "displayText": "Profile\nPhases",
+            "description": "Number of phases in profile mode"
+        },
+        "ProfilePreheatTemp": {
+            "displayText": "Preheat\nTemp",
+            "description": "Preheat to this temperature at the start of profile mode"
+        },
+        "ProfilePreheatSpeed": {
+            "displayText": "Preheat\nSpeed",
+            "description": "Preheat at this rate (degrees per second)"
+        },
+        "ProfilePhase1Temp": {
+            "displayText": "Phase 1\nTemp",
+            "description": "Target temperature for the end of this phase"
+        },
+        "ProfilePhase1Duration": {
+            "displayText": "Phase 1\nDuration",
+            "description": "Target duration of this phase (seconds)"
+        },
+        "ProfilePhase2Temp": {
+            "displayText": "Phase 2\nTemp",
+            "description": ""
+        },
+        "ProfilePhase2Duration": {
+            "displayText": "Phase 2\nDuration",
+            "description": ""
+        },
+        "ProfilePhase3Temp": {
+            "displayText": "Phase 3\nTemp",
+            "description": ""
+        },
+        "ProfilePhase3Duration": {
+            "displayText": "Phase 3\nDuration",
+            "description": ""
+        },
+        "ProfilePhase4Temp": {
+            "displayText": "Phase 4\nTemp",
+            "description": ""
+        },
+        "ProfilePhase4Duration": {
+            "displayText": "Phase 4\nDuration",
+            "description": ""
+        },
+        "ProfilePhase5Temp": {
+            "displayText": "Phase 5\nTemp",
+            "description": ""
+        },
+        "ProfilePhase5Duration": {
+            "displayText": "Phase 5\nDuration",
+            "description": ""
+        },
+        "ProfileCooldownSpeed": {
+            "displayText": "Cooldown\nSpeed",
+            "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
         },
         "ProfilePhases": {
             "displayText": "Profile\nPhases",
@@ -213,7 +269,7 @@
         },
         "MotionSensitivity": {
             "displayText": "Sensibilitate\nla miscare",
-            "description": "Sensibilitate senzor miscare (0=oprit | 1=puţin sensibil | ... | 9=cel mai sensibil)"
+            "description": "Sensibilitate senzor miscare (1=puţin sensibil | ... | 9=cel mai sensibil)"
         },
         "SleepTemperature": {
             "displayText": "Temp\nrepaus",
@@ -229,7 +285,7 @@
         },
         "HallEffSensitivity": {
             "displayText": "Sensibilitate\nsenzor Hall",
-            "description": "Sensibilitate senzor cu efect Hall pentru a detecta repausul (0=oprit | 1=putin sensibil | ... | 9=cel mai sensibil)"
+            "description": "Sensibilitate senzor cu efect Hall pentru a detecta repausul (1=putin sensibil | ... | 9=cel mai sensibil)"
         },
         "TemperatureUnit": {
             "displayText": "Unitate de\ntemperatură",
@@ -253,7 +309,7 @@
         },
         "AnimSpeed": {
             "displayText": "Animaţii\nviteză",
-            "description": "Ritmul animaţiilor pictogramei din meniu (O=oprit | Î=încet | M=mediu | R=rapid)"
+            "description": "Ritmul animaţiilor pictogramei din meniu (Î=încet | M=mediu | R=rapid)"
         },
         "AnimLoop": {
             "displayText": "Animaţii\nbuclă",

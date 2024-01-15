@@ -60,8 +60,11 @@
         "SleepingTipAdvancedString": {
             "message": "Hrot: \n"
         },
-        "OffString": {
-            "message": "Vyp"
+        "ProfilePreheatString": {
+            "message": "Preheat\n"
+        },
+        "ProfileCooldownString": {
+            "message": "Cooldown\n"
         },
         "ProfilePreheatString": {
             "message": "Předehřívání\n"
@@ -80,15 +83,12 @@
         "SettingRightChar": "P",
         "SettingLeftChar": "L",
         "SettingAutoChar": "A",
-        "SettingOffChar": "D",
         "SettingSlowChar": "P",
         "SettingMediumChar": "S",
         "SettingFastChar": "R",
-        "SettingStartNoneChar": "V",
         "SettingStartSolderingChar": "P",
         "SettingStartSleepChar": "S",
         "SettingStartSleepOffChar": "M",
-        "SettingLockDisableChar": "Z",
         "SettingLockBoostChar": "B",
         "SettingLockFullChar": "U"
     },
@@ -141,7 +141,7 @@
         },
         "AutoStart": {
             "displayText": "Chování\npři startu",
-            "description": "V=vypnuto | P=pájecí teplota | S=spánková teplota | M=zahřát hrot po pohybu"
+            "description": "P=pájecí teplota | S=spánková teplota | M=zahřát hrot po pohybu"
         },
         "TempChangeShortStep": {
             "displayText": "Krok teploty\nkrátký?",
@@ -153,7 +153,63 @@
         },
         "LockingMode": {
             "displayText": "Povolit zamč.\ntlačítek",
-            "description": "Při pájení podržte obě tlačítka pro jejich zamčení (Z=zakázáno | B=pouze v režimu boost | U=úplné zamčení)"
+            "description": "Při pájení podržte obě tlačítka pro jejich zamčení (B=pouze v režimu boost | U=úplné zamčení)"
+        },
+        "ProfilePhases": {
+            "displayText": "Profile\nPhases",
+            "description": "Number of phases in profile mode"
+        },
+        "ProfilePreheatTemp": {
+            "displayText": "Preheat\nTemp",
+            "description": "Preheat to this temperature at the start of profile mode"
+        },
+        "ProfilePreheatSpeed": {
+            "displayText": "Preheat\nSpeed",
+            "description": "Preheat at this rate (degrees per second)"
+        },
+        "ProfilePhase1Temp": {
+            "displayText": "Phase 1\nTemp",
+            "description": "Target temperature for the end of this phase"
+        },
+        "ProfilePhase1Duration": {
+            "displayText": "Phase 1\nDuration",
+            "description": "Target duration of this phase (seconds)"
+        },
+        "ProfilePhase2Temp": {
+            "displayText": "Phase 2\nTemp",
+            "description": ""
+        },
+        "ProfilePhase2Duration": {
+            "displayText": "Phase 2\nDuration",
+            "description": ""
+        },
+        "ProfilePhase3Temp": {
+            "displayText": "Phase 3\nTemp",
+            "description": ""
+        },
+        "ProfilePhase3Duration": {
+            "displayText": "Phase 3\nDuration",
+            "description": ""
+        },
+        "ProfilePhase4Temp": {
+            "displayText": "Phase 4\nTemp",
+            "description": ""
+        },
+        "ProfilePhase4Duration": {
+            "displayText": "Phase 4\nDuration",
+            "description": ""
+        },
+        "ProfilePhase5Temp": {
+            "displayText": "Phase 5\nTemp",
+            "description": ""
+        },
+        "ProfilePhase5Duration": {
+            "displayText": "Phase 5\nDuration",
+            "description": ""
+        },
+        "ProfileCooldownSpeed": {
+            "displayText": "Cooldown\nSpeed",
+            "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
         },
         "ProfilePhases": {
             "displayText": "Profilové\nFáze",
@@ -213,7 +269,7 @@
         },
         "MotionSensitivity": {
             "displayText": "Citlivost\nna pohyb",
-            "description": "0=vyp | 1=nejméně citlivé | ... | 9=nejvíce citlivé"
+            "description": "1=nejméně citlivé | ... | 9=nejvíce citlivé"
         },
         "SleepTemperature": {
             "displayText": "Teplota\nve spánku",
@@ -229,7 +285,7 @@
         },
         "HallEffSensitivity": {
             "displayText": "Citlivost\nHall. čidla",
-            "description": "Citlivost Hallova čidla pro detekci spánku (0=vypnuto | 1=nejméně citlivé | ... | 9=nejvíce citlivé)"
+            "description": "Citlivost Hallova čidla pro detekci spánku (1=nejméně citlivé | ... | 9=nejvíce citlivé)"
         },
         "TemperatureUnit": {
             "displayText": "Jednotka\nteploty",
@@ -253,7 +309,7 @@
         },
         "AnimSpeed": {
             "displayText": "Anim.\nrychlost",
-            "description": "Tempo animace ikon v menu (O=vypnuto | P=pomalu | S=středně | R=rychle)"
+            "description": "Tempo animace ikon v menu (P=pomalu | S=středně | R=rychle)"
         },
         "AnimLoop": {
             "displayText": "Anim.\nsmyčka",

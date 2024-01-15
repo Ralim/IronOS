@@ -60,8 +60,11 @@
         "SleepingTipAdvancedString": {
             "message": "Kärki: \n"
         },
-        "OffString": {
-            "message": "Off"
+        "ProfilePreheatString": {
+            "message": "Preheat\n"
+        },
+        "ProfileCooldownString": {
+            "message": "Cooldown\n"
         },
         "ProfilePreheatString": {
             "message": "Preheat\n"
@@ -80,15 +83,12 @@
         "SettingRightChar": "O",
         "SettingLeftChar": "V",
         "SettingAutoChar": "A",
-        "SettingOffChar": "P",
         "SettingSlowChar": "A",
         "SettingMediumChar": "M",
         "SettingFastChar": "S",
-        "SettingStartNoneChar": "E",
         "SettingStartSolderingChar": "J",
         "SettingStartSleepChar": "L",
         "SettingStartSleepOffChar": "H",
-        "SettingLockDisableChar": "P",
         "SettingLockBoostChar": "V",
         "SettingLockFullChar": "K"
     },
@@ -141,7 +141,7 @@
         },
         "AutoStart": {
             "displayText": "Autom.\nkäynnistys",
-            "description": "Käynnistää virrat kytkettäessä juotostilan automaattisesti. (E=Ei käytössä | J=juotostila | L=Lepotila | H=Lepotila huoneenlämpö)"
+            "description": "Käynnistää virrat kytkettäessä juotostilan automaattisesti. (J=juotostila | L=Lepotila | H=Lepotila huoneenlämpö)"
         },
         "TempChangeShortStep": {
             "displayText": "Lämmön muutos\nlyhyt painal.",
@@ -153,7 +153,63 @@
         },
         "LockingMode": {
             "displayText": "Salli nappien\nlukitus",
-            "description": "Kolvatessa paina molempia näppäimiä lukitaksesi ne (P=pois | V=vain tehostus | K=kaikki)"
+            "description": "Kolvatessa paina molempia näppäimiä lukitaksesi ne (V=vain tehostus | K=kaikki)"
+        },
+        "ProfilePhases": {
+            "displayText": "Profile\nPhases",
+            "description": "Number of phases in profile mode"
+        },
+        "ProfilePreheatTemp": {
+            "displayText": "Preheat\nTemp",
+            "description": "Preheat to this temperature at the start of profile mode"
+        },
+        "ProfilePreheatSpeed": {
+            "displayText": "Preheat\nSpeed",
+            "description": "Preheat at this rate (degrees per second)"
+        },
+        "ProfilePhase1Temp": {
+            "displayText": "Phase 1\nTemp",
+            "description": "Target temperature for the end of this phase"
+        },
+        "ProfilePhase1Duration": {
+            "displayText": "Phase 1\nDuration",
+            "description": "Target duration of this phase (seconds)"
+        },
+        "ProfilePhase2Temp": {
+            "displayText": "Phase 2\nTemp",
+            "description": ""
+        },
+        "ProfilePhase2Duration": {
+            "displayText": "Phase 2\nDuration",
+            "description": ""
+        },
+        "ProfilePhase3Temp": {
+            "displayText": "Phase 3\nTemp",
+            "description": ""
+        },
+        "ProfilePhase3Duration": {
+            "displayText": "Phase 3\nDuration",
+            "description": ""
+        },
+        "ProfilePhase4Temp": {
+            "displayText": "Phase 4\nTemp",
+            "description": ""
+        },
+        "ProfilePhase4Duration": {
+            "displayText": "Phase 4\nDuration",
+            "description": ""
+        },
+        "ProfilePhase5Temp": {
+            "displayText": "Phase 5\nTemp",
+            "description": ""
+        },
+        "ProfilePhase5Duration": {
+            "displayText": "Phase 5\nDuration",
+            "description": ""
+        },
+        "ProfileCooldownSpeed": {
+            "displayText": "Cooldown\nSpeed",
+            "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
         },
         "ProfilePhases": {
             "displayText": "Profile\nPhases",
@@ -213,7 +269,7 @@
         },
         "MotionSensitivity": {
             "displayText": "Liikkeen\nherkkyys",
-            "description": "0=pois päältä | 1=vähäinen herkkyys | ... | 9=suurin herkkyys"
+            "description": "1=vähäinen herkkyys | ... | 9=suurin herkkyys"
         },
         "SleepTemperature": {
             "displayText": "Lepotilan\nlämpötila",
@@ -229,7 +285,7 @@
         },
         "HallEffSensitivity": {
             "displayText": "Hall-\nherk.",
-            "description": "Hall-efektianturin herkkyys lepotilan tunnistuksessa (0=pois päältä | 1=vähäinen herkkyys | ... | 9=suurin herkkyys)"
+            "description": "Hall-efektianturin herkkyys lepotilan tunnistuksessa (1=vähäinen herkkyys | ... | 9=suurin herkkyys)"
         },
         "TemperatureUnit": {
             "displayText": "Lämpötilan\nyksikkö",
@@ -253,7 +309,7 @@
         },
         "AnimSpeed": {
             "displayText": "Animaation\nnopeus",
-            "description": "Animaatioiden nopeus valikossa (P=pois | A=alhainen | K=keskiverto | S=suuri)"
+            "description": "Animaatioiden nopeus valikossa (A=alhainen | K=keskiverto | S=suuri)"
         },
         "AnimLoop": {
             "displayText": "Animaation\ntoistaminen",
