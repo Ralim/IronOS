@@ -86,7 +86,7 @@ OperatingMode guiHandleDraw(void) {
       lastMovementTime = lastButtonTime = xTaskGetTickCount(); // Move forward so we dont go to sleep
       newMode                           = OperatingMode::Soldering;
     } else if (getSettingValue(SettingsOptions::AutoStartMode) == autoStartMode_t::ZERO) {
-      lastMovementTime = lastButtonTime = xTaskGetTickCount(); // Move forward so we dont go to sleep
+      lastMovementTime = lastButtonTime = 0; // We mask the values so that sleep goes until user moves again or presses a button
       newMode                           = OperatingMode::Hibernating;
     } else {
       newMode = OperatingMode::HomeScreen;
@@ -222,18 +222,6 @@ void startGUITask(void const *argument) {
 
   OLED::setRotation(getSettingValue(SettingsOptions::OrientationMode) & 1);
 
-  // // If the boot logo is enabled with timeout and the autostart mode is enabled (but not set to sleep w/o heat), start heating during boot logo
-  // if (getSettingValue(SettingsOptions::LOGOTime) > 0 && getSettingValue(SettingsOptions::LOGOTime) < 5 && getSettingValue(SettingsOptions::AutoStartMode) > 0
-  //     && getSettingValue(SettingsOptions::AutoStartMode) < 3) {
-  //   uint16_t sleepTempDegC;
-  //   if (getSettingValue(SettingsOptions::TemperatureInF)) {
-  //     sleepTempDegC = TipThermoModel::convertFtoC(getSettingValue(SettingsOptions::SleepTemp));
-  //   } else {
-  //     sleepTempDegC = getSettingValue(SettingsOptions::SleepTemp);
-  //   }
-  //   // Only heat to sleep temperature (but no higher than 75°C for safety)
-  //   currentTempTargetDegC = min(sleepTempDegC, 75);
-  // }
   // Read boot button state
   if (getButtonA()) {
     buttonsAtDeviceBoot = BUTTON_F_LONG;
