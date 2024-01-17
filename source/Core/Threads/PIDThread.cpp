@@ -63,7 +63,8 @@ void startPIDTask(void const *argument __unused) {
 #ifdef POW_PD
 #if POW_PD == 1
   // This is an FUSB based PD capable device
-  while (USBPowerDelivery::negotiationInProgress()) {
+  // Wait up to 3 seconds for USB-PD to settle
+  while (USBPowerDelivery::negotiationInProgress() && xTaskGetTickCount() < (TICKS_SECOND*3)) {
     resetWatchdog();
     ulTaskNotifyTake(pdTRUE, TICKS_100MS);
   }
