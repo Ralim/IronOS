@@ -61,12 +61,6 @@
             "message": "Човка:\n"
         },
         "ProfilePreheatString": {
-            "message": "Preheat\n"
-        },
-        "ProfileCooldownString": {
-            "message": "Cooldown\n"
-        },
-        "ProfilePreheatString": {
             "message": "Загряване\n"
         },
         "ProfileCooldownString": {
@@ -89,7 +83,6 @@
         "SettingStartSolderingChar": "З",
         "SettingStartSleepChar": "С",
         "SettingStartSleepOffChar": "П",
-        "SettingLockDisableChar": "И",
         "SettingLockBoostChar": "Т",
         "SettingLockFullChar": "П"
     },
