@@ -61,12 +61,6 @@
             "message": "Жало: \n"
         },
         "ProfilePreheatString": {
-            "message": "Preheat\n"
-        },
-        "ProfileCooldownString": {
-            "message": "Cooldown\n"
-        },
-        "ProfilePreheatString": {
             "message": "Попередній\nрозігрів"
         },
         "ProfileCooldownString": {
