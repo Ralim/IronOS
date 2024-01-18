@@ -61,12 +61,6 @@
             "message": "Punta: \n"
         },
         "ProfilePreheatString": {
-            "message": "Preheat\n"
-        },
-        "ProfileCooldownString": {
-            "message": "Cooldown\n"
-        },
-        "ProfilePreheatString": {
             "message": "Preriscaldamento\n"
         },
         "ProfileCooldownString": {
