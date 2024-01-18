@@ -61,12 +61,6 @@
             "message": "Hrot: \n"
         },
         "ProfilePreheatString": {
-            "message": "Preheat\n"
-        },
-        "ProfileCooldownString": {
-            "message": "Cooldown\n"
-        },
-        "ProfilePreheatString": {
             "message": "Předehřívání\n"
         },
         "ProfileCooldownString": {
