@@ -66,12 +66,6 @@
         "ProfileCooldownString": {
             "message": "Cooldown"
         },
-        "ProfilePreheatString": {
-            "message": "Preheat"
-        },
-        "ProfileCooldownString": {
-            "message": "Cooldown"
-        },
         "DeviceFailedValidationWarning": {
             "message": "这支电烙铁很有可能是冒牌货！"
         },
