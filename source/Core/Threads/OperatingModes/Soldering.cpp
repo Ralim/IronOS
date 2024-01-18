@@ -117,9 +117,9 @@ OperatingMode gui_solderingMode(const ButtonState buttons, guiContext *cxt) {
 
     if (cxt->scratch_state.state2) { // Boost mode is on
       if (OLED::getRotation()) {
-        OLED::setCursor(41, 0);
+        OLED::setCursor(34, 0);
       } else {
-        OLED::setCursor(52, 0);
+        OLED::setCursor(50, 0);
       }
       OLED::print(LargeSymbolPlus, FontStyle::LARGE);
     } else {
