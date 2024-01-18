@@ -66,12 +66,6 @@
         "ProfileCooldownString": {
             "message": "Cooldown\n"
         },
-        "ProfilePreheatString": {
-            "message": "Preheat\n"
-        },
-        "ProfileCooldownString": {
-            "message": "Cooldown\n"
-        },
         "DeviceFailedValidationWarning": {
             "message": "Din enhed er højst sandsyneligt en Kopivare!"
         },
