@@ -77,7 +77,7 @@ OperatingMode guiHandleDraw(void) {
     newMode = OperatingMode::InitialisationDone;
 #endif
   case OperatingMode::StartupLogo:
-    BootLogo::handleShowingLogo((uint8_t *)FLASH_LOGOADDR); // TODO needs refactor
+    showBootLogo();
 
     if (getSettingValue(SettingsOptions::AutoStartMode) == autoStartMode_t::SLEEP) {
       lastMovementTime = lastButtonTime = 0; // We mask the values so that sleep goes until user moves again or presses a button
