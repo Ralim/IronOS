@@ -63,11 +63,10 @@ void prepareTranslations() {
   }
 }
 
-bool settings_setLanguageSwitch(void) {
+void settings_setLanguageSwitch(void) {
   selectedLangIndex = (selectedLangIndex + 1) % LanguageCount;
   writeSelectedLanguageToSettings();
   prepareTranslations();
-  return selectedLangIndex == (LanguageCount - 1);
 }
 
 bool settings_showLanguageSwitch(void) { return true; }

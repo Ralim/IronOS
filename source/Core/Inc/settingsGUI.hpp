@@ -8,8 +8,8 @@
 #ifndef GUI_HPP_
 #define GUI_HPP_
 #include "BSP.h"
-#include "FreeRTOS.h"
 #include "Buttons.hpp"
+#include "FreeRTOS.h"
 #include "Settings.h"
 #include "Translation.h"
 
@@ -26,8 +26,8 @@ typedef struct {
   // The settings description index, please use the `SETTINGS_DESC` macro with
   // the `SettingsItemIndex` enum. Use 0 for no description.
   uint8_t description;
-  // return true if increment reached the maximum value
-  bool (*const incrementHandler)(void);
+  void (*const incrementHandler)(void);
+  // return true if at the last setting
   void (*const draw)(void);
   bool (*const isVisible)(void);
   // If this is set, we will automatically use the settings increment handler instead, set >= num settings to disable

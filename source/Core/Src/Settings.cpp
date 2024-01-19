@@ -188,7 +188,7 @@ uint16_t getSettingValue(const enum SettingsOptions option) { return systemSetti
 
 // Increment by the step size to the next value. If past the end wrap to the minimum
 // Returns true if we are on the _last_ value
-bool nextSettingValue(const enum SettingsOptions option) {
+void nextSettingValue(const enum SettingsOptions option) {
   const auto constants = settingsConstants[(int)option];
   if (systemSettings.settingsValues[(int)option] == (constants.max)) {
     // Already at max, wrap to the start
@@ -200,13 +200,36 @@ bool nextSettingValue(const enum SettingsOptions option) {
     // Otherwise increment
     systemSettings.settingsValues[(int)option] += constants.increment;
   }
-  // Return if we are at the max
-  return constants.max == systemSettings.settingsValues[(int)option];
 }
 
+bool isLastSettingValue(const enum SettingsOptions option) {
+  const auto constants = settingsConstants[(int)option];
+  uint16_t   max       = constants.max;
+  // handle temp unit limitations
+  if (option == SettingsOptions::SolderingTemp) {
+    if (getSettingValue(SettingsOptions::TemperatureInF)) {
+      max = MAX_TEMP_F;
+    } else {
+      max = MAX_TEMP_C;
+    }
+  } else if (option == SettingsOptions::BoostTemp) {
+    if (getSettingValue(SettingsOptions::TemperatureInF)) {
+      max = MAX_TEMP_F;
+    } else {
+      max = MAX_TEMP_C;
+    }
+  } else if (option == SettingsOptions::SleepTemp) {
+    if (getSettingValue(SettingsOptions::TemperatureInF)) {
+      max = 580;
+    } else {
+      max = 300;
+    }
+  }
+  return systemSettings.settingsValues[(int)option] >= max;
+}
 // Step backwards on the settings item
 // Return true if we are at the end (min)
-bool prevSettingValue(const enum SettingsOptions option) {
+void prevSettingValue(const enum SettingsOptions option) {
   const auto constants = settingsConstants[(int)option];
   if (systemSettings.settingsValues[(int)option] == (constants.min)) {
     // Already at min, wrap to the max
@@ -218,8 +241,6 @@ bool prevSettingValue(const enum SettingsOptions option) {
     // Otherwise decrement
     systemSettings.settingsValues[(int)option] -= constants.increment;
   }
-  // Return if we are at the min
-  return constants.min == systemSettings.settingsValues[(int)option];
 }
 
 uint16_t lookupHallEffectThreshold() {

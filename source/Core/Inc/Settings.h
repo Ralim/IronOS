@@ -107,8 +107,9 @@ void resetSettings();
 
 uint16_t getSettingValue(const enum SettingsOptions option);
 // Returns true if setting is now on the last value (next iteration will wrap)
-bool nextSettingValue(const enum SettingsOptions option);
-bool prevSettingValue(const enum SettingsOptions option);
+void nextSettingValue(const enum SettingsOptions option);
+void prevSettingValue(const enum SettingsOptions option);
+bool isLastSettingValue(const enum SettingsOptions option);
 
 void setSettingValue(const enum SettingsOptions option, const uint16_t newValue);
 

@@ -31,7 +31,6 @@ static void printShortDescription(SettingsItemIndex settingsItemIndex, uint16_t 
 // Render a menu, based on the position given
 // This will either draw the menu item, or the help text depending on how long its been since button press
 void render_menu(const menuitem *item, guiContext *cxt) {
-
   // If recent interaction or not help text draw the entry
   if ((xTaskGetTickCount() - lastButtonTime < HELP_TEXT_TIMEOUT_TICKS) || item->description == 0) {
 
@@ -144,6 +143,7 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
     // We walk the current menu to find the length
     *currentMenuLength = getMenuLength(currentMenu, 128 /* Max length of any menu*/);
   }
+
   if (*isRenderingHelp == 0) {
     //  Draw scroll
 
@@ -154,13 +154,30 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
     }
     // The height of the indicator is screen res height / total menu entries
     uint8_t indicatorHeight = OLED_HEIGHT / *currentMenuLength;
+
     if (indicatorHeight == 0) {
       indicatorHeight = 1; // always at least 1 pixel
     }
 
     uint16_t position = (OLED_HEIGHT * (uint16_t)currentVirtualPosition) / *currentMenuLength;
-    // Draw if not last item || flash if it is
-    if ((*currentMenuLength != currentVirtualPosition) || (xTaskGetTickCount() % 1000 < 500)) {
+
+    bool showScrollbar = (currentVirtualPosition <= (*currentMenuLength - 2)); // Not the last item, the -2 is a hack. need to fix this
+
+    // Store if its the last option for this setting
+    bool isLastOptionForSetting = false;
+    if ((int)currentMenu[currentScreen].autoSettingOption < (int)SettingsOptions::SettingsOptionsLength) {
+      isLastOptionForSetting = isLastSettingValue(currentMenu[currentScreen].autoSettingOption);
+    }
+
+    // Last settings menu entry, reset scroll show back so it flashes
+    if (isLastOptionForSetting) {
+      showScrollbar = false;
+    }
+
+    // Or Flash it
+    showScrollbar |= (xTaskGetTickCount() % (TICKS_SECOND / 4) < (TICKS_SECOND / 8));
+
+    if (showScrollbar) {
       OLED::drawScrollIndicator((uint8_t)position, indicatorHeight);
     }
   }
@@ -168,9 +185,9 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
 
   auto callIncrementHandler = [&]() {
     if ((int)currentMenu[currentScreen].autoSettingOption < (int)SettingsOptions::SettingsOptionsLength) {
-      return nextSettingValue(currentMenu[currentScreen].autoSettingOption);
+      nextSettingValue(currentMenu[currentScreen].autoSettingOption);
     } else if (currentMenu[currentScreen].incrementHandler != nullptr) {
-      return currentMenu[currentScreen].incrementHandler();
+      currentMenu[currentScreen].incrementHandler();
     }
     return false;
   };
@@ -196,7 +213,14 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
 
   case BUTTON_F_LONG:
     if (xTaskGetTickCount() + (*autoRepeatAcceleration) > (*autoRepeatTimer) + PRESS_ACCEL_INTERVAL_MAX) {
-      if (callIncrementHandler()) {
+      callIncrementHandler();
+      // Update the check for if its the last version
+      bool isLastOptionForSetting = false;
+      if ((int)currentMenu[currentScreen].autoSettingOption < (int)SettingsOptions::SettingsOptionsLength) {
+        isLastOptionForSetting = isLastSettingValue(currentMenu[currentScreen].autoSettingOption);
+      }
+
+      if (isLastOptionForSetting) {
         (*autoRepeatTimer) = TICKS_SECOND * 2;
       } else {
         (*autoRepeatTimer) = 0;
@@ -210,8 +234,7 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
     if (*isRenderingHelp) {
       *isRenderingHelp = 0;
     } else {
-      uint16_t *currentMenuLength = &(cxt->scratch_state.state5);
-      *currentMenuLength          = 0;
+      *currentMenuLength = 0;
       if (*subEntry == 0) {
         // In a root menu, if its null handler we enter the menu
         if (currentMenu[currentScreen].incrementHandler != nullptr) {
