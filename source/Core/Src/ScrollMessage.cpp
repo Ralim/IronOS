@@ -37,7 +37,7 @@ static uint16_t str_display_len(const char *const str) {
 uint16_t messageWidth(const char *message) { return FONT_12_WIDTH * str_display_len(message); }
 
 void drawScrollingText(const char *message, TickType_t currentTickOffset) {
-
+  OLED::clearScreen();
   int16_t  messageOffset;
   uint16_t msgWidth = messageWidth(message);
   if (msgWidth > OLED_WIDTH) {
