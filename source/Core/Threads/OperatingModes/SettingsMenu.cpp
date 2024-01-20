@@ -161,7 +161,7 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
 
     uint16_t position = (OLED_HEIGHT * (uint16_t)currentVirtualPosition) / *currentMenuLength;
 
-    bool showScrollbar = (currentVirtualPosition <= (*currentMenuLength - 2)); // Not the last item, the -2 is a hack. need to fix this
+    bool showScrollbar = true;
 
     // Store if its the last option for this setting
     bool isLastOptionForSetting = false;
