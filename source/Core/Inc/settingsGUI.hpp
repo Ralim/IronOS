@@ -27,7 +27,6 @@ typedef struct {
   // the `SettingsItemIndex` enum. Use 0 for no description.
   uint8_t description;
   void (*const incrementHandler)(void);
-  // return true if at the last setting
   void (*const draw)(void);
   bool (*const isVisible)(void);
   // If this is set, we will automatically use the settings increment handler instead, set >= num settings to disable

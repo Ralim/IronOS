@@ -227,6 +227,7 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
       }
       (*autoRepeatTimer) += xTaskGetTickCount();
       (*autoRepeatAcceleration) += PRESS_ACCEL_STEP;
+      *currentMenuLength = 0; // Reset incase menu visible changes
     }
     break;
   case BUTTON_F_SHORT:
@@ -234,7 +235,7 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
     if (*isRenderingHelp) {
       *isRenderingHelp = 0;
     } else {
-      *currentMenuLength = 0;
+      *currentMenuLength = 0; // Reset incase menu visible changes
       if (*subEntry == 0) {
         // In a root menu, if its null handler we enter the menu
         if (currentMenu[currentScreen].incrementHandler != nullptr) {
@@ -258,6 +259,7 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
     /* Fall through*/
   case BUTTON_B_SHORT:
     // Increment menu item
+
     newMode = moveToNextEntry(cxt);
     break;
 
