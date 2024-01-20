@@ -27,7 +27,7 @@ typedef struct {
   // the `SettingsItemIndex` enum. Use 0 for no description.
   uint8_t description;
   void (*const incrementHandler)(void);
-  void (*const draw)(void);
+  void (*const draw)(void); // Must not be nullptr, as that marks end of menu
   bool (*const isVisible)(void);
   // If this is set, we will automatically use the settings increment handler instead, set >= num settings to disable
   SettingsOptions   autoSettingOption;
