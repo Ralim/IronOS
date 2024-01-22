@@ -184,10 +184,10 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
   // Now handle user button input
 
   auto callIncrementHandler = [&]() {
-    if ((int)currentMenu[currentScreen].autoSettingOption < (int)SettingsOptions::SettingsOptionsLength) {
-      nextSettingValue(currentMenu[currentScreen].autoSettingOption);
-    } else if (currentMenu[currentScreen].incrementHandler != nullptr) {
+    if (currentMenu[currentScreen].incrementHandler != nullptr) {
       currentMenu[currentScreen].incrementHandler();
+    } else if ((int)currentMenu[currentScreen].autoSettingOption < (int)SettingsOptions::SettingsOptionsLength) {
+      nextSettingValue(currentMenu[currentScreen].autoSettingOption);
     }
     return false;
   };
