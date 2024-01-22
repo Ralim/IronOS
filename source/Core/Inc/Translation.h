@@ -130,22 +130,18 @@ struct TranslationIndexTable {
   uint16_t SleepingSimpleString;
   uint16_t SleepingAdvancedString;
   uint16_t SleepingTipAdvancedString;
-  uint16_t OffString;
   uint16_t DeviceFailedValidationWarning;
   uint16_t TooHotToStartProfileWarning;
 
   uint16_t SettingRightChar;
   uint16_t SettingLeftChar;
   uint16_t SettingAutoChar;
-  uint16_t SettingOffChar;
   uint16_t SettingSlowChar;
   uint16_t SettingMediumChar;
   uint16_t SettingFastChar;
-  uint16_t SettingStartNoneChar;
   uint16_t SettingStartSolderingChar;
   uint16_t SettingStartSleepChar;
   uint16_t SettingStartSleepOffChar;
-  uint16_t SettingLockDisableChar;
   uint16_t SettingLockBoostChar;
   uint16_t SettingLockFullChar;
 

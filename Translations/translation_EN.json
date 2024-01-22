@@ -60,9 +60,6 @@
         "SleepingTipAdvancedString": {
             "message": "Tip: \n"
         },
-        "OffString": {
-            "message": "Off"
-        },
         "ProfilePreheatString": {
             "message": "Preheat\n"
         },
@@ -80,15 +77,12 @@
         "SettingRightChar": "R",
         "SettingLeftChar": "L",
         "SettingAutoChar": "A",
-        "SettingOffChar": "O",
         "SettingSlowChar": "S",
         "SettingMediumChar": "M",
         "SettingFastChar": "F",
-        "SettingStartNoneChar": "O",
         "SettingStartSolderingChar": "S",
         "SettingStartSleepChar": "Z",
         "SettingStartSleepOffChar": "R",
-        "SettingLockDisableChar": "D",
         "SettingLockBoostChar": "B",
         "SettingLockFullChar": "F"
     },
@@ -141,7 +135,7 @@
         },
         "AutoStart": {
             "displayText": "Start-up\nbehavior",
-            "description": "O=off | S=heat to soldering temp | Z=standby at sleep temp until moved | R=standby without heating until moved"
+            "description": "S=heat to soldering temp | Z=standby at sleep temp until moved | R=standby without heating until moved"
         },
         "TempChangeShortStep": {
             "displayText": "Temp change\nshort",
@@ -153,7 +147,7 @@
         },
         "LockingMode": {
             "displayText": "Allow locking\nbuttons",
-            "description": "While soldering, hold down both buttons to toggle locking them (D=disable | B=boost mode only | F=full locking)"
+            "description": "While soldering, hold down both buttons to toggle locking them (B=boost mode only | F=full locking)"
         },
         "ProfilePhases": {
             "displayText": "Profile\nPhases",
@@ -213,7 +207,7 @@
         },
         "MotionSensitivity": {
             "displayText": "Motion\nsensitivity",
-            "description": "0=off | 1=least sensitive | ... | 9=most sensitive"
+            "description": "1=least sensitive | ... | 9=most sensitive"
         },
         "SleepTemperature": {
             "displayText": "Sleep\ntemp",
@@ -229,7 +223,7 @@
         },
         "HallEffSensitivity": {
             "displayText": "Hall sensor\nsensitivity",
-            "description": "Sensitivity to magnets (0=off | 1=least sensitive | ... | 9=most sensitive)"
+            "description": "Sensitivity to magnets (1=least sensitive | ... | 9=most sensitive)"
         },
         "TemperatureUnit": {
             "displayText": "Temperature\nunit",
@@ -253,7 +247,7 @@
         },
         "AnimSpeed": {
             "displayText": "Anim.\nspeed",
-            "description": "Pace of icon animations in menu (O=off | S=slow | M=medium | F=fast)"
+            "description": "Pace of icon animations in menu (S=slow | M=medium | F=fast)"
         },
         "AnimLoop": {
             "displayText": "Anim.\nloop",

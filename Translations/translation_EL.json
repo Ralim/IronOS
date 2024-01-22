@@ -60,9 +60,6 @@
         "SleepingTipAdvancedString": {
             "message": "Μύτη: \n"
         },
-        "OffString": {
-            "message": "Απ."
-        },
         "ProfilePreheatString": {
             "message": "Preheat\n"
         },
@@ -80,15 +77,12 @@
         "SettingRightChar": "R",
         "SettingLeftChar": "L",
         "SettingAutoChar": "Α",
-        "SettingOffChar": "0",
         "SettingSlowChar": "Α",
         "SettingMediumChar": "Μ",
         "SettingFastChar": "Γ",
-        "SettingStartNoneChar": "0",
         "SettingStartSolderingChar": "Κ",
         "SettingStartSleepChar": "Ζ",
         "SettingStartSleepOffChar": "Υ",
-        "SettingLockDisableChar": "Α",
         "SettingLockBoostChar": "B",
         "SettingLockFullChar": "Π"
     },
@@ -141,7 +135,7 @@
         },
         "AutoStart": {
             "displayText": "Ζέσταμα\nκατά την εν.",
-            "description": "0=off | Κ=θερμ. κόλλησης | Z=αναμονή σε θερμοκρασία ύπνου μέχρι την κίνηση | Υ=αναμονή χωρίς ζέσταμα μέχρι την κίνηση"
+            "description": "Κ=θερμ. κόλλησης | Z=αναμονή σε θερμοκρασία ύπνου μέχρι την κίνηση | Υ=αναμονή χωρίς ζέσταμα μέχρι την κίνηση"
         },
         "TempChangeShortStep": {
             "displayText": "Αλλαγή θερμοκ.\nστιγμιαίο",
@@ -153,7 +147,7 @@
         },
         "LockingMode": {
             "displayText": "Κλείδωμα\nπλήκτρων",
-            "description": "Κατά την κόλληση, κρατήστε και τα δύο πλήκτρα για κλείδωμα (A=απενεργοποίηση | B=μόνο λειτ. boost | Π=πλήρες κλείδωμα)"
+            "description": "Κατά την κόλληση, κρατήστε και τα δύο πλήκτρα για κλείδωμα (B=μόνο λειτ. boost | Π=πλήρες κλείδωμα)"
         },
         "ProfilePhases": {
             "displayText": "Profile\nPhases",
@@ -213,7 +207,7 @@
         },
         "MotionSensitivity": {
             "displayText": "Ευαισθησία\nκίνησης",
-            "description": "0=off | 1=λιγότερο ευαίσθητο | ... | 9=περισσότερο ευαίσθητο"
+            "description": "1=λιγότερο ευαίσθητο | ... | 9=περισσότερο ευαίσθητο"
         },
         "SleepTemperature": {
             "displayText": "Θερμοκρ.\nύπνου",
@@ -229,7 +223,7 @@
         },
         "HallEffSensitivity": {
             "displayText": "Ευαισθ. αισθ. \nφαιν. Hall",
-            "description": "Ευαισθησία του αισθητήρα φαινομένου Hall για εντοπισμό αδράνειας (0=off | 1=λιγότερο ευαίσθητο | ... | 9=περισσότερο ευαίσθητο)"
+            "description": "Ευαισθησία του αισθητήρα φαινομένου Hall για εντοπισμό αδράνειας (1=λιγότερο ευαίσθητο | ... | 9=περισσότερο ευαίσθητο)"
         },
         "TemperatureUnit": {
             "displayText": "Μονάδες\nθερμοκρασίας",
@@ -253,7 +247,7 @@
         },
         "AnimSpeed": {
             "displayText": "Ταχύτητα\nκιν. εικονιδ.",
-            "description": "Ρυθμός κίνησης εικονιδίων στο μενού (0=off | Α=αργός | Μ=μέτριος | Γ=γρήγορος)"
+            "description": "Ρυθμός κίνησης εικονιδίων στο μενού (Α=αργός | Μ=μέτριος | Γ=γρήγορος)"
         },
         "AnimLoop": {
             "displayText": "Επανάληψη\nκιν. εικονιδ.",

@@ -60,9 +60,6 @@
         "SleepingTipAdvancedString": {
             "message": "Otsik: \n"
         },
-        "OffString": {
-            "message": "Väljas"
-        },
         "ProfilePreheatString": {
             "message": "Eelkuumutus\n"
         },
@@ -80,15 +77,12 @@
         "SettingRightChar": "P",
         "SettingLeftChar": "V",
         "SettingAutoChar": "A",
-        "SettingOffChar": "V",
         "SettingSlowChar": "A",
         "SettingMediumChar": "K",
         "SettingFastChar": "T",
-        "SettingStartNoneChar": "V",
         "SettingStartSolderingChar": "J",
         "SettingStartSleepChar": "Z",
         "SettingStartSleepOffChar": "P",
-        "SettingLockDisableChar": "V",
         "SettingLockBoostChar": "B",
         "SettingLockFullChar": "T"
     },
@@ -141,7 +135,7 @@
         },
         "AutoStart": {
             "displayText": "Käitumine\nkäivitusel",
-            "description": "V=väljas | J=kuumuta jootmistemperatuurini | Z=unerežiim, kuni seadet liigutatakse | P=unerežiim toatemperatuuril, kuni seadet liigutatakse"
+            "description": "J=kuumuta jootmistemperatuurini | Z=unerežiim, kuni seadet liigutatakse | P=unerežiim toatemperatuuril, kuni seadet liigutatakse"
         },
         "TempChangeShortStep": {
             "displayText": "Temp. muut\nlühike",
@@ -153,7 +147,7 @@
         },
         "LockingMode": {
             "displayText": "Luba nuppude\nlukustamine",
-            "description": "Hoidke jootmise ajal mõlemad nupud all, et lülitada nende lukustamist (V=väljas | B=ainult boostrežiimis | T=täielik lukustamine)."
+            "description": "Hoidke jootmise ajal mõlemad nupud all, et lülitada nende lukustamist (B=ainult boostrežiimis | T=täielik lukustamine)."
         },
         "ProfilePhases": {
             "displayText": "Profiil\nfaasid",
@@ -213,7 +207,7 @@
         },
         "MotionSensitivity": {
             "displayText": "Liikumise\ntundlikkus",
-            "description": "0=väljas | 1=vähetundlikuim | ... | 9=kõige tundlikum"
+            "description": "1=vähetundlikuim | ... | 9=kõige tundlikum"
         },
         "SleepTemperature": {
             "displayText": "Unerežiimi\ntemp",
@@ -229,7 +223,7 @@
         },
         "HallEffSensitivity": {
             "displayText": "Halli anduri\ntundlikkus",
-            "description": "Tundlikkus magnetite suhtes (0=väljas | 1=vähetundlikum | ... | 9=kõige tundlikum)"
+            "description": "Tundlikkus magnetite suhtes (1=vähetundlikum | ... | 9=kõige tundlikum)"
         },
         "TemperatureUnit": {
             "displayText": "Temperatuuri\nühik",
@@ -253,7 +247,7 @@
         },
         "AnimSpeed": {
             "displayText": "Anim.\nkiirus",
-            "description": "Menüüikoonide animatsiooni kiirus (V=väljas | A=aeglane | K=keskmine | T=tempokas)"
+            "description": "Menüüikoonide animatsiooni kiirus (A=aeglane | K=keskmine | T=tempokas)"
         },
         "AnimLoop": {
             "displayText": "Pidevad\nanim.",
