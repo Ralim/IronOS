@@ -254,8 +254,8 @@
             "description": "Loop icon animations in main menu"
         },
         "Brightness": {
-            "displayText": "Screen\nbrightness",
-            "description": "Adjust the OLED screen brightness"
+            "displayText": "Ekran\nparlaklığı",
+            "description": "OLED ekran parlaklığını ayarlar"
         },
         "ColourInversion": {
             "displayText": "Invert\nscreen",
