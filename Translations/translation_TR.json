@@ -4,7 +4,7 @@
     "tempUnitFahrenheit": false,
     "messagesWarn": {
         "CalibrationDone": {
-            "message": "Calibration\ndone!"
+            "message": "Kalibrasyon\ntamam!"
         },
         "ResetOKMessage": {
             "message": "Sıfırlama Tamam"
@@ -88,7 +88,7 @@
     },
     "menuGroups": {
         "PowerMenu": {
-            "displayText": "Power\nsettings",
+            "displayText": "Güç\nAyarları",
             "description": ""
         },
         "SolderingMenu": {
@@ -118,8 +118,8 @@
             "description": "Minimum allowed voltage per battery cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
         },
         "QCMaxVoltage": {
-            "displayText": "QC\nvoltage",
-            "description": "Max QC voltage the iron should negotiate for"
+            "displayText": "QC\nvoltajı",
+            "description": "Max istenecek QC voltajı"
         },
         "PDNegTimeout": {
             "displayText": "PD\ntimeout",
