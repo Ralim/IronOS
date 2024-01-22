@@ -138,11 +138,11 @@
             "description": "Güç verildiğinde otomatik olarak lehimleme modunda başlat. (L=Lehimleme Modu | U=Uyku Modu | S=Uyku Modu Oda Sıcaklığı)"
         },
         "TempChangeShortStep": {
-            "displayText": "Temp change\nshort",
+            "displayText": "Sıcaklık değişimi\nkısa",
             "description": "Kısa basışlardaki sıcaklık derecesi atlama oranı"
         },
         "TempChangeLongStep": {
-            "displayText": "Temp change\nlong",
+            "displayText": "Sıcaklık değişimi\nuzun",
             "description": "Uzun başışlardaki sıcaklık derecesi atlama oranı"
         },
         "LockingMode": {
@@ -263,7 +263,7 @@
         },
         "LOGOTime": {
             "displayText": "Boot logo\nduration",
-            "description": "Set boot logo duration (s=seconds)"
+            "description": "Boot logo süresi (s=seconds)"
         },
         "AdvancedIdle": {
             "displayText": "AYRBİL\n",
