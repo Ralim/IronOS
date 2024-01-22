@@ -184,5 +184,6 @@ void prepareTranslations();
 void settings_displayLanguageSwitch(void);
 bool settings_showLanguageSwitch(void);
 void settings_setLanguageSwitch(void);
+bool isLastLanguageOption(void);
 
 #endif /* TRANSLATION_H_ */

@@ -203,6 +203,8 @@ int ble_char_read_bulk_value_callback(struct bt_conn *conn, const struct bt_gatt
       memcpy(buf, &id, sizeof(id));
       return sizeof(id);
     }
+  default:
+    break;
   }
   return 0;
 }

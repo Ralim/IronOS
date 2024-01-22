@@ -224,6 +224,8 @@ bool isLastSettingValue(const enum SettingsOptions option) {
     } else {
       max = 300;
     }
+  } else if (option == SettingsOptions::UILanguage) {
+    return isLastLanguageOption();
   }
   return systemSettings.settingsValues[(int)option] >= max;
 }
