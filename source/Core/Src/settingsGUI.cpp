@@ -546,14 +546,15 @@ static void setBoostTemp(void) {
       value = 0; // jump to off
     }
     setSettingValue(SettingsOptions::BoostTemp, value);
-  }
-  if (value == 0) {
-    value = MIN_BOOST_TEMP_C; // loop back at 250
   } else {
-    value += 10; // Go up 10C at a time
-  }
-  if (value > MAX_TEMP_C) {
-    value = 0; // Go to off state
+    if (value == 0) {
+      value = MIN_BOOST_TEMP_C; // loop back at 250
+    } else {
+      value += 10; // Go up 10C at a time
+    }
+    if (value > MAX_TEMP_C) {
+      value = 0; // Go to off state
+    }
   }
   setSettingValue(SettingsOptions::BoostTemp, value);
 }
