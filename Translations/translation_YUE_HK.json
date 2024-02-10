@@ -52,16 +52,13 @@
             "message": "Input V: "
         },
         "SleepingSimpleString": {
-            "message": "Zzzz"
+            "message": "Zzz "
         },
         "SleepingAdvancedString": {
             "message": "Sleeping..."
         },
         "SleepingTipAdvancedString": {
             "message": "Tip: "
-        },
-        "OffString": {
-            "message": "關"
         },
         "ProfilePreheatString": {
             "message": "Preheat"
@@ -80,15 +77,12 @@
         "SettingRightChar": "右",
         "SettingLeftChar": "左",
         "SettingAutoChar": "自",
-        "SettingOffChar": "關",
         "SettingSlowChar": "慢",
         "SettingMediumChar": "中",
         "SettingFastChar": "快",
-        "SettingStartNoneChar": "無",
         "SettingStartSolderingChar": "焊",
         "SettingStartSleepChar": "待",
         "SettingStartSleepOffChar": "室",
-        "SettingLockDisableChar": "無",
         "SettingLockBoostChar": "增",
         "SettingLockFullChar": "全"
     },
@@ -141,7 +135,7 @@
         },
         "AutoStart": {
             "displayText": "自動啓用",
-            "description": "開機時自動啓用 <無=停用 | 焊=焊接模式 | 待=待機模式 | 室=室温待機>"
+            "description": "開機時自動啓用 <焊=焊接模式 | 待=待機模式 | 室=室温待機>"
         },
         "TempChangeShortStep": {
             "displayText": "温度調整 短",
@@ -153,7 +147,7 @@
         },
         "LockingMode": {
             "displayText": "撳掣鎖定",
-            "description": "喺焊接模式時，同時長撳兩粒掣啓用撳掣鎖定 <無=停用 | 增=淨係容許增熱模式 | 全=鎖定全部>"
+            "description": "喺焊接模式時，同時長撳兩粒掣啓用撳掣鎖定 <增=淨係容許增熱模式 | 全=鎖定全部>"
         },
         "ProfilePhases": {
             "displayText": "Profile Phases",
@@ -213,7 +207,7 @@
         },
         "MotionSensitivity": {
             "displayText": "動作敏感度",
-            "description": "0=停用 | 1=最低敏感度 | ... | 9=最高敏感度"
+            "description": "1=最低敏感度 | ... | 9=最高敏感度"
         },
         "SleepTemperature": {
             "displayText": "待機温度",
@@ -229,7 +223,7 @@
         },
         "HallEffSensitivity": {
             "displayText": "磁場敏感度",
-            "description": "磁場感應器用嚟啓動待機模式嘅敏感度 <0=停用 | 1=最低敏感度 | ... | 9=最高敏感度>"
+            "description": "磁場感應器用嚟啓動待機模式嘅敏感度 <1=最低敏感度 | ... | 9=最高敏感度>"
         },
         "TemperatureUnit": {
             "displayText": "温度單位",
@@ -253,7 +247,7 @@
         },
         "AnimSpeed": {
             "displayText": "動畫速度",
-            "description": "功能表圖示動畫嘅速度 <關=不顯示動畫 | 慢=慢速 | 中=中速 | 快=快速>"
+            "description": "功能表圖示動畫嘅速度 <慢=慢速 | 中=中速 | 快=快速>"
         },
         "AnimLoop": {
             "displayText": "動畫循環",

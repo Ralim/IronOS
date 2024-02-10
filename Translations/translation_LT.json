@@ -52,16 +52,13 @@
             "message": "Įvestis V: \n"
         },
         "SleepingSimpleString": {
-            "message": "Zzzz"
+            "message": "Zzz "
         },
         "SleepingAdvancedString": {
             "message": "Miegu...\n"
         },
         "SleepingTipAdvancedString": {
             "message": "Antg: \n"
-        },
-        "OffString": {
-            "message": "Išj"
         },
         "ProfilePreheatString": {
             "message": "Preheat\n"
@@ -80,15 +77,12 @@
         "SettingRightChar": "D",
         "SettingLeftChar": "K",
         "SettingAutoChar": "A",
-        "SettingOffChar": "I",
         "SettingSlowChar": "L",
         "SettingMediumChar": "V",
         "SettingFastChar": "G",
-        "SettingStartNoneChar": "N",
         "SettingStartSolderingChar": "T",
         "SettingStartSleepChar": "M",
         "SettingStartSleepOffChar": "K",
-        "SettingLockDisableChar": "I",
         "SettingLockBoostChar": "T",
         "SettingLockFullChar": "V"
     },
@@ -141,7 +135,7 @@
         },
         "AutoStart": {
             "displayText": "Automatinis\npaleidimas",
-            "description": "Ar pradėti kaitininti iš karto įjungus lituoklį (N=Ne | T=Taip | M=Miegas | K=Miegoti kambario temperatūroje)"
+            "description": "Ar pradėti kaitininti iš karto įjungus lituoklį (T=Taip | M=Miegas | K=Miegoti kambario temperatūroje)"
         },
         "TempChangeShortStep": {
             "displayText": "Temp.keitim.\ntrump.spust.",
@@ -153,7 +147,7 @@
         },
         "LockingMode": {
             "displayText": "Mygtukų\nužraktas",
-            "description": "Lituodami, ilgai paspauskite abu mygtukus, kad juos užrakintumėte (I=Išjungta | T=leidžiamas tik Turbo režimas | V=Visiškas užrakinimas)"
+            "description": "Lituodami, ilgai paspauskite abu mygtukus, kad juos užrakintumėte (T=leidžiamas tik Turbo režimas | V=Visiškas užrakinimas)"
         },
         "ProfilePhases": {
             "displayText": "Profile\nPhases",
@@ -213,7 +207,7 @@
         },
         "MotionSensitivity": {
             "displayText": "Judesio\njautrumas",
-            "description": "Judesio jautrumas (0=Išjungta | 1=Mažiausias | ... | 9=Didžiausias)"
+            "description": "Judesio jautrumas (1=Mažiausias | ... | 9=Didžiausias)"
         },
         "SleepTemperature": {
             "displayText": "Miego\ntemperat.",
@@ -229,7 +223,7 @@
         },
         "HallEffSensitivity": {
             "displayText": "Holo\njutiklis",
-            "description": "Holo jutiklio jautrumas nustatant miegą (0=Išjungta | 1=Mažiausias | ... | 9=Didžiausias)"
+            "description": "Holo jutiklio jautrumas nustatant miegą (1=Mažiausias | ... | 9=Didžiausias)"
         },
         "TemperatureUnit": {
             "displayText": "Temperatūros\nvienetai",
@@ -253,7 +247,7 @@
         },
         "AnimSpeed": {
             "displayText": "Animacijų\ngreitis",
-            "description": "Paveiksliukų animacijų greitis meniu punktuose (I=Išjungtas | L=Lėtas | V=Vidutinis | G=Greitas)"
+            "description": "Paveiksliukų animacijų greitis meniu punktuose (L=Lėtas | V=Vidutinis | G=Greitas)"
         },
         "AnimLoop": {
             "displayText": "Animacijų\npakartojimas",

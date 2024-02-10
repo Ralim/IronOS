@@ -52,16 +52,13 @@
             "message": "Input V: "
         },
         "SleepingSimpleString": {
-            "message": "Zzzz"
+            "message": "Zzz "
         },
         "SleepingAdvancedString": {
             "message": "Sleeping..."
         },
         "SleepingTipAdvancedString": {
             "message": "Tip: "
-        },
-        "OffString": {
-            "message": "オフ"
         },
         "ProfilePreheatString": {
             "message": "Preheat"
@@ -80,15 +77,12 @@
         "SettingRightChar": "右",
         "SettingLeftChar": "左",
         "SettingAutoChar": "自",
-        "SettingOffChar": "×",
         "SettingSlowChar": "遅",
         "SettingMediumChar": "中",
         "SettingFastChar": "速",
-        "SettingStartNoneChar": "×",
         "SettingStartSolderingChar": "熱",
         "SettingStartSleepChar": "待",
         "SettingStartSleepOffChar": "室",
-        "SettingLockDisableChar": "×",
         "SettingLockBoostChar": "ブ",
         "SettingLockFullChar": "全"
     },
@@ -141,7 +135,7 @@
         },
         "AutoStart": {
             "displayText": "自動加熱",
-            "description": "電源投入時に自動的に加熱する <×=オフ | 熱=半田付けモード | 待=スタンバイモード | 室=室温スタンバイモード>"
+            "description": "電源投入時に自動的に加熱する <熱=半田付けモード | 待=スタンバイモード | 室=室温スタンバイモード>"
         },
         "TempChangeShortStep": {
             "displayText": "温度変化 短",
@@ -153,7 +147,7 @@
         },
         "LockingMode": {
             "displayText": "ボタンロック",
-            "description": "半田付けモード時に両方のボタンを長押しし、ボタンロックする <×=オフ | ブ=ブーストのみ許可 | 全=すべてをロック>"
+            "description": "半田付けモード時に両方のボタンを長押しし、ボタンロックする <ブ=ブーストのみ許可 | 全=すべてをロック>"
         },
         "ProfilePhases": {
             "displayText": "Profile Phases",
@@ -213,7 +207,7 @@
         },
         "MotionSensitivity": {
             "displayText": "動きの感度",
-            "description": "0=オフ | 1=最低感度 | ... | 9=最高感度"
+            "description": "1=最低感度 | ... | 9=最高感度"
         },
         "SleepTemperature": {
             "displayText": "待機温度",
@@ -229,7 +223,7 @@
         },
         "HallEffSensitivity": {
             "displayText": "磁界感度",
-            "description": "スタンバイモードに入るのに使用される磁場センサーの感度 <0=オフ | 1=最低感度 | ... | 9=最高感度>"
+            "description": "スタンバイモードに入るのに使用される磁場センサーの感度 <1=最低感度 | ... | 9=最高感度>"
         },
         "TemperatureUnit": {
             "displayText": "温度単位",
@@ -253,7 +247,7 @@
         },
         "AnimSpeed": {
             "displayText": "動画の速度",
-            "description": "メニューアイコンのアニメーションの速さ <×=再生しない | 遅=低速 | 中=中速 | 速=高速>"
+            "description": "メニューアイコンのアニメーションの速さ <遅=低速 | 中=中速 | 速=高速>"
         },
         "AnimLoop": {
             "displayText": "動画をループ",
