@@ -3,6 +3,14 @@
 #include "OperatingModes.h"
 OperatingMode performCJCC(const ButtonState buttons, guiContext *cxt) {
   // Calibrate Cold Junction Compensation directly at boot, before internal components get warm.
+
+  // While we wait for the pre-start checks to finish, we cant run CJC (as the pre-start checks control the tip)
+  if (preStartChecks() == 0) {
+    OLED::setCursor(0, 0);
+    OLED::print(translatedString(Tr->CJCCalibrating), FontStyle::SMALL);
+    return OperatingMode::CJCCalibration;
+  }
+
   if (!isTipDisconnected() && abs(int(TipThermoModel::getTipInC() - getHandleTemperature(0) / 10)) < 10) {
     // Take 16 samples, only sample
     if (cxt->scratch_state.state1 < 16) {
