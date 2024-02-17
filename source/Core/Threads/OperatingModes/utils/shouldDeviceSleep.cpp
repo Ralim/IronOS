@@ -4,15 +4,13 @@
 TickType_t        lastHallEffectSleepStart = 0;
 extern TickType_t lastMovementTime;
 
-bool shouldBeSleeping(bool inAutoStart) {
+bool shouldBeSleeping() {
 #ifndef NO_SLEEP_MODE
   // Return true if the iron should be in sleep mode
   if (getSettingValue(SettingsOptions::Sensitivity) && getSettingValue(SettingsOptions::SleepTime)) {
-    if (inAutoStart) {
-      // In auto start we are asleep until movement
-      if (lastMovementTime == 0 && lastButtonTime == 0) {
-        return true;
-      }
+    // In auto start we are asleep until movement
+    if (lastMovementTime == 0 && lastButtonTime == 0) {
+      return true;
     }
     if (lastMovementTime > 0 || lastButtonTime > 0) {
       if (((xTaskGetTickCount() - lastMovementTime) > getSleepTimeout()) && ((xTaskGetTickCount() - lastButtonTime) > getSleepTimeout())) {

@@ -4,6 +4,7 @@
 
 #include "SolderingCommon.h"
 #include "OperatingModes.h"
+#include "Types.h"
 #include "configuration.h"
 #include "history.hpp"
 
@@ -106,30 +107,8 @@ bool checkExitSoldering(void) {
     }
   }
 #endif
-#ifdef NO_SLEEP_MODE
-  // No sleep mode, but still want shutdown timeout
-
-  if (shouldShutdown()) {
-    // shutdown
-    currentTempTargetDegC = 0;
-    lastMovementTime      = xTaskGetTickCount(); // We manually move the movement time to now such that shutdown timer is reset
-
-    return true; // we want to exit soldering mode
-  }
-#endif
-  if (shouldBeSleeping(false)) {
-    if (gui_SolderingSleepingMode(false, false)) {
-      return true; // If the function returns non-0 then exit
-    }
-  }
 
   // If we have tripped thermal runaway, turn off heater and show warning
-  if (heaterThermalRunaway) {
-    currentTempTargetDegC = 0; // heater control off
-    warnUser(translatedString(Tr->WarningThermalRunaway), 10 * TICKS_SECOND);
-    heaterThermalRunaway = false;
-    return true;
-  }
 
   return false;
 }

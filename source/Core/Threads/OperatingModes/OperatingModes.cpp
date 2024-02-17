@@ -3,6 +3,3 @@
 //
 
 #include "OperatingModes.h"
-
-// Global variables
-OperatingMode currentMode = OperatingMode::idle;
