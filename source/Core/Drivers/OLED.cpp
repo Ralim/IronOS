@@ -262,7 +262,8 @@ void OLED::maskScrollIndicatorOnOLED() {
  * If forward is true, this displays a forward navigation to the second framebuffer contents.
  * Otherwise a rewinding navigation animation is shown to the second framebuffer contents.
  */
-void OLED::transitionSecondaryFramebuffer(bool forwardNavigation) {
+void OLED::transitionSecondaryFramebuffer(const bool forwardNavigation, const TickType_t viewEnterTime) {
+  bool     buttonsReleased = getButtonState() == BUTTON_NONE;
   uint8_t *stripBackPointers[4];
   stripBackPointers[0] = &secondFrameBuffer[FRAMEBUFFER_START + 0];
   stripBackPointers[1] = &secondFrameBuffer[FRAMEBUFFER_START + OLED_WIDTH];
@@ -317,10 +318,14 @@ void OLED::transitionSecondaryFramebuffer(bool forwardNavigation) {
 
     refresh(); // Now refresh to write out the contents to the new page
     vTaskDelayUntil(&startDraw, TICKS_100MS / 7);
-    if (getButtonState() != BUTTON_NONE) {
+    buttonsReleased |= getButtonState() == BUTTON_NONE;
+    if (getButtonState() != BUTTON_NONE && buttonsReleased) {
+      memcpy(screenBuffer + FRAMEBUFFER_START, secondFrameBuffer + FRAMEBUFFER_START, sizeof(screenBuffer) - FRAMEBUFFER_START);
+      refresh(); // Now refresh to write out the contents to the new page
       return;
     }
   }
+  refresh(); //
 }
 
 void OLED::useSecondaryFramebuffer(bool useSecondary) {
@@ -330,6 +335,7 @@ void OLED::useSecondaryFramebuffer(bool useSecondary) {
     setFramebuffer(screenBuffer);
   }
 }
+
 /**
  * This assumes that the current display output buffer has the current on screen contents
  * Then the secondary buffer has the "new" contents to be slid up onto the screen
@@ -337,8 +343,9 @@ void OLED::useSecondaryFramebuffer(bool useSecondary) {
  *
  * **This function blocks until the transition has completed or user presses button**
  */
-void OLED::transitionScrollDown() {
-  TickType_t startDraw = xTaskGetTickCount();
+void OLED::transitionScrollDown(const TickType_t viewEnterTime) {
+  TickType_t startDraw       = xTaskGetTickCount();
+  bool       buttonsReleased = getButtonState() == BUTTON_NONE;
 
   for (uint8_t heightPos = 0; heightPos < OLED_HEIGHT; heightPos++) {
     // For each line, we shuffle all bits up a row
@@ -365,9 +372,9 @@ void OLED::transitionScrollDown() {
       // Finally on the bottom row; we shuffle it up ready
       secondFrameBuffer[fourthStripPos] >>= 1;
 #else
-      // Move the MSB off the first strip, and pop MSB from second strip onto the first strip
+      // Move the LSB off the first strip, and pop MSB from second strip onto the first strip
       screenBuffer[firstStripPos] = (screenBuffer[firstStripPos] >> 1) | ((screenBuffer[secondStripPos] & 0x01) << 7);
-      // Now shuffle off the second strip MSB, and replace it with the MSB of the secondary buffer
+      // Now shuffle off the second strip MSB, and replace it with the LSB of the secondary buffer
       screenBuffer[secondStripPos] = (screenBuffer[secondStripPos] >> 1) | ((secondFrameBuffer[firstStripPos] & 0x01) << 7);
       // Finally, do the shuffle on the second frame buffer
       secondFrameBuffer[firstStripPos] = (secondFrameBuffer[firstStripPos] >> 1) | ((secondFrameBuffer[secondStripPos] & 0x01) << 7);
@@ -375,7 +382,62 @@ void OLED::transitionScrollDown() {
       secondFrameBuffer[secondStripPos] >>= 1;
 #endif /* OLED_128x32 */
     }
-    if (getButtonState() != BUTTON_NONE) {
+    buttonsReleased |= getButtonState() == BUTTON_NONE;
+    if (getButtonState() != BUTTON_NONE && buttonsReleased) {
+      // Exit early, but have to transition whole buffer
+      memcpy(screenBuffer + FRAMEBUFFER_START, secondFrameBuffer + FRAMEBUFFER_START, sizeof(screenBuffer) - FRAMEBUFFER_START);
+      refresh(); // Now refresh to write out the contents to the new page
+      return;
+    }
+    refresh(); // Now refresh to write out the contents to the new page
+    vTaskDelayUntil(&startDraw, TICKS_100MS / 7);
+  }
+}
+/**
+ * This assumes that the current display output buffer has the current on screen contents
+ * Then the secondary buffer has the "new" contents to be slid down onto the screen
+ * Sadly we cant use the hardware scroll as some devices with the 128x32 screens dont have the GRAM for holding both screens at once
+ *
+ * **This function blocks until the transition has completed or user presses button**
+ */
+void OLED::transitionScrollUp(const TickType_t viewEnterTime) {
+  TickType_t startDraw       = xTaskGetTickCount();
+  bool       buttonsReleased = getButtonState() == BUTTON_NONE;
+
+  for (uint8_t heightPos = 0; heightPos < OLED_HEIGHT; heightPos++) {
+    // For each line, we shuffle all bits down a row
+    for (uint8_t xPos = 0; xPos < OLED_WIDTH; xPos++) {
+      const uint16_t firstStripPos  = FRAMEBUFFER_START + xPos;
+      const uint16_t secondStripPos = firstStripPos + OLED_WIDTH;
+#ifdef OLED_128x32
+      // For 32 pixel high OLED's we have four strips to tailchain
+      const uint16_t thirdStripPos  = secondStripPos + OLED_WIDTH;
+      const uint16_t fourthStripPos = thirdStripPos + OLED_WIDTH;
+      // We are shffling LSB's off the end and pushing bits down
+      screenBuffer[fourthStripPos] = (screenBuffer[fourthStripPos] << 1) | ((screenBuffer[thirdStripPos] & 0x80) >> 7);
+      screenBuffer[thirdStripPos]  = (screenBuffer[thirdStripPos] << 1) | ((screenBuffer[secondStripPos] & 0x80) >> 7);
+      screenBuffer[secondStripPos] = (screenBuffer[secondStripPos] << 1) | ((screenBuffer[firstStripPos] & 0x80) >> 7);
+      screenBuffer[firstStripPos]  = (screenBuffer[firstStripPos] << 1) | ((secondFrameBuffer[fourthStripPos] & 0x80) >> 7);
+
+      secondFrameBuffer[fourthStripPos] = (secondFrameBuffer[fourthStripPos] << 1) | ((secondFrameBuffer[thirdStripPos] & 0x80) >> 7);
+      secondFrameBuffer[thirdStripPos]  = (secondFrameBuffer[thirdStripPos] << 1) | ((secondFrameBuffer[secondStripPos] & 0x80) >> 7);
+      secondFrameBuffer[secondStripPos] = (secondFrameBuffer[secondStripPos] << 1) | ((secondFrameBuffer[firstStripPos] & 0x80) >> 7);
+      // Finally on the bottom row; we shuffle it up ready
+      secondFrameBuffer[firstStripPos] <<= 1;
+#else
+      // We pop the LSB off the bottom row, and replace the MSB in that byte with the LSB of the row above
+      screenBuffer[secondStripPos] = (screenBuffer[secondStripPos] << 1) | ((screenBuffer[firstStripPos] & 0x80) >> 7);
+      // Move the LSB off the first strip, and pop MSB from second strip onto the first strip
+      screenBuffer[firstStripPos] = (screenBuffer[firstStripPos] << 1) | ((secondFrameBuffer[secondStripPos] & 0x80) >> 7);
+
+      // Finally, do the shuffle on the second frame buffer
+      secondFrameBuffer[secondStripPos] = (secondFrameBuffer[secondStripPos] << 1) | ((secondFrameBuffer[firstStripPos] & 0x80) >> 7);
+      // Finally on the bottom row; we shuffle it up ready
+      secondFrameBuffer[firstStripPos] <<= 1;
+#endif /* OLED_128x32 */
+    }
+    buttonsReleased |= getButtonState() == BUTTON_NONE;
+    if (getButtonState() != BUTTON_NONE && buttonsReleased) {
       // Exit early, but have to transition whole buffer
       memcpy(screenBuffer + FRAMEBUFFER_START, secondFrameBuffer + FRAMEBUFFER_START, sizeof(screenBuffer) - FRAMEBUFFER_START);
       refresh(); // Now refresh to write out the contents to the new page
@@ -428,14 +490,18 @@ void OLED::setRotation(bool leftHanded) {
 }
 
 void OLED::setBrightness(uint8_t contrast) {
-  OLED_Setup_Array[15].val = contrast;
-  I2C_CLASS::writeRegistersBulk(DEVICEADDR_OLED, &OLED_Setup_Array[14], 2);
+  if (OLED_Setup_Array[15].val != contrast) {
+    OLED_Setup_Array[15].val = contrast;
+    I2C_CLASS::writeRegistersBulk(DEVICEADDR_OLED, &OLED_Setup_Array[14], 2);
+  }
 }
 
 void OLED::setInverseDisplay(bool inverse) {
   uint8_t normalInverseCmd = inverse ? 0xA7 : 0xA6;
-  OLED_Setup_Array[21].val = normalInverseCmd;
-  I2C_CLASS::I2C_RegisterWrite(DEVICEADDR_OLED, 0x80, normalInverseCmd);
+  if (OLED_Setup_Array[21].val != normalInverseCmd) {
+    OLED_Setup_Array[21].val = normalInverseCmd;
+    I2C_CLASS::I2C_RegisterWrite(DEVICEADDR_OLED, 0x80, normalInverseCmd);
+  }
 }
 
 // print a string to the current cursor location, len chars MAX

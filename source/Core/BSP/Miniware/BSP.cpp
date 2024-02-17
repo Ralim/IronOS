@@ -360,14 +360,7 @@ uint8_t preStartChecks() {
   }
 
 #endif
-#ifdef POW_PD
-  // If we are in the middle of negotiating PD, wait until timeout
-  // Before turning on the heater
-  if (!USBPowerDelivery::negotiationComplete()) {
-    return 0;
-  }
 
-#endif
   return 1;
 }
 uint64_t getDeviceID() {

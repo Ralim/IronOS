@@ -16,6 +16,12 @@
 #include "power.hpp"
 #include "task.h"
 
+#ifdef POW_PD
+#if POW_PD == 1
+#include "USBPD.h"
+#endif
+#endif
+
 static TickType_t          powerPulseWaitUnit      = 25 * TICKS_100MS;      // 2.5 s
 static TickType_t          powerPulseDurationUnit  = (5 * TICKS_100MS) / 2; // 250 ms
 TaskHandle_t               pidTaskNotification     = NULL;
@@ -38,7 +44,9 @@ void startPIDTask(void const *argument __unused) {
 
   currentTempTargetDegC = 0; // Force start with no output (off). If in sleep / soldering this will
                              // be over-ridden rapidly
-  pidTaskNotification             = xTaskGetCurrentTaskHandle();
+
+  pidTaskNotification = xTaskGetCurrentTaskHandle();
+
   TemperatureType_t PIDTempTarget = 0;
   // Pre-seed the adc filters
   for (int i = 0; i < 32; i++) {
@@ -51,6 +59,17 @@ void startPIDTask(void const *argument __unused) {
     resetWatchdog();
     ulTaskNotifyTake(pdTRUE, 2000);
   }
+// Wait for PD if its in the middle of negotiation
+#ifdef POW_PD
+#if POW_PD == 1
+  // This is an FUSB based PD capable device
+  // Wait up to 3 seconds for USB-PD to settle
+  while (USBPowerDelivery::negotiationInProgress() && xTaskGetTickCount() < (TICKS_SECOND * 3)) {
+    resetWatchdog();
+    ulTaskNotifyTake(pdTRUE, TICKS_100MS);
+  }
+#endif
+#endif
 
   int32_t x10WattsOut = 0;
 

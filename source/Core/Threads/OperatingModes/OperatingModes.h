@@ -24,29 +24,64 @@ extern "C" {
 #include "pd.h"
 #endif
 
-// Exposed modes
-enum OperatingMode {
-  idle      = 0,
-  soldering = 1,
-  boost     = 2,
-  sleeping  = 3,
-  settings  = 4,
-  debug     = 5
+enum class OperatingMode {
+  StartupLogo = 0,    // Showing the startup logo
+  CJCCalibration,     // Cold Junction Calibration
+  StartupWarnings,    // Startup checks and warnings
+  InitialisationDone, // Special state we use just before we to home screen at first startup. Allows jumping to extra startup states
+  HomeScreen,         // Home/Idle screen that is the main launchpad to other modes
+  Soldering,          // Main soldering operating mode
+  SolderingProfile,   // Soldering by following a profile, used for reflow for example
+  Sleeping,           // Sleep state holds iron at lower sleep temp
+  Hibernating,        // Like sleeping but keeps heater fully off until woken
+  SettingsMenu,       // Settings Menu
+  DebugMenuReadout,   // Debug metrics
+  TemperatureAdjust,  // Set point temperature adjustment
+  UsbPDDebug,         // USB PD debugging information
+  ThermalRunaway,     // Thermal Runaway warning state.
+};
+
+enum class TransitionAnimation {
+  None  = 0,
+  Right = 1,
+  Left  = 2,
+  Down  = 3,
+  Up    = 4,
+};
+
+// Generic context struct used for gui functions to be able to retain state
+struct guiContext {
+  TickType_t          viewEnterTime; // Set to ticks when this view state was first entered
+  OperatingMode       previousMode;
+  TransitionAnimation transitionMode;
+  // Below is scratch state, this is retained over re-draws but blown away on state change
+  struct scratch {
+    uint16_t state1; // 16 bit state scratch
+    uint16_t state2; // 16 bit state scratch
+    uint32_t state3; // 32 bit state scratch
+    uint32_t state4; // 32 bit state scratch
+    uint16_t state5; // 16 bit state scratch
+    uint16_t state6; // 16 bit state scratch
+
+  } scratch_state;
 };
 
 // Main functions
-void performCJCC(void);                                            // Used to calibrate the Cold Junction offset
-void gui_solderingTempAdjust(void);                                // For adjusting the setpoint temperature of the iron
-int  gui_SolderingSleepingMode(bool stayOff, bool autoStarted);    // Sleep mode
-void gui_solderingMode(uint8_t jumpToSleep);                       // Main mode for hot pointy tool
-void gui_solderingProfileMode();                                   // Profile mode for hot likely-not-so-pointy tool
-void showDebugMenu(void);                                          // Debugging values
-void showPDDebug(void);                                            // Debugging menu that shows PD adaptor info
-void showWarnings(void);                                           // Shows user warnings if required
-void drawHomeScreen(bool buttonLockout) __attribute__((noreturn)); // IDLE / Home screen
-void renderHomeScreenAssets(void);                                 // Called to act as start delay and used to render out flipped images for home screen graphics
+OperatingMode gui_SolderingSleepingMode(const ButtonState buttons, guiContext *cxt); // Sleep mode
+OperatingMode gui_solderingMode(const ButtonState buttons, guiContext *cxt);         // Main mode for hot pointy tool
+OperatingMode gui_solderingTempAdjust(const ButtonState buttons, guiContext *cxt);   // For adjusting the setpoint temperature of the iron
+OperatingMode drawHomeScreen(const ButtonState buttons, guiContext *cxt);            // IDLE / Home screen
+OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt);          //
+
+OperatingMode gui_solderingProfileMode(const ButtonState buttons, guiContext *cxt); // Profile mode for hot likely-not-so-pointy tool
+OperatingMode performCJCC(const ButtonState buttons, guiContext *cxt);              // Used to calibrate the Cold Junction offset
+OperatingMode showDebugMenu(const ButtonState buttons, guiContext *cxt);            // Debugging values
+OperatingMode showPDDebug(const ButtonState buttons, guiContext *cxt);              // Debugging menu that shows PD adaptor info
+OperatingMode showWarnings(const ButtonState buttons, guiContext *cxt);             // Shows user warnings if required
 
 // Common helpers
-int8_t            getPowerSourceNumber(void); // Returns number ID of power source
-TemperatureType_t getTipTemp(void);           // Returns temperature of the tip in *C/*F (based on user settings)
+int8_t getPowerSourceNumber(void);   // Returns number ID of power source
+void   renderHomeScreenAssets(void); // Called to act as start delay and used to render out flipped images for home screen graphics
+
+extern bool heaterThermalRunaway;
 #endif

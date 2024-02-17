@@ -2,14 +2,10 @@
 #include "Buttons.hpp"
 #include "OperatingModes.h"
 
-#define MOVEMENT_INACTIVITY_TIME (60 * configTICK_RATE_HZ)
-#define BUTTON_INACTIVITY_TIME   (60 * configTICK_RATE_HZ)
-
-uint8_t              buttonAF[sizeof(buttonA)];
-uint8_t              buttonBF[sizeof(buttonB)];
-uint8_t              disconnectedTipF[sizeof(disconnectedTip)];
-extern OperatingMode currentMode;
-bool                 showExitMenuTransition = false;
+uint8_t buttonAF[sizeof(buttonA)];
+uint8_t buttonBF[sizeof(buttonB)];
+uint8_t disconnectedTipF[sizeof(disconnectedTip)];
+bool    showExitMenuTransition = false;
 
 void renderHomeScreenAssets(void) {
 
@@ -24,59 +20,50 @@ void renderHomeScreenAssets(void) {
   }
 }
 
-void handleButtons(bool *buttonLockout) {
-  ButtonState buttons = getButtonState();
-  if (buttons != BUTTON_NONE) {
-    OLED::setDisplayState(OLED::DisplayState::ON);
-  }
-  if (buttons != BUTTON_NONE && *buttonLockout) {
-    buttons = BUTTON_NONE;
+OperatingMode handleHomeButtons(const ButtonState buttons, guiContext *cxt) {
+  if (buttons != BUTTON_NONE && cxt->scratch_state.state1 == 0) {
+    return OperatingMode::HomeScreen; // Ignore button press
   } else {
-    *buttonLockout = false;
+    cxt->scratch_state.state1 = 1;
   }
   switch (buttons) {
   case BUTTON_NONE:
     // Do nothing
     break;
   case BUTTON_BOTH:
-    // Not used yet
-    // In multi-language this might be used to reset language on a long hold
-    // or some such
     break;
 
   case BUTTON_B_LONG:
-    // Show the version information
-    showDebugMenu();
+    cxt->transitionMode = TransitionAnimation::Up;
+    return OperatingMode::DebugMenuReadout;
     break;
   case BUTTON_F_LONG:
 #ifdef PROFILE_SUPPORT
     if (!isTipDisconnected()) {
-      gui_solderingProfileMode(); // enter profile mode
-      *buttonLockout = true;
+      cxt->transitionMode = TransitionAnimation::Left;
+      return OperatingMode::SolderingProfile;
+    } else {
+      return OperatingMode::HomeScreen;
     }
 #else
-    gui_solderingTempAdjust();
-    saveSettings();
+    cxt->transitionMode = TransitionAnimation::Left;
+    return OperatingMode::TemperatureAdjust;
 #endif
     break;
   case BUTTON_F_SHORT:
     if (!isTipDisconnected()) {
-      gui_solderingMode(0); // enter soldering mode
-      *buttonLockout = true;
+      cxt->transitionMode = TransitionAnimation::Left;
+      return OperatingMode::Soldering;
     }
     break;
   case BUTTON_B_SHORT:
-    currentMode = OperatingMode::settings;
-    enterSettingsMenu(); // enter the settings menu
-    {
-      OLED::useSecondaryFramebuffer(true);
-      showExitMenuTransition = true;
-    }
-    *buttonLockout = true;
+    cxt->transitionMode = TransitionAnimation::Right;
+    return OperatingMode::SettingsMenu;
     break;
   default:
     break;
   }
+  return OperatingMode::HomeScreen;
 }
 
 void drawDetailedHomeScreen(uint32_t tipTemp) {
@@ -181,55 +168,22 @@ void drawSimplifiedHomeScreen(uint32_t tipTemp) {
     }
   }
 }
-void drawHomeScreen(bool buttonLockout) {
+OperatingMode drawHomeScreen(const ButtonState buttons, guiContext *cxt) {
 
-  for (;;) {
-    currentMode = OperatingMode::idle;
-    handleButtons(&buttonLockout);
+  currentTempTargetDegC = 0; // ensure tip is off
+  getInputVoltageX10(getSettingValue(SettingsOptions::VoltageDiv), 0);
+  uint32_t tipTemp = TipThermoModel::getTipInC();
 
-    currentTempTargetDegC = 0; // ensure tip is off
-    getInputVoltageX10(getSettingValue(SettingsOptions::VoltageDiv), 0);
-    uint32_t tipTemp = TipThermoModel::getTipInC();
-    // Preemptively turn the display on.  Turn it off if and only if
-    // the tip temperature is below 50 degrees C *and* motion sleep
-    // detection is enabled *and* there has been no activity (movement or
-    // button presses) in a while.
-    // This is zero cost really as state is only changed on display updates
-    OLED::setDisplayState(OLED::DisplayState::ON);
-
-    if ((tipTemp < 50) && getSettingValue(SettingsOptions::Sensitivity) &&
-        (((xTaskGetTickCount() - lastMovementTime) > MOVEMENT_INACTIVITY_TIME) && ((xTaskGetTickCount() - lastButtonTime) > BUTTON_INACTIVITY_TIME))) {
-      OLED::setDisplayState(OLED::DisplayState::OFF);
-      setStatusLED(LED_OFF);
-    } else {
-      OLED::setDisplayState(OLED::DisplayState::ON);
-      if (tipTemp > 55) {
-        setStatusLED(LED_COOLING_STILL_HOT);
-      } else {
-        setStatusLED(LED_STANDBY);
-      }
-    }
-
-    // Clear the lcd buffer
-    OLED::clearScreen();
-    if (OLED::getRotation()) {
-      OLED::setCursor(50, 0);
-    } else {
-      OLED::setCursor(-1, 0);
-    }
-    if (getSettingValue(SettingsOptions::DetailedIDLE)) {
-      drawDetailedHomeScreen(tipTemp);
-    } else {
-      drawSimplifiedHomeScreen(tipTemp);
-    }
-
-    if (showExitMenuTransition) {
-      OLED::useSecondaryFramebuffer(false);
-      OLED::transitionSecondaryFramebuffer(false);
-      showExitMenuTransition = false;
-    } else {
-      OLED::refresh();
-      GUIDelay();
-    }
+  // Setup LCD Cursor location
+  if (OLED::getRotation()) {
+    OLED::setCursor(50, 0);
+  } else {
+    OLED::setCursor(-1, 0);
   }
+  if (getSettingValue(SettingsOptions::DetailedIDLE)) {
+    drawDetailedHomeScreen(tipTemp);
+  } else {
+    drawSimplifiedHomeScreen(tipTemp);
+  }
+  return handleHomeButtons(buttons, cxt);
 }
