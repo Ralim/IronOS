@@ -4,7 +4,7 @@
     "tempUnitFahrenheit": false,
     "messagesWarn": {
         "CalibrationDone": {
-            "message": "Calibration\ndone!"
+            "message": "Kalibrasyon\ntamam!"
         },
         "ResetOKMessage": {
             "message": "Sıfırlama Tamam"
@@ -88,7 +88,7 @@
     },
     "menuGroups": {
         "PowerMenu": {
-            "displayText": "Power\nsettings",
+            "displayText": "Güç\nAyarları",
             "description": ""
         },
         "SolderingMenu": {
@@ -118,8 +118,8 @@
             "description": "Minimum allowed voltage per battery cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
         },
         "QCMaxVoltage": {
-            "displayText": "QC\nvoltage",
-            "description": "Max QC voltage the iron should negotiate for"
+            "displayText": "QC\nvoltajı",
+            "description": "Max istenecek QC voltajı"
         },
         "PDNegTimeout": {
             "displayText": "PD\ntimeout",
@@ -138,11 +138,11 @@
             "description": "Güç verildiğinde otomatik olarak lehimleme modunda başlat. (L=Lehimleme Modu | U=Uyku Modu | S=Uyku Modu Oda Sıcaklığı)"
         },
         "TempChangeShortStep": {
-            "displayText": "Temp change\nshort",
+            "displayText": "Sıcaklık değişimi\nkısa",
             "description": "Kısa basışlardaki sıcaklık derecesi atlama oranı"
         },
         "TempChangeLongStep": {
-            "displayText": "Temp change\nlong",
+            "displayText": "Sıcaklık değişimi\nuzun",
             "description": "Uzun başışlardaki sıcaklık derecesi atlama oranı"
         },
         "LockingMode": {
@@ -254,8 +254,8 @@
             "description": "Loop icon animations in main menu"
         },
         "Brightness": {
-            "displayText": "Screen\nbrightness",
-            "description": "Adjust the OLED screen brightness"
+            "displayText": "Ekran\nparlaklığı",
+            "description": "OLED ekran parlaklığını ayarlar"
         },
         "ColourInversion": {
             "displayText": "Invert\nscreen",
@@ -263,7 +263,7 @@
         },
         "LOGOTime": {
             "displayText": "Boot logo\nduration",
-            "description": "Set boot logo duration (s=seconds)"
+            "description": "Boot logo süresi (s=seconds)"
         },
         "AdvancedIdle": {
             "displayText": "AYRBİL\n",
