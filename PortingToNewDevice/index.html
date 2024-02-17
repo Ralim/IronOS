@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://ralim.github.io/IronOS/PortingToNewDevice/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Requesting support for a new device - IronOS</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Requesting support for a new device";
+        var mkdocs_page_input_path = "PortingToNewDevice.md";
+        var mkdocs_page_url = "/IronOS/PortingToNewDevice/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/yaml.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> IronOS
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../GettingStarted/">Getting Started</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Flashing the firmware</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../Flashing/MHP30/">MHP30</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Flashing/Pinecil%20V1/">Pinecil V1</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Flashing/Pinecil%20V2/">Pinecil V2</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Flashing/TS80%28P%29/">TS80(P)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Flashing/TS100/">TS100</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Operation</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../Menu/">Main Menu</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Settings/">Settings</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../DebugMenu/">Debug Menu</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Power/">Power</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Temperature/">Temperature</a>
+                  </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Logo/">Startup Logo</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Hardware</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../HallSensor/">Hall Sensor (Pinecil)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Bluetooth/">Bluetooth (Pinecil V2)</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Hardware/">Hardware Notes</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Troubleshooting/">Troubleshooting</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../HardwareIssues/">Known Hardware Issues</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../PowerSources/">Power sources</a>
+                  </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Translation/">Translations</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Development/">Development</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../History/">Changelog</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">IronOS</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Requesting support for a new device</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/ralim/IronOS/edit/dev/Documentation/PortingToNewDevice.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="requesting-support-for-a-new-device">Requesting support for a new device</h1>
+<p>IronOS is largely designed to run on devices that are using <em>fairly</em> modern microcontrollers at their core. Generally this means an ARM Cortex or RISC-V processor.
+At this point in time it is not planned to support 8051 or similar cored devices. This is largely due to the reliance on FreeRTOS at the moment.</p>
+<p>When requesting a port for a new device, please try and find out if the hardware meets the below requirements. </p>
+<p>The feature list's below are organised into three categories; Hard requirements that as of current must be met, soft requirements that <em>should</em> be met for full featured performance and the final category of planned <em>but not yet implemented</em> features; which can be implemented but can result in delays as these are not yet implemented.</p>
+<p>Aside from the below, keep in mind IronOS is really designed for soldering irons. This has expanded out into hot-plates as they are exceptionally similar devices.</p>
+<h2 id="hard-requirements">Hard requirements</h2>
+<ol>
+<li>Supported processor (Arm Cortex or RISC-V). (Though generally anything that has an existing FreeRTOS port is possible).</li>
+<li>64K of flash or larger (See note A)</li>
+<li>16K of ram or larger</li>
+<li>Device has one or more heating elements that can be controlled by a main temperature sensor</li>
+<li>If the main temperature sensor is a thermalcouple, a reference temperature sensor for cold junction compensation must exist and be close to the sensor contacts</li>
+<li>Means of the user updating the device without opening</li>
+<li>Known pinmap for the microcontroller. (see note B)</li>
+</ol>
+<h2 id="soft-requirements">Soft requirements</h2>
+<ol>
+<li>USB-PD is strongly preferred over Quick Charge; Quick Charge only devices are considered legacy and will likely not be prioritiesd.</li>
+<li>Open source or at the least schematics available is <strong>strongly</strong> preferred and will prioritise the device.</li>
+<li>Likewise friendly vendors will help dramatically with support, due to both questions and also appearances to help the community.</li>
+<li>Hardware PWM wired up to the tip control is nice to have but not essential</li>
+<li>Very strong preference against devices that use the endless sea of STM32 clones.</li>
+</ol>
+<h2 id="planned-features">Planned features</h2>
+<p>These features are planned for eventual support, but will likely not be done until devices need them.</p>
+<ul>
+<li>OLED Screens larger than 96x16 pixels</li>
+<li>Colour screens</li>
+<li>More than 2 buttons for input, or encoder inputs</li>
+<li>WiFi/Zigbee/ any other networking</li>
+</ul>
+<h2 id="notes">Notes</h2>
+<h3 id="note-a-flash-storage-space">Note A - Flash storage space</h3>
+<p>64KB is generally the minimum recommended size for the hardware to have.
+Larger is <em>definitely</em> preferred as it enables more features or the multi-pack language firmwares.
+Keep in mind that on some devices we loose space to a USB DFU bootloader (Older STM32F1's) so the firmware <em>can</em> work with less. But it can come at the cost of features.
+128KB or larger is <strong>great</strong>. 
+For devices that have BLE or WiFi or other features, often code requirements are significantly larger. These are considered non essential features so will be ignored if we run into size issues.</p>
+<h3 id="note-b-pinmap-for-the-microcontroller">Note B - Pinmap for the microcontroller</h3>
+<p>In order to be able to write the interfacing code to communicate with the hardware, we need to know what pins on the microcontroller go to what hardware.
+It is also loosely required to have an understanding of the rest of the device, we do not need details on a lot of the boring aspects,but if for example a USB-PD interface IC is used we would want to know which one.</p>
+<h1 id="example-request-for-adding-a-new-device">Example request for adding a new device</h1>
+<p>Device Name: 
+Device Type:
+Approximate Price: 
+Example purchase locations:</p>
+<h2 id="hardware-details">Hardware details:</h2>
+<p>Microcontroller version:
+Flash size (If external to the MCU):
+Microcontroller Pinout: <!-- Either link to manufacturer information, a forum documenting this or a discussion where the pinout has been roughly figured out already-->
+Device type: <!-- Soldering Iron/Hot Plate/ Reflow oven etc-->
+Device meets hard requirements list []
+Device meets soft requirements list []</p>
+<p>Device features USB-PD []
+Device features USB-QC []
+Device features DC Input []
+Device features BLE []</p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/ralim/IronOS/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
