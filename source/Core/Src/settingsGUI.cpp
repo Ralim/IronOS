@@ -13,6 +13,7 @@
 #include "cmsis_os.h"
 #include "configuration.h"
 #include "main.hpp"
+#include "ui_drawing.hpp"
 
 #ifdef POW_DC
 static void displayInputVRange(void);

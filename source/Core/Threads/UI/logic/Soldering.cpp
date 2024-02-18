@@ -1,6 +1,7 @@
 
 #include "OperatingModes.h"
 #include "SolderingCommon.h"
+#include "ui_drawing.hpp"
 // State 1 = button locking
 // State 2 = boost mode
 // State 3 = buzzer timer
@@ -113,7 +114,7 @@ OperatingMode gui_solderingMode(const ButtonState buttons, guiContext *cxt) {
       OLED::setCursor(-1, 0);
     }
 
-    gui_drawTipTemp(true, FontStyle::LARGE);
+    ui_draw_tip_temperature(true, FontStyle::LARGE);
 
     if (cxt->scratch_state.state2) { // Boost mode is on
       if (OLED::getRotation()) {
@@ -141,10 +142,10 @@ OperatingMode gui_solderingMode(const ButtonState buttons, guiContext *cxt) {
       OLED::print(PowerSourceNames[getPowerSourceNumber()], FontStyle::SMALL, 2);
     }
 
-    detailedPowerStatus();
+    ui_draw_soldering_power_status();
 
   } else {
-    basicSolderingStatus(cxt->scratch_state.state2);
+    ui_draw_soldering_basic_status(cxt->scratch_state.state2);
   }
   // Check if we should bail due to undervoltage for example
   if (checkExitSoldering()) {

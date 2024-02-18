@@ -1,6 +1,7 @@
 #include "Buttons.hpp"
 #include "OperatingModeUtilities.h"
 #include "configuration.h"
+#include "ui_drawing.hpp"
 #ifdef POW_DC
 extern volatile TemperatureType_t currentTempTargetDegC;
 // returns true if undervoltage has occured
@@ -15,21 +16,7 @@ bool checkForUnderVoltage(void) {
   if (xTaskGetTickCount() > (TICKS_SECOND * 2)) {
     if ((v < lookupVoltageLevel())) {
       currentTempTargetDegC = 0;
-      OLED::clearScreen();
-      OLED::setCursor(0, 0);
-      if (getSettingValue(SettingsOptions::DetailedSoldering)) {
-        OLED::print(translatedString(Tr->UndervoltageString), FontStyle::SMALL);
-        OLED::setCursor(0, 8);
-        OLED::print(translatedString(Tr->InputVoltageString), FontStyle::SMALL);
-        printVoltage();
-        OLED::print(SmallSymbolVolts, FontStyle::SMALL);
-      } else {
-        OLED::print(translatedString(Tr->UVLOWarningString), FontStyle::LARGE);
-      }
-
-      OLED::refresh();
-      GUIDelay();
-      waitForButtonPress();
+      ui_draw_warning_undervoltage();
       return true;
     }
   }

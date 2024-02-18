@@ -80,8 +80,7 @@ OperatingMode showPDDebug(const ButtonState buttons, guiContext *cxt);          
 OperatingMode showWarnings(const ButtonState buttons, guiContext *cxt);             // Shows user warnings if required
 
 // Common helpers
-int8_t getPowerSourceNumber(void);   // Returns number ID of power source
-void   renderHomeScreenAssets(void); // Called to act as start delay and used to render out flipped images for home screen graphics
+int8_t getPowerSourceNumber(void); // Returns number ID of power source
 
 extern bool heaterThermalRunaway;
 #endif

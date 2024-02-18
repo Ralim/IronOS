@@ -1,5 +1,5 @@
 #include "OperatingModes.h"
-
+#include "ui_drawing.hpp"
 OperatingMode gui_SolderingSleepingMode(const ButtonState buttons, guiContext *cxt) {
 #ifdef NO_SLEEP_MODE
   return OperatingMode::Soldering;
@@ -28,30 +28,11 @@ OperatingMode gui_SolderingSleepingMode(const ButtonState buttons, guiContext *c
   // draw the lcd
   uint16_t tipTemp = getSettingValue(SettingsOptions::TemperatureInF) ? TipThermoModel::getTipInF() : TipThermoModel::getTipInC();
 
-  OLED::clearScreen();
-  OLED::setCursor(0, 0);
   if (getSettingValue(SettingsOptions::DetailedSoldering)) {
-    OLED::print(translatedString(Tr->SleepingAdvancedString), FontStyle::SMALL);
-    OLED::setCursor(0, 8);
-    OLED::print(translatedString(Tr->SleepingTipAdvancedString), FontStyle::SMALL);
-    OLED::printNumber(tipTemp, 3, FontStyle::SMALL);
-    if (getSettingValue(SettingsOptions::TemperatureInF)) {
-      OLED::print(SmallSymbolDegF, FontStyle::SMALL);
-    } else {
-      OLED::print(SmallSymbolDegC, FontStyle::SMALL);
-    }
-
-    OLED::print(SmallSymbolSpace, FontStyle::SMALL);
-    printVoltage();
-    OLED::print(SmallSymbolVolts, FontStyle::SMALL);
+    ui_draw_soldering_detailed_sleep(tipTemp);
   } else {
-    OLED::print(LargeSymbolSleep, FontStyle::LARGE);
-    OLED::printNumber(tipTemp, 3, FontStyle::LARGE);
-    OLED::printSymbolDeg(FontStyle::EXTRAS);
+    ui_draw_soldering_basic_sleep(tipTemp);
   }
-
-  OLED::refresh();
-  GUIDelay();
 
   if (!shouldBeSleeping()) {
     return cxt->previousMode;
