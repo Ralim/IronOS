@@ -3,7 +3,7 @@
 #include "SolderingCommon.h"
 #include "TipThermoModel.h"
 
-void gui_drawTipTemp(bool symbol, const FontStyle font) {
+void ui_draw_tip_temperature(bool symbol, const FontStyle font) {
   // Draw tip temp handling unit conversion & tolerance near setpoint
   TemperatureType_t Temp = getTipTemp();
 

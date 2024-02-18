@@ -1,6 +1,7 @@
 
 #include "OperatingModes.h"
 #include "SolderingCommon.h"
+#include "ui_drawing.hpp"
 
 OperatingMode gui_solderingProfileMode(const ButtonState buttons, guiContext *cxt) {
   /*
@@ -178,10 +179,10 @@ OperatingMode gui_solderingProfileMode(const ButtonState buttons, guiContext *cx
       }
     }
 
-    detailedPowerStatus();
+    ui_draw_soldering_power_status();
 
   } else {
-    basicSolderingStatus(false);
+    ui_draw_soldering_basic_status(false);
   }
 
   // Update the setpoints for the temperature
