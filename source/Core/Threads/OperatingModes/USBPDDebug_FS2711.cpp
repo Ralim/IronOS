@@ -1,8 +1,8 @@
 #include "FS2711.hpp"
 #include "OperatingModes.h"
 #include "stdbool.h"
-// #define POW_PD_EXT 2
-// #define HAS_POWER_DEBUG_MENU
+#define POW_PD_EXT 2
+#define HAS_POWER_DEBUG_MENU
 #if POW_PD_EXT == 2
 #ifdef HAS_POWER_DEBUG_MENU
 OperatingMode showPDDebug(const ButtonState buttons, guiContext *cxt) {
@@ -25,42 +25,28 @@ OperatingMode showPDDebug(const ButtonState buttons, guiContext *cxt) {
       OLED::print(SmallSymbolSpace, FontStyle::SMALL);
 
       fs2711_state_t state = FS2711::get_state();
-      OLED::printNumber(state.up, 1, FontStyle::SMALL, true);
-      OLED::print(SmallSymbolSpace, FontStyle::SMALL);
 
       OLED::printNumber(state.pdo_num, 1, FontStyle::SMALL);
       OLED::print(SmallSymbolSpace, FontStyle::SMALL);
 
-      OLED::printNumber(state.req_pdo_num, 1, FontStyle::SMALL, true);
+      //     OLED::drawHex(state.req_pdo_num, FontStyle::SMALL, 4);
+      OLED::printNumber(state.req_pdo_num > 7 ? 0 : state.req_pdo_num + 1, 1, FontStyle::SMALL, true);
       OLED::print(SmallSymbolSpace, FontStyle::SMALL);
-
-      OLED::printNumber(state.failed_pdo_checks, 1, FontStyle::SMALL, true);
-      OLED::print(SmallSymbolSpace, FontStyle::SMALL);
-
-      // OLED::printNumber(state.pps, 1, FontStyle::SMALL, true);
-      // OLED::print(SmallSymbolSpace, FontStyle::SMALL);
-
-      // OLED::printNumber(state.negotiated, 1, FontStyle::SMALL, true);
-      // OLED::print(SmallSymbolSpace, FontStyle::SMALL);
-
-      // OLED::printNumber(state.req_pdo_volt, 1, FontStyle::SMALL, true);
-      // OLED::print(SmallSymbolSpace, FontStyle::SMALL);
-
     } else {
 
       // Print out the Proposed power options one by one
       uint16_t voltage = FS2711::debug_pdo_source_voltage(screen - 1);
       uint16_t current = FS2711::debug_pdo_source_current(screen - 1);
       uint16_t pd_type = FS2711::debug_pdo_type(screen - 1);
-      OLED::printNumber(screen, 2, FontStyle::SMALL, true);
+      OLED::printNumber(screen, 1, FontStyle::SMALL, true);
       OLED::print(SmallSymbolSpace, FontStyle::SMALL);
 
       OLED::printNumber(pd_type, 1, FontStyle::SMALL, true);
       OLED::print(SmallSymbolSpace, FontStyle::SMALL);
 
-      OLED::printNumber(voltage, 6, FontStyle::SMALL, true);
+      OLED::printNumber(voltage, 2, FontStyle::SMALL, true);
       OLED::print(SmallSymbolSpace, FontStyle::SMALL);
-      OLED::printNumber(current, 6, FontStyle::SMALL, true);
+      OLED::printNumber(current, 1, FontStyle::SMALL, true);
       // OLED::print(SmallSymbolDot, FontStyle::SMALL);
       // OLED::printNumber(currentx100 % 100, 2, FontStyle::SMALL, true);
     }

@@ -1,18 +1,17 @@
 #include "configuration.h"
 #ifndef _DRIVERS_FS2711_HPP_
 #define _DRIVERS_FS2711_HPP_
+#define POW_PD_EXT 2
 #if POW_PD_EXT == 2
 #include <stdbool.h>
 #include <stdint.h>
 
 typedef struct {
   uint8_t  protocol; // Current protocol
-  bool     up;
-  uint16_t req_pdo_volt;
   uint16_t state;
-  uint16_t source_voltage;
-  uint16_t source_current;
   uint16_t req_pdo_num;
+  uint16_t source_current;
+  uint16_t source_voltage;
   uint32_t proto_exists; // Charger protocols
   uint8_t  pdo_num;      // Nums of USB-PD Objects max of 7
   uint16_t pdo_type[7];
@@ -26,9 +25,7 @@ typedef struct {
   uint16_t qc_max_volt;
   uint16_t afc_max_volt;
   uint16_t fcp_max_volt;
-  bool     negotiated;
-  bool     pps;
-  bool     failed_pdo_checks;
+  uint16_t req_pdo_volt;
 } fs2711_state_t;
 
 class FS2711 {

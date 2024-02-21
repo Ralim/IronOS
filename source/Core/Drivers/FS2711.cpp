@@ -2,6 +2,7 @@
 #include "FS2711_define.h"
 #include "I2CBB2.hpp"
 #include "configuration.h"
+#define POW_PD_EXT 2
 #if POW_PD_EXT == 2
 #include "FreeRTOS.h"
 #include <stdbool.h>
@@ -31,11 +32,9 @@ void osDelay(uint32_t delayms) {
 }
 
 void FS2711::start() {
-  state.up                = false;
-  state.pdo_num           = 0;
-  state.req_pdo_num       = 10; // Disabled
-  state.negotiated        = false;
-  state.failed_pdo_checks = false;
+  state.pdo_num     = 0;
+  state.req_pdo_num = 0xFF; // Disabled
+  state.protocol    = 0xFF;
   memset(state.pdo_type, 0, 7);
   memset(state.pdo_min_volt, 0, 7);
   memset(state.pdo_max_volt, 0, 7);
@@ -123,6 +122,7 @@ void FS2711::probe_pd() {
   osDelay(500);
   select_protocol(FS2711_PROTOCOL_PD);
   enable_protocol(true);
+  state.protocol = FS2711_PROTOCOL_PD;
 
   uint8_t i      = 0;
   uint8_t pdo_b0 = 0, pdo_b1 = 0, pdo_b2 = 0, pdo_b3 = 0;
@@ -174,14 +174,16 @@ bool FS2711::open_pps(uint8_t PDOID, uint16_t volt, uint16_t max_curr) {
     return false;
 
   if (state.protocol != FS2711_PROTOCOL_PPS) {
-    enable_protocol(false);
-    osDelay(500);
-    select_protocol(FS2711_PROTOCOL_PD);
-    enable_protocol(true);
-    osDelay(100);
-    select_protocol(FS2711_PROTOCOL_PPS);
-    enable_protocol(true);
-    osDelay(3000);
+    return false;
+    //    enable_protocol(false);
+    //    osDelay(500);
+    //    select_protocol(FS2711_PROTOCOL_PD);
+    //    enable_protocol(true);
+    //    osDelay(100);
+    //    select_protocol(FS2711_PROTOCOL_PPS);
+    //    enable_protocol(true);
+    //    osDelay(3000);
+    //    state.protocol = FS2711_PROTOCOL_PPS;
   }
 
   i2c_write(FS2711_PROTOCOL_PD_PDOID, PDOID + (PDOID << 4));
@@ -197,13 +199,12 @@ bool FS2711::open_pps(uint8_t PDOID, uint16_t volt, uint16_t max_curr) {
 
   state.source_voltage = volt;
   state.source_current = max_curr;
-  state.protocol       = FS2711_PROTOCOL_PPS;
-  state.up             = true;
+  state.req_pdo_num    = PDOID;
   return true;
 }
 
 bool FS2711::open_pd(uint8_t PDOID) {
-  if (PDOID > state.pdo_num) {
+  if (PDOID >= state.pdo_num) {
     return false;
   }
   if (state.pdo_type[PDOID] != FS2711_PDO_FIX) {
@@ -211,76 +212,70 @@ bool FS2711::open_pd(uint8_t PDOID) {
   }
 
   if (state.protocol != FS2711_PROTOCOL_PD) {
-    enable_protocol(false);
-    osDelay(500);
-    select_protocol(FS2711_PROTOCOL_PD);
-    enable_protocol(true);
-    osDelay(3000);
+    //    enable_protocol(false);
+    //    osDelay(500);
+    //    select_protocol(FS2711_PROTOCOL_PD);
+    //    enable_protocol(true);
+    //    osDelay(3000);
   }
 
   i2c_write(FS2711_PROTOCOL_PD_PDOID, PDOID + (PDOID << 4));
 
   enable_voltage();
 
-  state.source_current = state.pdo_max_curr[PDOID];
   state.source_voltage = state.pdo_max_volt[PDOID];
-  state.protocol       = FS2711_PROTOCOL_PD;
-  state.up             = true;
+  state.source_current = state.pdo_max_curr[PDOID];
+  state.req_pdo_num    = PDOID;
   return true;
 }
 
 void FS2711::negotiate() {
-  uint8_t        pdoid      = 0;
-  bool           pps        = false;
-  bool           negotiated = false;
-  uint16_t       voltage    = 0;
-  int            i;
+  uint8_t  pdoid      = 0;
+  bool     negotiated = false;
+  uint16_t voltage    = 0;
+  // FS2711 uses mV instead of V
   const uint16_t vmax = USB_PD_VMAX * 1000;
 
-  for (i = 0; state.pdo_num > i; i++) {
+  uint16_t pdo_min_volt = 0, pdo_max_volt = 0, pdo_max_curr = 0;
+
+  for (int i = 0; state.pdo_num > i; i++) {
+    pdo_min_volt = state.pdo_min_volt[i];
+    pdo_max_volt = state.pdo_max_volt[i];
+    pdo_max_curr = state.pdo_max_curr[i];
     // We check if the PDO Voltage is higher to our current voltage;
-    if (state.pdo_max_volt[i] > voltage) {
+    if (pdo_max_volt > voltage) {
       // Checks if we have a fixed PDO and if the voltage is lower or equal to our max allowed voltage.
-      if (state.pdo_type[i] == 0 && vmax >= state.pdo_max_volt[i]) {
-        voltage    = state.pdo_max_volt[i];
+      if (state.pdo_type[i] == 0 && vmax >= pdo_max_volt) {
+        voltage    = pdo_max_volt;
         pdoid      = i;
         negotiated = true;
-        pps        = false;
-        // Checks if we have a PPS supply and if the minimun voltage is lower or equal to our max allowed voltage.
-      } else if (state.pdo_type[i] == 1 && vmax >= state.pdo_min_volt[i]) {
-        pdoid      = i;
-        negotiated = true;
-        pps        = true;
-        // Select the smallest number between max allowed voltage and max psu voltage.
-        voltage = vmax < state.pdo_max_volt[i] ? vmax : state.pdo_max_volt[i];
       }
     }
   }
 
-  state.negotiated   = negotiated;
-  state.pps          = pps;
-  state.req_pdo_num  = i;
-  state.req_pdo_volt = voltage ? voltage / 1000 : 0;
-  state.protocol     = FS2711_PROTOCOL_PD;
-
   if (negotiated) {
-    if (pps) {
-      FS2711::open_pps(pdoid, voltage, state.pdo_max_curr[pdoid]);
-    } else {
-      FS2711::open_pd(pdoid);
-    }
+    FS2711::open_pd(pdoid);
   }
 }
 
-bool FS2711::has_run_selection() { return state.up; }
+bool FS2711::has_run_selection() { return state.protocol != 0xFF; }
 
-uint16_t FS2711::source_voltage() { return state.source_voltage; }
+uint16_t FS2711::source_voltage() { return state.source_voltage > 0 ? state.source_voltage / 1000 : 0; }
 
-uint16_t FS2711::source_currentx100() { return state.source_current / 10; }
+// FS2711 does current in mV so it needs to be converted to x100 intead of x1000
+uint16_t FS2711::source_currentx100() { return state.source_current > 0 ? state.source_current / 10 : 0; }
 
-uint16_t FS2711::debug_pdo_source_voltage(uint8_t pdoid) { return state.pdo_max_volt[pdoid]; }
+uint16_t FS2711::debug_pdo_source_voltage(uint8_t pdoid) {
+  uint16_t voltage = state.pdo_max_volt[pdoid];
 
-uint16_t FS2711::debug_pdo_source_current(uint8_t pdoid) { return state.pdo_max_curr[pdoid]; }
+  return voltage > 0 ? voltage / 1000 : 0;
+}
+
+uint16_t FS2711::debug_pdo_source_current(uint8_t pdoid) {
+  uint16_t current = state.pdo_max_curr[pdoid];
+
+  return current > 0 ? current / 1000 : 0;
+}
 
 uint16_t FS2711::debug_pdo_type(uint8_t pdoid) { return state.pdo_type[pdoid]; }
 
