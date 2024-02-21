@@ -20,7 +20,7 @@
 #define SOFT_SCL2_READ() (HAL_GPIO_ReadPin(SCL2_GPIO_Port, SCL2_Pin) == GPIO_PIN_SET ? 1 : 0)
 #define SOFT_I2C_DELAY()                                                                                                                                                                               \
   {                                                                                                                                                                                                    \
-    for (int xx = 0; xx < 10; xx++) {                                                                                                                                                                  \
+    for (int xx = 0; xx < 12; xx++) {                                                                                                                                                                  \
       asm("nop");                                                                                                                                                                                      \
     }                                                                                                                                                                                                  \
   }
