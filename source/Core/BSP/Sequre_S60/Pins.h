@@ -9,7 +9,7 @@
 #define BSP_MINIWARE_PINS_H_
 #include "configuration.h"
 
-#ifdef MODEL_S60
+#if defined(MODEL_S60) || defined(MODEL_S60P)
 
 #define KEY_B_Pin             GPIO_PIN_1
 #define KEY_B_GPIO_Port       GPIOB

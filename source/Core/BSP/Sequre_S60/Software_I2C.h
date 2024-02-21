@@ -18,11 +18,11 @@
 #define SOFT_SDA2_LOW()  HAL_GPIO_WritePin(SDA2_GPIO_Port, SDA2_Pin, GPIO_PIN_RESET)
 #define SOFT_SDA2_READ() (HAL_GPIO_ReadPin(SDA2_GPIO_Port, SDA2_Pin) == GPIO_PIN_SET ? 1 : 0)
 #define SOFT_SCL2_READ() (HAL_GPIO_ReadPin(SCL2_GPIO_Port, SCL2_Pin) == GPIO_PIN_SET ? 1 : 0)
-#define SOFT_I2C_DELAY()              \
-  {                                   \
-    for (int xx = 0; xx < 12; xx++) { \
-      asm("nop");                     \
-    }                                 \
+#define SOFT_I2C_DELAY()                                                                                                                                                                               \
+  {                                                                                                                                                                                                    \
+    for (int xx = 0; xx < 10; xx++) {                                                                                                                                                                  \
+      asm("nop");                                                                                                                                                                                      \
+    }                                                                                                                                                                                                  \
   }
 
 #endif

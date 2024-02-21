@@ -1,3 +1,4 @@
+#include "FS2711.hpp"
 #include "HUB238.hpp"
 #include "OperatingModes.h"
 void showWarnings(void) {
@@ -48,7 +49,16 @@ void showWarnings(void) {
     }
   }
 #endif /*POW_PD_EXT==1*/
-       // If tip looks to be shorted, yell at user and dont auto dismiss
+#if POW_PD_EXT == 2
+  if (!FS2711::probe()) {
+    if (getSettingValue(SettingsOptions::PDMissingWarningCounter) < 2) {
+      nextSettingValue(SettingsOptions::PDMissingWarningCounter);
+      saveSettings();
+      warnUser(translatedString(Tr->NoPowerDeliveryMessage), 10 * TICKS_SECOND);
+    }
+  }
+#endif
+  //  If tip looks to be shorted, yell at user and dont auto dismiss
   if (isTipShorted()) {
     warnUser(translatedString(Tr->WarningTipShorted), portMAX_DELAY);
   }

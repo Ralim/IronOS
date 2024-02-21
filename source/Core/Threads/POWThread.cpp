@@ -6,6 +6,7 @@
  */
 
 #include "BSP.h"
+#include "FS2711.hpp"
 #include "FreeRTOS.h"
 #include "HUB238.hpp"
 #include "QC3.h"
@@ -14,10 +15,12 @@
 #include "cmsis_os.h"
 #include "configuration.h"
 #include "main.hpp"
+#include "stdbool.h"
 #include "stdlib.h"
 #include "task.h"
 
 // Small worker thread to handle power (PD + QC) related steps
+bool run_once = true;
 
 void startPOWTask(void const *argument __unused) {
 
@@ -60,6 +63,13 @@ void startPOWTask(void const *argument __unused) {
 #endif
 #if POW_PD_EXT == 1
     hub238_check_negotiation();
+#endif
+#if POW_PD_EXT == 2
+    if (run_once) {
+      FS2711::start();
+      run_once = false;
+    }
+    FS2711::negotiate();
 #endif
     power_check();
   }
