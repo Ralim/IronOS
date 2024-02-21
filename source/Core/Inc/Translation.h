@@ -183,6 +183,7 @@ const char *translatedString(uint16_t index);
 void prepareTranslations();
 void settings_displayLanguageSwitch(void);
 bool settings_showLanguageSwitch(void);
-bool settings_setLanguageSwitch(void);
+void settings_setLanguageSwitch(void);
+bool isLastLanguageOption(void);
 
 #endif /* TRANSLATION_H_ */

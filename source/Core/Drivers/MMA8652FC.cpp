@@ -10,6 +10,10 @@
 #include "cmsis_os.h"
 #include <array>
 
+#include "MMA8652FC.hpp"
+#include "accelerometers_common.h"
+#include "cmsis_os.h"
+
 static const ACCEL_I2C_CLASS::I2C_REG i2c_registers[] = {
     {           CTRL_REG2,               0, 0}, // Normal mode
     {           CTRL_REG2,            0x40, 2}, // Reset all registers to POR values

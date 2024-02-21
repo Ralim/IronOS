@@ -149,9 +149,10 @@ public:
   static void drawHeatSymbol(uint8_t state);
   static void drawScrollIndicator(uint8_t p, uint8_t h); // Draws a scrolling position indicator
   static void maskScrollIndicatorOnOLED();
-  static void transitionSecondaryFramebuffer(bool forwardNavigation);
+  static void transitionSecondaryFramebuffer(const bool forwardNavigation, const TickType_t viewEnterTime);
   static void useSecondaryFramebuffer(bool useSecondary);
-  static void transitionScrollDown();
+  static void transitionScrollDown(const TickType_t viewEnterTime);
+  static void transitionScrollUp(const TickType_t viewEnterTime);
 
 private:
   static bool checkDisplayBufferChecksum() {

@@ -5,7 +5,7 @@
 // #define HAS_POWER_DEBUG_MENU
 #if POW_PD_EXT == 2
 #ifdef HAS_POWER_DEBUG_MENU
-void showPDDebug(void) {
+OperatingMode showPDDebug(const ButtonState buttons, guiContext *cxt) {
   // Print out the USB-PD state
   // Basically this is like the Debug menu, but instead we want to print out the PD status
   uint8_t     screen = 0;
@@ -68,13 +68,14 @@ void showPDDebug(void) {
     OLED::refresh();
     b = getButtonState();
     if (b == BUTTON_B_SHORT) {
-      return;
+      return OperatingMode::InitialisationDone;
     } else if (b == BUTTON_F_SHORT) {
       screen++;
     }
 
     GUIDelay();
   }
+  return OperatingMode::UsbPDDebug;
 }
 #endif
 #endif

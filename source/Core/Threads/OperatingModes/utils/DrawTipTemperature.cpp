@@ -1,5 +1,6 @@
 #include "OperatingModeUtilities.h"
 #include "OperatingModes.h"
+#include "SolderingCommon.h"
 #include "TipThermoModel.h"
 
 void gui_drawTipTemp(bool symbol, const FontStyle font) {
