@@ -6,11 +6,13 @@ on:
       - master
       - dev
       - main
+      - S60P
   pull_request:
     branches:
       - master
       - dev
       - main
+      - S60P
 
 jobs:
   build:
@@ -29,6 +31,7 @@ jobs:
             "Pinecilv2",
             "S60",
             "TS101",
+            "S60P",
           ]
       fail-fast: true
 
