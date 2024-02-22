@@ -1,7 +1,7 @@
 #include "configuration.h"
 #ifndef _DRIVERS_FS2711_HPP_
 #define _DRIVERS_FS2711_HPP_
-#define POW_PD_EXT 2
+// #define POW_PD_EXT 2
 #if POW_PD_EXT == 2
 #include <stdbool.h>
 #include <stdint.h>
@@ -61,7 +61,8 @@ public:
 
   static void probe_pd();
 
-  static uint16_t debug_pdo_source_voltage(uint8_t pdoid);
+  static uint16_t debug_pdo_max_voltage(uint8_t pdoid);
+  static uint16_t debug_pdo_min_voltage(uint8_t pdoid);
 
   static uint16_t debug_pdo_source_current(uint8_t pdoid);
 

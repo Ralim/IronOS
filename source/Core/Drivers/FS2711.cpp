@@ -2,8 +2,9 @@
 #include "FS2711_define.h"
 #include "I2CBB2.hpp"
 #include "configuration.h"
-#define POW_PD_EXT 2
+// #define POW_PD_EXT 2
 #if POW_PD_EXT == 2
+#include "BSP.h"
 #include "FreeRTOS.h"
 #include <stdbool.h>
 #include <string.h>
@@ -230,31 +231,68 @@ bool FS2711::open_pd(uint8_t PDOID) {
 }
 
 void FS2711::negotiate() {
-  uint8_t  pdoid      = 0;
-  bool     negotiated = false;
-  uint16_t voltage    = 0;
-  // FS2711 uses mV instead of V
-  const uint16_t vmax = USB_PD_VMAX * 1000;
+  uint16_t best_voltage = 0;
+  uint16_t best_current = 0;
+  uint8_t  best_pdoid   = 0xFF;
+  bool     pps          = false;
 
-  uint16_t pdo_min_volt = 0, pdo_max_volt = 0, pdo_max_curr = 0;
+  int min_resistance_omhsx10 = 0;
+
+  // FS2711 uses mV instead of V
+  const uint16_t vmax           = USB_PD_VMAX * 1000;
+  const uint8_t  tip_resistance = getTipResistanceX10() + 5;
+
+  uint16_t pdo_min_mv = 0, pdo_max_mv = 0, pdo_max_curr = 0, pdo_type = 0;
 
   for (int i = 0; state.pdo_num > i; i++) {
-    pdo_min_volt = state.pdo_min_volt[i];
-    pdo_max_volt = state.pdo_max_volt[i];
+    pdo_min_mv   = state.pdo_min_volt[i];
+    pdo_max_mv   = state.pdo_max_volt[i];
     pdo_max_curr = state.pdo_max_curr[i];
-    // We check if the PDO Voltage is higher to our current voltage;
-    if (pdo_max_volt > voltage) {
-      // Checks if we have a fixed PDO and if the voltage is lower or equal to our max allowed voltage.
-      if (state.pdo_type[i] == 0 && vmax >= pdo_max_volt) {
-        voltage    = pdo_max_volt;
-        pdoid      = i;
-        negotiated = true;
+    pdo_type     = state.pdo_type[i];
+
+    min_resistance_omhsx10 = (pdo_max_mv / pdo_max_curr) * 10;
+
+    switch (pdo_type) {
+    case FS2711_PDO_FIX:
+      if (pdo_max_mv > 0 && vmax >= pdo_max_mv) {
+        if (min_resistance_omhsx10 <= tip_resistance) {
+          if (pdo_max_mv > best_voltage) {
+            pps          = false;
+            best_pdoid   = i;
+            best_voltage = pdo_max_mv;
+            best_current = pdo_max_curr;
+          }
+        }
       }
+      break;
+
+    case FS2711_PDO_PPS:
+      int ideal_mv = tip_resistance * (pdo_max_curr / 100);
+      if (ideal_mv > pdo_max_mv) {
+        ideal_mv = pdo_max_mv;
+      }
+
+      if (ideal_mv > vmax) {
+        ideal_mv = vmax;
+      }
+
+      if (ideal_mv > best_voltage) {
+        best_pdoid   = i;
+        best_voltage = ideal_mv;
+        best_current = pdo_max_curr;
+        pps          = true;
+      }
+
+      break;
     }
   }
 
-  if (negotiated) {
-    FS2711::open_pd(pdoid);
+  if (best_pdoid != 0xFF) {
+    if (pps) {
+      FS2711::open_pps(best_pdoid, best_voltage, best_current);
+    } else {
+      FS2711::open_pd(best_pdoid);
+    }
   }
 }
 
@@ -265,17 +303,11 @@ uint16_t FS2711::source_voltage() { return state.source_voltage > 0 ? state.sour
 // FS2711 does current in mV so it needs to be converted to x100 intead of x1000
 uint16_t FS2711::source_currentx100() { return state.source_current > 0 ? state.source_current / 10 : 0; }
 
-uint16_t FS2711::debug_pdo_source_voltage(uint8_t pdoid) {
-  uint16_t voltage = state.pdo_max_volt[pdoid];
+uint16_t FS2711::debug_pdo_max_voltage(uint8_t pdoid) { return state.pdo_max_volt[pdoid]; }
 
-  return voltage > 0 ? voltage / 1000 : 0;
-}
+uint16_t FS2711::debug_pdo_min_voltage(uint8_t pdoid) { return state.pdo_min_volt[pdoid]; }
 
-uint16_t FS2711::debug_pdo_source_current(uint8_t pdoid) {
-  uint16_t current = state.pdo_max_curr[pdoid];
-
-  return current > 0 ? current / 1000 : 0;
-}
+uint16_t FS2711::debug_pdo_source_current(uint8_t pdoid) { return state.pdo_max_curr[pdoid]; }
 
 uint16_t FS2711::debug_pdo_type(uint8_t pdoid) { return state.pdo_type[pdoid]; }
 
