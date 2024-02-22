@@ -142,12 +142,12 @@ CPUFLAGS=-mcpu=cortex-m3  \
          -mfloat-abi=soft
 
 flash_size=62k
-ifeq ($(model),$(filter $(model), S60P))
-bootldr_size=0x5000
-DEVICE_DFU_ADDRESS=0x08005000
-else
+ifeq ($(model),S60)
 bootldr_size=0x4400
 DEVICE_DFU_ADDRESS=0x08004400
+else 
+bootldr_size=0x5000
+DEVICE_DFU_ADDRESS=0x08005000
 endif
 DEVICE_DFU_VID_PID=0x1209:0xDB42
 endif # ALL_SEQURE_MODELS

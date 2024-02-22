@@ -164,18 +164,36 @@
 #define MODEL_HAS_DCDC // We dont have DC/DC but have reallly fast PWM that gets us roughly the same place
 #endif                 /* S60 */
 
-#ifdef MODEL_S60
-#define POWER_LIMIT 0 // Default power limit
-#define USB_PD_VMAX 12
-#define POW_PD_EXT  1
-#endif
-
 #ifdef MODEL_S60P
-#define POWER_LIMIT 20 // C210 tips can only handle 20w
-#define USB_PD_VMAX 20 // C210 tips can handle 20V1A
-#define POW_PD_EXT  2  // S60P uses the FS2711IC
-#endif
+#define VOLTAGE_DIV        460 // Default divider scaler
+#define CALIBRATION_OFFSET 200 // Default adc offset in uV
+#define PID_POWER_LIMIT    70  // Sets the max pwm power limit
+#define POWER_LIMIT        0   // 0 watts default limit
+#define MAX_POWER_LIMIT    70
+#define POWER_LIMIT_STEPS  5
+#define OP_AMP_GAIN_STAGE  536
+#define TEMP_uV_LOOKUP_S60
+#define USB_PD_VMAX 12 // Maximum voltage for PD to negotiate
 
+#define HARDWARE_MAX_WATTAGE_X10 600
+
+#define TIP_THERMAL_MASS    8   // X10 watts to raise 1 deg C in 1 second
+#define TIP_THERMAL_INERTIA 128 // We use a large inertia value to smooth out the drive to the tip since its stupidly sensitive
+
+#define TIP_RESISTANCE 20 //(actually 2.5 ish but we need to be more conservative on pwm'ing watt limit) x10 ohms
+
+#define OLED_128x32
+#define GPIO_VIBRATION
+#define POW_PD_EXT                1
+#define USB_PD_EPR_WATTAGE        0 /*No EPR*/
+#define DEBUG_POWER_MENU_BUTTON_B 1
+#define HAS_POWER_DEBUG_MENU
+#define TEMP_NTC
+#define I2C_SOFT_BUS_2 // For now we are doing software I2C to get around hardware chip issues
+#define OLED_I2CBB2
+
+#define MODEL_HAS_DCDC // We dont have DC/DC but have reallly fast PWM that gets us roughly the same place
+#endif                 /* S60P */
 #define FLASH_LOGOADDR      (0x08000000 + (62 * 1024))
 #define SETTINGS_START_PAGE (0x08000000 + (63 * 1024))
 

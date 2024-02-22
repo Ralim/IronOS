@@ -30,6 +30,7 @@ jobs:
             "MHP30",
             "Pinecilv2",
             "S60",
+            "S60P",
             "TS101",
             "S60P",
           ]
@@ -73,7 +74,6 @@ jobs:
             source/Hexfile/LICENSE
             source/Hexfile/LICENSE_RELEASE.md
           if-no-files-found: error
-
 
   build_multi-lang:
     runs-on: ubuntu-22.04
@@ -122,7 +122,6 @@ jobs:
             source/Hexfile/LICENSE_RELEASE.md
           if-no-files-found: error
 
-
   upload_metadata:
     needs: [build, build_multi-lang]
     runs-on: ubuntu-20.04
@@ -141,7 +140,6 @@ jobs:
           name: metadata
           path: source/Hexfile/*.json
           if-no-files-found: error
-
 
   tests:
     runs-on: ubuntu-22.04
