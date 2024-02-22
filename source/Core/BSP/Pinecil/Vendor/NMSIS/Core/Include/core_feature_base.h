@@ -282,7 +282,7 @@ typedef union {
  */
 #define __RV_CSR_SWAP(csr, val)                                                            \
   ({                                                                                       \
-    register rv_csr_t __v = (unsigned long)(val);                                          \
+    volatile rv_csr_t __v = (unsigned long)(val);                                          \
     __ASM volatile("csrrw %0, " STRINGIFY(csr) ", %1" : "=r"(__v) : "rK"(__v) : "memory"); \
     __v;                                                                                   \
   })
@@ -297,7 +297,7 @@ typedef union {
  */
 #define __RV_CSR_READ(csr)                                               \
   ({                                                                     \
-    register rv_csr_t __v;                                               \
+    volatile rv_csr_t __v;                                               \
     __ASM volatile("csrr %0, " STRINGIFY(csr) : "=r"(__v) : : "memory"); \
     __v;                                                                 \
   })
@@ -312,7 +312,7 @@ typedef union {
  */
 #define __RV_CSR_WRITE(csr, val)                                            \
   ({                                                                        \
-    register rv_csr_t __v = (rv_csr_t)(val);                                \
+    volatile rv_csr_t __v = (rv_csr_t)(val);                                \
     __ASM volatile("csrw " STRINGIFY(csr) ", %0" : : "rK"(__v) : "memory"); \
   })
 
@@ -328,7 +328,7 @@ typedef union {
  */
 #define __RV_CSR_READ_SET(csr, val)                                                        \
   ({                                                                                       \
-    register rv_csr_t __v = (rv_csr_t)(val);                                               \
+    volatile rv_csr_t __v = (rv_csr_t)(val);                                               \
     __ASM volatile("csrrs %0, " STRINGIFY(csr) ", %1" : "=r"(__v) : "rK"(__v) : "memory"); \
     __v;                                                                                   \
   })
@@ -343,7 +343,7 @@ typedef union {
  */
 #define __RV_CSR_SET(csr, val)                                              \
   ({                                                                        \
-    register rv_csr_t __v = (rv_csr_t)(val);                                \
+    volatile rv_csr_t __v = (rv_csr_t)(val);                                \
     __ASM volatile("csrs " STRINGIFY(csr) ", %0" : : "rK"(__v) : "memory"); \
   })
 
@@ -359,7 +359,7 @@ typedef union {
  */
 #define __RV_CSR_READ_CLEAR(csr, val)                                                      \
   ({                                                                                       \
-    register rv_csr_t __v = (rv_csr_t)(val);                                               \
+    volatile rv_csr_t __v = (rv_csr_t)(val);                                               \
     __ASM volatile("csrrc %0, " STRINGIFY(csr) ", %1" : "=r"(__v) : "rK"(__v) : "memory"); \
     __v;                                                                                   \
   })
@@ -374,7 +374,7 @@ typedef union {
  */
 #define __RV_CSR_CLEAR(csr, val)                                            \
   ({                                                                        \
-    register rv_csr_t __v = (rv_csr_t)(val);                                \
+    volatile rv_csr_t __v = (rv_csr_t)(val);                                \
     __ASM volatile("csrc " STRINGIFY(csr) ", %0" : : "rK"(__v) : "memory"); \
   })
 #endif /* __ASSEMBLY__ */

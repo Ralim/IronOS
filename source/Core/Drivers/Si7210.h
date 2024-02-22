@@ -7,7 +7,10 @@
 
 #ifndef CORE_DRIVERS_SI7210_H_
 #define CORE_DRIVERS_SI7210_H_
+#include "configuration.h"
 #include <stdint.h>
+
+#ifdef MAG_SLEEP_SUPPORT
 class Si7210 {
 public:
   // Return true if present
@@ -23,5 +26,5 @@ private:
   static bool get_field_strength(int16_t *field);
   static bool set_high_range();
 };
-
+#endif // MAG_SLEEP_SUPPORT
 #endif /* CORE_DRIVERS_SI7210_H_ */
