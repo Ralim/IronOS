@@ -6,7 +6,7 @@ TRANSLATION_DIR="../Translations"
 # AVAILABLE_LANGUAGES will be calculating according to json files in $TRANSLATION_DIR
 AVAILABLE_LANGUAGES=()
 BUILD_LANGUAGES=()
-AVAILABLE_MODELS=("TS100" "TS80" "TS80P" "Pinecil" "MHP30" "Pinecilv2" "S60" "TS101")
+AVAILABLE_MODELS=("TS100" "TS80" "TS80P" "Pinecil" "MHP30" "Pinecilv2" "S60" "S60P" "TS101")
 BUILD_MODELS=()
 
 builder_info() {
@@ -47,8 +47,8 @@ INFO :
     exit 1
 }
 
-StartBuild(){ 
-    read -n 1 -r -s -p $'Press Enter to start the building process...\n' 
+StartBuild() {
+    read -n 1 -r -s -p $'Press Enter to start the building process...\n'
 }
 
 checkLastCommand() {
@@ -87,17 +87,17 @@ declare -a largs=()
 
 while getopts "h:l:m:" option; do
     case "${option}" in
-        h)
-            usage
-            ;;
-        l)  
-            IFS=' ' read -r -a largs <<< "${OPTARG}"
-            ;;
-        m)  
-            IFS=' ' read -r -a margs <<< "${OPTARG}"
-            ;;
-        *)
-            usage
+    h)
+        usage
+        ;;
+    l)
+        IFS=' ' read -r -a largs <<<"${OPTARG}"
+        ;;
+    m)
+        IFS=' ' read -r -a margs <<<"${OPTARG}"
+        ;;
+    *)
+        usage
         ;;
     esac
 done
