@@ -4,7 +4,7 @@
 #include "configuration.h"
 #if POW_PD_EXT == 2
 #include "BSP.h"
-#include "FreeRTOS.h"
+#include "cmsis_os.h"
 #include <stdbool.h>
 #include <stdint.h>
 #include <string.h>
@@ -152,18 +152,18 @@ void FS2711::probe_pd() {
 
 fs2711_state_t FS2711::get_state() { return state; }
 
-bool FS2711::open_pps(uint8_t PDOID, uint16_t volt, uint16_t max_curr) {
+bool FS2711::open_pps(uint8_t pdoid, uint16_t volt, uint16_t max_curr) {
   uint16_t wr;
 
-  if (PDOID > state.pdo_num)
+  if (pdoid > state.pdo_num)
     return false;
-  if ((volt > state.pdo_max_volt[PDOID]) || (volt < state.pdo_min_volt[PDOID]))
+  if ((volt > state.pdo_max_volt[pdoid]) || (volt < state.pdo_min_volt[pdoid]))
     return false;
-  if ((volt > state.pdo_max_volt[PDOID]) || (volt < state.pdo_min_volt[PDOID]))
+  if ((volt > state.pdo_max_volt[pdoid]) || (volt < state.pdo_min_volt[pdoid]))
     return false;
-  if (max_curr > state.pdo_max_curr[PDOID])
+  if (max_curr > state.pdo_max_curr[pdoid])
     return false;
-  if (state.pdo_type[PDOID] != FS2711_PDO_PPS)
+  if (state.pdo_type[pdoid] != FS2711_PDO_PPS)
     return false;
 
   if (state.protocol == FS2711_PROTOCOL_PD) {
@@ -177,8 +177,8 @@ bool FS2711::open_pps(uint8_t PDOID, uint16_t volt, uint16_t max_curr) {
     return false;
   }
 
-  i2c_write(FS2711_PROTOCOL_PD_PDOID, PDOID + (PDOID << 4));
-  wr = (volt - state.pdo_min_volt[PDOID]) / 20;
+  i2c_write(FS2711_PROTOCOL_PD_PDOID, pdoid + (pdoid << 4));
+  wr = (volt - state.pdo_min_volt[pdoid]) / 20;
   i2c_write(FS2711_PROTOCOL_PPS_CURRENT, max_curr / 50);
 
   i2c_write(0xF4, wr & 0xFF);
@@ -190,7 +190,7 @@ bool FS2711::open_pps(uint8_t PDOID, uint16_t volt, uint16_t max_curr) {
 
   state.source_voltage    = volt;
   state.source_current    = max_curr;
-  state.req_pdo_num       = PDOID;
+  state.req_pdo_num       = pdoid;
   powerSupplyWattageLimit = ((volt * max_curr) / 1000000) - 2;
   return true;
 }
