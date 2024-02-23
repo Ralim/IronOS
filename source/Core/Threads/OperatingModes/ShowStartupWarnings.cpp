@@ -82,8 +82,6 @@ OperatingMode showWarnings(const ButtonState buttons, guiContext *cxt) {
       cxt->scratch_state.state1 = 4;
     }
 #else
-    cxt->scratch_state.state1 = 4;
-#endif /*POW_PD_EXT==1*/
 #if POW_PD_EXT == 2
     if (!FS2711::probe()) {
       if (getSettingValue(SettingsOptions::PDMissingWarningCounter) < 2) {
@@ -100,6 +98,7 @@ OperatingMode showWarnings(const ButtonState buttons, guiContext *cxt) {
     }
 #else
     cxt->scratch_state.state1 = 4;
+#endif /*POW_PD_EXT==1*/
 #endif /*POW_PD_EXT==2*/
 #endif /*POW_PD*/
 
