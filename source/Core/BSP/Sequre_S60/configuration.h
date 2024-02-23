@@ -136,18 +136,19 @@
 #define MIN_BOOST_TEMP_F       480 // The min settable temp for boost mode °F
 
 #if defined(MODEL_S60) || defined(MODEL_S60P)
-#define VOLTAGE_DIV        460 // Default divider scaler
-#define CALIBRATION_OFFSET 200 // Default adc offset in uV
-#define PID_POWER_LIMIT    70  // Sets the max pwm power limit
-#define MAX_POWER_LIMIT    70
-#define POWER_LIMIT_STEPS  5
-#define OP_AMP_GAIN_STAGE  536
+#define VOLTAGE_DIV         460 // Default divider scaler
+#define CALIBRATION_OFFSET  200 // Default adc offset in uV
+#define PID_POWER_LIMIT     70  // Sets the max pwm power limit
+#define MAX_POWER_LIMIT     70
+#define POWER_LIMIT         0   // Default power limit
+#define TIP_THERMAL_INERTIA 128 // We use a large inertia value to smooth out the drive to the tip since its stupidly sensitive
+#define POWER_LIMIT_STEPS   5
+#define OP_AMP_GAIN_STAGE   536
 #define TEMP_uV_LOOKUP_S60
 
 #define HARDWARE_MAX_WATTAGE_X10 600
 
-#define TIP_THERMAL_MASS    8   // X10 watts to raise 1 deg C in 1 second
-#define TIP_THERMAL_INERTIA 128 // We use a large inertia value to smooth out the drive to the tip since its stupidly sensitive
+#define TIP_THERMAL_MASS 8 // X10 watts to raise 1 deg C in 1 second
 
 #define TIP_RESISTANCE 20 //(actually 2.5 ish but we need to be more conservative on pwm'ing watt limit) x10 ohms
 
@@ -165,15 +166,13 @@
 #endif                 /* S60 */
 
 #ifdef MODEL_S60
-#define POWER_LIMIT 0 // Default power limit
 #define USB_PD_VMAX 12
 #define POW_PD_EXT  1
 #endif
 
 #ifdef MODEL_S60P
-#define POWER_LIMIT 20 // C210 tips can only handle 20w
-#define USB_PD_VMAX 20 // C210 tips can handle 20V1A
-#define POW_PD_EXT  2  // S60P uses the FS2711IC
+#define USB_PD_VMAX 15
+#define POW_PD_EXT  2 // S60P uses the FS2711IC
 #endif
 
 #define FLASH_LOGOADDR      (0x08000000 + (62 * 1024))

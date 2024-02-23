@@ -7,11 +7,14 @@
 #include "BSP.h"
 #include "FreeRTOS.h"
 #include <stdbool.h>
+#include <stdint.h>
 #include <string.h>
 
 #ifndef USB_PD_VMAX
 #error Max PD Voltage must be defined
 #endif
+
+extern int32_t powerSupplyWattageLimit;
 
 fs2711_state_t FS2711::state;
 
@@ -174,17 +177,15 @@ bool FS2711::open_pps(uint8_t PDOID, uint16_t volt, uint16_t max_curr) {
   if (state.pdo_type[PDOID] != FS2711_PDO_PPS)
     return false;
 
+  if (state.protocol == FS2711_PROTOCOL_PD) {
+    select_protocol(FS2711_PROTOCOL_PPS);
+    enable_protocol(true);
+    osDelay(3000);
+    state.protocol = FS2711_PROTOCOL_PPS;
+  }
+
   if (state.protocol != FS2711_PROTOCOL_PPS) {
     return false;
-    //    enable_protocol(false);
-    //    osDelay(500);
-    //    select_protocol(FS2711_PROTOCOL_PD);
-    //    enable_protocol(true);
-    //    osDelay(100);
-    //    select_protocol(FS2711_PROTOCOL_PPS);
-    //    enable_protocol(true);
-    //    osDelay(3000);
-    //    state.protocol = FS2711_PROTOCOL_PPS;
   }
 
   i2c_write(FS2711_PROTOCOL_PD_PDOID, PDOID + (PDOID << 4));
@@ -198,9 +199,10 @@ bool FS2711::open_pps(uint8_t PDOID, uint16_t volt, uint16_t max_curr) {
 
   enable_voltage();
 
-  state.source_voltage = volt;
-  state.source_current = max_curr;
-  state.req_pdo_num    = PDOID;
+  state.source_voltage    = volt;
+  state.source_current    = max_curr;
+  state.req_pdo_num       = PDOID;
+  powerSupplyWattageLimit = ((volt * max_curr) / 1000000) - 2;
   return true;
 }
 
@@ -213,11 +215,7 @@ bool FS2711::open_pd(uint8_t PDOID) {
   }
 
   if (state.protocol != FS2711_PROTOCOL_PD) {
-    //    enable_protocol(false);
-    //    osDelay(500);
-    //    select_protocol(FS2711_PROTOCOL_PD);
-    //    enable_protocol(true);
-    //    osDelay(3000);
+    return false;
   }
 
   i2c_write(FS2711_PROTOCOL_PD_PDOID, PDOID + (PDOID << 4));
@@ -227,6 +225,8 @@ bool FS2711::open_pd(uint8_t PDOID) {
   state.source_voltage = state.pdo_max_volt[PDOID];
   state.source_current = state.pdo_max_curr[PDOID];
   state.req_pdo_num    = PDOID;
+
+  powerSupplyWattageLimit = ((state.source_voltage * state.source_current) / 1000000) - 2;
   return true;
 }
 
@@ -266,8 +266,8 @@ void FS2711::negotiate() {
       }
       break;
 
-    case FS2711_PDO_PPS:
-      int ideal_mv = tip_resistance * (pdo_max_curr / 100);
+    case FS2711_PDO_PPS: {
+      int ideal_mv = tip_resistance * (pdo_max_curr / 10);
       if (ideal_mv > pdo_max_mv) {
         ideal_mv = pdo_max_mv;
       }
@@ -282,7 +282,11 @@ void FS2711::negotiate() {
         best_current = pdo_max_curr;
         pps          = true;
       }
+    }
 
+    break;
+
+    default:
       break;
     }
   }
