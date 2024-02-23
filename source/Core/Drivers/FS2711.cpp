@@ -138,7 +138,7 @@ void FS2711::probe_pd() {
   memset(state.pdo_max_curr, 0, 7);
   osDelay(5000);
 
-  for (i = 0; 7 > i; i++) {
+  for (i = 0;  i < 7; i++) {
     pdo_b0 = i2c_read(FS2711_REG_PDO_B0 + i * 4);
     pdo_b1 = i2c_read(FS2711_REG_PDO_B1 + i * 4);
     pdo_b2 = i2c_read(FS2711_REG_PDO_B2 + i * 4);
