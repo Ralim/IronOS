@@ -211,23 +211,21 @@ bool isTipDisconnected() {
 
 void    setStatusLED(const enum StatusLED state) {}
 uint8_t preStartChecks() {
-  uint16_t voltage     = 0;
-  uint16_t currentx100 = 0;
 #if POW_PD_EXT == 1
   if (!hub238_has_run_selection() && (xTaskGetTickCount() < TICKS_SECOND * 5)) {
     return 0;
   }
   // We check if we are in a "Limited" mode; where we have to run the PWM really fast
   // Where as if we are on 9V for example, the tip resistance is enough
-  voltage     = hub238_source_voltage();
-  currentx100 = hub238_source_currentX100();
+  uint16_t voltage     = hub238_source_voltage();
+  uint16_t currentx100 = hub238_source_currentX100();
 #endif
 #if POW_PD_EXT == 2
   if (!FS2711::has_run_selection() && (xTaskGetTickCount() < TICKS_SECOND * 5)) {
     return 0;
   }
-  voltage     = FS2711::source_voltage();
-  currentx100 = FS2711::source_currentx100();
+  uint16_t voltage     = FS2711::source_voltage();
+  uint16_t currentx100 = FS2711::source_currentx100();
 #endif
 
   uint16_t thresholdResistancex10 = ((voltage * 1000) / currentx100) + 5;
