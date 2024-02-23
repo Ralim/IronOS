@@ -306,18 +306,5 @@ uint16_t FS2711::debug_pdo_type(uint8_t pdoid) { return state.pdo_type[pdoid]; }
 
 bool FS2711::debug_detected_pd() { return (state.proto_exists >> FS2711_PROTOCOL_PD) & 0x00000001; }
 
-uint16_t FS2711::debug_state() {
-  //  uint8_t state0 = 0, state1 = 0;
-  //
-  //  if (!I2CBB2::Mem_Read(FS2711_READ_ADDR, FS2711_REG_STATE0, &state0, 1)) {
-  //    return 0;
-  //  }
-  //
-  //  if (!I2CBB2::Mem_Read(FS2711_READ_ADDR, FS2711_REG_STATE1, &state1, 1)) {
-  //    return 0;
-  //  }
-  //
-  //  return ~(state1 | (((uint16_t)state0) << 8));
-  return state.state;
-}
+uint16_t FS2711::debug_state() { return state.state; }
 #endif
