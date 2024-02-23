@@ -1,8 +1,7 @@
 #include "FS2711.hpp"
-#include "FS2711_define.h"
+#include "FS2711_defines.h"
 #include "I2CBB2.hpp"
 #include "configuration.h"
-// #define POW_PD_EXT 2
 #if POW_PD_EXT == 2
 #include "BSP.h"
 #include "FreeRTOS.h"
@@ -18,22 +17,15 @@ extern int32_t powerSupplyWattageLimit;
 
 fs2711_state_t FS2711::state;
 
-void i2c_write(uint8_t addr, uint8_t data) { I2CBB2::Mem_Write(FS2711_ADDR, addr, &data, 1); }
+inline void i2c_write(uint8_t addr, uint8_t data) { I2CBB2::Mem_Write(FS2711_ADDR, addr, &data, 1); }
 
-uint8_t i2c_read(uint8_t addr) {
+inline uint8_t i2c_read(uint8_t addr) {
   uint8_t data = 0;
   I2CBB2::Mem_Read(FS2711_ADDR, addr, &data, 1);
   return data;
 }
 
-bool i2c_probe(uint8_t addr) { return I2CBB2::probe(addr); }
-
-void osDelay(uint32_t delayms) {
-  // Convert ms -> ticks
-  TickType_t ticks = delayms / portTICK_PERIOD_MS;
-
-  vTaskDelay(ticks ? ticks : 1);
-}
+inline bool i2c_probe(uint8_t addr) { return I2CBB2::probe(addr); }
 
 void FS2711::start() {
   state.pdo_num     = 0;
@@ -44,8 +36,6 @@ void FS2711::start() {
   memset(state.pdo_max_volt, 0, 7);
   memset(state.pdo_max_curr, 0, 7);
 
-  // start_scan();
-  // update_state();
   probe_pd();
 }
 
@@ -78,8 +68,7 @@ void FS2711::update_state() {
   uint8_t state0 = ~i2c_read(FS2711_REG_STATE0);
   uint8_t state1 = ~i2c_read(FS2711_REG_STATE1);
 
-  // state.state = (state1 | ((uint16_t)state0) << 8);
-  state.state = state1;
+  state.state = (state1 | ((uint16_t)state0) << 8);
 
   if (state1 & 0x1) {
     state.proto_exists = i2c_read(FS2711_REG_PROTOCOL_EXISTS);
@@ -97,7 +86,7 @@ void FS2711::update_state() {
     memset(state.pdo_max_curr, 0, 7);
     osDelay(5000);
 
-    for (i = 0; 7 > i; i++) {
+    for (i = 0; i < 7; i++) {
       pdo_b0 = i2c_read(FS2711_REG_PDO_B0 + i * 4);
       pdo_b1 = i2c_read(FS2711_REG_PDO_B1 + i * 4);
       pdo_b2 = i2c_read(FS2711_REG_PDO_B2 + i * 4);
@@ -138,7 +127,7 @@ void FS2711::probe_pd() {
   memset(state.pdo_max_curr, 0, 7);
   osDelay(5000);
 
-  for (i = 0; 7 > i; i++) {
+  for (i = 0; i < 7; i++) {
     pdo_b0 = i2c_read(FS2711_REG_PDO_B0 + i * 4);
     pdo_b1 = i2c_read(FS2711_REG_PDO_B1 + i * 4);
     pdo_b2 = i2c_read(FS2711_REG_PDO_B2 + i * 4);
@@ -302,10 +291,10 @@ void FS2711::negotiate() {
 
 bool FS2711::has_run_selection() { return state.protocol != 0xFF; }
 
-uint16_t FS2711::source_voltage() { return state.source_voltage > 0 ? state.source_voltage / 1000 : 0; }
+uint16_t FS2711::source_voltage() { state.source_voltage / 1000; }
 
 // FS2711 does current in mV so it needs to be converted to x100 intead of x1000
-uint16_t FS2711::source_currentx100() { return state.source_current > 0 ? state.source_current / 10 : 0; }
+uint16_t FS2711::source_currentx100() { return state.source_current / 10; }
 
 uint16_t FS2711::debug_pdo_max_voltage(uint8_t pdoid) { return state.pdo_max_volt[pdoid]; }
 

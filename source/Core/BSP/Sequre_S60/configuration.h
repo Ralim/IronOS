@@ -119,7 +119,7 @@
 // Vin_max = (3.3*(r1+r2))/(r2)
 // vdiv = (32768*4)/(vin_max*10)
 
-#if !defined(MODEL_S60) && !defined(MODEL_S60P)
+#if defined(MODEL_S60) + defined(MODEL_S60P) == 0
 #error "No model defined!"
 #endif
 
@@ -164,7 +164,7 @@
 #define OLED_I2CBB2
 
 #define MODEL_HAS_DCDC // We dont have DC/DC but have reallly fast PWM that gets us roughly the same place
-#endif
+#endif                 /* S60 */
 
 #ifdef MODEL_S60P
 #define VOLTAGE_DIV        460 // Default divider scaler
