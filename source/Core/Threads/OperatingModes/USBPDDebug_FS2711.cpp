@@ -1,8 +1,6 @@
 #include "FS2711.hpp"
 #include "OperatingModes.h"
 #include "stdbool.h"
-// #define POW_PD_EXT 2
-// #define HAS_POWER_DEBUG_MENU
 #if POW_PD_EXT == 2
 #ifdef HAS_POWER_DEBUG_MENU
 
