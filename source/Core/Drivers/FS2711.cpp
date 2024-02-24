@@ -13,6 +13,8 @@
 #error Max PD Voltage must be defined
 #endif
 
+#define PROTOCOL_TIMEOUT 500 // ms
+
 extern int32_t powerSupplyWattageLimit;
 
 fs2711_state_t FS2711::state;
@@ -31,6 +33,13 @@ void FS2711::start() {
   memset(&state, 0, sizeof(fs2711_state_t));
   state.req_pdo_num = 0xFF;
   state.protocol    = 0xFF;
+
+  enable_protocol(false);
+  osDelay(PROTOCOL_TIMEOUT);
+  select_protocol(FS2711_PROTOCOL_PD);
+  enable_protocol(true);
+  state.protocol = FS2711_PROTOCOL_PD;
+  osDelay(PROTOCOL_TIMEOUT);
 
   probe_pd();
 }
@@ -80,45 +89,11 @@ void FS2711::update_state() {
   }
 
   if (state1 & 0x2) {
-    state.pdo_num = 0;
-    memset(state.pdo_type, 0, 7);
-    memset(state.pdo_min_volt, 0, 7);
-    memset(state.pdo_max_volt, 0, 7);
-    memset(state.pdo_max_curr, 0, 7);
-
-    for (i = 0; i < 7; i++) {
-      pdo_b0 = i2c_read(FS2711_REG_PDO_B0 + i * 4);
-      pdo_b1 = i2c_read(FS2711_REG_PDO_B1 + i * 4);
-      pdo_b2 = i2c_read(FS2711_REG_PDO_B2 + i * 4);
-      pdo_b3 = i2c_read(FS2711_REG_PDO_B3 + i * 4);
-
-      if (pdo_b0) {
-        if ((pdo_b3 & FS2711_REG_PDO_B0) == FS2711_REG_PDO_B0) {
-          state.pdo_type[i]     = FS2711_PDO_PPS;
-          state.pdo_min_volt[i] = pdo_b1 * 100;
-          state.pdo_max_volt[i] = ((pdo_b2 >> 1) + ((pdo_b3 & 0x1) << 7)) * 100;
-          state.pdo_max_curr[i] = (pdo_b0 & 0x7F) * 50;
-        } else {
-          state.pdo_type[i]     = FS2711_PDO_FIX;
-          state.pdo_min_volt[i] = ((pdo_b1 >> 2) + ((pdo_b2 & 0xF) << 6)) * 50;
-          state.pdo_max_volt[i] = state.pdo_min_volt[i];
-          state.pdo_max_curr[i] = (pdo_b0 + ((pdo_b1 & 0x3) << 8)) * 10;
-        }
-        state.pdo_num++;
-      }
-    }
+    FS2711::probe_pd();
   }
 }
 
 void FS2711::probe_pd() {
-  enable_protocol(false);
-  osDelay(100);
-  select_protocol(FS2711_PROTOCOL_PD);
-  enable_protocol(true);
-  state.protocol = FS2711_PROTOCOL_PD;
-  osDelay(100);
-
-  uint8_t i      = 0;
   uint8_t pdo_b0 = 0, pdo_b1 = 0, pdo_b2 = 0, pdo_b3 = 0;
 
   state.pdo_num = 0;
@@ -127,7 +102,7 @@ void FS2711::probe_pd() {
   memset(state.pdo_max_volt, 0, 7);
   memset(state.pdo_max_curr, 0, 7);
 
-  for (i = 0; i < 7; i++) {
+  for (uint8_t i = 0; i < 7; i++) {
     pdo_b0 = i2c_read(FS2711_REG_PDO_B0 + i * 4);
     pdo_b1 = i2c_read(FS2711_REG_PDO_B1 + i * 4);
     pdo_b2 = i2c_read(FS2711_REG_PDO_B2 + i * 4);
@@ -169,7 +144,7 @@ bool FS2711::open_pps(uint8_t pdoid, uint16_t volt, uint16_t max_curr) {
   if (state.protocol == FS2711_PROTOCOL_PD) {
     select_protocol(FS2711_PROTOCOL_PPS);
     enable_protocol(true);
-    osDelay(100);
+    osDelay(PROTOCOL_TIMEOUT);
     state.protocol = FS2711_PROTOCOL_PPS;
   }
 
