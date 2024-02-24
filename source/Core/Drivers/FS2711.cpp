@@ -48,7 +48,7 @@ void FS2711::system_reset() { i2c_write(FS2711_REG_SYSTEM_RESET, 0x01); }
 void FS2711::port_reset() {
   i2c_write(FS2711_REG_MODE_SET, 0x02);   // Disconnects Rd?
   i2c_write(FS2711_REG_PORT_RESET, 0x00); // Port Reset
-  osDelay(1);
+  osDelay(100);
   i2c_write(FS2711_REG_MODE_SET, 0x00);
   i2c_write(FS2711_REG_PORT_RESET, 0x01);
 }
@@ -85,7 +85,6 @@ void FS2711::update_state() {
     memset(state.pdo_min_volt, 0, 7);
     memset(state.pdo_max_volt, 0, 7);
     memset(state.pdo_max_curr, 0, 7);
-    osDelay(5000);
 
     for (i = 0; i < 7; i++) {
       pdo_b0 = i2c_read(FS2711_REG_PDO_B0 + i * 4);
@@ -113,10 +112,11 @@ void FS2711::update_state() {
 
 void FS2711::probe_pd() {
   enable_protocol(false);
-  osDelay(500);
+  osDelay(100);
   select_protocol(FS2711_PROTOCOL_PD);
   enable_protocol(true);
   state.protocol = FS2711_PROTOCOL_PD;
+  osDelay(100);
 
   uint8_t i      = 0;
   uint8_t pdo_b0 = 0, pdo_b1 = 0, pdo_b2 = 0, pdo_b3 = 0;
@@ -126,7 +126,6 @@ void FS2711::probe_pd() {
   memset(state.pdo_min_volt, 0, 7);
   memset(state.pdo_max_volt, 0, 7);
   memset(state.pdo_max_curr, 0, 7);
-  osDelay(5000);
 
   for (i = 0; i < 7; i++) {
     pdo_b0 = i2c_read(FS2711_REG_PDO_B0 + i * 4);
@@ -170,7 +169,7 @@ bool FS2711::open_pps(uint8_t pdoid, uint16_t volt, uint16_t max_curr) {
   if (state.protocol == FS2711_PROTOCOL_PD) {
     select_protocol(FS2711_PROTOCOL_PPS);
     enable_protocol(true);
-    osDelay(3000);
+    osDelay(100);
     state.protocol = FS2711_PROTOCOL_PPS;
   }
 
