@@ -20,7 +20,6 @@
 #include "task.h"
 
 // Small worker thread to handle power (PD + QC) related steps
-bool run_once = true;
 
 void startPOWTask(void const *argument __unused) {
 
@@ -35,8 +34,11 @@ void startPOWTask(void const *argument __unused) {
   USBPowerDelivery::start();
   // Crank the handle at boot until we are stable and waiting for IRQ
   USBPowerDelivery::step();
-
 #endif
+#if POW_PD_EXT == 2
+  FS2711::start();
+#endif
+
   BaseType_t res;
   for (;;) {
     res = pdFALSE;
@@ -65,10 +67,6 @@ void startPOWTask(void const *argument __unused) {
     hub238_check_negotiation();
 #endif
 #if POW_PD_EXT == 2
-    if (run_once) {
-      FS2711::start();
-      run_once = false;
-    }
     FS2711::negotiate();
 #endif
     power_check();

@@ -28,13 +28,9 @@ inline uint8_t i2c_read(uint8_t addr) {
 inline bool i2c_probe(uint8_t addr) { return I2CBB2::probe(addr); }
 
 void FS2711::start() {
-  state.pdo_num     = 0;
-  state.req_pdo_num = 0xFF; // Disabled
+  memset(&state, 0, sizeof(fs2711_state_t));
+  state.req_pdo_num = 0xFF;
   state.protocol    = 0xFF;
-  memset(state.pdo_type, 0, 7);
-  memset(state.pdo_min_volt, 0, 7);
-  memset(state.pdo_max_volt, 0, 7);
-  memset(state.pdo_max_curr, 0, 7);
 
   probe_pd();
 }
@@ -65,7 +61,12 @@ void FS2711::update_state() {
   uint8_t i      = 0;
   uint8_t pdo_b0 = 0, pdo_b1 = 0, pdo_b2 = 0, pdo_b3 = 0;
 
-  uint8_t state0 = ~i2c_read(FS2711_REG_STATE0);
+  /*
+   * state0 and state1 are both bitmaps.
+   * state0 -> PD:SNK PD:SRC PD:pe_ready PD:send_softreset PD:hardreset PD:disable POM:hardrst_found (VIVO POM RX)
+   * state1 -> scan_done pdo_updated vooc_cmd VIVO_TX VIVO_RX hauwei_comms_failed hauwei_operation_finish
+   */
+  uint8_t state0 = ~i2c_read(FS2711_REG_STATE0); // State0 needs to be read ever if we don't use it
   uint8_t state1 = ~i2c_read(FS2711_REG_STATE1);
 
   state.state = (state1 | ((uint16_t)state0) << 8);
@@ -134,7 +135,7 @@ void FS2711::probe_pd() {
     pdo_b3 = i2c_read(FS2711_REG_PDO_B3 + i * 4);
 
     if (pdo_b0) {
-      if (pdo_b3 & 0xC0) {
+      if ((pdo_b3 & FS2711_REG_PDO_B0) == FS2711_REG_PDO_B0) {
         state.pdo_type[i]     = FS2711_PDO_PPS;
         state.pdo_min_volt[i] = pdo_b1 * 100;
         state.pdo_max_volt[i] = ((pdo_b2 >> 1) + ((pdo_b3 & 0x1) << 7)) * 100;
@@ -291,7 +292,7 @@ void FS2711::negotiate() {
 
 bool FS2711::has_run_selection() { return state.protocol != 0xFF; }
 
-uint16_t FS2711::source_voltage() { state.source_voltage / 1000; }
+uint16_t FS2711::source_voltage() { return state.source_voltage / 1000; }
 
 // FS2711 does current in mV so it needs to be converted to x100 intead of x1000
 uint16_t FS2711::source_currentx100() { return state.source_current / 10; }
