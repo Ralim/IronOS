@@ -307,4 +307,6 @@ uint16_t FS2711::debug_pdo_type(uint8_t pdoid) { return state.pdo_type[pdoid]; }
 bool FS2711::debug_detected_pd() { return (state.proto_exists >> FS2711_PROTOCOL_PD) & 0x00000001; }
 
 uint16_t FS2711::debug_state() { return state.state; }
+
+uint8_t FS2711::debug_protocol() { return i2c_read(FS2711_REG_SELECT_PROTOCOL); }
 #endif

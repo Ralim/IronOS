@@ -31,6 +31,9 @@ OperatingMode showPDDebug(const ButtonState buttons, guiContext *cxt) {
       //     OLED::drawHex(state.req_pdo_num, FontStyle::SMALL, 4);
       OLED::printNumber(state.req_pdo_num > 7 ? 0 : state.req_pdo_num + 1, 1, FontStyle::SMALL, true);
       OLED::print(SmallSymbolSpace, FontStyle::SMALL);
+      uint8_t protocol = FS2711::debug_protocol();
+      OLED::printNumber(protocol, 2, FontStyle::SMALL);
+      OLED::print(SmallSymbolSpace, FontStyle::SMALL);
     } else {
 
       // Print out the Proposed power options one by one

@@ -72,6 +72,8 @@ public:
 
   static uint16_t debug_state();
 
+  static uint8_t debug_protocol();
+
 private:
   // Internal state of IC
   static fs2711_state_t state;
