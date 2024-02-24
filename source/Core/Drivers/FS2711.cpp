@@ -280,7 +280,7 @@ void FS2711::negotiate() {
     }
   }
 
-  if (best_pdoid != 0xFF) {
+  if (best_pdoid != 0xFF && best_pdoid != state.req_pdo_num) {
     if (pps) {
       FS2711::open_pps(best_pdoid, best_voltage, best_current);
     } else {
