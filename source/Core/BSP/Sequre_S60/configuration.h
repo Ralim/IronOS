@@ -175,7 +175,7 @@
 #define POWER_LIMIT_STEPS  5
 #define OP_AMP_GAIN_STAGE  536
 #define TEMP_uV_LOOKUP_S60
-#define USB_PD_VMAX 12 // Maximum voltage for PD to negotiate
+#define USB_PD_VMAX 20 // Maximum voltage for PD to negotiate
 
 #define HARDWARE_MAX_WATTAGE_X10 600
 
