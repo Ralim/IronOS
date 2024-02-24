@@ -94,7 +94,7 @@ void FS2711::update_state() {
       pdo_b3 = i2c_read(FS2711_REG_PDO_B3 + i * 4);
 
       if (pdo_b0) {
-        if (pdo_b3 & 0xC0) {
+        if ((pdo_b3 & FS2711_REG_PDO_B0) == FS2711_REG_PDO_B0) {
           state.pdo_type[i]     = FS2711_PDO_PPS;
           state.pdo_min_volt[i] = pdo_b1 * 100;
           state.pdo_max_volt[i] = ((pdo_b2 >> 1) + ((pdo_b3 & 0x1) << 7)) * 100;
