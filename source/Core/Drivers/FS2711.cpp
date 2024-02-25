@@ -40,8 +40,6 @@ void FS2711::start() {
   enable_protocol(true);
   state.protocol = FS2711_PROTOCOL_PD;
   osDelay(PROTOCOL_TIMEOUT);
-
-  probe_pd();
 }
 
 void FS2711::enable_protocol(bool enable) { i2c_write(FS2711_REG_ENABLE_PROTOCOL, enable ? FS2711_ENABLE : FS2711_DISABLE); }
@@ -202,6 +200,9 @@ void FS2711::negotiate() {
 
   int min_resistance_omhsx10 = 0;
 
+  // Reads the PDO Registers
+  FS2711::probe_pd();
+
   // FS2711 uses mV instead of V
   const uint16_t vmax           = USB_PD_VMAX * 1000;
   const uint8_t  tip_resistance = getTipResistanceX10() + 5;
@@ -278,8 +279,6 @@ uint16_t FS2711::debug_pdo_min_voltage(uint8_t pdoid) { return state.pdo_min_vol
 uint16_t FS2711::debug_pdo_source_current(uint8_t pdoid) { return state.pdo_max_curr[pdoid]; }
 
 uint16_t FS2711::debug_pdo_type(uint8_t pdoid) { return state.pdo_type[pdoid]; }
-
-bool FS2711::debug_detected_pd() { return (state.proto_exists >> FS2711_PROTOCOL_PD) & 0x00000001; }
 
 uint16_t FS2711::debug_state() { return state.state; }
 

@@ -68,8 +68,6 @@ public:
 
   static uint16_t debug_pdo_type(uint8_t pdoid);
 
-  static bool debug_detected_pd();
-
   static uint16_t debug_state();
 
   static uint8_t debug_protocol();
