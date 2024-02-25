@@ -1,3 +1,4 @@
+#include "FS2711.hpp"
 #include "HUB238.hpp"
 #include "OperatingModes.h"
 OperatingMode showWarnings(const ButtonState buttons, guiContext *cxt) {
@@ -81,8 +82,24 @@ OperatingMode showWarnings(const ButtonState buttons, guiContext *cxt) {
       cxt->scratch_state.state1 = 4;
     }
 #else
+#if POW_PD_EXT == 2
+    if (!FS2711::probe()) {
+      if (getSettingValue(SettingsOptions::PDMissingWarningCounter) < 2) {
+        if (warnUser(translatedString(Tr->NoPowerDeliveryMessage), buttons)) {
+          cxt->scratch_state.state1 = 4;
+          nextSettingValue(SettingsOptions::PDMissingWarningCounter);
+          saveSettings();
+        }
+      } else {
+        cxt->scratch_state.state1 = 4;
+      }
+    } else {
+      cxt->scratch_state.state1 = 4;
+    }
+#else
     cxt->scratch_state.state1 = 4;
 #endif /*POW_PD_EXT==1*/
+#endif /*POW_PD_EXT==2*/
 #endif /*POW_PD*/
 
     break;

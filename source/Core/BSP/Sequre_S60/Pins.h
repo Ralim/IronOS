@@ -40,7 +40,6 @@
 
 #endif
 
-
 #ifdef MODEL_S60P
 
 #define KEY_B_Pin             GPIO_PIN_1
