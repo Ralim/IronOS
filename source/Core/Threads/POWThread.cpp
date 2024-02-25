@@ -68,7 +68,7 @@ void startPOWTask(void const *argument __unused) {
     hub238_check_negotiation();
 #endif
 #if POW_PD_EXT == 2
-    //  FS2711::negotiate();
+    FS2711::negotiate();
 #endif
     power_check();
   }
