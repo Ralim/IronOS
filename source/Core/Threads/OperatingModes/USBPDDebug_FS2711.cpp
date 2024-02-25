@@ -19,11 +19,10 @@ OperatingMode showPDDebug(const ButtonState buttons, guiContext *cxt) {
     }
     if (screen == 0) {
       // Print the PD Debug state
-      // OLED::drawHex(state.up, FontStyle::SMALL, 4);
       OLED::print(SmallSymbolState, FontStyle::SMALL);
       OLED::print(SmallSymbolSpace, FontStyle::SMALL);
 
-      fs2711_state_t state = FS2711::get_state();
+      fs2711_state_t state = FS2711::debug_get_state();
 
       OLED::printNumber(state.pdo_num, 1, FontStyle::SMALL);
       OLED::print(SmallSymbolSpace, FontStyle::SMALL);
@@ -31,7 +30,7 @@ OperatingMode showPDDebug(const ButtonState buttons, guiContext *cxt) {
       //     OLED::drawHex(state.req_pdo_num, FontStyle::SMALL, 4);
       OLED::printNumber(state.req_pdo_num > 7 ? 0 : state.req_pdo_num + 1, 1, FontStyle::SMALL, true);
       OLED::print(SmallSymbolSpace, FontStyle::SMALL);
-      uint8_t protocol = FS2711::debug_protocol();
+      uint8_t protocol = FS2711::selected_protocol();
       OLED::printNumber(protocol, 2, FontStyle::SMALL);
       OLED::print(SmallSymbolSpace, FontStyle::SMALL);
     } else {

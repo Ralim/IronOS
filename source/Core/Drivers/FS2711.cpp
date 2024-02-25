@@ -13,7 +13,7 @@
 #error Max PD Voltage must be defined
 #endif
 
-#define PROTOCOL_TIMEOUT 500 // ms
+#define PROTOCOL_TIMEOUT 100 // ms
 
 extern int32_t powerSupplyWattageLimit;
 
@@ -32,15 +32,15 @@ inline bool i2c_probe(uint8_t addr) { return I2CBB2::probe(addr); }
 void FS2711::start() {
   memset(&state, 0, sizeof(fs2711_state_t));
   state.req_pdo_num = 0xFF;
-  state.protocol    = 0xFF;
 
   enable_protocol(false);
   osDelay(PROTOCOL_TIMEOUT);
   select_protocol(FS2711_PROTOCOL_PD);
   enable_protocol(true);
-  state.protocol = FS2711_PROTOCOL_PD;
   osDelay(PROTOCOL_TIMEOUT);
 }
+
+uint8_t FS2711::selected_protocol() { return i2c_read(FS2711_REG_SELECT_PROTOCOL); }
 
 void FS2711::enable_protocol(bool enable) { i2c_write(FS2711_REG_ENABLE_PROTOCOL, enable ? FS2711_ENABLE : FS2711_DISABLE); }
 
@@ -50,48 +50,7 @@ void FS2711::enable_voltage() { i2c_write(FS2711_REG_ENABLE_VOLTAGE, FS2711_ENAB
 
 bool FS2711::probe() { return i2c_probe(FS2711_ADDR); }
 
-void FS2711::system_reset() { i2c_write(FS2711_REG_SYSTEM_RESET, 0x01); }
-
-void FS2711::port_reset() {
-  i2c_write(FS2711_REG_MODE_SET, 0x02);   // Disconnects Rd?
-  i2c_write(FS2711_REG_PORT_RESET, 0x00); // Port Reset
-  osDelay(100);
-  i2c_write(FS2711_REG_MODE_SET, 0x00);
-  i2c_write(FS2711_REG_PORT_RESET, 0x01);
-}
-
-void FS2711::dpdm_reset() { i2c_write(FS2711_REG_DPDM, 0x00); }
-
-void FS2711::start_scan() { i2c_write(FS2711_REG_SCAN_START, 0x01); }
-
-void FS2711::update_state() {
-  uint8_t i      = 0;
-  uint8_t pdo_b0 = 0, pdo_b1 = 0, pdo_b2 = 0, pdo_b3 = 0;
-
-  /*
-   * state0 and state1 are both bitmaps.
-   * state0 -> PD:SNK PD:SRC PD:pe_ready PD:send_softreset PD:hardreset PD:disable POM:hardrst_found (VIVO POM RX)
-   * state1 -> scan_done pdo_updated vooc_cmd VIVO_TX VIVO_RX hauwei_comms_failed hauwei_operation_finish
-   */
-  uint8_t state0 = ~i2c_read(FS2711_REG_STATE0); // State0 needs to be read ever if we don't use it
-  uint8_t state1 = ~i2c_read(FS2711_REG_STATE1);
-
-  state.state = (state1 | ((uint16_t)state0) << 8);
-
-  if (state1 & 0x1) {
-    state.proto_exists = i2c_read(FS2711_REG_PROTOCOL_EXISTS);
-    state.proto_exists |= i2c_read(FS2711_REG_PROTOCOL_EXISTS + 1) << 8;
-    state.proto_exists |= i2c_read(FS2711_REG_PROTOCOL_EXISTS + 2) << 16;
-
-    state.qc_max_volt = i2c_read(FS2711_PROTOCOL_QC_MAX_VOLT);
-  }
-
-  if (state1 & 0x2) {
-    FS2711::probe_pd();
-  }
-}
-
-void FS2711::probe_pd() {
+void FS2711::pdo_update() {
   uint8_t pdo_b0 = 0, pdo_b1 = 0, pdo_b2 = 0, pdo_b3 = 0;
 
   state.pdo_num = 0;
@@ -123,8 +82,6 @@ void FS2711::probe_pd() {
   }
 }
 
-fs2711_state_t FS2711::get_state() { return state; }
-
 bool FS2711::open_pps(uint8_t pdoid, uint16_t volt, uint16_t max_curr) {
   uint16_t wr;
 
@@ -139,25 +96,23 @@ bool FS2711::open_pps(uint8_t pdoid, uint16_t volt, uint16_t max_curr) {
   if (state.pdo_type[pdoid] != FS2711_PDO_PPS)
     return false;
 
-  if (state.protocol == FS2711_PROTOCOL_PD) {
+  if (FS2711::selected_protocol() == FS2711_PROTOCOL_PD) {
     select_protocol(FS2711_PROTOCOL_PPS);
     enable_protocol(true);
-    osDelay(PROTOCOL_TIMEOUT);
-    state.protocol = FS2711_PROTOCOL_PPS;
   }
 
-  if (state.protocol != FS2711_PROTOCOL_PPS) {
+  if (FS2711::selected_protocol() != FS2711_PROTOCOL_PPS) {
     return false;
   }
 
-  i2c_write(FS2711_PROTOCOL_PD_PDOID, pdoid + (pdoid << 4));
+  i2c_write(FS2711_REG_PDO_IDX, pdoid + (pdoid << 4));
   wr = (volt - state.pdo_min_volt[pdoid]) / 20;
   i2c_write(FS2711_PROTOCOL_PPS_CURRENT, max_curr / 50);
 
-  i2c_write(0xF4, wr & 0xFF);
-  i2c_write(0xF5, (wr >> 8) & 0xFF);
-  i2c_write(0xF6, wr & 0xFF);
-  i2c_write(0xF7, (wr >> 8) & 0xFF);
+  i2c_write(FS2711_REG_VOLT_CFG_B0, wr & 0xFF);
+  i2c_write(FS2711_REG_VOLT_CFG_B1, (wr >> 8) & 0xFF);
+  i2c_write(FS2711_REG_VOLT_CFG_B2, wr & 0xFF);
+  i2c_write(FS2711_REG_VOLT_CFG_B3, (wr >> 8) & 0xFF);
 
   enable_voltage();
 
@@ -168,25 +123,25 @@ bool FS2711::open_pps(uint8_t pdoid, uint16_t volt, uint16_t max_curr) {
   return true;
 }
 
-bool FS2711::open_pd(uint8_t PDOID) {
-  if (PDOID >= state.pdo_num) {
+bool FS2711::open_pd(uint8_t pdoid) {
+  if (pdoid >= state.pdo_num) {
     return false;
   }
-  if (state.pdo_type[PDOID] != FS2711_PDO_FIX) {
-    return false;
-  }
-
-  if (state.protocol != FS2711_PROTOCOL_PD) {
+  if (state.pdo_type[pdoid] != FS2711_PDO_FIX) {
     return false;
   }
 
-  i2c_write(FS2711_PROTOCOL_PD_PDOID, PDOID + (PDOID << 4));
+  if (FS2711::selected_protocol() != FS2711_PROTOCOL_PD) {
+    return false;
+  }
+
+  i2c_write(FS2711_REG_PDO_IDX, pdoid + (pdoid << 4));
 
   enable_voltage();
 
-  state.source_voltage = state.pdo_max_volt[PDOID];
-  state.source_current = state.pdo_max_curr[PDOID];
-  state.req_pdo_num    = PDOID;
+  state.source_voltage = state.pdo_max_volt[pdoid];
+  state.source_current = state.pdo_max_curr[pdoid];
+  state.req_pdo_num    = pdoid;
 
   powerSupplyWattageLimit = ((state.source_voltage * state.source_current) / 1000000) - 2;
   return true;
@@ -200,14 +155,13 @@ void FS2711::negotiate() {
 
   int min_resistance_omhsx10 = 0;
 
-  // Reads the PDO Registers
-  FS2711::probe_pd();
-
   // FS2711 uses mV instead of V
   const uint16_t vmax           = USB_PD_VMAX * 1000;
   const uint8_t  tip_resistance = getTipResistanceX10() + 5;
 
   uint16_t pdo_min_mv = 0, pdo_max_mv = 0, pdo_max_curr = 0, pdo_type = 0;
+
+  FS2711::pdo_update();
 
   for (int i = 0; state.pdo_num > i; i++) {
     pdo_min_mv   = state.pdo_min_volt[i];
@@ -265,7 +219,7 @@ void FS2711::negotiate() {
   }
 }
 
-bool FS2711::has_run_selection() { return state.protocol != 0xFF; }
+bool FS2711::has_run_selection() { return state.req_pdo_num != 0xFF; }
 
 uint16_t FS2711::source_voltage() { return state.source_voltage / 1000; }
 
@@ -280,7 +234,6 @@ uint16_t FS2711::debug_pdo_source_current(uint8_t pdoid) { return state.pdo_max_
 
 uint16_t FS2711::debug_pdo_type(uint8_t pdoid) { return state.pdo_type[pdoid]; }
 
-uint16_t FS2711::debug_state() { return state.state; }
+fs2711_state_t FS2711::debug_get_state() { return state; }
 
-uint8_t FS2711::debug_protocol() { return i2c_read(FS2711_REG_SELECT_PROTOCOL); }
 #endif
