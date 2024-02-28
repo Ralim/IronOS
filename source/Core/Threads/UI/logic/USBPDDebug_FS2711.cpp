@@ -9,13 +9,13 @@ OperatingMode showPDDebug(const ButtonState buttons, guiContext *cxt) {
   // Print out the USB-PD state
   // Basically this is like the Debug menu, but instead we want to print out the PD status
   uint16_t *screen = &(cxt->scratch_state.state1);
- 
+
   if (*screen > 7) {
     *screen = 0;
   }
   if (*screen == 0) {
     // Print the PD Debug state
-        fs2711_state_t state = FS2711::debug_get_state();
+    fs2711_state_t state = FS2711::debug_get_state();
 
     ui_draw_usb_pd_debug_state(0, state.pdo_num);
   } else {
