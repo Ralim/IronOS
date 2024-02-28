@@ -1,4 +1,6 @@
 #include "OperatingModes.h"
+#include "ui_drawing.hpp"
+
 OperatingMode gui_solderingTempAdjust(const ButtonState buttonIn, guiContext *cxt) {
 
   currentTempTargetDegC              = 0; // Turn off heater while adjusting temp
@@ -14,8 +16,6 @@ OperatingMode gui_solderingTempAdjust(const ButtonState buttonIn, guiContext *cx
       (*waitForRelease)++;
     }
   }
-
-  OLED::setCursor(0, 0);
 
   int16_t delta = 0;
   switch (buttons) {
@@ -81,21 +81,7 @@ OperatingMode gui_solderingTempAdjust(const ButtonState buttonIn, guiContext *cx
     }
     setSettingValue(SettingsOptions::SolderingTemp, (uint16_t)newTemp);
   }
-  if (OLED::getRotation()) {
-    OLED::print(getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled) ? LargeSymbolPlus : LargeSymbolMinus, FontStyle::LARGE);
-  } else {
-    OLED::print(getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled) ? LargeSymbolMinus : LargeSymbolPlus, FontStyle::LARGE);
-  }
-
-  OLED::print(LargeSymbolSpace, FontStyle::LARGE);
-  OLED::printNumber(getSettingValue(SettingsOptions::SolderingTemp), 3, FontStyle::LARGE);
-  OLED::printSymbolDeg(FontStyle::EXTRAS);
-  OLED::print(LargeSymbolSpace, FontStyle::LARGE);
-  if (OLED::getRotation()) {
-    OLED::print(getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled) ? LargeSymbolMinus : LargeSymbolPlus, FontStyle::LARGE);
-  } else {
-    OLED::print(getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled) ? LargeSymbolPlus : LargeSymbolMinus, FontStyle::LARGE);
-  }
+  ui_draw_temperature_change();
 
   if (xTaskGetTickCount() - lastButtonTime > (TICKS_SECOND * 3)) {
     saveSettings();

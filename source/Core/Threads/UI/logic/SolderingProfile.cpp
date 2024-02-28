@@ -126,61 +126,8 @@ OperatingMode gui_solderingProfileMode(const ButtonState buttons, guiContext *cx
 
   // Draw in the screen details
   if (getSettingValue(SettingsOptions::DetailedSoldering)) {
-    // print temperature
-    if (OLED::getRotation()) {
-      OLED::setCursor(48, 0);
-    } else {
-      OLED::setCursor(0, 0);
-    }
-
-    OLED::printNumber(tipTemp, 3, FontStyle::SMALL);
-    OLED::print(SmallSymbolSlash, FontStyle::SMALL);
-    OLED::printNumber(profileCurrentTargetTemp, 3, FontStyle::SMALL);
-
-    if (getSettingValue(SettingsOptions::TemperatureInF)) {
-      OLED::print(SmallSymbolDegF, FontStyle::SMALL);
-    } else {
-      OLED::print(SmallSymbolDegC, FontStyle::SMALL);
-    }
-
-    // print phase
-    if (cxt->scratch_state.state1 > 0 && cxt->scratch_state.state1 <= getSettingValue(SettingsOptions::ProfilePhases)) {
-      if (OLED::getRotation()) {
-        OLED::setCursor(36, 0);
-      } else {
-        OLED::setCursor(55, 0);
-      }
-      OLED::printNumber(cxt->scratch_state.state1, 1, FontStyle::SMALL);
-    }
-
-    // print time progress / preheat / cooldown
-    if (OLED::getRotation()) {
-      OLED::setCursor(42, 8);
-    } else {
-      OLED::setCursor(0, 8);
-    }
-
-    if (cxt->scratch_state.state1 == 0) {
-      OLED::print(translatedString(Tr->ProfilePreheatString), FontStyle::SMALL);
-    } else if (cxt->scratch_state.state1 > getSettingValue(SettingsOptions::ProfilePhases)) {
-      OLED::print(translatedString(Tr->ProfileCooldownString), FontStyle::SMALL);
-    } else {
-      OLED::printNumber(phaseElapsedSeconds / 60, 1, FontStyle::SMALL);
-      OLED::print(SmallSymbolColon, FontStyle::SMALL);
-      OLED::printNumber(phaseElapsedSeconds % 60, 2, FontStyle::SMALL, false);
-
-      OLED::print(SmallSymbolSlash, FontStyle::SMALL);
-
-      // blink if we can't keep up with the time goal
-      if (phaseElapsedSeconds < cxt->scratch_state.state2 + 2 || (xTaskGetTickCount() / TICKS_SECOND) % 2 == 0) {
-        OLED::printNumber(cxt->scratch_state.state2 / 60, 1, FontStyle::SMALL);
-        OLED::print(SmallSymbolColon, FontStyle::SMALL);
-        OLED::printNumber(cxt->scratch_state.state2 % 60, 2, FontStyle::SMALL, false);
-      }
-    }
-
-    ui_draw_soldering_power_status();
-
+    ui_draw_soldering_profile_advanced(tipTemp, profileCurrentTargetTemp, phaseElapsedSeconds, cxt->scratch_state.state1,cxt->scratch_state.state2);
+    ui_draw_soldering_power_status(false);
   } else {
     ui_draw_soldering_basic_status(false);
   }
