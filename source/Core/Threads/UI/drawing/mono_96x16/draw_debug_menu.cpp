@@ -1,14 +1,17 @@
 #include "OperatingModes.h"
+#include "TipThermoModel.h"
+#include "main.hpp"
+#include "ui_drawing.hpp"
 extern osThreadId GUITaskHandle;
 extern osThreadId MOVTaskHandle;
 extern osThreadId PIDTaskHandle;
 
-OperatingMode showDebugMenu(const ButtonState buttons, guiContext *cxt) {
+void ui_draw_debug_menu(const uint8_t item_number) {
   OLED::setCursor(0, 0);                                   // Position the cursor at the 0,0 (top left)
   OLED::print(SmallSymbolVersionNumber, FontStyle::SMALL); // Print version number
   OLED::setCursor(0, 8);                                   // second line
-  OLED::print(DebugMenu[cxt->scratch_state.state1], FontStyle::SMALL);
-  switch (cxt->scratch_state.state1) {
+  OLED::print(DebugMenu[item_number], FontStyle::SMALL);
+  switch (item_number) {
   case 0: // Build Date
     break;
   case 1: // Device ID
@@ -18,7 +21,7 @@ OperatingMode showDebugMenu(const ButtonState buttons, guiContext *cxt) {
     // If device has validation code; then we want to take over both lines of the screen
     OLED::clearScreen();   // Ensure the buffer starts clean
     OLED::setCursor(0, 0); // Position the cursor at the 0,0 (top left)
-    OLED::print(DebugMenu[cxt->scratch_state.state1], FontStyle::SMALL);
+    OLED::print(DebugMenu[item_number], FontStyle::SMALL);
     OLED::drawHex(getDeviceValidation(), FontStyle::SMALL, 8);
     OLED::setCursor(0, 8); // second line
 #endif
@@ -86,17 +89,4 @@ OperatingMode showDebugMenu(const ButtonState buttons, guiContext *cxt) {
   default:
     break;
   }
-
-  if (buttons == BUTTON_B_SHORT) {
-    cxt->transitionMode = TransitionAnimation::Down;
-    return OperatingMode::HomeScreen;
-  } else if (buttons == BUTTON_F_SHORT) {
-    cxt->scratch_state.state1++;
-#ifdef HALL_SENSOR
-    cxt->scratch_state.state1 = cxt->scratch_state.state1 % 17;
-#else
-    cxt->scratch_state.state1 = cxt->scratch_state.state1 % 16;
-#endif
-  }
-  return OperatingMode::DebugMenuReadout; // Stay in debug menu
 }

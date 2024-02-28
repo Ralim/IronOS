@@ -1,6 +1,7 @@
 
 #include "OperatingModes.h"
 #include "SolderingCommon.h"
+#include "ui_drawing.hpp"
 // State 1 = button locking
 // State 2 = boost mode
 // State 3 = buzzer timer
@@ -107,44 +108,11 @@ OperatingMode gui_solderingMode(const ButtonState buttons, guiContext *cxt) {
 
   // Draw in the screen details
   if (getSettingValue(SettingsOptions::DetailedSoldering)) {
-    if (OLED::getRotation()) {
-      OLED::setCursor(50, 0);
-    } else {
-      OLED::setCursor(-1, 0);
-    }
 
-    gui_drawTipTemp(true, FontStyle::LARGE);
-
-    if (cxt->scratch_state.state2) { // Boost mode is on
-      if (OLED::getRotation()) {
-        OLED::setCursor(34, 0);
-      } else {
-        OLED::setCursor(50, 0);
-      }
-      OLED::print(LargeSymbolPlus, FontStyle::LARGE);
-    } else {
-#ifndef NO_SLEEP_MODE
-      if (getSettingValue(SettingsOptions::Sensitivity) && getSettingValue(SettingsOptions::SleepTime)) {
-        if (OLED::getRotation()) {
-          OLED::setCursor(32, 0);
-        } else {
-          OLED::setCursor(47, 0);
-        }
-        printCountdownUntilSleep(getSleepTimeout());
-      }
-#endif
-      if (OLED::getRotation()) {
-        OLED::setCursor(32, 8);
-      } else {
-        OLED::setCursor(47, 8);
-      }
-      OLED::print(PowerSourceNames[getPowerSourceNumber()], FontStyle::SMALL, 2);
-    }
-
-    detailedPowerStatus();
+    ui_draw_soldering_power_status(cxt->scratch_state.state2);
 
   } else {
-    basicSolderingStatus(cxt->scratch_state.state2);
+    ui_draw_soldering_basic_status(cxt->scratch_state.state2);
   }
   // Check if we should bail due to undervoltage for example
   if (checkExitSoldering()) {

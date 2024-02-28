@@ -1,6 +1,6 @@
-
-
 #include "OperatingModes.h"
+#include "ui_drawing.hpp"
+
 OperatingMode performCJCC(const ButtonState buttons, guiContext *cxt) {
   // Calibrate Cold Junction Compensation directly at boot, before internal components get warm.
 
@@ -19,14 +19,7 @@ OperatingMode performCJCC(const ButtonState buttons, guiContext *cxt) {
         cxt->scratch_state.state1++;
         cxt->scratch_state.state4 = xTaskGetTickCount();
       }
-      OLED::setCursor(0, 0);
-      OLED::print(translatedString(Tr->CJCCalibrating), FontStyle::SMALL);
-      OLED::setCursor(0, 8);
-      OLED::print(SmallSymbolDot, FontStyle::SMALL);
-      for (uint8_t x = 0; x < (cxt->scratch_state.state1 / 4); x++) {
-        OLED::print(SmallSymbolDot, FontStyle::SMALL);
-      }
-
+      ui_draw_cjc_sampling(cxt->scratch_state.state1 / 4);
       return OperatingMode::CJCCalibration;
     }
 

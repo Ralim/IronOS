@@ -1,6 +1,6 @@
-#include "OperatingModeUtilities.h"
+#include "ui_drawing.hpp"
 
-void gui_drawBatteryIcon(void) {
+void ui_draw_power_source_icon(void) {
 #if defined(POW_PD) || defined(POW_QC) || defined(POW_PD_EXT)
   if (!getIsPoweredByDCIN()) {
     // On non-DC inputs we replace this symbol with the voltage we are operating on
