@@ -34,7 +34,7 @@
 #endif
 
 extern TickType_t    lastMovementTime;
-extern OperatingMode currentMode;
+extern OperatingMode currentOperatingMode;
 
 int ble_char_read_status_callback(struct bt_conn *conn, const struct bt_gatt_attr *attr, void *buf, u16_t len, u16_t offset) {
   if (attr == NULL || attr->uuid == NULL) {
@@ -123,7 +123,7 @@ int ble_char_read_status_callback(struct bt_conn *conn, const struct bt_gatt_att
     break;
   case 13:
     // Operating mode
-    temp = currentMode;
+    temp = (uint32_t)currentOperatingMode;
     memcpy(buf, &temp, sizeof(temp));
     return sizeof(temp);
     break;
@@ -162,7 +162,7 @@ int ble_char_read_bulk_value_callback(struct bt_conn *conn, const struct bt_gatt
           TipThermoModel::getTipMaxInC(),                                      // 9  - max temp
           TipThermoModel::convertTipRawADCTouV(getTipRawTemp(0), true),        // 10 - Raw tip in μV
           abs(getRawHallEffect()),                                             // 11 - hall sensor
-          currentMode,                                                         // 12 - Operating mode
+          (uint32_t)currentOperatingMode,                                      // 12 - Operating mode
           x10WattHistory.average(),                                            // 13 - Estimated Wattage *10
       };
       int lenToCopy = sizeof(bulkData) - offset;
@@ -203,6 +203,8 @@ int ble_char_read_bulk_value_callback(struct bt_conn *conn, const struct bt_gatt
       memcpy(buf, &id, sizeof(id));
       return sizeof(id);
     }
+  default:
+    break;
   }
   return 0;
 }

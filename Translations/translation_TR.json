@@ -4,7 +4,7 @@
     "tempUnitFahrenheit": false,
     "messagesWarn": {
         "CalibrationDone": {
-            "message": "Calibration\ndone!"
+            "message": "Kalibrasyon\ntamam!"
         },
         "ResetOKMessage": {
             "message": "Sıfırlama Tamam"
@@ -52,16 +52,13 @@
             "message": "Giriş V: \n"
         },
         "SleepingSimpleString": {
-            "message": "Zzz"
+            "message": "Zzz "
         },
         "SleepingAdvancedString": {
             "message": "Bekleme Modu...\n"
         },
         "SleepingTipAdvancedString": {
             "message": "Uç: \n"
-        },
-        "OffString": {
-            "message": "Kapalı"
         },
         "ProfilePreheatString": {
             "message": "Preheat\n"
@@ -80,21 +77,18 @@
         "SettingRightChar": "R",
         "SettingLeftChar": "L",
         "SettingAutoChar": "O",
-        "SettingOffChar": "K",
         "SettingSlowChar": "Y",
         "SettingMediumChar": "O",
         "SettingFastChar": "H",
-        "SettingStartNoneChar": "K",
         "SettingStartSolderingChar": "L",
         "SettingStartSleepChar": "U",
         "SettingStartSleepOffChar": "S",
-        "SettingLockDisableChar": "K",
         "SettingLockBoostChar": "B",
         "SettingLockFullChar": "F"
     },
     "menuGroups": {
         "PowerMenu": {
-            "displayText": "Power\nsettings",
+            "displayText": "Güç\nAyarları",
             "description": ""
         },
         "SolderingMenu": {
@@ -124,8 +118,8 @@
             "description": "Minimum allowed voltage per battery cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
         },
         "QCMaxVoltage": {
-            "displayText": "QC\nvoltage",
-            "description": "Max QC voltage the iron should negotiate for"
+            "displayText": "QC\nvoltajı",
+            "description": "Max istenecek QC voltajı"
         },
         "PDNegTimeout": {
             "displayText": "PD\ntimeout",
@@ -141,19 +135,19 @@
         },
         "AutoStart": {
             "displayText": "OTOBAŞ\n",
-            "description": "Güç verildiğinde otomatik olarak lehimleme modunda başlat. (K=Kapalı | L=Lehimleme Modu | U=Uyku Modu | S=Uyku Modu Oda Sıcaklığı)"
+            "description": "Güç verildiğinde otomatik olarak lehimleme modunda başlat. (L=Lehimleme Modu | U=Uyku Modu | S=Uyku Modu Oda Sıcaklığı)"
         },
         "TempChangeShortStep": {
-            "displayText": "Temp change\nshort",
+            "displayText": "Sıcaklık değişimi\nkısa",
             "description": "Kısa basışlardaki sıcaklık derecesi atlama oranı"
         },
         "TempChangeLongStep": {
-            "displayText": "Temp change\nlong",
+            "displayText": "Sıcaklık değişimi\nuzun",
             "description": "Uzun başışlardaki sıcaklık derecesi atlama oranı"
         },
         "LockingMode": {
             "displayText": "Allow locking\nbuttons",
-            "description": "While soldering, hold down both buttons to toggle locking them (K=Kapalı | B=boost mode only | F=full locking)"
+            "description": "While soldering, hold down both buttons to toggle locking them (B=boost mode only | F=full locking)"
         },
         "ProfilePhases": {
             "displayText": "Profile\nPhases",
@@ -213,7 +207,7 @@
         },
         "MotionSensitivity": {
             "displayText": "HARHAS\n",
-            "description": "Hareket Hassasiyeti (0=Kapalı | 1=En az duyarlı | ... | 9=En duyarlı)"
+            "description": "Hareket Hassasiyeti (1=En az duyarlı | ... | 9=En duyarlı)"
         },
         "SleepTemperature": {
             "displayText": "BKSC\n",
@@ -229,7 +223,7 @@
         },
         "HallEffSensitivity": {
             "displayText": "Hall sensor\nsensitivity",
-            "description": "Sensitivity to magnets (0=Kapalı | 1=En az duyarlı | ... | 9=En duyarlı)"
+            "description": "Sensitivity to magnets (1=En az duyarlı | ... | 9=En duyarlı)"
         },
         "TemperatureUnit": {
             "displayText": "SCKBRM\n",
@@ -253,15 +247,15 @@
         },
         "AnimSpeed": {
             "displayText": "Anim.\nspeed",
-            "description": "Pace of icon animations in menu (K=Kapalı | Y=Yavaş | O=Orta | H=Hızlı)"
+            "description": "Pace of icon animations in menu (Y=Yavaş | O=Orta | H=Hızlı)"
         },
         "AnimLoop": {
             "displayText": "Anim.\nloop",
             "description": "Loop icon animations in main menu"
         },
         "Brightness": {
-            "displayText": "Screen\nbrightness",
-            "description": "Adjust the OLED screen brightness"
+            "displayText": "Ekran\nparlaklığı",
+            "description": "OLED ekran parlaklığını ayarlar"
         },
         "ColourInversion": {
             "displayText": "Invert\nscreen",
@@ -269,7 +263,7 @@
         },
         "LOGOTime": {
             "displayText": "Boot logo\nduration",
-            "description": "Set boot logo duration (s=seconds)"
+            "description": "Boot logo süresi (s=seconds)"
         },
         "AdvancedIdle": {
             "displayText": "AYRBİL\n",

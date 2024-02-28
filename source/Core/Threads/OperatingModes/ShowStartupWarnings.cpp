@@ -1,56 +1,112 @@
+#include "FS2711.hpp"
 #include "HUB238.hpp"
 #include "OperatingModes.h"
-void showWarnings(void) {
+OperatingMode showWarnings(const ButtonState buttons, guiContext *cxt) {
   // Display alert if settings were reset
-  if (settingsWereReset) {
-    warnUser(translatedString(Tr->SettingsResetMessage), 10 * TICKS_SECOND);
-  }
-#ifdef DEVICE_HAS_VALIDATION_SUPPORT
-  if (getDeviceValidationStatus()) {
-    // Warn user this device might be counterfeit
-    warnUser(translatedString(Tr->DeviceFailedValidationWarning), 10 * TICKS_SECOND);
-  }
-#endif
 
-#ifndef NO_WARN_MISSING
-  // We also want to alert if accel or pd is not detected / not responding
-  // In this case though, we dont want to nag the user _too_ much
-  // So only show first 2 times
-  while (DetectedAccelerometerVersion == AccelType::Scanning) {
-    osDelay(5);
-    resetWatchdog();
-  }
-  // Display alert if accelerometer is not detected
-  if (DetectedAccelerometerVersion == AccelType::None) {
-    if (getSettingValue(SettingsOptions::AccelMissingWarningCounter) < 2) {
-      nextSettingValue(SettingsOptions::AccelMissingWarningCounter);
-      saveSettings();
-      warnUser(translatedString(Tr->NoAccelerometerMessage), 10 * TICKS_SECOND);
+  switch (cxt->scratch_state.state1) {
+  case 0: // Settings reset warning
+    if (settingsWereReset) {
+      if (warnUser(translatedString(Tr->SettingsResetMessage), buttons)) {
+        settingsWereReset         = false;
+        cxt->scratch_state.state1 = 1;
+      }
+    } else {
+      cxt->scratch_state.state1 = 1;
     }
-  }
+    break;
+  case 1: // Device validations
+#ifdef DEVICE_HAS_VALIDATION_SUPPORT
+    if (getDeviceValidationStatus()) {
+      // Warn user this device might be counterfeit
+      if (warnUser(translatedString(Tr->DeviceFailedValidationWarning), buttons)) {
+        cxt->scratch_state.state1 = 2;
+      }
+    } else {
+      cxt->scratch_state.state1 = 2;
+    }
+#else
+    cxt->scratch_state.state1 = 2;
+#endif
+    break;
+  case 2: // Accelerometer detection
+    if (DetectedAccelerometerVersion == AccelType::Scanning) {
+      break;
+    }
+    // Display alert if accelerometer is not detected
+    if (DetectedAccelerometerVersion == AccelType::None) {
+      if (getSettingValue(SettingsOptions::AccelMissingWarningCounter) < 2) {
+
+        if (warnUser(translatedString(Tr->NoAccelerometerMessage), buttons)) {
+          cxt->scratch_state.state1 = 3;
+          nextSettingValue(SettingsOptions::AccelMissingWarningCounter);
+          saveSettings();
+        }
+      } else {
+        cxt->scratch_state.state1 = 3;
+      }
+    } else {
+      cxt->scratch_state.state1 = 3;
+    }
+    break;
+  case 3:
+
 #ifdef POW_PD
-  // We expect pd to be present
-  resetWatchdog();
-  if (!USBPowerDelivery::fusbPresent()) {
-    if (getSettingValue(SettingsOptions::PDMissingWarningCounter) < 2) {
-      nextSettingValue(SettingsOptions::PDMissingWarningCounter);
-      saveSettings();
-      warnUser(translatedString(Tr->NoPowerDeliveryMessage), 10 * TICKS_SECOND);
+    // We expect pd to be present
+    if (!USBPowerDelivery::fusbPresent()) {
+      if (getSettingValue(SettingsOptions::PDMissingWarningCounter) < 2) {
+        if (warnUser(translatedString(Tr->NoPowerDeliveryMessage), buttons)) {
+          nextSettingValue(SettingsOptions::PDMissingWarningCounter);
+          saveSettings();
+          cxt->scratch_state.state1 = 4;
+        }
+      } else {
+        cxt->scratch_state.state1 = 4;
+      }
+    } else {
+      cxt->scratch_state.state1 = 4;
     }
-  }
-#endif /*POW_PD*/
+#else
 #if POW_PD_EXT == 1
-  if (!hub238_probe()) {
-    if (getSettingValue(SettingsOptions::PDMissingWarningCounter) < 2) {
-      nextSettingValue(SettingsOptions::PDMissingWarningCounter);
-      saveSettings();
-      warnUser(translatedString(Tr->NoPowerDeliveryMessage), 10 * TICKS_SECOND);
+    if (!hub238_probe()) {
+      if (getSettingValue(SettingsOptions::PDMissingWarningCounter) < 2) {
+        if (warnUser(translatedString(Tr->NoPowerDeliveryMessage), buttons)) {
+          cxt->scratch_state.state1 = 4;
+          nextSettingValue(SettingsOptions::PDMissingWarningCounter);
+          saveSettings();
+        }
+      } else {
+        cxt->scratch_state.state1 = 4;
+      }
+    } else {
+      cxt->scratch_state.state1 = 4;
     }
-  }
+#else
+#if POW_PD_EXT == 2
+    if (!FS2711::probe()) {
+      if (getSettingValue(SettingsOptions::PDMissingWarningCounter) < 2) {
+        if (warnUser(translatedString(Tr->NoPowerDeliveryMessage), buttons)) {
+          cxt->scratch_state.state1 = 4;
+          nextSettingValue(SettingsOptions::PDMissingWarningCounter);
+          saveSettings();
+        }
+      } else {
+        cxt->scratch_state.state1 = 4;
+      }
+    } else {
+      cxt->scratch_state.state1 = 4;
+    }
+#else
+    cxt->scratch_state.state1 = 4;
 #endif /*POW_PD_EXT==1*/
-       // If tip looks to be shorted, yell at user and dont auto dismiss
-  if (isTipShorted()) {
-    warnUser(translatedString(Tr->WarningTipShorted), portMAX_DELAY);
+#endif /*POW_PD_EXT==2*/
+#endif /*POW_PD*/
+
+    break;
+  default:
+    // We are off the end, warnings done
+    return OperatingMode::StartupLogo;
   }
-#endif /*NO_WARN_MISSING*/
+
+  return OperatingMode::StartupWarnings; // Stay in warnings
 }

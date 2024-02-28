@@ -52,16 +52,13 @@
             "message": "Сілкаванне В: \n"
         },
         "SleepingSimpleString": {
-            "message": "Zzz"
+            "message": "Zzz "
         },
         "SleepingAdvancedString": {
             "message": "Чаканне...\n"
         },
         "SleepingTipAdvancedString": {
             "message": "Джала: \n"
-        },
-        "OffString": {
-            "message": "Выкл."
         },
         "ProfilePreheatString": {
             "message": "Разагрэць\n"
@@ -80,15 +77,12 @@
         "SettingRightChar": "П",
         "SettingLeftChar": "Л",
         "SettingAutoChar": "А",
-        "SettingOffChar": "O",
         "SettingSlowChar": "М",
         "SettingMediumChar": "С",
         "SettingFastChar": "Х",
-        "SettingStartNoneChar": "В",
         "SettingStartSolderingChar": "П",
         "SettingStartSleepChar": "Ч",
         "SettingStartSleepOffChar": "К",
-        "SettingLockDisableChar": "А",
         "SettingLockBoostChar": "Т",
         "SettingLockFullChar": "П"
     },
@@ -141,7 +135,7 @@
         },
         "AutoStart": {
             "displayText": "Аўта\nстарт",
-            "description": "Рэжым, у якім запускаецца паяльнік пры падачы сілкавання (В=Выкл. | П=Пайка | Ч=Чаканне | К=Чаканне пры комн. тэмп.)"
+            "description": "Рэжым, у якім запускаецца паяльнік пры падачы сілкавання (П=Пайка | Ч=Чаканне | К=Чаканне пры комн. тэмп.)"
         },
         "TempChangeShortStep": {
             "displayText": "Крок тэмп.\nкар. нац.",
@@ -153,7 +147,7 @@
         },
         "LockingMode": {
             "displayText": "Дазволіць\nблок. кнопак",
-            "description": "Пры рабоце падоўжаны націск дзьвух кнопак блакуе іх (А=Адключана | Т=Толькі турба | П=Поўная блакіроўка)"
+            "description": "Пры рабоце падоўжаны націск дзьвух кнопак блакуе іх (Т=Толькі турба | П=Поўная блакіроўка)"
         },
         "ProfilePhases": {
             "displayText": "Profile\nPhases",
@@ -213,7 +207,7 @@
         },
         "MotionSensitivity": {
             "displayText": "Адчувальнасць\nакселерометра",
-            "description": "Адчувальнасць акселерометра (0=Выкл. | 1=Мін. | ... | 9=Макс.)"
+            "description": "Адчувальнасць акселерометра (1=Мін. | ... | 9=Макс.)"
         },
         "SleepTemperature": {
             "displayText": "Тэмп.\nчакання",
@@ -229,7 +223,7 @@
         },
         "HallEffSensitivity": {
             "displayText": "Эфект Хола\nадчувальнасць",
-            "description": "Узровень адчувальнасці датчыка хола ў рэжыме сну (0=Выкл. | 1=Мін. | ... | 9=Макс.)"
+            "description": "Узровень адчувальнасці датчыка хола ў рэжыме сну (1=Мін. | ... | 9=Макс.)"
         },
         "TemperatureUnit": {
             "displayText": "Адзінкі\nтэмпературы",
@@ -253,7 +247,7 @@
         },
         "AnimSpeed": {
             "displayText": "Хуткасць\nанімацыі",
-            "description": "Хуткасць анімацыі гузікаў у галоўным меню (Мілісекунды) (А=Адключана | Н=Нізкая | С=Сярэдняя | В=Высокая)"
+            "description": "Хуткасць анімацыі гузікаў у галоўным меню (Мілісекунды) (Н=Нізкая | С=Сярэдняя | В=Высокая)"
         },
         "AnimLoop": {
             "displayText": "Зацыкленая\nанімацыя",

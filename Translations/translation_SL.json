@@ -52,16 +52,13 @@
             "message": "Vhodna U: \n"
         },
         "SleepingSimpleString": {
-            "message": "Zzz"
+            "message": "Zzz "
         },
         "SleepingAdvancedString": {
             "message": "Spim...\n"
         },
         "SleepingTipAdvancedString": {
             "message": "Konica \n"
-        },
-        "OffString": {
-            "message": "Off"
         },
         "ProfilePreheatString": {
             "message": "Preheat\n"
@@ -80,15 +77,12 @@
         "SettingRightChar": "D",
         "SettingLeftChar": "L",
         "SettingAutoChar": "S",
-        "SettingOffChar": "U",
         "SettingSlowChar": "P",
         "SettingMediumChar": "M",
         "SettingFastChar": "H",
-        "SettingStartNoneChar": "U",
         "SettingStartSolderingChar": "S",
         "SettingStartSleepChar": "Z",
         "SettingStartSleepOffChar": "V",
-        "SettingLockDisableChar": "O",
         "SettingLockBoostChar": "L",
         "SettingLockFullChar": "P"
     },
@@ -141,7 +135,7 @@
         },
         "AutoStart": {
             "displayText": "Samodejni\nzagon",
-            "description": "Samodejno gretje konice ob vklopu (U=ugasnjeno | S=spajkanje | Z=spanje | V=spanje na sobni temperaturi)"
+            "description": "Samodejno gretje konice ob vklopu (S=spajkanje | Z=spanje | V=spanje na sobni temperaturi)"
         },
         "TempChangeShortStep": {
             "displayText": "Kratka sprememba\ntemperature?",
@@ -153,7 +147,7 @@
         },
         "LockingMode": {
             "displayText": "Omogoči\nzaklep gumbov",
-            "description": "Za zaklep med spajkanjem drži oba gumba (O=onemogoči | L=le pospešeno | P=polno)"
+            "description": "Za zaklep med spajkanjem drži oba gumba (L=le pospešeno | P=polno)"
         },
         "ProfilePhases": {
             "displayText": "Profile\nPhases",
@@ -213,7 +207,7 @@
         },
         "MotionSensitivity": {
             "displayText": "Občutljivost\npremikanja",
-            "description": "0=izklopljeno | 1=najmanjša | ... | 9=največja"
+            "description": "1=najmanjša | ... | 9=največja"
         },
         "SleepTemperature": {
             "displayText": "Temp. med\nspanjem",
@@ -229,7 +223,7 @@
         },
         "HallEffSensitivity": {
             "displayText": "Občut.\nHall son",
-            "description": "Občutljivost Hallove sonde za zaznavanje spanja (0=izklopljeno | 1=najmanjša | ... | 9=največja)"
+            "description": "Občutljivost Hallove sonde za zaznavanje spanja (1=najmanjša | ... | 9=največja)"
         },
         "TemperatureUnit": {
             "displayText": "Enota za\ntemperaturo",
@@ -253,7 +247,7 @@
         },
         "AnimSpeed": {
             "displayText": "Anim.\nspeed",
-            "description": "Pace of icon animations in menu (O=off | P=slow | M=medium | H=fast)"
+            "description": "Pace of icon animations in menu (P=slow | M=medium | H=fast)"
         },
         "AnimLoop": {
             "displayText": "Anim.\nloop",

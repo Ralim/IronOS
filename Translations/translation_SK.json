@@ -52,16 +52,13 @@
             "message": "Vstupné U: \n"
         },
         "SleepingSimpleString": {
-            "message": "Zzz"
+            "message": "Zzz "
         },
         "SleepingAdvancedString": {
             "message": "Pokojový režim.\n"
         },
         "SleepingTipAdvancedString": {
             "message": "Hrot: \n"
-        },
-        "OffString": {
-            "message": "Vyp"
         },
         "ProfilePreheatString": {
             "message": "Predhrievanie\n"
@@ -80,15 +77,12 @@
         "SettingRightChar": "P",
         "SettingLeftChar": "L",
         "SettingAutoChar": "A",
-        "SettingOffChar": "Z",
         "SettingSlowChar": "P",
         "SettingMediumChar": "S",
         "SettingFastChar": "R",
-        "SettingStartNoneChar": "V",
         "SettingStartSolderingChar": "Z",
         "SettingStartSleepChar": "S",
         "SettingStartSleepOffChar": "I",
-        "SettingLockDisableChar": "Z",
         "SettingLockBoostChar": "B",
         "SettingLockFullChar": "P"
     },
@@ -141,7 +135,7 @@
         },
         "AutoStart": {
             "displayText": "Automatické\nspustenie",
-            "description": "Pri štarte spustiť režim spájkovania (V=Vyp | Z=Spájkovanie | S=Spanok | I=Spanok izbová teplota)"
+            "description": "Pri štarte spustiť režim spájkovania (Z=Spájkovanie | S=Spanok | I=Spanok izbová teplota)"
         },
         "TempChangeShortStep": {
             "displayText": "Malý krok\nteploty",
@@ -153,7 +147,7 @@
         },
         "LockingMode": {
             "displayText": "Povoliť zámok\ntlačidiel",
-            "description": "Zamknutie tlačidiel - dlhé stlačenie oboch naraz počas spájkovania (Z=Zakázať | B=Okrem boost | P=Plné zamknutie)"
+            "description": "Zamknutie tlačidiel - dlhé stlačenie oboch naraz počas spájkovania (B=Okrem boost | P=Plné zamknutie)"
         },
         "ProfilePhases": {
             "displayText": "Profilové\nFázy",
@@ -204,7 +198,7 @@
             "description": ""
         },
         "ProfilePhase5Duration": {
-            "displayText": "Trvanie\nFáza 4",
+            "displayText": "Trvanie\nFáza 5",
             "description": ""
         },
         "ProfileCooldownSpeed": {
@@ -213,7 +207,7 @@
         },
         "MotionSensitivity": {
             "displayText": "Citlivosť\npohybu",
-            "description": "Citlivosť detekcie pohybu (0=Vyp | 1=Min | ... | 9=Max)"
+            "description": "Citlivosť detekcie pohybu (1=Min | ... | 9=Max)"
         },
         "SleepTemperature": {
             "displayText": "Pokojová\nteplota",
@@ -229,7 +223,7 @@
         },
         "HallEffSensitivity": {
             "displayText": "Citliv.\nHall",
-            "description": "Citlivosť Hallovho senzora pre detekciu spánku (0=Vyp | 1=Min | ... | 9=Max)"
+            "description": "Citlivosť Hallovho senzora pre detekciu spánku (1=Min | ... | 9=Max)"
         },
         "TemperatureUnit": {
             "displayText": "Jednotka\nteploty",
@@ -253,7 +247,7 @@
         },
         "AnimSpeed": {
             "displayText": "Rýchlosť\nanimácií",
-            "description": "Rýchlosť animácií ikoniek v menu (O=off | P=pomaly | S=stredne | R=rýchlo)"
+            "description": "Rýchlosť animácií ikoniek v menu (P=pomaly | S=stredne | R=rýchlo)"
         },
         "AnimLoop": {
             "displayText": "Opakovanie\nanimácií",

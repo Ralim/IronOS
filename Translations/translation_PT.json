@@ -52,16 +52,13 @@
             "message": "Tensão: \n"
         },
         "SleepingSimpleString": {
-            "message": "Zzz"
+            "message": "Zzz "
         },
         "SleepingAdvancedString": {
             "message": "Repouso...\n"
         },
         "SleepingTipAdvancedString": {
             "message": "Ponta: \n"
-        },
-        "OffString": {
-            "message": "Off"
         },
         "ProfilePreheatString": {
             "message": "Preheat\n"
@@ -80,15 +77,12 @@
         "SettingRightChar": "D",
         "SettingLeftChar": "C",
         "SettingAutoChar": "A",
-        "SettingOffChar": "O",
         "SettingSlowChar": "S",
         "SettingMediumChar": "M",
         "SettingFastChar": "F",
-        "SettingStartNoneChar": "D",
         "SettingStartSolderingChar": "S",
         "SettingStartSleepChar": "H",
         "SettingStartSleepOffChar": "A",
-        "SettingLockDisableChar": "D",
         "SettingLockBoostChar": "B",
         "SettingLockFullChar": "F"
     },
@@ -141,7 +135,7 @@
         },
         "AutoStart": {
             "displayText": "Aquecimento\nautomático",
-            "description": "Aquece a ponta automaticamente ao ligar (D=desligar | S=soldagem | H=hibernar | A=hibernar temp. ambiente)"
+            "description": "Aquece a ponta automaticamente ao ligar (S=soldagem | H=hibernar | A=hibernar temp. ambiente)"
         },
         "TempChangeShortStep": {
             "displayText": "Mudança temp.\ncurta",
@@ -153,7 +147,7 @@
         },
         "LockingMode": {
             "displayText": "Permitir bloquear\nbotões",
-            "description": "Durante a solda premir os dois botões para alternar entre (D=desativados | B=modo turbo | F=bloqueio total)"
+            "description": "Durante a solda premir os dois botões para alternar entre (B=modo turbo | F=bloqueio total)"
         },
         "ProfilePhases": {
             "displayText": "Profile\nPhases",
@@ -213,7 +207,7 @@
         },
         "MotionSensitivity": {
             "displayText": "Sensibilidade\nmovimento",
-            "description": "Sensibilidade ao movimento (0=Desligado | 1=Menor | ... | 9=Maior)"
+            "description": "Sensibilidade ao movimento (1=Menor | ... | 9=Maior)"
         },
         "SleepTemperature": {
             "displayText": "Temperatura\nrepouso",
@@ -229,7 +223,7 @@
         },
         "HallEffSensitivity": {
             "displayText": "Sensibilidade de\nmagnetismo",
-            "description": "Sensibilidade de magnetismo (0=Desligado | 1=Menor | ... | 9=Maior)"
+            "description": "Sensibilidade de magnetismo (1=Menor | ... | 9=Maior)"
         },
         "TemperatureUnit": {
             "displayText": "Unidade\ntemperatura",
@@ -253,7 +247,7 @@
         },
         "AnimSpeed": {
             "displayText": "Velocidade de\nanimação",
-            "description": "Velocidade das animações no menu (O=off | S=lenta | M=média | F=rápida)"
+            "description": "Velocidade das animações no menu (S=lenta | M=média | F=rápida)"
         },
         "AnimLoop": {
             "displayText": "Repetir\nanimações",

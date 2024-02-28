@@ -8,10 +8,10 @@
 #ifndef GUI_HPP_
 #define GUI_HPP_
 #include "BSP.h"
+#include "Buttons.hpp"
 #include "FreeRTOS.h"
 #include "Settings.h"
 #include "Translation.h"
-
 
 #define PRESS_ACCEL_STEP         (TICKS_100MS / 3)
 #define PRESS_ACCEL_INTERVAL_MIN TICKS_100MS
@@ -26,9 +26,8 @@ typedef struct {
   // The settings description index, please use the `SETTINGS_DESC` macro with
   // the `SettingsItemIndex` enum. Use 0 for no description.
   uint8_t description;
-  // return true if increment reached the maximum value
-  bool (*const incrementHandler)(void);
-  void (*const draw)(void);
+  void (*const incrementHandler)(void);
+  void (*const draw)(void); // Must not be nullptr, as that marks end of menu
   bool (*const isVisible)(void);
   // If this is set, we will automatically use the settings increment handler instead, set >= num settings to disable
   SettingsOptions   autoSettingOption;
@@ -36,8 +35,9 @@ typedef struct {
   uint8_t           shortDescriptionSize;
 } menuitem;
 
-void                  enterSettingsMenu();
-void                  warnUser(const char *warning, const TickType_t timeout);
-extern const menuitem rootSettingsMenu[];
+void                   enterSettingsMenu();
+bool                   warnUser(const char *warning, const ButtonState buttons);
+extern const menuitem  rootSettingsMenu[];
+extern const menuitem *subSettingsMenus[];
 
 #endif /* GUI_HPP_ */

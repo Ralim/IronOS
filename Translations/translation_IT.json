@@ -52,16 +52,13 @@
             "message": "V in: \n"
         },
         "SleepingSimpleString": {
-            "message": "Zzz"
+            "message": "Zzz "
         },
         "SleepingAdvancedString": {
             "message": "Riposo\n"
         },
         "SleepingTipAdvancedString": {
             "message": "Punta: \n"
-        },
-        "OffString": {
-            "message": "OFF"
         },
         "ProfilePreheatString": {
             "message": "Preriscaldamento\n"
@@ -80,15 +77,12 @@
         "SettingRightChar": "D",
         "SettingLeftChar": "S",
         "SettingAutoChar": "A",
-        "SettingOffChar": "O",
         "SettingSlowChar": "L",
         "SettingMediumChar": "M",
         "SettingFastChar": "V",
-        "SettingStartNoneChar": "D",
         "SettingStartSolderingChar": "S",
         "SettingStartSleepChar": "R",
         "SettingStartSleepOffChar": "A",
-        "SettingLockDisableChar": "D",
         "SettingLockBoostChar": "T",
         "SettingLockFullChar": "C"
     },
@@ -141,7 +135,7 @@
         },
         "AutoStart": {
             "displayText": "Avvio\nautomatico",
-            "description": "Attiva automaticamente il saldatore quando viene alimentato [D: disattiva; S: saldatura; R: riposo; A: temperatura ambiente]"
+            "description": "Attiva automaticamente il saldatore quando viene alimentato [S: saldatura; R: riposo; A: temperatura ambiente]"
         },
         "TempChangeShortStep": {
             "displayText": "Temp passo\nbreve",
@@ -153,7 +147,7 @@
         },
         "LockingMode": {
             "displayText": "Blocco\ntasti",
-            "description": "Blocca i tasti durante la modalità saldatura; tieni premuto entrambi per bloccare o sbloccare [D: disattiva; T: consenti Turbo; C: blocco completo]"
+            "description": "Blocca i tasti durante la modalità saldatura; tieni premuto entrambi per bloccare o sbloccare [T: consenti Turbo; C: blocco completo]"
         },
         "ProfilePhases": {
             "displayText": "Fasi modalità\nprofilo",
@@ -213,7 +207,7 @@
         },
         "MotionSensitivity": {
             "displayText": "Sensibilità\nal movimento",
-            "description": "Imposta la sensibilità al movimento per uscire dalla modalità riposo [0: nessuna; 1: minima; 9: massima]"
+            "description": "Imposta la sensibilità al movimento per uscire dalla modalità riposo [1: minima; 9: massima]"
         },
         "SleepTemperature": {
             "displayText": "Temperatura\nriposo",
@@ -229,7 +223,7 @@
         },
         "HallEffSensitivity": {
             "displayText": "Sensore\nHall",
-            "description": "Regola la sensibilità del sensore ad effetto Hall per entrare in modalità riposo [0: nessuna; 1: minima; 9: massima]"
+            "description": "Regola la sensibilità del sensore ad effetto Hall per entrare in modalità riposo [1: minima; 9: massima]"
         },
         "TemperatureUnit": {
             "displayText": "Unità di\ntemperatura",
@@ -253,7 +247,7 @@
         },
         "AnimSpeed": {
             "displayText": "Velocità\nanimazioni",
-            "description": "Imposta la velocità di riproduzione delle animazioni del menù principale [O: OFF; L: lenta; M: media; V: veloce]"
+            "description": "Imposta la velocità di riproduzione delle animazioni del menù principale [L: lenta; M: media; V: veloce]"
         },
         "AnimLoop": {
             "displayText": "Ciclo\nanimazioni",

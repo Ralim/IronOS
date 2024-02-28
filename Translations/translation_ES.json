@@ -52,16 +52,13 @@
             "message": "Voltaje: \n"
         },
         "SleepingSimpleString": {
-            "message": "Zzz"
+            "message": "Zzz "
         },
         "SleepingAdvancedString": {
             "message": "En reposo...\n"
         },
         "SleepingTipAdvancedString": {
             "message": "Punta: \n"
-        },
-        "OffString": {
-            "message": "Apagado"
         },
         "ProfilePreheatString": {
             "message": "Precalentado\n"
@@ -80,15 +77,12 @@
         "SettingRightChar": "D",
         "SettingLeftChar": "I",
         "SettingAutoChar": "A",
-        "SettingOffChar": "O",
         "SettingSlowChar": "L",
         "SettingMediumChar": "M",
         "SettingFastChar": "R",
-        "SettingStartNoneChar": "N",
         "SettingStartSolderingChar": "S",
         "SettingStartSleepChar": "R",
         "SettingStartSleepOffChar": "F",
-        "SettingLockDisableChar": "D",
         "SettingLockBoostChar": "B",
         "SettingLockFullChar": "F"
     },
@@ -142,7 +136,7 @@
         },
         "AutoStart": {
             "displayText": "Calentar\nal enchufar",
-            "description": "Calentado automático al iniciar (N=no | S=entrar en modo soldar | R=solo entrar en reposo | F=en reposo pero mantiene la punta fría)"
+            "description": "Calentado automático al iniciar (S=entrar en modo soldar | R=solo entrar en reposo | F=en reposo pero mantiene la punta fría)"
         },
         "TempChangeShortStep": {
             "displayText": "Cambio temp.\npuls. cortas",
@@ -154,7 +148,7 @@
         },
         "LockingMode": {
             "displayText": "Permitir botones\nbloqueo",
-            "description": "Mientras suelda, mantenga pulsados ambos botones para alternar su bloqueo (D=desactivar | B=sólo modo boost | F=bloqueo total)"
+            "description": "Mientras suelda, mantenga pulsados ambos botones para alternar su bloqueo (B=sólo modo boost | F=bloqueo total)"
         },
         "ProfilePhases": {
             "displayText": "Fases de\nPerfil",
@@ -214,7 +208,7 @@
         },
         "MotionSensitivity": {
             "displayText": "Detección de\nmovimiento",
-            "description": "Tiempo de reacción al agarrar (0=no | 1=menos sensible | ... | 9=más sensible)"
+            "description": "Tiempo de reacción al agarrar (1=menos sensible | ... | 9=más sensible)"
         },
         "SleepTemperature": {
             "displayText": "Temperatura\nen reposo",
@@ -230,7 +224,7 @@
         },
         "HallEffSensitivity": {
             "displayText": "Hall Eff\nSensibilidad",
-            "description": "Sensibilidad del sensor de efecto Hall en la detección de reposo (0=no | 1=menos sensible | ... | 9=más sensible)"
+            "description": "Sensibilidad del sensor de efecto Hall en la detección de reposo (1=menos sensible | ... | 9=más sensible)"
         },
         "TemperatureUnit": {
             "displayText": "Unidad de\ntemperatura",
@@ -254,7 +248,7 @@
         },
         "AnimSpeed": {
             "displayText": "Anim.\nvelocidad",
-            "description": "Velocidad de animaciones de iconos en el menú (O=apagado | L=baja | M=media | R=alta)"
+            "description": "Velocidad de animaciones de iconos en el menú (L=baja | M=media | R=alta)"
         },
         "AnimLoop": {
             "displayText": "Anim.\nbucle",

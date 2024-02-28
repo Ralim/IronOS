@@ -52,16 +52,13 @@
             "message": "Inspän. V: \n"
         },
         "SleepingSimpleString": {
-            "message": "Zzz"
+            "message": "Zzz "
         },
         "SleepingAdvancedString": {
             "message": "Viloläge...\n"
         },
         "SleepingTipAdvancedString": {
             "message": "Spets: \n"
-        },
-        "OffString": {
-            "message": "Av"
         },
         "ProfilePreheatString": {
             "message": "Förvärmning\n"
@@ -80,15 +77,12 @@
         "SettingRightChar": "H",
         "SettingLeftChar": "V",
         "SettingAutoChar": "A",
-        "SettingOffChar": "A",
         "SettingSlowChar": "L",
         "SettingMediumChar": "M",
         "SettingFastChar": "S",
-        "SettingStartNoneChar": "A",
         "SettingStartSolderingChar": "L",
         "SettingStartSleepChar": "V",
         "SettingStartSleepOffChar": "R",
-        "SettingLockDisableChar": "A",
         "SettingLockBoostChar": "T",
         "SettingLockFullChar": "F"
     },
@@ -141,7 +135,7 @@
         },
         "AutoStart": {
             "displayText": "Auto\nstart",
-            "description": "Startar automatiskt lödpennan vid uppstart. (A=Av | L=Lödning | V=Viloläge | R=Viloläge Rumstemperatur)"
+            "description": "Startar automatiskt lödpennan vid uppstart. (L=Lödning | V=Viloläge | R=Viloläge Rumstemperatur)"
         },
         "TempChangeShortStep": {
             "displayText": "Temp.just\nkorttryck",
@@ -153,7 +147,7 @@
         },
         "LockingMode": {
             "displayText": "Tillåt lås\nvia knappar",
-            "description": "Vid lödning, håll nere bägge knappar för att slå på lås (A=Av | T=Bara turbo | F=Fullt lås)"
+            "description": "Vid lödning, håll nere bägge knappar för att slå på lås (T=Bara turbo | F=Fullt lås)"
         },
         "ProfilePhases": {
             "displayText": "Profil-\nfaser",
@@ -213,7 +207,7 @@
         },
         "MotionSensitivity": {
             "displayText": "Rörelse-\nkänslighet",
-            "description": "Rörelsekänslighet (0=Av | 1=minst känslig | ... | 9=mest känslig)"
+            "description": "Rörelsekänslighet (1=minst känslig | ... | 9=mest känslig)"
         },
         "SleepTemperature": {
             "displayText": "Vilo-\ntemp",
@@ -229,7 +223,7 @@
         },
         "HallEffSensitivity": {
             "displayText": "Sensor-\nkänslght",
-            "description": "Känslighet för halleffekt-sensorn för viloläges-detektering (0=Av | 1=minst känslig | ... | 9=mest känslig)"
+            "description": "Känslighet för halleffekt-sensorn för viloläges-detektering (1=minst känslig | ... | 9=mest känslig)"
         },
         "TemperatureUnit": {
             "displayText": "Temperatur-\nenheter",
@@ -253,7 +247,7 @@
         },
         "AnimSpeed": {
             "displayText": "Anim.-\nhastighet",
-            "description": "Animationshastighet för ikoner i menyer (A=av | L=långsam | M=medel | S=snabb)"
+            "description": "Animationshastighet för ikoner i menyer (L=långsam | M=medel | S=snabb)"
         },
         "AnimLoop": {
             "displayText": "Anim.\nloop",

@@ -6,6 +6,7 @@
  */
 
 #include "BSP.h"
+#include "FS2711.hpp"
 #include "FreeRTOS.h"
 #include "HUB238.hpp"
 #include "QC3.h"
@@ -14,6 +15,7 @@
 #include "cmsis_os.h"
 #include "configuration.h"
 #include "main.hpp"
+#include "stdbool.h"
 #include "stdlib.h"
 #include "task.h"
 
@@ -32,8 +34,12 @@ void startPOWTask(void const *argument __unused) {
   USBPowerDelivery::start();
   // Crank the handle at boot until we are stable and waiting for IRQ
   USBPowerDelivery::step();
-
 #endif
+#if POW_PD_EXT == 2
+  FS2711::start();
+  FS2711::negotiate();
+#endif
+
   BaseType_t res;
   for (;;) {
     res = pdFALSE;
@@ -60,6 +66,9 @@ void startPOWTask(void const *argument __unused) {
 #endif
 #if POW_PD_EXT == 1
     hub238_check_negotiation();
+#endif
+#if POW_PD_EXT == 2
+    FS2711::negotiate();
 #endif
     power_check();
   }

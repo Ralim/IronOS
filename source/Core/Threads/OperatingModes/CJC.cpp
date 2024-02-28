@@ -1,39 +1,49 @@
 
 
 #include "OperatingModes.h"
-void performCJCC(void) {
+OperatingMode performCJCC(const ButtonState buttons, guiContext *cxt) {
   // Calibrate Cold Junction Compensation directly at boot, before internal components get warm.
-  OLED::refresh();
-  osDelay(50);
+
+  // While we wait for the pre-start checks to finish, we cant run CJC (as the pre-start checks control the tip)
+  if (preStartChecks() == 0) {
+    OLED::setCursor(0, 0);
+    OLED::print(translatedString(Tr->CJCCalibrating), FontStyle::SMALL);
+    return OperatingMode::CJCCalibration;
+  }
+
   if (!isTipDisconnected() && abs(int(TipThermoModel::getTipInC() - getHandleTemperature(0) / 10)) < 10) {
-    uint16_t setoffset = 0;
+    // Take 16 samples, only sample
+    if (cxt->scratch_state.state1 < 16) {
+      if ((xTaskGetTickCount() - cxt->scratch_state.state4) > TICKS_100MS) {
+        cxt->scratch_state.state3 += getTipRawTemp(1);
+        cxt->scratch_state.state1++;
+        cxt->scratch_state.state4 = xTaskGetTickCount();
+      }
+      OLED::setCursor(0, 0);
+      OLED::print(translatedString(Tr->CJCCalibrating), FontStyle::SMALL);
+      OLED::setCursor(0, 8);
+      OLED::print(SmallSymbolDot, FontStyle::SMALL);
+      for (uint8_t x = 0; x < (cxt->scratch_state.state1 / 4); x++) {
+        OLED::print(SmallSymbolDot, FontStyle::SMALL);
+      }
+
+      return OperatingMode::CJCCalibration;
+    }
+
     // If the thermo-couple at the end of the tip, and the handle are at
     // equilibrium, then the output should be zero, as there is no temperature
     // differential.
-    while (setoffset == 0) {
-      uint32_t offset = 0;
-      for (uint8_t i = 0; i < 16; i++) {
-        offset += getTipRawTemp(1);
-        // cycle through the filter a fair bit to ensure we're stable.
-        OLED::clearScreen();
-        OLED::setCursor(0, 0);
-        OLED::print(translatedString(Tr->CJCCalibrating), FontStyle::SMALL);
-        OLED::setCursor(0, 8);
-        OLED::print(SmallSymbolDot, FontStyle::SMALL);
-        for (uint8_t x = 0; x < (i / 4); x++) {
-          OLED::print(SmallSymbolDot, FontStyle::SMALL);
-        }
-        OLED::refresh();
-        osDelay(100);
-      }
-      setoffset = TipThermoModel::convertTipRawADCTouV(offset / 16, true);
+
+    uint16_t setOffset = TipThermoModel::convertTipRawADCTouV(cxt->scratch_state.state3 / 16, true);
+    setSettingValue(SettingsOptions::CalibrationOffset, setOffset);
+    if (warnUser(translatedString(Tr->CalibrationDone), buttons)) {
+      // Preventing to repeat calibration at boot automatically (only one shot).
+      setSettingValue(SettingsOptions::CalibrateCJC, 0);
+      saveSettings();
+      return OperatingMode::InitialisationDone;
     }
-    setSettingValue(SettingsOptions::CalibrationOffset, setoffset);
-    OLED::clearScreen();
-    warnUser(translatedString(Tr->CalibrationDone), 3 * TICKS_SECOND);
-    OLED::refresh();
-    // Preventing to repeat calibration at boot automatically (only one shot).
-    setSettingValue(SettingsOptions::CalibrateCJC, 0);
-    saveSettings();
+    return OperatingMode::CJCCalibration;
   }
+  // Cant run calibration without the tip and for temps to be close
+  return OperatingMode::StartupWarnings;
 }

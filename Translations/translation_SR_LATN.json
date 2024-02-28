@@ -52,16 +52,13 @@
             "message": "Ul. napon: \n"
         },
         "SleepingSimpleString": {
-            "message": "Zzz"
+            "message": "Zzz "
         },
         "SleepingAdvancedString": {
             "message": "Spavanje...\n"
         },
         "SleepingTipAdvancedString": {
             "message": "Vrh: \n"
-        },
-        "OffString": {
-            "message": "Isk"
         },
         "ProfilePreheatString": {
             "message": "Preheat\n"
@@ -80,15 +77,12 @@
         "SettingRightChar": "D",
         "SettingLeftChar": "L",
         "SettingAutoChar": "A",
-        "SettingOffChar": "O",
         "SettingSlowChar": "S",
         "SettingMediumChar": "M",
         "SettingFastChar": "B",
-        "SettingStartNoneChar": "I",
         "SettingStartSolderingChar": "L",
         "SettingStartSleepChar": "S",
         "SettingStartSleepOffChar": "X",
-        "SettingLockDisableChar": "D",
         "SettingLockBoostChar": "B",
         "SettingLockFullChar": "F"
     },
@@ -141,7 +135,7 @@
         },
         "AutoStart": {
             "displayText": "Vrući\nstart",
-            "description": "Lemilica odmah po pokretanju prelazi u režim lemljenja i greje se. (I=isključiti | L=lemljenje | S=spavati | X=spavati sobna temperatura)"
+            "description": "Lemilica odmah po pokretanju prelazi u režim lemljenja i greje se. (L=lemljenje | S=spavati | X=spavati sobna temperatura)"
         },
         "TempChangeShortStep": {
             "displayText": "Temp change\nshort",
@@ -153,7 +147,7 @@
         },
         "LockingMode": {
             "displayText": "Allow locking\nbuttons",
-            "description": "While soldering, hold down both buttons to toggle locking them (D=disable | B=boost mode only | F=full locking)"
+            "description": "While soldering, hold down both buttons to toggle locking them (B=boost mode only | F=full locking)"
         },
         "ProfilePhases": {
             "displayText": "Profile\nPhases",
@@ -213,7 +207,7 @@
         },
         "MotionSensitivity": {
             "displayText": "Osetljivost\nna pokret",
-            "description": "Osetljivost senzora pokreta. (0=isključeno | 1=najmanje osetljivo | ... | 9=najosetljivije)"
+            "description": "Osetljivost senzora pokreta. (1=najmanje osetljivo | ... | 9=najosetljivije)"
         },
         "SleepTemperature": {
             "displayText": "Temp.\nspavanja",
@@ -229,7 +223,7 @@
         },
         "HallEffSensitivity": {
             "displayText": "Hall sensor\nsensitivity",
-            "description": "Sensitivity to magnets (0=isključeno | 1=najmanje osetljivo | ... | 9=najosetljivije)"
+            "description": "Sensitivity to magnets (1=najmanje osetljivo | ... | 9=najosetljivije)"
         },
         "TemperatureUnit": {
             "displayText": "Jedinica\ntemperature",
@@ -253,7 +247,7 @@
         },
         "AnimSpeed": {
             "displayText": "Anim.\nspeed",
-            "description": "Pace of icon animations in menu (O=off | S=slow | M=medium | B=fast)"
+            "description": "Pace of icon animations in menu (S=slow | M=medium | B=fast)"
         },
         "AnimLoop": {
             "displayText": "Anim.\nloop",
