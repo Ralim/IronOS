@@ -14,7 +14,7 @@
   #define FONT_12_WIDTH 12
   // THE MAIN FONTS ARE NO LONGER HERE, MOVED TO PYTHON AUTO GEN
   // THESE ARE ONLY THE SYMBOL FONTS
-  
+  // clang-format off
   const uint8_t ExtraFontChars[] = {
       // width = 12
       // height = 16
@@ -2293,4 +2293,5 @@
     #endif
     };
   #endif
+  // clang-format on
 #endif /* FONT_H_ */

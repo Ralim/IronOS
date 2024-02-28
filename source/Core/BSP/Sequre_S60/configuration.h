@@ -24,8 +24,8 @@
  * OLED Brightness
  *
  */
-#define MIN_BRIGHTNESS     0   // Min OLED brightness selectable
-#define MAX_BRIGHTNESS     100 // Max OLED brightness selectable
+#define MIN_BRIGHTNESS     1   // Min OLED brightness selectable
+#define MAX_BRIGHTNESS     101 // Max OLED brightness selectable
 #define BRIGHTNESS_STEP    25  // OLED brightness increment
 #define DEFAULT_BRIGHTNESS 25  // default OLED brightness
 
@@ -166,7 +166,6 @@
 #define MODEL_HAS_DCDC // We dont have DC/DC but have reallly fast PWM that gets us roughly the same place
 #endif                 /* S60 */
 
-
 #ifdef MODEL_S60P
 #define VOLTAGE_DIV        460 // Default divider scaler
 #define CALIBRATION_OFFSET 200 // Default adc offset in uV
@@ -176,7 +175,7 @@
 #define POWER_LIMIT_STEPS  5
 #define OP_AMP_GAIN_STAGE  536
 #define TEMP_uV_LOOKUP_S60
-#define USB_PD_VMAX 12 // Maximum voltage for PD to negotiate
+#define USB_PD_VMAX 20 // Maximum voltage for PD to negotiate
 
 #define HARDWARE_MAX_WATTAGE_X10 600
 
@@ -187,7 +186,7 @@
 
 #define OLED_128x32
 #define GPIO_VIBRATION
-#define POW_PD_EXT                1
+#define POW_PD_EXT                2
 #define USB_PD_EPR_WATTAGE        0 /*No EPR*/
 #define DEBUG_POWER_MENU_BUTTON_B 1
 #define HAS_POWER_DEBUG_MENU
@@ -197,6 +196,7 @@
 
 #define MODEL_HAS_DCDC // We dont have DC/DC but have reallly fast PWM that gets us roughly the same place
 #endif                 /* S60P */
+
 #define FLASH_LOGOADDR      (0x08000000 + (62 * 1024))
 #define SETTINGS_START_PAGE (0x08000000 + (63 * 1024))
 
