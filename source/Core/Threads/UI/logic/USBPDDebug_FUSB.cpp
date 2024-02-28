@@ -1,30 +1,25 @@
 #include "OperatingModes.h"
-
+#include "ui_drawing.hpp"
 #ifdef POW_PD
 #ifdef HAS_POWER_DEBUG_MENU
 OperatingMode showPDDebug(const ButtonState buttons, guiContext *cxt) {
   // Print out the USB-PD state
   // Basically this is like the Debug menu, but instead we want to print out the PD status
   uint16_t *screen = &(cxt->scratch_state.state1);
-  OLED::setCursor(0, 0);                             // Position the cursor at the 0,0 (top left)
-  OLED::print(SmallSymbolPDDebug, FontStyle::SMALL); // Print Title
-  OLED::setCursor(0, 8);                             // second line
+
   if ((*screen) == 0) {
     // Print the PD state machine
-    OLED::print(SmallSymbolState, FontStyle::SMALL);
-    OLED::print(SmallSymbolSpace, FontStyle::SMALL);
-    OLED::printNumber(USBPowerDelivery::getStateNumber(), 2, FontStyle::SMALL, true);
-    OLED::print(SmallSymbolSpace, FontStyle::SMALL);
-    // Also print vbus mod status
-    if (USBPowerDelivery::fusbPresent()) {
+uint8_t vbusState=0;
+     if (USBPowerDelivery::fusbPresent()) {
       if (USBPowerDelivery::negotiationComplete() || (xTaskGetTickCount() > (TICKS_SECOND * 10))) {
         if (!USBPowerDelivery::isVBUSConnected()) {
-          OLED::print(SmallSymbolNoVBus, FontStyle::SMALL);
+     vbusState=2;
         } else {
-          OLED::print(SmallSymbolVBus, FontStyle::SMALL);
+          vbusState=1;
         }
       }
     }
+    ui_draw_usb_pd_debug_state(vbusState,USBPowerDelivery::getStateNumber());
   } else {
     // Print out the Proposed power options one by one
     auto lastCaps = USBPowerDelivery::getLastSeenCapabilities();
@@ -51,25 +46,7 @@ OperatingMode showPDDebug(const ButtonState buttons, guiContext *cxt) {
       if (voltage_mv == 0) {
         (*screen) += 1;
       } else {
-        // print out this entry of the proposal
-        OLED::printNumber(*screen, 2, FontStyle::SMALL, true); // print the entry number
-        OLED::print(SmallSymbolSpace, FontStyle::SMALL);
-        if (min_voltage > 0) {
-          OLED::printNumber(min_voltage / 1000, 2, FontStyle::SMALL, true); // print the voltage
-          OLED::print(SmallSymbolMinus, FontStyle::SMALL);
-        }
-        OLED::printNumber(voltage_mv / 1000, 2, FontStyle::SMALL, true); // print the voltage
-        OLED::print(SmallSymbolVolts, FontStyle::SMALL);
-        OLED::print(SmallSymbolSpace, FontStyle::SMALL);
-        if (wattage) {
-          OLED::printNumber(wattage, 3, FontStyle::SMALL, true); // print the current in 0.1A res
-          OLED::print(SmallSymbolWatts, FontStyle::SMALL);
-        } else {
-          OLED::printNumber(current_a_x100 / 100, 2, FontStyle::SMALL, true); // print the current in 0.1A res
-          OLED::print(SmallSymbolDot, FontStyle::SMALL);
-          OLED::printNumber(current_a_x100 % 100, 2, FontStyle::SMALL, false); // print the current in 0.1A res
-          OLED::print(SmallSymbolAmps, FontStyle::SMALL);
-        }
+        ui_draw_usb_pd_debug_pdo(*screen, min_voltage / 1000, voltage_mv / 1000, current_a_x100, wattage);
       }
     } else {
       (*screen) = 0;

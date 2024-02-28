@@ -34,7 +34,6 @@ OperatingMode gui_SolderingSleepingMode(const ButtonState buttons, guiContext *c
     ui_draw_soldering_basic_sleep(tipTemp);
   }
 
-
   if (!shouldBeSleeping()) {
     return cxt->previousMode;
   }

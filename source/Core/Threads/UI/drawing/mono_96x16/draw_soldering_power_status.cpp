@@ -1,7 +1,42 @@
 #include "power.hpp"
 #include "ui_drawing.hpp"
+#include <OperatingModes.h>
 
-void ui_draw_soldering_power_status(void) {
+void ui_draw_soldering_power_status(bool boost_mode_on) {
+  if (OLED::getRotation()) {
+    OLED::setCursor(50, 0);
+  } else {
+    OLED::setCursor(-1, 0);
+  }
+
+  ui_draw_tip_temperature(true, FontStyle::LARGE);
+
+  if (boost_mode_on) { // Boost mode is on
+    if (OLED::getRotation()) {
+      OLED::setCursor(34, 0);
+    } else {
+      OLED::setCursor(50, 0);
+    }
+    OLED::print(LargeSymbolPlus, FontStyle::LARGE);
+  } else {
+#ifndef NO_SLEEP_MODE
+    if (getSettingValue(SettingsOptions::Sensitivity) && getSettingValue(SettingsOptions::SleepTime)) {
+      if (OLED::getRotation()) {
+        OLED::setCursor(32, 0);
+      } else {
+        OLED::setCursor(47, 0);
+      }
+      printCountdownUntilSleep(getSleepTimeout());
+    }
+#endif
+    if (OLED::getRotation()) {
+      OLED::setCursor(32, 8);
+    } else {
+      OLED::setCursor(47, 8);
+    }
+    OLED::print(PowerSourceNames[getPowerSourceNumber()], FontStyle::SMALL, 2);
+  }
+
   if (OLED::getRotation()) {
     OLED::setCursor(0, 0);
   } else {
