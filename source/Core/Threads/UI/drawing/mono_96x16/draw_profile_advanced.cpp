@@ -1,6 +1,6 @@
 #include "ui_drawing.hpp"
 
-void ui_draw_soldering_profile_advanced(TemperatureType_t tipTemp, TemperatureType_t profileCurrentTargetTemp, uint32_t phaseElapsedSeconds, uint32_t phase,const uint32_t phaseTimeGoal) {
+void ui_draw_soldering_profile_advanced(TemperatureType_t tipTemp, TemperatureType_t profileCurrentTargetTemp, uint32_t phaseElapsedSeconds, uint32_t phase, const uint32_t phaseTimeGoal) {
   // print temperature
   if (OLED::getRotation()) {
     OLED::setCursor(48, 0);
