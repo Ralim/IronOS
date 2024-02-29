@@ -14,7 +14,7 @@ OperatingMode showPDDebug(const ButtonState buttons, guiContext *cxt) {
   if (*screen == 0) {
     // Print the PD Debug state
     uint16_t temp = hub238_debug_state();
-    ui_draw_usb_pd_debug_state( 0,temp);
+    ui_draw_usb_pd_debug_state(0, temp);
   } else {
 
     // Print out the Proposed power options one by one

@@ -126,7 +126,7 @@ OperatingMode gui_solderingProfileMode(const ButtonState buttons, guiContext *cx
 
   // Draw in the screen details
   if (getSettingValue(SettingsOptions::DetailedSoldering)) {
-    ui_draw_soldering_profile_advanced(tipTemp, profileCurrentTargetTemp, phaseElapsedSeconds, cxt->scratch_state.state1,cxt->scratch_state.state2);
+    ui_draw_soldering_profile_advanced(tipTemp, profileCurrentTargetTemp, phaseElapsedSeconds, cxt->scratch_state.state1, cxt->scratch_state.state2);
     ui_draw_soldering_power_status(false);
   } else {
     ui_draw_soldering_basic_status(false);
