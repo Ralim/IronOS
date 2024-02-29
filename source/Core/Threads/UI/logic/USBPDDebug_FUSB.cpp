@@ -9,17 +9,17 @@ OperatingMode showPDDebug(const ButtonState buttons, guiContext *cxt) {
 
   if ((*screen) == 0) {
     // Print the PD state machine
-uint8_t vbusState=0;
-     if (USBPowerDelivery::fusbPresent()) {
+    uint8_t vbusState = 0;
+    if (USBPowerDelivery::fusbPresent()) {
       if (USBPowerDelivery::negotiationComplete() || (xTaskGetTickCount() > (TICKS_SECOND * 10))) {
         if (!USBPowerDelivery::isVBUSConnected()) {
-     vbusState=2;
+          vbusState = 2;
         } else {
-          vbusState=1;
+          vbusState = 1;
         }
       }
     }
-    ui_draw_usb_pd_debug_state(vbusState,USBPowerDelivery::getStateNumber());
+    ui_draw_usb_pd_debug_state(vbusState, USBPowerDelivery::getStateNumber());
   } else {
     // Print out the Proposed power options one by one
     auto lastCaps = USBPowerDelivery::getLastSeenCapabilities();
