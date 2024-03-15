@@ -80,7 +80,7 @@ ALL_SOURCE=$(shell find    ./Core -type d \( $(ALL_SOURCE_EXCEPT)   \) -prune -f
 # Device dependent settings
 ifeq ($(model),$(filter $(model),$(ALL_MINIWARE_MODELS)))
 $(info Building for Miniware )
-DEVICE_BSP_DIR=./Core/BSP/Miniware/
+DEVICE_BSP_DIR=./Core/BSP/Miniware
 LDSCRIPT=./Core/BSP/Miniware/stm32f103.ld
 
 ifeq ($(model),$(filter $(model),TS101))
@@ -118,7 +118,7 @@ endif # ALL_MINIWARE_MODELS
 ifeq ($(model),$(filter $(model),$(ALL_SEQURE_MODELS)))
 $(info Building for Sequre )
 
-DEVICE_BSP_DIR=./Core/BSP/Sequre_S60/
+DEVICE_BSP_DIR=./Core/BSP/Sequre_S60
 S_SRCS:=$(shell find $(S60_STARTUP_DIR) -type f -name '*.S')
 LDSCRIPT=./Core/BSP/Sequre_S60/stm32f103.ld
 DEV_GLOBAL_DEFS=-D STM32F103T8Ux       \
@@ -154,7 +154,7 @@ endif # ALL_SEQURE_MODELS
 ifeq ($(model),$(filter $(model),$(ALL_MHP30_MODELS)))
 $(info Building for MHP30 )
 
-DEVICE_BSP_DIR=./Core/BSP/MHP30/
+DEVICE_BSP_DIR=./Core/BSP/MHP30
 LDSCRIPT=./Core/BSP/MHP30/stm32f103.ld
 DEV_GLOBAL_DEFS=-D STM32F103T8Ux    \
                 -D STM32F1          \
@@ -184,7 +184,7 @@ ifeq ($(model),$(ALL_PINECIL_MODELS))
 $(info Building for Pine64 Pinecilv1)
 
 
-DEVICE_BSP_DIR=./Core/BSP/Pinecil/
+DEVICE_BSP_DIR=./Core/BSP/Pinecil
 S_SRCS:=$(shell find $(DEVICE_BSP_DIR) -type f -name '*.S')
 LDSCRIPT=./Core/BSP/Pinecil/Vendor/SoC/gd32vf103/Board/pinecil/Source/GCC/gcc_gd32vf103_flashxip.ld
 flash_size=128k
@@ -209,7 +209,7 @@ ifeq ($(model),$(ALL_PINECIL_V2_MODELS))
 $(info Building for Pine64 Pinecilv2 )
 
 
-DEVICE_BSP_DIR=./Core/BSP/Pinecilv2/
+DEVICE_BSP_DIR=./Core/BSP/Pinecilv2
 LDSCRIPT=./Core/BSP/Pinecilv2/bl_mcu_sdk/drivers/bl702_driver/bl702_flash.ld
 DEVICE_DFU_ADDRESS=0x23000000
 # DFU starts at the beginning of flash
