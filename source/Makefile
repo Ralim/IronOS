@@ -71,9 +71,8 @@ PD_DRIVER_TESTS_DIR=./Core/Drivers/usb-pd/tests
 
 # Excludes for clang-format
 
-ALL_INCLUDES_EXCEPT:=-path $(PD_DRIVER_DIR)               \
-                  -o -not -name "configuration.h"
-ALL_SOURCE_EXCEPT:=-path $(PD_DRIVER_DIR)        
+ALL_INCLUDES_EXCEPT:=-path $(PD_DRIVER_DIR) -o -not -name "configuration.h"
+ALL_SOURCE_EXCEPT:=-path $(PD_DRIVER_DIR)
 # Find-all's used for formatting; have to exclude external modules
 ALL_INCLUDES=$(shell find  ./Core -type d \( $(ALL_INCLUDES_EXCEPT) \) -prune -false -o \( -type f \( -name '*.h' -o -name '*.hpp' \) \) )
 ALL_SOURCE=$(shell find    ./Core -type d \( $(ALL_SOURCE_EXCEPT)   \) -prune -false -o \( -type f \( -name '*.c' -o -name '*.cpp' \) \) )
@@ -193,10 +192,10 @@ bootldr_size=0x0
 
 # Flags
 CPUFLAGS=-march=rv32imaczicsr \
-         -mabi=ilp32     \
-         -mcmodel=medany \
-         -fsigned-char   \
-         -fno-builtin    \
+         -mabi=ilp32          \
+         -mcmodel=medany      \
+         -fsigned-char        \
+         -fno-builtin         \
          -nostartfiles
 
 DEV_LDFLAGS=-nostartfiles
@@ -215,7 +214,7 @@ LDSCRIPT=./Core/BSP/Pinecilv2/bl_mcu_sdk/drivers/bl702_driver/bl702_flash.ld
 DEVICE_DFU_ADDRESS=0x23000000
 # DFU starts at the beginning of flash
 # Flags
-CPUFLAGS=-march=rv32imafczicsr                                     \
+CPUFLAGS=-march=rv32imafczicsr                                \
          -mabi=ilp32f                                         \
          -mcmodel=medany                                      \
          -fsigned-char                                        \
@@ -300,13 +299,13 @@ BRIEFLZ_INCLUDE_DIRS:= ${shell find ${BRIEFLZ_DIR} -type d -print}
 MIDDLEWARES_INCLUDE_DIRS:= ${shell find ${MIDDLEWARES_DIR} -type d -print}
 
 
-INCLUDES=-I$(APP_INC_DIR)                    \
-         -I$(BSP_INC_DIR)                    \
+INCLUDES=-I$(APP_INC_DIR)                              \
+         -I$(BSP_INC_DIR)                              \
           ${patsubst %,-I%,${DEVICE_BSP_INCLUDE_DIRS}} \
-          ${patsubst %,-I%,${THREADS_INCLUDE_DIRS}} \
-          ${patsubst %,-I%,${DRIVERS_INCLUDE_DIRS}} \
-          ${patsubst %,-I%,${BRIEFLZ_INCLUDE_DIRS}} \
-          ${patsubst %,-I%,${MIDDLEWARES_INCLUDE_DIRS}} 
+          ${patsubst %,-I%,${THREADS_INCLUDE_DIRS}}    \
+          ${patsubst %,-I%,${DRIVERS_INCLUDE_DIRS}}    \
+          ${patsubst %,-I%,${BRIEFLZ_INCLUDE_DIRS}}    \
+          ${patsubst %,-I%,${MIDDLEWARES_INCLUDE_DIRS}}
 
 ASM_INC=$(INCLUDES)
 
@@ -319,11 +318,11 @@ SOURCE:=$(shell find ${THREADS_DIR}            -type f -name '*.c') \
         $(BRIEFLZ_DIR)/depack.c
 
 # We exclude the USB-PD stack tests $(PD_DRIVER_TESTS_DIR)
-SOURCE_CPP:=$(shell find ${THREADS_DIR}     -type f -name '*.cpp') \
-            $(shell find ${SOURCE_CORE_DIR}        -type f -name '*.cpp') \
-            $(shell find ${DRIVERS_DIR}     -type f -name '*.cpp' -not -path "${PD_DRIVER_TESTS_DIR}/*" ) \
-            $(shell find ${DEVICE_BSP_DIR}         -type f -name '*.cpp') \
-            $(shell find ${MIDDLEWARES_DIR} -type f -name '*.cpp')
+SOURCE_CPP:=$(shell find ${THREADS_DIR}      -type f -name '*.cpp') \
+            $(shell find ${SOURCE_CORE_DIR}  -type f -name '*.cpp') \
+            $(shell find ${DRIVERS_DIR}      -type f -name '*.cpp' -not -path "${PD_DRIVER_TESTS_DIR}/*" ) \
+            $(shell find ${DEVICE_BSP_DIR}   -type f -name '*.cpp') \
+            $(shell find ${MIDDLEWARES_DIR}  -type f -name '*.cpp')
 
 
 S_SRCS:=$(shell find $(DEVICE_BSP_DIR) -type f -name '*.S')
@@ -337,7 +336,7 @@ OPTIM=-Os                             \
       -fdevirtualize-at-ltrans        \
       -fmerge-all-constants           \
       -fshort-wchar                   \
-      -flto=auto                           \
+      -flto=auto                      \
       -finline-small-functions        \
       -finline-functions              \
       -findirect-inlining             \
