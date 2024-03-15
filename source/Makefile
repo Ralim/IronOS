@@ -57,13 +57,13 @@ DEVICE_DFU_VID_PID=0x28E9:0x0189
 
 
 # Enumerate all of the include directories (HAL source dirs are used for clang-format only)
-APP_INC_DIR=./Core/Inc/
-MIDDLEWARES_DIR=./Middlewares/
-BSP_INC_DIR=./Core/BSP/
-THREADS_DIR=./Core/Threads/
-SOURCE_CORE_DIR=./Core/Src/
-BRIEFLZ_DIR=./Core/brieflz/
-DRIVERS_DIR=./Core/Drivers/
+APP_INC_DIR=./Core/Inc
+MIDDLEWARES_DIR=./Middlewares
+BSP_INC_DIR=./Core/BSP
+THREADS_DIR=./Core/Threads
+SOURCE_CORE_DIR=./Core/Src
+BRIEFLZ_DIR=./Core/brieflz
+DRIVERS_DIR=./Core/Drivers
 PD_DRIVER_DIR=./Core/Drivers/usb-pd
 # Exclude USB-PD tests
 PD_DRIVER_TESTS_DIR=./Core/Drivers/usb-pd/tests
