@@ -5,10 +5,10 @@
  *      Author: Ralim
  */
 
-#include <array>
-
 #include "LIS2DH12.hpp"
 #include "cmsis_os.h"
+#include "configuration.h"
+#include <array>
 
 static const ACCEL_I2C_CLASS::I2C_REG i2c_registers[] = {
     {    LIS_CTRL_REG1,       0x17, 0}, // 25Hz
@@ -51,9 +51,11 @@ bool LIS2DH12::detect() {
 }
 
 bool LIS2DH12::isClone() {
+#ifdef ACCEL_LIS_CLONE
   uint8_t id = 0;
   if (ACCEL_I2C_CLASS::Mem_Read(LIS2DH_I2C_ADDRESS, LIS2DH_WHOAMI_REG, &id, 1)) {
     return (id == LIS2DH_CLONE_WHOAMI_ID);
   }
+#endif
   return false;
 }
