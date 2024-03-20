@@ -1,6 +1,7 @@
 #include "Buttons.hpp"
 #include "OperatingModeUtilities.h"
 #include "OperatingModes.h"
+#ifdef OLED_96x16
 bool warnUser(const char *warning, const ButtonState buttons) {
   OLED::clearScreen();
   OLED::printWholeScreen(warning);
@@ -10,3 +11,4 @@ bool warnUser(const char *warning, const ButtonState buttons) {
   }
   return buttons != BUTTON_NONE;
 }
+#endif

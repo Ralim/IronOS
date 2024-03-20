@@ -1,5 +1,6 @@
 #include "Buttons.hpp"
 #include "OperatingModeUtilities.h"
+#ifdef OLED_96x16
 extern TickType_t lastMovementTime;
 #ifndef NO_SLEEP_MODE
 void printCountdownUntilSleep(int sleepThres) {
@@ -17,4 +18,5 @@ void printCountdownUntilSleep(int sleepThres) {
     OLED::print(SmallSymbolSeconds, FontStyle::SMALL);
   }
 }
+#endif
 #endif

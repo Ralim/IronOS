@@ -1,4 +1,5 @@
 #include "ui_drawing.hpp"
+#ifdef OLED_96x16
 
 void ui_draw_usb_pd_debug_state(const uint16_t vbus_sense_state, const uint8_t stateNumber) {
   OLED::setCursor(0, 0);                             // Position the cursor at the 0,0 (top left)
@@ -41,3 +42,4 @@ void ui_draw_usb_pd_debug_pdo(const uint8_t entry_num, const uint16_t min_voltag
     OLED::print(SmallSymbolAmps, FontStyle::SMALL);
   }
 }
+#endif

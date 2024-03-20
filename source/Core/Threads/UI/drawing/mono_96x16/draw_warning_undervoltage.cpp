@@ -1,5 +1,5 @@
-
 #include "ui_drawing.hpp"
+#ifdef OLED_96x16
 
 void ui_draw_warning_undervoltage(void) {
   OLED::clearScreen();
@@ -18,3 +18,4 @@ void ui_draw_warning_undervoltage(void) {
   GUIDelay();
   waitForButtonPress();
 }
+#endif

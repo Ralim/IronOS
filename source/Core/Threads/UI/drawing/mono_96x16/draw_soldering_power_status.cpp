@@ -1,6 +1,7 @@
 #include "power.hpp"
 #include "ui_drawing.hpp"
 #include <OperatingModes.h>
+#ifdef OLED_96x16
 
 void ui_draw_soldering_power_status(bool boost_mode_on) {
   if (OLED::getRotation()) {
@@ -65,3 +66,4 @@ void ui_draw_soldering_power_status(bool boost_mode_on) {
   printVoltage();
   OLED::print(SmallSymbolVolts, FontStyle::SMALL);
 }
+#endif

@@ -2,6 +2,7 @@
 #include "OperatingModes.h"
 #include "SolderingCommon.h"
 #include "TipThermoModel.h"
+#ifdef OLED_96x16
 
 void ui_draw_tip_temperature(bool symbol, const FontStyle font) {
   // Draw tip temp handling unit conversion & tolerance near setpoint
@@ -13,3 +14,4 @@ void ui_draw_tip_temperature(bool symbol, const FontStyle font) {
     OLED::printSymbolDeg(font == FontStyle::LARGE ? FontStyle::EXTRAS : font);
   }
 }
+#endif

@@ -1,5 +1,6 @@
 #include "ui_drawing.hpp"
 
+#ifdef OLED_96x16
 extern uint8_t buttonAF[sizeof(buttonA)];
 extern uint8_t buttonBF[sizeof(buttonB)];
 extern uint8_t disconnectedTipF[sizeof(disconnectedTip)];
@@ -57,3 +58,5 @@ void ui_draw_homescreen_simplified(TemperatureType_t tipTemp) {
     }
   }
 }
+
+#endif

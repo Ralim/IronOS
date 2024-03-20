@@ -1,4 +1,5 @@
 #include "ui_drawing.hpp"
+#ifdef OLED_96x16
 
 void ui_draw_temperature_change(void) {
 
@@ -19,3 +20,4 @@ void ui_draw_temperature_change(void) {
     OLED::print(getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled) ? LargeSymbolPlus : LargeSymbolMinus, FontStyle::LARGE);
   }
 }
+#endif

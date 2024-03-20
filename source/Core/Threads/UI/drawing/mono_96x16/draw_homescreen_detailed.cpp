@@ -1,4 +1,5 @@
 #include "ui_drawing.hpp"
+#ifdef OLED_96x16
 
 extern uint8_t buttonAF[sizeof(buttonA)];
 extern uint8_t buttonBF[sizeof(buttonB)];
@@ -53,3 +54,4 @@ void ui_draw_homescreen_detailed(TemperatureType_t tipTemp) {
     OLED::print(SmallSymbolVolts, FontStyle::SMALL);
   }
 }
+#endif

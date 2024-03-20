@@ -1,4 +1,5 @@
 #include "ui_drawing.hpp"
+#ifdef OLED_96x16
 
 void ui_draw_soldering_detailed_sleep(TemperatureType_t tipTemp) {
 
@@ -32,3 +33,4 @@ void ui_draw_soldering_basic_sleep(TemperatureType_t tipTemp) {
 
   OLED::refresh();
 }
+#endif

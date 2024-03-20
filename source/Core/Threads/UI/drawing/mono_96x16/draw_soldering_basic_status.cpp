@@ -1,5 +1,6 @@
 #include "power.hpp"
 #include "ui_drawing.hpp"
+#ifdef OLED_96x16
 
 void ui_draw_soldering_basic_status(bool boostModeOn) {
   OLED::setCursor(0, 0);
@@ -40,3 +41,4 @@ void ui_draw_soldering_basic_status(bool boostModeOn) {
     ui_draw_power_source_icon();
   }
 }
+#endif

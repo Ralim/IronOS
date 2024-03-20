@@ -1,4 +1,5 @@
 #include "ui_drawing.hpp"
+#ifdef OLED_96x16
 
 void ui_draw_power_source_icon(void) {
 #if defined(POW_PD) || defined(POW_QC) || defined(POW_PD_EXT)
@@ -44,3 +45,5 @@ void ui_draw_power_source_icon(void) {
   }
 #endif
 }
+
+#endif

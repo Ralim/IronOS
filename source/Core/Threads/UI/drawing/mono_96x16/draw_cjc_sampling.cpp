@@ -1,5 +1,6 @@
 #include "ui_drawing.hpp"
 
+#ifdef OLED_96x16
 void ui_draw_cjc_sampling(const uint8_t num_dots) {
   OLED::setCursor(0, 0);
   OLED::print(translatedString(Tr->CJCCalibrating), FontStyle::SMALL);
@@ -9,3 +10,4 @@ void ui_draw_cjc_sampling(const uint8_t num_dots) {
     OLED::print(SmallSymbolDot, FontStyle::SMALL);
   }
 }
+#endif

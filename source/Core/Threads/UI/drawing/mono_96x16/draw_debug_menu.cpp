@@ -2,6 +2,7 @@
 #include "TipThermoModel.h"
 #include "main.hpp"
 #include "ui_drawing.hpp"
+#ifdef OLED_96x16
 extern osThreadId GUITaskHandle;
 extern osThreadId MOVTaskHandle;
 extern osThreadId PIDTaskHandle;
@@ -90,3 +91,4 @@ void ui_draw_debug_menu(const uint8_t item_number) {
     break;
   }
 }
+#endif
