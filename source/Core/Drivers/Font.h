@@ -95,7 +95,7 @@
   
   
   #if defined(MODEL_S60) || defined(MODEL_S60P) || defined(MODEL_TS101)
-    #ifdef MODEL_S60
+    #if defined(MODEL_S60) || defined(MODEL_S60P) 
     const uint8_t buttonA[] = {
         // width = 56
         // height = 32
