@@ -9,14 +9,14 @@ void ui_draw_homescreen_detailed(TemperatureType_t tipTemp) {
   if (isTipDisconnected()) {
     if (OLED::getRotation()) {
       // in right handed mode we want to draw over the first part
-      OLED::drawArea(54, 0, 42, 16, disconnectedTipF);
+      OLED::drawArea(54, 0, 56, 32, disconnectedTipF);
     } else {
-      OLED::drawArea(0, 0, 42, 16, disconnectedTip);
+      OLED::drawArea(0, 0, 56, 32, disconnectedTip);
     }
     if (OLED::getRotation()) {
       OLED::setCursor(-1, 0);
     } else {
-      OLED::setCursor(42, 0);
+      OLED::setCursor(56, 0);
     }
     uint32_t Vlt = getInputVoltageX10(getSettingValue(SettingsOptions::VoltageDiv), 0);
     OLED::printNumber(Vlt / 10, 2, FontStyle::LARGE);
