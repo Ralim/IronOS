@@ -1,7 +1,7 @@
 #include "FS2711.hpp"
 #include "OperatingModes.h"
-#include "ui_drawing.hpp"
 #include "stdbool.h"
+#include "ui_drawing.hpp"
 #if POW_PD_EXT == 2
 #ifdef HAS_POWER_DEBUG_MENU
 
