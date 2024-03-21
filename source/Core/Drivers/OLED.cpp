@@ -670,39 +670,34 @@ void OLED::drawArea(int16_t x, int8_t y, uint8_t width, uint8_t height, const ui
 
 // Draw an area, but y must be aligned on 0/8 offset
 // For data which has octets swapped in a 16-bit word.
-void OLED::drawAreaSwapped(int16_t x, int8_t y, uint8_t wide, uint8_t height, const uint8_t *ptr) {
-  // Splat this from x->x+wide in two strides
-  if (x <= -wide) {
+void OLED::drawAreaSwapped(int16_t x, int8_t y, uint8_t width, uint8_t height, const uint8_t *ptr) {
+  // Splat this from x->x+width in two strides
+  if (x <= -width) {
     return; // cutoffleft
   }
-  if (x > 96) {
+  if (x > OLED_WIDTH) {
     return; // cutoff right
   }
 
   uint8_t visibleStart = 0;
-  uint8_t visibleEnd   = wide;
+  uint8_t visibleEnd   = width;
 
   // trimming to draw partials
   if (x < 0) {
     visibleStart -= x; // subtract negative value == add absolute value
   }
-  if (x + wide > 96) {
-    visibleEnd = 96 - x;
+  if (x + width > OLED_WIDTH) {
+    visibleEnd = OLED_WIDTH - x;
   }
 
-  if (y == 0) {
-    // Splat first line of data
+  uint8_t rowsDrawn = 0;
+  while (height > 0) {
     for (uint8_t xx = visibleStart; xx < visibleEnd; xx += 2) {
-      stripPointers[0][xx + x]     = ptr[xx + 1];
-      stripPointers[0][xx + x + 1] = ptr[xx];
+      stripPointers[(y / 8) + rowsDrawn][x + xx]     = ptr[xx + 1 + (rowsDrawn * width)];
+      stripPointers[(y / 8) + rowsDrawn][x + xx + 1] = ptr[xx + (rowsDrawn * width)];
     }
-  }
-  if (y == 8 || height == 16) {
-    // Splat the second line
-    for (uint8_t xx = visibleStart; xx < visibleEnd; xx += 2) {
-      stripPointers[1][x + xx]     = ptr[xx + 1 + (height == 16 ? wide : 0)];
-      stripPointers[1][x + xx + 1] = ptr[xx + (height == 16 ? wide : 0)];
-    }
+    height -= 8;
+    rowsDrawn++;
   }
 }
 
