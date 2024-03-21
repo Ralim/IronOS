@@ -7,6 +7,7 @@
 
 #include "settingsGUI.hpp"
 #include "Buttons.hpp"
+#include "Font.h"
 #include "ScrollMessage.hpp"
 #include "TipThermoModel.h"
 #include "Translation.h"
@@ -1017,7 +1018,8 @@ static void displayMenu(size_t index) {
   // Draw symbol
   // 16 pixel wide image
   // less 2 pixel wide scrolling indicator
-  OLED::drawArea(OLED_WIDTH - 16 - 2, 0, 16, 16, (&SettingsMenuIcons[index][(16 * 2) * currentFrame]));
+
+  OLED::drawArea(OLED_WIDTH - SETTINGS_ICON_WIDTH - 2, 0, SETTINGS_ICON_WIDTH, SETTINGS_ICON_HEIGHT, (&SettingsMenuIcons[index][(SETTINGS_ICON_WIDTH * (SETTINGS_ICON_HEIGHT / 8)) * currentFrame]));
 }
 
 #if defined(POW_DC) || defined(POW_QC)
