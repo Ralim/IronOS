@@ -10,14 +10,14 @@ void ui_draw_homescreen_simplified(TemperatureType_t tipTemp) {
   bool tempOnDisplay          = false;
   bool tipDisconnectedDisplay = false;
   if (OLED::getRotation()) {
-    OLED::drawArea(54, 0, 56, 32, buttonAF);
+    OLED::drawArea(68, 0, 56, 32, buttonAF);
     OLED::drawArea(12, 0, 56, 32, buttonBF);
     OLED::setCursor(0, 0);
     ui_draw_power_source_icon();
   } else {
     OLED::drawArea(0, 0, 56, 32, buttonA);  // Needs to be flipped so button ends up
-    OLED::drawArea(42, 0, 56, 32, buttonB); // on right side of screen
-    OLED::setCursor(84, 0);
+    OLED::drawArea(58, 0, 56, 32, buttonB); // on right side of screen
+    OLED::setCursor(116, 0);
     ui_draw_power_source_icon();
   }
   tipDisconnectedDisplay = false;
@@ -35,7 +35,7 @@ void ui_draw_homescreen_simplified(TemperatureType_t tipTemp) {
     // Location changes on screen rotation
     if (OLED::getRotation()) {
       // in right handed mode we want to draw over the first part
-      OLED::fillArea(55, 0, 56, 32, 0); // clear the area for the temp
+      OLED::fillArea(68, 0, 56, 32, 0); // clear the area for the temp
       OLED::setCursor(56, 0);
     } else {
       OLED::fillArea(0, 0, 56, 32, 0); // clear the area
