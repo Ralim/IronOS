@@ -308,6 +308,8 @@ void FinishMeasureTipResistance() {
     return;
   } else if (reading < 200) {
     tipShorted = true;
+  } else if (reading < 520) {
+    newRes = 40;
   } else if (reading < 800) {
     newRes = 62;
   } else {

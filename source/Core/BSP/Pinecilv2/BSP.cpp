@@ -193,13 +193,14 @@ void FinishMeasureTipResistance() {
                      ((tipResistanceReadings[1] - tipResistanceReadings[2]) + calculatedSkew) // jump 2 - skew
                      )                                                                        //
                     / 2;                                                                      // Take average
-  // lastTipResistance = reading / 100;
-  // // As we are only detecting two resistances; we can split the difference for now
+  // As we are only detecting three resistances; we just bin to nearest
   uint8_t newRes = 0;
   if (reading > 8000) {
-    // return; // Change nothing as probably disconnected tip
+    // Let resistance be cleared to 0
   } else if (reading < 500) {
     tipShorted = true;
+  } else if (reading < 2600) {
+    newRes = 40;
   } else if (reading < 4000) {
     newRes = 62;
   } else {
