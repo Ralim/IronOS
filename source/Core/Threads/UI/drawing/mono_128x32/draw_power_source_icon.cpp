@@ -11,15 +11,10 @@ void ui_draw_power_source_icon(void) {
     } else {
       V = V / 10;
     }
-    if (V > 9) {
-      int16_t xPos = OLED::getCursorX();
-      OLED::printNumber(V / 10, 1, FontStyle::SMALL);
-      OLED::setCursor(xPos, 8);
-      OLED::printNumber(V % 10, 1, FontStyle::SMALL);
-      OLED::setCursor(xPos + 12, 0); // need to reset this as if we drew a wide char
-    } else {
-      OLED::printNumber(V, 1, FontStyle::LARGE);
-    }
+    int16_t xPos = OLED::getCursorX();
+    OLED::printNumber(V / 10, 1, FontStyle::LARGE);
+    OLED::setCursor(xPos, 16);
+    OLED::printNumber(V % 10, 1, FontStyle::LARGE);
     return;
   }
 #endif
