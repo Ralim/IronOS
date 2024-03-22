@@ -12,10 +12,10 @@ edit_uri: edit/dev/Documentation/
 
 # Theme and config
 theme:
-    name: readthedocs
-    highlightsjs: true
-    hljs_languages:
-        - yaml
+  name: readthedocs
+  highlightsjs: true
+  hljs_languages:
+    - yaml
 
 # Navigation structure
 nav:
@@ -41,6 +41,7 @@ nav:
       - Troubleshooting: Troubleshooting.md
       - Known Hardware Issues: HardwareIssues.md
       - Power sources: PowerSources.md
+      - New Hardware Requirements: PortingToNewDevice.md
   - Translations: Translation.md
   - Development: Development.md
   - Changelog: History.md
