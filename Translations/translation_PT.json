@@ -4,7 +4,7 @@
     "tempUnitFahrenheit": false,
     "messagesWarn": {
         "CalibrationDone": {
-            "message": "Calibração\nefetuada!"
+            "message": "Calibração\nfeita!"
         },
         "ResetOKMessage": {
             "message": "Reset OK"
@@ -28,7 +28,7 @@
             "message": "!Bloqueado!"
         },
         "WarningThermalRunaway": {
-            "message": "Thermal\nRunaway"
+            "message": "Avalanche\nTérmica"
         },
         "WarningTipShorted": {
             "message": "!Tip Shorted!"
@@ -37,7 +37,7 @@
             "message": "Antes de reiniciar certifique-se que o ferro está à temperatura ambiente!"
         },
         "CJCCalibrating": {
-            "message": "calibrar\n"
+            "message": "a calibrar\n"
         },
         "SettingsResetWarning": {
             "message": "Definições de fábrica?"
@@ -88,15 +88,15 @@
     },
     "menuGroups": {
         "PowerMenu": {
-            "displayText": "Configurações de\nenergia",
+            "displayText": "Opções de\nEnergia",
             "description": ""
         },
         "SolderingMenu": {
-            "displayText": "Configurações\nSolda",
+            "displayText": "Opções de\nSolda",
             "description": ""
         },
         "PowerSavingMenu": {
-            "displayText": "Modos\nRepouso",
+            "displayText": "Modo de\nRepouso",
             "description": ""
         },
         "UIMenu": {
@@ -104,7 +104,7 @@
             "description": ""
         },
         "AdvancedMenu": {
-            "displayText": "Menu\nAvançado",
+            "displayText": "Opções\nAvançadas",
             "description": ""
         }
     },
@@ -130,7 +130,7 @@
             "description": "Activa o modo PPS & EPR"
         },
         "BoostTemperature": {
-            "displayText": "Temp.\nModo turbo",
+            "displayText": "Temp.\nModo Turbo",
             "description": "Ajuste de temperatura do \"modo turbo\""
         },
         "AutoStart": {
@@ -146,7 +146,7 @@
             "description": "A temperatura será aumentada com um click longo"
         },
         "LockingMode": {
-            "displayText": "Permitir bloquear\nbotões",
+            "displayText": "Permitir bloq.\nbotões",
             "description": "Durante a solda premir os dois botões para alternar entre (B=modo turbo | F=bloqueio total)"
         },
         "ProfilePhases": {
@@ -162,43 +162,43 @@
             "description": "Preheat at this rate (degrees per second)"
         },
         "ProfilePhase1Temp": {
-            "displayText": "Phase 1\nTemp",
-            "description": "Target temperature for the end of this phase"
+            "displayText": "Temp.\nFase 1",
+            "description": "Temperatura alvo no final desta fase"
         },
         "ProfilePhase1Duration": {
-            "displayText": "Phase 1\nDuration",
-            "description": "Target duration of this phase (seconds)"
+            "displayText": "Duração\nFase 1",
+            "description": "Duração alvo desta fase (segundos)"
         },
         "ProfilePhase2Temp": {
-            "displayText": "Phase 2\nTemp",
+            "displayText": "Temp.\nFase 2",
             "description": ""
         },
         "ProfilePhase2Duration": {
-            "displayText": "Phase 2\nDuration",
+            "displayText": "Duração\nFase 2",
             "description": ""
         },
         "ProfilePhase3Temp": {
-            "displayText": "Phase 3\nTemp",
+            "displayText": "Temp.\nFase 3",
             "description": ""
         },
         "ProfilePhase3Duration": {
-            "displayText": "Phase 3\nDuration",
+            "displayText": "Duração\nFase 3",
             "description": ""
         },
         "ProfilePhase4Temp": {
-            "displayText": "Phase 4\nTemp",
+            "displayText": "Temp.\nFase 4",
             "description": ""
         },
         "ProfilePhase4Duration": {
-            "displayText": "Phase 4\nDuration",
+            "displayText": "Duração\nFase 4",
             "description": ""
         },
         "ProfilePhase5Temp": {
-            "displayText": "Phase 5\nTemp",
+            "displayText": "Temp.\nFase 5",
             "description": ""
         },
         "ProfilePhase5Duration": {
-            "displayText": "Phase 5\nDuration",
+            "displayText": "Duração\nFase 5",
             "description": ""
         },
         "ProfileCooldownSpeed": {
@@ -246,7 +246,7 @@
             "description": "Inverte o funcionamento dos botões de ajuste da temperatura"
         },
         "AnimSpeed": {
-            "displayText": "Velocidade de\nanimação",
+            "displayText": "Velocidade\nde animação",
             "description": "Velocidade das animações no menu (S=lenta | M=média | F=rápida)"
         },
         "AnimLoop": {
@@ -262,7 +262,7 @@
             "description": "Inverte as cores do ecrã OLED"
         },
         "LOGOTime": {
-            "displayText": "Duração do\nlogo no arranque",
+            "displayText": "Tempo img.\nno arranque",
             "description": "Define a duração do logotipo no arranque em (s=segundos)"
         },
         "AdvancedIdle": {
@@ -278,7 +278,7 @@
             "description": "Ativa o Bluetooth Low Energy (BLE)"
         },
         "PowerLimit": {
-            "displayText": "Limite de\npotência",
+            "displayText": "Limite\npotência",
             "description": "Potência máxima a usar (W=watt)"
         },
         "CalibrateCJC": {
