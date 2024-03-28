@@ -151,7 +151,7 @@
 #define ACCEL_MSA
 
 #define PROFILE_SUPPORT
-
+#define OLED_96x16         1
 #define POW_PD             1
 #define POW_PD_EXT         0
 #define USB_PD_EPR_WATTAGE 0 /*No EPR*/

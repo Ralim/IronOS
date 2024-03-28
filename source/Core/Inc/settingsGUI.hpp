@@ -36,7 +36,6 @@ typedef struct {
 } menuitem;
 
 void                   enterSettingsMenu();
-bool                   warnUser(const char *warning, const ButtonState buttons);
 extern const menuitem  rootSettingsMenu[];
 extern const menuitem *subSettingsMenus[];
 

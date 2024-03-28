@@ -155,6 +155,7 @@
 #define ENABLE_QC2                 1
 #define MAG_SLEEP_SUPPORT          1
 #define DEVICE_HAS_VALIDATION_SUPPORT
+#define OLED_96x16 1
 #define TEMP_NTC
 #define ACCEL_BMA
 #define ACCEL_SC7
