@@ -5,14 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://ralim.github.io/IronOS/PortingToNewDevice/" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Requesting support for a new device - IronOS</title>
+    <title>New Hardware Requirements - IronOS</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Requesting support for a new device";
+        var mkdocs_page_name = "New Hardware Requirements";
         var mkdocs_page_input_path = "PortingToNewDevice.md";
         var mkdocs_page_url = "/IronOS/PortingToNewDevice/";
       </script>
@@ -79,7 +79,7 @@
                 </li>
               </ul>
               <p class="caption"><span class="caption-text">Hardware</span></p>
-              <ul>
+              <ul class="current">
                   <li class="toctree-l1"><a class="reference internal" href="../HallSensor/">Hall Sensor (Pinecil)</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../Bluetooth/">Bluetooth (Pinecil V2)</a>
@@ -91,6 +91,30 @@
                   <li class="toctree-l1"><a class="reference internal" href="../HardwareIssues/">Known Hardware Issues</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../PowerSources/">Power sources</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">New Hardware Requirements</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#hard-requirements">Hard requirements</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#soft-requirements">Soft requirements</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#planned-features">Planned features</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#notes">Notes</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#note-a-flash-storage-space">Note A - Flash storage space</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#note-b-pinmap-for-the-microcontroller">Note B - Pinmap for the microcontroller</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#example-request-for-adding-a-new-device">Example request for adding a new device</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#hardware-details">Hardware details</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
                   </li>
               </ul>
               <ul>
@@ -119,7 +143,8 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
-      <li class="breadcrumb-item active">Requesting support for a new device</li>
+          <li class="breadcrumb-item">Hardware</li>
+      <li class="breadcrumb-item active">New Hardware Requirements</li>
     <li class="wy-breadcrumbs-aside">
           <a href="https://github.com/ralim/IronOS/edit/dev/Documentation/PortingToNewDevice.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
@@ -132,7 +157,7 @@
                 <h1 id="requesting-support-for-a-new-device">Requesting support for a new device</h1>
 <p>IronOS is largely designed to run on devices that are using <em>fairly</em> modern microcontrollers at their core. Generally this means an ARM Cortex or RISC-V processor.
 At this point in time it is not planned to support 8051 or similar cored devices. This is largely due to the reliance on FreeRTOS at the moment.</p>
-<p>When requesting a port for a new device, please try and find out if the hardware meets the below requirements. </p>
+<p>When requesting a port for a new device, please try and find out if the hardware meets the below requirements.</p>
 <p>The feature list's below are organised into three categories; Hard requirements that as of current must be met, soft requirements that <em>should</em> be met for full featured performance and the final category of planned <em>but not yet implemented</em> features; which can be implemented but can result in delays as these are not yet implemented.</p>
 <p>Aside from the below, keep in mind IronOS is really designed for soldering irons. This has expanded out into hot-plates as they are exceptionally similar devices.</p>
 <h2 id="hard-requirements">Hard requirements</h2>
@@ -141,7 +166,7 @@ At this point in time it is not planned to support 8051 or similar cored devices
 <li>64K of flash or larger (See note A)</li>
 <li>16K of ram or larger</li>
 <li>Device has one or more heating elements that can be controlled by a main temperature sensor</li>
-<li>If the main temperature sensor is a thermalcouple, a reference temperature sensor for cold junction compensation must exist and be close to the sensor contacts</li>
+<li>If the main temperature sensor is a thermocouple, a reference temperature sensor for cold junction compensation must exist and be close to the sensor contacts</li>
 <li>Means of the user updating the device without opening</li>
 <li>Known pinmap for the microcontroller. (see note B)</li>
 </ol>
@@ -156,7 +181,6 @@ At this point in time it is not planned to support 8051 or similar cored devices
 <h2 id="planned-features">Planned features</h2>
 <p>These features are planned for eventual support, but will likely not be done until devices need them.</p>
 <ul>
-<li>OLED Screens larger than 96x16 pixels</li>
 <li>Colour screens</li>
 <li>More than 2 buttons for input, or encoder inputs</li>
 <li>WiFi/Zigbee/ any other networking</li>
@@ -166,19 +190,19 @@ At this point in time it is not planned to support 8051 or similar cored devices
 <p>64KB is generally the minimum recommended size for the hardware to have.
 Larger is <em>definitely</em> preferred as it enables more features or the multi-pack language firmwares.
 Keep in mind that on some devices we loose space to a USB DFU bootloader (Older STM32F1's) so the firmware <em>can</em> work with less. But it can come at the cost of features.
-128KB or larger is <strong>great</strong>. 
+128KB or larger is <strong>great</strong>.
 For devices that have BLE or WiFi or other features, often code requirements are significantly larger. These are considered non essential features so will be ignored if we run into size issues.</p>
 <h3 id="note-b-pinmap-for-the-microcontroller">Note B - Pinmap for the microcontroller</h3>
 <p>In order to be able to write the interfacing code to communicate with the hardware, we need to know what pins on the microcontroller go to what hardware.
 It is also loosely required to have an understanding of the rest of the device, we do not need details on a lot of the boring aspects,but if for example a USB-PD interface IC is used we would want to know which one.</p>
-<h1 id="example-request-for-adding-a-new-device">Example request for adding a new device</h1>
-<p>Device Name: 
+<h2 id="example-request-for-adding-a-new-device">Example request for adding a new device</h2>
+<p>Device Name:
 Device Type:
-Approximate Price: 
+Approximate Price:
 Example purchase locations:</p>
-<h2 id="hardware-details">Hardware details:</h2>
-<p>Microcontroller version:
-Flash size (If external to the MCU):
+<h3 id="hardware-details">Hardware details</h3>
+<p>Microcontroller version: <code>STM32F103C8Tx</code>
+Flash size (If external to the MCU):<code>N/A</code>
 Microcontroller Pinout: <!-- Either link to manufacturer information, a forum documenting this or a discussion where the pinout has been roughly figured out already-->
 Device type: <!-- Soldering Iron/Hot Plate/ Reflow oven etc-->
 Device meets hard requirements list []
@@ -190,6 +214,10 @@ Device features BLE []</p>
               
             </div>
           </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../PowerSources/" class="btn btn-neutral float-left" title="Power sources"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../Translation/" class="btn btn-neutral float-right" title="Translations">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
 
   <hr/>
 
@@ -215,6 +243,10 @@ Device features BLE []</p>
         </span>
     
     
+      <span><a href="../PowerSources/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../Translation/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
