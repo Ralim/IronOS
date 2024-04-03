@@ -706,7 +706,7 @@ void OLED::fillArea(int16_t x, int8_t y, uint8_t wide, uint8_t height, const uin
   if (x <= -wide) {
     return; // cutoffleft
   }
-  if (x > 96) {
+  if (x > OLED_WIDTH) {
     return; // cutoff right
   }
 
@@ -717,21 +717,17 @@ void OLED::fillArea(int16_t x, int8_t y, uint8_t wide, uint8_t height, const uin
   if (x < 0) {
     visibleStart -= x; // subtract negative value == add absolute value
   }
-  if (x + wide > 96) {
-    visibleEnd = 96 - x;
+  if (x + wide > OLED_WIDTH) {
+    visibleEnd = OLED_WIDTH - x;
   }
 
-  if (y == 0) {
-    // Splat first line of data
+  uint8_t rowsDrawn = 0;
+  while (height > 0) {
     for (uint8_t xx = visibleStart; xx < visibleEnd; xx++) {
-      stripPointers[0][xx + x] = value;
+      stripPointers[(y / 8) + rowsDrawn][x + xx] = value;
     }
-  }
-  if (y == 8 || height == 16) {
-    // Splat the second line
-    for (uint8_t xx = visibleStart; xx < visibleEnd; xx++) {
-      stripPointers[1][x + xx] = value;
-    }
+    height -= 8;
+    rowsDrawn++;
   }
 }
 

@@ -49,7 +49,6 @@ void ui_draw_homescreen_simplified(TemperatureType_t tipTemp) {
       }
     } else {
       // Draw in missing tip symbol
-
       if (OLED::getRotation()) {
         // in right handed mode we want to draw over the first part
         OLED::drawArea(54, 0, 56, 32, disconnectedTipF);
