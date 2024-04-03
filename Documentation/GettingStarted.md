@@ -9,7 +9,7 @@ If your device did not come with IronOS already installed, or if you need to upd
 - [TS80 / TS80P](https://ralim.github.io/IronOS/Flashing/TS80%28P%29/)
 - [TS100](https://ralim.github.io/IronOS/Flashing/TS100)
 
-It is recommended to update to the newest stable release.
+It is recommended to update to the newest stable release when you first receive your device to ensure you are up to date.
 
 Once your Iron has been flashed, on first power on it _may_ warn you about the system settings being reset.
 _Do not panic_; this is 100% completely normal. This is here to note to you that they have been reset to handle the internal structure changing.

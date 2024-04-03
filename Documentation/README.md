@@ -27,6 +27,7 @@
       - [Troubleshooting](../Documentation/Troubleshooting.md)
       - [Known Hardware Issues](../Documentation/HardwareIssues.md)
       - [Power sources](../Documentation/PowerSources.md)
+      - [New Hardware Requirements](../Documentation/PortingToNewDevice.md)
   - [Translations](../Documentation/Translation.md)
   - [Development](../Documentation/Development.md)
   - [Changelog](../Documentation/History.md)
