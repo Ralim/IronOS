@@ -732,44 +732,28 @@ void OLED::fillArea(int16_t x, int8_t y, uint8_t wide, uint8_t height, const uin
 }
 
 void OLED::drawFilledRect(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, bool clear) {
+  //!! LSB is at the top of the screen !!
+
   // Draw this in 3 sections
-  // This is basically a N wide version of vertical line
+  uint8_t remainingHeight = y1 - y0;
+  for (uint8_t currentRow = y0 / 8; (currentRow < (OLED_HEIGHT / 8)) && remainingHeight; currentRow++) {
+    uint8_t maskTop = (0xFF) << (y0 % 8); // Shift off the mask
+    y0              = 0;                  // Blank out any start offset for future iterations
+                                          // If we are terminating the bottom of the rectangle in this row, we mask the bottom side of things too
+    if (remainingHeight <= 8) {
+      uint8_t maskBottom = ~((0xFF) << y1 % 8);  // Create mask for
+      maskTop            = maskTop & maskBottom; // AND the two masks together for final write mask
+    }
 
-  // Step 1 : Draw in the top few pixels that are not /8 aligned
-  // LSB is at the top of the screen
-  uint8_t mask = 0xFF;
-  if (y0) {
-    mask = mask << (y0 % 8);
-    for (uint8_t col = x0; col < x1; col++) {
+    for (uint8_t xpos = x0; xpos < x1; xpos++) {
       if (clear) {
-        stripPointers[0][(y0 / 8) * 96 + col] &= ~mask;
+        stripPointers[currentRow][xpos] &= ~maskTop;
       } else {
-        stripPointers[0][(y0 / 8) * 96 + col] |= mask;
+        stripPointers[currentRow][xpos] |= maskTop;
       }
     }
-  }
-  // Next loop down the line the total number of solids
-  if (y0 / 8 != y1 / 8) {
-    for (uint8_t col = x0; col < x1; col++) {
-      for (uint8_t r = (y0 / 8); r < (y1 / 8); r++) {
-        // This gives us the row index r
-        if (clear) {
-          stripPointers[0][(r * 96) + col] = 0;
-        } else {
-          stripPointers[0][(r * 96) + col] = 0xFF;
-        }
-      }
-    }
-  }
 
-  // Finally draw the tail
-  mask = ~(mask << (y1 % 8));
-  for (uint8_t col = x0; col < x1; col++) {
-    if (clear) {
-      stripPointers[0][(y1 / 8) * 96 + col] &= ~mask;
-    } else {
-      stripPointers[0][(y1 / 8) * 96 + col] |= mask;
-    }
+    remainingHeight -= 8; // Reduce remaining height but the row stripe height
   }
 }
 
