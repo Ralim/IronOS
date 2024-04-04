@@ -52,7 +52,7 @@
             "message": "Napětí: \n"
         },
         "SleepingSimpleString": {
-            "message": "Zzz "
+            "message": "SLP "
         },
         "SleepingAdvancedString": {
             "message": "Režim spánku...\n"

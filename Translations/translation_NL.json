@@ -52,7 +52,7 @@
             "message": "Ingangs spanning: \n"
         },
         "SleepingSimpleString": {
-            "message": "Zzz "
+            "message": "SLP "
         },
         "SleepingAdvancedString": {
             "message": "Slaapt...\n"

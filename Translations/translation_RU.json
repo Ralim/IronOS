@@ -52,7 +52,7 @@
             "message": "Питание(В):\n"
         },
         "SleepingSimpleString": {
-            "message": "Zzz "
+            "message": "Хрр "
         },
         "SleepingAdvancedString": {
             "message": "Сон...\n"

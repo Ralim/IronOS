@@ -52,7 +52,7 @@
             "message": "Jännite: \n"
         },
         "SleepingSimpleString": {
-            "message": "Zzz "
+            "message": "SLP "
         },
         "SleepingAdvancedString": {
             "message": "Lepotila...\n"
