@@ -51,9 +51,6 @@
         "InputVoltageString": {
             "message": "Είσοδος V: \n"
         },
-        "SleepingSimpleString": {
-            "message": "Zzz "
-        },
         "SleepingAdvancedString": {
             "message": "Υπνος...\n"
         },

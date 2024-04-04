@@ -48,6 +48,8 @@ extern const char *SmallSymbolState;
 extern const char *SmallSymbolNoVBus;
 extern const char *SmallSymbolVBus;
 
+extern const char *LargeSymbolSleep;
+
 extern const char *DebugMenu[];
 extern const char *AccelTypeNames[];
 extern const char *PowerSourceNames[];
@@ -127,7 +129,6 @@ struct TranslationIndexTable {
   uint16_t ProfilePreheatString;
   uint16_t ProfileCooldownString;
 
-  uint16_t SleepingSimpleString;
   uint16_t SleepingAdvancedString;
   uint16_t SleepingTipAdvancedString;
   uint16_t DeviceFailedValidationWarning;
