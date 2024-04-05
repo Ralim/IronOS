@@ -51,9 +51,6 @@
         "InputVoltageString": {
             "message": "Napětí: \n"
         },
-        "SleepingSimpleString": {
-            "message": "Zzz "
-        },
         "SleepingAdvancedString": {
             "message": "Režim spánku...\n"
         },

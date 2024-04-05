@@ -51,9 +51,6 @@
         "InputVoltageString": {
             "message": "Napon V: \n"
         },
-        "SleepingSimpleString": {
-            "message": "Zzz "
-        },
         "SleepingAdvancedString": {
             "message": "SPAVAM...\n"
         },

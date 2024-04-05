@@ -146,6 +146,7 @@ def get_constants() -> List[Tuple[str, str]]:
         ("SmallSymbolState", "State"),
         ("SmallSymbolNoVBus", "No VBus"),
         ("SmallSymbolVBus", "VBus"),
+        ("LargeSymbolSleep", "Zzz "),
     ]
 
 

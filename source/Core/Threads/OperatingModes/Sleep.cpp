@@ -45,7 +45,7 @@ OperatingMode gui_SolderingSleepingMode(const ButtonState buttons, guiContext *c
     printVoltage();
     OLED::print(SmallSymbolVolts, FontStyle::SMALL);
   } else {
-    OLED::print(translatedString(Tr->SleepingSimpleString), FontStyle::LARGE);
+    OLED::print(LargeSymbolSleep, FontStyle::LARGE);
     OLED::printNumber(tipTemp, 3, FontStyle::LARGE);
     OLED::printSymbolDeg(FontStyle::EXTRAS);
   }
