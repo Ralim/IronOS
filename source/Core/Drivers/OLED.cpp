@@ -282,8 +282,10 @@ void OLED::transitionSecondaryFramebuffer(const bool forwardNavigation, const Ti
   TickType_t duration      = 0;
   TickType_t start         = xTaskGetTickCount();
   uint8_t    offset        = 0;
+  uint32_t   loopCounter   = 0;
   TickType_t startDraw     = xTaskGetTickCount();
   while (duration <= totalDuration) {
+    loopCounter++;
     duration          = xTaskGetTickCount() - start;
     uint16_t progress = ((duration * 100) / totalDuration); // Percentage of the period we are through for animation
     progress          = easeInOutTiming(progress);
@@ -321,7 +323,14 @@ void OLED::transitionSecondaryFramebuffer(const bool forwardNavigation, const Ti
     memmove(&stripPointers[3][newStart], &stripBackPointers[3][newEnd], progress);
 #endif /* OLED_128x32 */
 
+#ifdef OLED_128x32
+    if (loopCounter % 2 == 0) {
+      refresh();
+    }
+#else
     refresh(); // Now refresh to write out the contents to the new page
+#endif /* OLED_128x32 */
+
     vTaskDelayUntil(&startDraw, TICKS_100MS / 7);
     buttonsReleased |= getButtonState() == BUTTON_NONE;
     if (getButtonState() != BUTTON_NONE && buttonsReleased) {
@@ -330,7 +339,7 @@ void OLED::transitionSecondaryFramebuffer(const bool forwardNavigation, const Ti
       return;
     }
   }
-  refresh(); //
+  refresh(); // redraw at the end if required
 }
 
 void OLED::useSecondaryFramebuffer(bool useSecondary) {
@@ -455,7 +464,15 @@ void OLED::transitionScrollUp(const TickType_t viewEnterTime) {
       refresh(); // Now refresh to write out the contents to the new page
       return;
     }
+
+#ifdef OLED_128x32
+    // To keep things faster, only redraw every second line
+    if (heightPos % 2 == 0) {
+      refresh(); // Now refresh to write out the contents to the new page
+    }
+#else
     refresh(); // Now refresh to write out the contents to the new page
+#endif
     vTaskDelayUntil(&startDraw, TICKS_100MS / 7);
   }
 }
