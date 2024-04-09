@@ -116,7 +116,7 @@ static bool showHallEffect(void);
 
 // Menu functions
 
-#if defined(POW_DC) || defined(POW_QC)
+#if defined(POW_DC) || defined(POW_QC) || defined(POW_PD)
 static void displayPowerMenu(void);
 #endif /* POW_DC or POW_QC */
 
@@ -208,7 +208,7 @@ const menuitem rootSettingsMenu[] {
    * // Language
    * Exit
    */
-#if defined(POW_DC) || defined(POW_QC)|| defined(POW_PD)
+#if defined(POW_DC) || defined(POW_QC) || defined(POW_PD)
   /* Power */
   {0, nullptr, displayPowerMenu, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0},
 #endif
@@ -1022,7 +1022,7 @@ static void displayMenu(size_t index) {
   OLED::drawArea(OLED_WIDTH - SETTINGS_ICON_WIDTH - 2, 0, SETTINGS_ICON_WIDTH, SETTINGS_ICON_HEIGHT, (&SettingsMenuIcons[index][(SETTINGS_ICON_WIDTH * (SETTINGS_ICON_HEIGHT / 8)) * currentFrame]));
 }
 
-#if defined(POW_DC) || defined(POW_QC)
+#if defined(POW_DC) || defined(POW_QC) || defined(POW_PD)
 static void displayPowerMenu(void) { displayMenu(0); }
 
 #endif /* POW_DC or POW_QC */
