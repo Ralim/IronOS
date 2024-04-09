@@ -208,7 +208,7 @@ const menuitem rootSettingsMenu[] {
    * // Language
    * Exit
    */
-#if defined(POW_DC) || defined(POW_QC)
+#if defined(POW_DC) || defined(POW_QC)|| defined(POW_PD)
   /* Power */
   {0, nullptr, displayPowerMenu, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0},
 #endif
