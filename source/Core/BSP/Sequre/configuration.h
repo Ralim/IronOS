@@ -65,7 +65,8 @@
  * OLED Orientation
  *
  */
-#define ORIENTATION_MODE           0 // 0: Right 1:Left 2:Automatic - Default Automatic
+#define ORIENTATION_MODE           0 // 0: Right 1:Left (2:Automatic N/A)
+#define MAX_ORIENTATION_MODE       1 // Disable auto mode
 #define REVERSE_BUTTON_TEMP_CHANGE 0 // 0:Default 1:Reverse - Reverse the plus and minus button assigment for temperature change
 
 /**
