@@ -274,8 +274,8 @@ void OLED::transitionSecondaryFramebuffer(const bool forwardNavigation, const Ti
   stripBackPointers[1] = &secondFrameBuffer[FRAMEBUFFER_START + OLED_WIDTH];
 
 #ifdef OLED_128x32
-  stripBackPointers[2] = &secondFrameBuffer[OLED_WIDTH * 2];
-  stripBackPointers[3] = &secondFrameBuffer[OLED_WIDTH * 3];
+  stripBackPointers[2] = &secondFrameBuffer[FRAMEBUFFER_START + (OLED_WIDTH * 2)];
+  stripBackPointers[3] = &secondFrameBuffer[FRAMEBUFFER_START + (OLED_WIDTH * 3)];
 #endif /* OLED_128x32 */
 
   TickType_t totalDuration = TICKS_100MS * 5; // 500ms
