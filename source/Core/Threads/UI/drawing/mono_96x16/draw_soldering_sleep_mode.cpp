@@ -27,7 +27,7 @@ void ui_draw_soldering_basic_sleep(TemperatureType_t tipTemp) {
   OLED::clearScreen();
   OLED::setCursor(0, 0);
 
-  OLED::print(translatedString(Tr->SleepingSimpleString), FontStyle::LARGE);
+  OLED::print(LargeSymbolSleep, FontStyle::LARGE);
   OLED::printNumber(tipTemp, 3, FontStyle::LARGE);
   OLED::printSymbolDeg(FontStyle::EXTRAS);
 
