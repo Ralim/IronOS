@@ -394,7 +394,14 @@ void OLED::transitionScrollDown(const TickType_t viewEnterTime) {
       refresh(); // Now refresh to write out the contents to the new page
       return;
     }
+#ifdef OLED_128x32
+    // To keep things faster, only redraw every second line
+    if (heightPos % 2 == 0) {
+      refresh(); // Now refresh to write out the contents to the new page
+    }
+#else
     refresh(); // Now refresh to write out the contents to the new page
+#endif
     vTaskDelayUntil(&startDraw, TICKS_100MS / 7);
   }
 }
