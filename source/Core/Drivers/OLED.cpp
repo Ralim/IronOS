@@ -209,17 +209,22 @@ void OLED::drawChar(const uint16_t charCode, const FontStyle fontStyle, const ui
  */
 void OLED::drawScrollIndicator(uint8_t y, uint8_t height) {
   union u_type {
-    uint16_t whole;
-    uint8_t  strips[2];
+    uint32_t whole;
+    uint8_t  strips[4];
   } column;
 
-  column.whole = (1 << height) - 1;
-  column.whole <<= y;
+  column.whole = (1 << height) - 1; // preload a set of set bits of height
+  column.whole <<= y;               // Shift down by the y value
 
   // Draw a one pixel wide bar to the left with a single pixel as
   // the scroll indicator.
   fillArea(OLED_WIDTH - 1, 0, 1, 8, column.strips[0]);
   fillArea(OLED_WIDTH - 1, 8, 1, 8, column.strips[1]);
+#if OLED_HEIGHT == 32
+  fillArea(OLED_WIDTH - 1, 16, 1, 8, column.strips[2]);
+  fillArea(OLED_WIDTH - 1, 24, 1, 8, column.strips[3]);
+
+#endif
 }
 
 /**
