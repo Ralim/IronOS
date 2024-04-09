@@ -174,12 +174,6 @@ void OLED::drawChar(const uint16_t charCode, const FontStyle fontStyle, const ui
   case FontStyle::SMALL:
   case FontStyle::LARGE:
   default:
-    if (charCode == '\x01' && cursor_y == 0) { // 0x01 is used as new line char
-      setCursor(soft_x_limit, 8);
-      return;
-    } else if (charCode <= 0x01) {
-      return;
-    }
     currentFont = nullptr;
     index       = 0;
     switch (fontStyle) {
@@ -192,6 +186,12 @@ void OLED::drawChar(const uint16_t charCode, const FontStyle fontStyle, const ui
       fontHeight = 16;
       fontWidth  = 12;
       break;
+    }
+    if (charCode == '\x01' && cursor_y == 0) { // 0x01 is used as new line char
+      setCursor(soft_x_limit, fontHeight);
+      return;
+    } else if (charCode <= 0x01) {
+      return;
     }
 
     currentFont = fontStyle == FontStyle::SMALL ? FontSectionInfo.font06_start_ptr : FontSectionInfo.font12_start_ptr;
