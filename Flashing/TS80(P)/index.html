@@ -173,6 +173,7 @@ Then this works the same as a production release (use the correct file).</p>
 <li>If it didn't work the first time, try copying the file again without disconnecting the device, often it will work on the second shot.</li>
 <li>Disconnect the USB and power up the device. You're good to go.</li>
 </ol>
+<p>If you get a message when copying: "Are you sure you want to move this file without its properties?" then this can cause an issue where the iron thinks that the file has finished copying before it actually has and can cause a .ERR file. Since this dialog prompt is caused by copying a file from NTFS to FAT (the iron's filesystem) in windows, you can fix this by formatting a thumbdrive as FAT32 and then storing the hex file on that before copying the file to the iron. As there will be no NTFS properties on the file when stored on a FAT32 filesystem, there will be no prompt, and the copy will then proceed normally.</p>
 <p>For the more adventurous out there, you can also load this firmware onto the device using an SWD programmer, for easier installation follow the guide at the end of this document.</p>
 <p>On the USB port, <code>USB_D+</code> is shorted to <code>SWDIO</code> and <code>USB_D-</code> is shorted to <code>SWCLK</code> so debugging works without disassembly (attach while staying in the bootloader). Installing <a href="https://github.com/Ralim/IronOS-dfu">IronOS-dfu</a> is recommended as it allows reliable flashing of binary files with <a href="http://dfu-util.sourceforge.net/">dfu-util</a>.</p>
 <h2 id="mac">Mac</h2>
