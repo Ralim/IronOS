@@ -96,14 +96,6 @@
             "description": "Shown in profile mode while cooling down"
         },
         {
-            "id": "SleepingSimpleString",
-            "maxLen": 4,
-            "exclude": [
-                "NO_SLEEP_MODE"
-            ],
-            "description": "The text shown to indicate the unit is in sleep mode when the advanced view is NOT on."
-        },
-        {
             "id": "SleepingAdvancedString",
             "maxLen": 15,
             "exclude": [

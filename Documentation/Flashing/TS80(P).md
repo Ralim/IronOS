@@ -39,6 +39,8 @@ Officially the bootloader on the devices only works under Windows (use the built
 7. If it didn't work the first time, try copying the file again without disconnecting the device, often it will work on the second shot.
 8. Disconnect the USB and power up the device. You're good to go.
 
+If you get a message when copying: "Are you sure you want to move this file without its properties?" then this can cause an issue where the iron thinks that the file has finished copying before it actually has and can cause a .ERR file. Since this dialog prompt is caused by copying a file from NTFS to FAT (the iron's filesystem) in windows, you can fix this by formatting a thumbdrive as FAT32 and then storing the hex file on that before copying the file to the iron. As there will be no NTFS properties on the file when stored on a FAT32 filesystem, there will be no prompt, and the copy will then proceed normally.
+
 For the more adventurous out there, you can also load this firmware onto the device using an SWD programmer, for easier installation follow the guide at the end of this document.
 
 On the USB port, `USB_D+` is shorted to `SWDIO` and `USB_D-` is shorted to `SWCLK` so debugging works without disassembly (attach while staying in the bootloader). Installing [IronOS-dfu](https://github.com/Ralim/IronOS-dfu) is recommended as it allows reliable flashing of binary files with [dfu-util](http://dfu-util.sourceforge.net/).

@@ -51,9 +51,6 @@
         "InputVoltageString": {
             "message": "Jännite: \n"
         },
-        "SleepingSimpleString": {
-            "message": "Zzz "
-        },
         "SleepingAdvancedString": {
             "message": "Lepotila...\n"
         },

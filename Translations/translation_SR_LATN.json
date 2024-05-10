@@ -51,9 +51,6 @@
         "InputVoltageString": {
             "message": "Ul. napon: \n"
         },
-        "SleepingSimpleString": {
-            "message": "Zzz "
-        },
         "SleepingAdvancedString": {
             "message": "Spavanje...\n"
         },

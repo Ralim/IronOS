@@ -51,9 +51,6 @@
         "InputVoltageString": {
             "message": "Tensão: \n"
         },
-        "SleepingSimpleString": {
-            "message": "Zzz "
-        },
         "SleepingAdvancedString": {
             "message": "Repouso...\n"
         },
@@ -61,16 +58,16 @@
             "message": "Ponta: \n"
         },
         "ProfilePreheatString": {
-            "message": "Preheat\n"
+            "message": "Pré-Aquecer\n"
         },
         "ProfileCooldownString": {
-            "message": "Cooldown\n"
+            "message": "Arrefecer\n"
         },
         "DeviceFailedValidationWarning": {
             "message": "O seu dispositivo provavelmente é falsificado!"
         },
         "TooHotToStartProfileWarning": {
-            "message": "Too hot to\nstart profile"
+            "message": "Demasiado quente para\niniciar perfil"
         }
     },
     "characters": {
@@ -154,12 +151,12 @@
             "description": "Number of phases in profile mode"
         },
         "ProfilePreheatTemp": {
-            "displayText": "Preheat\nTemp",
-            "description": "Preheat to this temperature at the start of profile mode"
+            "displayText": "Temperatura\nPré-aquecimento",
+            "description": "Pré-aquecer a esta temperatura quando o perfil é selecionado"
         },
         "ProfilePreheatSpeed": {
-            "displayText": "Preheat\nSpeed",
-            "description": "Preheat at this rate (degrees per second)"
+            "displayText": "Velocidade\nPré-aquecimento",
+            "description": "Ritmo de pré-aquecimento (graus por segundo)"
         },
         "ProfilePhase1Temp": {
             "displayText": "Temp.\nFase 1",
@@ -202,8 +199,8 @@
             "description": ""
         },
         "ProfileCooldownSpeed": {
-            "displayText": "Cooldown\nSpeed",
-            "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
+            "displayText": "Velocidade\nArrefecimento",
+            "description": "Arrefecer a este ritmo após sair do perfil selecionado (graus por segundo)"
         },
         "MotionSensitivity": {
             "displayText": "Sensibilidade\nmovimento",

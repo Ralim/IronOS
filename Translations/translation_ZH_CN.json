@@ -51,9 +51,6 @@
         "InputVoltageString": {
             "message": "VIN: "
         },
-        "SleepingSimpleString": {
-            "message": "Zzz "
-        },
         "SleepingAdvancedString": {
             "message": "Zzzz..."
         },
