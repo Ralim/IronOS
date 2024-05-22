@@ -155,47 +155,47 @@
             "description": "Preheat to this temperature at the start of profile mode"
         },
         "ProfilePreheatSpeed": {
-            "displayText": "Preheat\nSpeed",
-            "description": "Preheat at this rate (degrees per second)"
+        "displayText": "Ön Isıtma\nHızı",
+        "description": "Bu hızda ön ısıtma yapın (saniye başına derece)"
         },
         "ProfilePhase1Temp": {
-            "displayText": "Phase 1\nTemp",
-            "description": "Target temperature for the end of this phase"
+            "displayText": "Aşama 1\nSıcaklık",
+             "description": "Bu aşamanın sonunda hedeflenen sıcaklık"
         },
         "ProfilePhase1Duration": {
-            "displayText": "Phase 1\nDuration",
-            "description": "Target duration of this phase (seconds)"
+            "displayText": "Aşama 1\nSüre",
+            "description": "Bu aşamanın hedef süresi (saniye)"
         },
         "ProfilePhase2Temp": {
-            "displayText": "Phase 2\nTemp",
+            "displayText": "Aşama 2\nSıcaklık",
             "description": ""
         },
         "ProfilePhase2Duration": {
-            "displayText": "Phase 2\nDuration",
+            "displayText": "Aşama 2\nSüre",
             "description": ""
         },
         "ProfilePhase3Temp": {
-            "displayText": "Phase 3\nTemp",
+            "displayText": "Aşama 3\nSıcaklık",
             "description": ""
         },
         "ProfilePhase3Duration": {
-            "displayText": "Phase 3\nDuration",
+            "displayText": "Aşama 3\nSüre",
             "description": ""
         },
         "ProfilePhase4Temp": {
-            "displayText": "Phase 4\nTemp",
+            "displayText": "Aşama 4\nSıcaklık",
             "description": ""
         },
         "ProfilePhase4Duration": {
-            "displayText": "Phase 4\nDuration",
+            "displayText": "Aşama 4\nSüre",
             "description": ""
         },
         "ProfilePhase5Temp": {
-            "displayText": "Phase 5\nTemp",
+            "displayText": "Aşama 5\nSıcaklık",
             "description": ""
         },
         "ProfilePhase5Duration": {
-            "displayText": "Phase 5\nDuration",
+            "displayText": "Aşama 5\nSüre",
             "description": ""
         },
         "ProfileCooldownSpeed": {
