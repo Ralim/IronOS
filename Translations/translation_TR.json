@@ -160,7 +160,7 @@
         },
         "ProfilePhase1Temp": {
             "displayText": "Aşama 1\nSıcaklık",
-             "description": "Bu aşamanın sonunda hedeflenen sıcaklık"
+            "description": "Bu aşamanın sonunda hedeflenen sıcaklık"
         },
         "ProfilePhase1Duration": {
             "displayText": "Aşama 1\nSüre",
@@ -200,7 +200,7 @@
         },
         "ProfileCooldownSpeed": {
           "displayText": "Soğuma\nHızı",
-            "description": "Profil modunun sonunda bu hızda soğuma yapın (saniye başına derece)"
+          "description": "Profil modunun sonunda bu hızda soğuma yapın (saniye başına derece)"
         },
         "MotionSensitivity": {
             "displayText": "HARHAS\n",
@@ -239,28 +239,28 @@
             "description": "Bu yazının kayma hızı (Y=Yavaş | H=Hızlı)"
         },
         "ReverseButtonTempChange": {
-            "displayText": "Swap\n+ - keys",
+            "displayText": "Düğme Yerleri\nRotasyonu",
             "description": "\"Düğme Yerleri Rotasyonu\" Sıcaklık ayar düğmelerinin yerini değiştirin"
         },
         "AnimSpeed": {
-            "displayText": "Anim.\nspeed",
-            "description": "Pace of icon animations in menu (Y=Yavaş | O=Orta | H=Hızlı)"
+             "displayText": "Animasyon\nHızı",
+             "description": "Menüdeki simge animasyonlarının hızı (Y=Yavaş | O=Orta | H=Hızlı)"
         },
         "AnimLoop": {
-            "displayText": "Anim.\nloop",
-            "description": "Loop icon animations in main menu"
+            "displayText": "Animasyon\nDöngüsü",
+            "description": "Ana menüde simge animasyonlarının döngüsü"
         },
         "Brightness": {
             "displayText": "Ekran\nparlaklığı",
             "description": "OLED ekran parlaklığını ayarlar"
         },
         "ColourInversion": {
-            "displayText": "Invert\nscreen",
-            "description": "Invert the OLED screen colors"
+            "displayText": "Ekran\nRenkleri",
+            "description": "OLED ekran renklerini ters çevir"
         },
         "LOGOTime": {
-            "displayText": "Boot logo\nduration",
-            "description": "Boot logo süresi (s=seconds)"
+            "displayText": "Boot Logo\nSüresi",
+            "description": "Boot logo süresi (s=saniye)"
         },
         "AdvancedIdle": {
             "displayText": "AYRBİL\n",
@@ -275,7 +275,7 @@
             "description": "Bluetooth LE'yi etkinleştirir"
         },
         "PowerLimit": {
-            "displayText": "Power\nlimit",
+            "displayText": "Güç\nlimiti",
             "description": "Havyanın kullanacağı en yüksek güç (W=Watts)"
         },
         "CalibrateCJC": {
@@ -287,7 +287,7 @@
             "description": "Voltaj Girişi Kalibrasyonu. Düğmeler ayarlar, çıkmak için uzun bas."
         },
         "PowerPulsePower": {
-            "displayText": "Power\npulse",
+            "displayText": "Güç\nDarbeleri",
             "description": "Güç girişi voltajı ölçüm yoğunluğunu sık tut."
         },
         "PowerPulseWait": {
