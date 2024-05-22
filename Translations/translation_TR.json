@@ -13,31 +13,31 @@
             "message": "Ayarlar\nSıfırlandı"
         },
         "NoAccelerometerMessage": {
-            "message": "No accelerometer\ndetected!"
+            "message": "İvme sensörü\ntespit edilmedi!"
         },
         "NoPowerDeliveryMessage": {
-            "message": "No USB-PD IC\ndetected!"
+            "message": "USB-PD IC\ntespit edilmedi!"
         },
         "LockingKeysString": {
-            "message": "LOCKED"
+            "message": "KİLİTLİ"
         },
         "UnlockingKeysString": {
-            "message": "UNLOCKED"
+            "message": "KİLİT AÇIK"
         },
         "WarningKeysLockedString": {
-            "message": "!LOCKED!"
+            "message": "!KİLİTLİ!"
         },
         "WarningThermalRunaway": {
-            "message": "Thermal\nRunaway"
+            "message": "Termal\nKaçak"
         },
         "WarningTipShorted": {
-            "message": "!Tip Shorted!"
+            "message": "!Uç Kısa Devre!"
         },
         "SettingsCalibrationWarning": {
-            "message": "Before rebooting, make sure tip & handle are at room temperature!"
+            "message": "Yeniden başlatmadan önce uç ve sapın oda sıcaklığında olduğundan emin olun!"
         },
         "CJCCalibrating": {
-            "message": "calibrating\n"
+            "message": "kalibre ediliyor\n"
         },
         "SettingsResetWarning": {
             "message": "Ayarları varsayılan değerlere sıfırlamak istediğinizden emin misiniz?"
@@ -58,16 +58,16 @@
             "message": "Uç: \n"
         },
         "ProfilePreheatString": {
-            "message": "Preheat\n"
+            "message": "Ön Isıtma\n"
         },
         "ProfileCooldownString": {
-            "message": "Cooldown\n"
+            "message": "Soğuma\n"
         },
         "DeviceFailedValidationWarning": {
-            "message": "Your device is most likely a counterfeit!"
+            "message": "Cihazınız büyük olasılıkla sahte!"
         },
         "TooHotToStartProfileWarning": {
-            "message": "Too hot to\nstart profile"
+            "message": "Profil başlatmak için\nçok sıcak"
         }
     },
     "characters": {
@@ -111,20 +111,20 @@
             "description": "\"Güç Kaynağı\". En düşük çalışma voltajını ayarlar. (DC 10V) (S 3.3V hücre başına)"
         },
         "MinVolCell": {
-            "displayText": "Minimum\nvoltage",
-            "description": "Minimum allowed voltage per battery cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+            "displayText": "Minimum\nVoltaj",
+            "description": "Pil hücresi başına izin verilen minimum voltaj (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
         },
         "QCMaxVoltage": {
             "displayText": "QC\nvoltajı",
             "description": "Max istenecek QC voltajı"
         },
         "PDNegTimeout": {
-            "displayText": "PD\ntimeout",
-            "description": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers"
+            "displayText": "PD\nTimeout",
+            "description": "Bazı QC şarj cihazlarıyla uyumluluk için 100ms adımlarında PD pazarlık zaman aşımı"
         },
         "PDVpdo": {
             "displayText": "PD\nVPDO",
-            "description": "Enables PPS & EPR modes"
+            "description": "PPS & EPR modlarını etkinleştirir"
         },
         "BoostTemperature": {
             "displayText": "YKSC\n",
@@ -143,16 +143,16 @@
             "description": "Uzun başışlardaki sıcaklık derecesi atlama oranı"
         },
         "LockingMode": {
-            "displayText": "Allow locking\nbuttons",
-            "description": "While soldering, hold down both buttons to toggle locking them (B=boost mode only | F=full locking)"
+            "displayText": "Kilitleme\nİzni",
+            "description": "Lehimleme sırasında, her iki düğmeye basılı tutarak kilitleme modunu değiştirin (B=boost mod only | F=full locking)"
         },
         "ProfilePhases": {
-            "displayText": "Profile\nPhases",
-            "description": "Number of phases in profile mode"
+            "displayText": "Profil\nAşamaları",
+            "description": "Profil modundaki aşamaların sayısı"
         },
         "ProfilePreheatTemp": {
-            "displayText": "Preheat\nTemp",
-            "description": "Preheat to this temperature at the start of profile mode"
+            "displayText": "Ön Isıtma\nSıcaklık",
+            "description": "Profil modunun başlangıcında bu sıcaklığa kadar ön ısıtma yapar"
         },
         "ProfilePreheatSpeed": {
         "displayText": "Ön Isıtma\nHızı",
@@ -199,8 +199,8 @@
             "description": ""
         },
         "ProfileCooldownSpeed": {
-            "displayText": "Cooldown\nSpeed",
-            "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
+          "displayText": "Soğuma\nHızı",
+            "description": "Profil modunun sonunda bu hızda soğuma yapın (saniye başına derece)"
         },
         "MotionSensitivity": {
             "displayText": "HARHAS\n",
@@ -219,8 +219,8 @@
             "description": "Kapatma Zaman Aşımı (Dakika)"
         },
         "HallEffSensitivity": {
-            "displayText": "Hall sensor\nsensitivity",
-            "description": "Sensitivity to magnets (1=En az duyarlı | ... | 9=En duyarlı)"
+            "displayText": "Hall Sensör\nHassasiyeti",
+            "description": "Mıknatıslara duyarlılık (1=En az duyarlı | ... | 9=En duyarlı)"
         },
         "TemperatureUnit": {
             "displayText": "SCKBRM\n",
@@ -272,15 +272,15 @@
         },
         "BluetoothLE": {
             "displayText": "Bluetooth\n",
-            "description": "Enables BLE"
+            "description": "Bluetooth LE'yi etkinleştirir"
         },
         "PowerLimit": {
             "displayText": "Power\nlimit",
             "description": "Havyanın kullanacağı en yüksek güç (W=Watts)"
         },
         "CalibrateCJC": {
-            "displayText": "Calibrate CJC\nat next boot",
-            "description": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
+            "displayText": "CJC Kalibrasyonu\nSonraki Boot'ta",
+            "description": "Sonraki boot'ta uç Soğuk Nokta Kompansasyonu kalibre edilecek (Delta T < 5°C ise gerekmez)"
         },
         "VoltageCalibration": {
             "displayText": "VOL KAL?\n",
@@ -291,12 +291,12 @@
             "description": "Güç girişi voltajı ölçüm yoğunluğunu sık tut."
         },
         "PowerPulseWait": {
-            "displayText": "Power pulse\ndelay",
-            "description": "Delay before keep-awake-pulse is triggered (x 2.5s)"
+            "displayText": "Güç Darbesi\nGecikmesi",
+            "description": "Uyanık tutma darbesinin tetiklenmeden önceki gecikme süresi (x 2.5s)"
         },
         "PowerPulseDuration": {
-            "displayText": "Power pulse\nduration",
-            "description": "Keep-awake-pulse duration (x 250ms)"
+            "displayText": "Güç Darbesi\nSüresi",
+            "description": "Uyanık tutma darbesi süresi (x 250ms)"
         },
         "SettingsReset": {
             "displayText": "SIFIRLA?\n",
