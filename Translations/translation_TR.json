@@ -144,7 +144,7 @@
         },
         "LockingMode": {
             "displayText": "Kilitleme\nİzni",
-            "description": "Lehimleme sırasında, her iki düğmeye basılı tutarak kilitleme modunu değiştirin (B=boost mod only | F=full locking)"
+            "description": "Lehimleme sırasında, her iki düğmeye basılı tutarak kilitleme modunu değiştirin (B=Sadece performans modu | F=tam kilit)"
         },
         "ProfilePhases": {
             "displayText": "Profil\nAşamaları",
