@@ -163,7 +163,7 @@ void setup_adc(void) {
   }
 #endif
 
-#if 1
+#if 0
   // this sets the CVSP field (ADC conversion speed)
   {
     uint32_t regCfg2;
