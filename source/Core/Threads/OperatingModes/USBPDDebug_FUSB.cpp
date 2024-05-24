@@ -1,6 +1,7 @@
 #include "OperatingModes.h"
 
 #ifdef POW_PD
+#include "pd.h"
 #ifdef HAS_POWER_DEBUG_MENU
 OperatingMode showPDDebug(const ButtonState buttons, guiContext *cxt) {
   // Print out the USB-PD state
@@ -27,7 +28,8 @@ OperatingMode showPDDebug(const ButtonState buttons, guiContext *cxt) {
     }
   } else {
     // Print out the Proposed power options one by one
-    auto lastCaps = USBPowerDelivery::getLastSeenCapabilities();
+    auto lastCaps           = USBPowerDelivery::getLastSeenCapabilities();
+    bool sourceIsEPRCapable = lastCaps[0] & PD_PDO_SRC_FIXED_EPR_CAPABLE;
     if (((*screen) - 1) < 11) {
       int voltage_mv     = 0;
       int min_voltage    = 0;
@@ -37,15 +39,25 @@ OperatingMode showPDDebug(const ButtonState buttons, guiContext *cxt) {
       if ((lastCaps[(*screen) - 1] & PD_PDO_TYPE) == PD_PDO_TYPE_FIXED) {
         voltage_mv     = PD_PDV2MV(PD_PDO_SRC_FIXED_VOLTAGE_GET(lastCaps[(*screen) - 1])); // voltage in mV units
         current_a_x100 = PD_PDO_SRC_FIXED_CURRENT_GET(lastCaps[(*screen) - 1]);            // current in 10mA units
-      } else if (((lastCaps[(*screen) - 1] & PD_PDO_TYPE) == PD_PDO_TYPE_AUGMENTED) && ((lastCaps[(*screen) - 1] & PD_APDO_TYPE) == PD_APDO_TYPE_AVS)) {
-        voltage_mv  = PD_PAV2MV(PD_APDO_AVS_MAX_VOLTAGE_GET(lastCaps[(*screen) - 1]));
-        min_voltage = PD_PAV2MV(PD_APDO_PPS_MIN_VOLTAGE_GET(lastCaps[(*screen) - 1]));
-        // Last value is wattage
-        wattage = PD_APDO_AVS_MAX_POWER_GET(lastCaps[(*screen) - 1]);
-      } else if (((lastCaps[(*screen) - 1] & PD_PDO_TYPE) == PD_PDO_TYPE_AUGMENTED) && ((lastCaps[(*screen) - 1] & PD_APDO_TYPE) == PD_APDO_TYPE_PPS)) {
-        voltage_mv     = PD_PAV2MV(PD_APDO_PPS_MAX_VOLTAGE_GET(lastCaps[(*screen) - 1]));
-        min_voltage    = PD_PAV2MV(PD_APDO_PPS_MIN_VOLTAGE_GET(lastCaps[(*screen) - 1]));
-        current_a_x100 = PD_PAI2CA(PD_APDO_PPS_CURRENT_GET(lastCaps[(*screen) - 1])); // max current in 10mA units
+      } else if ((lastCaps[(*screen) - 1] & PD_PDO_TYPE) == PD_PDO_TYPE_AUGMENTED) {
+        if (sourceIsEPRCapable) {
+          if ((lastCaps[(*screen) - 1] & PD_APDO_TYPE) == PD_APDO_TYPE_AVS) {
+            voltage_mv  = PD_PAV2MV(PD_APDO_AVS_MAX_VOLTAGE_GET(lastCaps[(*screen) - 1]));
+            min_voltage = PD_PAV2MV(PD_APDO_PPS_MIN_VOLTAGE_GET(lastCaps[(*screen) - 1]));
+            // Last value is wattage
+            wattage = PD_APDO_AVS_MAX_POWER_GET(lastCaps[(*screen) - 1]);
+          } else if (((lastCaps[(*screen) - 1] & PD_APDO_TYPE) == PD_APDO_TYPE_PPS)) {
+            voltage_mv     = PD_PAV2MV(PD_APDO_PPS_MAX_VOLTAGE_GET(lastCaps[(*screen) - 1]));
+            min_voltage    = PD_PAV2MV(PD_APDO_PPS_MIN_VOLTAGE_GET(lastCaps[(*screen) - 1]));
+            current_a_x100 = PD_PAI2CA(PD_APDO_PPS_CURRENT_GET(lastCaps[(*screen) - 1])); // max current in 10mA units
+          }
+        } else {
+          // Doesn't have EPR support. So treat as PPS
+          // https://github.com/Ralim/IronOS/issues/1906
+          voltage_mv     = PD_PAV2MV(PD_APDO_PPS_MAX_VOLTAGE_GET(lastCaps[(*screen) - 1]));
+          min_voltage    = PD_PAV2MV(PD_APDO_PPS_MIN_VOLTAGE_GET(lastCaps[(*screen) - 1]));
+          current_a_x100 = PD_PAI2CA(PD_APDO_PPS_CURRENT_GET(lastCaps[(*screen) - 1])); // max current in 10mA units
+        }
       }
       // Skip not used entries
       if (voltage_mv == 0) {
