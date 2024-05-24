@@ -68,7 +68,7 @@ volatile uint16_t PWMSafetyTimer          = 0;
 volatile uint8_t  pendingPWM              = 0;
 volatile bool     pendingNextPeriodIsFast = false;
 
-void start_PWM_output(void) {
+inline void start_PWM_output(void) {
   TIMER_Disable(TIMER_CH0);
 
   if (PWMSafetyTimer) {
