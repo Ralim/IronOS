@@ -83,7 +83,7 @@
 #define POWER_PULSE_WAIT_MAX     9   // 9*2.5s = 22.5 seconds
 #define POWER_PULSE_DURATION_MAX 9   // 9*250ms = 2.25 seconds
 
-#ifdef MODEL_Pinecil
+#ifdef MODEL_Pinecilv2
 #define POWER_PULSE_DEFAULT 0
 #else
 #define POWER_PULSE_DEFAULT 5
@@ -124,10 +124,10 @@
 #endif
 
 #ifdef MODEL_Pinecilv2
-#define ADC_VDD_MV                 3300                      // ADC max reading millivolts
-#define ADC_MAX_READING            (62000 >> 1)              // Maximum reading of the adc
+#define ADC_VDD_MV                 3200                      // ADC max reading millivolts
+#define ADC_MAX_READING            ((1 << 16) >> 1)          // Maximum reading of the adc
 #define SOLDERING_TEMP             320                       // Default soldering temp is 320.0 °C
-#define VOLTAGE_DIV                600                       // 600 - Default divider from schematic
+#define VOLTAGE_DIV                630                       // 600 - Default divider from schematic
 #define CALIBRATION_OFFSET         900                       // 900 - Default adc offset in uV
 #define MIN_CALIBRATION_OFFSET     100                       // Min value for calibration
 #define PID_POWER_LIMIT            120                       // Sets the max pwm power limit
@@ -157,6 +157,7 @@
 #define DEVICE_HAS_VALIDATION_SUPPORT
 #define TEMP_NTC
 #define ACCEL_BMA
+#define CUSTOM_MAX_TEMP_C 1 // Uses custom max temp lookup
 #define ACCEL_SC7
 #define HALL_SENSOR
 #define HALL_SI7210
