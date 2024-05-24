@@ -66,7 +66,7 @@ void hardware_init() {
   // Note on I2C clock rate @ 100Khz the screen update == 20ms which is too long for USB-PD to work
   // 200kHz and above works
   I2C_ClockSet(I2C0_ID, 300000); // Sets clock to around 25 kHz less than set here
-  TIMER_SetCompValue(TIMER_CH0, TIMER_COMP_ID_1, 0);
+  TIMER_SetCompValue(TIMER_CH0, TIMER_COMP_ID_0, 0);
 }
 void setup_pwm(void) {
   // Setup PWM we use for driving the tip
@@ -95,10 +95,6 @@ void setup_adc(void) {
   //
   ADC_CFG_Type      adc_cfg      = {};
   ADC_FIFO_Cfg_Type adc_fifo_cfg = {};
-
-  CPU_Interrupt_Disable(GPADC_DMA_IRQn);
-
-  ADC_IntMask(ADC_INT_ALL, MASK);
 
   // Please also see PR #1529 for even more context
 
@@ -178,16 +174,11 @@ void setup_adc(void) {
 #endif
 
   adc_fifo_cfg.dmaEn         = DISABLE;
-  adc_fifo_cfg.fifoThreshold = ADC_FIFO_THRESHOLD_8; // Triger FIFO when all 8 measurements are done
+  adc_fifo_cfg.fifoThreshold = ADC_FIFO_THRESHOLD_1;
   ADC_FIFO_Cfg(&adc_fifo_cfg);
   ADC_MIC_Bias_Disable();
   ADC_Tsen_Disable();
   ADC_Gain_Trim();
-
-  // Enable FiFo IRQ
-  Interrupt_Handler_Register(GPADC_DMA_IRQn, adc_fifo_irq);
-  ADC_IntMask(ADC_INT_FIFO_READY, UNMASK);
-  CPU_Interrupt_Enable(GPADC_DMA_IRQn);
   ADC_Stop();
   ADC_FIFO_Clear();
   ADC_Scan_Channel_Config(adc_tip_pos_chans, adc_tip_neg_chans, sizeof(adc_tip_pos_chans) / sizeof(ADC_Chan_Type), DISABLE);
