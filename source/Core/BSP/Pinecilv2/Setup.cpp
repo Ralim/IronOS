@@ -202,10 +202,10 @@ void setup_timer_scheduler() {
       TIMER_PRELOAD_TRIG_COMP2,                               // Trigger; reset after trigger 0
       TIMER_COUNT_PRELOAD,                                    // Counter mode
       22,                                                     // Clock div
-      (uint16_t)(powerPWM + holdoffTicks),                    // CH0 compare (adc)
-      (uint16_t)(powerPWM),                                   // CH1 compare (pwm out)
+      (uint16_t)(powerPWM),                                   // CH0 compare (pwm out)
+      (uint16_t)(powerPWM + holdoffTicks),                    // CH1 compare (adc)
       (uint16_t)(powerPWM + holdoffTicks + tempMeasureTicks), // CH2 compare end of cycle
-      0,                                                      // Preload
+      0,                                                      // Preload, copied to counter on trigger of comp2
   };
   TIMER_Init(&cfg);
 

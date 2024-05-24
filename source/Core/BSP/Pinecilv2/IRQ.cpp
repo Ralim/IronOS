@@ -82,10 +82,11 @@ void start_PWM_output(void) {
     }
     // Update trigger for the end point of the PWM cycle
     if (pendingPWM > 0) {
-      TIMER_SetCompValue(TIMER_CH0, TIMER_COMP_ID_1, pendingPWM - 1);
+      TIMER_SetCompValue(TIMER_CH0, TIMER_COMP_ID_0, pendingPWM - 1);
       // Turn on output
       PWM_Channel_Enable(PWM_Channel);
     } else {
+      TIMER_SetCompValue(TIMER_CH0, TIMER_COMP_ID_0, 255 - 1);
       // Leave output off
       PWM_Channel_Disable(PWM_Channel);
     }
@@ -96,18 +97,24 @@ void start_PWM_output(void) {
   TIMER_Enable(TIMER_CH0);
 }
 
-// Timer 0 is used to co-ordinate the ADC and the output PWM
 void timer0_comp0_callback(void) {
+  // Trigged at end of output cycle; turn off the tip PWM
+  PWM_Channel_Disable(PWM_Channel);
+  TIMER_ClearIntStatus(TIMER_CH0, TIMER_COMP_ID_0);
+}
+
+// Timer 0 is used to co-ordinate the ADC and the output PWM
+void timer0_comp1_callback(void) {
   if (PWM_Channel_Is_Enabled(PWM_Channel)) {
+    ADC_FIFO_Clear();
     // So there appears to be a bug _somewhere_ where sometimes the comparator doesn't fire
     // Its not re-occurring with specific values, so suspect its a weird bug
     // For now, we just skip the cycle and throw away the ADC readings. Its a waste but
     // It stops stupid glitches in readings, i'd take slight instability from the time jump
-    // Over the readings we get that are borked as the header is left on
+    // Over the readings we get that are borked as the heater is left on
     // <Ralim 2023/10/14>
     PWM_Channel_Disable(PWM_Channel);
-    // MSG("ALERT PWM Glitch\r\n");
-    // Triger the PID now instead
+    // Trigger the PID now instead
     if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
       BaseType_t xHigherPriorityTaskWoken = pdFALSE;
       if (pidTaskNotification) {
@@ -118,18 +125,12 @@ void timer0_comp0_callback(void) {
   } else {
     ADC_Start();
   }
-  TIMER_ClearIntStatus(TIMER_CH0, TIMER_COMP_ID_0);
-}
-void timer0_comp1_callback(void) {
-  // Trigged at end of output cycle; turn off the tip PWM
-  PWM_Channel_Disable(PWM_Channel);
   TIMER_ClearIntStatus(TIMER_CH0, TIMER_COMP_ID_1);
 }
-
 void timer0_comp2_callback(void) {
   // Triggered at end of timer cycle; re-start the tip driver
-  start_PWM_output();
   TIMER_ClearIntStatus(TIMER_CH0, TIMER_COMP_ID_2);
+  start_PWM_output();
 }
 void switchToFastPWM(void) {
   inFastPWMMode    = true;
@@ -139,7 +140,7 @@ void switchToFastPWM(void) {
   TIMER_SetCompValue(TIMER_CH0, TIMER_COMP_ID_2, totalPWM);
 
   // ~10Hz
-  TIMER_SetCompValue(TIMER_CH0, TIMER_COMP_ID_0, powerPWM + holdoffTicks);
+  TIMER_SetCompValue(TIMER_CH0, TIMER_COMP_ID_1, powerPWM + holdoffTicks);
 
   // Set divider to 10 ~= 10.5Hz
   uint32_t tmpVal = BL_RD_REG(TIMER_BASE, TIMER_TCDR);
@@ -158,7 +159,7 @@ void switchToSlowPWM(void) {
 
   TIMER_SetCompValue(TIMER_CH0, TIMER_COMP_ID_2, totalPWM);
   // Adjust ADC
-  TIMER_SetCompValue(TIMER_CH0, TIMER_COMP_ID_0, powerPWM + holdoffTicks);
+  TIMER_SetCompValue(TIMER_CH0, TIMER_COMP_ID_1, powerPWM + holdoffTicks);
 
   // Set divider for ~ 5Hz
 
