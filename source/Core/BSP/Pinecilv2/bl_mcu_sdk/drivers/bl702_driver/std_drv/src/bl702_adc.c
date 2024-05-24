@@ -353,12 +353,12 @@ void ADC_Scan_Channel_Config(const ADC_Chan_Type posChList[], const ADC_Chan_Typ
 void ADC_Start(void) {
   uint32_t regCmd;
 
-  /* disable convert start */
-  regCmd = BL_RD_REG(AON_BASE, AON_GPADC_REG_CMD);
-  regCmd = BL_CLR_REG_BIT(regCmd, AON_GPADC_CONV_START);
-  BL_WR_REG(AON_BASE, AON_GPADC_REG_CMD, regCmd);
+  // /* disable convert start */
+  // regCmd = BL_RD_REG(AON_BASE, AON_GPADC_REG_CMD);
+  // regCmd = BL_CLR_REG_BIT(regCmd, AON_GPADC_CONV_START);
+  // BL_WR_REG(AON_BASE, AON_GPADC_REG_CMD, regCmd);
 
-  ADC_RESTART_DUMMY_WAIT;
+  // ADC_RESTART_DUMMY_WAIT;
 
   /* enable convert start */
   regCmd = BL_RD_REG(AON_BASE, AON_GPADC_REG_CMD);
