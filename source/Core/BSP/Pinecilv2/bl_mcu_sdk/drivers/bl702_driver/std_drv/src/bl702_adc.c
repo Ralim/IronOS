@@ -74,11 +74,11 @@
 /** @defgroup  ADC_Private_Variables
  *  @{
  */
-static intCallback_Type   *adcIntCbfArra[ADC_INT_ALL] = {NULL};
-static ADC_Gain_Coeff_Type adcGainCoeffCal            = {
-               .adcGainCoeffEnable = DISABLE,
-               .adcgainCoeffVal    = 0,
-               .coe                = 1,
+static intCallback_Type *adcIntCbfArra[ADC_INT_ALL] = {NULL};
+ADC_Gain_Coeff_Type      adcGainCoeffCal            = {
+                    .adcGainCoeffEnable = DISABLE,
+                    .adcgainCoeffVal    = 0,
+                    .coe                = 1,
 };
 
 /*@} end of group ADC_Private_Variables */
@@ -510,8 +510,7 @@ void ADC_Parse_Result(uint32_t *orgVal, uint32_t len, ADC_Result_Type *result) {
   uint32_t            tmpVal1 = 0, tmpVal2 = 0;
   ADC_Data_Width_Type dataType;
   ADC_SIG_INPUT_Type  sigType;
-  float               ref = 2.0;
-  uint32_t            i   = 0;
+  uint32_t            i = 0;
 
   float coe = 1.0;
 
@@ -524,10 +523,6 @@ void ADC_Parse_Result(uint32_t *orgVal, uint32_t len, ADC_Result_Type *result) {
   dataType = BL_GET_REG_BITS_VAL(tmpVal1, AON_GPADC_RES_SEL);
   sigType  = BL_GET_REG_BITS_VAL(tmpVal2, AON_GPADC_DIFF_MODE);
 
-  if (BL_GET_REG_BITS_VAL(tmpVal2, AON_GPADC_VREF_SEL) == ADC_VREF_3P2V) {
-    ref = 3.2;
-  }
-
   if (sigType == ADC_INPUT_SINGLE_END) {
     for (i = 0; i < len; i++) {
       result[i].posChan = orgVal[i] >> 21;
@@ -535,13 +530,10 @@ void ADC_Parse_Result(uint32_t *orgVal, uint32_t len, ADC_Result_Type *result) {
 
       if (dataType == ADC_DATA_WIDTH_12) {
         result[i].value = (unsigned int)(((orgVal[i] & 0xffff) >> 4) / coe);
-        result[i].volt  = result[i].value / 4096.0 * ref;
       } else if ((dataType == ADC_DATA_WIDTH_14_WITH_16_AVERAGE) || (dataType == ADC_DATA_WIDTH_14_WITH_64_AVERAGE)) {
         result[i].value = (unsigned int)(((orgVal[i] & 0xffff) >> 2) / coe);
-        result[i].volt  = result[i].value / 16384.0 * ref;
       } else if ((dataType == ADC_DATA_WIDTH_16_WITH_128_AVERAGE) || (dataType == ADC_DATA_WIDTH_16_WITH_256_AVERAGE)) {
         result[i].value = (unsigned int)((orgVal[i] & 0xffff) / coe);
-        result[i].volt  = result[i].value / 65536.0 * ref;
       }
     }
   } else {
@@ -558,17 +550,10 @@ void ADC_Parse_Result(uint32_t *orgVal, uint32_t len, ADC_Result_Type *result) {
 
       if (dataType == ADC_DATA_WIDTH_12) {
         result[i].value = (unsigned int)(((orgVal[i] & 0xffff) >> 4) / coe);
-        result[i].volt  = result[i].value / 2048.0 * ref;
       } else if ((dataType == ADC_DATA_WIDTH_14_WITH_16_AVERAGE) || (dataType == ADC_DATA_WIDTH_14_WITH_64_AVERAGE)) {
         result[i].value = (unsigned int)(((orgVal[i] & 0xffff) >> 2) / coe);
-        result[i].volt  = result[i].value / 8192.0 * ref;
       } else if ((dataType == ADC_DATA_WIDTH_16_WITH_128_AVERAGE) || (dataType == ADC_DATA_WIDTH_16_WITH_256_AVERAGE)) {
         result[i].value = (unsigned int)((orgVal[i] & 0xffff) / coe);
-        result[i].volt  = result[i].value / 32768.0 * ref;
-      }
-
-      if (neg) {
-        result[i].volt = -result[i].volt;
       }
     }
   }

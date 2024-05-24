@@ -40,7 +40,6 @@
 #include "bl702_common.h"
 #include "gpip_reg.h"
 
-
 /** @addtogroup  BL702_Peripheral_Driver
  *  @{
  */
@@ -273,7 +272,7 @@ typedef struct {
   int8_t   posChan; /*!< Positive channel */
   int8_t   negChan; /*!< Negative channel */
   uint16_t value;   /*!< ADC value */
-  float    volt;    /*!< ADC voltage result */
+  // float    volt;    /*!< ADC voltage result */
 } ADC_Result_Type;
 
 /**
@@ -325,11 +324,11 @@ typedef struct {
 /** @defgroup  ADC_CHAN_TYPE
  *  @{
  */
-#define IS_ADC_CHAN_TYPE(type)                                                                                                                                                                      \
-  (((type) == ADC_CHAN0) || ((type) == ADC_CHAN1) || ((type) == ADC_CHAN2) || ((type) == ADC_CHAN3) || ((type) == ADC_CHAN4) || ((type) == ADC_CHAN5) || ((type) == ADC_CHAN6)                      \
-   || ((type) == ADC_CHAN7) || ((type) == ADC_CHAN8) || ((type) == ADC_CHAN9) || ((type) == ADC_CHAN10) || ((type) == ADC_CHAN11) || ((type) == ADC_CHAN_DAC_OUTA) || ((type) == ADC_CHAN_DAC_OUTB) \
-   || ((type) == ADC_CHAN_TSEN_P) || ((type) == ADC_CHAN_TSEN_N) || ((type) == ADC_CHAN_VREF) || ((type) == ADC_CHAN_DCTEST) || ((type) == ADC_CHAN_VABT_HALF) || ((type) == ADC_CHAN_SENP3)        \
-   || ((type) == ADC_CHAN_SENP2) || ((type) == ADC_CHAN_SENP1) || ((type) == ADC_CHAN_SENP0) || ((type) == ADC_CHAN_GND))
+#define IS_ADC_CHAN_TYPE(type)                                                                                                                                                                         \
+  (((type) == ADC_CHAN0) || ((type) == ADC_CHAN1) || ((type) == ADC_CHAN2) || ((type) == ADC_CHAN3) || ((type) == ADC_CHAN4) || ((type) == ADC_CHAN5) || ((type) == ADC_CHAN6) ||                      \
+   ((type) == ADC_CHAN7) || ((type) == ADC_CHAN8) || ((type) == ADC_CHAN9) || ((type) == ADC_CHAN10) || ((type) == ADC_CHAN11) || ((type) == ADC_CHAN_DAC_OUTA) || ((type) == ADC_CHAN_DAC_OUTB) ||    \
+   ((type) == ADC_CHAN_TSEN_P) || ((type) == ADC_CHAN_TSEN_N) || ((type) == ADC_CHAN_VREF) || ((type) == ADC_CHAN_DCTEST) || ((type) == ADC_CHAN_VABT_HALF) || ((type) == ADC_CHAN_SENP3) ||           \
+   ((type) == ADC_CHAN_SENP2) || ((type) == ADC_CHAN_SENP1) || ((type) == ADC_CHAN_SENP0) || ((type) == ADC_CHAN_GND))
 
 /** @defgroup  ADC_V18_SEL_TYPE
  *  @{
@@ -344,23 +343,23 @@ typedef struct {
 /** @defgroup  ADC_CLK_TYPE
  *  @{
  */
-#define IS_ADC_CLK_TYPE(type)                                                                                                                                                    \
-  (((type) == ADC_CLK_DIV_1) || ((type) == ADC_CLK_DIV_4) || ((type) == ADC_CLK_DIV_8) || ((type) == ADC_CLK_DIV_12) || ((type) == ADC_CLK_DIV_16) || ((type) == ADC_CLK_DIV_20) \
-   || ((type) == ADC_CLK_DIV_24) || ((type) == ADC_CLK_DIV_32))
+#define IS_ADC_CLK_TYPE(type)                                                                                                                                                                          \
+  (((type) == ADC_CLK_DIV_1) || ((type) == ADC_CLK_DIV_4) || ((type) == ADC_CLK_DIV_8) || ((type) == ADC_CLK_DIV_12) || ((type) == ADC_CLK_DIV_16) || ((type) == ADC_CLK_DIV_20) ||                    \
+   ((type) == ADC_CLK_DIV_24) || ((type) == ADC_CLK_DIV_32))
 
 /** @defgroup  ADC_DELAY_SEL_TYPE
  *  @{
  */
-#define IS_ADC_DELAY_SEL_TYPE(type)                                                                                                                                                       \
-  (((type) == ADC_DELAY_SEL_0) || ((type) == ADC_DELAY_SEL_1) || ((type) == ADC_DELAY_SEL_2) || ((type) == ADC_DELAY_SEL_3) || ((type) == ADC_DELAY_SEL_4) || ((type) == ADC_DELAY_SEL_5) \
-   || ((type) == ADC_DELAY_SEL_6) || ((type) == ADC_DELAY_SEL_7))
+#define IS_ADC_DELAY_SEL_TYPE(type)                                                                                                                                                                    \
+  (((type) == ADC_DELAY_SEL_0) || ((type) == ADC_DELAY_SEL_1) || ((type) == ADC_DELAY_SEL_2) || ((type) == ADC_DELAY_SEL_3) || ((type) == ADC_DELAY_SEL_4) || ((type) == ADC_DELAY_SEL_5) ||           \
+   ((type) == ADC_DELAY_SEL_6) || ((type) == ADC_DELAY_SEL_7))
 
 /** @defgroup  ADC_PGA_GAIN_TYPE
  *  @{
  */
-#define IS_ADC_PGA_GAIN_TYPE(type)                                                                                                                                                      \
-  (((type) == ADC_PGA_GAIN_NONE) || ((type) == ADC_PGA_GAIN_1) || ((type) == ADC_PGA_GAIN_2) || ((type) == ADC_PGA_GAIN_4) || ((type) == ADC_PGA_GAIN_8) || ((type) == ADC_PGA_GAIN_16) \
-   || ((type) == ADC_PGA_GAIN_32))
+#define IS_ADC_PGA_GAIN_TYPE(type)                                                                                                                                                                     \
+  (((type) == ADC_PGA_GAIN_NONE) || ((type) == ADC_PGA_GAIN_1) || ((type) == ADC_PGA_GAIN_2) || ((type) == ADC_PGA_GAIN_4) || ((type) == ADC_PGA_GAIN_8) || ((type) == ADC_PGA_GAIN_16) ||             \
+   ((type) == ADC_PGA_GAIN_32))
 
 /** @defgroup  ADC_BIAS_SEL_TYPE
  *  @{
@@ -395,9 +394,9 @@ typedef struct {
 /** @defgroup  ADC_DATA_WIDTH_TYPE
  *  @{
  */
-#define IS_ADC_DATA_WIDTH_TYPE(type)                                                                                                                                                 \
-  (((type) == ADC_DATA_WIDTH_12) || ((type) == ADC_DATA_WIDTH_14_WITH_16_AVERAGE) || ((type) == ADC_DATA_WIDTH_14_WITH_64_AVERAGE) || ((type) == ADC_DATA_WIDTH_16_WITH_128_AVERAGE) \
-   || ((type) == ADC_DATA_WIDTH_16_WITH_256_AVERAGE))
+#define IS_ADC_DATA_WIDTH_TYPE(type)                                                                                                                                                                   \
+  (((type) == ADC_DATA_WIDTH_12) || ((type) == ADC_DATA_WIDTH_14_WITH_16_AVERAGE) || ((type) == ADC_DATA_WIDTH_14_WITH_64_AVERAGE) || ((type) == ADC_DATA_WIDTH_16_WITH_128_AVERAGE) ||                \
+   ((type) == ADC_DATA_WIDTH_16_WITH_256_AVERAGE))
 
 /** @defgroup  ADC_MICBOOST_DB_TYPE
  *  @{
@@ -422,9 +421,9 @@ typedef struct {
 /** @defgroup  ADC_INT_TYPE
  *  @{
  */
-#define IS_ADC_INT_TYPE(type)                                                                                                                                                         \
-  (((type) == ADC_INT_POS_SATURATION) || ((type) == ADC_INT_NEG_SATURATION) || ((type) == ADC_INT_FIFO_UNDERRUN) || ((type) == ADC_INT_FIFO_OVERRUN) || ((type) == ADC_INT_ADC_READY) \
-   || ((type) == ADC_INT_FIFO_READY) || ((type) == ADC_INT_ALL))
+#define IS_ADC_INT_TYPE(type)                                                                                                                                                                          \
+  (((type) == ADC_INT_POS_SATURATION) || ((type) == ADC_INT_NEG_SATURATION) || ((type) == ADC_INT_FIFO_UNDERRUN) || ((type) == ADC_INT_FIFO_OVERRUN) || ((type) == ADC_INT_ADC_READY) ||               \
+   ((type) == ADC_INT_FIFO_READY) || ((type) == ADC_INT_ALL))
 
 /*@} end of group ADC_Public_Constants */
 
