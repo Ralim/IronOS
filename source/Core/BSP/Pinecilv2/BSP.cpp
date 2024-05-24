@@ -9,11 +9,14 @@
 #include "TipThermoModel.h"
 #include "USBPD.h"
 #include "Utils.h"
+#include "bl702_adc.h"
 #include "configuration.h"
 #include "crc32.h"
 #include "hal_flash.h"
 #include "history.hpp"
 #include "main.hpp"
+
+extern ADC_Gain_Coeff_Type adcGainCoeffCal;
 
 // These control the period's of time used for the PWM
 const uint16_t powerPWM         = 255;
@@ -273,4 +276,17 @@ void showBootLogo(void) {
   flash_read(FLASH_LOGOADDR - 0x23000000, scratch, 1024);
 
   BootLogo::handleShowingLogo(scratch);
+}
+
+TemperatureType_t getCustomTipMaxInC() {
+  // have to lookup the max temp while being aware of the coe scaling value
+  float max_reading = ADC_MAX_READING - 1.0;
+
+  if (adcGainCoeffCal.adcGainCoeffEnable) {
+    max_reading /= adcGainCoeffCal.coe;
+  }
+
+  TemperatureType_t maximumTipTemp = TipThermoModel::convertTipRawADCToDegC(max_reading);
+  maximumTipTemp += getHandleTemperature(0) / 10; // Add handle offset
+  return maximumTipTemp - 1;
 }
