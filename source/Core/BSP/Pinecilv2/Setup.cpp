@@ -77,7 +77,7 @@ void setup_pwm(void) {
       PWM_POL_NORMAL,  // Normal Polarity
       60,              // Clock Div
       100,             // Period
-      0,               // Thres 1 - start at beginng
+      0,               // Thres 1 - start at beginning
       50,              // Thres 2 - turn off at 50%
       0,               // Interrupt pulse count
   };
