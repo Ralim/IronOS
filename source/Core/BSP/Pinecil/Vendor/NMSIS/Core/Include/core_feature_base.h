@@ -748,8 +748,8 @@ __STATIC_FORCEINLINE void __SD(volatile void *addr, uint64_t val) { __ASM volati
  * \return  return the initial value in memory
  */
 __STATIC_FORCEINLINE uint32_t __CAS_W(volatile uint32_t *addr, uint32_t oldval, uint32_t newval) {
-  register uint32_t result;
-  register uint32_t rc;
+  uint32_t result;
+  uint32_t rc;
 
   __ASM volatile("0:     lr.w %0, %2      \n"
                  "       bne  %0, %z3, 1f \n"
@@ -770,7 +770,7 @@ __STATIC_FORCEINLINE uint32_t __CAS_W(volatile uint32_t *addr, uint32_t oldval, 
  * \return  return the original value in memory
  */
 __STATIC_FORCEINLINE uint32_t __AMOSWAP_W(volatile uint32_t *addr, uint32_t newval) {
-  register uint32_t result;
+  uint32_t result;
 
   __ASM volatile("amoswap.w %0, %2, %1" : "=r"(result), "+A"(*addr) : "r"(newval) : "memory");
   return result;
@@ -784,7 +784,7 @@ __STATIC_FORCEINLINE uint32_t __AMOSWAP_W(volatile uint32_t *addr, uint32_t newv
  * \return  return memory value + add value
  */
 __STATIC_FORCEINLINE int32_t __AMOADD_W(volatile int32_t *addr, int32_t value) {
-  register int32_t result;
+  int32_t result;
 
   __ASM volatile("amoadd.w %0, %2, %1" : "=r"(result), "+A"(*addr) : "r"(value) : "memory");
   return *addr;
@@ -798,7 +798,7 @@ __STATIC_FORCEINLINE int32_t __AMOADD_W(volatile int32_t *addr, int32_t value) {
  * \return  return memory value & and value
  */
 __STATIC_FORCEINLINE int32_t __AMOAND_W(volatile int32_t *addr, int32_t value) {
-  register int32_t result;
+  int32_t result;
 
   __ASM volatile("amoand.w %0, %2, %1" : "=r"(result), "+A"(*addr) : "r"(value) : "memory");
   return *addr;
@@ -812,7 +812,7 @@ __STATIC_FORCEINLINE int32_t __AMOAND_W(volatile int32_t *addr, int32_t value) {
  * \return  return memory value | and value
  */
 __STATIC_FORCEINLINE int32_t __AMOOR_W(volatile int32_t *addr, int32_t value) {
-  register int32_t result;
+  int32_t result;
 
   __ASM volatile("amoor.w %0, %2, %1" : "=r"(result), "+A"(*addr) : "r"(value) : "memory");
   return *addr;
@@ -826,7 +826,7 @@ __STATIC_FORCEINLINE int32_t __AMOOR_W(volatile int32_t *addr, int32_t value) {
  * \return  return memory value ^ and value
  */
 __STATIC_FORCEINLINE int32_t __AMOXOR_W(volatile int32_t *addr, int32_t value) {
-  register int32_t result;
+  int32_t result;
 
   __ASM volatile("amoxor.w %0, %2, %1" : "=r"(result), "+A"(*addr) : "r"(value) : "memory");
   return *addr;
@@ -840,7 +840,7 @@ __STATIC_FORCEINLINE int32_t __AMOXOR_W(volatile int32_t *addr, int32_t value) {
  * \return  return the bigger value
  */
 __STATIC_FORCEINLINE uint32_t __AMOMAXU_W(volatile uint32_t *addr, uint32_t value) {
-  register uint32_t result;
+  uint32_t result;
 
   __ASM volatile("amomaxu.w %0, %2, %1" : "=r"(result), "+A"(*addr) : "r"(value) : "memory");
   return *addr;
@@ -854,7 +854,7 @@ __STATIC_FORCEINLINE uint32_t __AMOMAXU_W(volatile uint32_t *addr, uint32_t valu
  * \return the bigger value
  */
 __STATIC_FORCEINLINE int32_t __AMOMAX_W(volatile int32_t *addr, int32_t value) {
-  register int32_t result;
+  int32_t result;
 
   __ASM volatile("amomax.w %0, %2, %1" : "=r"(result), "+A"(*addr) : "r"(value) : "memory");
   return *addr;
@@ -868,7 +868,7 @@ __STATIC_FORCEINLINE int32_t __AMOMAX_W(volatile int32_t *addr, int32_t value) {
  * \return the smaller value
  */
 __STATIC_FORCEINLINE uint32_t __AMOMINU_W(volatile uint32_t *addr, uint32_t value) {
-  register uint32_t result;
+  uint32_t result;
 
   __ASM volatile("amominu.w %0, %2, %1" : "=r"(result), "+A"(*addr) : "r"(value) : "memory");
   return *addr;
@@ -882,7 +882,7 @@ __STATIC_FORCEINLINE uint32_t __AMOMINU_W(volatile uint32_t *addr, uint32_t valu
  * \return  the smaller value
  */
 __STATIC_FORCEINLINE int32_t __AMOMIN_W(volatile int32_t *addr, int32_t value) {
-  register int32_t result;
+  int32_t result;
 
   __ASM volatile("amomin.w %0, %2, %1" : "=r"(result), "+A"(*addr) : "r"(value) : "memory");
   return *addr;
