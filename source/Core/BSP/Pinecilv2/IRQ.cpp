@@ -29,19 +29,18 @@ void adc_fifo_irq(void) {
   if (ADC_GetIntStatus(ADC_INT_FIFO_READY) == SET) {
     // Read out all entries in the fifo
     while (ADC_Get_FIFO_Count()) {
-      uint32_t reading = ADC_Read_FIFO();
-      // As per manual, 26 bit reading; lowest 16 are the ADC
-      uint16_t sample = reading & 0xFFFF;
-      uint8_t  source = (reading >> 21) & 0b11111;
-      switch (source) {
+      uint32_t        reading = ADC_Read_FIFO();
+      ADC_Result_Type parsed  = {0, 0, 0};
+      ADC_Parse_Result(&reading, 1, &parsed);
+      switch (parsed.posChan) {
       case TMP36_ADC_CHANNEL:
-        ADC_Temp.update(sample);
+        ADC_Temp.update(parsed.value << 2);
         break;
       case TIP_TEMP_ADC_CHANNEL:
-        ADC_Tip.update(sample);
+        ADC_Tip.update(parsed.value << 2);
         break;
       case VIN_ADC_CHANNEL:
-        ADC_Vin.update(sample);
+        ADC_Vin.update(parsed.value << 2);
         break;
       default:
         break;

@@ -100,17 +100,55 @@ void setup_adc(void) {
 
   ADC_IntMask(ADC_INT_ALL, MASK);
 
+  // Please also see PR #1529 for even more context
+
+  /*
+      A note on ADC settings
+
+      The bl70x ADC seems to be very sensitive to various analog settings.
+      It has been a challenge to determine what is the most correct way to
+      configure it in order to get accurate readings that can be transformed
+      into millivolts, for accurate measurements.
+
+      This latest set of ADC parameters, matches the latest configuration from
+      the upstream bl_mcu_sdk repository from commit hash:
+      9e189b69cbc0a75ffa170f600a28820848d56432
+      except for one difference.
+      (Note: bl_mcu_sdk has been heavily refactored since it has been imported into IronOS.)
+
+      You can make it match exactly by defining ENABLE_MIC2_DIFF, see the code
+      #ifdef ENABLE_MIC2_DIFF below.
+      I have decided to not apply this change because it appeared to make the
+      lower end of the input less precise.
+
+      Note that this configuration uses an ADC trimming value that is stored in the Efuse
+      of the bl70x chip. The actual reading is divided by this "coe" value.
+      We have found the following coe values on 3 different chips:
+      0.9629, 0.9438, 0.9876
+
+      Additional note for posterity:
+      PGA = programmable gain amplifier.
+      We would have expected to achieve the highest accuracy by disabling this amplifier,
+      however we found that not to be the case, and in almost all cases we have found
+      that there is a scaling error compared to the ideal Vref.
+      The only other configuration we have found to be accurate was if we had:
+      PGA disabled + Vref=2V + biasSel=AON + without trimming from the efuse.
+      But we can't use it because a Vref=2V limits the higher end of temperature and voltage readings.
+      Also we don't know if this other configuration is really accurate on all chips, or only
+      happened to be accurate on the one chip on which it has been found.
+  */
+
   adc_cfg.clkDiv         = ADC_CLK_DIV_4;
   adc_cfg.vref           = ADC_VREF_3P2V;
   adc_cfg.resWidth       = ADC_DATA_WIDTH_14_WITH_16_AVERAGE;
   adc_cfg.inputMode      = ADC_INPUT_SINGLE_END;
-  adc_cfg.v18Sel         = ADC_V18_SEL_1P72V;
+  adc_cfg.v18Sel         = ADC_V18_SEL_1P82V;
   adc_cfg.v11Sel         = ADC_V11_SEL_1P1V;
-  adc_cfg.gain1          = ADC_PGA_GAIN_NONE;
-  adc_cfg.gain2          = ADC_PGA_GAIN_NONE;
-  adc_cfg.chopMode       = ADC_CHOP_MOD_AZ_ON;
+  adc_cfg.gain1          = ADC_PGA_GAIN_1;
+  adc_cfg.gain2          = ADC_PGA_GAIN_1;
+  adc_cfg.chopMode       = ADC_CHOP_MOD_AZ_PGA_ON;
   adc_cfg.biasSel        = ADC_BIAS_SEL_MAIN_BANDGAP;
-  adc_cfg.vcm            = ADC_PGA_VCM_1P6V;
+  adc_cfg.vcm            = ADC_PGA_VCM_1P2V;
   adc_cfg.offsetCalibEn  = DISABLE;
   adc_cfg.offsetCalibVal = 0;
 
@@ -119,11 +157,32 @@ void setup_adc(void) {
   ADC_Reset();
 
   ADC_Init(&adc_cfg);
+#ifdef ENABLE_MIC2_DIFF
+  // This is the change that enables MIC2_DIFF, for now deciding not to enable it, since it seems to make results slightly worse
+  {
+    uint32_t tmpVal;
+    tmpVal = BL_RD_REG(AON_BASE, AON_GPADC_REG_CMD);
+    tmpVal = BL_SET_REG_BITS_VAL(tmpVal, AON_GPADC_MIC2_DIFF, 1);
+    BL_WR_REG(AON_BASE, AON_GPADC_REG_CMD, tmpVal);
+  }
+#endif
+
+#if 1
+  // this sets the CVSP field (ADC conversion speed)
+  {
+    uint32_t regCfg2;
+    regCfg2 = BL_RD_REG(AON_BASE, AON_GPADC_REG_CONFIG2);
+    regCfg2 = BL_SET_REG_BITS_VAL(regCfg2, AON_GPADC_DLY_SEL, 0x02);
+    BL_WR_REG(AON_BASE, AON_GPADC_REG_CONFIG2, regCfg2);
+  }
+#endif
+
   adc_fifo_cfg.dmaEn         = DISABLE;
   adc_fifo_cfg.fifoThreshold = ADC_FIFO_THRESHOLD_8; // Triger FIFO when all 8 measurements are done
   ADC_FIFO_Cfg(&adc_fifo_cfg);
   ADC_MIC_Bias_Disable();
   ADC_Tsen_Disable();
+  ADC_Gain_Trim();
 
   // Enable FiFo IRQ
   Interrupt_Handler_Register(GPADC_DMA_IRQn, adc_fifo_irq);
