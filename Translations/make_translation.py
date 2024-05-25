@@ -1215,7 +1215,7 @@ def get_translation_strings_and_indices_text(
         translation_indices_text += (
             f"    .{record['id']} = {start_index}, // {escape(lang_data)}\n"
         )
-    
+
     for _, record in enumerate(defs["menuValues"]):
         # Add to translations the menu text and the description
         lang_data = lang["menuValues"][record["id"]]
@@ -1260,7 +1260,7 @@ def get_translation_strings_and_indices_text(
     translation_indices_text = write_grouped_indexes(
         translation_indices_text, "SettingsShortNames", "menuOptions", "displayText"
     )
-  
+
     translation_indices_text = write_grouped_indexes(
         translation_indices_text,
         "SettingsMenuEntriesDescriptions",
