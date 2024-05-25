@@ -136,7 +136,7 @@ bool parseCapabilitiesArray(const uint8_t numCaps, uint8_t *bestIndex, uint16_t 
 
   // Fudge of 0.5 ohms to round up a little to account for us always having off periods in PWM
   uint8_t tipResistance = getTipResistanceX10();
-  if (getSettingValue(SettingsOptions::PDVpdo) == 1) {
+  if (getSettingValue(SettingsOptions::USBPDMode) == 1) {
     tipResistance += 5;
   }
 #ifdef MODEL_HAS_DCDC
@@ -170,7 +170,7 @@ bool parseCapabilitiesArray(const uint8_t numCaps, uint8_t *bestIndex, uint16_t 
           }
         }
       }
-    } else if ((lastCapabilities[i] & PD_PDO_TYPE) == PD_PDO_TYPE_AUGMENTED && getSettingValue(SettingsOptions::PDVpdo)) {
+    } else if ((lastCapabilities[i] & PD_PDO_TYPE) == PD_PDO_TYPE_AUGMENTED && getSettingValue(SettingsOptions::USBPDMode)) {
       bool sourceIsEPRCapable = lastCapabilities[0] & PD_PDO_SRC_FIXED_EPR_CAPABLE;
       bool isPPS              = false;
       bool isAVS              = false;

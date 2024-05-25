@@ -26,7 +26,7 @@ static void displayQCInputV(void);
 
 #ifdef POW_PD
 static void displayPDNegTimeout(void);
-static void displayPDVpdo(void);
+static void displayUSBPDMode(void);
 #endif /* POW_PD */
 
 static void displaySensitivity(void);
@@ -131,7 +131,7 @@ static void displayAdvancedMenu(void);
  *  -Minimum Voltage
  *  QC Voltage
  *  PD Timeout
- *  PDVpdo
+ *  USBPDMode
  *
  * Soldering
  *  Boost Mode Temp
@@ -232,7 +232,7 @@ const menuitem powerMenu[] = {
    * -Minimum Voltage
    * QC Voltage
    * PD Timeout
-   * PDVpdo
+   * USBPDMode
    */
 #ifdef POW_DC
   /* Voltage input */
@@ -248,7 +248,7 @@ const menuitem powerMenu[] = {
   /* PD timeout setup */
   {SETTINGS_DESC(SettingsItemIndex::PDNegTimeout), nullptr, displayPDNegTimeout, nullptr, SettingsOptions::PDNegTimeout, SettingsItemIndex::PDNegTimeout, 6},
   /* Toggle PPS & EPR */
-  {SETTINGS_DESC(SettingsItemIndex::PDVpdo), nullptr, displayPDVpdo, nullptr, SettingsOptions::PDVpdo, SettingsItemIndex::PDVpdo, 7},
+  {SETTINGS_DESC(SettingsItemIndex::USBPDMode), nullptr, displayUSBPDMode, nullptr, SettingsOptions::USBPDMode, SettingsItemIndex::USBPDMode, 7},
 #endif
   /* vvvv end of menu marker. DO NOT REMOVE vvvv */
   {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0}
@@ -433,7 +433,7 @@ const menuitem advancedMenu[] = {
 /* clang-format on */
 
 const menuitem *subSettingsMenus[] {
-#if defined(POW_DC) || defined(POW_QC) || defined(POW_PD)
+#if defined(POW_DC) || defined(POW_QC) || defined(POW_PD) || defined(POW_PD_EXT)
   powerMenu,
 #endif
       solderingMenu, PowerSavingMenu, UIMenu, advancedMenu,
@@ -529,7 +529,26 @@ static void displayPDNegTimeout(void) {
   }
 }
 
-static void displayPDVpdo(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::PDVpdo)); }
+static void displayUSBPDMode(void) {
+  /*
+   * PD Mode
+   * 0 = Safe mode, no PPS, no EPR
+   * 1 = Default mode, tolerant + PPS + EPR
+   * 2 = Strict mode + PPS + EPR
+   */
+
+  switch (getSettingValue(SettingsOptions::USBPDMode)) {
+  case 1:
+    OLED::print(translatedString(Tr->SettingPDModeDefaultChar), FontStyle::LARGE);
+    break;
+  case 2:
+    OLED::print(translatedString(Tr->SettingPDModeSafeChar), FontStyle::LARGE);
+    break;
+  default:
+    OLED::print(translatedString(Tr->SettingPDModeNoDynamicChar), FontStyle::LARGE);
+    break;
+  }
+}
 
 #endif /* POW_PD */
 
