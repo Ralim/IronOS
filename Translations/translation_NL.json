@@ -105,6 +105,17 @@
       "description": ""
     }
   },
+  "menuValues": {
+    "USBPDModeDefault": {
+      "displayText": "Default\nMode"
+    },
+    "USBPDModeNoDynamic": {
+      "displayText": "No\nDynamic"
+    },
+    "USBPDModeSafe": {
+      "displayText": "Safe\nMode"
+    }
+  },
   "menuOptions": {
     "DCInCutoff": {
       "displayText": "Vermogens\nbron",
@@ -123,7 +134,7 @@
       "description": "PD onderhandelings verlooptijd, afstemmingsduur in stappen van 100 ms (voor compatibiliteit met sommige QC laders)"
     },
     "USBPDMode": {
-      "displayText": "PD\nVPDO",
+      "displayText": "PD\nMode",
       "description": "Zet PPS & EPR modes aan"
     },
     "BoostTemperature": {

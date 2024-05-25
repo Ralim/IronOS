@@ -105,6 +105,17 @@
       "description": ""
     }
   },
+  "menuValues": {
+    "USBPDModeDefault": {
+      "displayText": "Default\nMode"
+    },
+    "USBPDModeNoDynamic": {
+      "displayText": "No\nDynamic"
+    },
+    "USBPDModeSafe": {
+      "displayText": "Safe\nMode"
+    }
+  },
   "menuOptions": {
     "DCInCutoff": {
       "displayText": "Fuente\nde energía",
@@ -123,7 +134,7 @@
       "description": "Timeout de negociación de PD en pasos de 100ms para compatibilidad con algunos cargadores QC (0: apagado)"
     },
     "USBPDMode": {
-      "displayText": "PD\nVPDO",
+      "displayText": "PD\nMode",
       "description": "Permite modos PPS & EPR"
     },
     "BoostTemperature": {

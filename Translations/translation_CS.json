@@ -105,6 +105,17 @@
       "description": ""
     }
   },
+  "menuValues": {
+    "USBPDModeDefault": {
+      "displayText": "Default\nMode"
+    },
+    "USBPDModeNoDynamic": {
+      "displayText": "No\nDynamic"
+    },
+    "USBPDModeSafe": {
+      "displayText": "Safe\nMode"
+    }
+  },
   "menuOptions": {
     "DCInCutoff": {
       "displayText": "Zdroj\nnapájení",
@@ -123,7 +134,7 @@
       "description": "Maximální prodleva při jednání PD ve 100ms krocích pro kompatibilitu s některými QC nabíječkami"
     },
     "USBPDMode": {
-      "displayText": "PD\nVPDO",
+      "displayText": "PD\nMode",
       "description": "Povoluje režimy PPS & EPR"
     },
     "BoostTemperature": {

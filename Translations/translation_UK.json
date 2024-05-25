@@ -105,6 +105,17 @@
       "description": ""
     }
   },
+  "menuValues": {
+    "USBPDModeDefault": {
+      "displayText": "Default\nMode"
+    },
+    "USBPDModeNoDynamic": {
+      "displayText": "No\nDynamic"
+    },
+    "USBPDModeSafe": {
+      "displayText": "Safe\nMode"
+    }
+  },
   "menuOptions": {
     "DCInCutoff": {
       "displayText": "Джерело\nживлення",
@@ -123,7 +134,7 @@
       "description": "Затримка у 100мс інкрементах для PD для сумісності з деякими QC зарядними пристроями (0: вимкнено)"
     },
     "USBPDMode": {
-      "displayText": "PD\nVPDO",
+      "displayText": "PD\nMode",
       "description": "Вмикає режими PPS & EPR."
     },
     "BoostTemperature": {

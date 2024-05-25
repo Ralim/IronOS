@@ -105,6 +105,17 @@
       "description": ""
     }
   },
+  "menuValues": {
+    "USBPDModeDefault": {
+      "displayText": "Default\nMode"
+    },
+    "USBPDModeNoDynamic": {
+      "displayText": "No\nDynamic"
+    },
+    "USBPDModeSafe": {
+      "displayText": "Safe\nMode"
+    }
+  },
   "menuOptions": {
     "DCInCutoff": {
       "displayText": "Spannungs-\nquelle",
@@ -123,7 +134,7 @@
       "description": "PD Abfragedauer in 100ms Schritten (Kompatibilität mit best. QC-Ladegeräten)"
     },
     "USBPDMode": {
-      "displayText": "PD\nVPDO",
+      "displayText": "PD\nMode",
       "description": "Aktiviert PPS & EPR"
     },
     "BoostTemperature": {

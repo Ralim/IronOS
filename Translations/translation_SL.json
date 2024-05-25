@@ -105,6 +105,17 @@
       "description": ""
     }
   },
+  "menuValues": {
+    "USBPDModeDefault": {
+      "displayText": "Default\nMode"
+    },
+    "USBPDModeNoDynamic": {
+      "displayText": "No\nDynamic"
+    },
+    "USBPDModeSafe": {
+      "displayText": "Safe\nMode"
+    }
+  },
   "menuOptions": {
     "DCInCutoff": {
       "displayText": "Vir\nnapajanja",
@@ -123,8 +134,8 @@
       "description": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers"
     },
     "USBPDMode": {
-      "displayText": "PD\nVPDO",
-      "description": "Enables PPS & EPR modes"
+      "displayText": "PD\nMode",
+      "description": "No Dynamic disables EPR & PPS, Safe mode does not use padding resistance"
     },
     "BoostTemperature": {
       "displayText": "Pospešena\ntemp.",

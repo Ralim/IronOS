@@ -105,6 +105,17 @@
       "description": ""
     }
   },
+  "menuValues": {
+    "USBPDModeDefault": {
+      "displayText": "Default\nMode"
+    },
+    "USBPDModeNoDynamic": {
+      "displayText": "No\nDynamic"
+    },
+    "USBPDModeSafe": {
+      "displayText": "Safe\nMode"
+    }
+  },
   "menuOptions": {
     "DCInCutoff": {
       "displayText": "Предельное\nнапряжение",
@@ -123,7 +134,7 @@
       "description": "Интервал согласования питания по Power Delivery с шагом 100 мс для совместимости с некоторыми источниками питания по QC (0=Откл.)"
     },
     "USBPDMode": {
-      "displayText": "PD\nVPDO",
+      "displayText": "PD\nMode",
       "description": "Включить режимы PPS & EPR"
     },
     "BoostTemperature": {

@@ -105,6 +105,17 @@
       "description": ""
     }
   },
+  "menuValues": {
+    "USBPDModeDefault": {
+      "displayText": "Default\nMode"
+    },
+    "USBPDModeNoDynamic": {
+      "displayText": "No\nDynamic"
+    },
+    "USBPDModeSafe": {
+      "displayText": "Safe\nMode"
+    }
+  },
   "menuOptions": {
     "DCInCutoff": {
       "displayText": "Źródło\nzasilania",
@@ -123,7 +134,7 @@
       "description": "Limit czasu negocjacji PD w krokach co 100 ms dla zgodności z niektórymi ładowarkami QC (0: wyłączone)"
     },
     "USBPDMode": {
-      "displayText": "PD\nVPDO",
+      "displayText": "PD\nMode",
       "description": "Włącza tryby PPS & EPR."
     },
     "BoostTemperature": {

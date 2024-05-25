@@ -105,6 +105,17 @@
       "description": ""
     }
   },
+  "menuValues": {
+    "USBPDModeDefault": {
+      "displayText": "Default\nMode"
+    },
+    "USBPDModeNoDynamic": {
+      "displayText": "No\nDynamic"
+    },
+    "USBPDModeSafe": {
+      "displayText": "Safe\nMode"
+    }
+  },
   "menuOptions": {
     "DCInCutoff": {
       "displayText": "Sursa de\nalimentare",
@@ -123,8 +134,8 @@
       "description": "Timp limită de negociere pentru tranzacţia PD, în paşi de 100ms, pentru compatibilitate cu alimentatoarele QC"
     },
     "USBPDMode": {
-      "displayText": "PD\nVPDO",
-      "description": "Enables PPS & EPR modes"
+      "displayText": "PD\nMode",
+      "description": "No Dynamic disables EPR & PPS, Safe mode does not use padding resistance"
     },
     "BoostTemperature": {
       "displayText": "Modifică\ntemp. impuls",

@@ -105,6 +105,17 @@
       "description": ""
     }
   },
+  "menuValues": {
+    "USBPDModeDefault": {
+      "displayText": "Default\nMode"
+    },
+    "USBPDModeNoDynamic": {
+      "displayText": "No\nDynamic"
+    },
+    "USBPDModeSafe": {
+      "displayText": "Safe\nMode"
+    }
+  },
   "menuOptions": {
     "DCInCutoff": {
       "displayText": "Nguon\nđien",
@@ -123,8 +134,8 @@
       "description": "Thoi gian cho đàm phán PD trong các buoc 100ms đe tuong thích voi mot so bo sac QC"
     },
     "USBPDMode": {
-      "displayText": "PD\nVPDO",
-      "description": "Enables PPS & EPR modes"
+      "displayText": "PD\nMode",
+      "description": "No Dynamic disables EPR & PPS, Safe mode does not use padding resistance"
     },
     "BoostTemperature": {
       "displayText": "Tăng\nnhiet đo",

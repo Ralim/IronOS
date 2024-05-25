@@ -105,10 +105,21 @@
       "description": ""
     }
   },
+  "menuValues": {
+    "USBPDModeDefault": {
+      "displayText": "Default\nMode"
+    },
+    "USBPDModeNoDynamic": {
+      "displayText": "No\nDynamic"
+    },
+    "USBPDModeSafe": {
+      "displayText": "Safe\nMode"
+    }
+  },
   "menuOptions": {
     "DCInCutoff": {
       "displayText": "Power\nsource",
-      "description": "Set cutoff voltage to prevent battery overdrainage (DC 10V) (S=3.3V per cell, disable PWR limit)"
+      "description": "Set cutoff voltage to prevent battery overdischarge (DC=10V) (S=3.3V per cell, disable PWR limit)"
     },
     "MinVolCell": {
       "displayText": "Minimum\nvoltage",
@@ -123,8 +134,8 @@
       "description": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers"
     },
     "USBPDMode": {
-      "displayText": "PD\nVPDO",
-      "description": "Enables PPS & EPR modes"
+      "displayText": "PD\nMode",
+      "description": "No Dynamic disables EPR & PPS, Safe mode does not use padding resistance"
     },
     "BoostTemperature": {
       "displayText": "Boost\ntemp",

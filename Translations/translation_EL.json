@@ -105,6 +105,17 @@
       "description": ""
     }
   },
+  "menuValues": {
+    "USBPDModeDefault": {
+      "displayText": "Default\nMode"
+    },
+    "USBPDModeNoDynamic": {
+      "displayText": "No\nDynamic"
+    },
+    "USBPDModeSafe": {
+      "displayText": "Safe\nMode"
+    }
+  },
   "menuOptions": {
     "DCInCutoff": {
       "displayText": "Πηγή\nενέργειας",
@@ -123,7 +134,7 @@
       "description": "Χρονικό όριο διαπραγμάτευσης PD σε βήματα 100ms για συμβατότητα με κάποιους φορτιστές QC"
     },
     "USBPDMode": {
-      "displayText": "PD\nVPDO",
+      "displayText": "PD\nMode",
       "description": "Ενεργοποιεί λειτουργίες PPS & EPR."
     },
     "BoostTemperature": {

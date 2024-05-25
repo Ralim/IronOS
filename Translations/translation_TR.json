@@ -105,6 +105,17 @@
       "description": ""
     }
   },
+  "menuValues": {
+    "USBPDModeDefault": {
+      "displayText": "Default\nMode"
+    },
+    "USBPDModeNoDynamic": {
+      "displayText": "No\nDynamic"
+    },
+    "USBPDModeSafe": {
+      "displayText": "Safe\nMode"
+    }
+  },
   "menuOptions": {
     "DCInCutoff": {
       "displayText": "GÇKYN\n",
@@ -123,7 +134,7 @@
       "description": "Bazı QC şarj cihazlarıyla uyumluluk için 100ms adımlarında PD pazarlık zaman aşımı"
     },
     "USBPDMode": {
-      "displayText": "PD\nVPDO",
+      "displayText": "PD\nMode",
       "description": "PPS & EPR modlarını etkinleştirir"
     },
     "BoostTemperature": {

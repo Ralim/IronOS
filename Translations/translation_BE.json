@@ -105,6 +105,17 @@
       "description": ""
     }
   },
+  "menuValues": {
+    "USBPDModeDefault": {
+      "displayText": "Default\nMode"
+    },
+    "USBPDModeNoDynamic": {
+      "displayText": "No\nDynamic"
+    },
+    "USBPDModeSafe": {
+      "displayText": "Safe\nMode"
+    }
+  },
   "menuOptions": {
     "DCInCutoff": {
       "displayText": "Крыніца\nсілкавання",
@@ -123,7 +134,7 @@
       "description": "Час чакання ўзгаднення PD з крокам 100 мс для сумяшчальнасці з некаторымі зараднымі зараднымі прыладамі QC (0: адключана)"
     },
     "USBPDMode": {
-      "displayText": "PD\nVPDO",
+      "displayText": "PD\nMode",
       "description": "Уключае рэжымы PPS & EPR."
     },
     "BoostTemperature": {

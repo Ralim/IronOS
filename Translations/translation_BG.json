@@ -105,6 +105,17 @@
       "description": ""
     }
   },
+  "menuValues": {
+    "USBPDModeDefault": {
+      "displayText": "Default\nMode"
+    },
+    "USBPDModeNoDynamic": {
+      "displayText": "No\nDynamic"
+    },
+    "USBPDModeSafe": {
+      "displayText": "Safe\nMode"
+    }
+  },
   "menuOptions": {
     "DCInCutoff": {
       "displayText": "Гранично\nнапрежение",
@@ -123,7 +134,7 @@
       "description": "PD интервал за договаряне на захранването на стъпки от 100 мс за съвместимост с някои QC захранвания (0=Изкл.)"
     },
     "USBPDMode": {
-      "displayText": "PD\nVPDO",
+      "displayText": "PD\nMode",
       "description": "Включи PPS & EPR"
     },
     "BoostTemperature": {
