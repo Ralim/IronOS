@@ -33,7 +33,6 @@ void read_adc_fifo(void) {
   if (pending_readings != 8) {
     MSG((char *)"Discarding out of sync adc %d\r\n", pending_readings);
   } else {
-    MSG((char *)"FIFO Count %d\r\n", pending_readings);
     while (pending_readings) {
       pending_readings--;
       uint32_t        raw_reading = ADC_Read_FIFO();
@@ -45,11 +44,6 @@ void read_adc_fifo(void) {
         ADC_Temp.update(parsed.value << 2);
         break;
       case TIP_TEMP_ADC_CHANNEL: {
-        int32_t avg   = ADC_Tip.average();
-        int32_t delta = (int32_t)parsed.value - (avg >> 2);
-        if (delta > 4000) {
-          MSG((char *)"ADC Chan %d -> %d -> %d\r\n", pending_readings, parsed.value, delta);
-        }
         ADC_Tip.update(parsed.value << 2);
       } break;
       case VIN_ADC_CHANNEL:
@@ -60,7 +54,6 @@ void read_adc_fifo(void) {
       }
     }
   }
-  ADC_FIFO_Clear();
   // unblock the PID controller thread
   if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED) {
     BaseType_t xHigherPriorityTaskWoken = pdFALSE;
@@ -88,6 +81,7 @@ void timer0_comp0_callback(void) {
 
 // Timer 0 is used to co-ordinate the ADC and the output PWM
 void timer0_comp1_callback(void) {
+  ADC_FIFO_Clear();
   ADC_Start();
   TIMER_ClearIntStatus(TIMER_CH0, TIMER_COMP_ID_1);
 }

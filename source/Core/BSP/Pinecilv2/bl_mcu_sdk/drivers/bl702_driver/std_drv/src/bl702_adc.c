@@ -535,6 +535,10 @@ void ADC_Parse_Result(uint32_t *orgVal, uint32_t len, ADC_Result_Type *result) {
       } else if ((dataType == ADC_DATA_WIDTH_16_WITH_128_AVERAGE) || (dataType == ADC_DATA_WIDTH_16_WITH_256_AVERAGE)) {
         result[i].value = (unsigned int)((orgVal[i] & 0xffff) / coe);
       }
+      // Saturate at 16 bits
+      if (result[i].value > 0xFFFF) {
+        result[i].value = 0xFFFF;
+      }
     }
   } else {
     for (i = 0; i < len; i++) {
@@ -554,6 +558,10 @@ void ADC_Parse_Result(uint32_t *orgVal, uint32_t len, ADC_Result_Type *result) {
         result[i].value = (unsigned int)(((orgVal[i] & 0xffff) >> 2) / coe);
       } else if ((dataType == ADC_DATA_WIDTH_16_WITH_128_AVERAGE) || (dataType == ADC_DATA_WIDTH_16_WITH_256_AVERAGE)) {
         result[i].value = (unsigned int)((orgVal[i] & 0xffff) / coe);
+      }
+      // Saturate at 16 bits
+      if (result[i].value > 0xFFFF) {
+        result[i].value = 0xFFFF;
       }
     }
   }

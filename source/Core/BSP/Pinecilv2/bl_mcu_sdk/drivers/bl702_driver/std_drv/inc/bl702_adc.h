@@ -271,7 +271,7 @@ typedef struct {
 typedef struct {
   int8_t   posChan; /*!< Positive channel */
   int8_t   negChan; /*!< Negative channel */
-  uint16_t value;   /*!< ADC value */
+  uint32_t value;   /*!< ADC value */
   // float    volt;    /*!< ADC voltage result */
 } ADC_Result_Type;
 
