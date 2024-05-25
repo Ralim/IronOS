@@ -165,24 +165,6 @@
       "len": 1,
       "default": "F",
       "description": "Shown when the locking mode is set to lock all buttons."
-    },
-    {
-      "id": "SettingPDModeDefaultChar",
-      "len": 1,
-      "default": "D",
-      "description": "Shown when the locking mode is set to lock all buttons."
-    },
-    {
-      "id": "SettingPDModeSafeChar",
-      "len": 1,
-      "default": "S",
-      "description": "Shown when the locking mode is set to lock all buttons."
-    },
-    {
-      "id": "SettingPDModeNoDynamicChar",
-      "len": 1,
-      "default": "N",
-      "description": "Shown when the locking mode is set to lock all buttons."
     }
   ],
   "menuGroups": [
@@ -216,6 +198,20 @@
       "maxLen": 5,
       "maxLen2": 11,
       "description": "Advanced settings. Misc catchall for settings that don't fit anywhere else or settings that require some thought before use."
+    }
+  ],
+  "menuValues": [
+    {
+      "id": "USBPDModeDefault",
+      "description": "When in this mode we enable all PD features, and we pad resistance slightly to account for cable and PCB trace loss"
+    },
+    {
+      "id": "USBPDModeNoDynamic",
+      "description": "When in this mode we only enable fixed voltage USB-PD options, and we pad resistance slightly to account for cable and PCB trace loss"
+    },
+    {
+      "id": "USBPDModeSafe",
+      "description": "When in this mode we enable all PD features, but we don't pad resistance slightly to account for cable and PCB trace loss"
     }
   ],
   "menuOptions": [
@@ -252,7 +248,7 @@
       "maxLen": 7,
       "maxLen2": 15,
       "include": ["POW_PD"],
-      "description": "Enabled PPS & EPR modes."
+      "description": "No Dynamic disables EPR & PPS, Safe mode does not use padding resistance"
     },
     {
       "id": "BoostTemperature",
