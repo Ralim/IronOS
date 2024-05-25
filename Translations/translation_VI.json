@@ -1,310 +1,310 @@
 {
-    "languageCode": "VI",
-    "languageLocalName": "Tieng Viet",
-    "tempUnitFahrenheit": false,
-    "messagesWarn": {
-        "CalibrationDone": {
-            "message": "Calibration\ndone!"
-        },
-        "ResetOKMessage": {
-            "message": "Reset OK"
-        },
-        "SettingsResetMessage": {
-            "message": "Mot so cài đat\nđã thay đoi"
-        },
-        "NoAccelerometerMessage": {
-            "message": "Không phát hien\ngia toc ke!"
-        },
-        "NoPowerDeliveryMessage": {
-            "message": "Không phát hien\nUSB-PD IC!"
-        },
-        "LockingKeysString": {
-            "message": "Đã khóa"
-        },
-        "UnlockingKeysString": {
-            "message": "Mo khóa"
-        },
-        "WarningKeysLockedString": {
-            "message": "Đã khóa!"
-        },
-        "WarningThermalRunaway": {
-            "message": "Nhiet\nTat gia nhiet"
-        },
-        "WarningTipShorted": {
-            "message": "!Tip Shorted!"
-        },
-        "SettingsCalibrationWarning": {
-            "message": "Before rebooting, make sure tip & handle are at room temperature!"
-        },
-        "CJCCalibrating": {
-            "message": "calibrating\n"
-        },
-        "SettingsResetWarning": {
-            "message": "Ban chac chan muon khôi phuc tat ca cài đat ve mac đinh?"
-        },
-        "UVLOWarningString": {
-            "message": "DC thap"
-        },
-        "UndervoltageString": {
-            "message": "Đien áp thap\n"
-        },
-        "InputVoltageString": {
-            "message": "Đau vào V: \n"
-        },
-        "SleepingAdvancedString": {
-            "message": "Đang ngu...\n"
-        },
-        "SleepingTipAdvancedString": {
-            "message": "Meo: \n"
-        },
-        "ProfilePreheatString": {
-            "message": "Preheat\n"
-        },
-        "ProfileCooldownString": {
-            "message": "Cooldown\n"
-        },
-        "DeviceFailedValidationWarning": {
-            "message": "Your device is most likely a counterfeit!"
-        },
-        "TooHotToStartProfileWarning": {
-            "message": "Too hot to\nstart profile"
-        }
+  "languageCode": "VI",
+  "languageLocalName": "Tieng Viet",
+  "tempUnitFahrenheit": false,
+  "messagesWarn": {
+    "CalibrationDone": {
+      "message": "Calibration\ndone!"
     },
-    "characters": {
-        "SettingRightChar": "R",
-        "SettingLeftChar": "L",
-        "SettingAutoChar": "A",
-        "SettingSlowChar": "S",
-        "SettingMediumChar": "M",
-        "SettingFastChar": "F",
-        "SettingStartSolderingChar": "S",
-        "SettingStartSleepChar": "Z",
-        "SettingStartSleepOffChar": "R",
-        "SettingLockBoostChar": "B",
-        "SettingLockFullChar": "F"
+    "ResetOKMessage": {
+      "message": "Reset OK"
     },
-    "menuGroups": {
-        "PowerMenu": {
-            "displayText": "Cài đat\nnguon đien",
-            "description": ""
-        },
-        "SolderingMenu": {
-            "displayText": "Cài đat\ntay hàn",
-            "description": ""
-        },
-        "PowerSavingMenu": {
-            "displayText": "Che đo\nngu",
-            "description": ""
-        },
-        "UIMenu": {
-            "displayText": "Giao dien\nnguoi dùng",
-            "description": ""
-        },
-        "AdvancedMenu": {
-            "displayText": "Cài đat\nnâng cao",
-            "description": ""
-        }
+    "SettingsResetMessage": {
+      "message": "Mot so cài đat\nđã thay đoi"
     },
-    "menuOptions": {
-        "DCInCutoff": {
-            "displayText": "Nguon\nđien",
-            "description": "Nguon đien, đat đien áp giam. (DC 10V) (S 3.3V moi cell, tat gioi han công suat)"
-        },
-        "MinVolCell": {
-            "displayText": "Voltage\ntoi thieu",
-            "description": "Đien áp toi thieu cho phép trên moi cell (3S: 3 - 3,7V | 4-6S: 2,4 - 3,7V)"
-        },
-        "QCMaxVoltage": {
-            "displayText": "QC\nvoltage",
-            "description": "Đien áp QC toi đa mà tay hàn yêu cau"
-        },
-        "PDNegTimeout": {
-            "displayText": "PD\nsau",
-            "description": "Thoi gian cho đàm phán PD trong các buoc 100ms đe tuong thích voi mot so bo sac QC"
-        },
-        "PDVpdo": {
-            "displayText": "PD\nVPDO",
-            "description": "Enables PPS & EPR modes"
-        },
-        "BoostTemperature": {
-            "displayText": "Tăng\nnhiet đo",
-            "description": "Nhiet đo dùng trong che đo \"tăng cuong\""
-        },
-        "AutoStart": {
-            "displayText": "Nhiet đo\nđang tăng",
-            "description": "S=nhiet đo hàn | Z=cho o nhiet đo ngu đen khi cu đong | R=cho mà không gia nhiet đen khi cu đong"
-        },
-        "TempChangeShortStep": {
-            "displayText": "Thay đoi n.đo\nan nút nhanh",
-            "description": "Biên đo tăng/giam nhiet đo khi an nút nhanh"
-        },
-        "TempChangeLongStep": {
-            "displayText": "Thay đoi n.đo\nan nút lâu",
-            "description": "Biên đo tăng/giam nhiet đo khi an nút lâu"
-        },
-        "LockingMode": {
-            "displayText": "Cho phép khóa\ncác nút",
-            "description": "Trong khi hàn, giu ca 2 nút đe khóa (B=chi che đo tăng cuong | F=khóa hoàn toàn)"
-        },
-        "ProfilePhases": {
-            "displayText": "Profile\nPhases",
-            "description": "Number of phases in profile mode"
-        },
-        "ProfilePreheatTemp": {
-            "displayText": "Preheat\nTemp",
-            "description": "Preheat to this temperature at the start of profile mode"
-        },
-        "ProfilePreheatSpeed": {
-            "displayText": "Preheat\nSpeed",
-            "description": "Preheat at this rate (degrees per second)"
-        },
-        "ProfilePhase1Temp": {
-            "displayText": "Phase 1\nTemp",
-            "description": "Target temperature for the end of this phase"
-        },
-        "ProfilePhase1Duration": {
-            "displayText": "Phase 1\nDuration",
-            "description": "Target duration of this phase (seconds)"
-        },
-        "ProfilePhase2Temp": {
-            "displayText": "Phase 2\nTemp",
-            "description": ""
-        },
-        "ProfilePhase2Duration": {
-            "displayText": "Phase 2\nDuration",
-            "description": ""
-        },
-        "ProfilePhase3Temp": {
-            "displayText": "Phase 3\nTemp",
-            "description": ""
-        },
-        "ProfilePhase3Duration": {
-            "displayText": "Phase 3\nDuration",
-            "description": ""
-        },
-        "ProfilePhase4Temp": {
-            "displayText": "Phase 4\nTemp",
-            "description": ""
-        },
-        "ProfilePhase4Duration": {
-            "displayText": "Phase 4\nDuration",
-            "description": ""
-        },
-        "ProfilePhase5Temp": {
-            "displayText": "Phase 5\nTemp",
-            "description": ""
-        },
-        "ProfilePhase5Duration": {
-            "displayText": "Phase 5\nDuration",
-            "description": ""
-        },
-        "ProfileCooldownSpeed": {
-            "displayText": "Cooldown\nSpeed",
-            "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
-        },
-        "MotionSensitivity": {
-            "displayText": "Cam bien\ncu đong",
-            "description": "1=đo nhay thap nhat| ... | 9=đo nhay cao nhat"
-        },
-        "SleepTemperature": {
-            "displayText": "Nhiet đo\nkhi ngu",
-            "description": "Giam nhiet đo khi o \"Che đo ngu\""
-        },
-        "SleepTimeout": {
-            "displayText": "Ngu\nsau",
-            "description": "thoi gian truoc khi \"Che đo ngu\" bat đau (s=giây | m=phút)"
-        },
-        "ShutdownTimeout": {
-            "displayText": "Tat\nsau",
-            "description": "khoang thoi gian truoc khi tay hàn tat (m=phút)"
-        },
-        "HallEffSensitivity": {
-            "displayText": "Hall\nđo nhay",
-            "description": "Đo nhay cam bien Hall đe phát hien che đo ngu (1=ít nhay nhat |...| 9=nhay nhat)"
-        },
-        "TemperatureUnit": {
-            "displayText": "Đon vi\nnhiet đo",
-            "description": "C= Đo C | F= Đo F"
-        },
-        "DisplayRotation": {
-            "displayText": "Huong\nhien thi",
-            "description": "R=huong tay phai | L=huong tay trái | A=tu đong"
-        },
-        "CooldownBlink": {
-            "displayText": "Nguoi đi\nchop mat",
-            "description": "Nhap nháy nhiet đo sau khi viec gia nhiet tam dung trong khi mui hàn van nóng"
-        },
-        "ScrollingSpeed": {
-            "displayText": "Toc đo\ncuon",
-            "description": "Toc đo cuon văn ban(S=cham | F=nhanh)"
-        },
-        "ReverseButtonTempChange": {
-            "displayText": "Đao nguoc\nnút + -",
-            "description": "Đao nguoc chuc năng các nút đieu chinh nhiet đo"
-        },
-        "AnimSpeed": {
-            "displayText": "Toc đo\nhoat anh",
-            "description": "Toc đo cua hoat anh menu (S=cham | M=trung bình | F=nhanh)"
-        },
-        "AnimLoop": {
-            "displayText": "Hoat anh\nlap lai",
-            "description": "Lap lai các hoat anh trong màn hình chính"
-        },
-        "Brightness": {
-            "displayText": "Đo tuong phan\nmàn hình",
-            "description": "Đieu chinh đo sáng màn hình OLED"
-        },
-        "ColourInversion": {
-            "displayText": "Đao nguoc màu\nmàn hình",
-            "description": "Đao nguoc màu màn hình OLED"
-        },
-        "LOGOTime": {
-            "displayText": "Boot logo\nduration",
-            "description": "Set boot logo duration (s=seconds)"
-        },
-        "AdvancedIdle": {
-            "displayText": "Chi tiet\nmàn hình cho",
-            "description": "hien thi thông tin chi tiet bang phông chu nho hon trên màn hình cho"
-        },
-        "AdvancedSoldering": {
-            "displayText": "Chi tiet\nmàn hình hàn",
-            "description": "Hien thi thông tin bang phông chu nho hon trên màn hình hàn"
-        },
-        "BluetoothLE": {
-            "displayText": "Bluetooth\n",
-            "description": "Enables BLE"
-        },
-        "PowerLimit": {
-            "displayText": "Công suat\ngioi han",
-            "description": "Công suat toi đa mà tay hàn có the su dung (W=watt)"
-        },
-        "CalibrateCJC": {
-            "displayText": "Calibrate CJC\nat next boot",
-            "description": "Calbrate Cold Junction Compensation at next boot (not required if Delta T is < 5°C)"
-        },
-        "VoltageCalibration": {
-            "displayText": "Hieu chinh\nđien áp đau vào?",
-            "description": "bat đau hieu chuan VIN (nhan và giu đe thoát)"
-        },
-        "PowerPulsePower": {
-            "displayText": "Công suat\nkích nguon",
-            "description": "Cuong đo công suat kích nguon (watt)"
-        },
-        "PowerPulseWait": {
-            "displayText": "Trì hoãn\nđien áp kích",
-            "description": "Trì hoãn truoc khi kích hoat kích nguon(x 2,5 giây)"
-        },
-        "PowerPulseDuration": {
-            "displayText": "Thoi luong\nkích nguon",
-            "description": "thoi luong kích nguon (x 250ms)"
-        },
-        "SettingsReset": {
-            "displayText": "Khôi phuc\ncài đat goc?",
-            "description": "đat lai tat ca cài đat ve mac đinh"
-        },
-        "LanguageSwitch": {
-            "displayText": "Ngôn ngu:\n VI  Tieng Viet",
-            "description": ""
-        }
+    "NoAccelerometerMessage": {
+      "message": "Không phát hien\ngia toc ke!"
+    },
+    "NoPowerDeliveryMessage": {
+      "message": "Không phát hien\nUSB-PD IC!"
+    },
+    "LockingKeysString": {
+      "message": "Đã khóa"
+    },
+    "UnlockingKeysString": {
+      "message": "Mo khóa"
+    },
+    "WarningKeysLockedString": {
+      "message": "Đã khóa!"
+    },
+    "WarningThermalRunaway": {
+      "message": "Nhiet\nTat gia nhiet"
+    },
+    "WarningTipShorted": {
+      "message": "!Tip Shorted!"
+    },
+    "SettingsCalibrationWarning": {
+      "message": "Before rebooting, make sure tip & handle are at room temperature!"
+    },
+    "CJCCalibrating": {
+      "message": "calibrating\n"
+    },
+    "SettingsResetWarning": {
+      "message": "Ban chac chan muon khôi phuc tat ca cài đat ve mac đinh?"
+    },
+    "UVLOWarningString": {
+      "message": "DC thap"
+    },
+    "UndervoltageString": {
+      "message": "Đien áp thap\n"
+    },
+    "InputVoltageString": {
+      "message": "Đau vào V: \n"
+    },
+    "SleepingAdvancedString": {
+      "message": "Đang ngu...\n"
+    },
+    "SleepingTipAdvancedString": {
+      "message": "Meo: \n"
+    },
+    "ProfilePreheatString": {
+      "message": "Preheat\n"
+    },
+    "ProfileCooldownString": {
+      "message": "Cooldown\n"
+    },
+    "DeviceFailedValidationWarning": {
+      "message": "Your device is most likely a counterfeit!"
+    },
+    "TooHotToStartProfileWarning": {
+      "message": "Too hot to\nstart profile"
     }
+  },
+  "characters": {
+    "SettingRightChar": "R",
+    "SettingLeftChar": "L",
+    "SettingAutoChar": "A",
+    "SettingSlowChar": "S",
+    "SettingMediumChar": "M",
+    "SettingFastChar": "F",
+    "SettingStartSolderingChar": "S",
+    "SettingStartSleepChar": "Z",
+    "SettingStartSleepOffChar": "R",
+    "SettingLockBoostChar": "B",
+    "SettingLockFullChar": "F"
+  },
+  "menuGroups": {
+    "PowerMenu": {
+      "displayText": "Cài đat\nnguon đien",
+      "description": ""
+    },
+    "SolderingMenu": {
+      "displayText": "Cài đat\ntay hàn",
+      "description": ""
+    },
+    "PowerSavingMenu": {
+      "displayText": "Che đo\nngu",
+      "description": ""
+    },
+    "UIMenu": {
+      "displayText": "Giao dien\nnguoi dùng",
+      "description": ""
+    },
+    "AdvancedMenu": {
+      "displayText": "Cài đat\nnâng cao",
+      "description": ""
+    }
+  },
+  "menuOptions": {
+    "DCInCutoff": {
+      "displayText": "Nguon\nđien",
+      "description": "Nguon đien, đat đien áp giam. (DC 10V) (S 3.3V moi cell, tat gioi han công suat)"
+    },
+    "MinVolCell": {
+      "displayText": "Voltage\ntoi thieu",
+      "description": "Đien áp toi thieu cho phép trên moi cell (3S: 3 - 3,7V | 4-6S: 2,4 - 3,7V)"
+    },
+    "QCMaxVoltage": {
+      "displayText": "QC\nvoltage",
+      "description": "Đien áp QC toi đa mà tay hàn yêu cau"
+    },
+    "PDNegTimeout": {
+      "displayText": "PD\nsau",
+      "description": "Thoi gian cho đàm phán PD trong các buoc 100ms đe tuong thích voi mot so bo sac QC"
+    },
+    "USBPDMode": {
+      "displayText": "PD\nVPDO",
+      "description": "Enables PPS & EPR modes"
+    },
+    "BoostTemperature": {
+      "displayText": "Tăng\nnhiet đo",
+      "description": "Nhiet đo dùng trong che đo \"tăng cuong\""
+    },
+    "AutoStart": {
+      "displayText": "Nhiet đo\nđang tăng",
+      "description": "S=nhiet đo hàn | Z=cho o nhiet đo ngu đen khi cu đong | R=cho mà không gia nhiet đen khi cu đong"
+    },
+    "TempChangeShortStep": {
+      "displayText": "Thay đoi n.đo\nan nút nhanh",
+      "description": "Biên đo tăng/giam nhiet đo khi an nút nhanh"
+    },
+    "TempChangeLongStep": {
+      "displayText": "Thay đoi n.đo\nan nút lâu",
+      "description": "Biên đo tăng/giam nhiet đo khi an nút lâu"
+    },
+    "LockingMode": {
+      "displayText": "Cho phép khóa\ncác nút",
+      "description": "Trong khi hàn, giu ca 2 nút đe khóa (B=chi che đo tăng cuong | F=khóa hoàn toàn)"
+    },
+    "ProfilePhases": {
+      "displayText": "Profile\nPhases",
+      "description": "Number of phases in profile mode"
+    },
+    "ProfilePreheatTemp": {
+      "displayText": "Preheat\nTemp",
+      "description": "Preheat to this temperature at the start of profile mode"
+    },
+    "ProfilePreheatSpeed": {
+      "displayText": "Preheat\nSpeed",
+      "description": "Preheat at this rate (degrees per second)"
+    },
+    "ProfilePhase1Temp": {
+      "displayText": "Phase 1\nTemp",
+      "description": "Target temperature for the end of this phase"
+    },
+    "ProfilePhase1Duration": {
+      "displayText": "Phase 1\nDuration",
+      "description": "Target duration of this phase (seconds)"
+    },
+    "ProfilePhase2Temp": {
+      "displayText": "Phase 2\nTemp",
+      "description": ""
+    },
+    "ProfilePhase2Duration": {
+      "displayText": "Phase 2\nDuration",
+      "description": ""
+    },
+    "ProfilePhase3Temp": {
+      "displayText": "Phase 3\nTemp",
+      "description": ""
+    },
+    "ProfilePhase3Duration": {
+      "displayText": "Phase 3\nDuration",
+      "description": ""
+    },
+    "ProfilePhase4Temp": {
+      "displayText": "Phase 4\nTemp",
+      "description": ""
+    },
+    "ProfilePhase4Duration": {
+      "displayText": "Phase 4\nDuration",
+      "description": ""
+    },
+    "ProfilePhase5Temp": {
+      "displayText": "Phase 5\nTemp",
+      "description": ""
+    },
+    "ProfilePhase5Duration": {
+      "displayText": "Phase 5\nDuration",
+      "description": ""
+    },
+    "ProfileCooldownSpeed": {
+      "displayText": "Cooldown\nSpeed",
+      "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
+    },
+    "MotionSensitivity": {
+      "displayText": "Cam bien\ncu đong",
+      "description": "1=đo nhay thap nhat| ... | 9=đo nhay cao nhat"
+    },
+    "SleepTemperature": {
+      "displayText": "Nhiet đo\nkhi ngu",
+      "description": "Giam nhiet đo khi o \"Che đo ngu\""
+    },
+    "SleepTimeout": {
+      "displayText": "Ngu\nsau",
+      "description": "thoi gian truoc khi \"Che đo ngu\" bat đau (s=giây | m=phút)"
+    },
+    "ShutdownTimeout": {
+      "displayText": "Tat\nsau",
+      "description": "khoang thoi gian truoc khi tay hàn tat (m=phút)"
+    },
+    "HallEffSensitivity": {
+      "displayText": "Hall\nđo nhay",
+      "description": "Đo nhay cam bien Hall đe phát hien che đo ngu (1=ít nhay nhat |...| 9=nhay nhat)"
+    },
+    "TemperatureUnit": {
+      "displayText": "Đon vi\nnhiet đo",
+      "description": "C= Đo C | F= Đo F"
+    },
+    "DisplayRotation": {
+      "displayText": "Huong\nhien thi",
+      "description": "R=huong tay phai | L=huong tay trái | A=tu đong"
+    },
+    "CooldownBlink": {
+      "displayText": "Nguoi đi\nchop mat",
+      "description": "Nhap nháy nhiet đo sau khi viec gia nhiet tam dung trong khi mui hàn van nóng"
+    },
+    "ScrollingSpeed": {
+      "displayText": "Toc đo\ncuon",
+      "description": "Toc đo cuon văn ban(S=cham | F=nhanh)"
+    },
+    "ReverseButtonTempChange": {
+      "displayText": "Đao nguoc\nnút + -",
+      "description": "Đao nguoc chuc năng các nút đieu chinh nhiet đo"
+    },
+    "AnimSpeed": {
+      "displayText": "Toc đo\nhoat anh",
+      "description": "Toc đo cua hoat anh menu (S=cham | M=trung bình | F=nhanh)"
+    },
+    "AnimLoop": {
+      "displayText": "Hoat anh\nlap lai",
+      "description": "Lap lai các hoat anh trong màn hình chính"
+    },
+    "Brightness": {
+      "displayText": "Đo tuong phan\nmàn hình",
+      "description": "Đieu chinh đo sáng màn hình OLED"
+    },
+    "ColourInversion": {
+      "displayText": "Đao nguoc màu\nmàn hình",
+      "description": "Đao nguoc màu màn hình OLED"
+    },
+    "LOGOTime": {
+      "displayText": "Boot logo\nduration",
+      "description": "Set boot logo duration (s=seconds)"
+    },
+    "AdvancedIdle": {
+      "displayText": "Chi tiet\nmàn hình cho",
+      "description": "hien thi thông tin chi tiet bang phông chu nho hon trên màn hình cho"
+    },
+    "AdvancedSoldering": {
+      "displayText": "Chi tiet\nmàn hình hàn",
+      "description": "Hien thi thông tin bang phông chu nho hon trên màn hình hàn"
+    },
+    "BluetoothLE": {
+      "displayText": "Bluetooth\n",
+      "description": "Enables BLE"
+    },
+    "PowerLimit": {
+      "displayText": "Công suat\ngioi han",
+      "description": "Công suat toi đa mà tay hàn có the su dung (W=watt)"
+    },
+    "CalibrateCJC": {
+      "displayText": "Calibrate CJC\nat next boot",
+      "description": "Calbrate Cold Junction Compensation at next boot (not required if Delta T is < 5°C)"
+    },
+    "VoltageCalibration": {
+      "displayText": "Hieu chinh\nđien áp đau vào?",
+      "description": "bat đau hieu chuan VIN (nhan và giu đe thoát)"
+    },
+    "PowerPulsePower": {
+      "displayText": "Công suat\nkích nguon",
+      "description": "Cuong đo công suat kích nguon (watt)"
+    },
+    "PowerPulseWait": {
+      "displayText": "Trì hoãn\nđien áp kích",
+      "description": "Trì hoãn truoc khi kích hoat kích nguon(x 2,5 giây)"
+    },
+    "PowerPulseDuration": {
+      "displayText": "Thoi luong\nkích nguon",
+      "description": "thoi luong kích nguon (x 250ms)"
+    },
+    "SettingsReset": {
+      "displayText": "Khôi phuc\ncài đat goc?",
+      "description": "đat lai tat ca cài đat ve mac đinh"
+    },
+    "LanguageSwitch": {
+      "displayText": "Ngôn ngu:\n VI  Tieng Viet",
+      "description": ""
+    }
+  }
 }

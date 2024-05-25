@@ -1,310 +1,310 @@
 {
-    "languageCode": "EN",
-    "languageLocalName": "English",
-    "tempUnitFahrenheit": true,
-    "messagesWarn": {
-        "CalibrationDone": {
-            "message": "Calibration\ndone!"
-        },
-        "ResetOKMessage": {
-            "message": "Reset OK"
-        },
-        "SettingsResetMessage": {
-            "message": "Certain settings\nchanged!"
-        },
-        "NoAccelerometerMessage": {
-            "message": "No accelerometer\ndetected!"
-        },
-        "NoPowerDeliveryMessage": {
-            "message": "No USB-PD IC\ndetected!"
-        },
-        "LockingKeysString": {
-            "message": "LOCKED"
-        },
-        "UnlockingKeysString": {
-            "message": "UNLOCKED"
-        },
-        "WarningKeysLockedString": {
-            "message": "!LOCKED!"
-        },
-        "WarningThermalRunaway": {
-            "message": "Thermal\nRunaway"
-        },
-        "WarningTipShorted": {
-            "message": "!Tip Shorted!"
-        },
-        "SettingsCalibrationWarning": {
-            "message": "Before rebooting, make sure tip & handle are at room temperature!"
-        },
-        "CJCCalibrating": {
-            "message": "calibrating\n"
-        },
-        "SettingsResetWarning": {
-            "message": "Are you sure you want to restore default settings?"
-        },
-        "UVLOWarningString": {
-            "message": "DC LOW"
-        },
-        "UndervoltageString": {
-            "message": "Undervoltage\n"
-        },
-        "InputVoltageString": {
-            "message": "Input V: \n"
-        },
-        "SleepingAdvancedString": {
-            "message": "Sleeping...\n"
-        },
-        "SleepingTipAdvancedString": {
-            "message": "Tip: \n"
-        },
-        "ProfilePreheatString": {
-            "message": "Preheat\n"
-        },
-        "ProfileCooldownString": {
-            "message": "Cooldown\n"
-        },
-        "DeviceFailedValidationWarning": {
-            "message": "Your device is most likely a counterfeit!"
-        },
-        "TooHotToStartProfileWarning": {
-            "message": "Too hot to\nstart profile"
-        }
+  "languageCode": "EN",
+  "languageLocalName": "English",
+  "tempUnitFahrenheit": true,
+  "messagesWarn": {
+    "CalibrationDone": {
+      "message": "Calibration\ndone!"
     },
-    "characters": {
-        "SettingRightChar": "R",
-        "SettingLeftChar": "L",
-        "SettingAutoChar": "A",
-        "SettingSlowChar": "S",
-        "SettingMediumChar": "M",
-        "SettingFastChar": "F",
-        "SettingStartSolderingChar": "S",
-        "SettingStartSleepChar": "Z",
-        "SettingStartSleepOffChar": "R",
-        "SettingLockBoostChar": "B",
-        "SettingLockFullChar": "F"
+    "ResetOKMessage": {
+      "message": "Reset OK"
     },
-    "menuGroups": {
-        "PowerMenu": {
-            "displayText": "Power\nsettings",
-            "description": ""
-        },
-        "SolderingMenu": {
-            "displayText": "Soldering\nsettings",
-            "description": ""
-        },
-        "PowerSavingMenu": {
-            "displayText": "Sleep\nmode",
-            "description": ""
-        },
-        "UIMenu": {
-            "displayText": "User\ninterface",
-            "description": ""
-        },
-        "AdvancedMenu": {
-            "displayText": "Advanced\nsettings",
-            "description": ""
-        }
+    "SettingsResetMessage": {
+      "message": "Certain settings\nchanged!"
     },
-    "menuOptions": {
-        "DCInCutoff": {
-            "displayText": "Power\nsource",
-            "description": "Set cutoff voltage to prevent battery overdrainage (DC 10V) (S=3.3V per cell, disable PWR limit)"
-        },
-        "MinVolCell": {
-            "displayText": "Minimum\nvoltage",
-            "description": "Minimum allowed voltage per battery cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
-        },
-        "QCMaxVoltage": {
-            "displayText": "QC\nvoltage",
-            "description": "Max QC voltage the iron should negotiate for"
-        },
-        "PDNegTimeout": {
-            "displayText": "PD\ntimeout",
-            "description": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers"
-        },
-        "PDVpdo": {
-            "displayText": "PD\nVPDO",
-            "description": "Enables PPS & EPR modes"
-        },
-        "BoostTemperature": {
-            "displayText": "Boost\ntemp",
-            "description": "Tip temperature used in \"boost mode\""
-        },
-        "AutoStart": {
-            "displayText": "Start-up\nbehavior",
-            "description": "S=heat to soldering temp | Z=standby at sleep temp until moved | R=standby without heating until moved"
-        },
-        "TempChangeShortStep": {
-            "displayText": "Temp change\nshort",
-            "description": "Temperature-change-increment on short button press"
-        },
-        "TempChangeLongStep": {
-            "displayText": "Temp change\nlong",
-            "description": "Temperature-change-increment on long button press"
-        },
-        "LockingMode": {
-            "displayText": "Allow locking\nbuttons",
-            "description": "While soldering, hold down both buttons to toggle locking them (B=boost mode only | F=full locking)"
-        },
-        "ProfilePhases": {
-            "displayText": "Profile\nPhases",
-            "description": "Number of phases in profile mode"
-        },
-        "ProfilePreheatTemp": {
-            "displayText": "Preheat\nTemp",
-            "description": "Preheat to this temperature at the start of profile mode"
-        },
-        "ProfilePreheatSpeed": {
-            "displayText": "Preheat\nSpeed",
-            "description": "Preheat at this rate (degrees per second)"
-        },
-        "ProfilePhase1Temp": {
-            "displayText": "Phase 1\nTemp",
-            "description": "Target temperature for the end of this phase"
-        },
-        "ProfilePhase1Duration": {
-            "displayText": "Phase 1\nDuration",
-            "description": "Target duration of this phase (seconds)"
-        },
-        "ProfilePhase2Temp": {
-            "displayText": "Phase 2\nTemp",
-            "description": ""
-        },
-        "ProfilePhase2Duration": {
-            "displayText": "Phase 2\nDuration",
-            "description": ""
-        },
-        "ProfilePhase3Temp": {
-            "displayText": "Phase 3\nTemp",
-            "description": ""
-        },
-        "ProfilePhase3Duration": {
-            "displayText": "Phase 3\nDuration",
-            "description": ""
-        },
-        "ProfilePhase4Temp": {
-            "displayText": "Phase 4\nTemp",
-            "description": ""
-        },
-        "ProfilePhase4Duration": {
-            "displayText": "Phase 4\nDuration",
-            "description": ""
-        },
-        "ProfilePhase5Temp": {
-            "displayText": "Phase 5\nTemp",
-            "description": ""
-        },
-        "ProfilePhase5Duration": {
-            "displayText": "Phase 5\nDuration",
-            "description": ""
-        },
-        "ProfileCooldownSpeed": {
-            "displayText": "Cooldown\nSpeed",
-            "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
-        },
-        "MotionSensitivity": {
-            "displayText": "Motion\nsensitivity",
-            "description": "1=least sensitive | ... | 9=most sensitive"
-        },
-        "SleepTemperature": {
-            "displayText": "Sleep\ntemp",
-            "description": "Tip temperature while in \"sleep mode\""
-        },
-        "SleepTimeout": {
-            "displayText": "Sleep\ntimeout",
-            "description": "Interval before \"sleep mode\" starts (s=seconds | m=minutes)"
-        },
-        "ShutdownTimeout": {
-            "displayText": "Shutdown\ntimeout",
-            "description": "Interval before the iron shuts down (m=minutes)"
-        },
-        "HallEffSensitivity": {
-            "displayText": "Hall sensor\nsensitivity",
-            "description": "Sensitivity to magnets (1=least sensitive | ... | 9=most sensitive)"
-        },
-        "TemperatureUnit": {
-            "displayText": "Temperature\nunit",
-            "description": "C=°Celsius | F=°Fahrenheit"
-        },
-        "DisplayRotation": {
-            "displayText": "Display\norientation",
-            "description": "R=right-handed | L=left-handed | A=automatic"
-        },
-        "CooldownBlink": {
-            "displayText": "Cooldown\nflashing",
-            "description": "Flash temp reading at idle while tip is hot"
-        },
-        "ScrollingSpeed": {
-            "displayText": "Scrolling\nspeed",
-            "description": "Scrolling speed of info text (S=slow | F=fast)"
-        },
-        "ReverseButtonTempChange": {
-            "displayText": "Swap\n+ - keys",
-            "description": "Reverse assignment of buttons for temperature adjustment"
-        },
-        "AnimSpeed": {
-            "displayText": "Anim.\nspeed",
-            "description": "Pace of icon animations in menu (S=slow | M=medium | F=fast)"
-        },
-        "AnimLoop": {
-            "displayText": "Anim.\nloop",
-            "description": "Loop icon animations in main menu"
-        },
-        "Brightness": {
-            "displayText": "Screen\nbrightness",
-            "description": "Adjust the OLED screen brightness"
-        },
-        "ColourInversion": {
-            "displayText": "Invert\nscreen",
-            "description": "Invert the OLED screen colors"
-        },
-        "LOGOTime": {
-            "displayText": "Boot logo\nduration",
-            "description": "Set boot logo duration (s=seconds)"
-        },
-        "AdvancedIdle": {
-            "displayText": "Detailed\nidle screen",
-            "description": "Display detailed info in a smaller font on idle screen"
-        },
-        "AdvancedSoldering": {
-            "displayText": "Detailed\nsolder screen",
-            "description": "Display detailed info in a smaller font on soldering screen"
-        },
-        "BluetoothLE": {
-            "displayText": "Bluetooth\n",
-            "description": "Enables BLE"
-        },
-        "PowerLimit": {
-            "displayText": "Power\nlimit",
-            "description": "Average maximum power the iron can use (W=watt)"
-        },
-        "CalibrateCJC": {
-            "displayText": "Calibrate CJC\nat next boot",
-            "description": "Calibrate Cold Junction Compensation at next boot (not required if Delta T is < 5°C)"
-        },
-        "VoltageCalibration": {
-            "displayText": "Calibrate\ninput voltage",
-            "description": "Start VIN calibration (long press to exit)"
-        },
-        "PowerPulsePower": {
-            "displayText": "Power\npulse",
-            "description": "Intensity of power of keep-awake-pulse (W=watt)"
-        },
-        "PowerPulseWait": {
-            "displayText": "Power pulse\ndelay",
-            "description": "Delay before keep-awake-pulse is triggered (x 2.5s)"
-        },
-        "PowerPulseDuration": {
-            "displayText": "Power pulse\nduration",
-            "description": "Keep-awake-pulse duration (x 250ms)"
-        },
-        "SettingsReset": {
-            "displayText": "Restore default\nsettings",
-            "description": "Reset all settings to default"
-        },
-        "LanguageSwitch": {
-            "displayText": "Language:\n EN     English",
-            "description": ""
-        }
+    "NoAccelerometerMessage": {
+      "message": "No accelerometer\ndetected!"
+    },
+    "NoPowerDeliveryMessage": {
+      "message": "No USB-PD IC\ndetected!"
+    },
+    "LockingKeysString": {
+      "message": "LOCKED"
+    },
+    "UnlockingKeysString": {
+      "message": "UNLOCKED"
+    },
+    "WarningKeysLockedString": {
+      "message": "!LOCKED!"
+    },
+    "WarningThermalRunaway": {
+      "message": "Thermal\nRunaway"
+    },
+    "WarningTipShorted": {
+      "message": "!Tip Shorted!"
+    },
+    "SettingsCalibrationWarning": {
+      "message": "Before rebooting, make sure tip & handle are at room temperature!"
+    },
+    "CJCCalibrating": {
+      "message": "calibrating\n"
+    },
+    "SettingsResetWarning": {
+      "message": "Are you sure you want to restore default settings?"
+    },
+    "UVLOWarningString": {
+      "message": "DC LOW"
+    },
+    "UndervoltageString": {
+      "message": "Undervoltage\n"
+    },
+    "InputVoltageString": {
+      "message": "Input V: \n"
+    },
+    "SleepingAdvancedString": {
+      "message": "Sleeping...\n"
+    },
+    "SleepingTipAdvancedString": {
+      "message": "Tip: \n"
+    },
+    "ProfilePreheatString": {
+      "message": "Preheat\n"
+    },
+    "ProfileCooldownString": {
+      "message": "Cooldown\n"
+    },
+    "DeviceFailedValidationWarning": {
+      "message": "Your device is most likely a counterfeit!"
+    },
+    "TooHotToStartProfileWarning": {
+      "message": "Too hot to\nstart profile"
     }
+  },
+  "characters": {
+    "SettingRightChar": "R",
+    "SettingLeftChar": "L",
+    "SettingAutoChar": "A",
+    "SettingSlowChar": "S",
+    "SettingMediumChar": "M",
+    "SettingFastChar": "F",
+    "SettingStartSolderingChar": "S",
+    "SettingStartSleepChar": "Z",
+    "SettingStartSleepOffChar": "R",
+    "SettingLockBoostChar": "B",
+    "SettingLockFullChar": "F"
+  },
+  "menuGroups": {
+    "PowerMenu": {
+      "displayText": "Power\nsettings",
+      "description": ""
+    },
+    "SolderingMenu": {
+      "displayText": "Soldering\nsettings",
+      "description": ""
+    },
+    "PowerSavingMenu": {
+      "displayText": "Sleep\nmode",
+      "description": ""
+    },
+    "UIMenu": {
+      "displayText": "User\ninterface",
+      "description": ""
+    },
+    "AdvancedMenu": {
+      "displayText": "Advanced\nsettings",
+      "description": ""
+    }
+  },
+  "menuOptions": {
+    "DCInCutoff": {
+      "displayText": "Power\nsource",
+      "description": "Set cutoff voltage to prevent battery overdrainage (DC 10V) (S=3.3V per cell, disable PWR limit)"
+    },
+    "MinVolCell": {
+      "displayText": "Minimum\nvoltage",
+      "description": "Minimum allowed voltage per battery cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+    },
+    "QCMaxVoltage": {
+      "displayText": "QC\nvoltage",
+      "description": "Max QC voltage the iron should negotiate for"
+    },
+    "PDNegTimeout": {
+      "displayText": "PD\ntimeout",
+      "description": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers"
+    },
+    "USBPDMode": {
+      "displayText": "PD\nVPDO",
+      "description": "Enables PPS & EPR modes"
+    },
+    "BoostTemperature": {
+      "displayText": "Boost\ntemp",
+      "description": "Tip temperature used in \"boost mode\""
+    },
+    "AutoStart": {
+      "displayText": "Start-up\nbehavior",
+      "description": "S=heat to soldering temp | Z=standby at sleep temp until moved | R=standby without heating until moved"
+    },
+    "TempChangeShortStep": {
+      "displayText": "Temp change\nshort",
+      "description": "Temperature-change-increment on short button press"
+    },
+    "TempChangeLongStep": {
+      "displayText": "Temp change\nlong",
+      "description": "Temperature-change-increment on long button press"
+    },
+    "LockingMode": {
+      "displayText": "Allow locking\nbuttons",
+      "description": "While soldering, hold down both buttons to toggle locking them (B=boost mode only | F=full locking)"
+    },
+    "ProfilePhases": {
+      "displayText": "Profile\nPhases",
+      "description": "Number of phases in profile mode"
+    },
+    "ProfilePreheatTemp": {
+      "displayText": "Preheat\nTemp",
+      "description": "Preheat to this temperature at the start of profile mode"
+    },
+    "ProfilePreheatSpeed": {
+      "displayText": "Preheat\nSpeed",
+      "description": "Preheat at this rate (degrees per second)"
+    },
+    "ProfilePhase1Temp": {
+      "displayText": "Phase 1\nTemp",
+      "description": "Target temperature for the end of this phase"
+    },
+    "ProfilePhase1Duration": {
+      "displayText": "Phase 1\nDuration",
+      "description": "Target duration of this phase (seconds)"
+    },
+    "ProfilePhase2Temp": {
+      "displayText": "Phase 2\nTemp",
+      "description": ""
+    },
+    "ProfilePhase2Duration": {
+      "displayText": "Phase 2\nDuration",
+      "description": ""
+    },
+    "ProfilePhase3Temp": {
+      "displayText": "Phase 3\nTemp",
+      "description": ""
+    },
+    "ProfilePhase3Duration": {
+      "displayText": "Phase 3\nDuration",
+      "description": ""
+    },
+    "ProfilePhase4Temp": {
+      "displayText": "Phase 4\nTemp",
+      "description": ""
+    },
+    "ProfilePhase4Duration": {
+      "displayText": "Phase 4\nDuration",
+      "description": ""
+    },
+    "ProfilePhase5Temp": {
+      "displayText": "Phase 5\nTemp",
+      "description": ""
+    },
+    "ProfilePhase5Duration": {
+      "displayText": "Phase 5\nDuration",
+      "description": ""
+    },
+    "ProfileCooldownSpeed": {
+      "displayText": "Cooldown\nSpeed",
+      "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
+    },
+    "MotionSensitivity": {
+      "displayText": "Motion\nsensitivity",
+      "description": "1=least sensitive | ... | 9=most sensitive"
+    },
+    "SleepTemperature": {
+      "displayText": "Sleep\ntemp",
+      "description": "Tip temperature while in \"sleep mode\""
+    },
+    "SleepTimeout": {
+      "displayText": "Sleep\ntimeout",
+      "description": "Interval before \"sleep mode\" starts (s=seconds | m=minutes)"
+    },
+    "ShutdownTimeout": {
+      "displayText": "Shutdown\ntimeout",
+      "description": "Interval before the iron shuts down (m=minutes)"
+    },
+    "HallEffSensitivity": {
+      "displayText": "Hall sensor\nsensitivity",
+      "description": "Sensitivity to magnets (1=least sensitive | ... | 9=most sensitive)"
+    },
+    "TemperatureUnit": {
+      "displayText": "Temperature\nunit",
+      "description": "C=°Celsius | F=°Fahrenheit"
+    },
+    "DisplayRotation": {
+      "displayText": "Display\norientation",
+      "description": "R=right-handed | L=left-handed | A=automatic"
+    },
+    "CooldownBlink": {
+      "displayText": "Cooldown\nflashing",
+      "description": "Flash temp reading at idle while tip is hot"
+    },
+    "ScrollingSpeed": {
+      "displayText": "Scrolling\nspeed",
+      "description": "Scrolling speed of info text (S=slow | F=fast)"
+    },
+    "ReverseButtonTempChange": {
+      "displayText": "Swap\n+ - keys",
+      "description": "Reverse assignment of buttons for temperature adjustment"
+    },
+    "AnimSpeed": {
+      "displayText": "Anim.\nspeed",
+      "description": "Pace of icon animations in menu (S=slow | M=medium | F=fast)"
+    },
+    "AnimLoop": {
+      "displayText": "Anim.\nloop",
+      "description": "Loop icon animations in main menu"
+    },
+    "Brightness": {
+      "displayText": "Screen\nbrightness",
+      "description": "Adjust the OLED screen brightness"
+    },
+    "ColourInversion": {
+      "displayText": "Invert\nscreen",
+      "description": "Invert the OLED screen colors"
+    },
+    "LOGOTime": {
+      "displayText": "Boot logo\nduration",
+      "description": "Set boot logo duration (s=seconds)"
+    },
+    "AdvancedIdle": {
+      "displayText": "Detailed\nidle screen",
+      "description": "Display detailed info in a smaller font on idle screen"
+    },
+    "AdvancedSoldering": {
+      "displayText": "Detailed\nsolder screen",
+      "description": "Display detailed info in a smaller font on soldering screen"
+    },
+    "BluetoothLE": {
+      "displayText": "Bluetooth\n",
+      "description": "Enables BLE"
+    },
+    "PowerLimit": {
+      "displayText": "Power\nlimit",
+      "description": "Average maximum power the iron can use (W=watt)"
+    },
+    "CalibrateCJC": {
+      "displayText": "Calibrate CJC\nat next boot",
+      "description": "Calibrate Cold Junction Compensation at next boot (not required if Delta T is < 5°C)"
+    },
+    "VoltageCalibration": {
+      "displayText": "Calibrate\ninput voltage",
+      "description": "Start VIN calibration (long press to exit)"
+    },
+    "PowerPulsePower": {
+      "displayText": "Power\npulse",
+      "description": "Intensity of power of keep-awake-pulse (W=watt)"
+    },
+    "PowerPulseWait": {
+      "displayText": "Power pulse\ndelay",
+      "description": "Delay before keep-awake-pulse is triggered (x 2.5s)"
+    },
+    "PowerPulseDuration": {
+      "displayText": "Power pulse\nduration",
+      "description": "Keep-awake-pulse duration (x 250ms)"
+    },
+    "SettingsReset": {
+      "displayText": "Restore default\nsettings",
+      "description": "Reset all settings to default"
+    },
+    "LanguageSwitch": {
+      "displayText": "Language:\n EN     English",
+      "description": ""
+    }
+  }
 }

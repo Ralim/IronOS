@@ -59,7 +59,7 @@ enum class SettingsItemIndex : uint8_t {
   MinVolCell,
   QCMaxVoltage,
   PDNegTimeout,
-  PDVpdo,
+  USBPDMode,
   BoostTemperature,
   AutoStart,
   TempChangeShortStep,

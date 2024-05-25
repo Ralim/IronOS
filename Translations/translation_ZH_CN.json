@@ -1,310 +1,310 @@
 {
-    "languageCode": "ZH_CN",
-    "languageLocalName": "简体中文",
-    "tempUnitFahrenheit": true,
-    "messagesWarn": {
-        "CalibrationDone": {
-            "message": "校正完成！"
-        },
-        "ResetOKMessage": {
-            "message": "已重置！"
-        },
-        "SettingsResetMessage": {
-            "message": "设定已被重置！"
-        },
-        "NoAccelerometerMessage": {
-            "message": "未检测到加速度计"
-        },
-        "NoPowerDeliveryMessage": {
-            "message": "未检测到PD电路"
-        },
-        "LockingKeysString": {
-            "message": "已锁定"
-        },
-        "UnlockingKeysString": {
-            "message": "已解锁"
-        },
-        "WarningKeysLockedString": {
-            "message": "!按键锁定!"
-        },
-        "WarningThermalRunaway": {
-            "message": "加热失控"
-        },
-        "WarningTipShorted": {
-            "message": "!烙铁头短路!"
-        },
-        "SettingsCalibrationWarning": {
-            "message": "在重启前请确认烙铁头及本体已完全冷却！"
-        },
-        "CJCCalibrating": {
-            "message": "校正中"
-        },
-        "SettingsResetWarning": {
-            "message": "你是否确定要将全部设定重置为默认值？"
-        },
-        "UVLOWarningString": {
-            "message": "电压过低"
-        },
-        "UndervoltageString": {
-            "message": "Undervoltage"
-        },
-        "InputVoltageString": {
-            "message": "VIN: "
-        },
-        "SleepingAdvancedString": {
-            "message": "Zzzz..."
-        },
-        "SleepingTipAdvancedString": {
-            "message": "<--- "
-        },
-        "ProfilePreheatString": {
-            "message": "Preheat"
-        },
-        "ProfileCooldownString": {
-            "message": "Cooldown"
-        },
-        "DeviceFailedValidationWarning": {
-            "message": "这支电烙铁很有可能是冒牌货！"
-        },
-        "TooHotToStartProfileWarning": {
-            "message": "Too hot to start profile"
-        }
+  "languageCode": "ZH_CN",
+  "languageLocalName": "简体中文",
+  "tempUnitFahrenheit": true,
+  "messagesWarn": {
+    "CalibrationDone": {
+      "message": "校正完成！"
     },
-    "characters": {
-        "SettingRightChar": "右",
-        "SettingLeftChar": "左",
-        "SettingAutoChar": "自",
-        "SettingSlowChar": "慢",
-        "SettingMediumChar": "中",
-        "SettingFastChar": "快",
-        "SettingStartSolderingChar": "焊",
-        "SettingStartSleepChar": "待",
-        "SettingStartSleepOffChar": "室",
-        "SettingLockBoostChar": "增",
-        "SettingLockFullChar": "全"
+    "ResetOKMessage": {
+      "message": "已重置！"
     },
-    "menuGroups": {
-        "PowerMenu": {
-            "displayText": "电源设置",
-            "description": ""
-        },
-        "SolderingMenu": {
-            "displayText": "焊接设置",
-            "description": ""
-        },
-        "PowerSavingMenu": {
-            "displayText": "待机设置",
-            "description": ""
-        },
-        "UIMenu": {
-            "displayText": "用户界面",
-            "description": ""
-        },
-        "AdvancedMenu": {
-            "displayText": "高级设置",
-            "description": ""
-        }
+    "SettingsResetMessage": {
+      "message": "设定已被重置！"
     },
-    "menuOptions": {
-        "DCInCutoff": {
-            "displayText": "下限电压",
-            "description": "设置自动停机电压 <DC=10V | S=（串）每节锂电池3.3V；此设置会禁用功率限制>"
-        },
-        "MinVolCell": {
-            "displayText": "最低电压",
-            "description": "每节电池的最低允许电压 <V（伏特）> <3S: 3.0V - 3.7V, 4/5/6S: 2.4V - 3.7V>"
-        },
-        "QCMaxVoltage": {
-            "displayText": "QC电压",
-            "description": "使用QC电源时请求的最高目标电压"
-        },
-        "PDNegTimeout": {
-            "displayText": "PD超时",
-            "description": "设定USB-PD协议交涉的超时时限；为兼容某些QC电源而设 <x100ms（亳秒）>"
-        },
-        "PDVpdo": {
-            "displayText": "PD VPDO",
-            "description": "启用PPS和EPR快充支持"
-        },
-        "BoostTemperature": {
-            "displayText": "增热温度",
-            "description": "增热模式时使用的温度"
-        },
-        "AutoStart": {
-            "displayText": "自动启动",
-            "description": "开机时自动启动 <焊=焊接模式 | 待=待机模式 | 室=室温待机>"
-        },
-        "TempChangeShortStep": {
-            "displayText": "短按温度调整",
-            "description": "调校温度时短按按键的温度变幅"
-        },
-        "TempChangeLongStep": {
-            "displayText": "长按温度调整",
-            "description": "调校温度时长按按键的温度变幅"
-        },
-        "LockingMode": {
-            "displayText": "按键锁定",
-            "description": "焊接模式时，同时长按两个按键启用按键锁定 <增=只容许增热模式 | 全=完全锁定>"
-        },
-        "ProfilePhases": {
-            "displayText": "Profile Phases",
-            "description": "Number of phases in profile mode"
-        },
-        "ProfilePreheatTemp": {
-            "displayText": "Preheat Temp",
-            "description": "Preheat to this temperature at the start of profile mode"
-        },
-        "ProfilePreheatSpeed": {
-            "displayText": "Preheat Speed",
-            "description": "Preheat at this rate (degrees per second)"
-        },
-        "ProfilePhase1Temp": {
-            "displayText": "Phase 1 Temp",
-            "description": "Target temperature for the end of this phase"
-        },
-        "ProfilePhase1Duration": {
-            "displayText": "Phase 1 Duration",
-            "description": "Target duration of this phase (seconds)"
-        },
-        "ProfilePhase2Temp": {
-            "displayText": "Phase 2 Temp",
-            "description": ""
-        },
-        "ProfilePhase2Duration": {
-            "displayText": "Phase 2 Duration",
-            "description": ""
-        },
-        "ProfilePhase3Temp": {
-            "displayText": "Phase 3 Temp",
-            "description": ""
-        },
-        "ProfilePhase3Duration": {
-            "displayText": "Phase 3 Duration",
-            "description": ""
-        },
-        "ProfilePhase4Temp": {
-            "displayText": "Phase 4 Temp",
-            "description": ""
-        },
-        "ProfilePhase4Duration": {
-            "displayText": "Phase 4 Duration",
-            "description": ""
-        },
-        "ProfilePhase5Temp": {
-            "displayText": "Phase 5 Temp",
-            "description": ""
-        },
-        "ProfilePhase5Duration": {
-            "displayText": "Phase 5 Duration",
-            "description": ""
-        },
-        "ProfileCooldownSpeed": {
-            "displayText": "Cooldown Speed",
-            "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
-        },
-        "MotionSensitivity": {
-            "displayText": "动作灵敏度",
-            "description": "1=最低灵敏度 | ... | 9=最高灵敏度"
-        },
-        "SleepTemperature": {
-            "displayText": "待机温度",
-            "description": "待机模式时的烙铁头温度"
-        },
-        "SleepTimeout": {
-            "displayText": "待机超时",
-            "description": "自动进入待机模式前的等候时间 <s=秒 | m=分钟>"
-        },
-        "ShutdownTimeout": {
-            "displayText": "自动关机",
-            "description": "自动关机前的等候时间 <m=分钟>"
-        },
-        "HallEffSensitivity": {
-            "displayText": "磁场灵敏度",
-            "description": "霍尔效应传感器用作启动待机模式的灵敏度 <1=最低灵敏度 | ... | 9=最高灵敏度>"
-        },
-        "TemperatureUnit": {
-            "displayText": "温度单位",
-            "description": "C=摄氏 | F=华氏"
-        },
-        "DisplayRotation": {
-            "displayText": "显示方向",
-            "description": "右=右手 | 左=左手 | 自=自动"
-        },
-        "CooldownBlink": {
-            "displayText": "降温时闪显",
-            "description": "停止加热之后，闪动温度显示提醒烙铁头仍处于高温状态"
-        },
-        "ScrollingSpeed": {
-            "displayText": "滚动速度",
-            "description": "解说文字的滚动速度"
-        },
-        "ReverseButtonTempChange": {
-            "displayText": "调换加减键",
-            "description": "调校温度时更换加减键的方向"
-        },
-        "AnimSpeed": {
-            "displayText": "动画速度",
-            "description": "主菜单中功能图标动画的播放速度 <慢=慢速 | 中=中速 | 快=快速>"
-        },
-        "AnimLoop": {
-            "displayText": "动画循环",
-            "description": "主菜单中循环播放功能图标动画"
-        },
-        "Brightness": {
-            "displayText": "屏幕亮度",
-            "description": "调整OLED屏幕的亮度"
-        },
-        "ColourInversion": {
-            "displayText": "反转屏幕颜色",
-            "description": "反转OLED黑/白屏幕"
-        },
-        "LOGOTime": {
-            "displayText": "开机画面",
-            "description": "设定开机画面显示时长 <s=秒>"
-        },
-        "AdvancedIdle": {
-            "displayText": "闲置画面详情",
-            "description": "闲置画面以英语小字体显示详情"
-        },
-        "AdvancedSoldering": {
-            "displayText": "焊接画面详情",
-            "description": "焊接模式画面以英语小字体显示详请"
-        },
-        "BluetoothLE": {
-            "displayText": "蓝牙",
-            "description": "启用蓝牙支持"
-        },
-        "PowerLimit": {
-            "displayText": "功率限制",
-            "description": "限制烙铁可用的最大功率 <W=瓦特>"
-        },
-        "CalibrateCJC": {
-            "displayText": "校正CJC",
-            "description": "在下次重启时校正烙铁头热电偶冷接点补偿值（CJC）（温差小于5摄氏度时无需校正）"
-        },
-        "VoltageCalibration": {
-            "displayText": "输入电压校正？",
-            "description": "开始校正输入电压（VIN）<长按以退出>"
-        },
-        "PowerPulsePower": {
-            "displayText": "电源脉冲",
-            "description": "为保持电源处于唤醒状态所用的功率 <Watt（瓦特）>"
-        },
-        "PowerPulseWait": {
-            "displayText": "电源脉冲间隔",
-            "description": "为保持电源处于唤醒状态，每次通电之间的间隔时间 <x2.5s（秒）>"
-        },
-        "PowerPulseDuration": {
-            "displayText": "电源脉冲时长",
-            "description": "为保持电源处于唤醒状态，每次通电脉冲的时间长度 <x250ms（亳秒）>"
-        },
-        "SettingsReset": {
-            "displayText": "全部重置？",
-            "description": "将所有设定重置为默认值"
-        },
-        "LanguageSwitch": {
-            "displayText": "语言：简体中文",
-            "description": ""
-        }
+    "NoAccelerometerMessage": {
+      "message": "未检测到加速度计"
+    },
+    "NoPowerDeliveryMessage": {
+      "message": "未检测到PD电路"
+    },
+    "LockingKeysString": {
+      "message": "已锁定"
+    },
+    "UnlockingKeysString": {
+      "message": "已解锁"
+    },
+    "WarningKeysLockedString": {
+      "message": "!按键锁定!"
+    },
+    "WarningThermalRunaway": {
+      "message": "加热失控"
+    },
+    "WarningTipShorted": {
+      "message": "!烙铁头短路!"
+    },
+    "SettingsCalibrationWarning": {
+      "message": "在重启前请确认烙铁头及本体已完全冷却！"
+    },
+    "CJCCalibrating": {
+      "message": "校正中"
+    },
+    "SettingsResetWarning": {
+      "message": "你是否确定要将全部设定重置为默认值？"
+    },
+    "UVLOWarningString": {
+      "message": "电压过低"
+    },
+    "UndervoltageString": {
+      "message": "Undervoltage"
+    },
+    "InputVoltageString": {
+      "message": "VIN: "
+    },
+    "SleepingAdvancedString": {
+      "message": "Zzzz..."
+    },
+    "SleepingTipAdvancedString": {
+      "message": "<--- "
+    },
+    "ProfilePreheatString": {
+      "message": "Preheat"
+    },
+    "ProfileCooldownString": {
+      "message": "Cooldown"
+    },
+    "DeviceFailedValidationWarning": {
+      "message": "这支电烙铁很有可能是冒牌货！"
+    },
+    "TooHotToStartProfileWarning": {
+      "message": "Too hot to start profile"
     }
+  },
+  "characters": {
+    "SettingRightChar": "右",
+    "SettingLeftChar": "左",
+    "SettingAutoChar": "自",
+    "SettingSlowChar": "慢",
+    "SettingMediumChar": "中",
+    "SettingFastChar": "快",
+    "SettingStartSolderingChar": "焊",
+    "SettingStartSleepChar": "待",
+    "SettingStartSleepOffChar": "室",
+    "SettingLockBoostChar": "增",
+    "SettingLockFullChar": "全"
+  },
+  "menuGroups": {
+    "PowerMenu": {
+      "displayText": "电源设置",
+      "description": ""
+    },
+    "SolderingMenu": {
+      "displayText": "焊接设置",
+      "description": ""
+    },
+    "PowerSavingMenu": {
+      "displayText": "待机设置",
+      "description": ""
+    },
+    "UIMenu": {
+      "displayText": "用户界面",
+      "description": ""
+    },
+    "AdvancedMenu": {
+      "displayText": "高级设置",
+      "description": ""
+    }
+  },
+  "menuOptions": {
+    "DCInCutoff": {
+      "displayText": "下限电压",
+      "description": "设置自动停机电压 <DC=10V | S=（串）每节锂电池3.3V；此设置会禁用功率限制>"
+    },
+    "MinVolCell": {
+      "displayText": "最低电压",
+      "description": "每节电池的最低允许电压 <V（伏特）> <3S: 3.0V - 3.7V, 4/5/6S: 2.4V - 3.7V>"
+    },
+    "QCMaxVoltage": {
+      "displayText": "QC电压",
+      "description": "使用QC电源时请求的最高目标电压"
+    },
+    "PDNegTimeout": {
+      "displayText": "PD超时",
+      "description": "设定USB-PD协议交涉的超时时限；为兼容某些QC电源而设 <x100ms（亳秒）>"
+    },
+    "USBPDMode": {
+      "displayText": "PD VPDO",
+      "description": "启用PPS和EPR快充支持"
+    },
+    "BoostTemperature": {
+      "displayText": "增热温度",
+      "description": "增热模式时使用的温度"
+    },
+    "AutoStart": {
+      "displayText": "自动启动",
+      "description": "开机时自动启动 <焊=焊接模式 | 待=待机模式 | 室=室温待机>"
+    },
+    "TempChangeShortStep": {
+      "displayText": "短按温度调整",
+      "description": "调校温度时短按按键的温度变幅"
+    },
+    "TempChangeLongStep": {
+      "displayText": "长按温度调整",
+      "description": "调校温度时长按按键的温度变幅"
+    },
+    "LockingMode": {
+      "displayText": "按键锁定",
+      "description": "焊接模式时，同时长按两个按键启用按键锁定 <增=只容许增热模式 | 全=完全锁定>"
+    },
+    "ProfilePhases": {
+      "displayText": "Profile Phases",
+      "description": "Number of phases in profile mode"
+    },
+    "ProfilePreheatTemp": {
+      "displayText": "Preheat Temp",
+      "description": "Preheat to this temperature at the start of profile mode"
+    },
+    "ProfilePreheatSpeed": {
+      "displayText": "Preheat Speed",
+      "description": "Preheat at this rate (degrees per second)"
+    },
+    "ProfilePhase1Temp": {
+      "displayText": "Phase 1 Temp",
+      "description": "Target temperature for the end of this phase"
+    },
+    "ProfilePhase1Duration": {
+      "displayText": "Phase 1 Duration",
+      "description": "Target duration of this phase (seconds)"
+    },
+    "ProfilePhase2Temp": {
+      "displayText": "Phase 2 Temp",
+      "description": ""
+    },
+    "ProfilePhase2Duration": {
+      "displayText": "Phase 2 Duration",
+      "description": ""
+    },
+    "ProfilePhase3Temp": {
+      "displayText": "Phase 3 Temp",
+      "description": ""
+    },
+    "ProfilePhase3Duration": {
+      "displayText": "Phase 3 Duration",
+      "description": ""
+    },
+    "ProfilePhase4Temp": {
+      "displayText": "Phase 4 Temp",
+      "description": ""
+    },
+    "ProfilePhase4Duration": {
+      "displayText": "Phase 4 Duration",
+      "description": ""
+    },
+    "ProfilePhase5Temp": {
+      "displayText": "Phase 5 Temp",
+      "description": ""
+    },
+    "ProfilePhase5Duration": {
+      "displayText": "Phase 5 Duration",
+      "description": ""
+    },
+    "ProfileCooldownSpeed": {
+      "displayText": "Cooldown Speed",
+      "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
+    },
+    "MotionSensitivity": {
+      "displayText": "动作灵敏度",
+      "description": "1=最低灵敏度 | ... | 9=最高灵敏度"
+    },
+    "SleepTemperature": {
+      "displayText": "待机温度",
+      "description": "待机模式时的烙铁头温度"
+    },
+    "SleepTimeout": {
+      "displayText": "待机超时",
+      "description": "自动进入待机模式前的等候时间 <s=秒 | m=分钟>"
+    },
+    "ShutdownTimeout": {
+      "displayText": "自动关机",
+      "description": "自动关机前的等候时间 <m=分钟>"
+    },
+    "HallEffSensitivity": {
+      "displayText": "磁场灵敏度",
+      "description": "霍尔效应传感器用作启动待机模式的灵敏度 <1=最低灵敏度 | ... | 9=最高灵敏度>"
+    },
+    "TemperatureUnit": {
+      "displayText": "温度单位",
+      "description": "C=摄氏 | F=华氏"
+    },
+    "DisplayRotation": {
+      "displayText": "显示方向",
+      "description": "右=右手 | 左=左手 | 自=自动"
+    },
+    "CooldownBlink": {
+      "displayText": "降温时闪显",
+      "description": "停止加热之后，闪动温度显示提醒烙铁头仍处于高温状态"
+    },
+    "ScrollingSpeed": {
+      "displayText": "滚动速度",
+      "description": "解说文字的滚动速度"
+    },
+    "ReverseButtonTempChange": {
+      "displayText": "调换加减键",
+      "description": "调校温度时更换加减键的方向"
+    },
+    "AnimSpeed": {
+      "displayText": "动画速度",
+      "description": "主菜单中功能图标动画的播放速度 <慢=慢速 | 中=中速 | 快=快速>"
+    },
+    "AnimLoop": {
+      "displayText": "动画循环",
+      "description": "主菜单中循环播放功能图标动画"
+    },
+    "Brightness": {
+      "displayText": "屏幕亮度",
+      "description": "调整OLED屏幕的亮度"
+    },
+    "ColourInversion": {
+      "displayText": "反转屏幕颜色",
+      "description": "反转OLED黑/白屏幕"
+    },
+    "LOGOTime": {
+      "displayText": "开机画面",
+      "description": "设定开机画面显示时长 <s=秒>"
+    },
+    "AdvancedIdle": {
+      "displayText": "闲置画面详情",
+      "description": "闲置画面以英语小字体显示详情"
+    },
+    "AdvancedSoldering": {
+      "displayText": "焊接画面详情",
+      "description": "焊接模式画面以英语小字体显示详请"
+    },
+    "BluetoothLE": {
+      "displayText": "蓝牙",
+      "description": "启用蓝牙支持"
+    },
+    "PowerLimit": {
+      "displayText": "功率限制",
+      "description": "限制烙铁可用的最大功率 <W=瓦特>"
+    },
+    "CalibrateCJC": {
+      "displayText": "校正CJC",
+      "description": "在下次重启时校正烙铁头热电偶冷接点补偿值（CJC）（温差小于5摄氏度时无需校正）"
+    },
+    "VoltageCalibration": {
+      "displayText": "输入电压校正？",
+      "description": "开始校正输入电压（VIN）<长按以退出>"
+    },
+    "PowerPulsePower": {
+      "displayText": "电源脉冲",
+      "description": "为保持电源处于唤醒状态所用的功率 <Watt（瓦特）>"
+    },
+    "PowerPulseWait": {
+      "displayText": "电源脉冲间隔",
+      "description": "为保持电源处于唤醒状态，每次通电之间的间隔时间 <x2.5s（秒）>"
+    },
+    "PowerPulseDuration": {
+      "displayText": "电源脉冲时长",
+      "description": "为保持电源处于唤醒状态，每次通电脉冲的时间长度 <x250ms（亳秒）>"
+    },
+    "SettingsReset": {
+      "displayText": "全部重置？",
+      "description": "将所有设定重置为默认值"
+    },
+    "LanguageSwitch": {
+      "displayText": "语言：简体中文",
+      "description": ""
+    }
+  }
 }
