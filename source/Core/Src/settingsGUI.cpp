@@ -248,7 +248,7 @@ const menuitem powerMenu[] = {
   /* PD timeout setup */
   {SETTINGS_DESC(SettingsItemIndex::PDNegTimeout), nullptr, displayPDNegTimeout, nullptr, SettingsOptions::PDNegTimeout, SettingsItemIndex::PDNegTimeout, 6},
   /* Toggle PPS & EPR */
-  {SETTINGS_DESC(SettingsItemIndex::USBPDMode), nullptr, displayUSBPDMode, nullptr, SettingsOptions::USBPDMode, SettingsItemIndex::USBPDMode, 7},
+  {SETTINGS_DESC(SettingsItemIndex::USBPDMode), nullptr, displayUSBPDMode, nullptr, SettingsOptions::USBPDMode, SettingsItemIndex::USBPDMode, 4},
 #endif
   /* vvvv end of menu marker. DO NOT REMOVE vvvv */
   {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0}
@@ -539,13 +539,13 @@ static void displayUSBPDMode(void) {
 
   switch (getSettingValue(SettingsOptions::USBPDMode)) {
   case 1:
-    OLED::print(translatedString(Tr->SettingPDModeDefaultChar), FontStyle::LARGE);
+    OLED::print(translatedString(Tr->USBPDModeDefault), FontStyle::SMALL, 255, OLED::getCursorX());
     break;
   case 2:
-    OLED::print(translatedString(Tr->SettingPDModeSafeChar), FontStyle::LARGE);
+    OLED::print(translatedString(Tr->USBPDModeSafe), FontStyle::SMALL, 255, OLED::getCursorX());
     break;
   default:
-    OLED::print(translatedString(Tr->SettingPDModeNoDynamicChar), FontStyle::LARGE);
+    OLED::print(translatedString(Tr->USBPDModeNoDynamic), FontStyle::SMALL, 255, OLED::getCursorX());
     break;
   }
 }
