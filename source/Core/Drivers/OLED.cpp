@@ -160,7 +160,7 @@ void OLED::setFramebuffer(uint8_t *buffer) {
  * UTF font handling is done using the two input chars.
  * Precursor is the command char that is used to select the table.
  */
-void OLED::drawChar(const uint16_t charCode, const FontStyle fontStyle) {
+void OLED::drawChar(const uint16_t charCode, const FontStyle fontStyle, const uint8_t soft_x_limit) {
   const uint8_t *currentFont;
   static uint8_t fontWidth, fontHeight;
   uint16_t       index;
@@ -175,7 +175,7 @@ void OLED::drawChar(const uint16_t charCode, const FontStyle fontStyle) {
   case FontStyle::LARGE:
   default:
     if (charCode == '\x01' && cursor_y == 0) { // 0x01 is used as new line char
-      setCursor(0, 8);
+      setCursor(soft_x_limit, 8);
       return;
     } else if (charCode <= 0x01) {
       return;
@@ -505,7 +505,7 @@ void OLED::setInverseDisplay(bool inverse) {
 }
 
 // print a string to the current cursor location, len chars MAX
-void OLED::print(const char *const str, FontStyle fontStyle, uint8_t len) {
+void OLED::print(const char *const str, FontStyle fontStyle, uint8_t len, const uint8_t soft_x_limit) {
   const uint8_t *next = reinterpret_cast<const uint8_t *>(str);
   if (next[0] == 0x01) {
     fontStyle = FontStyle::LARGE;
@@ -523,7 +523,7 @@ void OLED::print(const char *const str, FontStyle fontStyle, uint8_t len) {
       index = (next[0] - 0xF0) * 0xFF - 15 + next[1];
       next += 2;
     }
-    drawChar(index, fontStyle);
+    drawChar(index, fontStyle, soft_x_limit);
   }
 }
 
@@ -580,7 +580,7 @@ void OLED::drawHex(uint32_t x, FontStyle fontStyle, uint8_t digits) {
   // print number to hex
   for (uint_fast8_t i = 0; i < digits; i++) {
     uint16_t value = (x >> (4 * (7 - i))) & 0b1111;
-    drawChar(value + 2, fontStyle);
+    drawChar(value + 2, fontStyle, 0);
   }
 }
 
@@ -635,7 +635,7 @@ void OLED::debugNumber(int32_t val, FontStyle fontStyle) {
 
 void OLED::drawSymbol(uint8_t symbolID) {
   // draw a symbol to the current cursor location
-  drawChar(symbolID, FontStyle::EXTRAS);
+  drawChar(symbolID, FontStyle::EXTRAS, 0);
 }
 
 // Draw an area, but y must be aligned on 0/8 offset
