@@ -433,7 +433,7 @@ const menuitem advancedMenu[] = {
 /* clang-format on */
 
 const menuitem *subSettingsMenus[] {
-#if defined(POW_DC) || defined(POW_QC) || defined(POW_PD) || defined(POW_PD_EXT)
+#if defined(POW_DC) || defined(POW_QC) || defined(POW_PD)
   powerMenu,
 #endif
       solderingMenu, PowerSavingMenu, UIMenu, advancedMenu,

@@ -156,10 +156,10 @@ void FS2711::negotiate() {
   int min_resistance_omhsx10 = 0;
 
   // FS2711 uses mV instead of V
-  const uint16_t vmax          = USB_PD_VMAX * 1000;
-  uint8_t        tipResistance = getTipResistanceX10();
+  const uint16_t vmax           = USB_PD_VMAX * 1000;
+  uint8_t        tip_resistance = getTipResistanceX10();
   if (getSettingValue(SettingsOptions::USBPDMode) == 1) {
-    tipResistance += 5;
+    tip_resistance += 5;
   }
 
   uint16_t pdo_min_mv = 0, pdo_max_mv = 0, pdo_max_curr = 0, pdo_type = 0;
