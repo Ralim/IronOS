@@ -119,7 +119,7 @@
 // Vin_max = (3.3*(r1+r2))/(r2)
 // vdiv = (32768*4)/(vin_max*10)
 
-#if defined(MODEL_S60) + defined(MODEL_S60P)+defined(MODEL_S99) == 0
+#if defined(MODEL_S60) + defined(MODEL_S60P) + defined(MODEL_S99) == 0
 #error "No model defined!"
 #endif
 
