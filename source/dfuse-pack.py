@@ -256,7 +256,7 @@ if __name__ == "__main__":
                 sys.exit(1)
             for hexf in options.hexfiles:
                 ih = IntelHex(hexf)
-                for (address, end) in ih.segments():
+                for address, end in ih.segments():
                     try:
                         address = address & 0xFFFFFFFF
                     except ValueError:

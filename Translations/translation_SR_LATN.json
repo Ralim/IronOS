@@ -1,310 +1,321 @@
 {
-    "languageCode": "SR_LATN",
-    "languageLocalName": "Srpski",
-    "tempUnitFahrenheit": false,
-    "messagesWarn": {
-        "CalibrationDone": {
-            "message": "Calibration\ndone!"
-        },
-        "ResetOKMessage": {
-            "message": "Reset OK"
-        },
-        "SettingsResetMessage": {
-            "message": "Certain settings\nwere changed!"
-        },
-        "NoAccelerometerMessage": {
-            "message": "No accelerometer\ndetected!"
-        },
-        "NoPowerDeliveryMessage": {
-            "message": "No USB-PD IC\ndetected!"
-        },
-        "LockingKeysString": {
-            "message": "LOCKED"
-        },
-        "UnlockingKeysString": {
-            "message": "UNLOCKED"
-        },
-        "WarningKeysLockedString": {
-            "message": "!LOCKED!"
-        },
-        "WarningThermalRunaway": {
-            "message": "Thermal\nRunaway"
-        },
-        "WarningTipShorted": {
-            "message": "!Tip Shorted!"
-        },
-        "SettingsCalibrationWarning": {
-            "message": "Before rebooting, make sure tip & handle are at room temperature!"
-        },
-        "CJCCalibrating": {
-            "message": "calibrating\n"
-        },
-        "SettingsResetWarning": {
-            "message": "Da li zaista želite da vratite postavke na fabričke vrednosti?"
-        },
-        "UVLOWarningString": {
-            "message": "NIZ.NAP."
-        },
-        "UndervoltageString": {
-            "message": "PRENIZAK NAPON\n"
-        },
-        "InputVoltageString": {
-            "message": "Ul. napon: \n"
-        },
-        "SleepingAdvancedString": {
-            "message": "Spavanje...\n"
-        },
-        "SleepingTipAdvancedString": {
-            "message": "Vrh: \n"
-        },
-        "ProfilePreheatString": {
-            "message": "Preheat\n"
-        },
-        "ProfileCooldownString": {
-            "message": "Cooldown\n"
-        },
-        "DeviceFailedValidationWarning": {
-            "message": "Your device is most likely a counterfeit!"
-        },
-        "TooHotToStartProfileWarning": {
-            "message": "Too hot to\nstart profile"
-        }
+  "languageCode": "SR_LATN",
+  "languageLocalName": "Srpski",
+  "tempUnitFahrenheit": false,
+  "messagesWarn": {
+    "CalibrationDone": {
+      "message": "Calibration\ndone!"
     },
-    "characters": {
-        "SettingRightChar": "D",
-        "SettingLeftChar": "L",
-        "SettingAutoChar": "A",
-        "SettingSlowChar": "S",
-        "SettingMediumChar": "M",
-        "SettingFastChar": "B",
-        "SettingStartSolderingChar": "L",
-        "SettingStartSleepChar": "S",
-        "SettingStartSleepOffChar": "X",
-        "SettingLockBoostChar": "B",
-        "SettingLockFullChar": "F"
+    "ResetOKMessage": {
+      "message": "Reset OK"
     },
-    "menuGroups": {
-        "PowerMenu": {
-            "displayText": "Power\nsettings",
-            "description": ""
-        },
-        "SolderingMenu": {
-            "displayText": "Postavke\nlemljenja",
-            "description": ""
-        },
-        "PowerSavingMenu": {
-            "displayText": "Ušteda\nenergije",
-            "description": ""
-        },
-        "UIMenu": {
-            "displayText": "Korisničko\nsučelje",
-            "description": ""
-        },
-        "AdvancedMenu": {
-            "displayText": "Napredne\npostavke",
-            "description": ""
-        }
+    "SettingsResetMessage": {
+      "message": "Certain settings\nwere changed!"
     },
-    "menuOptions": {
-        "DCInCutoff": {
-            "displayText": "Vrsta\nnapajanja",
-            "description": "Tip napajanja; određuje najniži radni napon. (DC=adapter [10V], S=baterija [3,3V po ćeliji])"
-        },
-        "MinVolCell": {
-            "displayText": "Minimum\nvoltage",
-            "description": "Minimum allowed voltage per battery cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
-        },
-        "QCMaxVoltage": {
-            "displayText": "Ulazna\nsnaga",
-            "description": "Snaga napajanja u vatima."
-        },
-        "PDNegTimeout": {
-            "displayText": "PD\ntimeout",
-            "description": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers"
-        },
-        "PDVpdo": {
-            "displayText": "PD\nVPDO",
-            "description": "Enables PPS & EPR modes"
-        },
-        "BoostTemperature": {
-            "displayText": "Temp.\npojačanja",
-            "description": "Temperatura vrha lemilice u toku pojačanja."
-        },
-        "AutoStart": {
-            "displayText": "Vrući\nstart",
-            "description": "Lemilica odmah po pokretanju prelazi u režim lemljenja i greje se. (L=lemljenje | S=spavati | X=spavati sobna temperatura)"
-        },
-        "TempChangeShortStep": {
-            "displayText": "Temp change\nshort",
-            "description": "Temperature-change-increment on short button press"
-        },
-        "TempChangeLongStep": {
-            "displayText": "Temp change\nlong",
-            "description": "Temperature-change-increment on long button press"
-        },
-        "LockingMode": {
-            "displayText": "Allow locking\nbuttons",
-            "description": "While soldering, hold down both buttons to toggle locking them (B=boost mode only | F=full locking)"
-        },
-        "ProfilePhases": {
-            "displayText": "Profile\nPhases",
-            "description": "Number of phases in profile mode"
-        },
-        "ProfilePreheatTemp": {
-            "displayText": "Preheat\nTemp",
-            "description": "Preheat to this temperature at the start of profile mode"
-        },
-        "ProfilePreheatSpeed": {
-            "displayText": "Preheat\nSpeed",
-            "description": "Preheat at this rate (degrees per second)"
-        },
-        "ProfilePhase1Temp": {
-            "displayText": "Phase 1\nTemp",
-            "description": "Target temperature for the end of this phase"
-        },
-        "ProfilePhase1Duration": {
-            "displayText": "Phase 1\nDuration",
-            "description": "Target duration of this phase (seconds)"
-        },
-        "ProfilePhase2Temp": {
-            "displayText": "Phase 2\nTemp",
-            "description": ""
-        },
-        "ProfilePhase2Duration": {
-            "displayText": "Phase 2\nDuration",
-            "description": ""
-        },
-        "ProfilePhase3Temp": {
-            "displayText": "Phase 3\nTemp",
-            "description": ""
-        },
-        "ProfilePhase3Duration": {
-            "displayText": "Phase 3\nDuration",
-            "description": ""
-        },
-        "ProfilePhase4Temp": {
-            "displayText": "Phase 4\nTemp",
-            "description": ""
-        },
-        "ProfilePhase4Duration": {
-            "displayText": "Phase 4\nDuration",
-            "description": ""
-        },
-        "ProfilePhase5Temp": {
-            "displayText": "Phase 5\nTemp",
-            "description": ""
-        },
-        "ProfilePhase5Duration": {
-            "displayText": "Phase 5\nDuration",
-            "description": ""
-        },
-        "ProfileCooldownSpeed": {
-            "displayText": "Cooldown\nSpeed",
-            "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
-        },
-        "MotionSensitivity": {
-            "displayText": "Osetljivost\nna pokret",
-            "description": "Osetljivost senzora pokreta. (1=najmanje osetljivo | ... | 9=najosetljivije)"
-        },
-        "SleepTemperature": {
-            "displayText": "Temp.\nspavanja",
-            "description": "Temperatura na koju se spušta lemilica nakon određenog vremena mirovanja. (C | F)"
-        },
-        "SleepTimeout": {
-            "displayText": "Vreme do\nspavanja",
-            "description": "Vreme mirovanja nakon koga lemilica spušta temperaturu. (m=minuti | s=sekunde)"
-        },
-        "ShutdownTimeout": {
-            "displayText": "Vreme do\ngašenja",
-            "description": "Vreme mirovanja nakon koga se lemilica gasi. (m=minuti)"
-        },
-        "HallEffSensitivity": {
-            "displayText": "Hall sensor\nsensitivity",
-            "description": "Sensitivity to magnets (1=najmanje osetljivo | ... | 9=najosetljivije)"
-        },
-        "TemperatureUnit": {
-            "displayText": "Jedinica\ntemperature",
-            "description": "Jedinice u kojima se prikazuje temperatura. (C=celzijus | F=farenhajt)"
-        },
-        "DisplayRotation": {
-            "displayText": "Orijentacija\nekrana",
-            "description": "Kako je okrenut ekran. (D=za desnoruke | L=za levoruke | A=automatski)"
-        },
-        "CooldownBlink": {
-            "displayText": "Upozorenje\npri hlađenju",
-            "description": "Prikaz temperature trepće prilikom hlađenja dokle god je vrh i dalje vruć."
-        },
-        "ScrollingSpeed": {
-            "displayText": "Brzina\nporuka",
-            "description": "Brzina kretanja opisnih poruka poput ove. (S=sporo | B=brzo)"
-        },
-        "ReverseButtonTempChange": {
-            "displayText": "Swap\n+ - keys",
-            "description": "Reverse assignment of buttons for temperature adjustment"
-        },
-        "AnimSpeed": {
-            "displayText": "Anim.\nspeed",
-            "description": "Pace of icon animations in menu (S=slow | M=medium | B=fast)"
-        },
-        "AnimLoop": {
-            "displayText": "Anim.\nloop",
-            "description": "Loop icon animations in main menu"
-        },
-        "Brightness": {
-            "displayText": "Screen\nbrightness",
-            "description": "Adjust the OLED screen brightness"
-        },
-        "ColourInversion": {
-            "displayText": "Invert\nscreen",
-            "description": "Invert the OLED screen colors"
-        },
-        "LOGOTime": {
-            "displayText": "Boot logo\nduration",
-            "description": "Set boot logo duration (s=seconds)"
-        },
-        "AdvancedIdle": {
-            "displayText": "Detalji tokom\nmirovanja",
-            "description": "Prikazivanje detaljnih informacija na ekranu tokom mirovanja."
-        },
-        "AdvancedSoldering": {
-            "displayText": "Detalji tokom\nlemljenja",
-            "description": "Prikazivanje detaljnih informacija na ekranu tokom lemljenja."
-        },
-        "BluetoothLE": {
-            "displayText": "Bluetooth\n",
-            "description": "Enables BLE"
-        },
-        "PowerLimit": {
-            "displayText": "Power\nlimit",
-            "description": "Average maximum power the iron can use (W=watt)"
-        },
-        "CalibrateCJC": {
-            "displayText": "Calibrate CJC\nat next boot",
-            "description": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
-        },
-        "VoltageCalibration": {
-            "displayText": "Kalibracija\nulaznog napona",
-            "description": "Kalibrisanje ulaznog napona. Podešava se na tastere; dugi pritisak za kraj."
-        },
-        "PowerPulsePower": {
-            "displayText": "Power\npulse",
-            "description": "Intensity of power of keep-awake-pulse (W=watt)"
-        },
-        "PowerPulseWait": {
-            "displayText": "Power pulse\ndelay",
-            "description": "Delay before keep-awake-pulse is triggered (x 2.5s)"
-        },
-        "PowerPulseDuration": {
-            "displayText": "Power pulse\nduration",
-            "description": "Keep-awake-pulse duration (x 250ms)"
-        },
-        "SettingsReset": {
-            "displayText": "Fabričke\npostavke",
-            "description": "Vraćanje svih postavki na fabričke vrednosti."
-        },
-        "LanguageSwitch": {
-            "displayText": "Jezik:\n SR      Srpski",
-            "description": ""
-        }
+    "NoAccelerometerMessage": {
+      "message": "No accelerometer\ndetected!"
+    },
+    "NoPowerDeliveryMessage": {
+      "message": "No USB-PD IC\ndetected!"
+    },
+    "LockingKeysString": {
+      "message": "LOCKED"
+    },
+    "UnlockingKeysString": {
+      "message": "UNLOCKED"
+    },
+    "WarningKeysLockedString": {
+      "message": "!LOCKED!"
+    },
+    "WarningThermalRunaway": {
+      "message": "Thermal\nRunaway"
+    },
+    "WarningTipShorted": {
+      "message": "!Tip Shorted!"
+    },
+    "SettingsCalibrationWarning": {
+      "message": "Before rebooting, make sure tip & handle are at room temperature!"
+    },
+    "CJCCalibrating": {
+      "message": "calibrating\n"
+    },
+    "SettingsResetWarning": {
+      "message": "Da li zaista želite da vratite postavke na fabričke vrednosti?"
+    },
+    "UVLOWarningString": {
+      "message": "NIZ.NAP."
+    },
+    "UndervoltageString": {
+      "message": "PRENIZAK NAPON\n"
+    },
+    "InputVoltageString": {
+      "message": "Ul. napon: \n"
+    },
+    "SleepingAdvancedString": {
+      "message": "Spavanje...\n"
+    },
+    "SleepingTipAdvancedString": {
+      "message": "Vrh: \n"
+    },
+    "ProfilePreheatString": {
+      "message": "Preheat\n"
+    },
+    "ProfileCooldownString": {
+      "message": "Cooldown\n"
+    },
+    "DeviceFailedValidationWarning": {
+      "message": "Your device is most likely a counterfeit!"
+    },
+    "TooHotToStartProfileWarning": {
+      "message": "Too hot to\nstart profile"
     }
+  },
+  "characters": {
+    "SettingRightChar": "D",
+    "SettingLeftChar": "L",
+    "SettingAutoChar": "A",
+    "SettingSlowChar": "S",
+    "SettingMediumChar": "M",
+    "SettingFastChar": "B",
+    "SettingStartSolderingChar": "L",
+    "SettingStartSleepChar": "S",
+    "SettingStartSleepOffChar": "X",
+    "SettingLockBoostChar": "B",
+    "SettingLockFullChar": "F"
+  },
+  "menuGroups": {
+    "PowerMenu": {
+      "displayText": "Power\nsettings",
+      "description": ""
+    },
+    "SolderingMenu": {
+      "displayText": "Postavke\nlemljenja",
+      "description": ""
+    },
+    "PowerSavingMenu": {
+      "displayText": "Ušteda\nenergije",
+      "description": ""
+    },
+    "UIMenu": {
+      "displayText": "Korisničko\nsučelje",
+      "description": ""
+    },
+    "AdvancedMenu": {
+      "displayText": "Napredne\npostavke",
+      "description": ""
+    }
+  },
+  "menuValues": {
+    "USBPDModeDefault": {
+      "displayText": "Default\nMode"
+    },
+    "USBPDModeNoDynamic": {
+      "displayText": "No\nDynamic"
+    },
+    "USBPDModeSafe": {
+      "displayText": "Safe\nMode"
+    }
+  },
+  "menuOptions": {
+    "DCInCutoff": {
+      "displayText": "Vrsta\nnapajanja",
+      "description": "Tip napajanja; određuje najniži radni napon. (DC=adapter [10V], S=baterija [3,3V po ćeliji])"
+    },
+    "MinVolCell": {
+      "displayText": "Minimum\nvoltage",
+      "description": "Minimum allowed voltage per battery cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+    },
+    "QCMaxVoltage": {
+      "displayText": "Ulazna\nsnaga",
+      "description": "Snaga napajanja u vatima."
+    },
+    "PDNegTimeout": {
+      "displayText": "PD\ntimeout",
+      "description": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers"
+    },
+    "USBPDMode": {
+      "displayText": "PD\nMode",
+      "description": "No Dynamic disables EPR & PPS, Safe mode does not use padding resistance"
+    },
+    "BoostTemperature": {
+      "displayText": "Temp.\npojačanja",
+      "description": "Temperatura vrha lemilice u toku pojačanja."
+    },
+    "AutoStart": {
+      "displayText": "Vrući\nstart",
+      "description": "Lemilica odmah po pokretanju prelazi u režim lemljenja i greje se. (L=lemljenje | S=spavati | X=spavati sobna temperatura)"
+    },
+    "TempChangeShortStep": {
+      "displayText": "Temp change\nshort",
+      "description": "Temperature-change-increment on short button press"
+    },
+    "TempChangeLongStep": {
+      "displayText": "Temp change\nlong",
+      "description": "Temperature-change-increment on long button press"
+    },
+    "LockingMode": {
+      "displayText": "Allow locking\nbuttons",
+      "description": "While soldering, hold down both buttons to toggle locking them (B=boost mode only | F=full locking)"
+    },
+    "ProfilePhases": {
+      "displayText": "Profile\nPhases",
+      "description": "Number of phases in profile mode"
+    },
+    "ProfilePreheatTemp": {
+      "displayText": "Preheat\nTemp",
+      "description": "Preheat to this temperature at the start of profile mode"
+    },
+    "ProfilePreheatSpeed": {
+      "displayText": "Preheat\nSpeed",
+      "description": "Preheat at this rate (degrees per second)"
+    },
+    "ProfilePhase1Temp": {
+      "displayText": "Phase 1\nTemp",
+      "description": "Target temperature for the end of this phase"
+    },
+    "ProfilePhase1Duration": {
+      "displayText": "Phase 1\nDuration",
+      "description": "Target duration of this phase (seconds)"
+    },
+    "ProfilePhase2Temp": {
+      "displayText": "Phase 2\nTemp",
+      "description": ""
+    },
+    "ProfilePhase2Duration": {
+      "displayText": "Phase 2\nDuration",
+      "description": ""
+    },
+    "ProfilePhase3Temp": {
+      "displayText": "Phase 3\nTemp",
+      "description": ""
+    },
+    "ProfilePhase3Duration": {
+      "displayText": "Phase 3\nDuration",
+      "description": ""
+    },
+    "ProfilePhase4Temp": {
+      "displayText": "Phase 4\nTemp",
+      "description": ""
+    },
+    "ProfilePhase4Duration": {
+      "displayText": "Phase 4\nDuration",
+      "description": ""
+    },
+    "ProfilePhase5Temp": {
+      "displayText": "Phase 5\nTemp",
+      "description": ""
+    },
+    "ProfilePhase5Duration": {
+      "displayText": "Phase 5\nDuration",
+      "description": ""
+    },
+    "ProfileCooldownSpeed": {
+      "displayText": "Cooldown\nSpeed",
+      "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
+    },
+    "MotionSensitivity": {
+      "displayText": "Osetljivost\nna pokret",
+      "description": "Osetljivost senzora pokreta. (1=najmanje osetljivo | ... | 9=najosetljivije)"
+    },
+    "SleepTemperature": {
+      "displayText": "Temp.\nspavanja",
+      "description": "Temperatura na koju se spušta lemilica nakon određenog vremena mirovanja. (C | F)"
+    },
+    "SleepTimeout": {
+      "displayText": "Vreme do\nspavanja",
+      "description": "Vreme mirovanja nakon koga lemilica spušta temperaturu. (m=minuti | s=sekunde)"
+    },
+    "ShutdownTimeout": {
+      "displayText": "Vreme do\ngašenja",
+      "description": "Vreme mirovanja nakon koga se lemilica gasi. (m=minuti)"
+    },
+    "HallEffSensitivity": {
+      "displayText": "Hall sensor\nsensitivity",
+      "description": "Sensitivity to magnets (1=najmanje osetljivo | ... | 9=najosetljivije)"
+    },
+    "TemperatureUnit": {
+      "displayText": "Jedinica\ntemperature",
+      "description": "Jedinice u kojima se prikazuje temperatura. (C=celzijus | F=farenhajt)"
+    },
+    "DisplayRotation": {
+      "displayText": "Orijentacija\nekrana",
+      "description": "Kako je okrenut ekran. (D=za desnoruke | L=za levoruke | A=automatski)"
+    },
+    "CooldownBlink": {
+      "displayText": "Upozorenje\npri hlađenju",
+      "description": "Prikaz temperature trepće prilikom hlađenja dokle god je vrh i dalje vruć."
+    },
+    "ScrollingSpeed": {
+      "displayText": "Brzina\nporuka",
+      "description": "Brzina kretanja opisnih poruka poput ove. (S=sporo | B=brzo)"
+    },
+    "ReverseButtonTempChange": {
+      "displayText": "Swap\n+ - keys",
+      "description": "Reverse assignment of buttons for temperature adjustment"
+    },
+    "AnimSpeed": {
+      "displayText": "Anim.\nspeed",
+      "description": "Pace of icon animations in menu (S=slow | M=medium | B=fast)"
+    },
+    "AnimLoop": {
+      "displayText": "Anim.\nloop",
+      "description": "Loop icon animations in main menu"
+    },
+    "Brightness": {
+      "displayText": "Screen\nbrightness",
+      "description": "Adjust the OLED screen brightness"
+    },
+    "ColourInversion": {
+      "displayText": "Invert\nscreen",
+      "description": "Invert the OLED screen colors"
+    },
+    "LOGOTime": {
+      "displayText": "Boot logo\nduration",
+      "description": "Set boot logo duration (s=seconds)"
+    },
+    "AdvancedIdle": {
+      "displayText": "Detalji tokom\nmirovanja",
+      "description": "Prikazivanje detaljnih informacija na ekranu tokom mirovanja."
+    },
+    "AdvancedSoldering": {
+      "displayText": "Detalji tokom\nlemljenja",
+      "description": "Prikazivanje detaljnih informacija na ekranu tokom lemljenja."
+    },
+    "BluetoothLE": {
+      "displayText": "Bluetooth\n",
+      "description": "Enables BLE"
+    },
+    "PowerLimit": {
+      "displayText": "Power\nlimit",
+      "description": "Average maximum power the iron can use (W=watt)"
+    },
+    "CalibrateCJC": {
+      "displayText": "Calibrate CJC\nat next boot",
+      "description": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
+    },
+    "VoltageCalibration": {
+      "displayText": "Kalibracija\nulaznog napona",
+      "description": "Kalibrisanje ulaznog napona. Podešava se na tastere; dugi pritisak za kraj."
+    },
+    "PowerPulsePower": {
+      "displayText": "Power\npulse",
+      "description": "Intensity of power of keep-awake-pulse (W=watt)"
+    },
+    "PowerPulseWait": {
+      "displayText": "Power pulse\ndelay",
+      "description": "Delay before keep-awake-pulse is triggered (x 2.5s)"
+    },
+    "PowerPulseDuration": {
+      "displayText": "Power pulse\nduration",
+      "description": "Keep-awake-pulse duration (x 250ms)"
+    },
+    "SettingsReset": {
+      "displayText": "Fabričke\npostavke",
+      "description": "Vraćanje svih postavki na fabričke vrednosti."
+    },
+    "LanguageSwitch": {
+      "displayText": "Jezik:\n SR      Srpski",
+      "description": ""
+    }
+  }
 }

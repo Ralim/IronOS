@@ -78,10 +78,7 @@ enum class FontStyle {
 
 class OLED {
 public:
-  enum DisplayState : bool {
-    OFF = false,
-    ON  = true
-  };
+  enum DisplayState : bool { OFF = false, ON = true };
 
   static void initialize(); // Startup the I2C coms (brings screen out of reset etc)
   static bool isInitDone();
@@ -120,7 +117,7 @@ public:
   static void    setInverseDisplay(bool inverted);
   static int16_t getCursorX() { return cursor_x; }
   // Draw a string to the current location, with selected font; optionally - with MAX length only
-  static void print(const char *string, FontStyle fontStyle, uint8_t length = 255);
+  static void print(const char *string, FontStyle fontStyle, uint8_t length = 255, const uint8_t soft_x_limit = 0);
   static void printWholeScreen(const char *string);
   // Print *F or *C - in font style of Small, Large (by default) or Extra based on input arg
   static void printSymbolDeg(FontStyle fontStyle = FontStyle::LARGE);
@@ -166,7 +163,7 @@ private:
     displayChecksum = hash;
     return result;
   }
-  static void         drawChar(uint16_t charCode, FontStyle fontStyle); // Draw a character to the current cursor location
+  static void         drawChar(uint16_t charCode, FontStyle fontStyle, const uint8_t soft_x_limit); // Draw a character to the current cursor location
   static void         setFramebuffer(uint8_t *buffer);
   static uint8_t     *stripPointers[4]; // Pointers to the strips to allow for buffer having extra content
   static bool         inLeftHandedMode; // Whether the screen is in left or not (used for offsets in GRAM)

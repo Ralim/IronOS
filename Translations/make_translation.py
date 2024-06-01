@@ -76,13 +76,13 @@ def filter_translation(lang: dict, defs: dict, macros: frozenset):
 
         return False
 
-    for category in ("menuOptions", "menuGroups"):
-        for index, record in enumerate(defs[category]):
+    for category in ("menuOptions", "menuGroups", "menuValues"):
+        for _, record in enumerate(defs[category]):
             if check_excluded(record):
                 lang[category][record["id"]]["displayText"] = ""
                 lang[category][record["id"]]["description"] = ""
 
-    for index, record in enumerate(defs["messagesWarn"]):
+    for _, record in enumerate(defs["messagesWarn"]):
         if check_excluded(record):
             lang["messagesWarn"][record["id"]]["message"] = ""
 
@@ -248,6 +248,15 @@ def get_letter_counts(defs: dict, lang: dict, build_version: str) -> Dict:
         eid = mod["id"]
         msg = obj[eid]["description"]
         big_font_messages.append(msg)
+
+    obj = lang["menuValues"]
+    for mod in defs["menuValues"]:
+        eid = mod["id"]
+        msg = obj[eid]["displayText"]
+        if test_is_small_font(msg):
+            small_font_messages.append(msg)
+        else:
+            big_font_messages.append(msg)
 
     obj = lang["menuGroups"]
     for mod in defs["menuGroups"]:
@@ -1114,6 +1123,12 @@ def get_translation_strings_and_indices_text(
         encode_string_and_add(
             lang_data["displayText"], "menuOptions" + record["id"] + "displayText"
         )
+    for index, record in enumerate(defs["menuValues"]):
+        lang_data = lang["menuValues"][record["id"]]
+        # Add to translations the menu text and the description
+        encode_string_and_add(
+            lang_data["displayText"], "menuValues" + record["id"] + "displayText"
+        )
 
     for index, record in enumerate(defs["menuGroups"]):
         lang_data = lang["menuGroups"][record["id"]]
@@ -1201,6 +1216,21 @@ def get_translation_strings_and_indices_text(
             f"    .{record['id']} = {start_index}, // {escape(lang_data)}\n"
         )
 
+    for _, record in enumerate(defs["menuValues"]):
+        # Add to translations the menu text and the description
+        lang_data = lang["menuValues"][record["id"]]
+        key = "menuValues" + record["id"] + "displayText"
+        translated_index = translated_string_lookups[key]
+        string_index = translated_index.byte_encoded_translation_index
+        start_index = (
+            string_index_commulative_lengths[string_index]
+            + translated_index.str_start_offset
+        )
+
+        translation_indices_text += (
+            f"    .{record['id']} = {start_index}, // {escape(lang_data)}\n"
+        )
+
     translation_indices_text += "\n"
 
     # Now for the fun ones, where they are nested and ordered
@@ -1230,6 +1260,7 @@ def get_translation_strings_and_indices_text(
     translation_indices_text = write_grouped_indexes(
         translation_indices_text, "SettingsShortNames", "menuOptions", "displayText"
     )
+
     translation_indices_text = write_grouped_indexes(
         translation_indices_text,
         "SettingsMenuEntriesDescriptions",

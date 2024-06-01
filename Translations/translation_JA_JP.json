@@ -1,310 +1,321 @@
 {
-    "languageCode": "JA_JP",
-    "languageLocalName": "日本語",
-    "tempUnitFahrenheit": true,
-    "messagesWarn": {
-        "CalibrationDone": {
-            "message": "Calibration done!"
-        },
-        "ResetOKMessage": {
-            "message": "リセットOK"
-        },
-        "SettingsResetMessage": {
-            "message": "初期化されました"
-        },
-        "NoAccelerometerMessage": {
-            "message": "加速度計未検出"
-        },
-        "NoPowerDeliveryMessage": {
-            "message": "PD IC未検出"
-        },
-        "LockingKeysString": {
-            "message": "ボタンロック"
-        },
-        "UnlockingKeysString": {
-            "message": "ロックを解除"
-        },
-        "WarningKeysLockedString": {
-            "message": "!入力ロック中!"
-        },
-        "WarningThermalRunaway": {
-            "message": "過熱"
-        },
-        "WarningTipShorted": {
-            "message": "!Tip Shorted!"
-        },
-        "SettingsCalibrationWarning": {
-            "message": "Before rebooting, make sure tip & handle are at room temperature!"
-        },
-        "CJCCalibrating": {
-            "message": "calibrating"
-        },
-        "SettingsResetWarning": {
-            "message": "設定をリセットしますか？"
-        },
-        "UVLOWarningString": {
-            "message": "電圧が低すぎます"
-        },
-        "UndervoltageString": {
-            "message": "Undervoltage"
-        },
-        "InputVoltageString": {
-            "message": "Input V: "
-        },
-        "SleepingAdvancedString": {
-            "message": "Sleeping..."
-        },
-        "SleepingTipAdvancedString": {
-            "message": "Tip: "
-        },
-        "ProfilePreheatString": {
-            "message": "Preheat"
-        },
-        "ProfileCooldownString": {
-            "message": "Cooldown"
-        },
-        "DeviceFailedValidationWarning": {
-            "message": "このデバイスはおそらく偽造品です"
-        },
-        "TooHotToStartProfileWarning": {
-            "message": "Too hot to start profile"
-        }
+  "languageCode": "JA_JP",
+  "languageLocalName": "日本語",
+  "tempUnitFahrenheit": true,
+  "messagesWarn": {
+    "CalibrationDone": {
+      "message": "Calibration done!"
     },
-    "characters": {
-        "SettingRightChar": "右",
-        "SettingLeftChar": "左",
-        "SettingAutoChar": "自",
-        "SettingSlowChar": "遅",
-        "SettingMediumChar": "中",
-        "SettingFastChar": "速",
-        "SettingStartSolderingChar": "熱",
-        "SettingStartSleepChar": "待",
-        "SettingStartSleepOffChar": "室",
-        "SettingLockBoostChar": "ブ",
-        "SettingLockFullChar": "全"
+    "ResetOKMessage": {
+      "message": "リセットOK"
     },
-    "menuGroups": {
-        "PowerMenu": {
-            "displayText": "電源設定",
-            "description": ""
-        },
-        "SolderingMenu": {
-            "displayText": "半田付け設定",
-            "description": ""
-        },
-        "PowerSavingMenu": {
-            "displayText": "待機設定",
-            "description": ""
-        },
-        "UIMenu": {
-            "displayText": "UI設定",
-            "description": ""
-        },
-        "AdvancedMenu": {
-            "displayText": "高度な設定",
-            "description": ""
-        }
+    "SettingsResetMessage": {
+      "message": "初期化されました"
     },
-    "menuOptions": {
-        "DCInCutoff": {
-            "displayText": "下限電圧",
-            "description": "下限電圧を指定する <DC=10V | S=セルあたり3.3V、電力制限を無効化>"
-        },
-        "MinVolCell": {
-            "displayText": "最低電圧",
-            "description": "セルあたりの最低電圧 <ボルト> <3S: 3.0V - 3.7V, 4/5/6S: 2.4V - 3.7V>"
-        },
-        "QCMaxVoltage": {
-            "displayText": "QC電圧",
-            "description": "QC電源使用時に要求する目標電圧"
-        },
-        "PDNegTimeout": {
-            "displayText": "PD\ntimeout",
-            "description": "一部のQC電源との互換性のため、PDネゴシエーションをタイムアウトする時間 <x100ms（ミリ秒）>"
-        },
-        "PDVpdo": {
-            "displayText": "PD VPDO",
-            "description": "Enables PPS & EPR modes"
-        },
-        "BoostTemperature": {
-            "displayText": "ブースト温度",
-            "description": "ブーストモードで使用される温度"
-        },
-        "AutoStart": {
-            "displayText": "自動加熱",
-            "description": "電源投入時に自動的に加熱する <熱=半田付けモード | 待=スタンバイモード | 室=室温スタンバイモード>"
-        },
-        "TempChangeShortStep": {
-            "displayText": "温度変化 短",
-            "description": "ボタンを短く押した時の温度変化値"
-        },
-        "TempChangeLongStep": {
-            "displayText": "温度変化 長",
-            "description": "ボタンを長押しした時の温度変化値"
-        },
-        "LockingMode": {
-            "displayText": "ボタンロック",
-            "description": "半田付けモード時に両方のボタンを長押しし、ボタンロックする <ブ=ブーストのみ許可 | 全=すべてをロック>"
-        },
-        "ProfilePhases": {
-            "displayText": "Profile Phases",
-            "description": "Number of phases in profile mode"
-        },
-        "ProfilePreheatTemp": {
-            "displayText": "Preheat Temp",
-            "description": "Preheat to this temperature at the start of profile mode"
-        },
-        "ProfilePreheatSpeed": {
-            "displayText": "Preheat Speed",
-            "description": "Preheat at this rate (degrees per second)"
-        },
-        "ProfilePhase1Temp": {
-            "displayText": "Phase 1 Temp",
-            "description": "Target temperature for the end of this phase"
-        },
-        "ProfilePhase1Duration": {
-            "displayText": "Phase 1 Duration",
-            "description": "Target duration of this phase (seconds)"
-        },
-        "ProfilePhase2Temp": {
-            "displayText": "Phase 2 Temp",
-            "description": ""
-        },
-        "ProfilePhase2Duration": {
-            "displayText": "Phase 2 Duration",
-            "description": ""
-        },
-        "ProfilePhase3Temp": {
-            "displayText": "Phase 3 Temp",
-            "description": ""
-        },
-        "ProfilePhase3Duration": {
-            "displayText": "Phase 3 Duration",
-            "description": ""
-        },
-        "ProfilePhase4Temp": {
-            "displayText": "Phase 4 Temp",
-            "description": ""
-        },
-        "ProfilePhase4Duration": {
-            "displayText": "Phase 4 Duration",
-            "description": ""
-        },
-        "ProfilePhase5Temp": {
-            "displayText": "Phase 5 Temp",
-            "description": ""
-        },
-        "ProfilePhase5Duration": {
-            "displayText": "Phase 5 Duration",
-            "description": ""
-        },
-        "ProfileCooldownSpeed": {
-            "displayText": "Cooldown Speed",
-            "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
-        },
-        "MotionSensitivity": {
-            "displayText": "動きの感度",
-            "description": "1=最低感度 | ... | 9=最高感度"
-        },
-        "SleepTemperature": {
-            "displayText": "待機温度",
-            "description": "スタンバイ時のコテ先温度"
-        },
-        "SleepTimeout": {
-            "displayText": "待機遅延",
-            "description": "スタンバイモードに入るまでの待機時間 <s=秒 | m=分>"
-        },
-        "ShutdownTimeout": {
-            "displayText": "自動オフ",
-            "description": "自動電源オフまでの待機時間 <m=分>"
-        },
-        "HallEffSensitivity": {
-            "displayText": "磁界感度",
-            "description": "スタンバイモードに入るのに使用される磁場センサーの感度 <1=最低感度 | ... | 9=最高感度>"
-        },
-        "TemperatureUnit": {
-            "displayText": "温度単位",
-            "description": "C=摂氏 | F=華氏"
-        },
-        "DisplayRotation": {
-            "displayText": "画面の向き",
-            "description": "右=右利き | 左=左利き | 自=自動"
-        },
-        "CooldownBlink": {
-            "displayText": "冷却中に点滅",
-            "description": "加熱の停止後、コテ先が熱い間は温度表示を点滅する"
-        },
-        "ScrollingSpeed": {
-            "displayText": "スクロール速度",
-            "description": "テキストをスクロールする速さ <遅=遅い | 速=速い>"
-        },
-        "ReverseButtonTempChange": {
-            "displayText": "キー入れ替え",
-            "description": "温度設定時に+ボタンと-ボタンを入れ替える"
-        },
-        "AnimSpeed": {
-            "displayText": "動画の速度",
-            "description": "メニューアイコンのアニメーションの速さ <遅=低速 | 中=中速 | 速=高速>"
-        },
-        "AnimLoop": {
-            "displayText": "動画をループ",
-            "description": "メニューアイコンのアニメーションをループする"
-        },
-        "Brightness": {
-            "displayText": "画面輝度",
-            "description": "画面の明るさ・コントラストを変更する"
-        },
-        "ColourInversion": {
-            "displayText": "色反転",
-            "description": "画面の色を反転する"
-        },
-        "LOGOTime": {
-            "displayText": "起動画面",
-            "description": "起動画面の表示時間を設定する"
-        },
-        "AdvancedIdle": {
-            "displayText": "詳細な待受画面",
-            "description": "待ち受け画面に詳細情報を表示する"
-        },
-        "AdvancedSoldering": {
-            "displayText": "詳細な作業画面",
-            "description": "半田付け画面に詳細情報を表示する"
-        },
-        "BluetoothLE": {
-            "displayText": "Bluetooth",
-            "description": "Enables BLE"
-        },
-        "PowerLimit": {
-            "displayText": "電力制限",
-            "description": "最大電力を制限する <W=ワット>"
-        },
-        "CalibrateCJC": {
-            "displayText": "Calibrate CJC",
-            "description": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5 C)"
-        },
-        "VoltageCalibration": {
-            "displayText": "電圧校正",
-            "description": "入力電圧(VIN)の校正を開始する <長押しで終了>"
-        },
-        "PowerPulsePower": {
-            "displayText": "電力パルス",
-            "description": "電源をオンに保つための電力パルス <ワット>"
-        },
-        "PowerPulseWait": {
-            "displayText": "パルス間隔",
-            "description": "電源をオンに保つための電力パルスの時間間隔 <x2.5s（秒）>"
-        },
-        "PowerPulseDuration": {
-            "displayText": "パルス時間長",
-            "description": "電源をオンに保つための電力パルスの時間長 <x250ms（ミリ秒）>"
-        },
-        "SettingsReset": {
-            "displayText": "設定をリセット",
-            "description": "すべての設定を初期化する"
-        },
-        "LanguageSwitch": {
-            "displayText": "言語： 日本語",
-            "description": ""
-        }
+    "NoAccelerometerMessage": {
+      "message": "加速度計未検出"
+    },
+    "NoPowerDeliveryMessage": {
+      "message": "PD IC未検出"
+    },
+    "LockingKeysString": {
+      "message": "ボタンロック"
+    },
+    "UnlockingKeysString": {
+      "message": "ロックを解除"
+    },
+    "WarningKeysLockedString": {
+      "message": "!入力ロック中!"
+    },
+    "WarningThermalRunaway": {
+      "message": "過熱"
+    },
+    "WarningTipShorted": {
+      "message": "!Tip Shorted!"
+    },
+    "SettingsCalibrationWarning": {
+      "message": "Before rebooting, make sure tip & handle are at room temperature!"
+    },
+    "CJCCalibrating": {
+      "message": "calibrating"
+    },
+    "SettingsResetWarning": {
+      "message": "設定をリセットしますか？"
+    },
+    "UVLOWarningString": {
+      "message": "電圧が低すぎます"
+    },
+    "UndervoltageString": {
+      "message": "Undervoltage"
+    },
+    "InputVoltageString": {
+      "message": "Input V: "
+    },
+    "SleepingAdvancedString": {
+      "message": "Sleeping..."
+    },
+    "SleepingTipAdvancedString": {
+      "message": "Tip: "
+    },
+    "ProfilePreheatString": {
+      "message": "Preheat"
+    },
+    "ProfileCooldownString": {
+      "message": "Cooldown"
+    },
+    "DeviceFailedValidationWarning": {
+      "message": "このデバイスはおそらく偽造品です"
+    },
+    "TooHotToStartProfileWarning": {
+      "message": "Too hot to start profile"
     }
+  },
+  "characters": {
+    "SettingRightChar": "右",
+    "SettingLeftChar": "左",
+    "SettingAutoChar": "自",
+    "SettingSlowChar": "遅",
+    "SettingMediumChar": "中",
+    "SettingFastChar": "速",
+    "SettingStartSolderingChar": "熱",
+    "SettingStartSleepChar": "待",
+    "SettingStartSleepOffChar": "室",
+    "SettingLockBoostChar": "ブ",
+    "SettingLockFullChar": "全"
+  },
+  "menuGroups": {
+    "PowerMenu": {
+      "displayText": "電源設定",
+      "description": ""
+    },
+    "SolderingMenu": {
+      "displayText": "半田付け設定",
+      "description": ""
+    },
+    "PowerSavingMenu": {
+      "displayText": "待機設定",
+      "description": ""
+    },
+    "UIMenu": {
+      "displayText": "UI設定",
+      "description": ""
+    },
+    "AdvancedMenu": {
+      "displayText": "高度な設定",
+      "description": ""
+    }
+  },
+  "menuValues": {
+    "USBPDModeDefault": {
+      "displayText": "Default\nMode"
+    },
+    "USBPDModeNoDynamic": {
+      "displayText": "No\nDynamic"
+    },
+    "USBPDModeSafe": {
+      "displayText": "Safe\nMode"
+    }
+  },
+  "menuOptions": {
+    "DCInCutoff": {
+      "displayText": "下限電圧",
+      "description": "下限電圧を指定する <DC=10V | S=セルあたり3.3V、電力制限を無効化>"
+    },
+    "MinVolCell": {
+      "displayText": "最低電圧",
+      "description": "セルあたりの最低電圧 <ボルト> <3S: 3.0V - 3.7V, 4/5/6S: 2.4V - 3.7V>"
+    },
+    "QCMaxVoltage": {
+      "displayText": "QC電圧",
+      "description": "QC電源使用時に要求する目標電圧"
+    },
+    "PDNegTimeout": {
+      "displayText": "PD\ntimeout",
+      "description": "一部のQC電源との互換性のため、PDネゴシエーションをタイムアウトする時間 <x100ms（ミリ秒）>"
+    },
+    "USBPDMode": {
+      "displayText": "PD VPDO",
+      "description": "No Dynamic disables EPR & PPS, Safe mode does not use padding resistance"
+    },
+    "BoostTemperature": {
+      "displayText": "ブースト温度",
+      "description": "ブーストモードで使用される温度"
+    },
+    "AutoStart": {
+      "displayText": "自動加熱",
+      "description": "電源投入時に自動的に加熱する <熱=半田付けモード | 待=スタンバイモード | 室=室温スタンバイモード>"
+    },
+    "TempChangeShortStep": {
+      "displayText": "温度変化 短",
+      "description": "ボタンを短く押した時の温度変化値"
+    },
+    "TempChangeLongStep": {
+      "displayText": "温度変化 長",
+      "description": "ボタンを長押しした時の温度変化値"
+    },
+    "LockingMode": {
+      "displayText": "ボタンロック",
+      "description": "半田付けモード時に両方のボタンを長押しし、ボタンロックする <ブ=ブーストのみ許可 | 全=すべてをロック>"
+    },
+    "ProfilePhases": {
+      "displayText": "Profile Phases",
+      "description": "Number of phases in profile mode"
+    },
+    "ProfilePreheatTemp": {
+      "displayText": "Preheat Temp",
+      "description": "Preheat to this temperature at the start of profile mode"
+    },
+    "ProfilePreheatSpeed": {
+      "displayText": "Preheat Speed",
+      "description": "Preheat at this rate (degrees per second)"
+    },
+    "ProfilePhase1Temp": {
+      "displayText": "Phase 1 Temp",
+      "description": "Target temperature for the end of this phase"
+    },
+    "ProfilePhase1Duration": {
+      "displayText": "Phase 1 Duration",
+      "description": "Target duration of this phase (seconds)"
+    },
+    "ProfilePhase2Temp": {
+      "displayText": "Phase 2 Temp",
+      "description": ""
+    },
+    "ProfilePhase2Duration": {
+      "displayText": "Phase 2 Duration",
+      "description": ""
+    },
+    "ProfilePhase3Temp": {
+      "displayText": "Phase 3 Temp",
+      "description": ""
+    },
+    "ProfilePhase3Duration": {
+      "displayText": "Phase 3 Duration",
+      "description": ""
+    },
+    "ProfilePhase4Temp": {
+      "displayText": "Phase 4 Temp",
+      "description": ""
+    },
+    "ProfilePhase4Duration": {
+      "displayText": "Phase 4 Duration",
+      "description": ""
+    },
+    "ProfilePhase5Temp": {
+      "displayText": "Phase 5 Temp",
+      "description": ""
+    },
+    "ProfilePhase5Duration": {
+      "displayText": "Phase 5 Duration",
+      "description": ""
+    },
+    "ProfileCooldownSpeed": {
+      "displayText": "Cooldown Speed",
+      "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
+    },
+    "MotionSensitivity": {
+      "displayText": "動きの感度",
+      "description": "1=最低感度 | ... | 9=最高感度"
+    },
+    "SleepTemperature": {
+      "displayText": "待機温度",
+      "description": "スタンバイ時のコテ先温度"
+    },
+    "SleepTimeout": {
+      "displayText": "待機遅延",
+      "description": "スタンバイモードに入るまでの待機時間 <s=秒 | m=分>"
+    },
+    "ShutdownTimeout": {
+      "displayText": "自動オフ",
+      "description": "自動電源オフまでの待機時間 <m=分>"
+    },
+    "HallEffSensitivity": {
+      "displayText": "磁界感度",
+      "description": "スタンバイモードに入るのに使用される磁場センサーの感度 <1=最低感度 | ... | 9=最高感度>"
+    },
+    "TemperatureUnit": {
+      "displayText": "温度単位",
+      "description": "C=摂氏 | F=華氏"
+    },
+    "DisplayRotation": {
+      "displayText": "画面の向き",
+      "description": "右=右利き | 左=左利き | 自=自動"
+    },
+    "CooldownBlink": {
+      "displayText": "冷却中に点滅",
+      "description": "加熱の停止後、コテ先が熱い間は温度表示を点滅する"
+    },
+    "ScrollingSpeed": {
+      "displayText": "スクロール速度",
+      "description": "テキストをスクロールする速さ <遅=遅い | 速=速い>"
+    },
+    "ReverseButtonTempChange": {
+      "displayText": "キー入れ替え",
+      "description": "温度設定時に+ボタンと-ボタンを入れ替える"
+    },
+    "AnimSpeed": {
+      "displayText": "動画の速度",
+      "description": "メニューアイコンのアニメーションの速さ <遅=低速 | 中=中速 | 速=高速>"
+    },
+    "AnimLoop": {
+      "displayText": "動画をループ",
+      "description": "メニューアイコンのアニメーションをループする"
+    },
+    "Brightness": {
+      "displayText": "画面輝度",
+      "description": "画面の明るさ・コントラストを変更する"
+    },
+    "ColourInversion": {
+      "displayText": "色反転",
+      "description": "画面の色を反転する"
+    },
+    "LOGOTime": {
+      "displayText": "起動画面",
+      "description": "起動画面の表示時間を設定する"
+    },
+    "AdvancedIdle": {
+      "displayText": "詳細な待受画面",
+      "description": "待ち受け画面に詳細情報を表示する"
+    },
+    "AdvancedSoldering": {
+      "displayText": "詳細な作業画面",
+      "description": "半田付け画面に詳細情報を表示する"
+    },
+    "BluetoothLE": {
+      "displayText": "Bluetooth",
+      "description": "Enables BLE"
+    },
+    "PowerLimit": {
+      "displayText": "電力制限",
+      "description": "最大電力を制限する <W=ワット>"
+    },
+    "CalibrateCJC": {
+      "displayText": "Calibrate CJC",
+      "description": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5 C)"
+    },
+    "VoltageCalibration": {
+      "displayText": "電圧校正",
+      "description": "入力電圧(VIN)の校正を開始する <長押しで終了>"
+    },
+    "PowerPulsePower": {
+      "displayText": "電力パルス",
+      "description": "電源をオンに保つための電力パルス <ワット>"
+    },
+    "PowerPulseWait": {
+      "displayText": "パルス間隔",
+      "description": "電源をオンに保つための電力パルスの時間間隔 <x2.5s（秒）>"
+    },
+    "PowerPulseDuration": {
+      "displayText": "パルス時間長",
+      "description": "電源をオンに保つための電力パルスの時間長 <x250ms（ミリ秒）>"
+    },
+    "SettingsReset": {
+      "displayText": "設定をリセット",
+      "description": "すべての設定を初期化する"
+    },
+    "LanguageSwitch": {
+      "displayText": "言語： 日本語",
+      "description": ""
+    }
+  }
 }
