@@ -1,310 +1,321 @@
 {
-    "languageCode": "FI",
-    "languageLocalName": "Suomi",
-    "tempUnitFahrenheit": false,
-    "messagesWarn": {
-        "CalibrationDone": {
-            "message": "Calibration\ndone!"
-        },
-        "ResetOKMessage": {
-            "message": "Palautus"
-        },
-        "SettingsResetMessage": {
-            "message": "Asetukset\npalautettu!"
-        },
-        "NoAccelerometerMessage": {
-            "message": "Kiihtyvyysanturi\npuuttuu!"
-        },
-        "NoPowerDeliveryMessage": {
-            "message": "USB-PD IC\npuuttuu!"
-        },
-        "LockingKeysString": {
-            "message": " LUKITTU"
-        },
-        "UnlockingKeysString": {
-            "message": "AUKI"
-        },
-        "WarningKeysLockedString": {
-            "message": "!LUKKO!"
-        },
-        "WarningThermalRunaway": {
-            "message": "Thermal\nRunaway"
-        },
-        "WarningTipShorted": {
-            "message": "!Tip Shorted!"
-        },
-        "SettingsCalibrationWarning": {
-            "message": "Before rebooting, make sure tip & handle are at room temperature!"
-        },
-        "CJCCalibrating": {
-            "message": "calibrating\n"
-        },
-        "SettingsResetWarning": {
-            "message": "Haluatko varmasti palauttaa oletusarvot?"
-        },
-        "UVLOWarningString": {
-            "message": "DC ALH."
-        },
-        "UndervoltageString": {
-            "message": "Alijännite\n"
-        },
-        "InputVoltageString": {
-            "message": "Jännite: \n"
-        },
-        "SleepingAdvancedString": {
-            "message": "Lepotila...\n"
-        },
-        "SleepingTipAdvancedString": {
-            "message": "Kärki: \n"
-        },
-        "ProfilePreheatString": {
-            "message": "Preheat\n"
-        },
-        "ProfileCooldownString": {
-            "message": "Cooldown\n"
-        },
-        "DeviceFailedValidationWarning": {
-            "message": "Your device is most likely a counterfeit!"
-        },
-        "TooHotToStartProfileWarning": {
-            "message": "Too hot to\nstart profile"
-        }
+  "languageCode": "FI",
+  "languageLocalName": "Suomi",
+  "tempUnitFahrenheit": false,
+  "messagesWarn": {
+    "CalibrationDone": {
+      "message": "Calibration\ndone!"
     },
-    "characters": {
-        "SettingRightChar": "O",
-        "SettingLeftChar": "V",
-        "SettingAutoChar": "A",
-        "SettingSlowChar": "A",
-        "SettingMediumChar": "M",
-        "SettingFastChar": "S",
-        "SettingStartSolderingChar": "J",
-        "SettingStartSleepChar": "L",
-        "SettingStartSleepOffChar": "H",
-        "SettingLockBoostChar": "V",
-        "SettingLockFullChar": "K"
+    "ResetOKMessage": {
+      "message": "Palautus"
     },
-    "menuGroups": {
-        "PowerMenu": {
-            "displayText": "Virta-\nasetukset",
-            "description": ""
-        },
-        "SolderingMenu": {
-            "displayText": "Juotos-\nasetukset",
-            "description": ""
-        },
-        "PowerSavingMenu": {
-            "displayText": "Lepotilan\nasetukset",
-            "description": ""
-        },
-        "UIMenu": {
-            "displayText": "Käyttö-\nliittymä",
-            "description": ""
-        },
-        "AdvancedMenu": {
-            "displayText": "Lisä-\nasetukset",
-            "description": ""
-        }
+    "SettingsResetMessage": {
+      "message": "Asetukset\npalautettu!"
     },
-    "menuOptions": {
-        "DCInCutoff": {
-            "displayText": "Virtalähde\nDC",
-            "description": "Virtalähde. Asettaa katkaisujännitteen. (DC 10V) (S 3.3V per kenno, poistaa virtarajoitukset)"
-        },
-        "MinVolCell": {
-            "displayText": "Pienin\njännite",
-            "description": "Pienin sallittu jännite per kenno (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
-        },
-        "QCMaxVoltage": {
-            "displayText": "QC\njännite",
-            "description": "Ensisijainen maksimi QC jännite"
-        },
-        "PDNegTimeout": {
-            "displayText": "PD\ntimeout",
-            "description": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers"
-        },
-        "PDVpdo": {
-            "displayText": "PD\nVPDO",
-            "description": "Enables PPS & EPR modes"
-        },
-        "BoostTemperature": {
-            "displayText": "Tehostus-\nlämpötila",
-            "description": "Tehostustilan lämpötila"
-        },
-        "AutoStart": {
-            "displayText": "Autom.\nkäynnistys",
-            "description": "Käynnistää virrat kytkettäessä juotostilan automaattisesti. (J=juotostila | L=Lepotila | H=Lepotila huoneenlämpö)"
-        },
-        "TempChangeShortStep": {
-            "displayText": "Lämmön muutos\nlyhyt painal.",
-            "description": "Lämpötilan muutos lyhyellä painalluksella"
-        },
-        "TempChangeLongStep": {
-            "displayText": "Lämmön muutos\npitkä painal.",
-            "description": "Lämpötilan muutos pitkällä painalluksella"
-        },
-        "LockingMode": {
-            "displayText": "Salli nappien\nlukitus",
-            "description": "Kolvatessa paina molempia näppäimiä lukitaksesi ne (V=vain tehostus | K=kaikki)"
-        },
-        "ProfilePhases": {
-            "displayText": "Profile\nPhases",
-            "description": "Number of phases in profile mode"
-        },
-        "ProfilePreheatTemp": {
-            "displayText": "Preheat\nTemp",
-            "description": "Preheat to this temperature at the start of profile mode"
-        },
-        "ProfilePreheatSpeed": {
-            "displayText": "Preheat\nSpeed",
-            "description": "Preheat at this rate (degrees per second)"
-        },
-        "ProfilePhase1Temp": {
-            "displayText": "Phase 1\nTemp",
-            "description": "Target temperature for the end of this phase"
-        },
-        "ProfilePhase1Duration": {
-            "displayText": "Phase 1\nDuration",
-            "description": "Target duration of this phase (seconds)"
-        },
-        "ProfilePhase2Temp": {
-            "displayText": "Phase 2\nTemp",
-            "description": ""
-        },
-        "ProfilePhase2Duration": {
-            "displayText": "Phase 2\nDuration",
-            "description": ""
-        },
-        "ProfilePhase3Temp": {
-            "displayText": "Phase 3\nTemp",
-            "description": ""
-        },
-        "ProfilePhase3Duration": {
-            "displayText": "Phase 3\nDuration",
-            "description": ""
-        },
-        "ProfilePhase4Temp": {
-            "displayText": "Phase 4\nTemp",
-            "description": ""
-        },
-        "ProfilePhase4Duration": {
-            "displayText": "Phase 4\nDuration",
-            "description": ""
-        },
-        "ProfilePhase5Temp": {
-            "displayText": "Phase 5\nTemp",
-            "description": ""
-        },
-        "ProfilePhase5Duration": {
-            "displayText": "Phase 5\nDuration",
-            "description": ""
-        },
-        "ProfileCooldownSpeed": {
-            "displayText": "Cooldown\nSpeed",
-            "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
-        },
-        "MotionSensitivity": {
-            "displayText": "Liikkeen\nherkkyys",
-            "description": "1=vähäinen herkkyys | ... | 9=suurin herkkyys"
-        },
-        "SleepTemperature": {
-            "displayText": "Lepotilan\nlämpötila",
-            "description": "Kärjen lämpötila \"lepotilassa\""
-        },
-        "SleepTimeout": {
-            "displayText": "Lepotilan\nviive",
-            "description": "\"Lepotilan\" ajastus (s=sekuntia | m=minuuttia)"
-        },
-        "ShutdownTimeout": {
-            "displayText": "Sammutus\nviive",
-            "description": "Automaattisen sammutuksen ajastus (m=minuuttia)"
-        },
-        "HallEffSensitivity": {
-            "displayText": "Hall-\nherk.",
-            "description": "Hall-efektianturin herkkyys lepotilan tunnistuksessa (1=vähäinen herkkyys | ... | 9=suurin herkkyys)"
-        },
-        "TemperatureUnit": {
-            "displayText": "Lämpötilan\nyksikkö",
-            "description": "C=celsius, F=fahrenheit"
-        },
-        "DisplayRotation": {
-            "displayText": "Näytön\nkierto",
-            "description": "O=oikeakätinen | V=vasenkätinen | A=automaattinen"
-        },
-        "CooldownBlink": {
-            "displayText": "Jäähdytyksen\nvilkutus",
-            "description": "Vilkuttaa jäähtyessä juotoskärjen lämpötilaa sen ollessa vielä vaarallisen kuuma"
-        },
-        "ScrollingSpeed": {
-            "displayText": "Selityksien\nnopeus",
-            "description": "Selityksien vieritysnopeus (H=hidas | N=nopea)"
-        },
-        "ReverseButtonTempChange": {
-            "displayText": "Suunnanvaihto\n+ - näppäimille",
-            "description": "Lämpötilapainikkeiden suunnan vaihtaminen"
-        },
-        "AnimSpeed": {
-            "displayText": "Animaation\nnopeus",
-            "description": "Animaatioiden nopeus valikossa (A=alhainen | K=keskiverto | S=suuri)"
-        },
-        "AnimLoop": {
-            "displayText": "Animaation\ntoistaminen",
-            "description": "Toista animaatiot valikossa"
-        },
-        "Brightness": {
-            "displayText": "Screen\nbrightness",
-            "description": "Adjust the OLED screen brightness"
-        },
-        "ColourInversion": {
-            "displayText": "Invert\nscreen",
-            "description": "Invert the OLED screen colors"
-        },
-        "LOGOTime": {
-            "displayText": "Boot logo\nduration",
-            "description": "Set boot logo duration (s=seconds)"
-        },
-        "AdvancedIdle": {
-            "displayText": "Tiedot\nlepotilassa",
-            "description": "Näyttää yksityiskohtaisemmat pienemmällä fontilla tiedot lepotilassa."
-        },
-        "AdvancedSoldering": {
-            "displayText": "Tarkempi\njuotosnäyttö",
-            "description": "Näyttää yksityiskohtaisemmat tiedot pienellä fontilla juotostilassa"
-        },
-        "BluetoothLE": {
-            "displayText": "Bluetooth\n",
-            "description": "Enables BLE"
-        },
-        "PowerLimit": {
-            "displayText": "Tehon-\nrajoitus",
-            "description": "Suurin sallittu teho (Watti)"
-        },
-        "CalibrateCJC": {
-            "displayText": "Calibrate CJC\nat next boot",
-            "description": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
-        },
-        "VoltageCalibration": {
-            "displayText": "Kalibroi\ntulojännite?",
-            "description": "Tulojännitten kalibrointi (VIN) (paina pitkään poistuaksesi)"
-        },
-        "PowerPulsePower": {
-            "displayText": "Herätyspulssin\nvoimakkuus",
-            "description": "Herätyspulssin voimakkuus (Watti)"
-        },
-        "PowerPulseWait": {
-            "displayText": "Pulssin\nodotusaika",
-            "description": "Odotusaika herätyspulssin lähetykseen (x 2.5s)"
-        },
-        "PowerPulseDuration": {
-            "displayText": "Pulssin\nkesto",
-            "description": "Herätyspulssin kesto (x 250ms)"
-        },
-        "SettingsReset": {
-            "displayText": "Palauta\ntehdasasetukset?",
-            "description": "Palauta kaikki asetukset oletusarvoihin"
-        },
-        "LanguageSwitch": {
-            "displayText": "Kieli:\n FI       Suomi",
-            "description": ""
-        }
+    "NoAccelerometerMessage": {
+      "message": "Kiihtyvyysanturi\npuuttuu!"
+    },
+    "NoPowerDeliveryMessage": {
+      "message": "USB-PD IC\npuuttuu!"
+    },
+    "LockingKeysString": {
+      "message": " LUKITTU"
+    },
+    "UnlockingKeysString": {
+      "message": "AUKI"
+    },
+    "WarningKeysLockedString": {
+      "message": "!LUKKO!"
+    },
+    "WarningThermalRunaway": {
+      "message": "Thermal\nRunaway"
+    },
+    "WarningTipShorted": {
+      "message": "!Tip Shorted!"
+    },
+    "SettingsCalibrationWarning": {
+      "message": "Before rebooting, make sure tip & handle are at room temperature!"
+    },
+    "CJCCalibrating": {
+      "message": "calibrating\n"
+    },
+    "SettingsResetWarning": {
+      "message": "Haluatko varmasti palauttaa oletusarvot?"
+    },
+    "UVLOWarningString": {
+      "message": "DC ALH."
+    },
+    "UndervoltageString": {
+      "message": "Alijännite\n"
+    },
+    "InputVoltageString": {
+      "message": "Jännite: \n"
+    },
+    "SleepingAdvancedString": {
+      "message": "Lepotila...\n"
+    },
+    "SleepingTipAdvancedString": {
+      "message": "Kärki: \n"
+    },
+    "ProfilePreheatString": {
+      "message": "Preheat\n"
+    },
+    "ProfileCooldownString": {
+      "message": "Cooldown\n"
+    },
+    "DeviceFailedValidationWarning": {
+      "message": "Your device is most likely a counterfeit!"
+    },
+    "TooHotToStartProfileWarning": {
+      "message": "Too hot to\nstart profile"
     }
+  },
+  "characters": {
+    "SettingRightChar": "O",
+    "SettingLeftChar": "V",
+    "SettingAutoChar": "A",
+    "SettingSlowChar": "A",
+    "SettingMediumChar": "M",
+    "SettingFastChar": "S",
+    "SettingStartSolderingChar": "J",
+    "SettingStartSleepChar": "L",
+    "SettingStartSleepOffChar": "H",
+    "SettingLockBoostChar": "V",
+    "SettingLockFullChar": "K"
+  },
+  "menuGroups": {
+    "PowerMenu": {
+      "displayText": "Virta-\nasetukset",
+      "description": ""
+    },
+    "SolderingMenu": {
+      "displayText": "Juotos-\nasetukset",
+      "description": ""
+    },
+    "PowerSavingMenu": {
+      "displayText": "Lepotilan\nasetukset",
+      "description": ""
+    },
+    "UIMenu": {
+      "displayText": "Käyttö-\nliittymä",
+      "description": ""
+    },
+    "AdvancedMenu": {
+      "displayText": "Lisä-\nasetukset",
+      "description": ""
+    }
+  },
+  "menuValues": {
+    "USBPDModeDefault": {
+      "displayText": "Default\nMode"
+    },
+    "USBPDModeNoDynamic": {
+      "displayText": "No\nDynamic"
+    },
+    "USBPDModeSafe": {
+      "displayText": "Safe\nMode"
+    }
+  },
+  "menuOptions": {
+    "DCInCutoff": {
+      "displayText": "Virtalähde\nDC",
+      "description": "Virtalähde. Asettaa katkaisujännitteen. (DC 10V) (S 3.3V per kenno, poistaa virtarajoitukset)"
+    },
+    "MinVolCell": {
+      "displayText": "Pienin\njännite",
+      "description": "Pienin sallittu jännite per kenno (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+    },
+    "QCMaxVoltage": {
+      "displayText": "QC\njännite",
+      "description": "Ensisijainen maksimi QC jännite"
+    },
+    "PDNegTimeout": {
+      "displayText": "PD\ntimeout",
+      "description": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers"
+    },
+    "USBPDMode": {
+      "displayText": "PD\nMode",
+      "description": "No Dynamic disables EPR & PPS, Safe mode does not use padding resistance"
+    },
+    "BoostTemperature": {
+      "displayText": "Tehostus-\nlämpötila",
+      "description": "Tehostustilan lämpötila"
+    },
+    "AutoStart": {
+      "displayText": "Autom.\nkäynnistys",
+      "description": "Käynnistää virrat kytkettäessä juotostilan automaattisesti. (J=juotostila | L=Lepotila | H=Lepotila huoneenlämpö)"
+    },
+    "TempChangeShortStep": {
+      "displayText": "Lämmön muutos\nlyhyt painal.",
+      "description": "Lämpötilan muutos lyhyellä painalluksella"
+    },
+    "TempChangeLongStep": {
+      "displayText": "Lämmön muutos\npitkä painal.",
+      "description": "Lämpötilan muutos pitkällä painalluksella"
+    },
+    "LockingMode": {
+      "displayText": "Salli nappien\nlukitus",
+      "description": "Kolvatessa paina molempia näppäimiä lukitaksesi ne (V=vain tehostus | K=kaikki)"
+    },
+    "ProfilePhases": {
+      "displayText": "Profile\nPhases",
+      "description": "Number of phases in profile mode"
+    },
+    "ProfilePreheatTemp": {
+      "displayText": "Preheat\nTemp",
+      "description": "Preheat to this temperature at the start of profile mode"
+    },
+    "ProfilePreheatSpeed": {
+      "displayText": "Preheat\nSpeed",
+      "description": "Preheat at this rate (degrees per second)"
+    },
+    "ProfilePhase1Temp": {
+      "displayText": "Phase 1\nTemp",
+      "description": "Target temperature for the end of this phase"
+    },
+    "ProfilePhase1Duration": {
+      "displayText": "Phase 1\nDuration",
+      "description": "Target duration of this phase (seconds)"
+    },
+    "ProfilePhase2Temp": {
+      "displayText": "Phase 2\nTemp",
+      "description": ""
+    },
+    "ProfilePhase2Duration": {
+      "displayText": "Phase 2\nDuration",
+      "description": ""
+    },
+    "ProfilePhase3Temp": {
+      "displayText": "Phase 3\nTemp",
+      "description": ""
+    },
+    "ProfilePhase3Duration": {
+      "displayText": "Phase 3\nDuration",
+      "description": ""
+    },
+    "ProfilePhase4Temp": {
+      "displayText": "Phase 4\nTemp",
+      "description": ""
+    },
+    "ProfilePhase4Duration": {
+      "displayText": "Phase 4\nDuration",
+      "description": ""
+    },
+    "ProfilePhase5Temp": {
+      "displayText": "Phase 5\nTemp",
+      "description": ""
+    },
+    "ProfilePhase5Duration": {
+      "displayText": "Phase 5\nDuration",
+      "description": ""
+    },
+    "ProfileCooldownSpeed": {
+      "displayText": "Cooldown\nSpeed",
+      "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
+    },
+    "MotionSensitivity": {
+      "displayText": "Liikkeen\nherkkyys",
+      "description": "1=vähäinen herkkyys | ... | 9=suurin herkkyys"
+    },
+    "SleepTemperature": {
+      "displayText": "Lepotilan\nlämpötila",
+      "description": "Kärjen lämpötila \"lepotilassa\""
+    },
+    "SleepTimeout": {
+      "displayText": "Lepotilan\nviive",
+      "description": "\"Lepotilan\" ajastus (s=sekuntia | m=minuuttia)"
+    },
+    "ShutdownTimeout": {
+      "displayText": "Sammutus\nviive",
+      "description": "Automaattisen sammutuksen ajastus (m=minuuttia)"
+    },
+    "HallEffSensitivity": {
+      "displayText": "Hall-\nherk.",
+      "description": "Hall-efektianturin herkkyys lepotilan tunnistuksessa (1=vähäinen herkkyys | ... | 9=suurin herkkyys)"
+    },
+    "TemperatureUnit": {
+      "displayText": "Lämpötilan\nyksikkö",
+      "description": "C=celsius, F=fahrenheit"
+    },
+    "DisplayRotation": {
+      "displayText": "Näytön\nkierto",
+      "description": "O=oikeakätinen | V=vasenkätinen | A=automaattinen"
+    },
+    "CooldownBlink": {
+      "displayText": "Jäähdytyksen\nvilkutus",
+      "description": "Vilkuttaa jäähtyessä juotoskärjen lämpötilaa sen ollessa vielä vaarallisen kuuma"
+    },
+    "ScrollingSpeed": {
+      "displayText": "Selityksien\nnopeus",
+      "description": "Selityksien vieritysnopeus (H=hidas | N=nopea)"
+    },
+    "ReverseButtonTempChange": {
+      "displayText": "Suunnanvaihto\n+ - näppäimille",
+      "description": "Lämpötilapainikkeiden suunnan vaihtaminen"
+    },
+    "AnimSpeed": {
+      "displayText": "Animaation\nnopeus",
+      "description": "Animaatioiden nopeus valikossa (A=alhainen | K=keskiverto | S=suuri)"
+    },
+    "AnimLoop": {
+      "displayText": "Animaation\ntoistaminen",
+      "description": "Toista animaatiot valikossa"
+    },
+    "Brightness": {
+      "displayText": "Screen\nbrightness",
+      "description": "Adjust the OLED screen brightness"
+    },
+    "ColourInversion": {
+      "displayText": "Invert\nscreen",
+      "description": "Invert the OLED screen colors"
+    },
+    "LOGOTime": {
+      "displayText": "Boot logo\nduration",
+      "description": "Set boot logo duration (s=seconds)"
+    },
+    "AdvancedIdle": {
+      "displayText": "Tiedot\nlepotilassa",
+      "description": "Näyttää yksityiskohtaisemmat pienemmällä fontilla tiedot lepotilassa."
+    },
+    "AdvancedSoldering": {
+      "displayText": "Tarkempi\njuotosnäyttö",
+      "description": "Näyttää yksityiskohtaisemmat tiedot pienellä fontilla juotostilassa"
+    },
+    "BluetoothLE": {
+      "displayText": "Bluetooth\n",
+      "description": "Enables BLE"
+    },
+    "PowerLimit": {
+      "displayText": "Tehon-\nrajoitus",
+      "description": "Suurin sallittu teho (Watti)"
+    },
+    "CalibrateCJC": {
+      "displayText": "Calibrate CJC\nat next boot",
+      "description": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
+    },
+    "VoltageCalibration": {
+      "displayText": "Kalibroi\ntulojännite?",
+      "description": "Tulojännitten kalibrointi (VIN) (paina pitkään poistuaksesi)"
+    },
+    "PowerPulsePower": {
+      "displayText": "Herätyspulssin\nvoimakkuus",
+      "description": "Herätyspulssin voimakkuus (Watti)"
+    },
+    "PowerPulseWait": {
+      "displayText": "Pulssin\nodotusaika",
+      "description": "Odotusaika herätyspulssin lähetykseen (x 2.5s)"
+    },
+    "PowerPulseDuration": {
+      "displayText": "Pulssin\nkesto",
+      "description": "Herätyspulssin kesto (x 250ms)"
+    },
+    "SettingsReset": {
+      "displayText": "Palauta\ntehdasasetukset?",
+      "description": "Palauta kaikki asetukset oletusarvoihin"
+    },
+    "LanguageSwitch": {
+      "displayText": "Kieli:\n FI       Suomi",
+      "description": ""
+    }
+  }
 }

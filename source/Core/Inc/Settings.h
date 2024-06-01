@@ -52,7 +52,7 @@ enum SettingsOptions {
   LOGOTime                       = 35, // Duration the logo will be displayed for
   CalibrateCJC                   = 36, // Toggle calibrate CJC at next boot
   BluetoothLE                    = 37, // Toggle BLE if present
-  PDVpdo                         = 38, // Toggle PPS & EPR
+  USBPDMode                      = 38, // Toggle PPS & EPR
   ProfilePhases                  = 39, // Number of profile mode phases
   ProfilePreheatTemp             = 40, // Temperature to preheat to before the first phase
   ProfilePreheatSpeed            = 41, // Maximum allowed preheat speed in degrees per second
