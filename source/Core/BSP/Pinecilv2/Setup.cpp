@@ -87,8 +87,8 @@ void setup_pwm(void) {
   PWM_Channel_Disable(PWM_Channel);
 }
 
-const ADC_Chan_Type adc_tip_pos_chans[] = {TIP_TEMP_ADC_CHANNEL, TMP36_ADC_CHANNEL, TIP_TEMP_ADC_CHANNEL, VIN_ADC_CHANNEL,
-                                           TIP_TEMP_ADC_CHANNEL, TMP36_ADC_CHANNEL, TIP_TEMP_ADC_CHANNEL, VIN_ADC_CHANNEL};
+const ADC_Chan_Type adc_tip_pos_chans[] = {TMP36_ADC_CHANNEL, TIP_TEMP_ADC_CHANNEL, VIN_ADC_CHANNEL, TIP_TEMP_ADC_CHANNEL,
+                                           TMP36_ADC_CHANNEL, TIP_TEMP_ADC_CHANNEL, VIN_ADC_CHANNEL, TIP_TEMP_ADC_CHANNEL};
 const ADC_Chan_Type adc_tip_neg_chans[] = {ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND, ADC_CHAN_GND};
 static_assert(sizeof(adc_tip_pos_chans) == sizeof(adc_tip_neg_chans));
 

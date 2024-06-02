@@ -122,7 +122,7 @@ void timer0_comp2_callback(void) {
 
 void switchToFastPWM(void) {
   inFastPWMMode    = true;
-  holdoffTicks     = 10;
+  holdoffTicks     = 20;
   tempMeasureTicks = 10;
   totalPWM         = powerPWM + tempMeasureTicks + holdoffTicks;
 
@@ -140,7 +140,7 @@ void switchToFastPWM(void) {
 void switchToSlowPWM(void) {
   // 5Hz
   inFastPWMMode    = false;
-  holdoffTicks     = 5;
+  holdoffTicks     = 10;
   tempMeasureTicks = 5;
   totalPWM         = powerPWM + tempMeasureTicks + holdoffTicks;
 
