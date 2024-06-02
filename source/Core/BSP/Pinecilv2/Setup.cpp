@@ -50,9 +50,9 @@ void hardware_init() {
   gpio_set_mode(OLED_RESET_Pin, GPIO_OUTPUT_MODE);
   gpio_set_mode(KEY_A_Pin, GPIO_INPUT_PD_MODE);
   gpio_set_mode(KEY_B_Pin, GPIO_INPUT_PD_MODE);
-  gpio_set_mode(TMP36_INPUT_Pin, GPIO_INPUT_MODE);
-  gpio_set_mode(TIP_TEMP_Pin, GPIO_INPUT_MODE);
-  gpio_set_mode(VIN_Pin, GPIO_INPUT_MODE);
+  gpio_set_mode(TMP36_INPUT_Pin, GPIO_HZ_MODE);
+  gpio_set_mode(TIP_TEMP_Pin, GPIO_HZ_MODE);
+  gpio_set_mode(VIN_Pin, GPIO_HZ_MODE);
 
   gpio_set_mode(TIP_RESISTANCE_SENSE, GPIO_OUTPUT_MODE);
   gpio_write(TIP_RESISTANCE_SENSE, 0);
