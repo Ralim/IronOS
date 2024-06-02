@@ -527,44 +527,48 @@ void ADC_Parse_Result(uint32_t *orgVal, uint32_t len, ADC_Result_Type *result) {
     for (i = 0; i < len; i++) {
       result[i].posChan = orgVal[i] >> 21;
       result[i].negChan = -1;
-
+      uint32_t sample;
       if (dataType == ADC_DATA_WIDTH_12) {
-        result[i].value = (unsigned int)(((orgVal[i] & 0xffff) >> 4) / coe);
+        sample = ((orgVal[i] & 0xffff) >> 4);
       } else if ((dataType == ADC_DATA_WIDTH_14_WITH_16_AVERAGE) || (dataType == ADC_DATA_WIDTH_14_WITH_64_AVERAGE)) {
-        result[i].value = (unsigned int)(((orgVal[i] & 0xffff) >> 2) / coe);
+        sample = ((orgVal[i] & 0xffff) >> 2);
       } else if ((dataType == ADC_DATA_WIDTH_16_WITH_128_AVERAGE) || (dataType == ADC_DATA_WIDTH_16_WITH_256_AVERAGE)) {
-        result[i].value = (unsigned int)((orgVal[i] & 0xffff) / coe);
-      }
-      // Saturate at 16 bits
-      if (result[i].value > 0xFFFF) {
-        result[i].value = 0xFFFF;
-      }
-    }
-  } else {
-    for (i = 0; i < len; i++) {
-      neg               = 0;
-      result[i].posChan = orgVal[i] >> 21;
-      result[i].negChan = (orgVal[i] >> 16) & 0x1F;
-
-      if (orgVal[i] & 0x8000) {
-        orgVal[i] = ~orgVal[i];
-        orgVal[i] += 1;
-        neg = 1;
+        sample = (orgVal[i] & 0xffff);
       }
 
-      if (dataType == ADC_DATA_WIDTH_12) {
-        result[i].value = (unsigned int)(((orgVal[i] & 0xffff) >> 4) / coe);
-      } else if ((dataType == ADC_DATA_WIDTH_14_WITH_16_AVERAGE) || (dataType == ADC_DATA_WIDTH_14_WITH_64_AVERAGE)) {
-        result[i].value = (unsigned int)(((orgVal[i] & 0xffff) >> 2) / coe);
-      } else if ((dataType == ADC_DATA_WIDTH_16_WITH_128_AVERAGE) || (dataType == ADC_DATA_WIDTH_16_WITH_256_AVERAGE)) {
-        result[i].value = (unsigned int)((orgVal[i] & 0xffff) / coe);
-      }
+      result[i].value = (unsigned int)(sample / coe);
+
       // Saturate at 16 bits
       if (result[i].value > 0xFFFF) {
         result[i].value = 0xFFFF;
       }
     }
   }
+  // else {
+  //   for (i = 0; i < len; i++) {
+  //     neg               = 0;
+  //     result[i].posChan = orgVal[i] >> 21;
+  //     result[i].negChan = (orgVal[i] >> 16) & 0x1F;
+
+  //     if (orgVal[i] & 0x8000) {
+  //       orgVal[i] = ~orgVal[i];
+  //       orgVal[i] += 1;
+  //       neg = 1;
+  //     }
+
+  //     if (dataType == ADC_DATA_WIDTH_12) {
+  //       result[i].value = (unsigned int)(((orgVal[i] & 0xffff) >> 4) / coe);
+  //     } else if ((dataType == ADC_DATA_WIDTH_14_WITH_16_AVERAGE) || (dataType == ADC_DATA_WIDTH_14_WITH_64_AVERAGE)) {
+  //       result[i].value = (unsigned int)(((orgVal[i] & 0xffff) >> 2) / coe);
+  //     } else if ((dataType == ADC_DATA_WIDTH_16_WITH_128_AVERAGE) || (dataType == ADC_DATA_WIDTH_16_WITH_256_AVERAGE)) {
+  //       result[i].value = (unsigned int)((orgVal[i] & 0xffff) / coe);
+  //     }
+  //     // Saturate at 16 bits
+  //     if (result[i].value > 0xFFFF) {
+  //       result[i].value = 0xFFFF;
+  //     }
+  //   }
+  // }
 }
 
 /****************************************************************************/
