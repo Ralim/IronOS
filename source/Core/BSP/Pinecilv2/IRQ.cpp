@@ -38,6 +38,10 @@ void read_adc_fifo(void) {
       uint32_t        raw_reading = ADC_Read_FIFO();
       ADC_Result_Type parsed      = {0, 0, 0};
       ADC_Parse_Result(&raw_reading, 1, &parsed);
+      // Rollover prevention
+      if (parsed.value > ((1 << 14) - 1)) {
+        parsed.value = ((1 << 14) - 1);
+      }
 
       switch (parsed.posChan) {
       case TMP36_ADC_CHANNEL:

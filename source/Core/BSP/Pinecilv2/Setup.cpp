@@ -50,6 +50,7 @@ void hardware_init() {
   gpio_set_mode(OLED_RESET_Pin, GPIO_OUTPUT_MODE);
   gpio_set_mode(KEY_A_Pin, GPIO_INPUT_PD_MODE);
   gpio_set_mode(KEY_B_Pin, GPIO_INPUT_PD_MODE);
+
   gpio_set_mode(TMP36_INPUT_Pin, GPIO_HZ_MODE);
   gpio_set_mode(TIP_TEMP_Pin, GPIO_HZ_MODE);
   gpio_set_mode(VIN_Pin, GPIO_HZ_MODE);
@@ -163,7 +164,7 @@ void setup_adc(void) {
   }
 #endif
 
-#if 0
+#if 1
   // this sets the CVSP field (ADC conversion speed)
   {
     uint32_t regCfg2;
