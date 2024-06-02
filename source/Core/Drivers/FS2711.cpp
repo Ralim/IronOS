@@ -2,6 +2,7 @@
 #include "FS2711_defines.h"
 #include "I2CBB2.hpp"
 #include "configuration.h"
+#include "Settings.h"
 #if POW_PD_EXT == 2
 #include "BSP.h"
 #include "cmsis_os.h"
@@ -12,8 +13,6 @@
 #ifndef USB_PD_VMAX
 #error Max PD Voltage must be defined
 #endif
-
-#define PROTOCOL_TIMEOUT 100 // ms
 
 extern int32_t powerSupplyWattageLimit;
 
@@ -34,10 +33,11 @@ void FS2711::start() {
   state.req_pdo_num = 0xFF;
 
   enable_protocol(false);
-  osDelay(PROTOCOL_TIMEOUT);
+  // PDNegTimeout is in 1/100 s, so x10 for ms
+  osDelay(getSettingValue(SettingsOptions::PDNegTimeout)*10);
   select_protocol(FS2711_PROTOCOL_PD);
   enable_protocol(true);
-  osDelay(PROTOCOL_TIMEOUT);
+  osDelay(getSettingValue(SettingsOptions::PDNegTimeout)*10);
 }
 
 uint8_t FS2711::selected_protocol() { return i2c_read(FS2711_REG_SELECT_PROTOCOL); }
