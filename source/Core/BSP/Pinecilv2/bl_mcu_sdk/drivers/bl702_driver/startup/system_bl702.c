@@ -41,6 +41,9 @@ void USB_DoNothing_IRQHandler(void) {
 /*----------------------------------------------------------------------------
   Vector Table
  *----------------------------------------------------------------------------*/
+#define VECT_TAB_OFFSET                                                                                                                                                                                \
+  0x00 /*!< Vector Table base offset field.                                                                                                                                                            \
+             This value must be a multiple of 0x200. */
 
 /*----------------------------------------------------------------------------
   System initialization function
@@ -124,7 +127,7 @@ void SystemInit(void) {
 #ifdef BFLB_EFLASH_LOADER
   Interrupt_Handler_Register(USB_IRQn, USB_DoNothing_IRQHandler);
 #endif
-  /* init for for all platform */
+  /* init bor for all platform */
   system_bor_init();
   /* global IRQ enable */
   __enable_irq();
