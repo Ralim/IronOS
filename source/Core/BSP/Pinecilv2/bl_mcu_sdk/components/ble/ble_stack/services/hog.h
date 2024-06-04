@@ -15,9 +15,6 @@ extern "C" {
 #endif
 
 #include <types.h>
-#include "conn.h"
-#include "conn_internal.h"
-
 #define HID_PAGE_KBD  0x07
 #define HID_PAGE_CONS 0x0C
 

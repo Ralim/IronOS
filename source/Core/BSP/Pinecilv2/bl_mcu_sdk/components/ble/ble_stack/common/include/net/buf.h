@@ -14,7 +14,7 @@
 #include <zephyr/types.h>
 #include <misc/util.h>
 #include <zephyr.h>
-#include "ble_config.h"
+#include "../../port/include/ble_config.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -66,6 +66,19 @@ extern "C" {
         .__buf = net_buf_data_##_name,                    \
     }
 
+#if (BFLB_STATIC_ALLOC_MEM)
+enum {
+    HCI_CMD = 0,
+    HCI_RX,
+    NUM_COMPLETE,
+    ACL_IN,
+    DISCARDABLE,
+    ACL_TX,
+    FRAG,
+    PREP,
+
+};
+#endif
 /** @brief Simple network buffer representation.
  *
  *  This is a simpler variant of the net_buf object (in fact net_buf uses
@@ -827,7 +840,11 @@ extern const struct net_buf_data_cb net_buf_var_cb;
 #endif
 
 #if defined(BFLB_DYNAMIC_ALLOC_MEM)
+#if (BFLB_STATIC_ALLOC_MEM)
+void net_buf_init(u8_t buf_type, struct net_buf_pool *buf_pool, u16_t buf_count, size_t data_size, destroy_cb_t destroy);
+#else
 void net_buf_init(struct net_buf_pool *buf_pool, u16_t buf_count, size_t data_size, destroy_cb_t destroy);
+#endif
 void net_buf_deinit(struct net_buf_pool *buf_pool);
 #endif
 /**

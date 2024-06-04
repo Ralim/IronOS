@@ -8,17 +8,17 @@
 
 /*  @brief Container for public key callback */
 struct bt_pub_key_cb {
-    /** @brief Callback type for Public Key generation.
-	 *
-	 *  Used to notify of the local public key or that the local key is not
-	 *  available (either because of a failure to read it or because it is
-	 *  being regenerated).
-	 *
-	 *  @param key The local public key, or NULL in case of no key.
-	 */
-    void (*func)(const u8_t key[64]);
+  /** @brief Callback type for Public Key generation.
+   *
+   *  Used to notify of the local public key or that the local key is not
+   *  available (either because of a failure to read it or because it is
+   *  being regenerated).
+   *
+   *  @param key The local public key, or NULL in case of no key.
+   */
+  void (*func)(const u8_t key[64]);
 
-    struct bt_pub_key_cb *_next;
+  struct bt_pub_key_cb *_next;
 };
 
 /*  @brief Generate a new Public Key.

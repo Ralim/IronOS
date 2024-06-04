@@ -10,9 +10,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include <FreeRTOS.h>
+#include <atomic.h>
 #include <errno.h>
-#include <include/atomic.h>
 #include <misc/byteorder.h>
 #include <misc/stack.h>
 #include <misc/util.h>
