@@ -525,7 +525,7 @@ void ADC_Parse_Result(uint32_t *orgVal, uint32_t len, ADC_Result_Type *result) {
     for (i = 0; i < len; i++) {
       result[i].posChan = orgVal[i] >> 21;
       result[i].negChan = -1;
-      uint32_t sample=0;
+      uint32_t sample   = 0;
       if (dataType == ADC_DATA_WIDTH_12) {
         sample = ((orgVal[i] & 0xffff) >> 4);
       } else if ((dataType == ADC_DATA_WIDTH_14_WITH_16_AVERAGE) || (dataType == ADC_DATA_WIDTH_14_WITH_64_AVERAGE)) {

@@ -27,7 +27,6 @@
 #include "hal_dma.h"
 #include "hal_mtimer.h"
 
-
 #define USE_INTERNAL_TRANSCEIVER
 // #define ENABLE_LPM_INT
 // #define ENABLE_SOF3MS_INT
