@@ -343,7 +343,8 @@ static u8_t *fixed_data_alloc(struct net_buf *buf, size_t *size, s32_t timeout) 
   return fixed->data_pool + fixed->data_size * net_buf_id(buf);
 }
 
-static void fixed_data_unref(struct net_buf *buf, u8_t *data) { /* Nothing needed for fixed-size data pools */ }
+static void fixed_data_unref(struct net_buf *buf, u8_t *data) { /* Nothing needed for fixed-size data pools */
+}
 
 const struct net_buf_data_cb net_buf_fixed_cb = {
     .alloc = fixed_data_alloc,
