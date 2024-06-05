@@ -238,9 +238,8 @@ destroy:
   }
 
 #ifdef BFLB_BLE_PATCH_FREE_ALLOCATED_BUFFER_IN_OS
-  if (chan->rtx_work.timer.timer.hdl) {
+  if (chan->rtx_work.timer.timer.hdl)
     k_delayed_work_del_timer(&chan->rtx_work);
-  }
 #endif
 }
 

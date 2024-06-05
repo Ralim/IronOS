@@ -3,6 +3,34 @@ bl mcu sdk Release Notes
 此文件包含 bl mcu sdk 软件开发包的发行说明。
 每个版本的文字说明与发布时的说明保持一致（可能会有错别字的勘误）。
 
+bl mcu sdk Release V1.4.4
+----------------------------
+
+新增功能说明：
+    1. 增加 adc dma, uart dma p2p, at client, tensorflow vww demo
+    2. boot2 更新
+    3. 删除 timer basic 和 dac_from_flash demo
+    4. 更新 bflb flash tool 到 1.7.1
+    5. ble lib 更新，使用 t-head 10.2 工具链构建（小于此工具链版本编译将报错）
+
+修复问题说明：
+    1. 修正 dma 相关命令宏，重命名 DMA_BURST_xBYTE 防止误导
+    2. 修正 readme 中相关编译命令
+
+bl mcu sdk Release V1.4.3
+----------------------------
+
+新增功能说明：
+    1. 增加 pikascript 和 mac154 组件
+    2. 增加 ble pds 的 demo
+    3. doc 缓存文件移出
+    4. 增加 cklink 和 jlink 在 eclipse 中的调试
+
+修复问题说明：
+    1. driver 更新
+    2. Os to O2
+    3. uart sig 选定功能后，对与其他 sig 使用相同功能进行调整
+
 bl mcu sdk Release V1.4.2
 ----------------------------
 
