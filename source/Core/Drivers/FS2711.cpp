@@ -3,6 +3,7 @@
 #include "I2CBB2.hpp"
 #include "configuration.h"
 #include "Settings.h"
+#include "Utils.h"
 #if POW_PD_EXT == 2
 #include "BSP.h"
 #include "cmsis_os.h"
@@ -33,11 +34,11 @@ void FS2711::start() {
   state.req_pdo_num = 0xFF;
 
   enable_protocol(false);
-  // PDNegTimeout is in 1/100 s, so x10 for ms
-  osDelay(getSettingValue(SettingsOptions::PDNegTimeout)*10);
+  // PDNegTimeout is in 100ms, so x100 for ms
+  osDelay(getSettingValue(SettingsOptions::PDNegTimeout)*100);
   select_protocol(FS2711_PROTOCOL_PD);
   enable_protocol(true);
-  osDelay(getSettingValue(SettingsOptions::PDNegTimeout)*10);
+  osDelay(getSettingValue(SettingsOptions::PDNegTimeout)*100);
 }
 
 uint8_t FS2711::selected_protocol() { return i2c_read(FS2711_REG_SELECT_PROTOCOL); }
@@ -161,6 +162,11 @@ void FS2711::negotiate() {
   if (getSettingValue(SettingsOptions::USBPDMode) == 1) {
     tip_resistance += 5;
   }
+  #ifdef MODEL_HAS_DCDC
+    // If this device has step down DC/DC inductor to smooth out current spikes
+    // We can instead ignore resistance and go for max voltage we can accept; and rely on the DC/DC regulation to keep under current limit
+    tip_resistance = 255; // (Push to 25.5 ohms to effectively disable this check)
+  #endif
 
   uint16_t pdo_min_mv = 0, pdo_max_mv = 0, pdo_max_curr = 0, pdo_type = 0;
 
@@ -226,7 +232,7 @@ bool FS2711::has_run_selection() { return state.req_pdo_num != 0xFF; }
 
 uint16_t FS2711::source_voltage() { return state.source_voltage / 1000; }
 
-// FS2711 does current in mV so it needs to be converted to x100 intead of x1000
+// FS2711 does current in mA so it needs to be converted to x100 intead of x1000
 uint16_t FS2711::source_currentx100() { return state.source_current / 10; }
 
 uint16_t FS2711::debug_pdo_max_voltage(uint8_t pdoid) { return state.pdo_max_volt[pdoid]; }

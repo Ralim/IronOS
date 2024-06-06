@@ -145,6 +145,7 @@
 #define OP_AMP_GAIN_STAGE  536
 #define TEMP_uV_LOOKUP_S60
 #define USB_PD_VMAX 12 // Maximum voltage for PD to negotiate
+#define USB_PD_TIMEOUT 1 // Default Timeout for USB-PD Protocol negotiation in x100ms
 
 #define HARDWARE_MAX_WATTAGE_X10 600
 
@@ -176,6 +177,7 @@
 #define OP_AMP_GAIN_STAGE  536
 #define TEMP_uV_LOOKUP_S60
 #define USB_PD_VMAX 20 // Maximum voltage for PD to negotiate
+#define USB_PD_TIMEOUT 1 // Default Timeout for USB-PD Protocol negotiation in x100ms
 
 #define HARDWARE_MAX_WATTAGE_X10 600
 
@@ -204,11 +206,12 @@
 #define POWER_LIMIT        0   // 0 watts default limit
 #define MAX_POWER_LIMIT    70
 #define POWER_LIMIT_STEPS  5
-#define OP_AMP_GAIN_STAGE  536
-#define TEMP_uV_LOOKUP_S60
+#define OP_AMP_GAIN_STAGE  237 // Two sequential op-amps 1st: 1+(9k29/997R)=10.31 2nd: 1+(22k/1k)=23 -> 10.31*23=237
+#define TEMP_uV_LOOKUP_S99
 #define USB_PD_VMAX 20 // Maximum voltage for PD to negotiate
+#define USB_PD_TIMEOUT 2 // Default Timeout for USB-PD Protocol negotiation in x100ms
 
-#define HARDWARE_MAX_WATTAGE_X10 600
+#define HARDWARE_MAX_WATTAGE_X10 1300
 
 #define TIP_THERMAL_MASS    8   // X10 watts to raise 1 deg C in 1 second
 #define TIP_THERMAL_INERTIA 128 // We use a large inertia value to smooth out the drive to the tip since its stupidly sensitive
@@ -219,6 +222,7 @@
 #define GPIO_VIBRATION
 #define POW_PD_EXT                2
 #define USB_PD_EPR_WATTAGE        0 /*No EPR*/
+#define POW_DC
 #define DEBUG_POWER_MENU_BUTTON_B 1
 #define HAS_POWER_DEBUG_MENU
 #define TEMP_NTC
