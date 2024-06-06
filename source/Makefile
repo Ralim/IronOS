@@ -118,9 +118,9 @@ endif # ALL_MINIWARE_MODELS
 ifeq ($(model),$(filter $(model),$(ALL_SEQURE_MODELS)))
 $(info Building for Sequre )
 
-DEVICE_BSP_DIR=./Core/BSP/Sequre_S60
+DEVICE_BSP_DIR=./Core/BSP/Sequre
 S_SRCS:=$(shell find $(S60_STARTUP_DIR) -type f -name '*.S')
-LDSCRIPT=./Core/BSP/Sequre_S60/stm32f103.ld
+LDSCRIPT=./Core/BSP/Sequre/stm32f103.ld
 DEV_GLOBAL_DEFS=-D STM32F103T8Ux       \
                 -D STM32F1             \
                 -D STM32               \
