@@ -8,7 +8,7 @@
 #include "Utils.h"
 #include "configuration.h"
 
-#if  defined(TEMP_uV_LOOKUP_S60)
+#if defined(TEMP_uV_LOOKUP_S60)
 TemperatureType_t TipThermoModel::convertuVToDegC(uint32_t tipuVDelta) { return (tipuVDelta * 50) / 485; }
 #elif defined(TEMP_uV_LOOKUP_S99)
 // 42.85 uV / K -> 1/42.85 K/uV = 20/857
