@@ -30,13 +30,6 @@ uint8_t    accelInit        = 0;
 TickType_t lastMovementTime = 0;
 // Order matters for probe order, some Acceleromters do NOT like bad reads; and we have a bunch of overlap of addresses
 void detectAccelerometerVersion() {
-  DetectedAccelerometerVersion = AccelType::Scanning;
-#ifdef NO_ACCEL
-  setSettingValue(SettingsOptions::Sensitivity, 0);
-  DetectedAccelerometerVersion = AccelType::None;
-  return;
-#endif
-
 #ifdef ACCEL_MMA
   if (MMA8652FC::detect()) {
     if (MMA8652FC::initalize()) {
@@ -146,6 +139,12 @@ inline void readAccelerometer(int16_t &tx, int16_t &ty, int16_t &tz, Orientation
   }
 }
 void startMOVTask(void const *argument __unused) {
+#ifdef NO_ACCEL
+  DetectedAccelerometerVersion = AccelType::None;
+  for (;;) {
+    osDelay(2 * TICKS_SECOND);
+  }
+#endif
 
   osDelay(TICKS_100MS / 5); // This is here as the BMA doesnt start up instantly and can wedge the I2C bus if probed too fast after boot
   detectAccelerometerVersion();

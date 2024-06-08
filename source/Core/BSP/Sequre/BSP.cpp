@@ -256,3 +256,7 @@ uint16_t getTipInertia() { return TIP_THERMAL_INERTIA; }
 void setBuzzer(bool on) {}
 
 void showBootLogo(void) { BootLogo::handleShowingLogo((uint8_t *)FLASH_LOGOADDR); }
+
+#ifdef CUSTOM_MAX_TEMP_C
+TemperatureType_t getCustomTipMaxInC() { return MAX_TEMP_C; }
+#endif

@@ -205,6 +205,7 @@
 // Uses a HUB238 for PD negotiation like the S60, also has a buzzer. Feels like designed to share with S60
 // Hold back left button for "DFU"
 
+#define SOLDERING_TEMP     200 // Default soldering temp is 200.0 °C
 #define VOLTAGE_DIV        460 // Default divider scaler
 #define CALIBRATION_OFFSET 0   // Default adc offset in uV
 #define PID_POWER_LIMIT    70  // Sets the max pwm power limit
@@ -228,7 +229,7 @@
 #define TIP_THERMAL_INERTIA 128 // We use a large inertia value to smooth out the drive to the tip since its stupidly sensitive
 
 #define TIP_RESISTANCE 52 // PCB heater, measured at ~19C. Will shift by temp a decent amount
-
+#define CUSTOM_MAX_TEMP_C
 #define PROFILE_SUPPORT           1 // Soldering Profiles
 #define OLED_128x32               1 // Larger OLED
 #define OLED_FLIP                 1 // Mounted upside down
