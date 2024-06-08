@@ -119,7 +119,7 @@ ifeq ($(model),$(filter $(model),$(ALL_SEQURE_MODELS)))
 $(info Building for Sequre )
 
 DEVICE_BSP_DIR=./Core/BSP/Sequre
-S_SRCS:=$(shell find $(S60_STARTUP_DIR) -type f -name '*.S')
+S_SRCS:=$(shell find $(DEVICE_BSP_DIR) -type f -name '*.S')
 LDSCRIPT=./Core/BSP/Sequre/stm32f103.ld
 DEV_GLOBAL_DEFS=-D STM32F103T8Ux       \
                 -D STM32F1             \
