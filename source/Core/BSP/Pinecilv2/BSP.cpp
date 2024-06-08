@@ -9,11 +9,14 @@
 #include "TipThermoModel.h"
 #include "USBPD.h"
 #include "Utils.h"
+#include "bl702_adc.h"
 #include "configuration.h"
 #include "crc32.h"
 #include "hal_flash.h"
 #include "history.hpp"
 #include "main.hpp"
+
+extern ADC_Gain_Coeff_Type adcGainCoeffCal;
 
 // These control the period's of time used for the PWM
 const uint16_t powerPWM         = 255;
@@ -31,52 +34,44 @@ void resetWatchdog() {
 // Stored as ADCReading,Temp in degC
 static const int32_t NTCHandleLookup[] = {
     // ADC Reading , Temp in C x10
-
-    3221,  -400, //
-    4144,  -350, //
-    5271,  -300, //
-    6622,  -250, //
-    8219,  -200, //
-    10075, -150, //
-    12190, -100, //
-    14554, -50,  //
-    17151, 0,    //
-    19937, 50,   //
-    22867, 100,  //
-    25886, 150,  //
-    28944, 200,  //
-    29546, 210,  //
-    30159, 220,  //
-    30769, 230,  //
-    31373, 240,  //
-    31969, 250,  //
-    32566, 260,  //
-    33159, 270,  //
-    33749, 280,  //
-    34334, 290,  //
-    34916, 300,  //
-    35491, 310,  //
-    36062, 320,  //
-    36628, 330,  //
-    37186, 340,  //
-    37739, 350,  //
-    38286, 360,  //
-    38825, 370,  //
-    39358, 380,  //
-    39884, 390,  //
-    40400, 400,  //
-    42879, 450,  //
-    45160, 500,  //
-    47235, 550,  //
-    49111, 600,  //
-    50792, 650,  //
-    52292, 700,  //
-    53621, 750,  //
-    54797, 800,  //
-    55836, 850,  //
-    56748, 900,  //
-    57550, 950,  //
-    58257, 1000, //
+    // Based on NTCG163JF103FTDS thermocouple datasheet values,
+    // arranged in a voltage divider configuration, with the NTC
+    // pulling up towards 3.3V, and with a 10k 1% pull-down resistor.
+    // ADC Reading = 3.3V * 10 / (10 + TypkOhm) / 3.2V * (2 ^ 16)
+    3405,  -400, //
+    4380,  -350, //
+    5572,  -300, //
+    6999,  -250, //
+    8688,  -200, //
+    10650, -150, //
+    12885, -100, //
+    15384, -50,  //
+    18129, 0,    //
+    21074, 50,   //
+    24172, 100,  //
+    27362, 150,  //
+    30595, 200,  //
+    33792, 250,  //
+    36907, 300,  //
+    39891, 350,  //
+    42704, 400,  //
+    45325, 450,  //
+    47736, 500,  //
+    49929, 550,  //
+    51912, 600,  //
+    53689, 650,  //
+    55274, 700,  //
+    56679, 750,  //
+    57923, 800,  //
+    59020, 850,  //
+    59984, 900,  //
+    60832, 950,  //
+    61580, 1000, //
+    62232, 1050, //
+    62810, 1100, //
+    63316, 1150, //
+    63765, 1200, //
+    64158, 1250, //
 
 };
 #endif
@@ -281,4 +276,17 @@ void showBootLogo(void) {
   flash_read(FLASH_LOGOADDR - 0x23000000, scratch, 1024);
 
   BootLogo::handleShowingLogo(scratch);
+}
+
+TemperatureType_t getCustomTipMaxInC() {
+  // have to lookup the max temp while being aware of the coe scaling value
+  float max_reading = ADC_MAX_READING - 1.0;
+
+  if (adcGainCoeffCal.adcGainCoeffEnable) {
+    max_reading /= adcGainCoeffCal.coe;
+  }
+
+  TemperatureType_t maximumTipTemp = TipThermoModel::convertTipRawADCToDegC(max_reading);
+  maximumTipTemp += getHandleTemperature(0) / 10; // Add handle offset
+  return maximumTipTemp - 1;
 }

@@ -194,10 +194,6 @@ void hci_driver_enque_recvq(struct net_buf *buf);
 
 int hci_driver_init(void);
 
-#if (BFLB_BLE_CO_THREAD)
-void co_tx_thread();
-#endif
-
 #endif //#if (BFLB_BLE)
 
 #ifdef __cplusplus

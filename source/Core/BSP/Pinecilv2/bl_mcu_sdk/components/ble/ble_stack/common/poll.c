@@ -139,12 +139,23 @@ static inline void set_event_ready(struct k_poll_event *event, u32_t state) {
   event->state |= state;
 }
 
-static bool polling_events(struct k_poll_event *events, int num_events, s32_t timeout, int *last_registered) {
+#if (BFLB_BT_CO_THREAD)
+static bool polling_events(struct k_poll_event *events, int num_events, int total_evt_array_cnt, s32_t timeout, int *last_registered)
+#else
+static bool polling_events(struct k_poll_event *events, int num_events, s32_t timeout, int *last_registered)
+#endif
+{
   int          rc;
   bool         polling = true;
   unsigned int key;
 
+#if (BFLB_BT_CO_THREAD)
+  for (int ii = 0; ii < total_evt_array_cnt; ii++) {
+    if (ii >= num_events && ii != total_evt_array_cnt - 1)
+      continue;
+#else
   for (int ii = 0; ii < num_events; ii++) {
+#endif
     u32_t state;
     key = irq_lock();
     if (is_condition_met(&events[ii], &state)) {
@@ -163,7 +174,12 @@ static bool polling_events(struct k_poll_event *events, int num_events, s32_t ti
   return polling;
 }
 
-int k_poll(struct k_poll_event *events, int num_events, s32_t timeout) {
+#if (BFLB_BT_CO_THREAD)
+int k_poll(struct k_poll_event *events, int num_events, int total_evt_array_cnt, s32_t timeout, u8_t *to_process)
+#else
+int k_poll(struct k_poll_event *events, int num_events, s32_t timeout)
+#endif
+{
   __ASSERT(events, "NULL events\n");
   __ASSERT(num_events > 0, "zero events\n");
 
@@ -172,16 +188,32 @@ int k_poll(struct k_poll_event *events, int num_events, s32_t timeout) {
   bool         polling = true;
 
   /* find events whose condition is already fulfilled */
+#if (BFLB_BT_CO_THREAD)
+  polling = polling_events(events, num_events, total_evt_array_cnt, timeout, &last_registered);
+#else
   polling = polling_events(events, num_events, timeout, &last_registered);
+#endif
 
   if (polling == false) {
     goto exit;
   }
+#if (BFLB_BT_CO_THREAD)
+  if (timeout != K_NO_WAIT)
+#endif
+  {
+    k_sem_take(&g_poll_sem, timeout);
+    last_registered = -1;
+#if (BFLB_BT_CO_THREAD)
+    polling = polling_events(events, num_events, total_evt_array_cnt, timeout, &last_registered);
+#else
+    polling_events(events, num_events, timeout, &last_registered);
+#endif
+  }
 
-  k_sem_take(&g_poll_sem, timeout);
-
-  last_registered = -1;
-  polling_events(events, num_events, timeout, &last_registered);
+#if (BFLB_BT_CO_THREAD)
+  if (to_process)
+    *to_process = polling ? 0 : 1;
+#endif
 exit:
   key = irq_lock();
   clear_event_registrations(events, last_registered, key);

@@ -315,7 +315,7 @@ struct bt_le_adv_param {
     /** Maximum Advertising Interval (N * 0.625) */
     u16_t interval_max;
 
-#if defined(CONFIG_BT_STACK_PTS)
+#if defined(CONFIG_BT_STACK_PTS) || defined(CONFIG_AUTO_PTS)
     u8_t addr_type;
 #endif
 };

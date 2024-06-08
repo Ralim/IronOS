@@ -21,8 +21,8 @@
 #include <hci_host.h>
 
 #include "FreeRTOS.h"
-#include "task.h"
 #include "FreeRTOSConfig.h"
+#include "task.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -38,16 +38,20 @@ extern "C" {
 #define LOG_LEVEL CONFIG_BT_LOG_LEVEL
 #endif
 
-//LOG_MODULE_REGISTER(LOG_MODULE_NAME, LOG_LEVEL);
+// LOG_MODULE_REGISTER(LOG_MODULE_NAME, LOG_LEVEL);
 
 #if defined(BFLB_BLE)
 
 #if defined(BL_MCU_SDK)
-#define BT_DBG(fmt, ...) //bflb_platform_printf(fmt", %s\r\n", ##__VA_ARGS__, __func__)
-#define BT_ERR(fmt, ...) bflb_platform_printf(fmt ", %s\r\n", ##__VA_ARGS__, __func__)
+#define BT_DBG(fmt, ...)  // bflb_platform_printf(fmt", %s\r\n", ##__VA_ARGS__, __func__)
+#define BT_ERR(fmt, ...)  bflb_platform_printf(fmt ", %s\r\n", ##__VA_ARGS__, __func__)
+#define BT_WARN(fmt, ...) bflb_platform_printf(fmt ", %s\r\n", ##__VA_ARGS__, __func__)
+#define BT_INFO(fmt, ...) // bflb_platform_printf(fmt", %s\r\n", ##__VA_ARGS__, __func__)
 #else
-#define BT_DBG(fmt, ...) //printf(fmt", %s\r\n", ##__VA_ARGS__, __func__)
-#define BT_ERR(fmt, ...) printf(fmt ", %s\r\n", ##__VA_ARGS__, __func__)
+#define BT_DBG(fmt, ...)  // printf(fmt", %s\r\n", ##__VA_ARGS__, __func__)
+#define BT_ERR(fmt, ...)  printf(fmt ", %s\r\n", ##__VA_ARGS__, __func__)
+#define BT_WARN(fmt, ...) printf(fmt ", %s\r\n", ##__VA_ARGS__, __func__)
+#define BT_INFO(fmt, ...) // printf(fmt", %s\r\n", ##__VA_ARGS__, __func__)
 #endif
 
 #if defined(CONFIG_BT_STACK_PTS) || defined(CONFIG_BT_MESH_PTS)
@@ -56,14 +60,6 @@ extern "C" {
 #else
 #define BT_PTS(fmt, ...) printf(fmt "\r\n", ##__VA_ARGS__)
 #endif
-
-#endif
-#if defined(BL_MCU_SDK)
-#define BT_WARN(fmt, ...) bflb_platform_printf(fmt ", %s\r\n", ##__VA_ARGS__, __func__)
-#define BT_INFO(fmt, ...) //bflb_platform_printf(fmt", %s\r\n", ##__VA_ARGS__, __func__)
-#else
-#define BT_WARN(fmt, ...) printf(fmt ", %s\r\n", ##__VA_ARGS__, __func__)
-#define BT_INFO(fmt, ...) //printf(fmt", %s\r\n", ##__VA_ARGS__, __func__)
 #endif
 
 #else /*BFLB_BLE*/
@@ -89,17 +85,16 @@ extern "C" {
 
 #if defined(CONFIG_BT_ASSERT)
 #if defined(BFLB_BLE)
-extern void vAssertCalled(void);
-#define BT_ASSERT(cond) \
-    if ((cond) == 0)    \
-    vAssertCalled()
+extern void user_vAssertCalled(void);
+#define BT_ASSERT(cond)                                                                                                                                                                                \
+  if ((cond) == 0)                                                                                                                                                                                     \
+  user_vAssertCalled()
 #else
-#define BT_ASSERT(cond)                   \
-    if (!(cond)) {                        \
-        BT_ASSERT_PRINT("assert: '" #cond \
-                        "' failed\n");    \
-        BT_ASSERT_DIE();                  \
-    }
+#define BT_ASSERT(cond)                                                                                                                                                                                \
+  if (!(cond)) {                                                                                                                                                                                       \
+    BT_ASSERT_PRINT("assert: '" #cond "' failed\n");                                                                                                                                                   \
+    BT_ASSERT_DIE();                                                                                                                                                                                   \
+  }
 #endif /*BFLB_BLE*/
 #else
 #if defined(BFLB_BLE)
@@ -109,14 +104,10 @@ extern void vAssertCalled(void);
 #endif /*BFLB_BLE*/
 #endif /* CONFIG_BT_ASSERT*/
 
-#define BT_HEXDUMP_DBG(_data, _length, _str) \
-    LOG_HEXDUMP_DBG((const u8_t *)_data, _length, _str)
+#define BT_HEXDUMP_DBG(_data, _length, _str) LOG_HEXDUMP_DBG((const u8_t *)_data, _length, _str)
 
 #if defined(BFLB_BLE)
-static inline char *log_strdup(const char *str)
-{
-    return (char *)str;
-}
+static inline char *log_strdup(const char *str) { return (char *)str; }
 #endif
 
 /* NOTE: These helper functions always encodes into the same buffer storage.
