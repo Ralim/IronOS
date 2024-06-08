@@ -212,7 +212,7 @@
 #define MAX_POWER_LIMIT    70
 #define POWER_LIMIT_STEPS  5
 #define OP_AMP_GAIN_STAGE  536
-#define TEMP_uV_LOOKUP_PT100_1K_PULLUP
+#define TEMP_uV_LOOKUP_PT1000
 #define USB_PD_VMAX       20 // Maximum voltage for PD to negotiate
 #define NO_DISPLAY_ROTATE    // Disable OLED rotation by accel
 
