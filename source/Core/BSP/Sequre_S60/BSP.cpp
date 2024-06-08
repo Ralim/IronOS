@@ -105,7 +105,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     if (PWMSafetyTimer == 0) {
       htim4.Instance->CCR3 = 0;
     } else {
-      htim4.Instance->CCR3 = pendingPWM;
+      htim4.Instance->CCR3 = pendingPWM / 4;
     }
   } else if (htim->Instance == TIM1) {
     // STM uses this for internal functions as a counter for timeouts

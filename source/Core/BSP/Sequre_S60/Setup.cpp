@@ -57,7 +57,7 @@ void        Setup_HAL() {
     GPIO_InitStruct.Pin   = MOVEMENT_Pin;
     GPIO_InitStruct.Mode  = GPIO_MODE_INPUT;
     GPIO_InitStruct.Pull  = GPIO_PULLDOWN;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH; // We would like sharp rising edges
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
     HAL_GPIO_Init(MOVEMENT_GPIO_Port, &GPIO_InitStruct);
   }
 }
@@ -254,23 +254,20 @@ static void MX_IWDG_Init(void) {
 
 static void MX_TIM4_Init(void) {
   /*
-   * We use the channel 1 to trigger the ADC at end of PWM period
-   * And we use the channel 4 as the PWM modulation source using Interrupts
+   * On Sequre devies we run the output PWM as fast as possible due to the low tip resistance + no inductor for filtering.
+   * So we run it as fast as we can and hope that the caps filter out the current spikes.
    * */
   TIM_ClockConfigTypeDef  sClockSourceConfig;
   TIM_MasterConfigTypeDef sMasterConfig;
   TIM_OC_InitTypeDef      sConfigOC;
   memset(&sConfigOC, 0, sizeof(sConfigOC));
-  // Timer 2 is fairly slow as its being used to run the PWM and trigger the ADC
-  // in the PWM off time.
+
   htim4.Instance = TIM4;
   // dummy value, will be reconfigured by BSPInit()
-  htim4.Init.Prescaler = 10; // 2 MHz timer clock/1000 = 2 kHz tick rate
+  htim4.Init.Prescaler = 10; // 2 MHz timer clock/10 = 200 kHz tick rate
 
-  // pwm out is 10k from tim3, we want to run our PWM at around 10hz or slower on the output stage
-  // These values give a rate of around 3.5 Hz for "fast" mode and 1.84 Hz for "slow"
   htim4.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim4.Init.Period      = 255;
+  htim4.Init.Period      = 64;
 
   htim4.Init.ClockDivision     = TIM_CLOCKDIVISION_DIV1; // 8 MHz (x2 APB1) before divide
   htim4.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
