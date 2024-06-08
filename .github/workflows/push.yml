@@ -25,6 +25,7 @@ jobs:
             "Pinecilv2",
             "S60",
             "S60P",
+            "T55",
             "TS101",
           ]
       fail-fast: true
