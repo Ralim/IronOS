@@ -51,7 +51,8 @@ void        Setup_HAL() {
   HAL_ADCEx_InjectedStart(&hadc1);                                   // enable injected readings
   HAL_ADCEx_InjectedStart(&hadc2);                                   // enable injected readings
 
-  // Setup movement pin
+// Setup movement pin
+#ifdef MOVEMENT_Pin
   {
     GPIO_InitTypeDef GPIO_InitStruct;
     GPIO_InitStruct.Pin   = MOVEMENT_Pin;
@@ -60,6 +61,7 @@ void        Setup_HAL() {
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
     HAL_GPIO_Init(MOVEMENT_GPIO_Port, &GPIO_InitStruct);
   }
+#endif
 }
 
 uint16_t getADCHandleTemp(uint8_t sample) {
