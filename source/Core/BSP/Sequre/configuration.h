@@ -120,7 +120,7 @@
 // Vin_max = (3.3*(r1+r2))/(r2)
 // vdiv = (32768*4)/(vin_max*10)
 
-#if defined(MODEL_S60) + defined(MODEL_S60P) == 0
+#if defined(MODEL_S60) + defined(MODEL_S60P) + defined(MODEL_T55) == 0
 #error "No model defined!"
 #endif
 
@@ -188,6 +188,43 @@
 
 #define OLED_128x32
 #define GPIO_VIBRATION
+#define POW_PD_EXT                2
+#define USB_PD_EPR_WATTAGE        0 /*No EPR*/
+#define DEBUG_POWER_MENU_BUTTON_B 1
+#define HAS_POWER_DEBUG_MENU
+#define TEMP_NTC
+#define I2C_SOFT_BUS_2 // For now we are doing software I2C to get around hardware chip issues
+#define OLED_I2CBB2
+#define FILTER_DISPLAYED_TIP_TEMP 4 // Filtering for GUI display
+
+#define MODEL_HAS_DCDC // We dont have DC/DC but have reallly fast PWM that gets us roughly the same place
+#endif                 /* S60P */
+
+#ifdef MODEL_T55
+// T55 Hotplate is similar to Project-Argon, PCB heater + PT100 sensor but no current rolloff compensation
+// Uses a HUB238 for PD negotiation like the S60P, also has a buzzer
+// Hold back left button for "DFU"
+
+#define VOLTAGE_DIV        460 // Default divider scaler
+#define CALIBRATION_OFFSET 200 // Default adc offset in uV
+#define PID_POWER_LIMIT    70  // Sets the max pwm power limit
+#define POWER_LIMIT        0   // 0 watts default limit
+#define MAX_POWER_LIMIT    70
+#define POWER_LIMIT_STEPS  5
+#define OP_AMP_GAIN_STAGE  536
+#define TEMP_uV_LOOKUP_PT100_1K_PULLUP
+#define USB_PD_VMAX       20 // Maximum voltage for PD to negotiate
+#define NO_DISPLAY_ROTATE    // Disable OLED rotation by accel
+
+#define HARDWARE_MAX_WATTAGE_X10 600
+
+#define TIP_THERMAL_MASS    10  // X10 watts to raise 1 deg C in 1 second
+#define TIP_THERMAL_INERTIA 128 // We use a large inertia value to smooth out the drive to the tip since its stupidly sensitive
+
+#define TIP_RESISTANCE 52 // PCB heater, measured at ~19C. Will shift by temp a decent amount
+
+#define OLED_128x32
+#define OLED_FLIP                 1 // Mounted upside down
 #define POW_PD_EXT                2
 #define USB_PD_EPR_WATTAGE        0 /*No EPR*/
 #define DEBUG_POWER_MENU_BUTTON_B 1
