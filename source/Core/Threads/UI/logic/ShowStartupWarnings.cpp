@@ -31,6 +31,9 @@ OperatingMode showWarnings(const ButtonState buttons, guiContext *cxt) {
 #endif
     break;
   case 2: // Accelerometer detection
+#ifdef NO_ACCEL
+    cxt->scratch_state.state1 = 3;
+#else
     if (DetectedAccelerometerVersion == AccelType::Scanning) {
       break;
     }
@@ -49,6 +52,8 @@ OperatingMode showWarnings(const ButtonState buttons, guiContext *cxt) {
     } else {
       cxt->scratch_state.state1 = 3;
     }
+#endif
+
     break;
   case 3:
 

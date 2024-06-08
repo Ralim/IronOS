@@ -31,6 +31,11 @@ TickType_t lastMovementTime = 0;
 // Order matters for probe order, some Acceleromters do NOT like bad reads; and we have a bunch of overlap of addresses
 void detectAccelerometerVersion() {
   DetectedAccelerometerVersion = AccelType::Scanning;
+#ifdef NO_ACCEL
+  setSettingValue(SettingsOptions::Sensitivity, 0);
+  DetectedAccelerometerVersion = AccelType::None;
+  return;
+#endif
 
 #ifdef ACCEL_MMA
   if (MMA8652FC::detect()) {
