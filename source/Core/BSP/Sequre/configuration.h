@@ -206,24 +206,31 @@
 // Hold back left button for "DFU"
 
 #define VOLTAGE_DIV        460 // Default divider scaler
-#define CALIBRATION_OFFSET 200 // Default adc offset in uV
+#define CALIBRATION_OFFSET 0   // Default adc offset in uV
 #define PID_POWER_LIMIT    70  // Sets the max pwm power limit
 #define POWER_LIMIT        0   // 0 watts default limit
 #define MAX_POWER_LIMIT    70
 #define POWER_LIMIT_STEPS  5
-#define OP_AMP_GAIN_STAGE  536
+#define OP_AMP_GAIN_STAGE  1
 #define TEMP_uV_LOOKUP_PT1000
-#define USB_PD_VMAX       20 // Maximum voltage for PD to negotiate
-#define NO_DISPLAY_ROTATE    // Disable OLED rotation by accel
-
-#define HARDWARE_MAX_WATTAGE_X10 600
+#define USB_PD_VMAX       20  // Maximum voltage for PD to negotiate
+#define NO_DISPLAY_ROTATE     // Disable OLED rotation by accel
+#define MAX_TEMP_C        350 // Max soldering temp selectable °C
+#define MAX_TEMP_F        660 // Max soldering temp selectable °F
+#define MIN_TEMP_C        10  // Min soldering temp selectable °C
+#define MIN_TEMP_F        50  // Min soldering temp selectable °F
+#define MIN_BOOST_TEMP_C  150 // The min settable temp for boost mode °C
+#define MIN_BOOST_TEMP_F  300 // The min settable temp for boost mode °F
+#define NO_SLEEP_MODE
+#define HARDWARE_MAX_WATTAGE_X10 850
 
 #define TIP_THERMAL_MASS    10  // X10 watts to raise 1 deg C in 1 second
 #define TIP_THERMAL_INERTIA 128 // We use a large inertia value to smooth out the drive to the tip since its stupidly sensitive
 
 #define TIP_RESISTANCE 52 // PCB heater, measured at ~19C. Will shift by temp a decent amount
 
-#define OLED_128x32
+#define PROFILE_SUPPORT           1 // Soldering Profiles
+#define OLED_128x32               1 // Larger OLED
 #define OLED_FLIP                 1 // Mounted upside down
 #define POW_PD_EXT                1 // Older HUB238
 #define USB_PD_EPR_WATTAGE        0 /*No EPR*/

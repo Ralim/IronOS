@@ -53,6 +53,7 @@ static const uint16_t NTCHandleLookup[] = {
 };
 
 uint16_t getHandleTemperature(uint8_t sample) {
+#ifdef TMP36_ADC1_CHANNEL
   int32_t result = getADCHandleTemp(sample);
   // S60 uses 10k NTC resistor
   // For now not doing interpolation
@@ -62,6 +63,9 @@ uint16_t getHandleTemperature(uint8_t sample) {
     }
   }
   return 45 * 10;
+#else
+  return 0; // Not implemented
+#endif
 }
 
 uint16_t getInputVoltageX10(uint16_t divisor, uint8_t sample) {

@@ -73,19 +73,21 @@
 
 #ifdef MODEL_T55
 
-#define KEY_B_Pin       GPIO_PIN_1
-#define KEY_B_GPIO_Port GPIOB
+#define KEY_A_Pin       GPIO_PIN_1
+#define KEY_A_GPIO_Port GPIOB
 // No cold junction compensation as its a PT1000
 #define TIP_TEMP_Pin          GPIO_PIN_5
 #define TIP_TEMP_GPIO_Port    GPIOA
 #define TIP_TEMP_ADC1_CHANNEL ADC_CHANNEL_5
 #define TIP_TEMP_ADC2_CHANNEL ADC_CHANNEL_5
+
 #define VIN_Pin               GPIO_PIN_4
 #define VIN_GPIO_Port         GPIOA
 #define VIN_ADC1_CHANNEL      ADC_CHANNEL_4
 #define VIN_ADC2_CHANNEL      ADC_CHANNEL_4
-#define KEY_A_Pin             GPIO_PIN_0
-#define KEY_A_GPIO_Port       GPIOB
+#define KEY_B_Pin             GPIO_PIN_0
+#define KEY_B_GPIO_Port       GPIOB
+
 #define PWM_Out_Pin           GPIO_PIN_8
 #define PWM_Out_GPIO_Port     GPIOB
 #define PWM_Out_CHANNEL       TIM_CHANNEL_3 // Timer 4; channel 3
