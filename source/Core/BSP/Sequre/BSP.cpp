@@ -246,7 +246,25 @@ uint64_t getDeviceID() {
   return HAL_GetUIDw0() | ((uint64_t)HAL_GetUIDw1() << 32);
 }
 
-uint8_t getTipResistanceX10() { return TIP_RESISTANCE; }
+uint8_t getTipResistanceX10() {
+#ifdef COPPER_HEATER_COIL
+
+  // TODO
+  //! Warning, must never return 0.
+  TemperatureType_t measuredTemperature = TipThermoModel::getTipInC(false);
+  if (measuredTemperature < 25) {
+    return 50; // Start assuming under spec to soft-start
+  }
+
+  // Assuming a temperature rise of 0.00393 per deg c over 20C
+
+  uint32_t scaler = 393 * (measuredTemperature - 20);
+
+  return TIP_RESISTANCE + ((TIP_RESISTANCE * scaler) / 100000);
+#else
+  return TIP_RESISTANCE;
+#endif
+}
 bool    isTipShorted() { return false; }
 uint8_t preStartChecksDone() { return 1; }
 

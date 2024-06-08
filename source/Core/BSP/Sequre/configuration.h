@@ -100,9 +100,6 @@
 #define DETAILED_SOLDERING 0 // 0: Disable 1: Enable - Default 0
 #define DETAILED_IDLE      0 // 0: Disable 1: Enable - Default 0
 
-#define THERMAL_RUNAWAY_TIME_SEC 20
-#define THERMAL_RUNAWAY_TEMP_C   10
-
 #define CUT_OUT_SETTING          0  // default to no cut-off voltage
 #define RECOM_VOL_CELL           33 // Minimum voltage per cell (Recommended 3.3V (33))
 #define TEMPERATURE_INF          0  // default to 0
@@ -145,7 +142,9 @@
 #define POWER_LIMIT_STEPS  5
 #define OP_AMP_GAIN_STAGE  536
 #define TEMP_uV_LOOKUP_S60
-#define USB_PD_VMAX 12 // Maximum voltage for PD to negotiate
+#define USB_PD_VMAX              12 // Maximum voltage for PD to negotiate
+#define THERMAL_RUNAWAY_TIME_SEC 20
+#define THERMAL_RUNAWAY_TEMP_C   10
 
 #define HARDWARE_MAX_WATTAGE_X10 600
 
@@ -177,7 +176,9 @@
 #define POWER_LIMIT_STEPS  5
 #define OP_AMP_GAIN_STAGE  536
 #define TEMP_uV_LOOKUP_S60
-#define USB_PD_VMAX 20 // Maximum voltage for PD to negotiate
+#define USB_PD_VMAX              20 // Maximum voltage for PD to negotiate
+#define THERMAL_RUNAWAY_TIME_SEC 20
+#define THERMAL_RUNAWAY_TEMP_C   10
 
 #define HARDWARE_MAX_WATTAGE_X10 600
 
@@ -225,10 +226,13 @@
 #define NO_SLEEP_MODE
 #define HARDWARE_MAX_WATTAGE_X10 850
 
-#define TIP_THERMAL_MASS    10  // X10 watts to raise 1 deg C in 1 second
-#define TIP_THERMAL_INERTIA 128 // We use a large inertia value to smooth out the drive to the tip since its stupidly sensitive
+#define TIP_THERMAL_MASS         30 // X10 watts to raise 1 deg C in 1 second
+#define TIP_THERMAL_INERTIA      10 // We use a large inertia value to smooth out the drive to the tip since its stupidly sensitive
+#define THERMAL_RUNAWAY_TIME_SEC 60
+#define THERMAL_RUNAWAY_TEMP_C   3
 
-#define TIP_RESISTANCE 52 // PCB heater, measured at ~19C. Will shift by temp a decent amount
+#define COPPER_HEATER_COIL 1  // Have a heater coil that changes resistance on us
+#define TIP_RESISTANCE     52 // PCB heater, measured at ~19C. Will shift by temp a decent amount
 #define CUSTOM_MAX_TEMP_C
 #define PROFILE_SUPPORT           1 // Soldering Profiles
 #define OLED_128x32               1 // Larger OLED
@@ -240,7 +244,7 @@
 #define NO_ACCEL       1
 #define I2C_SOFT_BUS_2 // For now we are doing software I2C to get around hardware chip issues
 #define OLED_I2CBB2
-#define FILTER_DISPLAYED_TIP_TEMP 4 // Filtering for GUI display
+#define FILTER_DISPLAYED_TIP_TEMP 16 // Filtering for GUI display
 
 #define MODEL_HAS_DCDC // We dont have DC/DC but have reallly fast PWM that gets us roughly the same place
 #endif                 /* T55 */
