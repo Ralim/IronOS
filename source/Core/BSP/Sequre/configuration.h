@@ -123,16 +123,6 @@
 
 #define NEEDS_VBUS_PROBE 0
 
-#define MIN_CALIBRATION_OFFSET 100 // Min value for calibration
-#define SOLDERING_TEMP         320 // Default soldering temp is 320.0 °C
-#define PID_TIM_HZ             (8) // Tick rate of the PID loop
-#define MAX_TEMP_C             450 // Max soldering temp selectable °C
-#define MAX_TEMP_F             850 // Max soldering temp selectable °F
-#define MIN_TEMP_C             10  // Min soldering temp selectable °C
-#define MIN_TEMP_F             60  // Min soldering temp selectable °F
-#define MIN_BOOST_TEMP_C       250 // The min settable temp for boost mode °C
-#define MIN_BOOST_TEMP_F       480 // The min settable temp for boost mode °F
-
 #ifdef MODEL_S60
 #define VOLTAGE_DIV        460 // Default divider scaler
 #define CALIBRATION_OFFSET 200 // Default adc offset in uV
@@ -206,14 +196,15 @@
 // Uses a HUB238 for PD negotiation like the S60, also has a buzzer. Feels like designed to share with S60
 // Hold back left button for "DFU"
 
-#define SOLDERING_TEMP     200 // Default soldering temp is 200.0 °C
-#define VOLTAGE_DIV        460 // Default divider scaler
-#define CALIBRATION_OFFSET 0   // Default adc offset in uV
-#define PID_POWER_LIMIT    70  // Sets the max pwm power limit
-#define POWER_LIMIT        0   // 0 watts default limit
-#define MAX_POWER_LIMIT    70
-#define POWER_LIMIT_STEPS  5
-#define OP_AMP_GAIN_STAGE  1
+#define SOLDERING_TEMP         200 // Default soldering temp is 200.0 °C
+#define VOLTAGE_DIV            460 // Default divider scaler
+#define MIN_CALIBRATION_OFFSET 0   // Should be 0
+#define CALIBRATION_OFFSET     0   // Default adc offset in uV
+#define PID_POWER_LIMIT        70  // Sets the max pwm power limit
+#define POWER_LIMIT            0   // 0 watts default limit
+#define MAX_POWER_LIMIT        70
+#define POWER_LIMIT_STEPS      5
+#define OP_AMP_GAIN_STAGE      1
 #define TEMP_uV_LOOKUP_PT1000
 #define USB_PD_VMAX       20  // Maximum voltage for PD to negotiate
 #define NO_DISPLAY_ROTATE     // Disable OLED rotation by accel
@@ -251,5 +242,35 @@
 
 #define FLASH_LOGOADDR      (0x08000000 + (62 * 1024))
 #define SETTINGS_START_PAGE (0x08000000 + (63 * 1024))
+
+// Defaults
+
+#ifndef MIN_CALIBRATION_OFFSET
+#define MIN_CALIBRATION_OFFSET 100 // Min value for calibration
+#endif
+#ifndef SOLDERING_TEMP
+#define SOLDERING_TEMP 320 // Default soldering temp is 320.0 °C
+#endif
+#ifndef PID_TIM_HZ
+#define PID_TIM_HZ (8) // Tick rate of the PID loop
+#endif
+#ifndef MAX_TEMP_C
+#define MAX_TEMP_C 450 // Max soldering temp selectable °C
+#endif
+#ifndef MAX_TEMP_F
+#define MAX_TEMP_F 850 // Max soldering temp selectable °F
+#endif
+#ifndef MIN_TEMP_C
+#define MIN_TEMP_C 10 // Min soldering temp selectable °C
+#endif
+#ifndef MIN_TEMP_F
+#define MIN_TEMP_F 60 // Min soldering temp selectable °F
+#endif
+#ifndef MIN_BOOST_TEMP_C
+#define MIN_BOOST_TEMP_C 250 // The min settable temp for boost mode °C
+#endif
+#ifndef MIN_BOOST_TEMP_F
+#define MIN_BOOST_TEMP_F 480 // The min settable temp for boost mode °F
+#endif
 
 #endif /* CONFIGURATION_H_ */
