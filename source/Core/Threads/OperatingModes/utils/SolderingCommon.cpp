@@ -135,9 +135,9 @@ int8_t getPowerSourceNumber(void) {
 #endif
 #if POW_PD_EXT == 2
     if (FS2711::has_run_selection()) {
-        poweredbyPD = true;
-        // FS2711IC has VBUS always connected
-        pdHasVBUSConnected = true;
+      poweredbyPD = true;
+      // FS2711IC has VBUS always connected
+      pdHasVBUSConnected = true;
     }
 #endif
     if (poweredbyPD) {
