@@ -5,8 +5,8 @@
  *      Author: Ralim
  */
 
-#ifndef BSP_MINIWARE_PINS_H_
-#define BSP_MINIWARE_PINS_H_
+#ifndef BSP_SEQURE_PINS_H_
+#define BSP_SEQURE_PINS_H_
 #include "configuration.h"
 
 #ifdef MODEL_S60
@@ -65,6 +65,10 @@
 #define SCL2_GPIO_Port        GPIOB
 #define SDA2_Pin              GPIO_PIN_7
 #define SDA2_GPIO_Port        GPIOB
+#define SCL_Pin               GPIO_PIN_11
+#define SCL_GPIO_Port         GPIOB
+#define SDA_Pin               GPIO_PIN_10
+#define SDA_GPIO_Port         GPIOB
 // Pin gets pulled high on movement
 #define MOVEMENT_Pin       GPIO_PIN_3
 #define MOVEMENT_GPIO_Port GPIOA
@@ -96,9 +100,13 @@
 #define SCL2_GPIO_Port        GPIOB
 #define SDA2_Pin              GPIO_PIN_7
 #define SDA2_GPIO_Port        GPIOB
+#define SCL_Pin               GPIO_PIN_11
+#define SCL_GPIO_Port         GPIOB
+#define SDA_Pin               GPIO_PIN_10
+#define SDA_GPIO_Port         GPIOB
 // Pin gets pulled high on movement
 #define MOVEMENT_Pin       GPIO_PIN_3
 #define MOVEMENT_GPIO_Port GPIOA
 
 #endif
-#endif /* BSP_MINIWARE_PINS_H_ */
+#endif /* BSP_SEQURE_PINS_H_ */
