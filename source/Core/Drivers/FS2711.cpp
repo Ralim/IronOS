@@ -19,9 +19,10 @@
 extern int32_t powerSupplyWattageLimit;
 
 uint8_t I2C_PORT = 2;
+
 fs2711_state_t FS2711::state;
 
-void i2c_write(uint8_t addr, uint8_t data) { 
+void i2c_write(uint8_t addr, uint8_t data) {
   if (I2C_PORT == 2) {
     I2CBB2::Mem_Write(FS2711_ADDR, addr, &data, 1);
   } else if (I2C_PORT == 1) {
@@ -39,14 +40,14 @@ uint8_t i2c_read(uint8_t addr) {
   return data;
 }
 
-bool i2c_probe(uint8_t addr) { 
+bool i2c_probe(uint8_t addr) {
   if (I2C_PORT == 2) {
-    I2CBB2::probe(addr); 
+    I2CBB2::probe(addr);
   } else if (I2C_PORT == 1) {
     I2CBB1::probe(addr);
   }
   return false;
-  }
+}
 
 uint8_t FS2711::detect_i2c_bus_num() {
   if (I2CBB2::probe(FS2711_ADDR)) {
