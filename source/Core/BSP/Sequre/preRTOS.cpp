@@ -6,10 +6,14 @@
  */
 
 #include "BSP.h"
+#include "I2CBB1.hpp"
 #include "I2CBB2.hpp"
 #include "Pins.h"
 #include "Setup.h"
 #include <I2C_Wrapper.hpp>
+#if defined(I2C_PROBE_POW_PD) && POW_PD_EXT == 2
+#include "FS2711.hpp"
+#endif
 
 void preRToSInit() {
   /* Reset of all peripherals, Initializes the Flash interface and the Systick.
@@ -19,5 +23,11 @@ void preRToSInit() {
   BSPInit();
 #ifdef I2C_SOFT_BUS_2
   I2CBB2::init();
-#endif
+#if defined(I2C_PROBE_POW_PD) && POW_PD_EXT == 2
+  // Detect FS2711 I2C bus num
+  if (FS2711::detect_i2c_bus_num() == 1) {
+    I2CBB1::init();
+  }
+#endif /* defined(I2C_PROBE_POW_PD) && POW_PD_EXT == 2 */
+#endif /* I2C_SOFT_BUS_2 */
 }

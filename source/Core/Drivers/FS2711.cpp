@@ -1,5 +1,6 @@
 #include "FS2711.hpp"
 #include "FS2711_defines.h"
+#include "I2CBB1.hpp"
 #include "I2CBB2.hpp"
 #include "Settings.h"
 #include "Utils.h"
@@ -17,17 +18,44 @@
 
 extern int32_t powerSupplyWattageLimit;
 
+uint8_t I2C_PORT = 2;
 fs2711_state_t FS2711::state;
 
-inline void i2c_write(uint8_t addr, uint8_t data) { I2CBB2::Mem_Write(FS2711_ADDR, addr, &data, 1); }
+void i2c_write(uint8_t addr, uint8_t data) { 
+  if (I2C_PORT == 2) {
+    I2CBB2::Mem_Write(FS2711_ADDR, addr, &data, 1);
+  } else if (I2C_PORT == 1) {
+    I2CBB1::Mem_Write(FS2711_ADDR, addr, &data, 1);
+  }
+}
 
-inline uint8_t i2c_read(uint8_t addr) {
+uint8_t i2c_read(uint8_t addr) {
   uint8_t data = 0;
-  I2CBB2::Mem_Read(FS2711_ADDR, addr, &data, 1);
+  if (I2C_PORT == 2) {
+    I2CBB2::Mem_Read(FS2711_ADDR, addr, &data, 1);
+  } else if (I2C_PORT == 1) {
+    I2CBB1::Mem_Read(FS2711_ADDR, addr, &data, 1);
+  }
   return data;
 }
 
-inline bool i2c_probe(uint8_t addr) { return I2CBB2::probe(addr); }
+bool i2c_probe(uint8_t addr) { 
+  if (I2C_PORT == 2) {
+    I2CBB2::probe(addr); 
+  } else if (I2C_PORT == 1) {
+    I2CBB1::probe(addr);
+  }
+  return false;
+  }
+
+uint8_t FS2711::detect_i2c_bus_num() {
+  if (I2CBB2::probe(FS2711_ADDR)) {
+    I2C_PORT = 2;
+  } else {
+    I2C_PORT = 1;
+  }
+  return I2C_PORT;
+}
 
 void FS2711::start() {
   memset(&state, 0, sizeof(fs2711_state_t));

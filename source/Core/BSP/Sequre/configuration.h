@@ -194,6 +194,8 @@
 #define HAS_POWER_DEBUG_MENU
 #define TEMP_NTC
 #define I2C_SOFT_BUS_2 // For now we are doing software I2C to get around hardware chip issues
+#define I2C_PROBE_POW_PD // For now we are doing software I2C to get around hardware chip issues
+#define I2C_SOFT_BUS_1 // For now we are doing software I2C to get around hardware chip issues
 #define OLED_I2CBB2
 
 #define MODEL_HAS_DCDC // We dont have DC/DC but have reallly fast PWM that gets us roughly the same place
@@ -227,6 +229,8 @@
 #define HAS_POWER_DEBUG_MENU
 #define TEMP_NTC
 #define I2C_SOFT_BUS_2 // For now we are doing software I2C to get around hardware chip issues
+#define I2C_PROBE_POW_PD // For now we are doing software I2C to get around hardware chip issues
+#define I2C_SOFT_BUS_1 // For now we are doing software I2C to get around hardware chip issues
 #define OLED_I2CBB2
 
 #define MODEL_HAS_DCDC // We dont have DC/DC but have reallly fast PWM that gets us roughly the same place
