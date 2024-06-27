@@ -24,7 +24,7 @@ static void displayInputMinVRange(void);
 static void displayQCInputV(void);
 #endif /* POW_QC */
 
-#if defined POW_PD || POW_PD_EXT == 2
+#if defined(POW_PD) || POW_PD_EXT == 2
 static void displayPDNegTimeout(void);
 static void displayUSBPDMode(void);
 #endif /* POW_PD */
