@@ -16,8 +16,9 @@
 
 void bt_monitor_send(uint16_t opcode, const void *data, size_t len) {
   const uint8_t *buf = data;
-
+  unsigned int   key = irq_lock();
   BT_WARN("[Hci]:pkt_type:[0x%x],pkt_data:[%s]\r\n", opcode, bt_hex(buf, len));
+  irq_unlock(key);
 }
 
 void bt_monitor_new_index(uint8_t type, uint8_t bus, bt_addr_t *addr, const char *name) {}

@@ -52,8 +52,8 @@ extern "C" {
 header file. */
 void vAssertCalled(void);
 
-#define configASSERT(x) \
-  if ((x) == 0)         \
+#define configASSERT(x)                                                                                                                                                                                \
+  if ((x) == 0)                                                                                                                                                                                        \
   vAssertCalled()
 
 #ifdef __cplusplus
@@ -75,7 +75,7 @@ void vApplicationSleep(uint32_t xExpectedIdleTime);
 #define INCLUDE_xTaskGetCurrentTaskHandle   1
 #define INCLUDE_uxTaskGetStackHighWaterMark 1
 #define INCLUDE_xTaskGetIdleTaskHandle      1
-#define INCLUDE_eTaskGetState               0
+#define INCLUDE_eTaskGetState               1
 #define INCLUDE_xEventGroupSetBitFromISR    1
 #define INCLUDE_xTimerPendFunctionCall      0
 #define INCLUDE_xTaskAbortDelay             0

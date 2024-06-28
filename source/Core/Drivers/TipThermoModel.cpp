@@ -89,7 +89,11 @@ TemperatureType_t TipThermoModel::getTipInF(bool sampleNow) {
 }
 
 TemperatureType_t TipThermoModel::getTipMaxInC() {
+#ifdef CUSTOM_MAX_TEMP_C
+  return getCustomTipMaxInC();
+#else
   TemperatureType_t maximumTipTemp = TipThermoModel::convertTipRawADCToDegC(ADC_MAX_READING - 1);
   maximumTipTemp += getHandleTemperature(0) / 10; // Add handle offset
   return maximumTipTemp - 1;
+#endif
 }

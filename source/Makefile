@@ -119,7 +119,7 @@ ifeq ($(model),$(filter $(model),$(ALL_SEQURE_MODELS)))
 $(info Building for Sequre )
 
 DEVICE_BSP_DIR=./Core/BSP/Sequre
-S_SRCS:=$(shell find $(S60_STARTUP_DIR) -type f -name '*.S')
+S_SRCS:=$(shell find $(DEVICE_BSP_DIR) -type f -name '*.S')
 LDSCRIPT=./Core/BSP/Sequre/stm32f103.ld
 DEV_GLOBAL_DEFS=-D STM32F103T8Ux       \
                 -D STM32F1             \
@@ -227,7 +227,7 @@ CPUFLAGS=-march=rv32imafczicsr                                \
          -DARCH_RISCV                                         \
          -D__RISCV_FEATURE_MVE=0                              \
          -DBL702                                              \
-         -DBFLB_USE_ROM_DRIVER=1                              \
+         -DBFLB_USE_ROM_DRIVER=0                              \
 
 # Binary blobs suck and they should be ashamed
 PINECILV2_SDK_DIR=$(DEVICE_BSP_DIR)/bl_mcu_sdk
@@ -252,7 +252,7 @@ DEV_GLOBAL_DEFS=-DCFG_FREERTOS                                       \
                 -DCFG_BLE                                            \
                 -DOPTIMIZE_DATA_EVT_FLOW_FROM_CONTROLLER             \
                 -DBL_MCU_SDK                                         \
-                -DCFG_CON=2                                          \
+                -DCFG_CON=1                                          \
                 -DCFG_BLE_TX_BUFF_DATA=2                             \
                 -DCONFIG_BT_PERIPHERAL                               \
                 -DCONFIG_BT_L2CAP_DYNAMIC_CHANNEL                    \
@@ -276,14 +276,14 @@ DEV_GLOBAL_DEFS=-DCFG_FREERTOS                                       \
                 -DCONFIG_BT_SETTINGS_CCC_LAZY_LOADING                \
                 -DCONFIG_BT_SETTINGS_USE_PRINTK                      \
                 -DCFG_SLEEP                                          \
-                -DCONFIG_BT_ALLROLES                                 \
-                -DCONFIG_BT_CENTRAL                                  \
                 -DCONFIG_BT_OBSERVER                                 \
                 -DCONFIG_BT_BROADCASTER                              \
-                -DCFG_BLE_STACK_DBG_PRINT                            \
                 -DportasmHANDLE_INTERRUPT=FreeRTOS_Interrupt_Handler \
                 -DCONFIG_BT_DEVICE_NAME=\"Pinecil\"                  \
                 -DCONFIG_BT_DEVICE_APPEARANCE=0x06C1
+                # -DCFG_BLE_STACK_DBG_PRINT                            \
+                # -DCONFIG_BT_CENTRAL                                  \
+                # -DCONFIG_BT_ALLROLES                                 \
 # -DBFLB_USE_HAL_DRIVER \
 # -DCONFIG_BT_SMP
 

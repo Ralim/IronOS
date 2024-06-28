@@ -476,6 +476,17 @@ struct bt_hci_write_local_name {
 #define BT_BREDR_SCAN_INQUIRY       0x01
 #define BT_BREDR_SCAN_PAGE          0x02
 
+#define BT_HCI_OP_WRITE_INQUIRY_SCAN_ACTIVITY BT_OP(BT_OGF_BASEBAND, 0x001e)
+struct bt_hci_cp_write_inquiry_scan_activity {
+    u16_t interval;
+    u16_t window;
+} __packed;
+
+#define BT_HCI_OP_WRITE_CLASS_OF_DEVICE BT_OP(BT_OGF_BASEBAND, 0x0024)
+struct bt_hci_cp_write_class_of_device {
+    u8_t cod[3];
+} __packed;
+
 #define BT_TX_POWER_LEVEL_CURRENT     0x00
 #define BT_TX_POWER_LEVEL_MAX         0x01
 #define BT_HCI_OP_READ_TX_POWER_LEVEL BT_OP(BT_OGF_BASEBAND, 0x002d)
@@ -516,9 +527,19 @@ struct bt_hci_cp_host_num_completed_packets {
     struct bt_hci_handle_count h[0];
 } __packed;
 
+#define BT_HCI_OP_WRITE_INQUIRY_SCAN_TYPE BT_OP(BT_OGF_BASEBAND, 0x0043)
+struct bt_hci_cp_write_inquiry_scan_type {
+    u8_t type;
+} __packed;
+
 #define BT_HCI_OP_WRITE_INQUIRY_MODE BT_OP(BT_OGF_BASEBAND, 0x0045)
 struct bt_hci_cp_write_inquiry_mode {
     u8_t mode;
+} __packed;
+
+#define BT_HCI_OP_WRITE_PAGE_SCAN_TYPE BT_OP(BT_OGF_BASEBAND, 0x0047)
+struct bt_hci_cp_write_page_scan_type {
+    u8_t type;
 } __packed;
 
 #define BT_HCI_OP_WRITE_EXT_INQUIRY_RESP BT_OP(BT_OGF_BASEBAND, 0x0052)
@@ -2616,6 +2637,10 @@ typedef bool bt_hci_vnd_evt_cb_t(struct net_buf_simple *buf);
   * @return 0 on success or negative error value on failure.
   */
 int bt_hci_register_vnd_evt_cb(bt_hci_vnd_evt_cb_t cb);
+
+#if (BFLB_BT_CO_THREAD)
+struct k_thread *bt_get_co_thread(void);
+#endif
 
 #ifdef __cplusplus
 }

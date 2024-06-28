@@ -52,10 +52,11 @@
  *  POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include "ecc.h"
 #include "../include/tinycrypt/ecc.h"
-#include "../include/tinycrypt/ecc_platform_specific.h"
-#include <stdint.h>
+#include "ecc_platform_specific.h"
 #include <string.h>
+
 /* IMPORTANT: Make sure a cryptographically-secure PRNG is set and the platform
  * has access to enough entropy in order to feed the PRNG regularly. */
 #if default_RNG_defined
@@ -752,9 +753,8 @@ int uECC_valid_point(const uECC_word_t *point, uECC_Curve curve) {
   curve->x_side(tmp2, point, curve); /* tmp2 = x^3 + ax + b */
 
   /* Make sure that y^2 == x^3 + ax + b */
-  if (uECC_vli_equal(tmp1, tmp2, num_words) != 0) {
+  if (uECC_vli_equal(tmp1, tmp2, num_words) != 0)
     return -3;
-  }
 
   return 0;
 }

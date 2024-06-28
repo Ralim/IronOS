@@ -107,13 +107,13 @@
   },
   "menuValues": {
     "USBPDModeDefault": {
-      "displayText": "Default\nMode"
+      "displayText": "Режим\nЗамовчуванню"
     },
     "USBPDModeNoDynamic": {
-      "displayText": "No\nDynamic"
+      "displayText": "Без\nДинамічного"
     },
     "USBPDModeSafe": {
-      "displayText": "Safe\nMode"
+      "displayText": "Безпечний\nРежим"
     }
   },
   "menuOptions": {

@@ -149,7 +149,7 @@
 
 #define HARDWARE_MAX_WATTAGE_X10 600
 
-#define TIP_THERMAL_MASS    8   // X10 watts to raise 1 deg C in 1 second
+#define TIP_THERMAL_MASS    10  // X10 watts to raise 1 deg C in 1 second
 #define TIP_THERMAL_INERTIA 128 // We use a large inertia value to smooth out the drive to the tip since its stupidly sensitive
 
 #define TIP_RESISTANCE 20 //(actually 2.5 ish but we need to be more conservative on pwm'ing watt limit) x10 ohms
@@ -163,6 +163,7 @@
 #define TEMP_NTC
 #define I2C_SOFT_BUS_2 // For now we are doing software I2C to get around hardware chip issues
 #define OLED_I2CBB2
+#define FILTER_DISPLAYED_TIP_TEMP 4 // Filtering for GUI display
 
 #define MODEL_HAS_DCDC // We dont have DC/DC but have reallly fast PWM that gets us roughly the same place
 #endif                 /* S60 */
@@ -181,7 +182,7 @@
 
 #define HARDWARE_MAX_WATTAGE_X10 600
 
-#define TIP_THERMAL_MASS    8   // X10 watts to raise 1 deg C in 1 second
+#define TIP_THERMAL_MASS    10  // X10 watts to raise 1 deg C in 1 second
 #define TIP_THERMAL_INERTIA 128 // We use a large inertia value to smooth out the drive to the tip since its stupidly sensitive
 
 #define TIP_RESISTANCE 20 //(actually 2.5 ish but we need to be more conservative on pwm'ing watt limit) x10 ohms
@@ -198,6 +199,7 @@
 #define I2C_PROBE_POW_PD // For now we are doing software I2C to get around hardware chip issues
 #define I2C_SOFT_BUS_1 // For now we are doing software I2C to get around hardware chip issues
 #define OLED_I2CBB2
+#define FILTER_DISPLAYED_TIP_TEMP 4 // Filtering for GUI display
 
 #define MODEL_HAS_DCDC // We dont have DC/DC but have reallly fast PWM that gets us roughly the same place
 #endif                 /* S60P */
@@ -233,6 +235,7 @@
 #define I2C_PROBE_POW_PD // For now we are doing software I2C to get around hardware chip issues
 #define I2C_SOFT_BUS_1 // For now we are doing software I2C to get around hardware chip issues
 #define OLED_I2CBB2
+#define FILTER_DISPLAYED_TIP_TEMP 4 // Filtering for GUI display
 
 #define MODEL_HAS_DCDC // We dont have DC/DC but have reallly fast PWM that gets us roughly the same place
 #endif                 /* S99 */

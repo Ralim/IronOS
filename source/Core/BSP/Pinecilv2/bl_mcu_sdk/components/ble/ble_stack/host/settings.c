@@ -221,72 +221,37 @@ int  bt_check_if_ef_ready() {
 
   if (!ef_ready_flag) {
     err = easyflash_init();
-    if (!err) {
+    if (!err)
       ef_ready_flag = true;
-    }
   }
 
   return err;
 }
 
 int bt_settings_set_bin(const char *key, const uint8_t *value, size_t length) {
-  const char *lookup = "0123456789abcdef";
-  char       *str_value;
-  int         err;
+  int err;
 
   err = bt_check_if_ef_ready();
-  if (err) {
+  if (err)
     return err;
-  }
 
-  str_value = pvPortMalloc(length * 2 + 1);
-
-  BT_ASSERT(str_value != NULL);
-
-  for (size_t i = 0; i < length; i++) {
-    str_value[(i * 2) + 0] = lookup[(value[i] >> 4) & 0x0F];
-    str_value[(i * 2) + 1] = lookup[value[i] & 0x0F];
-  }
-  str_value[length * 2] = '\0';
-
-  err = ef_set_env(key, (const char *)str_value);
-
-  vPortFree(str_value);
+  err = ef_set_env_blob(key, value, length);
 
   return err;
 }
 
 int bt_settings_get_bin(const char *key, u8_t *value, size_t exp_len, size_t *real_len) {
-  char  *str_value;
-  size_t str_value_len;
-  char   rand[3];
   int    err;
+  size_t rlen;
 
   err = bt_check_if_ef_ready();
-  if (err) {
+  if (err)
     return err;
-  }
 
-  str_value = ef_get_env(key);
-  if (str_value == NULL) {
-    return -1;
-  }
+  rlen = ef_get_env_blob(key, value, exp_len, NULL);
 
-  str_value_len = strlen(str_value);
-
-  if ((str_value_len % 2) != 0 || (exp_len > 0 && str_value_len > exp_len * 2)) {
-    return -1;
-  }
-
-  if (real_len) {
-    *real_len = str_value_len / 2;
-  }
-
-  for (size_t i = 0; i < str_value_len / 2; i++) {
-    strncpy(rand, str_value + 2 * i, 2);
-    rand[2]  = '\0';
-    value[i] = strtol(rand, NULL, 16);
-  }
+  if (real_len)
+    *real_len = rlen;
 
   return 0;
 }
@@ -300,9 +265,8 @@ int settings_save_one(const char *key, const u8_t *value, size_t length) { retur
 void bt_settings_save_id(void) {
 #if defined(BFLB_BLE)
 #if defined(CONFIG_BT_SETTINGS)
-  if (bt_check_if_ef_ready()) {
+  if (bt_check_if_ef_ready())
     return;
-  }
   bt_settings_set_bin(NV_LOCAL_ID_ADDR, (const u8_t *)&bt_dev.id_addr[0], sizeof(bt_addr_le_t) * CONFIG_BT_ID_MAX);
 #if defined(CONFIG_BT_PRIVACY)
   bt_settings_set_bin(NV_LOCAL_IRK, (const u8_t *)&bt_dev.irk[0], 16 * CONFIG_BT_ID_MAX);
@@ -315,26 +279,13 @@ void bt_settings_save_id(void) {
 
 #if defined(BFLB_BLE)
 #if defined(CONFIG_BT_SETTINGS)
-void bt_settings_save_name(void) {
-  if (bt_check_if_ef_ready()) {
-    return;
-  }
-
-  ef_set_env(NV_LOCAL_NAME, bt_dev.name);
-}
+void bt_settings_save_name(void) { bt_settings_set_bin(NV_LOCAL_NAME, (u8_t *)bt_dev.name, strlen(bt_dev.name) + 1); }
 
 void bt_local_info_load(void) {
-  if (bt_check_if_ef_ready()) {
+  if (bt_check_if_ef_ready())
     return;
-  }
 #if defined(CONFIG_BT_DEVICE_NAME_DYNAMIC)
-  char   *dev_name;
-  uint8_t len;
-  dev_name = ef_get_env(NV_LOCAL_NAME);
-  if (dev_name != NULL) {
-    len = ((strlen(dev_name) + 1) < CONFIG_BT_DEVICE_NAME_MAX) ? (strlen(dev_name) + 1) : CONFIG_BT_DEVICE_NAME_MAX;
-    memcpy(bt_dev.name, dev_name, len);
-  }
+  bt_settings_get_bin(NV_LOCAL_NAME, (u8_t *)bt_dev.name, CONFIG_BT_DEVICE_NAME_MAX, NULL);
 #endif
   bt_settings_get_bin(NV_LOCAL_ID_ADDR, (u8_t *)&bt_dev.id_addr[0], sizeof(bt_addr_le_t) * CONFIG_BT_ID_MAX, NULL);
 #if defined(CONFIG_BT_PRIVACY)

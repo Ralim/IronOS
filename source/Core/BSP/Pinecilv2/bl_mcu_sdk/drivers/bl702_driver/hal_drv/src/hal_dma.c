@@ -79,13 +79,13 @@ int dma_open(struct device *dev, uint16_t oflag) {
 
   /* Disable all interrupt */
   DMA_IntMask(dma_device->ch, DMA_INT_ALL, MASK);
-  /* Enable uart interrupt*/
   CPU_Interrupt_Disable(DMA_ALL_IRQn);
 
   DMA_Disable();
 
   DMA_Channel_Disable(dma_device->ch);
 
+  dma_device->intr     = 0;
   chCfg.ch             = dma_device->ch;
   chCfg.dir            = dma_device->direction;
   chCfg.srcPeriph      = dma_device->src_req;
@@ -101,7 +101,7 @@ int dma_open(struct device *dev, uint16_t oflag) {
   DMA_Enable();
 
   Interrupt_Handler_Register(DMA_ALL_IRQn, DMA0_IRQ);
-  /* Enable uart interrupt*/
+  /* Enable dma interrupt*/
   CPU_Interrupt_Enable(DMA_ALL_IRQn);
   return 0;
 }
@@ -121,14 +121,14 @@ int dma_control(struct device *dev, int cmd, void *args) {
     /* Dma interrupt configuration */
     DMA_IntMask(dma_device->ch, DMA_INT_TCOMPLETED, UNMASK);
     DMA_IntMask(dma_device->ch, DMA_INT_ERR, UNMASK);
-
+    dma_device->intr = 1;
     break;
 
   case DEVICE_CTRL_CLR_INT:
     /* Dma interrupt configuration */
     DMA_IntMask(dma_device->ch, DMA_INT_TCOMPLETED, MASK);
     DMA_IntMask(dma_device->ch, DMA_INT_ERR, MASK);
-
+    dma_device->intr = 0;
     break;
 
   case DEVICE_CTRL_GET_INT:
@@ -181,6 +181,7 @@ int dma_close(struct device *dev) {
 
   DMA_Channel_Disable(dma_device->ch);
   DMA_Channel_Init(&chCfg);
+  dma_device->intr = 0;
   return 0;
 }
 
@@ -205,62 +206,6 @@ int dma_register(enum dma_index_type index, const char *name) {
   return device_register(dev, name);
 }
 
-static BL_Err_Type dma_scan_unregister_device(uint8_t *allocate_index) {
-  struct device *dev;
-  dlist_t       *node;
-  uint8_t        dma_index = 0;
-  uint32_t       dma_handle[DMA_MAX_INDEX];
-
-  for (dma_index = 0; dma_index < DMA_MAX_INDEX; dma_index++) {
-    dma_handle[dma_index] = 0xff;
-  }
-
-  /* get registered dma handle list*/
-  dlist_for_each(node, device_get_list_header()) {
-    dev = dlist_entry(node, struct device, list);
-
-    if (dev->type == DEVICE_CLASS_DMA) {
-      dma_handle[(((uint32_t)dev - (uint32_t)dmax_device) / sizeof(dma_device_t)) % DMA_MAX_INDEX] = SET;
-    }
-  }
-
-  for (dma_index = 0; dma_index < DMA_MAX_INDEX; dma_index++) {
-    if (dma_handle[dma_index] == 0xff) {
-      *allocate_index = dma_index;
-      return SUCCESS;
-    }
-  }
-
-  return ERROR;
-}
-
-int dma_allocate_register(const char *name) {
-  struct device *dev;
-  uint8_t        index;
-
-  if (DMA_MAX_INDEX == 0) {
-    return -DEVICE_EINVAL;
-  }
-
-  if (dma_scan_unregister_device(&index) == ERROR) {
-    return -DEVICE_ENOSPACE;
-  }
-
-  dev = &(dmax_device[index].parent);
-
-  dev->open    = dma_open;
-  dev->close   = dma_close;
-  dev->control = dma_control;
-  // dev->write = dma_write;
-  // dev->read = dma_read;
-
-  dev->status = DEVICE_UNREGISTER;
-  dev->type   = DEVICE_CLASS_DMA;
-  dev->handle = NULL;
-
-  return device_register(dev, name);
-}
-
 /**
  * @brief
  *
@@ -271,14 +216,13 @@ int dma_allocate_register(const char *name) {
  * @return int
  */
 int dma_reload(struct device *dev, uint32_t src_addr, uint32_t dst_addr, uint32_t transfer_size) {
-#if defined(BSP_USING_DMA0_CH0) || defined(BSP_USING_DMA0_CH1) || defined(BSP_USING_DMA0_CH2) || defined(BSP_USING_DMA0_CH3) || defined(BSP_USING_DMA0_CH4) || defined(BSP_USING_DMA0_CH5) ||          \
-    defined(BSP_USING_DMA0_CH6) || defined(BSP_USING_DMA0_CH7)
-
+#ifdef BSP_USING_DMA
   uint32_t           malloc_count;
   uint32_t           remain_len;
   uint32_t           actual_transfer_len    = 0;
   uint32_t           actual_transfer_offset = 0;
   dma_control_data_t dma_ctrl_cfg;
+  bool               intr = false;
 
   dma_device_t *dma_device = (dma_device_t *)dev;
 
@@ -315,6 +259,7 @@ int dma_reload(struct device *dev, uint32_t src_addr, uint32_t dst_addr, uint32_
   }
 
   dma_ctrl_cfg = (dma_control_data_t)(BL_RD_REG(dma_channel_base[dma_device->id][dma_device->ch], DMA_CONTROL));
+  intr         = dma_device->intr;
 
   malloc_count = actual_transfer_len / 4095;
   remain_len   = actual_transfer_len % 4095;
@@ -326,14 +271,13 @@ int dma_reload(struct device *dev, uint32_t src_addr, uint32_t dst_addr, uint32_
   dma_device->lli_cfg = (dma_lli_ctrl_t *)realloc(dma_device->lli_cfg, sizeof(dma_lli_ctrl_t) * malloc_count);
 
   if (dma_device->lli_cfg) {
+    dma_ctrl_cfg.bits.TransferSize = 4095;
+    dma_ctrl_cfg.bits.I            = 0;
     /*transfer_size will be integer multiple of 4095*n or 4095*2*n or 4095*4*n,(n>0) */
     for (uint32_t i = 0; i < malloc_count; i++) {
       dma_device->lli_cfg[i].src_addr = src_addr;
       dma_device->lli_cfg[i].dst_addr = dst_addr;
       dma_device->lli_cfg[i].nextlli  = 0;
-
-      dma_ctrl_cfg.bits.TransferSize = 4095;
-      dma_ctrl_cfg.bits.I            = 0;
 
       if (dma_ctrl_cfg.bits.SI) {
         src_addr += actual_transfer_offset;
@@ -347,7 +291,7 @@ int dma_reload(struct device *dev, uint32_t src_addr, uint32_t dst_addr, uint32_
         if (remain_len) {
           dma_ctrl_cfg.bits.TransferSize = remain_len;
         }
-        dma_ctrl_cfg.bits.I = 1;
+        dma_ctrl_cfg.bits.I = intr;
 
         if (dma_device->transfer_mode == DMA_LLI_CYCLE_MODE) {
           dma_device->lli_cfg[i].nextlli = (uint32_t)&dma_device->lli_cfg[0];
