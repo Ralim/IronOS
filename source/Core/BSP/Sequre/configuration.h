@@ -190,6 +190,7 @@
 #define GPIO_VIBRATION
 #define POW_PD_EXT                2
 #define USB_PD_EPR_WATTAGE        0 /*No EPR*/
+#define POW_DC
 #define DEBUG_POWER_MENU_BUTTON_B 1
 #define HAS_POWER_DEBUG_MENU
 #define TEMP_NTC
