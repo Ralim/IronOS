@@ -107,13 +107,13 @@
   },
   "menuValues": {
     "USBPDModeDefault": {
-      "displayText": "Default\nMode"
+      "displayText": "Вкл.\nPPSиERP"
     },
     "USBPDModeNoDynamic": {
-      "displayText": "No\nDynamic"
+      "displayText": "Изкл.\n"
     },
     "USBPDModeSafe": {
-      "displayText": "Safe\nMode"
+      "displayText": "Вкл.без\nсъпротив"
     }
   },
   "menuOptions": {
@@ -134,8 +134,8 @@
       "description": "PD интервал за договаряне на захранването на стъпки от 100 мс за съвместимост с някои QC захранвания (0=Изкл.)"
     },
     "USBPDMode": {
-      "displayText": "PD\nMode",
-      "description": "Включи PPS & EPR"
+      "displayText": "PD\nрежим",
+      "description": "Вкл.без съпротив: включи PPS и EPR без 'изравняване' на съпротивлението"
     },
     "BoostTemperature": {
       "displayText": "Турбо\nтемп.",
