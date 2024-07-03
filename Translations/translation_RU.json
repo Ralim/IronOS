@@ -107,13 +107,13 @@
   },
   "menuValues": {
     "USBPDModeDefault": {
-      "displayText": "Default\nMode"
+      "displayText": "Вкл.\nPPSиEPR"
     },
     "USBPDModeNoDynamic": {
-      "displayText": "No\nDynamic"
+      "displayText": "Откл.\n"
     },
     "USBPDModeSafe": {
-      "displayText": "Safe\nMode"
+      "displayText": "Вкл.без\nсопротив"
     }
   },
   "menuOptions": {
@@ -130,12 +130,12 @@
       "description": "Максимальное напряжение для согласования с источником питания по QC"
     },
     "PDNegTimeout": {
-      "displayText": "PD\nинтервал",
+      "displayText": "Интервал\nPD",
       "description": "Интервал согласования питания по Power Delivery с шагом 100 мс для совместимости с некоторыми источниками питания по QC (0=Откл.)"
     },
     "USBPDMode": {
-      "displayText": "PD\nMode",
-      "description": "Включить режимы PPS & EPR"
+      "displayText": "Режим\nPD",
+      "description": "Вкл.без сопротив: включить PPS и EPR без 'выравнивания' сопротивления"
     },
     "BoostTemperature": {
       "displayText": "t° турбо\nрежима",
