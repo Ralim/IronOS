@@ -107,13 +107,13 @@
   },
   "menuValues": {
     "USBPDModeDefault": {
-      "displayText": "Default\nMode"
+      "displayText": "\nРэжым"
     },
     "USBPDModeNoDynamic": {
-      "displayText": "No\nDynamic"
+      "displayText": "Няма\nдынамікі"
     },
     "USBPDModeSafe": {
-      "displayText": "Safe\nMode"
+      "displayText": "Бяспечны\nрэжым"
     }
   },
   "menuOptions": {
@@ -134,7 +134,7 @@
       "description": "Час чакання ўзгаднення PD з крокам 100 мс для сумяшчальнасці з некаторымі зараднымі зараднымі прыладамі QC (0: адключана)"
     },
     "USBPDMode": {
-      "displayText": "PD\nMode",
+      "displayText": "PD\nРэжым",
       "description": "Уключае рэжымы PPS & EPR."
     },
     "BoostTemperature": {
@@ -158,59 +158,59 @@
       "description": "Пры рабоце падоўжаны націск дзьвух кнопак блакуе іх (Т=Толькі турба | П=Поўная блакіроўка)"
     },
     "ProfilePhases": {
-      "displayText": "Profile\nPhases",
+      "displayText": "Фазы\nпрофілю",
       "description": "Колькасць фаз у рэжыме профілю"
     },
     "ProfilePreheatTemp": {
-      "displayText": "Preheat\nTemp",
+      "displayText": "Тэмпература\nразагравання",
       "description": "Разагрэйце да гэтай тэмпературы ў пачатку профільнага рэжыму"
     },
     "ProfilePreheatSpeed": {
-      "displayText": "Preheat\nSpeed",
+      "displayText": "Хуткасть\nразагравання",
       "description": "Разагрэйце з гэтай хуткасцю (градусы ў секунду)"
     },
     "ProfilePhase1Temp": {
-      "displayText": "Phase 1\nTemp",
+      "displayText": "Фаза 1\nтэмпература",
       "description": "Мэтавая тэмпература ў канцы гэтай фазы"
     },
     "ProfilePhase1Duration": {
-      "displayText": "Phase 1\nDuration",
+      "displayText": "Фаза 1\nпрацягласць",
       "description": "Мэтавая працягласць гэтай фазы (секунды)"
     },
     "ProfilePhase2Temp": {
-      "displayText": "Phase 2\nTemp",
-      "description": ""
+      "displayText": "Фаза 2\nтэмпература",
+      "description": "Мэтавая тэмпература ў канцы гэтай фазы"
     },
     "ProfilePhase2Duration": {
-      "displayText": "Phase 2\nDuration",
-      "description": ""
+      "displayText": "Фаза 2\nпрацягласць",
+      "description": "Мэтавая працягласць гэтай фазы (секунды)"
     },
     "ProfilePhase3Temp": {
-      "displayText": "Phase 3\nTemp",
-      "description": ""
+      "displayText": "Фаза 3\nтэмпература",
+      "description": "Мэтавая тэмпература ў канцы гэтай фазы"
     },
     "ProfilePhase3Duration": {
-      "displayText": "Phase 3\nDuration",
-      "description": ""
+      "displayText": "Фаза 3\nпрацягласць",
+      "description": "Мэтавая працягласць гэтай фазы (секунды)"
     },
     "ProfilePhase4Temp": {
-      "displayText": "Phase 4\nTemp",
-      "description": ""
+      "displayText": "Фаза 4\nтэмпература",
+      "description": "Мэтавая тэмпература ў канцы гэтай фазы"
     },
     "ProfilePhase4Duration": {
-      "displayText": "Phase 4\nDuration",
-      "description": ""
+      "displayText": "Фаза 4\nпрацягласць",
+      "description": "Мэтавая працягласць гэтай фазы (секунды)"
     },
     "ProfilePhase5Temp": {
-      "displayText": "Phase 5\nTemp",
-      "description": ""
+      "displayText": "Фаза 5\nтэмпература",
+      "description": "Мэтавая тэмпература ў канцы гэтай фазы"
     },
     "ProfilePhase5Duration": {
-      "displayText": "Phase 5\nDuration",
-      "description": ""
+      "displayText": "Фаза 5\nпрацягласць",
+      "description": "Мэтавая працягласць гэтай фазы (секунды)"
     },
     "ProfileCooldownSpeed": {
-      "displayText": "Cooldown\nSpeed",
+      "displayText": "Хуткасць\nастывання",
       "description": "Астуджаць з гэтай хуткасцю ў канцы профільнага рэжыму (градусы ў секунду)"
     },
     "MotionSensitivity": {
