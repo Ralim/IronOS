@@ -113,7 +113,7 @@
       "displayText": "Изкл.\n"
     },
     "USBPDModeSafe": {
-      "displayText": "Вкл.без\nсъпротив"
+      "displayText": "Вкл.без\nискане"
     }
   },
   "menuOptions": {
@@ -135,7 +135,7 @@
     },
     "USBPDMode": {
       "displayText": "PD\nрежим",
-      "description": "Вкл.без съпротив: включи PPS и EPR без 'изравняване' на съпротивлението"
+      "description": "Вкл.без искане: включи PPS и EPR без да искате повече мощност"
     },
     "BoostTemperature": {
       "displayText": "Турбо\nтемп.",
