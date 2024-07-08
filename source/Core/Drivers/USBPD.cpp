@@ -136,7 +136,7 @@ bool parseCapabilitiesArray(const uint8_t numCaps, uint8_t *bestIndex, uint16_t 
 
   // Fudge of 0.5 ohms to round up a little to account for us always having off periods in PWM
   uint8_t tipResistance = getTipResistanceX10();
-  if (getSettingValue(SettingsOptions::USBPDMode) == 1) {
+  if (getSettingValue(SettingsOptions::USBPDMode) == usbpdMode_t::DEFAULT) {
     tipResistance += 5;
   }
 #ifdef MODEL_HAS_DCDC

@@ -104,6 +104,12 @@ typedef enum {
   INFINITY = 6, // Show boot logo on repeat (if animated) until a button toggled
 } logoMode_t;
 
+typedef enum {
+  DEFAULT    = 1, // PPS + EPR + more power request through increasing resistance by 0.5 Ohm
+  SAFE       = 2, // PPS + EPR, without requesting more power
+  NO_DYNAMIC = 0, // Disabled, fixed PDO only
+} usbpdMode_t;
+
 // Settings wide operations
 void saveSettings();
 bool loadSettings();
