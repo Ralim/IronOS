@@ -23,7 +23,7 @@ int32_t Utils::LinearInterpolate(int32_t x1, int32_t y1, int32_t x2, int32_t y2,
 
 uint16_t Utils::RequiredCurrentForTipAtVoltage(uint16_t voltageX10) {
   uint8_t tipResistancex10 = getTipResistanceX10();
-  if (getSettingValue(SettingsOptions::USBPDMode) == 1) {
+  if (getSettingValue(SettingsOptions::USBPDMode) == usbpdMode_t::DEFAULT) {
     tipResistancex10 += 5;
   }
 #ifdef MODEL_HAS_DCDC

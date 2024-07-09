@@ -531,19 +531,20 @@ static void displayPDNegTimeout(void) {
 
 static void displayUSBPDMode(void) {
   /*
-   * PD Mode
-   * 0 = Safe mode, no PPS, no EPR
-   * 1 = Default mode, tolerant + PPS + EPR
-   * 2 = Strict mode + PPS + EPR
+   * Supported PD modes:
+   *  DEFAULT,    1 = PPS + EPR + more power request through increasing resistance by 0.5 Ohm to compensate power loss over cable/PCB/etc.
+   *  SAFE,       2 = PPS + EPR, without requesting more power
+   *  NO_DYNAMIC, 0 = PPS + EPR disabled, fixed PDO only
    */
 
   switch (getSettingValue(SettingsOptions::USBPDMode)) {
-  case 1:
+  case usbpdMode_t::DEFAULT:
     OLED::print(translatedString(Tr->USBPDModeDefault), FontStyle::SMALL, 255, OLED::getCursorX());
     break;
-  case 2:
+  case usbpdMode_t::SAFE:
     OLED::print(translatedString(Tr->USBPDModeSafe), FontStyle::SMALL, 255, OLED::getCursorX());
     break;
+  case usbpdMode_t::NO_DYNAMIC:
   default:
     OLED::print(translatedString(Tr->USBPDModeNoDynamic), FontStyle::SMALL, 255, OLED::getCursorX());
     break;
