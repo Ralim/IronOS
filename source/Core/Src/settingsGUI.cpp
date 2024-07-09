@@ -532,9 +532,9 @@ static void displayPDNegTimeout(void) {
 static void displayUSBPDMode(void) {
   /*
    * Supported PD modes:
-   *  DEFAULT,    1 = PPS + EPR + more power request through increasing resistance by 0.5 Ohm
+   *  DEFAULT,    1 = PPS + EPR + more power request through increasing resistance by 0.5 Ohm to compensate power loss over cable/PCB/etc.
    *  SAFE,       2 = PPS + EPR, without requesting more power
-   *  NO_DYNAMIC, 0 = Disabled, fixed PDO only
+   *  NO_DYNAMIC, 0 = PPS + EPR disabled, fixed PDO only
    */
 
   switch (getSettingValue(SettingsOptions::USBPDMode)) {
