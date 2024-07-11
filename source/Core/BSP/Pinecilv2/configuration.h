@@ -57,6 +57,7 @@
  *
  */
 #define ORIENTATION_MODE           2 // 0: Right 1:Left 2:Automatic - Default Automatic
+#define MAX_ORIENTATION_MODE       2 // Up to auto
 #define REVERSE_BUTTON_TEMP_CHANGE 0 // 0:Default 1:Reverse - Reverse the plus and minus button assigment for temperature change
 
 /**
@@ -155,6 +156,7 @@
 #define ENABLE_QC2                 1
 #define MAG_SLEEP_SUPPORT          1
 #define DEVICE_HAS_VALIDATION_SUPPORT
+#define OLED_96x16 1
 #define TEMP_NTC
 #define ACCEL_BMA
 #define CUSTOM_MAX_TEMP_C 1 // Uses custom max temp lookup

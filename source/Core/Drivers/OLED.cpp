@@ -174,12 +174,6 @@ void OLED::drawChar(const uint16_t charCode, const FontStyle fontStyle, const ui
   case FontStyle::SMALL:
   case FontStyle::LARGE:
   default:
-    if (charCode == '\x01' && cursor_y == 0) { // 0x01 is used as new line char
-      setCursor(soft_x_limit, 8);
-      return;
-    } else if (charCode <= 0x01) {
-      return;
-    }
     currentFont = nullptr;
     index       = 0;
     switch (fontStyle) {
@@ -192,6 +186,12 @@ void OLED::drawChar(const uint16_t charCode, const FontStyle fontStyle, const ui
       fontHeight = 16;
       fontWidth  = 12;
       break;
+    }
+    if (charCode == '\x01' && cursor_y == 0) { // 0x01 is used as new line char
+      setCursor(soft_x_limit, fontHeight);
+      return;
+    } else if (charCode <= 0x01) {
+      return;
     }
 
     currentFont = fontStyle == FontStyle::SMALL ? FontSectionInfo.font06_start_ptr : FontSectionInfo.font12_start_ptr;
@@ -209,17 +209,22 @@ void OLED::drawChar(const uint16_t charCode, const FontStyle fontStyle, const ui
  */
 void OLED::drawScrollIndicator(uint8_t y, uint8_t height) {
   union u_type {
-    uint16_t whole;
-    uint8_t  strips[2];
+    uint32_t whole;
+    uint8_t  strips[4];
   } column;
 
-  column.whole = (1 << height) - 1;
-  column.whole <<= y;
+  column.whole = (1 << height) - 1; // preload a set of set bits of height
+  column.whole <<= y;               // Shift down by the y value
 
   // Draw a one pixel wide bar to the left with a single pixel as
   // the scroll indicator.
   fillArea(OLED_WIDTH - 1, 0, 1, 8, column.strips[0]);
   fillArea(OLED_WIDTH - 1, 8, 1, 8, column.strips[1]);
+#if OLED_HEIGHT == 32
+  fillArea(OLED_WIDTH - 1, 16, 1, 8, column.strips[2]);
+  fillArea(OLED_WIDTH - 1, 24, 1, 8, column.strips[3]);
+
+#endif
 }
 
 /**
@@ -269,16 +274,18 @@ void OLED::transitionSecondaryFramebuffer(const bool forwardNavigation, const Ti
   stripBackPointers[1] = &secondFrameBuffer[FRAMEBUFFER_START + OLED_WIDTH];
 
 #ifdef OLED_128x32
-  stripBackPointers[2] = &secondFrameBuffer[OLED_WIDTH * 2];
-  stripBackPointers[3] = &secondFrameBuffer[OLED_WIDTH * 3];
+  stripBackPointers[2] = &secondFrameBuffer[FRAMEBUFFER_START + (OLED_WIDTH * 2)];
+  stripBackPointers[3] = &secondFrameBuffer[FRAMEBUFFER_START + (OLED_WIDTH * 3)];
 #endif /* OLED_128x32 */
 
   TickType_t totalDuration = TICKS_100MS * 5; // 500ms
   TickType_t duration      = 0;
   TickType_t start         = xTaskGetTickCount();
   uint8_t    offset        = 0;
+  uint32_t   loopCounter   = 0;
   TickType_t startDraw     = xTaskGetTickCount();
   while (duration <= totalDuration) {
+    loopCounter++;
     duration          = xTaskGetTickCount() - start;
     uint16_t progress = ((duration * 100) / totalDuration); // Percentage of the period we are through for animation
     progress          = easeInOutTiming(progress);
@@ -316,7 +323,14 @@ void OLED::transitionSecondaryFramebuffer(const bool forwardNavigation, const Ti
     memmove(&stripPointers[3][newStart], &stripBackPointers[3][newEnd], progress);
 #endif /* OLED_128x32 */
 
+#ifdef OLED_128x32
+    if (loopCounter % 2 == 0) {
+      refresh();
+    }
+#else
     refresh(); // Now refresh to write out the contents to the new page
+#endif /* OLED_128x32 */
+
     vTaskDelayUntil(&startDraw, TICKS_100MS / 7);
     buttonsReleased |= getButtonState() == BUTTON_NONE;
     if (getButtonState() != BUTTON_NONE && buttonsReleased) {
@@ -325,7 +339,7 @@ void OLED::transitionSecondaryFramebuffer(const bool forwardNavigation, const Ti
       return;
     }
   }
-  refresh(); //
+  refresh(); // redraw at the end if required
 }
 
 void OLED::useSecondaryFramebuffer(bool useSecondary) {
@@ -389,7 +403,14 @@ void OLED::transitionScrollDown(const TickType_t viewEnterTime) {
       refresh(); // Now refresh to write out the contents to the new page
       return;
     }
+#ifdef OLED_128x32
+    // To keep things faster, only redraw every second line
+    if (heightPos % 2 == 0) {
+      refresh(); // Now refresh to write out the contents to the new page
+    }
+#else
     refresh(); // Now refresh to write out the contents to the new page
+#endif
     vTaskDelayUntil(&startDraw, TICKS_100MS / 7);
   }
 }
@@ -443,7 +464,15 @@ void OLED::transitionScrollUp(const TickType_t viewEnterTime) {
       refresh(); // Now refresh to write out the contents to the new page
       return;
     }
+
+#ifdef OLED_128x32
+    // To keep things faster, only redraw every second line
+    if (heightPos % 2 == 0) {
+      refresh(); // Now refresh to write out the contents to the new page
+    }
+#else
     refresh(); // Now refresh to write out the contents to the new page
+#endif
     vTaskDelayUntil(&startDraw, TICKS_100MS / 7);
   }
 }
@@ -639,76 +668,65 @@ void OLED::drawSymbol(uint8_t symbolID) {
 }
 
 // Draw an area, but y must be aligned on 0/8 offset
-void OLED::drawArea(int16_t x, int8_t y, uint8_t wide, uint8_t height, const uint8_t *ptr) {
-  // Splat this from x->x+wide in two strides
-  if (x <= -wide) {
+void OLED::drawArea(int16_t x, int8_t y, uint8_t width, uint8_t height, const uint8_t *ptr) {
+  // Splat this from x->x+width in two strides
+  if (x <= -width) {
     return; // cutoffleft
   }
-  if (x > 96) {
+  if (x > OLED_WIDTH) {
     return; // cutoff right
   }
 
   uint8_t visibleStart = 0;
-  uint8_t visibleEnd   = wide;
+  uint8_t visibleEnd   = width;
 
   // trimming to draw partials
   if (x < 0) {
     visibleStart -= x; // subtract negative value == add absolute value
   }
-  if (x + wide > 96) {
-    visibleEnd = 96 - x;
+  if (x + width > OLED_WIDTH) {
+    visibleEnd = OLED_WIDTH - x;
   }
-
-  if (y == 0) {
-    // Splat first line of data
+  uint8_t rowsDrawn = 0;
+  while (height > 0) {
     for (uint8_t xx = visibleStart; xx < visibleEnd; xx++) {
-      stripPointers[0][xx + x] = ptr[xx];
+      stripPointers[(y / 8) + rowsDrawn][x + xx] = ptr[xx + (rowsDrawn * width)];
     }
+    height -= 8;
+    rowsDrawn++;
   }
-  if (y == 8 || height >= 16) {
-    // Splat the second line
-    for (uint8_t xx = visibleStart; xx < visibleEnd; xx++) {
-      stripPointers[1][x + xx] = ptr[xx + (height == 16 ? wide : 0)];
-    }
-  }
-  // TODO NEEDS HEIGHT HANDLERS for 24/32
 }
 
 // Draw an area, but y must be aligned on 0/8 offset
 // For data which has octets swapped in a 16-bit word.
-void OLED::drawAreaSwapped(int16_t x, int8_t y, uint8_t wide, uint8_t height, const uint8_t *ptr) {
-  // Splat this from x->x+wide in two strides
-  if (x <= -wide) {
+void OLED::drawAreaSwapped(int16_t x, int8_t y, uint8_t width, uint8_t height, const uint8_t *ptr) {
+  // Splat this from x->x+width in two strides
+  if (x <= -width) {
     return; // cutoffleft
   }
-  if (x > 96) {
+  if (x > OLED_WIDTH) {
     return; // cutoff right
   }
 
   uint8_t visibleStart = 0;
-  uint8_t visibleEnd   = wide;
+  uint8_t visibleEnd   = width;
 
   // trimming to draw partials
   if (x < 0) {
     visibleStart -= x; // subtract negative value == add absolute value
   }
-  if (x + wide > 96) {
-    visibleEnd = 96 - x;
+  if (x + width > OLED_WIDTH) {
+    visibleEnd = OLED_WIDTH - x;
   }
 
-  if (y == 0) {
-    // Splat first line of data
+  uint8_t rowsDrawn = 0;
+  while (height > 0) {
     for (uint8_t xx = visibleStart; xx < visibleEnd; xx += 2) {
-      stripPointers[0][xx + x]     = ptr[xx + 1];
-      stripPointers[0][xx + x + 1] = ptr[xx];
+      stripPointers[(y / 8) + rowsDrawn][x + xx]     = ptr[xx + 1 + (rowsDrawn * width)];
+      stripPointers[(y / 8) + rowsDrawn][x + xx + 1] = ptr[xx + (rowsDrawn * width)];
     }
-  }
-  if (y == 8 || height == 16) {
-    // Splat the second line
-    for (uint8_t xx = visibleStart; xx < visibleEnd; xx += 2) {
-      stripPointers[1][x + xx]     = ptr[xx + 1 + (height == 16 ? wide : 0)];
-      stripPointers[1][x + xx + 1] = ptr[xx + (height == 16 ? wide : 0)];
-    }
+    height -= 8;
+    rowsDrawn++;
   }
 }
 
@@ -717,7 +735,7 @@ void OLED::fillArea(int16_t x, int8_t y, uint8_t wide, uint8_t height, const uin
   if (x <= -wide) {
     return; // cutoffleft
   }
-  if (x > 96) {
+  if (x > OLED_WIDTH) {
     return; // cutoff right
   }
 
@@ -728,63 +746,43 @@ void OLED::fillArea(int16_t x, int8_t y, uint8_t wide, uint8_t height, const uin
   if (x < 0) {
     visibleStart -= x; // subtract negative value == add absolute value
   }
-  if (x + wide > 96) {
-    visibleEnd = 96 - x;
+  if (x + wide > OLED_WIDTH) {
+    visibleEnd = OLED_WIDTH - x;
   }
 
-  if (y == 0) {
-    // Splat first line of data
+  uint8_t rowsDrawn = 0;
+  while (height > 0) {
     for (uint8_t xx = visibleStart; xx < visibleEnd; xx++) {
-      stripPointers[0][xx + x] = value;
+      stripPointers[(y / 8) + rowsDrawn][x + xx] = value;
     }
-  }
-  if (y == 8 || height == 16) {
-    // Splat the second line
-    for (uint8_t xx = visibleStart; xx < visibleEnd; xx++) {
-      stripPointers[1][x + xx] = value;
-    }
+    height -= 8;
+    rowsDrawn++;
   }
 }
 
 void OLED::drawFilledRect(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, bool clear) {
+  //!! LSB is at the top of the screen !!
+
   // Draw this in 3 sections
-  // This is basically a N wide version of vertical line
+  uint8_t remainingHeight = y1 - y0;
+  for (uint8_t currentRow = y0 / 8; (currentRow < (OLED_HEIGHT / 8)) && remainingHeight; currentRow++) {
+    uint8_t maskTop = (0xFF) << (y0 % 8); // Shift off the mask
+    y0              = 0;                  // Blank out any start offset for future iterations
+                                          // If we are terminating the bottom of the rectangle in this row, we mask the bottom side of things too
+    if (remainingHeight <= 8) {
+      uint8_t maskBottom = ~((0xFF) << y1 % 8);  // Create mask for
+      maskTop            = maskTop & maskBottom; // AND the two masks together for final write mask
+    }
 
-  // Step 1 : Draw in the top few pixels that are not /8 aligned
-  // LSB is at the top of the screen
-  uint8_t mask = 0xFF;
-  if (y0) {
-    mask = mask << (y0 % 8);
-    for (uint8_t col = x0; col < x1; col++) {
+    for (uint8_t xpos = x0; xpos < x1; xpos++) {
       if (clear) {
-        stripPointers[0][(y0 / 8) * 96 + col] &= ~mask;
+        stripPointers[currentRow][xpos] &= ~maskTop;
       } else {
-        stripPointers[0][(y0 / 8) * 96 + col] |= mask;
+        stripPointers[currentRow][xpos] |= maskTop;
       }
     }
-  }
-  // Next loop down the line the total number of solids
-  if (y0 / 8 != y1 / 8) {
-    for (uint8_t col = x0; col < x1; col++) {
-      for (uint8_t r = (y0 / 8); r < (y1 / 8); r++) {
-        // This gives us the row index r
-        if (clear) {
-          stripPointers[0][(r * 96) + col] = 0;
-        } else {
-          stripPointers[0][(r * 96) + col] = 0xFF;
-        }
-      }
-    }
-  }
 
-  // Finally draw the tail
-  mask = ~(mask << (y1 % 8));
-  for (uint8_t col = x0; col < x1; col++) {
-    if (clear) {
-      stripPointers[0][(y1 / 8) * 96 + col] &= ~mask;
-    } else {
-      stripPointers[0][(y1 / 8) * 96 + col] |= mask;
-    }
+    remainingHeight -= 8; // Reduce remaining height but the row stripe height
   }
 }
 

@@ -57,6 +57,7 @@
  *
  */
 #define ORIENTATION_MODE           2 // 0: Right 1:Left 2:Automatic - Default Automatic
+#define MAX_ORIENTATION_MODE       2 // Up to auto
 #define REVERSE_BUTTON_TEMP_CHANGE 0 // 0:Default 1:Reverse - Reverse the plus and minus button assigment for temperature change
 
 /**
@@ -145,14 +146,15 @@
 #define MIN_BOOST_TEMP_C       250                       // The min settable temp for boost mode °C
 #define MIN_BOOST_TEMP_F       480                       // The min settable temp for boost mode °F
 
+#define OLED_96x16         1
 #define POW_PD             1
 #define USB_PD_EPR_WATTAGE 0 /*No EPR (Yet?) */
-#define POW_PD_EXT        0
-#define POW_QC            1
-#define POW_DC            1
-#define POW_QC_20V        1
-#define ENABLE_QC2        1
-#define MAG_SLEEP_SUPPORT 1
+#define POW_PD_EXT         0
+#define POW_QC             1
+#define POW_DC             1
+#define POW_QC_20V         1
+#define ENABLE_QC2         1
+#define MAG_SLEEP_SUPPORT  1
 #define TEMP_TMP36
 #define ACCEL_BMA
 #define ACCEL_SC7

@@ -26,6 +26,7 @@ extern "C" {
 #include "settingsGUI.hpp"
 #include "stdlib.h"
 #include "string.h"
+#include "ui_drawing.hpp"
 #ifdef POW_PD
 #include "USBPD.h"
 #include "pd.h"
@@ -216,7 +217,7 @@ void startGUITask(void const *argument) {
   OLED::setInverseDisplay(getSettingValue(SettingsOptions::OLEDInversion));
 
   bool buttonLockout = false;
-  renderHomeScreenAssets();
+  ui_pre_render_assets();
   getTipRawTemp(1); // reset filter
   memset(&context, 0, sizeof(context));
 

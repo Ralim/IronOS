@@ -57,6 +57,7 @@
  *
  */
 #define ORIENTATION_MODE           0 // 0: Right 1:Left 2:Automatic - Default right
+#define MAX_ORIENTATION_MODE       1 // Unlikely to ever change
 #define REVERSE_BUTTON_TEMP_CHANGE 0 // 0:Default 1:Reverse - Reverse the plus and minus button assigment for temperature change
 
 /**
@@ -151,7 +152,7 @@
 #define ACCEL_MSA
 
 #define PROFILE_SUPPORT
-
+#define OLED_96x16         1
 #define POW_PD             1
 #define POW_PD_EXT         0
 #define USB_PD_EPR_WATTAGE 0 /*No EPR*/
