@@ -49,15 +49,26 @@ OperatingMode gui_solderingProfileMode(const ButtonState buttons, guiContext *cx
   if (cxt->scratch_state.state6 == 0) {
     cxt->scratch_state.state6 = tipTemp;
     // if this is hotter than the preheat temperature, we should fail
-    if (cxt->scratch_state.state6 >= 55) {
+    if (cxt->scratch_state.state6 >= cxt->scratch_state.state5) {
       warnUser(translatedString(Tr->TooHotToStartProfileWarning), buttons);
       return OperatingMode::HomeScreen;
     }
   }
   uint16_t phaseElapsedSeconds = (xTaskGetTickCount() - cxt->scratch_state.state3) / TICKS_SECOND;
 
-  // have we finished this phase?
-  if (phaseElapsedSeconds >= cxt->scratch_state.state2 && tipTemp == cxt->scratch_state.state5) {
+  // Have we finished this phase?
+  // Check if we have hit our temperature target in either direction.
+  bool phaseTargetReached = false;
+  if (cxt->scratch_state.state6 < cxt->scratch_state.state5 && tipTemp >= cxt->scratch_state.state5) {
+    phaseTargetReached = true;
+  } else if (cxt->scratch_state.state6 > cxt->scratch_state.state5 && tipTemp <= cxt->scratch_state.state5) {
+    phaseTargetReached = true;
+  } else if (tipTemp == cxt->scratch_state.state5) {
+    phaseTargetReached = true;
+  }
+
+  // If we both hit the temperature target and enough time has passed, phase complete.
+  if (phaseElapsedSeconds >= cxt->scratch_state.state2 && phaseTargetReached) {
     cxt->scratch_state.state1++;
     cxt->scratch_state.state6 = cxt->scratch_state.state5;
     cxt->scratch_state.state3 = xTaskGetTickCount();
@@ -115,13 +126,18 @@ OperatingMode gui_solderingProfileMode(const ButtonState buttons, guiContext *cx
 
   // determine current target temp
   if (cxt->scratch_state.state6 < cxt->scratch_state.state5) {
-    if (profileCurrentTargetTemp < cxt->scratch_state.state5) {
-      profileCurrentTargetTemp = cxt->scratch_state.state6 + ((xTaskGetTickCount() - cxt->viewEnterTime) / phaseTicksPerDegree);
+    profileCurrentTargetTemp = cxt->scratch_state.state6 + ((xTaskGetTickCount() - cxt->viewEnterTime) / phaseTicksPerDegree);
+    if (profileCurrentTargetTemp > cxt->scratch_state.state5) {
+      profileCurrentTargetTemp = cxt->scratch_state.state5;
+    }
+  } else if (cxt->scratch_state.state6 > cxt->scratch_state.state5) {
+    profileCurrentTargetTemp = cxt->scratch_state.state6 - ((xTaskGetTickCount() - cxt->viewEnterTime) / phaseTicksPerDegree);
+    // Chance of an overflow when ramping up is basically zero, but chance of an underflow here is quite high. If the target underflowed, snap it back.
+    if (profileCurrentTargetTemp < cxt->scratch_state.state5 || profileCurrentTargetTemp > cxt->scratch_state.state6) {
+      profileCurrentTargetTemp = cxt->scratch_state.state5;
     }
   } else {
-    if (profileCurrentTargetTemp > cxt->scratch_state.state5) {
-      profileCurrentTargetTemp = cxt->scratch_state.state6 - ((xTaskGetTickCount() - cxt->viewEnterTime) / phaseTicksPerDegree);
-    }
+    profileCurrentTargetTemp = cxt->scratch_state.state5;
   }
 
   // Draw in the screen details
