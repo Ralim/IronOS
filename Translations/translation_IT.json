@@ -107,13 +107,13 @@
   },
   "menuValues": {
     "USBPDModeDefault": {
-      "displayText": "Modo\npredefinito"
+      "displayText": "Modalità\npredefinita"
     },
     "USBPDModeNoDynamic": {
-      "displayText": "Modo\nstatico"
+      "displayText": "Modalità\nstatica"
     },
     "USBPDModeSafe": {
-      "displayText": "Modo\nsicuro"
+      "displayText": "Modalità\nsicura"
     }
   },
   "menuOptions": {
