@@ -110,6 +110,12 @@ typedef enum {
   NO_DYNAMIC = 0, // PPS + EPR disabled, fixed PDO only
 } usbpdMode_t;
 
+typedef enum {
+  DISABLED = 0, // Locking buttons is disabled
+  BOOST    = 1, // Locking buttons for Boost mode only
+  FULL     = 2, // Locking buttons fully
+} lockingMode_t;
+
 // Settings wide operations
 void saveSettings();
 bool loadSettings();

@@ -10,7 +10,7 @@ OperatingMode handleSolderingButtons(const ButtonState buttons, guiContext *cxt)
   if (cxt->scratch_state.state1 == 1) {
     // Buttons are currently locked
     if (buttons == BUTTON_F_LONG) {
-      if (getSettingValue(SettingsOptions::BoostTemp) && (getSettingValue(SettingsOptions::LockingMode) == 1)) {
+      if (getSettingValue(SettingsOptions::BoostTemp) && (getSettingValue(SettingsOptions::LockingMode) == lockingMode_t::BOOST)) {
         cxt->scratch_state.state2 = 1;
       }
     } else if (buttons == BUTTON_BOTH_LONG) {
@@ -45,11 +45,9 @@ OperatingMode handleSolderingButtons(const ButtonState buttons, guiContext *cxt)
     cxt->transitionMode = TransitionAnimation::Left;
     return OperatingMode::TemperatureAdjust;
   case BUTTON_BOTH_LONG:
-    if (getSettingValue(SettingsOptions::LockingMode) != 0) {
+    if (getSettingValue(SettingsOptions::LockingMode) && warnUser(translatedString(Tr->LockingKeysString), buttons)) {
       // Lock buttons
-      if (warnUser(translatedString(Tr->LockingKeysString), buttons)) {
-        cxt->scratch_state.state1 = 1;
-      }
+      cxt->scratch_state.state1 = 1;
     }
     break;
   default:
@@ -57,6 +55,7 @@ OperatingMode handleSolderingButtons(const ButtonState buttons, guiContext *cxt)
   }
   return OperatingMode::Soldering;
 }
+
 OperatingMode gui_solderingMode(const ButtonState buttons, guiContext *cxt) {
   /*
    * * Soldering (gui_solderingMode)

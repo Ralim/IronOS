@@ -611,13 +611,13 @@ static void displayTempChangeLongStep(void) { OLED::printNumber(getSettingValue(
 
 static void displayLockingMode(void) {
   switch (getSettingValue(SettingsOptions::LockingMode)) {
-  case 0:
+  case lockingMode_t::DISABLED:
     OLED::drawUnavailableIcon();
     break;
-  case 1:
+  case lockingMode_t::BOOST:
     OLED::print(translatedString(Tr->SettingLockBoostChar), FontStyle::LARGE);
     break;
-  case 2:
+  case lockingMode_t::FULL:
     OLED::print(translatedString(Tr->SettingLockFullChar), FontStyle::LARGE);
     break;
   default:
