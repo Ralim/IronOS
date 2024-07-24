@@ -31,9 +31,9 @@ void ui_draw_soldering_profile_advanced(TemperatureType_t tipTemp, TemperatureTy
 
   // print time progress / preheat / cooldown
   if (OLED::getRotation()) {
-    OLED::setCursor(42, 8);
+    OLED::setCursor(42, 16);
   } else {
-    OLED::setCursor(0, 8);
+    OLED::setCursor(0, 16);
   }
 
   if (phase == 0) {

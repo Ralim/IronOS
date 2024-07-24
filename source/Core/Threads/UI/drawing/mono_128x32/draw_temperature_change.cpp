@@ -3,7 +3,7 @@
 #ifdef OLED_128x32
 void ui_draw_temperature_change(void) {
 
-  OLED::setCursor(0, 0);
+  OLED::setCursor(8, 8);
   if (OLED::getRotation()) {
     OLED::print(getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled) ? LargeSymbolPlus : LargeSymbolMinus, FontStyle::LARGE);
   } else {

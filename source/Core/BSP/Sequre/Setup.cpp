@@ -51,7 +51,8 @@ void        Setup_HAL() {
   HAL_ADCEx_InjectedStart(&hadc1);                                   // enable injected readings
   HAL_ADCEx_InjectedStart(&hadc2);                                   // enable injected readings
 
-  // Setup movement pin
+// Setup movement pin
+#ifdef MOVEMENT_Pin
   {
     GPIO_InitTypeDef GPIO_InitStruct;
     GPIO_InitStruct.Pin   = MOVEMENT_Pin;
@@ -60,9 +61,11 @@ void        Setup_HAL() {
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
     HAL_GPIO_Init(MOVEMENT_GPIO_Port, &GPIO_InitStruct);
   }
+#endif
 }
 
 uint16_t getADCHandleTemp(uint8_t sample) {
+#ifdef TMP36_ADC1_CHANNEL
   static history<uint16_t, ADC_FILTER_LEN> filter = {{0}, 0, 0};
   if (sample) {
     uint32_t sum = 0;
@@ -72,6 +75,9 @@ uint16_t getADCHandleTemp(uint8_t sample) {
     filter.update(sum);
   }
   return filter.average() >> 1;
+#else
+  return 0;
+#endif
 }
 
 uint16_t getADCVin(uint8_t sample) {
@@ -165,13 +171,19 @@ static void MX_ADC1_Init(void) {
   hadc1.Init.NbrOfConversion       = 1;
   HAL_ADC_Init(&hadc1);
 
-  /**Configure Regular Channel
-   */
+/**Configure Regular Channel
+ */
+#ifdef TMP36_ADC1_CHANNEL
   sConfig.Channel      = TMP36_ADC1_CHANNEL;
   sConfig.Rank         = ADC_REGULAR_RANK_1;
   sConfig.SamplingTime = ADC_SAMPLETIME_71CYCLES_5;
   HAL_ADC_ConfigChannel(&hadc1, &sConfig);
-
+#else
+  sConfig.Channel      = VIN_ADC1_CHANNEL; // Filler
+  sConfig.Rank         = ADC_REGULAR_RANK_1;
+  sConfig.SamplingTime = ADC_SAMPLETIME_71CYCLES_5;
+  HAL_ADC_ConfigChannel(&hadc1, &sConfig);
+#endif
   /**Configure Injected Channel
    */
   // F in = 10.66 MHz
