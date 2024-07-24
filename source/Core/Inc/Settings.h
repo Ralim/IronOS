@@ -113,7 +113,7 @@ typedef enum {
 typedef enum {
   DISABLED = 0, // Locking buttons is disabled
   BOOST    = 1, // Locking buttons for Boost mode only
-  FULL     = 2, // Locking buttons fully
+  FULL     = 2, // Locking buttons for Boost mode AND for Soldering mode
 } lockingMode_t;
 
 // Settings wide operations
