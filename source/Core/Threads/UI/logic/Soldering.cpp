@@ -2,7 +2,7 @@
 #include "OperatingModes.h"
 #include "SolderingCommon.h"
 #include "ui_drawing.hpp"
-// State 1 = button locking  (0:unlocked, 1:unlocked+released, 2:locked, 3:locked+released)
+// State 1 = button locking  (0:unlocked+released, 1:unlocked, 2:locked, 3:locked+released)
 // State 2 = boost mode
 // State 3 = buzzer timer
 
