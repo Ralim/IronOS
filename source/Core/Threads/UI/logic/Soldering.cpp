@@ -21,6 +21,8 @@ OperatingMode handleSolderingButtons(const ButtonState buttons, guiContext *cxt)
         if (warnUser(translatedString(Tr->UnlockingKeysString), buttons)) {
           cxt->scratch_state.state1 = 1;
         }
+      } else {
+        warnUser(translatedString(Tr->WarningKeysLockedString), buttons);
       }
       break;
     case BUTTON_NONE:
@@ -54,10 +56,15 @@ OperatingMode handleSolderingButtons(const ButtonState buttons, guiContext *cxt)
     cxt->transitionMode = TransitionAnimation::Left;
     return OperatingMode::TemperatureAdjust;
   case BUTTON_BOTH_LONG:
-    if (getSettingValue(SettingsOptions::LockingMode) && warnUser(translatedString(Tr->LockingKeysString), buttons)) {
+    if (getSettingValue(SettingsOptions::LockingMode)) {
       // Lock buttons
       if (cxt->scratch_state.state1 == 0) {
-        cxt->scratch_state.state1 = 2;
+        if (warnUser(translatedString(Tr->LockingKeysString), buttons)) {
+          cxt->scratch_state.state1 = 2;
+        }
+      } else {
+        // FIXME should be WarningKeysUnlockedString
+        warnUser(translatedString(Tr->UnlockingKeysString), buttons);
       }
     }
     break;
