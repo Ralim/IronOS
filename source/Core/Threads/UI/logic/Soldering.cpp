@@ -8,8 +8,9 @@
 
 OperatingMode handleSolderingButtons(const ButtonState buttons, guiContext *cxt) {
   if (cxt->scratch_state.state1 >= 2) {
+    // Buttons are currently locked
     switch (buttons) {
-    case BUTTON_F_LONG:  // Buttons are currently locked
+    case BUTTON_F_LONG:
       if (getSettingValue(SettingsOptions::BoostTemp) && (getSettingValue(SettingsOptions::LockingMode) == lockingMode_t::BOOST)) {
         cxt->scratch_state.state2 = 1;
       }
