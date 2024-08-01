@@ -2,25 +2,35 @@
 #include "OperatingModes.h"
 #include "SolderingCommon.h"
 #include "ui_drawing.hpp"
-// State 1 = button locking
+// State 1 = button locking  (0:unlocked+released, 1:unlocked, 2:locked, 3:locked+released)
 // State 2 = boost mode
 // State 3 = buzzer timer
 
 OperatingMode handleSolderingButtons(const ButtonState buttons, guiContext *cxt) {
-  if (cxt->scratch_state.state1 == 1) {
+  if (cxt->scratch_state.state1 >= 2) {
     // Buttons are currently locked
-    if (buttons == BUTTON_F_LONG) {
+    switch (buttons) {
+    case BUTTON_F_LONG:
       if (getSettingValue(SettingsOptions::BoostTemp) && (getSettingValue(SettingsOptions::LockingMode) == lockingMode_t::BOOST)) {
         cxt->scratch_state.state2 = 1;
       }
-    } else if (buttons == BUTTON_BOTH_LONG) {
-      // Unlocking
-      if (warnUser(translatedString(Tr->UnlockingKeysString), buttons)) {
-        cxt->scratch_state.state1 = 0;
+      break;
+    case BUTTON_BOTH_LONG:
+      if (cxt->scratch_state.state1 == 3) {
+        // Unlocking
+        if (warnUser(translatedString(Tr->UnlockingKeysString), buttons)) {
+          cxt->scratch_state.state1 = 1;
+        }
+      } else {
+        warnUser(translatedString(Tr->WarningKeysLockedString), buttons);
       }
-    } else if (buttons != BUTTON_NONE) {
-      // Do nothing and display a lock warning
+      break;
+    case BUTTON_NONE:
+      cxt->scratch_state.state1 = 3;
+      break;
+    default: // Do nothing and display a lock warning
       warnUser(translatedString(Tr->WarningKeysLockedString), buttons);
+      break;
     }
     return OperatingMode::Soldering;
   }
@@ -28,6 +38,7 @@ OperatingMode handleSolderingButtons(const ButtonState buttons, guiContext *cxt)
   switch (buttons) {
   case BUTTON_NONE:
     cxt->scratch_state.state2 = 0;
+    cxt->scratch_state.state1 = 0;
     break;
   case BUTTON_BOTH:
   /*Fall through*/
@@ -45,9 +56,16 @@ OperatingMode handleSolderingButtons(const ButtonState buttons, guiContext *cxt)
     cxt->transitionMode = TransitionAnimation::Left;
     return OperatingMode::TemperatureAdjust;
   case BUTTON_BOTH_LONG:
-    if (getSettingValue(SettingsOptions::LockingMode) && warnUser(translatedString(Tr->LockingKeysString), buttons)) {
+    if (getSettingValue(SettingsOptions::LockingMode)) {
       // Lock buttons
-      cxt->scratch_state.state1 = 1;
+      if (cxt->scratch_state.state1 == 0) {
+        if (warnUser(translatedString(Tr->LockingKeysString), buttons)) {
+          cxt->scratch_state.state1 = 2;
+        }
+      } else {
+        // FIXME should be WarningKeysUnlockedString
+        warnUser(translatedString(Tr->UnlockingKeysString), buttons);
+      }
     }
     break;
   default:
