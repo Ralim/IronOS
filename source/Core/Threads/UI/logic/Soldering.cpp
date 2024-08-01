@@ -7,7 +7,7 @@
 // State 3 = buzzer timer
 
 OperatingMode handleSolderingButtons(const ButtonState buttons, guiContext *cxt) {
-  if (cxt->scratch_state.state1 >= 2) {
+  if (cxt->scratch_state.state1 & (2|3)) {
     // Buttons are currently locked
     switch (buttons) {
     case BUTTON_F_LONG:
@@ -16,17 +16,21 @@ OperatingMode handleSolderingButtons(const ButtonState buttons, guiContext *cxt)
       }
       break;
     case BUTTON_BOTH_LONG:
-      if (cxt->scratch_state.state1 == 3) {
+      if ((cxt->scratch_state.state1 & (2|3)) == 3) {
         // Unlocking
         if (warnUser(translatedString(Tr->UnlockingKeysString), buttons)) {
-          cxt->scratch_state.state1 = 1;
+          // cxt->scratch_state.state1 &= ~3;
+          // cxt->scratch_state.state1 |= 1;
+          cxt->scratch_state.state1 &= ~2;
         }
       } else {
         warnUser(translatedString(Tr->WarningKeysLockedString), buttons);
       }
       break;
     case BUTTON_NONE:
-      cxt->scratch_state.state1 = 3;
+      //cxt->scratch_state.state1 &= ~2;
+      //cxt->scratch_state.state1 |= 3;
+      cxt->scratch_state.state1 |= 3;
       break;
     default: // Do nothing and display a lock warning
       warnUser(translatedString(Tr->WarningKeysLockedString), buttons);
@@ -38,7 +42,7 @@ OperatingMode handleSolderingButtons(const ButtonState buttons, guiContext *cxt)
   switch (buttons) {
   case BUTTON_NONE:
     cxt->scratch_state.state2 = 0;
-    cxt->scratch_state.state1 = 0;
+    cxt->scratch_state.state1 &= ~1;
     break;
   case BUTTON_BOTH:
   /*Fall through*/
@@ -58,9 +62,9 @@ OperatingMode handleSolderingButtons(const ButtonState buttons, guiContext *cxt)
   case BUTTON_BOTH_LONG:
     if (getSettingValue(SettingsOptions::LockingMode)) {
       // Lock buttons
-      if (cxt->scratch_state.state1 == 0) {
+      if ((cxt->scratch_state.state1 & 1) == 0) {
         if (warnUser(translatedString(Tr->LockingKeysString), buttons)) {
-          cxt->scratch_state.state1 = 2;
+          cxt->scratch_state.state1 |= 2;
         }
       } else {
         // FIXME should be WarningKeysUnlockedString
