@@ -11,7 +11,7 @@ OperatingMode handleSolderingButtons(const ButtonState buttons, guiContext *cxt)
     // Buttons are currently locked
     if (cxt->scratch_state.state1 > 3) {
       // show locked until timer is up
-      if ((uint16_t)(xTaskGetTickCount() << 2) - (cxt->scratch_state.state1 & ~3) > TICKS_SECOND) {
+      if ((uint16_t)(xTaskGetTickCount() << 2) - (cxt->scratch_state.state1 & ~3) > TICKS_SECOND << 2) {
         cxt->scratch_state.state1 &= 3;
       } else {
         warnUser(translatedString(Tr->WarningKeysLockedString), buttons);
