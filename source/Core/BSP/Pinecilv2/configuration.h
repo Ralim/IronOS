@@ -171,9 +171,9 @@
 #define NEEDS_VBUS_PROBE          0   // No vbus probe, its not connected in pcb
 #define CANT_DIRECT_READ_SETTINGS     // We cant memcpy settings due to flash cache
 #define TIP_CONTROL_PID               // We use PID rather than integrator
-#define TIP_PID_KP                40  // Reasonable compromise for most tips so far
-#define TIP_PID_KI                6   // About as high for stability across tips
-#define TIP_PID_KD                200 // Helps dampen smaller tips; ~= nothing for larger tips
+#define TIP_PID_KP                40//40  // Reasonable compromise for most tips so far
+#define TIP_PID_KI                0//6   // About as high for stability across tips
+#define TIP_PID_KD                0//200 // Helps dampen smaller tips; ~= nothing for larger tips
 #define FILTER_DISPLAYED_TIP_TEMP 8   // Filtering for GUI display
 
 #endif /* Pinecilv2 */
