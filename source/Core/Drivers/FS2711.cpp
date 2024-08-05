@@ -41,12 +41,13 @@ uint8_t i2c_read(uint8_t addr) {
 }
 
 bool i2c_probe(uint8_t addr) {
+  bool probing_state = false;
   if (I2C_PORT == 2) {
-    I2CBB2::probe(addr);
+    probing_state = I2CBB2::probe(addr);
   } else if (I2C_PORT == 1) {
-    I2CBB1::probe(addr);
+    probing_state = I2CBB1::probe(addr);
   }
-  return false;
+  return probing_state;
 }
 
 uint8_t FS2711::detect_i2c_bus_num() {
