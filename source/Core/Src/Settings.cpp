@@ -135,9 +135,9 @@ bool sanitiseSettings() {
   // For all settings, need to ensure settings are in a valid range
   // First for any not know about due to array growth, reset them and update the length value
   bool dirty = false;
-  if (systemSettings.versionMarker != 0x55AA) {
+  if (systemSettings.versionMarker != SETTINGSVERSION) {
     memset((void *)&systemSettings, 0xFF, sizeof(systemSettings));
-    systemSettings.versionMarker = 0x55AA;
+    systemSettings.versionMarker = SETTINGSVERSION;
     dirty                        = true;
   }
   if (systemSettings.padding != 0xFFFFFFFF) {

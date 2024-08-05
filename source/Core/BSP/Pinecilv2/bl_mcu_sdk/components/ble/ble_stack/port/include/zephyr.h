@@ -2,7 +2,6 @@
 #define ZEPHYR_H
 #include <stdint.h>
 #include <stddef.h>
-#include <FreeRTOS.h>
 
 #include <zephyr/types.h>
 #include <misc/slist.h>
@@ -129,7 +128,11 @@ struct k_poll_signal {
     }
 
 extern int k_poll_signal_raise(struct k_poll_signal *signal, int result);
+#if (BFLB_BT_CO_THREAD)
+extern int k_poll(struct k_poll_event *events, int num_events, int total_evt_array_cnt, s32_t timeout, u8_t *to_process);
+#else
 extern int k_poll(struct k_poll_event *events, int num_events, s32_t timeout);
+#endif
 extern void k_poll_event_init(struct k_poll_event *event, u32_t type, int mode, void *obj);
 
 /* public - polling modes */

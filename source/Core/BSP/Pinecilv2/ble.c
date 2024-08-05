@@ -59,3 +59,12 @@ void vApplicationMallocFailedHook(void) {
     ;
   }
 }
+
+void user_vAssertCalled(void) {
+
+  MSG("user_vAssertCalled\r\n");
+
+  while (1) {
+    ;
+  }
+}

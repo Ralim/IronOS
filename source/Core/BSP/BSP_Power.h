@@ -8,6 +8,8 @@
 
 #ifndef BSP_POWER_H_
 #define BSP_POWER_H_
+#include "Types.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -21,6 +23,8 @@ uint8_t getTipResistanceX10();
 
 uint16_t getTipThermalMass();
 uint16_t getTipInertia();
+
+TemperatureType_t getCustomTipMaxInC();
 
 #ifdef __cplusplus
 }

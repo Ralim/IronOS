@@ -21,6 +21,7 @@
  *
  */
 #include "hal_usb.h"
+#include "bl702_dma.h"
 #include "bl702_glb.h"
 #include "bl702_usb.h"
 #include "hal_dma.h"
@@ -396,8 +397,8 @@ int usb_write(struct device *dev, uint32_t pos, const void *buffer, uint32_t siz
     usb_lli_list.cfg.bits.TransferSize = size;
     usb_lli_list.cfg.bits.DI           = 0;
     usb_lli_list.cfg.bits.SI           = 1;
-    usb_lli_list.cfg.bits.SBSize       = DMA_BURST_16BYTE;
-    usb_lli_list.cfg.bits.DBSize       = DMA_BURST_1BYTE;
+    usb_lli_list.cfg.bits.SBSize       = DMA_BURST_SIZE_16;
+    usb_lli_list.cfg.bits.DBSize       = DMA_BURST_SIZE_1;
     dma_channel_update(usb_device->tx_dma, (void *)((uint32_t)&usb_lli_list));
     dma_channel_start(usb_device->tx_dma);
     return 0;
@@ -420,8 +421,8 @@ int usb_read(struct device *dev, uint32_t pos, void *buffer, uint32_t size) {
     usb_lli_list.cfg.bits.TransferSize = size;
     usb_lli_list.cfg.bits.DI           = 1;
     usb_lli_list.cfg.bits.SI           = 0;
-    usb_lli_list.cfg.bits.SBSize       = DMA_BURST_1BYTE;
-    usb_lli_list.cfg.bits.DBSize       = DMA_BURST_16BYTE;
+    usb_lli_list.cfg.bits.SBSize       = DMA_BURST_SIZE_1;
+    usb_lli_list.cfg.bits.DBSize       = DMA_BURST_SIZE_16;
     dma_channel_update(usb_device->rx_dma, (void *)((uint32_t)&usb_lli_list));
     dma_channel_start(usb_device->rx_dma);
     return 0;
@@ -817,9 +818,8 @@ int usb_dc_ep_write(struct device *dev, const uint8_t ep, const uint8_t *data, u
 
   memcopy_to_fifo((void *)ep_tx_fifo_addr, (uint8_t *)data, data_len);
   /* Clear NAK and enable ep */
-  if (USB_EP_GET_IDX(ep) != 0) {
+  if (USB_EP_GET_IDX(ep) != 0)
     USB_Set_EPx_Rdy(USB_EP_GET_IDX(ep));
-  }
   USB_DC_LOG_DBG("EP%d write %u bytes\r\n", ep_idx, data_len);
 
   if (ret_bytes) {

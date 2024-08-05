@@ -11,7 +11,13 @@
 #define SETTINGS_H_
 #include <stdbool.h>
 #include <stdint.h>
-#define SETTINGSVERSION (0x2A) // This number is frozen, do not edit
+
+#ifdef MODEL_Pinecilv2
+// Required settings reset for PR #1916
+#define SETTINGSVERSION (0x55AB) // This number is frozen, do not edit
+#else
+#define SETTINGSVERSION (0x55AA) // This number is frozen, do not edit
+#endif
 
 enum SettingsOptions {
   SolderingTemp                  = 0,  // current set point for the iron
@@ -97,6 +103,12 @@ typedef enum {
   ONETIME  = 5, // Show boot logo once (if animated) and stall until a button toggled
   INFINITY = 6, // Show boot logo on repeat (if animated) until a button toggled
 } logoMode_t;
+
+typedef enum {
+  DEFAULT    = 1, // PPS + EPR + more power request through increasing resistance by 0.5 Ohm to compensate power loss over cable/PCB/etc.
+  SAFE       = 2, // PPS + EPR, without requesting more power
+  NO_DYNAMIC = 0, // PPS + EPR disabled, fixed PDO only
+} usbpdMode_t;
 
 // Settings wide operations
 void saveSettings();

@@ -17,9 +17,9 @@
  *
  * (originally from x86's atomic.c)
  */
+
 #include "bl_port.h"
-#include <FreeRTOS.h>
-#include <include/atomic.h>
+#include <atomic.h>
 // #include <toolchain.h>
 // #include <arch/cpu.h>
 

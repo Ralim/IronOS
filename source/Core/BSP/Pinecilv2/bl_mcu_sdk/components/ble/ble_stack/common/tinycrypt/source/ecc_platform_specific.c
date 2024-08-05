@@ -70,9 +70,8 @@
 
 int default_CSPRNG(uint8_t *dest, unsigned int size) {
   /* input sanity check: */
-  if (dest == (uint8_t *)0 || (size <= 0)) {
+  if (dest == (uint8_t *)0 || (size <= 0))
     return 0;
-  }
 
   int fd = open("/dev/urandom", O_RDONLY | O_CLOEXEC);
   if (fd == -1) {

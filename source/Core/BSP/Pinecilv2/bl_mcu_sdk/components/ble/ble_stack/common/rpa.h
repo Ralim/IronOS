@@ -13,4 +13,4 @@
 #include "hci_host.h"
 
 bool bt_rpa_irk_matches(const u8_t irk[16], const bt_addr_t *addr);
-int bt_rpa_create(const u8_t irk[16], bt_addr_t *rpa);
+int  bt_rpa_create(const u8_t irk[16], bt_addr_t *rpa);
