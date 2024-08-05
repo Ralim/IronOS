@@ -26,7 +26,7 @@ OperatingMode handleSolderingButtons(const ButtonState buttons, guiContext *cxt)
           cxt->scratch_state.state1 = 1;
         }
       } else {
-        warnUser(translatedString(Tr->WarningKeysLockedString), buttons);
+        vTaskDelay(TICKS_SECOND);
       }
       break;
     case BUTTON_NONE:
@@ -76,6 +76,7 @@ OperatingMode handleSolderingButtons(const ButtonState buttons, guiContext *cxt)
       } else {
         // FIXME should be WarningKeysUnlockedString
         warnUser(translatedString(Tr->UnlockingKeysString), buttons);
+        vTaskDelay(TICKS_SECOND);
       }
     }
     break;
