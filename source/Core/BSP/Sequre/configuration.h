@@ -212,7 +212,7 @@
 #define OP_AMP_GAIN_STAGE  237 // Two sequential op-amps 1st: 1+(9k29/997R)=10.31 2nd: 1+(22k/1k)=23 -> 10.31*23=237
 #define TEMP_uV_LOOKUP_S99
 #define USB_PD_VMAX        20  // Maximum voltage for PD to negotiate
-#define USB_PD_TIMEOUT     2   // Default Timeout for USB-PD Protocol negotiation in x100ms
+#define USB_PD_TIMEOUT     1   // Default Timeout for USB-PD Protocol negotiation in x100ms
 
 #define HARDWARE_MAX_WATTAGE_X10 1300
 
