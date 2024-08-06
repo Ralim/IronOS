@@ -9,10 +9,10 @@
 OperatingMode handleSolderingButtons(const ButtonState buttons, guiContext *cxt) {
   if (cxt->scratch_state.state1 >= 2) {
     // Buttons are currently locked
-    if (cxt->scratch_state.state1 > 3) {
+    if (cxt->scratch_state.state7 != 0) {
       // show locked until timer is up
-      if ((uint16_t)(xTaskGetTickCount() << 2) - (cxt->scratch_state.state1 & ~3) > TICKS_SECOND << 2) {
-        cxt->scratch_state.state1 &= 3;
+      if (xTaskGetTickCount() >= cxt->scratch_state.state7) {
+        cxt->scratch_state.state7 = 0;
       } else {
         warnUser(translatedString(Tr->WarningKeysLockedString), buttons);
         return OperatingMode::Soldering;
@@ -26,7 +26,7 @@ OperatingMode handleSolderingButtons(const ButtonState buttons, guiContext *cxt)
           cxt->scratch_state.state1 = 1;
         }
       } else {
-        vTaskDelay(TICKS_SECOND);
+        warnUser(translatedString(Tr->WarningKeysLockedString), buttons);
       }
       break;
     case BUTTON_NONE:
@@ -39,7 +39,7 @@ OperatingMode handleSolderingButtons(const ButtonState buttons, guiContext *cxt)
       }
     /*Fall through*/
     default: // Set timer for and display a lock warning
-      cxt->scratch_state.state1 |= (xTaskGetTickCount() + TICKS_SECOND) << 2;
+      cxt->scratch_state.state7 = xTaskGetTickCount() + TICKS_SECOND;
       warnUser(translatedString(Tr->WarningKeysLockedString), buttons);
       break;
     }
@@ -76,7 +76,6 @@ OperatingMode handleSolderingButtons(const ButtonState buttons, guiContext *cxt)
       } else {
         // FIXME should be WarningKeysUnlockedString
         warnUser(translatedString(Tr->UnlockingKeysString), buttons);
-        vTaskDelay(TICKS_SECOND);
       }
     }
     break;
