@@ -7,12 +7,14 @@
 
 #include "settingsGUI.hpp"
 #include "Buttons.hpp"
+#include "Font.h"
 #include "ScrollMessage.hpp"
 #include "TipThermoModel.h"
 #include "Translation.h"
 #include "cmsis_os.h"
 #include "configuration.h"
 #include "main.hpp"
+#include "ui_drawing.hpp"
 
 #ifdef POW_DC
 static void displayInputVRange(void);
@@ -114,7 +116,7 @@ static bool showHallEffect(void);
 
 // Menu functions
 
-#if defined(POW_DC) || defined(POW_QC) || defined(POW_PD) || POW_PD_EXT == 2
+#if defined(POW_DC) || defined(POW_QC) || defined(POW_PD) || defined(POW_PD) || POW_PD_EXT == 2
 static void displayPowerMenu(void);
 #endif /* POW_DC or POW_QC or POW_PD or POD_PD_EXT 2*/
 
@@ -206,7 +208,7 @@ const menuitem rootSettingsMenu[] {
    * // Language
    * Exit
    */
-#if defined(POW_DC) || defined(POW_QC)
+#if defined(POW_DC) || defined(POW_QC) || defined(POW_PD)
   /* Power */
   {0, nullptr, displayPowerMenu, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0},
 #endif
@@ -609,13 +611,13 @@ static void displayTempChangeLongStep(void) { OLED::printNumber(getSettingValue(
 
 static void displayLockingMode(void) {
   switch (getSettingValue(SettingsOptions::LockingMode)) {
-  case 0:
+  case lockingMode_t::DISABLED:
     OLED::drawUnavailableIcon();
     break;
-  case 1:
+  case lockingMode_t::BOOST:
     OLED::print(translatedString(Tr->SettingLockBoostChar), FontStyle::LARGE);
     break;
-  case 2:
+  case lockingMode_t::FULL:
     OLED::print(translatedString(Tr->SettingLockFullChar), FontStyle::LARGE);
     break;
   default:
@@ -858,10 +860,10 @@ static void displayLogoTime(void) {
     OLED::drawUnavailableIcon();
     break;
   case logoMode_t::ONETIME:
-    OLED::drawArea(OLED_WIDTH - 16 - 2, 0, 16, 16, RepeatOnce);
+    OLED::drawArea(OLED_WIDTH - OLED_HEIGHT - 2, 0, OLED_HEIGHT, OLED_HEIGHT, RepeatOnce);
     break;
   case logoMode_t::INFINITY:
-    OLED::drawArea(OLED_WIDTH - 16 - 2, 0, 16, 16, RepeatInf);
+    OLED::drawArea(OLED_WIDTH - OLED_HEIGHT - 2, 0, OLED_HEIGHT, OLED_HEIGHT, RepeatInf);
     break;
   default:
     OLED::printNumber(getSettingValue(SettingsOptions::LOGOTime), 1, FontStyle::LARGE);
@@ -1013,10 +1015,11 @@ static void displayMenu(size_t index) {
   // Draw symbol
   // 16 pixel wide image
   // less 2 pixel wide scrolling indicator
-  OLED::drawArea(OLED_WIDTH - 16 - 2, 0, 16, 16, (&SettingsMenuIcons[index][(16 * 2) * currentFrame]));
+
+  OLED::drawArea(OLED_WIDTH - SETTINGS_ICON_WIDTH - 2, 0, SETTINGS_ICON_WIDTH, SETTINGS_ICON_HEIGHT, (&SettingsMenuIcons[index][(SETTINGS_ICON_WIDTH * (SETTINGS_ICON_HEIGHT / 8)) * currentFrame]));
 }
 
-#if defined(POW_DC) || defined(POW_QC)
+#if defined(POW_DC) || defined(POW_QC) || defined(POW_PD)
 static void displayPowerMenu(void) { displayMenu(0); }
 
 #endif /* POW_DC or POW_QC */

@@ -51,13 +51,13 @@ typedef struct {
 
 static const SettingConstants settingsConstants[(int)SettingsOptions::SettingsOptionsLength] = {
   //{                   min,                               max,         increment,                      default}
-    {            MIN_TEMP_C,                        MAX_TEMP_F,                 5,                          320}, // SolderingTemp
+    {            MIN_TEMP_C,                        MAX_TEMP_F,                 5,               SOLDERING_TEMP}, // SolderingTemp
     {            MIN_TEMP_C,                        MAX_TEMP_F,                 5,                          150}, // SleepTemp
     {                     0,                                15,                 1,                   SLEEP_TIME}, // SleepTime
     {                     0,                                 4,                 1,              CUT_OUT_SETTING}, // MinDCVoltageCells
     {                    24,                                38,                 1,               RECOM_VOL_CELL}, // MinVoltageCells
     {                    90,                    QC_VOLTAGE_MAX,                 2,                           90}, // QCIdealVoltage
-    {                     0,                                 2,                 1,             ORIENTATION_MODE}, // OrientationMode
+    {                     0,              MAX_ORIENTATION_MODE,                 1,             ORIENTATION_MODE}, // OrientationMode
     {                     0,                                 9,                 1,                  SENSITIVITY}, // Sensitivity
     {                     0,                                 1,                 1,               ANIMATION_LOOP}, // AnimationLoop
     {                     0,  settingOffSpeed_t::MAX_VALUE - 1,                 1,              ANIMATION_SPEED}, // AnimationSpeed

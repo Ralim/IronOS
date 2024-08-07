@@ -57,6 +57,7 @@
  *
  */
 #define ORIENTATION_MODE           2 // 0: Right 1:Left 2:Automatic - Default Automatic
+#define MAX_ORIENTATION_MODE       2 // Up to auto
 #define REVERSE_BUTTON_TEMP_CHANGE 0 // 0:Default 1:Reverse - Reverse the plus and minus button assigment for temperature change
 
 /**
@@ -156,6 +157,7 @@
 #define ENABLE_QC2                 1
 #define MAG_SLEEP_SUPPORT          1
 #define DEVICE_HAS_VALIDATION_SUPPORT
+#define OLED_96x16 1
 #define TEMP_NTC
 #define ACCEL_BMA
 #define CUSTOM_MAX_TEMP_C 1 // Uses custom max temp lookup
@@ -169,8 +171,8 @@
 #define NEEDS_VBUS_PROBE          0   // No vbus probe, its not connected in pcb
 #define CANT_DIRECT_READ_SETTINGS     // We cant memcpy settings due to flash cache
 #define TIP_CONTROL_PID               // We use PID rather than integrator
-#define TIP_PID_KP                45  // Reasonable compromise for most tips so far
-#define TIP_PID_KI                9   // About as high for stability across tips
+#define TIP_PID_KP                40  // Reasonable compromise for most tips so far
+#define TIP_PID_KI                6   // About as high for stability across tips
 #define TIP_PID_KD                200 // Helps dampen smaller tips; ~= nothing for larger tips
 #define FILTER_DISPLAYED_TIP_TEMP 8   // Filtering for GUI display
 

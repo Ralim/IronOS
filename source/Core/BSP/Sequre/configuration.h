@@ -65,7 +65,8 @@
  * OLED Orientation
  *
  */
-#define ORIENTATION_MODE           0 // 0: Right 1:Left 2:Automatic - Default Automatic
+#define ORIENTATION_MODE           0 // 0: Right 1:Left (2:Automatic N/A)
+#define MAX_ORIENTATION_MODE       1 // Disable auto mode
 #define REVERSE_BUTTON_TEMP_CHANGE 0 // 0:Default 1:Reverse - Reverse the plus and minus button assigment for temperature change
 
 /**
@@ -99,9 +100,6 @@
 #define DETAILED_SOLDERING 0 // 0: Disable 1: Enable - Default 0
 #define DETAILED_IDLE      0 // 0: Disable 1: Enable - Default 0
 
-#define THERMAL_RUNAWAY_TIME_SEC 20
-#define THERMAL_RUNAWAY_TEMP_C   10
-
 #define CUT_OUT_SETTING          0  // default to no cut-off voltage
 #define RECOM_VOL_CELL           33 // Minimum voltage per cell (Recommended 3.3V (33))
 #define TEMPERATURE_INF          0  // default to 0
@@ -119,21 +117,11 @@
 // Vin_max = (3.3*(r1+r2))/(r2)
 // vdiv = (32768*4)/(vin_max*10)
 
-#if defined(MODEL_S60) + defined(MODEL_S60P) + defined(MODEL_S99) == 0
+#if defined(MODEL_S60) + defined(MODEL_S60P) + defined(MODEL_T55) + defined(MODEL_S99) == 0
 #error "No model defined!"
 #endif
 
 #define NEEDS_VBUS_PROBE 0
-
-#define MIN_CALIBRATION_OFFSET 100 // Min value for calibration
-#define SOLDERING_TEMP         320 // Default soldering temp is 320.0 °C
-#define PID_TIM_HZ             (8) // Tick rate of the PID loop
-#define MAX_TEMP_C             450 // Max soldering temp selectable °C
-#define MAX_TEMP_F             850 // Max soldering temp selectable °F
-#define MIN_TEMP_C             10  // Min soldering temp selectable °C
-#define MIN_TEMP_F             60  // Min soldering temp selectable °F
-#define MIN_BOOST_TEMP_C       250 // The min settable temp for boost mode °C
-#define MIN_BOOST_TEMP_F       480 // The min settable temp for boost mode °F
 
 #ifdef MODEL_S60
 #define VOLTAGE_DIV        460 // Default divider scaler
@@ -144,7 +132,9 @@
 #define POWER_LIMIT_STEPS  5
 #define OP_AMP_GAIN_STAGE  536
 #define TEMP_uV_LOOKUP_S60
-#define USB_PD_VMAX        12  // Maximum voltage for PD to negotiate
+#define USB_PD_VMAX                     12  // Maximum voltage for PD to negotiate
+#define THERMAL_RUNAWAY_TIME_SEC 20
+#define THERMAL_RUNAWAY_TEMP_C   10
 #define USB_PD_TIMEOUT     1   // Default Timeout for USB-PD Protocol negotiation in x100ms
 
 #define HARDWARE_MAX_WATTAGE_X10 600
@@ -177,7 +167,9 @@
 #define POWER_LIMIT_STEPS  5
 #define OP_AMP_GAIN_STAGE  536
 #define TEMP_uV_LOOKUP_S60
-#define USB_PD_VMAX        20  // Maximum voltage for PD to negotiate
+#define USB_PD_VMAX                     20  // Maximum voltage for PD to negotiate
+#define THERMAL_RUNAWAY_TIME_SEC 20
+#define THERMAL_RUNAWAY_TEMP_C   10
 #define USB_PD_TIMEOUT     1   // Default Timeout for USB-PD Protocol negotiation in x100ms
 
 #define HARDWARE_MAX_WATTAGE_X10 600
@@ -203,6 +195,57 @@
 
 #define MODEL_HAS_DCDC // We dont have DC/DC but have reallly fast PWM that gets us roughly the same place
 #endif                 /* S60P */
+
+#ifdef MODEL_T55
+// T55 Hotplate is similar to Project-Argon, PCB heater + PT100 sensor but no current rolloff compensation
+// Uses a HUB238 for PD negotiation like the S60, also has a buzzer. Feels like designed to share with S60
+// Hold back left button for "DFU"
+
+#define SOLDERING_TEMP         200 // Default soldering temp is 200.0 °C
+#define VOLTAGE_DIV            460 // Default divider scaler
+#define MIN_CALIBRATION_OFFSET 0   // Should be 0
+#define CALIBRATION_OFFSET     0   // Default adc offset in uV
+#define PID_POWER_LIMIT        70  // Sets the max pwm power limit
+#define POWER_LIMIT            0   // 0 watts default limit
+#define MAX_POWER_LIMIT        70
+#define POWER_LIMIT_STEPS      5
+#define OP_AMP_GAIN_STAGE      1
+#define TEMP_uV_LOOKUP_PT1000
+#define USB_PD_VMAX       20  // Maximum voltage for PD to negotiate
+#define USB_PD_TIMEOUT     1   // Default Timeout for USB-PD Protocol negotiation in x100ms
+
+#define NO_DISPLAY_ROTATE     // Disable OLED rotation by accel
+#define MAX_TEMP_C        350 // Max soldering temp selectable °C
+#define MAX_TEMP_F        660 // Max soldering temp selectable °F
+#define MIN_TEMP_C        10  // Min soldering temp selectable °C
+#define MIN_TEMP_F        50  // Min soldering temp selectable °F
+#define MIN_BOOST_TEMP_C  150 // The min settable temp for boost mode °C
+#define MIN_BOOST_TEMP_F  300 // The min settable temp for boost mode °F
+#define NO_SLEEP_MODE
+#define HARDWARE_MAX_WATTAGE_X10 850
+
+#define TIP_THERMAL_MASS         30 // X10 watts to raise 1 deg C in 1 second
+#define TIP_THERMAL_INERTIA      10 // We use a large inertia value to smooth out the drive to the tip since its stupidly sensitive
+#define THERMAL_RUNAWAY_TIME_SEC 60
+#define THERMAL_RUNAWAY_TEMP_C   3
+
+#define COPPER_HEATER_COIL 1  // Have a heater coil that changes resistance on us
+#define TIP_RESISTANCE     52 // PCB heater, measured at ~19C. Will shift by temp a decent amount
+#define CUSTOM_MAX_TEMP_C
+#define PROFILE_SUPPORT           1 // Soldering Profiles
+#define OLED_128x32               1 // Larger OLED
+#define OLED_FLIP                 1 // Mounted upside down
+#define POW_PD_EXT                1 // Older HUB238
+#define USB_PD_EPR_WATTAGE        0 /*No EPR*/
+#define DEBUG_POWER_MENU_BUTTON_B 1
+#define HAS_POWER_DEBUG_MENU
+#define NO_ACCEL       1
+#define I2C_SOFT_BUS_2 // For now we are doing software I2C to get around hardware chip issues
+#define OLED_I2CBB2
+#define FILTER_DISPLAYED_TIP_TEMP 16 // Filtering for GUI display
+
+#define MODEL_HAS_DCDC // We dont have DC/DC but have reallly fast PWM that gets us roughly the same place
+#endif                 /* T55 */
 
 #ifdef MODEL_S99
 #define VOLTAGE_DIV        460 // Default divider scaler
@@ -242,5 +285,35 @@
 
 #define FLASH_LOGOADDR      (0x08000000 + (62 * 1024))
 #define SETTINGS_START_PAGE (0x08000000 + (63 * 1024))
+
+// Defaults
+
+#ifndef MIN_CALIBRATION_OFFSET
+#define MIN_CALIBRATION_OFFSET 100 // Min value for calibration
+#endif
+#ifndef SOLDERING_TEMP
+#define SOLDERING_TEMP 320 // Default soldering temp is 320.0 °C
+#endif
+#ifndef PID_TIM_HZ
+#define PID_TIM_HZ (8) // Tick rate of the PID loop
+#endif
+#ifndef MAX_TEMP_C
+#define MAX_TEMP_C 450 // Max soldering temp selectable °C
+#endif
+#ifndef MAX_TEMP_F
+#define MAX_TEMP_F 850 // Max soldering temp selectable °F
+#endif
+#ifndef MIN_TEMP_C
+#define MIN_TEMP_C 10 // Min soldering temp selectable °C
+#endif
+#ifndef MIN_TEMP_F
+#define MIN_TEMP_F 60 // Min soldering temp selectable °F
+#endif
+#ifndef MIN_BOOST_TEMP_C
+#define MIN_BOOST_TEMP_C 250 // The min settable temp for boost mode °C
+#endif
+#ifndef MIN_BOOST_TEMP_F
+#define MIN_BOOST_TEMP_F 480 // The min settable temp for boost mode °F
+#endif
 
 #endif /* CONFIGURATION_H_ */

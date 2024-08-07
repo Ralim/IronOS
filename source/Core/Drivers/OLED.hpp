@@ -136,7 +136,7 @@ public:
   static void drawBattery(uint8_t state) { drawSymbol(3 + (state > 10 ? 10 : state)); }
   // Draws a checkbox
   static void drawCheckbox(bool state) { drawSymbol((state) ? 16 : 17); }
-  inline static void drawUnavailableIcon() { drawArea(OLED_WIDTH - 16 - 2, 0, 16, 16, UnavailableIcon); }
+  inline static void drawUnavailableIcon() { drawArea(OLED_WIDTH - OLED_HEIGHT - 2, 0, OLED_HEIGHT, OLED_HEIGHT, UnavailableIcon); }
   static void debugNumber(int32_t val, FontStyle fontStyle);
   static void drawHex(uint32_t x, FontStyle fontStyle, uint8_t digits);
   static void drawSymbol(uint8_t symbolID);                                                           // Used for drawing symbols of a predictable width
