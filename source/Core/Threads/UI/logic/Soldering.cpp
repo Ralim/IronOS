@@ -17,7 +17,7 @@ OperatingMode handleSolderingButtons(const ButtonState buttons, guiContext *cxt)
           cxt->scratch_state.state7 = 0;
         }
       } else {
-        warnUser(translatedString(Tr->WarningKeysLockedString), buttons);
+        warnUser(translatedString(Tr->LockingKeysString), buttons);
       }
       return OperatingMode::Soldering;
     }
