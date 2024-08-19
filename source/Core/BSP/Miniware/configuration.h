@@ -194,7 +194,7 @@
 #define POWER_LIMIT_STEPS  5
 #define OP_AMP_GAIN_STAGE  OP_AMP_GAIN_STAGE_TS100
 #define TEMP_uV_LOOKUP_HAKKO
-#define ACCEL_LIS_CLONE 1
+#define ACCEL_LIS_CLONE          1
 #define HARDWARE_MAX_WATTAGE_X10 1000
 #define TIP_THERMAL_MASS         65 // X10 watts to raise 1 deg C in 1 second
 #define TIP_RESISTANCE           75 // x10 ohms, 7.5 typical for ts100 tips
@@ -272,8 +272,13 @@
 #endif /* TS80P */
 
 #ifdef MODEL_TS101
-#define FLASH_LOGOADDR      (0x08000000 + (126 * 1024))
-#define SETTINGS_START_PAGE (0x08000000 + (127 * 1024))
+// For whatever reason, Miniware decided to only allow their bootloader to work on 4k page sizes
+// So we have to locate the boot-logo on a different 4k page to the settings
+// And also, it doesnt let me write to the last page on my DFU version
+// So, we put settings on the last section (as we can work with it fine)
+// And then we use the N-1'th 4K for logo
+#define FLASH_LOGOADDR      (0x08000000 + (120 * 1024))
+#define SETTINGS_START_PAGE (0x08000000 + (124 * 1024))
 #else
 #define FLASH_LOGOADDR      (0x08000000 + (62 * 1024))
 #define SETTINGS_START_PAGE (0x08000000 + (63 * 1024))

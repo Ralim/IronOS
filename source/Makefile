@@ -84,7 +84,8 @@ DEVICE_BSP_DIR=./Core/BSP/Miniware
 LDSCRIPT=./Core/BSP/Miniware/stm32f103.ld
 
 ifeq ($(model),$(filter $(model),TS101))
-flash_size=126k
+# 128K - 8K for settings & logo
+flash_size=119k
 bootldr_size=0x8000
 DEVICE_DFU_ADDRESS=0x08008000
 else
