@@ -277,8 +277,8 @@
 // And also, it doesnt let me write to the last page on my DFU version
 // So, we put settings on the last section (as we can work with it fine)
 // And then we use the N-1'th 4K for logo
-#define FLASH_LOGOADDR      (0x08000000 + (120 * 1024))
-#define SETTINGS_START_PAGE (0x08000000 + (124 * 1024))
+#define FLASH_LOGOADDR      (0x08000000 + (124 * 1024))
+#define SETTINGS_START_PAGE (0x08000000 + (127 * 1024))
 #else
 #define FLASH_LOGOADDR      (0x08000000 + (62 * 1024))
 #define SETTINGS_START_PAGE (0x08000000 + (63 * 1024))
