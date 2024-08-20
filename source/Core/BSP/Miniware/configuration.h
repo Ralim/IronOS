@@ -272,12 +272,12 @@
 #endif /* TS80P */
 
 #ifdef MODEL_TS101
-// For whatever reason, Miniware decided to only allow their bootloader to work on 4k page sizes
-// So we have to locate the boot-logo on a different 4k page to the settings
-// And also, it doesnt let me write to the last page on my DFU version
-// So, we put settings on the last section (as we can work with it fine)
-// And then we use the N-1'th 4K for logo
-#define FLASH_LOGOADDR      (0x08000000 + (124 * 1024))
+// For whatever reason, Miniware decided to not build a reliable DFU bootloader
+// It can't appear to flash to some of the upper pages of flash,
+// I'm slightly suspect a watchdog or something runs out
+// as device resets before file finishes copying
+// So logo has to be located on page 99 or else it cant be flashed on stock bootloader
+#define FLASH_LOGOADDR      (0x08000000 + (99 * 1024))
 #define SETTINGS_START_PAGE (0x08000000 + (127 * 1024))
 #else
 #define FLASH_LOGOADDR      (0x08000000 + (62 * 1024))
