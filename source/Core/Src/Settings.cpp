@@ -104,7 +104,7 @@ static const SettingConstants settingsConstants[(int)SettingsOptions::SettingsOp
     {            MIN_TEMP_C,                        MAX_TEMP_F,                 5,                           90}, // ProfilePhase5Temp
     {                    10,                               180,                 5,                           30}, // ProfilePhase5Duration
     {                     1,                                10,                 1,                            2}, // ProfileCooldownSpeed
-    {                     0,                                 12,                1,                            0}, // HallEffectSleepTime
+    {                     0,                                12,                 1,                            0}, // HallEffectSleepTime
 };
 static_assert((sizeof(settingsConstants) / sizeof(SettingConstants)) == ((int)SettingsOptions::SettingsOptionsLength));
 
