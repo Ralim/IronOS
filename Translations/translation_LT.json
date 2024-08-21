@@ -233,6 +233,8 @@
       "displayText": "Holo\njutiklis",
       "description": "Holo jutiklio jautrumas nustatant miegą (1=Mažiausias | ... | 9=Didžiausias)"
     },
+    "HallEffSleepTimeout": {                                            "displayText": "HallSensor\nSleepTime",                           "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+    },
     "TemperatureUnit": {
       "displayText": "Temperatūros\nvienetai",
       "description": "Temperatūros vienetai (C=Celsijus | F=Farenheitas)"

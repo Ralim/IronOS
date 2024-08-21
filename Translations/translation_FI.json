@@ -233,6 +233,8 @@
       "displayText": "Hall-\nherk.",
       "description": "Hall-efektianturin herkkyys lepotilan tunnistuksessa (1=vähäinen herkkyys | ... | 9=suurin herkkyys)"
     },
+    "HallEffSleepTimeout": {                                            "displayText": "HallSensor\nSleepTime",                           "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+    },
     "TemperatureUnit": {
       "displayText": "Lämpötilan\nyksikkö",
       "description": "C=celsius, F=fahrenheit"

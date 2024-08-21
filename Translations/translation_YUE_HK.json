@@ -233,6 +233,8 @@
       "displayText": "磁場敏感度",
       "description": "磁場感應器用嚟啓動待機模式嘅敏感度 <1=最低敏感度 | ... | 9=最高敏感度>"
     },
+    "HallEffSleepTimeout": {                                            "displayText": "HallSensor\nSleepTime",                           "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+    },
     "TemperatureUnit": {
       "displayText": "温度單位",
       "description": "C=攝氏 | F=華氏"

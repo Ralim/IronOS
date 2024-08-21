@@ -233,6 +233,8 @@
       "displayText": "Sensibilitate\nsenzor Hall",
       "description": "Sensibilitate senzor cu efect Hall pentru a detecta repausul (1=putin sensibil | ... | 9=cel mai sensibil)"
     },
+    "HallEffSleepTimeout": {                                            "displayText": "HallSensor\nSleepTime",                           "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+    },
     "TemperatureUnit": {
       "displayText": "Unitate de\ntemperatură",
       "description": "C=Celsius | F=Fahrenheit"

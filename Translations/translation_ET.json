@@ -233,6 +233,8 @@
       "displayText": "Halli anduri\ntundlikkus",
       "description": "Tundlikkus magnetite suhtes (1=vähetundlikum | ... | 9=kõige tundlikum)"
     },
+    "HallEffSleepTimeout": {                                            "displayText": "HallSensor\nSleepTime",                           "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+    },
     "TemperatureUnit": {
       "displayText": "Temperatuuri\nühik",
       "description": "C=°Celsius | F=°Fahrenheit"

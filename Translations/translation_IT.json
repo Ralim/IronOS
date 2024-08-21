@@ -233,6 +233,8 @@
       "displayText": "Sensore\nHall",
       "description": "Regola la sensibilità del sensore ad effetto Hall per entrare in modalità riposo [1: minima; 9: massima]"
     },
+    "HallEffSleepTimeout": {                                            "displayText": "HallSensor\nSleepTime",                           "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+    },
     "TemperatureUnit": {
       "displayText": "Unità di\ntemperatura",
       "description": "Scegli l'unità di misura per la temperatura [C: grado Celsius; F: grado Farenheit]"

@@ -233,6 +233,8 @@
       "displayText": "Эфект Хола\nадчувальнасць",
       "description": "Узровень адчувальнасці датчыка хола ў рэжыме сну (1=Мін. | ... | 9=Макс.)"
     },
+    "HallEffSleepTimeout": {                                            "displayText": "HallSensor\nSleepTime",                           "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+    },
     "TemperatureUnit": {
       "displayText": "Адзінкі\nтэмпературы",
       "description": "Адзінкі вымярэння тэмпературы (C=Цэльcія | F=Фарэнгейта)"
