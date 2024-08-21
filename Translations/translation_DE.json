@@ -233,6 +233,8 @@
       "displayText": "Empfindlichkeit\nder Hall-Sonde",
       "description": "Empfindlichkeit der Hall-Sonde um den Ruhemodus auszulösen (1=minimal | ... | 9=maximal)"
     },
+    "HallEffSleepTimeout": {                                            "displayText": "HallSensor\nSleepTime",                           "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+    },
     "TemperatureUnit": {
       "displayText": "Temperatur-\neinheit",
       "description": "C=°Celsius | F=°Fahrenheit"

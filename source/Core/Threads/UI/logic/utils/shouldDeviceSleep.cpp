@@ -32,7 +32,7 @@ bool shouldBeSleeping() {
       if (lastHallEffectSleepStart == 0) {
         lastHallEffectSleepStart = xTaskGetTickCount();
       }
-      if ((xTaskGetTickCount() - lastHallEffectSleepStart) > TICKS_SECOND) {
+      if ((xTaskGetTickCount() - lastHallEffectSleepStart) > getHallEffectSleepTimeout()) {
         return true;
       }
     } else {

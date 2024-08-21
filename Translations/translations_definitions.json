@@ -412,6 +412,13 @@
       "description": "If the unit has a hall effect sensor (Pinecil), this adjusts how sensitive it is at detecting a magnet to put the device into sleep mode."
     },
     {
+      "id": "HallEffSleepTimeout",
+      "maxLen": 10,
+      "maxLen2": 10,
+      "include": ["HALL_SENSOR"],
+      "description": "If the unit has a hall effect sensor (Pinecil), this adjusts how long the device takes before it drops down to the sleep temperature when hall sensor is over threshold."
+    },
+    {
       "id": "TemperatureUnit",
       "maxLen": 6,
       "maxLen2": 13,

@@ -233,6 +233,8 @@
       "displayText": "磁场灵敏度",
       "description": "霍尔效应传感器用作启动待机模式的灵敏度 <1=最低灵敏度 | ... | 9=最高灵敏度>"
     },
+    "HallEffSleepTimeout": {                                            "displayText": "HallSensor\nSleepTime",                           "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+    },
     "TemperatureUnit": {
       "displayText": "温度单位",
       "description": "C=摄氏 | F=华氏"

@@ -233,6 +233,8 @@
       "displayText": "Sensibilidade de\nmagnetismo",
       "description": "Sensibilidade de magnetismo (1=Menor | ... | 9=Maior)"
     },
+    "HallEffSleepTimeout": {                                            "displayText": "HallSensor\nSleepTime",                           "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+    },
     "TemperatureUnit": {
       "displayText": "Unidade\ntemperatura",
       "description": "Unidade de temperatura (C=Celsius | F=Fahrenheit)"
