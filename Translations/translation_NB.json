@@ -233,6 +233,8 @@
       "displayText": "Hall-sensor\nfølsomhet",
       "description": "Sensitiviteten til Hall-effekt-sensoren for å detektere inaktivitet (1=Minst følsom | ... | 9=Mest følsom)"
     },
+    "HallEffSleepTimeout": {                                            "displayText": "HallSensor\nSleepTime",                           "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+    },
     "TemperatureUnit": {
       "displayText": "TmpEnh\n",
       "description": "Temperaturskala (C=Celsius | F=Fahrenheit)"

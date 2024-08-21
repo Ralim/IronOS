@@ -233,6 +233,8 @@
       "displayText": "Citliv.\nHall",
       "description": "Citlivosť Hallovho senzora pre detekciu spánku (1=Min | ... | 9=Max)"
     },
+    "HallEffSleepTimeout": {                                            "displayText": "HallSensor\nSleepTime",                           "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+    },
     "TemperatureUnit": {
       "displayText": "Jednotka\nteploty",
       "description": "Jednotky merania teploty (C=stupne Celzia | F=stupne Fahrenheita)"

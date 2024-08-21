@@ -233,6 +233,8 @@
       "displayText": "Hall Eff\nSensibilidad",
       "description": "Sensibilidad del sensor de efecto Hall en la detección de reposo (1=menos sensible | ... | 9=más sensible)"
     },
+    "HallEffSleepTimeout": {                                            "displayText": "HallSensor\nSleepTime",                           "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+    },
     "TemperatureUnit": {
       "displayText": "Unidad de\ntemperatura",
       "description": "Unidad de temperatura (C=entígrados | F=Fahrenheit)"

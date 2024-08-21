@@ -233,6 +233,8 @@
       "displayText": "Hall Sensör\nHassasiyeti",
       "description": "Mıknatıslara duyarlılık (1=En az duyarlı | ... | 9=En duyarlı)"
     },
+    "HallEffSleepTimeout": {                                            "displayText": "HallSensor\nSleepTime",                           "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+    },
     "TemperatureUnit": {
       "displayText": "SCKBRM\n",
       "description": "Sıcaklık Birimi (C=Celsius | F=Fahrenheit)"

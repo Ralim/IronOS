@@ -233,6 +233,8 @@
       "displayText": "磁界感度",
       "description": "スタンバイモードに入るのに使用される磁場センサーの感度 <1=最低感度 | ... | 9=最高感度>"
     },
+    "HallEffSleepTimeout": {                                            "displayText": "HallSensor\nSleepTime",                           "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+    },
     "TemperatureUnit": {
       "displayText": "温度単位",
       "description": "C=摂氏 | F=華氏"
