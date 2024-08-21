@@ -78,7 +78,6 @@ enum SettingsOptions {
   SettingsOptionsLength = 54, //
 };
 
-
 typedef enum {
   OFF       = 0, // Off (disabled)
   SLOW      = 1, //
