@@ -290,7 +290,7 @@
       "description": "Suurin sallittu teho (Watti)"
     },
     "CalibrateCJC": {
-      "displayText": "Kalibroi CJC\nensi käynnistyksessä",
+      "displayText": "Kalibroi CJC\nensi käynnist",
       "description": "Ensi käynnistyksessä kärjen Cold Junction Compensation kalibroidaan (ei tarpeellista jos Delta T on < 5°C)"
     },
     "VoltageCalibration": {
