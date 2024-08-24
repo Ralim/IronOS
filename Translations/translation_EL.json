@@ -233,6 +233,8 @@
       "displayText": "Ευαισθ. αισθ. \nφαιν. Hall",
       "description": "Ευαισθησία του αισθητήρα φαινομένου Hall για εντοπισμό αδράνειας (1=λιγότερο ευαίσθητο | ... | 9=περισσότερο ευαίσθητο)"
     },
+    "HallEffSleepTimeout": {                                            "displayText": "HallSensor\nSleepTime",                           "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+    },
     "TemperatureUnit": {
       "displayText": "Μονάδες\nθερμοκρασίας",
       "description": "C=Κελσίου | F=Φαρενάιτ"

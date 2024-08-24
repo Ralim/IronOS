@@ -194,7 +194,7 @@
 #define POWER_LIMIT_STEPS  5
 #define OP_AMP_GAIN_STAGE  OP_AMP_GAIN_STAGE_TS100
 #define TEMP_uV_LOOKUP_HAKKO
-#define ACCEL_LIS_CLONE 1
+#define ACCEL_LIS_CLONE          1
 #define HARDWARE_MAX_WATTAGE_X10 1000
 #define TIP_THERMAL_MASS         65 // X10 watts to raise 1 deg C in 1 second
 #define TIP_RESISTANCE           75 // x10 ohms, 7.5 typical for ts100 tips
@@ -272,7 +272,12 @@
 #endif /* TS80P */
 
 #ifdef MODEL_TS101
-#define FLASH_LOGOADDR      (0x08000000 + (126 * 1024))
+// For whatever reason, Miniware decided to not build a reliable DFU bootloader
+// It can't appear to flash to some of the upper pages of flash,
+// I'm slightly suspect a watchdog or something runs out
+// as device resets before file finishes copying
+// So logo has to be located on page 99 or else it cant be flashed on stock bootloader
+#define FLASH_LOGOADDR      (0x08000000 + (99 * 1024))
 #define SETTINGS_START_PAGE (0x08000000 + (127 * 1024))
 #else
 #define FLASH_LOGOADDR      (0x08000000 + (62 * 1024))

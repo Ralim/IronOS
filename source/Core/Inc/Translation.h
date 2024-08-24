@@ -84,6 +84,7 @@ enum class SettingsItemIndex : uint8_t {
   SleepTimeout,
   ShutdownTimeout,
   HallEffSensitivity,
+  HallEffSleepTimeout,
   TemperatureUnit,
   DisplayRotation,
   CooldownBlink,

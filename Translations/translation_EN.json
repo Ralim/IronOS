@@ -233,6 +233,10 @@
       "displayText": "Hall sensor\nsensitivity",
       "description": "Sensitivity to magnets (1=least sensitive | ... | 9=most sensitive)"
     },
+    "HallEffSleepTimeout": {
+      "displayText": "HallSensor\nSleepTime",
+      "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+    },
     "TemperatureUnit": {
       "displayText": "Temperature\nunit",
       "description": "C=°Celsius | F=°Fahrenheit"
