@@ -111,6 +111,7 @@ static void displayLogoTime(void);
 
 #ifdef HALL_SENSOR
 static void displayHallEffect(void);
+static void displayHallEffectSleepTime(void);
 static bool showHallEffect(void);
 #endif /* HALL_SENSOR */
 
@@ -162,6 +163,7 @@ static void displayAdvancedMenu(void);
  *  -Sleep Time
  *  -Shutdown Time
  *  Hall Sensor Sensitivity
+ *  Hall Sensor Sleep Time
  *
  * UI
  *  Temperature Unit
@@ -346,6 +348,8 @@ const menuitem PowerSavingMenu[] = {
 #ifdef HALL_SENSOR
   /* Hall Effect Sensitivity */
   {SETTINGS_DESC(SettingsItemIndex::HallEffSensitivity), nullptr, displayHallEffect, showHallEffect, SettingsOptions::HallEffectSensitivity, SettingsItemIndex::HallEffSensitivity, 7},
+  /* Hall Effect Sleep Time */
+  {SETTINGS_DESC(SettingsItemIndex::HallEffSleepTimeout), nullptr, displayHallEffectSleepTime, showHallEffect, SettingsOptions::HallEffectSleepTime, SettingsItemIndex::HallEffSleepTimeout, 5},
 #endif /* HALL_SENSOR */
   /* vvvv end of menu marker. DO NOT REMOVE vvvv */
   {0, nullptr, nullptr, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::NUM_ITEMS, 0}
@@ -740,6 +744,16 @@ static void displayHallEffect(void) {
   }
 }
 static bool showHallEffect(void) { return getHallSensorFitted(); }
+static void displayHallEffectSleepTime(void) {
+  if (getSettingValue(SettingsOptions::HallEffectSleepTime)) {
+    OLED::printNumber(getSettingValue(SettingsOptions::HallEffectSleepTime) * 5, 2, FontStyle::LARGE, false);
+    OLED::print(LargeSymbolSeconds, FontStyle::LARGE);
+  } else {
+    // When sleep time is set to zero, we sleep for 1 second anyways. This is the default.
+    OLED::printNumber(1, 2, FontStyle::LARGE, false);
+    OLED::print(LargeSymbolSeconds, FontStyle::LARGE);
+  }
+}
 #endif /* HALL_SENSOR */
 
 static void setTempF(const enum SettingsOptions option) {

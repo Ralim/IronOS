@@ -233,6 +233,8 @@
       "displayText": "Датчик\nХолла",
       "description": "Чувствительность датчика Холла к магнитному полю (1=мин. | ... | 9=макс.)"
     },
+    "HallEffSleepTimeout": {                                            "displayText": "HallSensor\nSleepTime",                           "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+    },
     "TemperatureUnit": {
       "displayText": "Единицы\nизмерения",
       "description": "Единицы измерения температуры (C=°Цельcия | F=°Фаренгейта)"

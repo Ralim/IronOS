@@ -7,6 +7,7 @@
 void     GUIDelay();                               //
 bool     checkForUnderVoltage(void);               //
 uint32_t getSleepTimeout(void);                    //
+uint32_t getHallEffectSleepTimeout(void);          //
 bool     shouldBeSleeping();                       //
 bool     shouldShutdown(void);                     //
 void     printVoltage(void);                       //

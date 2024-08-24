@@ -233,6 +233,8 @@
       "displayText": "Alvásérzékelő\nérzékenység",
       "description": "Alvásérzékelő gyorsulásmérő érzékenysége (1=legkevésbé érzékeny | ... | 9=legérzékenyebb)"
     },
+    "HallEffSleepTimeout": {                                            "displayText": "HallSensor\nSleepTime",                           "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+    },
     "TemperatureUnit": {
       "displayText": "Hőmérséklet\nmértékegysége",
       "description": "Hőmérséklet mértékegysége (C=Celsius | F=Fahrenheit)"

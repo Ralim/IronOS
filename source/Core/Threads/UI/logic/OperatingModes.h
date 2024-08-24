@@ -66,6 +66,7 @@ struct guiContext {
     uint32_t state4; // 32 bit state scratch
     uint16_t state5; // 16 bit state scratch
     uint16_t state6; // 16 bit state scratch
+    uint32_t state7; // 32 bit state scratch
 
   } scratch_state;
 };
