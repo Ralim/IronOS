@@ -146,15 +146,17 @@ This means that the electronics in the handle can only turn the heating element 
 This <em>means</em> that the power provided in the tip is 100% controlled by the supply voltage used (higher voltage PSU = higher performance).</p>
 <p>Irons at their simplest are just a resistor (Ω) connected to your power source via a switch.</p>
 <ul>
-<li>When the switch is on, the power in the resistor is: $P(watts) = V(volts) \times\ I(current=amps)$</li>
-<li>Current through the resistor is:  $I(amps) = V(volts) ÷ Ω (resistance)$</li>
+<li>When the switch is on, the power in the resistor is: <em><code>P(watts) = V(volts) \times\ I(current=amps)</code></em></li>
+<li>Current through the resistor is:  <em><code>I(amps) = V(volts) ÷ Ω (resistance)</code></em></li>
 <li>Combining these gives some common equations for Power</li>
 </ul>
-<p>$P(watts) = V(volts) * I(amps)$ or $P = V^2 ÷ Ω$</p>
-<p>The resistance of the tip is a fixed constant in ohms (Ω):
-- 6.2 Ω  Pine64 short tip
-- 8.0 Ω  TS100/Pinecil long tip
-- 4.5 Ω  TS80(P)</p>
+<p><em><code>P(watts) = V(volts) * I(amps)</code></em> or <em><code>P = V^2 ÷ Ω</code></em></p>
+<p>The resistance of the tip is a fixed constant in ohms (Ω):</p>
+<ul>
+<li>6.2 Ω  Pine64 short tip</li>
+<li>8.0 Ω  TS100/Pinecil long tip</li>
+<li>4.5 Ω  TS80(P)</li>
+</ul>
 <p>This means the power delivered to the soldering tip is proportional to the voltage squared.
 Therefore the Pinecil and TS100 perform poorly when run off 12V power supplies and may issue a <code>Thermal Runaway</code> message (weak power supply).</p>
 <h4 id="use-an-ohm-calculator-to-quickly-derive-watts">Use an <a href="https://www.rapidtables.com/calc/electric/power-calculator.html#dc">Ohm calculator</a> to quickly derive watts.</h4>
