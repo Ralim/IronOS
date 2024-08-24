@@ -270,7 +270,7 @@
       "description": "Asettaa käänteiset värit OLED-näyttöön."
     },
     "LOGOTime": {
-      "displayText": "Käynnistyslogon\naika näytöllä",
+      "displayText": "Käynnistysl\naika näytöllä",
       "description": "Aseta käynnistyslogon aika näytöllä (s=sekunteja)"
     },
     "AdvancedIdle": {
