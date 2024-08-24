@@ -107,7 +107,7 @@
   },
   "menuValues": {
     "USBPDModeDefault": {
-      "displayText": "USB-PD\noletus-tila"
+      "displayText": "USB-PD\noletus-t"
     },
     "USBPDModeNoDynamic": {
       "displayText": "USB-PD\nvakaa-tila"
