@@ -130,7 +130,7 @@
       "description": "Ensisijainen maksimi QC jännite."
     },
     "PDNegTimeout": {
-      "displayText": "PD\naikakatkaisu",
+      "displayText": "PD\naikakatkais",
       "description": "PD neuvottelun aikakatkaisu 100ms askelin joitakin QC-latureita varten."
     },
     "USBPDMode": {
