@@ -6,13 +6,14 @@ This *means* that the power provided in the tip is 100% controlled by the supply
 
 Irons at their simplest are just a resistor (Ω) connected to your power source via a switch.
 
-- When the switch is on, the power in the resistor is: $P(watts) = V(volts) \times\ I(current=amps)$
-- Current through the resistor is:  $I(amps) = V(volts) ÷ Ω (resistance)$
+- When the switch is on, the power in the resistor is: *`P(watts) = V(volts) \times\ I(current=amps)`*
+- Current through the resistor is:  *`I(amps) = V(volts) ÷ Ω (resistance)`*
 - Combining these gives some common equations for Power
 
-   $P(watts) = V(volts) * I(amps)$ or $P = V^2 ÷ Ω$
+   *`P(watts) = V(volts) * I(amps)`* or *`P = V^2 ÷ Ω`*
 
 The resistance of the tip is a fixed constant in ohms (Ω):
+
 - 6.2 Ω  Pine64 short tip
 - 8.0 Ω  TS100/Pinecil long tip
 - 4.5 Ω  TS80(P)
