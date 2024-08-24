@@ -34,7 +34,7 @@
       "message": "!Kärki\noikosulussa!"
     },
     "SettingsCalibrationWarning": {
-      "message": "Varmista laitteen ja kärjen huoneenlämpöisyys ennen uudelleenkäynnistystä.!"
+      "message": "Varmista laitteen ja kärjen huoneenlämpöisyys ennen uudelleenkäynnistystä!"
     },
     "CJCCalibrating": {
       "message": "Kalibroidaan\n"
