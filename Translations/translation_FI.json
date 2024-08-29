@@ -318,6 +318,10 @@
     "LanguageSwitch": {
       "displayText": "Kieli:\n FI       Suomi",
       "description": ""
+    },
+    "SolderingTipType": {
+      "displayText": "Soldering\nTip Type",
+      "description": "Select the tip type fitted"
     }
   }
 }

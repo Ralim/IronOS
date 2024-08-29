@@ -18,7 +18,9 @@
     },
     {
       "id": "NoPowerDeliveryMessage",
-      "include": ["POW_PD"],
+      "include": [
+        "POW_PD"
+      ],
       "description": "The IC required for USB-PD could not be communicated with. This is an error warning that USB-PD WILL NOT FUNCTION. Generally indicative of either a hardware or software issues."
     },
     {
@@ -56,44 +58,58 @@
     {
       "id": "UVLOWarningString",
       "maxLen": 8,
-      "include": ["POW_DC"],
+      "include": [
+        "POW_DC"
+      ],
       "description": "Warning text shown when the unit turns off due to undervoltage in simple mode."
     },
     {
       "id": "UndervoltageString",
       "maxLen": 15,
-      "include": ["POW_DC"],
+      "include": [
+        "POW_DC"
+      ],
       "description": "Warning text shown when the unit turns off due to undervoltage in advanced mode."
     },
     {
       "id": "InputVoltageString",
       "maxLen": 11,
       "note": "Preferably end with a space",
-      "include": ["POW_DC"],
+      "include": [
+        "POW_DC"
+      ],
       "description": "Prefix text for 'Input Voltage' shown before showing the input voltage reading."
     },
     {
       "id": "ProfilePreheatString",
       "maxLen": 9,
-      "include": ["PROFILE_SUPPORT"],
+      "include": [
+        "PROFILE_SUPPORT"
+      ],
       "description": "Shown in profile mode while preheating"
     },
     {
       "id": "ProfileCooldownString",
       "maxLen": 9,
-      "include": ["PROFILE_SUPPORT"],
+      "include": [
+        "PROFILE_SUPPORT"
+      ],
       "description": "Shown in profile mode while cooling down"
     },
     {
       "id": "SleepingAdvancedString",
       "maxLen": 15,
-      "exclude": ["NO_SLEEP_MODE"],
+      "exclude": [
+        "NO_SLEEP_MODE"
+      ],
       "description": "The text shown to indicate the unit is in sleep mode when the advanced view is turned on."
     },
     {
       "id": "SleepingTipAdvancedString",
       "maxLen": 6,
-      "exclude": ["NO_SLEEP_MODE"],
+      "exclude": [
+        "NO_SLEEP_MODE"
+      ],
       "description": "The prefix text shown before tip temperature when the unit is sleeping with advanced view on."
     },
     {
@@ -104,7 +120,9 @@
     {
       "id": "TooHotToStartProfileWarning",
       "default": "Too hot to\nstart profile",
-      "include": ["PROFILE_SUPPORT"],
+      "include": [
+        "PROFILE_SUPPORT"
+      ],
       "description": "Shown when profile mode is started while the device is too hot."
     }
   ],
@@ -172,7 +190,10 @@
       "id": "PowerMenu",
       "maxLen": 5,
       "maxLen2": 11,
-      "include": ["POW_DC", "POW_QC"],
+      "include": [
+        "POW_DC",
+        "POW_QC"
+      ],
       "description": "Menu for settings related to power. Main settings to do with the input voltage."
     },
     {
@@ -212,6 +233,30 @@
     {
       "id": "USBPDModeSafe",
       "description": "When in this mode we enable all PD features, but we don't pad resistance slightly to account for cable and PCB trace loss"
+    },
+    {
+      "id": "TipTypeAuto",
+      "description": "This is for automatic best-effort tip selection based on resistance"
+    },
+    {
+      "id": "TipTypeT12Long",
+      "description": "Hakko T12 or older (long) TS100 tips"
+    },
+    {
+      "id": "TipTypeT12Short",
+      "description": "Pine 6.2 ohm short TS100 style tips"
+    },
+    {
+      "id": "TipTypeT12PTS",
+      "description": "PTS200 4 ohm short TS100 style tips"
+    },
+    {
+      "id": "TipTypeTS80",
+      "description": "Miniware TS80(P) tips"
+    },
+    {
+      "id": "TipTypeJBC",
+      "description": "JBC (or clone) tips"
     }
   ],
   "menuOptions": [
@@ -219,35 +264,45 @@
       "id": "DCInCutoff",
       "maxLen": 5,
       "maxLen2": 11,
-      "include": ["POW_DC"],
+      "include": [
+        "POW_DC"
+      ],
       "description": "When the device is powered by a battery, this adjusts the low voltage threshold for when the unit should turn off the heater to protect the battery."
     },
     {
       "id": "MinVolCell",
       "maxLen": 4,
       "maxLen2": 9,
-      "include": ["POW_DC"],
+      "include": [
+        "POW_DC"
+      ],
       "description": "When powered by a battery, this adjusts the minimum voltage per cell before shutdown. (This is multiplied by the cell count.)"
     },
     {
       "id": "QCMaxVoltage",
       "maxLen": 8,
       "maxLen2": 15,
-      "include": ["POW_QC"],
+      "include": [
+        "POW_QC"
+      ],
       "description": "This adjusts the maximum voltage the QC negotiation will adjust to. Does NOT affect USB-PD. Should be set safely based on the current rating of your power supply."
     },
     {
       "id": "PDNegTimeout",
       "maxLen": 8,
       "maxLen2": 15,
-      "include": ["POW_PD"],
+      "include": [
+        "POW_PD"
+      ],
       "description": "How long until firmware stops trying to negotiate for USB-PD and tries QC instead. Longer times may help dodgy / old PD adapters, faster times move onto PD quickly. Units of 100ms. Recommended to keep small values."
     },
     {
       "id": "USBPDMode",
       "maxLen": 7,
       "maxLen2": 15,
-      "include": ["POW_PD"],
+      "include": [
+        "POW_PD"
+      ],
       "description": "No Dynamic disables EPR & PPS, Safe mode does not use padding resistance"
     },
     {
@@ -284,98 +339,126 @@
       "id": "ProfilePhases",
       "maxLen": 6,
       "maxLen2": 13,
-      "include": ["PROFILE_SUPPORT"],
+      "include": [
+        "PROFILE_SUPPORT"
+      ],
       "description": "set the number of phases for profile mode."
     },
     {
       "id": "ProfilePreheatTemp",
       "maxLen": 4,
       "maxLen2": 9,
-      "include": ["PROFILE_SUPPORT"],
+      "include": [
+        "PROFILE_SUPPORT"
+      ],
       "description": "Preheat to this temperature at the start of profile mode."
     },
     {
       "id": "ProfilePreheatSpeed",
       "maxLen": 5,
       "maxLen2": 11,
-      "include": ["PROFILE_SUPPORT"],
+      "include": [
+        "PROFILE_SUPPORT"
+      ],
       "description": "How fast the temperature is allowed to rise during the preheat phase at the start of profile mode."
     },
     {
       "id": "ProfilePhase1Temp",
       "maxLen": 4,
       "maxLen2": 9,
-      "include": ["PROFILE_SUPPORT"],
+      "include": [
+        "PROFILE_SUPPORT"
+      ],
       "description": "Target temperature for the end of phase 1 of profile mode."
     },
     {
       "id": "ProfilePhase1Duration",
       "maxLen": 4,
       "maxLen2": 9,
-      "include": ["PROFILE_SUPPORT"],
+      "include": [
+        "PROFILE_SUPPORT"
+      ],
       "description": "Duration of phase 1 of profile mode. The phase might actually take longer if it takes longer to reach the target temperature."
     },
     {
       "id": "ProfilePhase2Temp",
       "maxLen": 4,
       "maxLen2": 9,
-      "include": ["PROFILE_SUPPORT"],
+      "include": [
+        "PROFILE_SUPPORT"
+      ],
       "description": "Target temperature for the end of phase 2 of profile mode."
     },
     {
       "id": "ProfilePhase2Duration",
       "maxLen": 4,
       "maxLen2": 9,
-      "include": ["PROFILE_SUPPORT"],
+      "include": [
+        "PROFILE_SUPPORT"
+      ],
       "description": "Duration of phase 2 of profile mode. The phase might actually take longer if it takes longer to reach the target temperature."
     },
     {
       "id": "ProfilePhase3Temp",
       "maxLen": 4,
       "maxLen2": 9,
-      "include": ["PROFILE_SUPPORT"],
+      "include": [
+        "PROFILE_SUPPORT"
+      ],
       "description": "Target temperature for the end of phase 3 of profile mode."
     },
     {
       "id": "ProfilePhase3Duration",
       "maxLen": 4,
       "maxLen2": 9,
-      "include": ["PROFILE_SUPPORT"],
+      "include": [
+        "PROFILE_SUPPORT"
+      ],
       "description": "Duration of phase 3 of profile mode. The phase might actually take longer if it takes longer to reach the target temperature."
     },
     {
       "id": "ProfilePhase4Temp",
       "maxLen": 4,
       "maxLen2": 9,
-      "include": ["PROFILE_SUPPORT"],
+      "include": [
+        "PROFILE_SUPPORT"
+      ],
       "description": "Target temperature for the end of phase 5 of profile mode."
     },
     {
       "id": "ProfilePhase4Duration",
       "maxLen": 4,
       "maxLen2": 9,
-      "include": ["PROFILE_SUPPORT"],
+      "include": [
+        "PROFILE_SUPPORT"
+      ],
       "description": "Duration of phase 5 of profile mode. The phase might actually take longer if it takes longer to reach the target temperature."
     },
     {
       "id": "ProfilePhase5Temp",
       "maxLen": 4,
       "maxLen2": 9,
-      "include": ["PROFILE_SUPPORT"],
+      "include": [
+        "PROFILE_SUPPORT"
+      ],
       "description": "Target temperature for the end of phase 5 of profile mode."
     },
     {
       "id": "ProfilePhase5Duration",
       "maxLen": 4,
       "maxLen2": 9,
-      "include": ["PROFILE_SUPPORT"],
+      "include": [
+        "PROFILE_SUPPORT"
+      ],
       "description": "Duration of phase 5 of profile mode. The phase might actually take longer if it takes longer to reach the target temperature."
     },
     {
       "id": "ProfileCooldownSpeed",
       "maxLen": 5,
       "maxLen2": 11,
-      "include": ["PROFILE_SUPPORT"],
+      "include": [
+        "PROFILE_SUPPORT"
+      ],
       "description": "How fast the temperature is allowed to drop during the cooldown phase at the end of profile mode."
     },
     {
@@ -388,14 +471,18 @@
       "id": "SleepTemperature",
       "maxLen": 4,
       "maxLen2": 9,
-      "exclude": ["NO_SLEEP_MODE"],
+      "exclude": [
+        "NO_SLEEP_MODE"
+      ],
       "description": "Temperature the device will drop down to while asleep. Typically around halfway between off and soldering temperature."
     },
     {
       "id": "SleepTimeout",
       "maxLen": 4,
       "maxLen2": 9,
-      "exclude": ["NO_SLEEP_MODE"],
+      "exclude": [
+        "NO_SLEEP_MODE"
+      ],
       "description": "How long of a period without movement / button-pressing is required before the device drops down to the sleep temperature."
     },
     {
@@ -408,14 +495,18 @@
       "id": "HallEffSensitivity",
       "maxLen": 6,
       "maxLen2": 13,
-      "include": ["HALL_SENSOR"],
+      "include": [
+        "HALL_SENSOR"
+      ],
       "description": "If the unit has a hall effect sensor (Pinecil), this adjusts how sensitive it is at detecting a magnet to put the device into sleep mode."
     },
     {
       "id": "HallEffSleepTimeout",
       "maxLen": 10,
       "maxLen2": 10,
-      "include": ["HALL_SENSOR"],
+      "include": [
+        "HALL_SENSOR"
+      ],
       "description": "If the unit has a hall effect sensor (Pinecil), this adjusts how long the device takes before it drops down to the sleep temperature when hall sensor is over threshold."
     },
     {
@@ -428,7 +519,9 @@
       "id": "DisplayRotation",
       "maxLen": 6,
       "maxLen2": 13,
-      "exclude": ["NO_DISPLAY_ROTATE"],
+      "exclude": [
+        "NO_DISPLAY_ROTATE"
+      ],
       "description": "If the display should rotate automatically or if it should be fixed for left- or right-handed mode."
     },
     {
@@ -495,7 +588,9 @@
       "id": "BluetoothLE",
       "maxLen": 7,
       "maxLen2": 15,
-      "include": ["BLE_ENABLED"],
+      "include": [
+        "BLE_ENABLED"
+      ],
       "description": "Should BLE be enabled at boot time."
     },
     {
@@ -545,6 +640,12 @@
       "maxLen": 7,
       "maxLen2": 15,
       "description": "Changes the device language on multi-lingual builds."
+    },
+    {
+      "id": "SolderingTipType",
+      "maxLen": 7,
+      "maxLen2": 15,
+      "description": "For manually selecting the type of tip fitted"
     }
   ]
 }

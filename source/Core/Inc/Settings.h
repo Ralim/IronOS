@@ -7,8 +7,8 @@
  *      Houses the system settings and allows saving / restoring from flash
  */
 
-#ifndef SETTINGS_H_
-#define SETTINGS_H_
+#ifndef CORE_SETTINGS_H_
+#define CORE_SETTINGS_H_
 #include <stdbool.h>
 #include <stdint.h>
 
@@ -74,8 +74,9 @@ enum SettingsOptions {
   ProfilePhase5Duration          = 51, // Target duration for phase 5
   ProfileCooldownSpeed           = 52, // Maximum allowed cooldown speed in degrees per second
   HallEffectSleepTime            = 53, // Seconds (/5) timeout to sleep when hall effect over threshold
+  SolderingTipType               = 54, // Selecting the type of soldering tip fitted
   //
-  SettingsOptionsLength = 54, //
+  SettingsOptionsLength = 55, // End marker
 };
 
 typedef enum {
@@ -117,6 +118,31 @@ typedef enum {
   FULL     = 2, // Locking buttons for Boost mode AND for Soldering mode
 } lockingMode_t;
 
+/* Selection of the soldering tip
+ * Some devices allow multiple types of tips to be fitted, this allows selecting them or overriding the logic
+ * The first type will be the default (gets value of 0)
+*/
+typedef enum {
+  #ifdef AUTO_TIP_SELECTION
+  AUTO, // If the hardware supports automatic detection
+#endif
+
+  #ifdef TIPTYPE_T12
+  T12_8_OHM, // TS100 style tips or Hakko T12 tips with adaptors
+  T12_6_2_OHM, // Short Tips manufactured by Pine64
+  T12_4_OHM, // Longer tip but low resistance for PTS200
+  #endif
+  #ifdef TIPTYE_TS80
+  TS80_4_5_OHM, // TS80(P) default tips
+  // We do not know of other tuning tips (?yet?)
+  #endif
+  #ifdef TIPTYPE_JBC
+  JBC_2_5_OHM, // Small JBC tips as used in the S60
+  #endif
+  TIP_TYPE_MAX, // Max value marker
+} tipType_t;
+
+
 // Settings wide operations
 void saveSettings();
 bool loadSettings();
@@ -129,11 +155,11 @@ uint16_t getSettingValue(const enum SettingsOptions option);
 void nextSettingValue(const enum SettingsOptions option);
 void prevSettingValue(const enum SettingsOptions option);
 bool isLastSettingValue(const enum SettingsOptions option);
-
+// For setting values to settings
 void setSettingValue(const enum SettingsOptions option, const uint16_t newValue);
 
-// Special access
+// Special access helpers, to reduce logic duplication
 uint8_t  lookupVoltageLevel();
 uint16_t lookupHallEffectThreshold();
-
+const char* lookupTipName(); // Get the name string for the current soldering tip
 #endif /* SETTINGS_H_ */

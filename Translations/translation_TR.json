@@ -318,6 +318,10 @@
     "LanguageSwitch": {
       "displayText": "Dil:\n TR      Türkçe",
       "description": ""
+    },
+    "SolderingTipType": {
+      "displayText": "Soldering\nTip Type",
+      "description": "Select the tip type fitted"
     }
   }
 }

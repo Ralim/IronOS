@@ -318,6 +318,10 @@
     "LanguageSwitch": {
       "displayText": "Ngôn ngu:\n VI  Tieng Viet",
       "description": ""
+    },
+    "SolderingTipType": {
+      "displayText": "Soldering\nTip Type",
+      "description": "Select the tip type fitted"
     }
   }
 }

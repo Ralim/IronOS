@@ -318,6 +318,10 @@
     "LanguageSwitch": {
       "displayText": "Taal:\n NL  Nederlands",
       "description": ""
+    },
+    "SolderingTipType": {
+      "displayText": "Soldering\nTip Type",
+      "description": "Select the tip type fitted"
     }
   }
 }

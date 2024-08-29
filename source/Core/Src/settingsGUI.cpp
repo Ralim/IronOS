@@ -115,6 +115,10 @@ static void displayHallEffectSleepTime(void);
 static bool showHallEffect(void);
 #endif /* HALL_SENSOR */
 
+// Tip type selection
+static void displaySolderingTipType(void);
+static bool showSolderingTipType(void);
+
 // Menu functions
 
 #if defined(POW_DC) || defined(POW_QC) || defined(POW_PD)
@@ -137,6 +141,7 @@ static void displayAdvancedMenu(void);
  *  USBPDMode
  *
  * Soldering
+ *  Tip Type selection
  *  Boost Mode Temp
  *  Auto Start
  *  Temp Change Short Step
@@ -262,6 +267,7 @@ const menuitem powerMenu[] = {
 
 const menuitem solderingMenu[] = {
   /*
+   *  Tip Type
    *  Boost Mode Temp
    *  Auto Start
    *  Temp Change Short Step
@@ -282,6 +288,8 @@ const menuitem solderingMenu[] = {
    *  Profile Phase 5 Duration (s)
    *  Profile Cooldown Max Temperature Change Per Second
    */
+  /* Tip Type */
+  {SETTINGS_DESC(SettingsItemIndex::SolderingTipType), nullptr, displaySolderingTipType, showSolderingTipType, SettingsOptions::SolderingTipType, SettingsItemIndex::SolderingTipType, 5},
   /* Boost Temp */
   {SETTINGS_DESC(SettingsItemIndex::BoostTemperature), setBoostTemp, displayBoostTemp, nullptr, SettingsOptions::BoostTemp, SettingsItemIndex::BoostTemperature, 5},
   /* Auto start */
@@ -755,7 +763,12 @@ static void displayHallEffectSleepTime(void) {
   }
 }
 #endif /* HALL_SENSOR */
-
+static void displaySolderingTipType(void) {
+  // TODO wrapping X value
+  OLED::print(lookupTipName(), FontStyle::SMALL);
+}
+// If there is no detection, and no options, max is 0
+static bool showSolderingTipType(void) { return tipType_t::TIP_TYPE_MAX != 0; }
 static void setTempF(const enum SettingsOptions option) {
   uint16_t Temp = getSettingValue(option);
   if (getSettingValue(SettingsOptions::TemperatureInF)) {

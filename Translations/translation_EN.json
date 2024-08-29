@@ -114,6 +114,24 @@
     },
     "USBPDModeSafe": {
       "displayText": "Safe\nMode"
+    },
+    "TipTypeAuto": {
+      "displayText": "Auto"
+    },
+    "TipTypeT12Long": {
+      "displayText": "TS100\nLong"
+    },
+    "TipTypeT12Short": {
+      "displayText": "TS100\nShort"
+    },
+    "TipTypeT12PTS": {
+      "displayText": "TS100\nPTS"
+    },
+    "TipTypeTS80": {
+      "displayText": "TS80\n"
+    },
+    "TipTypeJBC": {
+      "displayText": "JBC\n"
     }
   },
   "menuOptions": {
@@ -320,6 +338,10 @@
     "LanguageSwitch": {
       "displayText": "Language:\n EN     English",
       "description": ""
+    },
+    "SolderingTipType": {
+      "displayText": "Soldering\nTip Type",
+      "description": "Select the tip type fitted"
     }
   }
 }

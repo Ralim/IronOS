@@ -318,6 +318,10 @@
     "LanguageSwitch": {
       "displayText": "Kalba:\n LT    Lietuvių",
       "description": ""
+    },
+    "SolderingTipType": {
+      "displayText": "Soldering\nTip Type",
+      "description": "Select the tip type fitted"
     }
   }
 }

@@ -106,6 +106,7 @@ enum class SettingsItemIndex : uint8_t {
   PowerPulseDuration,
   SettingsReset,
   LanguageSwitch,
+  SolderingTipType,
   NUM_ITEMS,
 };
 
@@ -149,6 +150,12 @@ struct TranslationIndexTable {
   uint16_t USBPDModeDefault;
   uint16_t USBPDModeNoDynamic;
   uint16_t USBPDModeSafe;
+  uint16_t TipTypeAuto;
+  uint16_t TipTypeT12Long;
+  uint16_t TipTypeT12Short;
+  uint16_t TipTypeT12PTS;
+  uint16_t TipTypeTS80;
+  uint16_t TipTypeJBC;
 
   uint16_t SettingsDescriptions[static_cast<uint32_t>(SettingsItemIndex::NUM_ITEMS)];
   uint16_t SettingsShortNames[static_cast<uint32_t>(SettingsItemIndex::NUM_ITEMS)];
