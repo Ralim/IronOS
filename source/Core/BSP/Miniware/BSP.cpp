@@ -382,9 +382,18 @@ uint8_t getTipResistanceX10() {
 #ifdef TIP_RESISTANCE_SENSE_Pin
   // Return tip resistance in x10 ohms
   // We can measure this using the op-amp
-  return lastTipResistance;
+  uint8_t user_selected_tip = getUserSelectedTipResistance();
+  if (user_selected_tip == 0) {
+    return lastTipResistance; // Auto mode
+  }
+  return user_selected_tip;
+
 #else
-  return TIP_RESISTANCE;
+  uint8_t user_selected_tip = getUserSelectedTipResistance();
+  if (user_selected_tip == 0) {
+    return TIP_RESISTANCE; // Auto mode
+  }
+  return user_selected_tip;
 #endif
 }
 #ifdef TIP_RESISTANCE_SENSE_Pin

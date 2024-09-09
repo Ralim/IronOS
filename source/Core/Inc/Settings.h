@@ -11,7 +11,7 @@
 #define CORE_SETTINGS_H_
 #include <stdbool.h>
 #include <stdint.h>
-
+#include "configuration.h"
 #ifdef MODEL_Pinecilv2
 // Required settings reset for PR #1916
 #define SETTINGSVERSION (0x55AB) // This number is frozen, do not edit
@@ -124,7 +124,7 @@ typedef enum {
 */
 typedef enum {
   #ifdef AUTO_TIP_SELECTION
-  AUTO, // If the hardware supports automatic detection
+  TIP_TYPE_AUTO, // If the hardware supports automatic detection
 #endif
 
   #ifdef TIPTYPE_T12
@@ -137,11 +137,12 @@ typedef enum {
   // We do not know of other tuning tips (?yet?)
   #endif
   #ifdef TIPTYPE_JBC
-  JBC_2_5_OHM, // Small JBC tips as used in the S60
+  JBC_210_2_5_OHM, // Small JBC tips as used in the S60/S60P
   #endif
   TIP_TYPE_MAX, // Max value marker
 } tipType_t;
 
+uint8_t getUserSelectedTipResistance();
 
 // Settings wide operations
 void saveSettings();

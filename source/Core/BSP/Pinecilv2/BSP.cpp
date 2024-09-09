@@ -152,7 +152,11 @@ uint8_t       tipResistanceReadingSlot = 0;
 uint8_t       getTipResistanceX10() {
   // Return tip resistance in x10 ohms
   // We can measure this using the op-amp
-  return lastTipResistance;
+  uint8_t user_selected_tip = getUserSelectedTipResistance();
+  if (user_selected_tip == 0) {
+    return lastTipResistance; // Auto mode
+  }
+  return user_selected_tip;
 }
 
 uint16_t getTipThermalMass() { return 120; }

@@ -155,6 +155,8 @@
 #define POW_EPR                    1
 #define ENABLE_QC2                 1
 #define MAG_SLEEP_SUPPORT          1
+#define AUTO_TIP_SELECTION         1 // Can auto-select the tip
+#define TIPTYPE_T12                1 // Can manually pick a T12 tip
 #define DEVICE_HAS_VALIDATION_SUPPORT
 #define OLED_96x16 1
 #define TEMP_NTC

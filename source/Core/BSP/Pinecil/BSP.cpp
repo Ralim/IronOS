@@ -93,7 +93,13 @@ void setBuzzer(bool on) {}
 uint8_t  preStartChecks() { return 1; }
 uint64_t getDeviceID() { return dbg_id_get(); }
 
-uint8_t getTipResistanceX10() { return TIP_RESISTANCE; }
+uint8_t getTipResistanceX10() {
+  uint8_t user_selected_tip = getUserSelectedTipResistance();
+  if (user_selected_tip == 0) {
+    return TIP_RESISTANCE; // Auto mode
+  }
+  return user_selected_tip;
+}
 bool    isTipShorted() { return false; }
 uint8_t preStartChecksDone() { return 1; }
 
