@@ -181,6 +181,7 @@
 #define I2C_SOFT_BUS_1 1
 #define OLED_I2CBB1    1
 #define ACCEL_I2CBB1   1
+#define TIPTYPE_T12    1 // Can manually pick a T12 tip
 
 #define TEMP_TMP36
 #endif /* TS100 */
@@ -213,6 +214,8 @@
 #define TEMP_NTC             1
 #define ACCEL_I2CBB1         1
 #define POW_EPR              1
+#define AUTO_TIP_SELECTION   1 // Can auto-select the tip
+#define TIPTYPE_T12          1 // Can manually pick a T12 tip
 #define HAS_POWER_DEBUG_MENU
 #define DEBUG_POWER_MENU_BUTTON_B
 

@@ -9,9 +9,9 @@
 
 #ifndef CORE_SETTINGS_H_
 #define CORE_SETTINGS_H_
+#include "configuration.h"
 #include <stdbool.h>
 #include <stdint.h>
-#include "configuration.h"
 #ifdef MODEL_Pinecilv2
 // Required settings reset for PR #1916
 #define SETTINGSVERSION (0x55AB) // This number is frozen, do not edit
@@ -121,28 +121,27 @@ typedef enum {
 /* Selection of the soldering tip
  * Some devices allow multiple types of tips to be fitted, this allows selecting them or overriding the logic
  * The first type will be the default (gets value of 0)
-*/
+ */
 typedef enum {
-  #ifdef AUTO_TIP_SELECTION
+#ifdef AUTO_TIP_SELECTION
   TIP_TYPE_AUTO, // If the hardware supports automatic detection
 #endif
 
-  #ifdef TIPTYPE_T12
-  T12_8_OHM, // TS100 style tips or Hakko T12 tips with adaptors
+#ifdef TIPTYPE_T12
+  T12_8_OHM,   // TS100 style tips or Hakko T12 tips with adaptors
   T12_6_2_OHM, // Short Tips manufactured by Pine64
-  T12_4_OHM, // Longer tip but low resistance for PTS200
-  #endif
-  #ifdef TIPTYE_TS80
+  T12_4_OHM,   // Longer tip but low resistance for PTS200
+#endif
+#ifdef TIPTYE_TS80
   TS80_4_5_OHM, // TS80(P) default tips
-  // We do not know of other tuning tips (?yet?)
-  #endif
-  #ifdef TIPTYPE_JBC
+// We do not know of other tuning tips (?yet?)
+#endif
+#ifdef TIPTYPE_JBC
   JBC_210_2_5_OHM, // Small JBC tips as used in the S60/S60P
-  #endif
+#endif
   TIP_TYPE_MAX, // Max value marker
 } tipType_t;
-
-uint8_t getUserSelectedTipResistance();
+uint8_t getUserSelectedTipResistance(); // returns the resistance matching the selected tip type or 0 for auto
 
 // Settings wide operations
 void saveSettings();
@@ -160,7 +159,7 @@ bool isLastSettingValue(const enum SettingsOptions option);
 void setSettingValue(const enum SettingsOptions option, const uint16_t newValue);
 
 // Special access helpers, to reduce logic duplication
-uint8_t  lookupVoltageLevel();
-uint16_t lookupHallEffectThreshold();
-const char* lookupTipName(); // Get the name string for the current soldering tip
-#endif /* SETTINGS_H_ */
+uint8_t     lookupVoltageLevel();
+uint16_t    lookupHallEffectThreshold();
+const char *lookupTipName(); // Get the name string for the current soldering tip
+#endif                       /* SETTINGS_H_ */

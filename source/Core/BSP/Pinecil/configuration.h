@@ -155,6 +155,7 @@
 #define POW_QC_20V         1
 #define ENABLE_QC2         1
 #define MAG_SLEEP_SUPPORT  1
+#define TIPTYPE_T12        1 // Can manually pick a T12 tip
 #define TEMP_TMP36
 #define ACCEL_BMA
 #define ACCEL_SC7
