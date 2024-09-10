@@ -234,7 +234,7 @@
       "description": "Regola la sensibilità del sensore ad effetto Hall per entrare in modalità riposo [1: minima; 9: massima]"
     },
     "HallEffSleepTimeout": {                                            
-    "displayText": "Timer\nsens. Hall",                           
+    "displayText": "Timer\nriposoHall",                           
     "description": "Imposta un timer per entrare in modalità riposo quando il sensore ad effetto Hall è al di sopra della soglia di attivazione [secondi]"
     },
     "TemperatureUnit": {
