@@ -223,17 +223,19 @@
     },
     "SleepTimeout": {
       "displayText": "Timer\nriposo",
-      "description": "Imposta il timer per entrare in modalità riposo [secondi/minuti]"
+      "description": "Imposta un timer per entrare in modalità riposo [secondi/minuti]"
     },
     "ShutdownTimeout": {
       "displayText": "Timer\nspegnimento",
-      "description": "Imposta il timer per lo spegnimento [minuti]"
+      "description": "Imposta un timer per lo spegnimento [minuti]"
     },
     "HallEffSensitivity": {
       "displayText": "Sensore\nHall",
       "description": "Regola la sensibilità del sensore ad effetto Hall per entrare in modalità riposo [1: minima; 9: massima]"
     },
-    "HallEffSleepTimeout": {                                            "displayText": "HallSensor\nSleepTime",                           "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+    "HallEffSleepTimeout": {                                            
+    "displayText": "Timer\nriposoHall",                           
+    "description": "Imposta un timer per entrare in modalità riposo quando il sensore ad effetto Hall è al di sopra della soglia di attivazione [secondi]"
     },
     "TemperatureUnit": {
       "displayText": "Unità di\ntemperatura",
