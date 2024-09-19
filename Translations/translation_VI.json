@@ -233,7 +233,9 @@
       "displayText": "Hall\nđo nhay",
       "description": "Đo nhay cam bien Hall đe phát hien che đo ngu (1=ít nhay nhat |...| 9=nhay nhat)"
     },
-    "HallEffSleepTimeout": {                                            "displayText": "HallSensor\nSleepTime",                           "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+    "HallEffSleepTimeout": {
+      "displayText": "HallSensor\nSleepTime",
+      "description": "Khoảng thời gian trước khi \"chế độ ngủ\" bắt đầu khi hiệu ứng Hall vượt quá ngưỡng"
     },
     "TemperatureUnit": {
       "displayText": "Đon vi\nnhiet đo",
