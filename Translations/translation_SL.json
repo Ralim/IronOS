@@ -233,7 +233,9 @@
       "displayText": "Občut.\nHall son",
       "description": "Občutljivost Hallove sonde za zaznavanje spanja (1=najmanjša | ... | 9=največja)"
     },
-    "HallEffSleepTimeout": {                                            "displayText": "HallSensor\nSleepTime",                           "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+    "HallEffSleepTimeout": {
+      "displayText": "HallSensor\nSleepTime",
+      "description": "Interval pred začetkom \"načina mirovanja\", ko je Hallov učinek nad pragom"
     },
     "TemperatureUnit": {
       "displayText": "Enota za\ntemperaturo",
