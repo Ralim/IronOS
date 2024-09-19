@@ -233,7 +233,9 @@
       "displayText": "磁場敏感度",
       "description": "磁場感應器用作啟動待機模式的敏感度 <1=最低敏感度 | ... | 9=最高敏感度>"
     },
-    "HallEffSleepTimeout": {                                            "displayText": "HallSensor\nSleepTime",                           "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+    "HallEffSleepTimeout": {
+      "displayText": "HallSensor\nSleepTime",
+      "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
     },
     "TemperatureUnit": {
       "displayText": "溫標",
