@@ -233,7 +233,9 @@
       "displayText": "Citliv.\nHall",
       "description": "Citlivosť Hallovho senzora pre detekciu spánku (1=Min | ... | 9=Max)"
     },
-    "HallEffSleepTimeout": {                                            "displayText": "HallSensor\nSleepTime",                           "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+    "HallEffSleepTimeout": {
+      "displayText": "HallSensor\nSleepTime",
+      "description": "Interval pred spustením \"režimu spánku\" keď je hall efekt nad prahovou hodnotou"
     },
     "TemperatureUnit": {
       "displayText": "Jednotka\nteploty",
