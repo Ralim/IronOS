@@ -233,7 +233,9 @@
       "displayText": "Чутливість\nЕфекту Холла",
       "description": "Чутливість датчика ефекту Холла при виявленні сну (1=мін. чутливості | ... | 9=макс. чутливості)"
     },
-    "HallEffSleepTimeout": {                                            "displayText": "HallSensor\nSleepTime",                           "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+    "HallEffSleepTimeout": {
+      "displayText": "HallSensor\nSleepTime",
+      "description": "Інтервал перед початком \"режиму сну\", коли ефект Холла перевищує порогове значення"
     },
     "TemperatureUnit": {
       "displayText": "Формат темпе-\nратури(C°/F°)",
