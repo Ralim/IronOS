@@ -233,7 +233,9 @@
       "displayText": "Hall Eff\nSensibilidad",
       "description": "Sensibilidad del sensor de efecto Hall en la detección de reposo (1=menos sensible | ... | 9=más sensible)"
     },
-    "HallEffSleepTimeout": {                                            "displayText": "HallSensor\nSleepTime",                           "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+    "HallEffSleepTimeout": {
+      "displayText": "HallSensor\nSleepTime",
+      "description": "Intervalo antes de que comience el \"modo de suspensión\" cuando el efecto Hall está por encima del umbral"
     },
     "TemperatureUnit": {
       "displayText": "Unidad de\ntemperatura",
