@@ -233,7 +233,9 @@
       "displayText": "Hall-\nherk.",
       "description": "Hall-efektianturin herkkyys lepotilan tunnistuksessa (1=vähäinen herkkyys | ... | 9=suurin herkkyys)"
     },
-    "HallEffSleepTimeout": {                                            "displayText": "HallSensor\nSleepTime",                           "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+    "HallEffSleepTimeout": {
+      "displayText": "HallSensor\nSleepTime",
+      "description": "Aikaväli ennen \"lepotilaa\" alkaa, kun hall-efekti ylittää kynnyksen"
     },
     "TemperatureUnit": {
       "displayText": "Lämpötilan\nyksikkö",
