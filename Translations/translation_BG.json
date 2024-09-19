@@ -233,7 +233,9 @@
       "displayText": "Датчик\nна Хол",
       "description": "Чувствителност на сензора към магнитно поле (1=Слабо | ... | 9=Силно)"
     },
-    "HallEffSleepTimeout": {                                            "displayText": "HallSensor\nSleepTime",                           "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+    "HallEffSleepTimeout": {
+      "displayText": "HallSensor\nSleepTime",
+      "description": "Интервалът преди началото на \"режим на заспиване\", когато ефектът на Хол надвиши прага"
     },
     "TemperatureUnit": {
       "displayText": "Единици за\nтемпературата",
