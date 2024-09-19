@@ -233,7 +233,9 @@
       "displayText": "Датчик\nХолла",
       "description": "Чувствительность датчика Холла к магнитному полю (1=мин. | ... | 9=макс.)"
     },
-    "HallEffSleepTimeout": {                                            "displayText": "HallSensor\nSleepTime",                           "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+    "HallEffSleepTimeout": {
+      "displayText": "HallSensor\nSleepTime",
+      "description": "Интервал перед запуском \"спящего режима\", когда эффект Холла превышает пороговое значение"
     },
     "TemperatureUnit": {
       "displayText": "Единицы\nизмерения",
