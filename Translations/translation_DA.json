@@ -235,7 +235,7 @@
     },
     "HallEffSleepTimeout": {
       "displayText": "HallSensor\nSleepTime",
-      "description": "Intervallet før starten af ​​\"dvaletilstand\", når Hall-effekten overskrider tærsklen"
+      "description": "Intervallet før starten af \"dvaletilstand\", når Hall-effekten overskrider tærsklen"
     },
     "TemperatureUnit": {
       "displayText": "Temperatur\nEnhed",
