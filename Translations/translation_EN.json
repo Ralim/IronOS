@@ -122,16 +122,16 @@
       "displayText": "TS100\nLong"
     },
     "TipTypeT12Short": {
-      "displayText": "TS100\nShort"
+      "displayText": "Pine\nShort"
     },
     "TipTypeT12PTS": {
-      "displayText": "TS100\nPTS"
+      "displayText": "PTS\n200"
     },
     "TipTypeTS80": {
       "displayText": "TS80\n"
     },
-    "TipTypeJBC": {
-      "displayText": "JBC\n"
+    "TipTypeJBCC210": {
+      "displayText": "JBC\nC210"
     }
   },
   "menuOptions": {

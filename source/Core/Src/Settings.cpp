@@ -326,7 +326,7 @@ const char *lookupTipName() {
 #endif
 #ifdef TIPTYPE_JBC
   case tipType_t::JBC_210_2_5_OHM:
-    return translatedString(Tr->TipTypeJBC);
+    return translatedString(Tr->TipTypeJBCC210);
     break;
 #endif
   default:
