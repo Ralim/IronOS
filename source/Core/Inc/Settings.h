@@ -132,13 +132,13 @@ typedef enum {
   T12_6_2_OHM, // Short Tips manufactured by Pine64
   T12_4_OHM,   // Longer tip but low resistance for PTS200
 #endif
-#ifdef TIPTYE_TS80
-  TS80_4_5_OHM, // TS80(P) default tips
-// We do not know of other tuning tips (?yet?)
-#endif
-#ifdef TIPTYPE_JBC
-  JBC_210_2_5_OHM, // Small JBC tips as used in the S60/S60P
-#endif
+  // #ifdef TIPTYPE_TS80
+  //   TS80_4_5_OHM, // TS80(P) default tips
+  // // We do not know of other tuning tips (?yet?)
+  // #endif
+  // #ifdef TIPTYPE_JBC
+  //   JBC_210_2_5_OHM, // Small JBC tips as used in the S60/S60P
+  // #endif
   TIP_TYPE_MAX, // Max value marker
 } tipType_t;
 uint8_t getUserSelectedTipResistance(); // returns the resistance matching the selected tip type or 0 for auto

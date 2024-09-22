@@ -233,6 +233,8 @@
 #define I2C_SOFT_BUS_2   1
 #define LIS_ORI_FLIP
 #define OLED_FLIP
+#define TIPTYPE_TS80 1 // Only one tip type so far
+
 #endif /* TS80(P) */
 
 #ifdef MODEL_TS80
