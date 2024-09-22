@@ -446,11 +446,11 @@ const menuitem advancedMenu[] = {
 
 /* clang-format on */
 
-const menuitem *subSettingsMenus[] {
+const menuitem *subSettingsMenus[]{
 #if defined(POW_DC) || defined(POW_QC) || defined(POW_PD)
-  powerMenu,
+    powerMenu,
 #endif
-      solderingMenu, PowerSavingMenu, UIMenu, advancedMenu,
+    solderingMenu, PowerSavingMenu, UIMenu, advancedMenu,
 };
 /* ^^^ !!!ENABLE CLANG-FORMAT back!!! ^^^ */
 
@@ -765,7 +765,7 @@ static void displayHallEffectSleepTime(void) {
 #endif /* HALL_SENSOR */
 static void displaySolderingTipType(void) {
   // TODO wrapping X value
-  OLED::print(lookupTipName(), FontStyle::SMALL);
+  OLED::print(lookupTipName(), FontStyle::SMALL, 255, OLED::getCursorX());
 }
 // If there is no detection, and no options, max is 0
 static bool showSolderingTipType(void) { return tipType_t::TIP_TYPE_MAX != 0; }
