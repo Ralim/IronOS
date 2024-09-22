@@ -114,6 +114,24 @@
     },
     "USBPDModeSafe": {
       "displayText": "Modalità\nsicura"
+    },
+    "TipTypeAuto": {
+      "displayText": "Auto\nSense"
+    },
+    "TipTypeT12Long": {
+      "displayText": "TS100\nLong"
+    },
+    "TipTypeT12Short": {
+      "displayText": "Pine\nShort"
+    },
+    "TipTypeT12PTS": {
+      "displayText": "PTS\n200"
+    },
+    "TipTypeTS80": {
+      "displayText": "TS80\n"
+    },
+    "TipTypeJBCC210": {
+      "displayText": "JBC\nC210"
     }
   },
   "menuOptions": {
@@ -233,9 +251,9 @@
       "displayText": "Sensore\nHall",
       "description": "Regola la sensibilità del sensore ad effetto Hall per entrare in modalità riposo [1: minima; 9: massima]"
     },
-    "HallEffSleepTimeout": {                                            
-    "displayText": "Timer\nriposoHall",                           
-    "description": "Imposta un timer per entrare in modalità riposo quando il sensore ad effetto Hall è al di sopra della soglia di attivazione [secondi]"
+    "HallEffSleepTimeout": {
+      "displayText": "Timer\nriposoHall",
+      "description": "Imposta un timer per entrare in modalità riposo quando il sensore ad effetto Hall è al di sopra della soglia di attivazione [secondi]"
     },
     "TemperatureUnit": {
       "displayText": "Unità di\ntemperatura",
