@@ -114,6 +114,24 @@
     },
     "USBPDModeSafe": {
       "displayText": "Вкл.без\nзапроса"
+    },
+    "TipTypeAuto": {
+      "displayText": "Auto\nSense"
+    },
+    "TipTypeT12Long": {
+      "displayText": "TS100\nLong"
+    },
+    "TipTypeT12Short": {
+      "displayText": "Pine\nShort"
+    },
+    "TipTypeT12PTS": {
+      "displayText": "PTS\n200"
+    },
+    "TipTypeTS80": {
+      "displayText": "TS80\n"
+    },
+    "TipTypeJBCC210": {
+      "displayText": "JBC\nC210"
     }
   },
   "menuOptions": {
@@ -233,7 +251,9 @@
       "displayText": "Датчик\nХолла",
       "description": "Чувствительность датчика Холла к магнитному полю (1=мин. | ... | 9=макс.)"
     },
-    "HallEffSleepTimeout": {                                            "displayText": "HallSensor\nSleepTime",                           "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+    "HallEffSleepTimeout": {
+      "displayText": "HallSensor\nSleepTime",
+      "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
     },
     "TemperatureUnit": {
       "displayText": "Единицы\nизмерения",
