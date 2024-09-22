@@ -4,6 +4,7 @@
 #include "BootLogo.h"
 #include "I2C_Wrapper.hpp"
 #include "Pins.h"
+#include "Settings.h"
 #include "Setup.h"
 #include "TipThermoModel.h"
 #include "USBPD.h"

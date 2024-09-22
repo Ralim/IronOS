@@ -7,9 +7,10 @@
  *      Houses the system settings and allows saving / restoring from flash
  */
 
+#include "configuration.h"
+
 #ifndef CORE_SETTINGS_H_
 #define CORE_SETTINGS_H_
-#include "configuration.h"
 #include <stdbool.h>
 #include <stdint.h>
 #ifdef MODEL_Pinecilv2

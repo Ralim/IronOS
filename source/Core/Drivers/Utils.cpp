@@ -6,6 +6,7 @@
  */
 
 #include "BSP_Power.h"
+#include "Settings.h"
 #include "configuration.h"
 #include <Utils.h>
 
