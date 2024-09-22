@@ -235,7 +235,7 @@
     },
     "HallEffSleepTimeout": {
       "displayText": "HallSensor\nSleepTime",
-      "description": "Khoảng thời gian trước khi \"chế độ ngủ\" bắt đầu khi hiệu úng Hall vượt quá ngưỡng"
+      "description": "Khoảng thời gian trước khi \"chế độ ngu\" bắt đầu khi hiệu úng Hall vượt quá ngưỡng"
     },
     "TemperatureUnit": {
       "displayText": "Đon vi\nnhiet đo",
