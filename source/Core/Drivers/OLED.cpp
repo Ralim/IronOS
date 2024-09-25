@@ -33,7 +33,7 @@ uint32_t           OLED::displayChecksum;
  * Data packets are prefixed with 0x40
  */
 I2C_CLASS::I2C_REG OLED_Setup_Array[] = {
-    /**/
+  /**/
     {0x80,         OLED_OFF, 0}, /* Display off */
     {0x80,     OLED_DIVIDER, 0}, /* Set display clock divide ratio / osc freq */
     {0x80,             0x52, 0}, /* Divide ratios */
