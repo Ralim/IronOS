@@ -1,9 +1,9 @@
 #include "USBPD.h"
 #include "configuration.h"
 #ifdef POW_PD
-
 #include "BSP_PD.h"
 #include "FreeRTOS.h"
+#include "Settings.h"
 #include "fusb302b.h"
 #include "main.hpp"
 #include "pd.h"
