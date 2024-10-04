@@ -31,7 +31,7 @@
       "message": "Térmico\nFuera de control"
     },
     "WarningTipShorted": {
-      "message": "!Tip Shorted!"
+      "message": "¡Punta en Corto!"
     },
     "SettingsCalibrationWarning": {
       "message": "¡Antes de reiniciar, asegúrese de que la punta y el mango estén a temperatura ambiente!"
@@ -107,13 +107,13 @@
   },
   "menuValues": {
     "USBPDModeDefault": {
-      "displayText": "Default\nMode"
+      "displayText": "Modo por\nDefecto"
     },
     "USBPDModeNoDynamic": {
-      "displayText": "No\nDynamic"
+      "displayText": "Dinámico\nNo"
     },
     "USBPDModeSafe": {
-      "displayText": "Safe\nMode"
+      "displayText": "Modo\nSeguro"
     }
   },
   "menuOptions": {
@@ -233,9 +233,9 @@
       "displayText": "Hall Eff\nSensibilidad",
       "description": "Sensibilidad del sensor de efecto Hall en la detección de reposo (1=menos sensible | ... | 9=más sensible)"
     },
-    "HallEffSleepTimeout": {
-      "displayText": "HallSensor\nSleepTime",
-      "description": "Intervalo antes de que comience el \"modo de suspensión\" cuando el efecto Hall está por encima del umbral"
+    "HallEffSleepTimeout": {                                           
+      "displayText": "Tiempo reposo\nSensor Hall", 
+      "description": "Intervalo antes de que \"sleep mode\" empiece cuando sensorhall supera límite"
     },
     "TemperatureUnit": {
       "displayText": "Unidad de\ntemperatura",
