@@ -56,7 +56,7 @@ It does **not** support USB-PD and will not work when powered from a USB-C power
 
 ### TS80P
 
-The TS80P is a successor to TS80, and really its what the TS80 should have been. It is nearly identical except it adds USB-PD support for far better compatibility with modern power banks as well as a faster tip removal method.
+The TS80P is the direct successor to the TS80 and essentially what the TS80 should have been from its debut. It is nearly identical except it adds USB-PD support for far better compatibility with modern power banks as well as a faster tip removal method.
 
 - supports _Quick Charge 3.0_ (_QC3_: 9V/2A,12V/1.5A 18W max);
 - supports _Power Delivery_ (_PD_: 9V/3A & 12V/3A, 30W max)\*\*;
