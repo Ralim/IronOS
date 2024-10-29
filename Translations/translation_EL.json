@@ -253,7 +253,7 @@
     },
     "HallEffSleepTimeout": {
       "displayText": "HallSensor\nSleepTime",
-      "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+      "description": "Το διάστημα πριν από την \"λειτουργία ύπνου\" ξεκινά όταν το εφέ αίθουσας είναι πάνω από το όριο"
     },
     "TemperatureUnit": {
       "displayText": "Μονάδες\nθερμοκρασίας",

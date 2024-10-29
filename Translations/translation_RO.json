@@ -253,7 +253,7 @@
     },
     "HallEffSleepTimeout": {
       "displayText": "HallSensor\nSleepTime",
-      "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+      "description": "Intervalul înainte de începerea \"modului de repaus\" când efectul de sală este peste prag"
     },
     "TemperatureUnit": {
       "displayText": "Unitate de\ntemperatură",

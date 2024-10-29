@@ -253,7 +253,7 @@
     },
     "HallEffSleepTimeout": {
       "displayText": "HallSensor\nSleepTime",
-      "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+      "description": "Az \"alvó üzemmód\" előtti intervallum akkor kezdődik, amikor a hall-effektus meghaladja a küszöbértéket"
     },
     "TemperatureUnit": {
       "displayText": "Hőmérséklet\nmértékegysége",

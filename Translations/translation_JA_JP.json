@@ -253,7 +253,7 @@
     },
     "HallEffSleepTimeout": {
       "displayText": "HallSensor\nSleepTime",
-      "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+      "description": "ホール効果が閾値を超えたときに\"「スリープモード」\"が開始されるまでの間隔"
     },
     "TemperatureUnit": {
       "displayText": "温度単位",

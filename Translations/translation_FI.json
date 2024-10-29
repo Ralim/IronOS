@@ -253,7 +253,7 @@
     },
     "HallEffSleepTimeout": {
       "displayText": "HallSensor\nSleepTime",
-      "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+      "description": "Aikaväli ennen \"lepotilaa\" alkaa, kun hall-efekti ylittää kynnyksen"
     },
     "TemperatureUnit": {
       "displayText": "Lämpötilan\nyksikkö",

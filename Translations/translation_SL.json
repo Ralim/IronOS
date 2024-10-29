@@ -253,7 +253,7 @@
     },
     "HallEffSleepTimeout": {
       "displayText": "HallSensor\nSleepTime",
-      "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+      "description": "Interval pred začetkom \"načina mirovanja\", ko je Hallov učinek nad pragom"
     },
     "TemperatureUnit": {
       "displayText": "Enota za\ntemperaturo",

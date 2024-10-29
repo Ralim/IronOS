@@ -253,7 +253,7 @@
     },
     "HallEffSleepTimeout": {
       "displayText": "HallSensor\nSleepTime",
-      "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+      "description": "Intervalas prieš \"miego režimą\" prasideda, kai salės efektas viršija slenkstį"
     },
     "TemperatureUnit": {
       "displayText": "Temperatūros\nvienetai",
