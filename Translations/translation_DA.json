@@ -233,7 +233,9 @@
       "displayText": "Hall sensor\nfølsomhed",
       "description": "følsomhed overfor magneten (1=Mindst følsom | ... | 9=Mest følsom)"
     },
-    "HallEffSleepTimeout": {                                            "displayText": "HallSensor\nSleepTime",                           "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+    "HallEffSleepTimeout": {
+      "displayText": "HallSensor\nSleepTime",
+      "description": "Intervallet før starten af \"dvaletilstand\", når Hall-effekten overskrider tærsklen"
     },
     "TemperatureUnit": {
       "displayText": "Temperatur\nEnhed",

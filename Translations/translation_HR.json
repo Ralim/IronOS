@@ -233,7 +233,9 @@
       "displayText": "Osjetljivost\nHall senzora",
       "description": "Osjetljivost senzora magnetskog polja za detekciju spavanja (N=Najmanja | S=Srednja | V=Visoka)"
     },
-    "HallEffSleepTimeout": {                                            "displayText": "HallSensor\nSleepTime",                           "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+    "HallEffSleepTimeout": {
+      "displayText": "HallSensor\nSleepTime",
+      "description": "Interval prije pokretanja \"načina mirovanja\" kada je Hall efekt iznad praga"
     },
     "TemperatureUnit": {
       "displayText": "Jedinica\ntemperature",

@@ -233,7 +233,9 @@
       "displayText": "Sensibilidade de\nmagnetismo",
       "description": "Sensibilidade de magnetismo (1=Menor | ... | 9=Maior)"
     },
-    "HallEffSleepTimeout": {                                            "displayText": "HallSensor\nSleepTime",                           "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+    "HallEffSleepTimeout": {
+      "displayText": "HallSensor\nSleepTime",
+      "description": "Intervalo antes do início do \"modo de suspensão\" quando o efeito Hall está acima do limite"
     },
     "TemperatureUnit": {
       "displayText": "Unidade\ntemperatura",

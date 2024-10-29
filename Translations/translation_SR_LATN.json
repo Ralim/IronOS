@@ -233,7 +233,9 @@
       "displayText": "Hall sensor\nsensitivity",
       "description": "Sensitivity to magnets (1=najmanje osetljivo | ... | 9=najosetljivije)"
     },
-    "HallEffSleepTimeout": {                                            "displayText": "HallSensor\nSleepTime",                           "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+    "HallEffSleepTimeout": {
+      "displayText": "HallSensor\nSleepTime",
+      "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
     },
     "TemperatureUnit": {
       "displayText": "Jedinica\ntemperature",

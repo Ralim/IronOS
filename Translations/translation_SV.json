@@ -233,7 +233,9 @@
       "displayText": "Sensor-\nkänslght",
       "description": "Känslighet för halleffekt-sensorn för viloläges-detektering (1=minst känslig | ... | 9=mest känslig)"
     },
-    "HallEffSleepTimeout": {                                            "displayText": "HallSensor\nSleepTime",                           "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+    "HallEffSleepTimeout": {
+      "displayText": "HallSensor\nSleepTime",
+      "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
     },
     "TemperatureUnit": {
       "displayText": "Temperatur-\nenheter",

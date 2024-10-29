@@ -233,7 +233,9 @@
       "displayText": "Sensibilité\ncapteur effet hall",
       "description": "Sensibilité du capteur à effet Hall pour la mise en veille (1=peu sensible | ... | 9=très sensible)"
     },
-    "HallEffSleepTimeout": {                                            "displayText": "HallSensor\nSleepTime",                           "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+    "HallEffSleepTimeout": {
+      "displayText": "HallSensor\nSleepTime",
+      "description": "Intervalle avant le démarrage du \"mode veille\" lorsque l'effet Hall est supérieur au seuil"
     },
     "TemperatureUnit": {
       "displayText": "Unité de\ntempérature",
