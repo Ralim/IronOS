@@ -38,7 +38,7 @@ Its now generally not reccomended to buy new as other devices have all of its fe
 The TS101 is the direct replacement of the TS100 with the same tip compatibility.
 It adds a spring pressure tip holding mechanism instead of using a screw so tips are easier to swap on the fly (But are held less securely and can pull out depending on the use case). It adds USB-C PD support and the hardware is compatible with 28V EPR power supplies (under both IronOS and official firmware).
 
-It unfortunately uses an STM32 clone MCU with quirks, so performance of the screen isn't as good as it could be but its perfectly usable. The bootloader for programming is the biggest weakness of this device and programming can be a pain. Thankfully IronOS is relatively stable feature wise so you shouldn't need to update the device especially often.
+It unfortunately uses an STM32 clone MCU with quirks, so performance of the screen isn't as good as it could be but its perfectly usable. The bootloader for programming is the biggest weakness of this device and programming can be a pain. Fortunately, IronOS is relatively stable feature wise, so you shouldn't need to update the device often.
 
 The Miniware bootup logo is burned into their bootloader, so IronOS cant remove this. IronOS can show your own logo when it starts however. There are quirks to loading a logo on this device, so be sure to read the documentation if you are coming from other devices.
 
