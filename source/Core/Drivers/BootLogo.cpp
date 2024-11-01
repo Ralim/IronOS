@@ -2,6 +2,7 @@
 #include "BSP.h"
 #include "Buttons.hpp"
 #include "OLED.hpp"
+#include "Settings.h"
 #include "cmsis_os.h"
 
 #define LOGO_PAGE_LENGTH 1024

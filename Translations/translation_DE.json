@@ -114,6 +114,24 @@
     },
     "USBPDModeSafe": {
       "displayText": "Safe\nMode"
+    },
+    "TipTypeAuto": {
+      "displayText": "Auto\nSense"
+    },
+    "TipTypeT12Long": {
+      "displayText": "TS100\nLong"
+    },
+    "TipTypeT12Short": {
+      "displayText": "Pine\nShort"
+    },
+    "TipTypeT12PTS": {
+      "displayText": "PTS\n200"
+    },
+    "TipTypeTS80": {
+      "displayText": "TS80\n"
+    },
+    "TipTypeJBCC210": {
+      "displayText": "JBC\nC210"
     }
   },
   "menuOptions": {
@@ -235,7 +253,7 @@
     },
     "HallEffSleepTimeout": {
       "displayText": "HallSensor\nSleepTime",
-      "description": "Das Intervall vor dem Start des \"Ruhemodus\", wenn der Hall-Effekt den Schwellenwert überschreitet"
+      "description": "Dauer vor dem Wechsel in den \"Ruhemodus\", nachdem die Hall-Sonde auslöst"
     },
     "TemperatureUnit": {
       "displayText": "Temperatur-\neinheit",
@@ -320,6 +338,10 @@
     "LanguageSwitch": {
       "displayText": "Sprache:\n DE     Deutsch",
       "description": ""
+    },
+    "SolderingTipType": {
+      "displayText": "Soldering\nTip Type",
+      "description": "Select the tip type fitted"
     }
   }
 }

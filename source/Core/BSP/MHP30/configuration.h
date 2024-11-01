@@ -1,6 +1,5 @@
 #ifndef CONFIGURATION_H_
 #define CONFIGURATION_H_
-#include "Settings.h"
 #include <stdint.h>
 /**
  * Configuration.h
@@ -147,7 +146,7 @@
 #define MIN_BOOST_TEMP_F       300                     // The min settable temp for boost mode °F
 #define NO_DISPLAY_ROTATE                              // Disable OLED rotation by accel
 #define SLEW_LIMIT             50                      // Limit to 3.0 Watts per 64ms pid loop update rate slew rate
-
+#define TIPTYPE_MHP30          1                       // It's own special tip
 #define ACCEL_SC7
 #define ACCEL_MSA
 

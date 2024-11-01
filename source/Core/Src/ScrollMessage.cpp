@@ -1,6 +1,6 @@
 #include "ScrollMessage.hpp"
-
 #include "OLED.hpp"
+#include "Settings.h"
 #include "configuration.h"
 
 /**

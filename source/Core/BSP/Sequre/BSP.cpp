@@ -6,6 +6,7 @@
 #include "HUB238.hpp"
 #include "I2C_Wrapper.hpp"
 #include "Pins.h"
+#include "Settings.h"
 #include "Setup.h"
 #include "TipThermoModel.h"
 #include "configuration.h"
@@ -262,7 +263,11 @@ uint8_t getTipResistanceX10() {
 
   return TIP_RESISTANCE + ((TIP_RESISTANCE * scaler) / 100000);
 #else
-  return TIP_RESISTANCE;
+  uint8_t user_selected_tip = getUserSelectedTipResistance();
+  if (user_selected_tip == 0) {
+    return TIP_RESISTANCE; // Auto mode
+  }
+  return user_selected_tip;
 #endif
 }
 bool    isTipShorted() { return false; }

@@ -16,6 +16,10 @@
 #include <string.h> // for memset
 bool sanitiseSettings();
 
+/*
+ * Used to constrain the QC 3.0 Voltage selection to suit hardware.
+ * We allow a little overvoltage for users who want to push it
+ */
 #ifdef POW_QC_20V
 #define QC_VOLTAGE_MAX 220
 #else
@@ -51,60 +55,61 @@ typedef struct {
 
 static const SettingConstants settingsConstants[(int)SettingsOptions::SettingsOptionsLength] = {
   //{                   min,                               max,         increment,                      default}
-    {            MIN_TEMP_C,                        MAX_TEMP_F,                 5,               SOLDERING_TEMP}, // SolderingTemp
-    {            MIN_TEMP_C,                        MAX_TEMP_F,                 5,                          150}, // SleepTemp
-    {                     0,                                15,                 1,                   SLEEP_TIME}, // SleepTime
-    {                     0,                                 4,                 1,              CUT_OUT_SETTING}, // MinDCVoltageCells
-    {                    24,                                38,                 1,               RECOM_VOL_CELL}, // MinVoltageCells
-    {                    90,                    QC_VOLTAGE_MAX,                 2,                           90}, // QCIdealVoltage
-    {                     0,              MAX_ORIENTATION_MODE,                 1,             ORIENTATION_MODE}, // OrientationMode
-    {                     0,                                 9,                 1,                  SENSITIVITY}, // Sensitivity
-    {                     0,                                 1,                 1,               ANIMATION_LOOP}, // AnimationLoop
-    {                     0,  settingOffSpeed_t::MAX_VALUE - 1,                 1,              ANIMATION_SPEED}, // AnimationSpeed
-    {                     0,                                 3,                 1,              AUTO_START_MODE}, // AutoStartMode
-    {                     0,                                60,                 1,                SHUTDOWN_TIME}, // ShutdownTime
-    {                     0,                                 1,                 1,           COOLING_TEMP_BLINK}, // CoolingTempBlink
-    {                     0,                                 1,                 1,                DETAILED_IDLE}, // DetailedIDLE
-    {                     0,                                 1,                 1,           DETAILED_SOLDERING}, // DetailedSoldering
-    {                     0, (uint16_t)(HasFahrenheit ? 1 : 0),                 1,              TEMPERATURE_INF}, // TemperatureInF
-    {                     0,                                 1,                 1,     DESCRIPTION_SCROLL_SPEED}, // DescriptionScrollSpeed
-    {                     0,                                 2,                 1,                 LOCKING_MODE}, // LockingMode
-    {                     0,                                99,                 1,          POWER_PULSE_DEFAULT}, // KeepAwakePulse
-    {                     1,              POWER_PULSE_WAIT_MAX,                 1,     POWER_PULSE_WAIT_DEFAULT}, // KeepAwakePulseWait
-    {                     1,          POWER_PULSE_DURATION_MAX,                 1, POWER_PULSE_DURATION_DEFAULT}, // KeepAwakePulseDuration
-    {                   360,                               900,                 1,                  VOLTAGE_DIV}, // VoltageDiv
-    {                     0,                        MAX_TEMP_F,                10,                   BOOST_TEMP}, // BoostTemp
-    {MIN_CALIBRATION_OFFSET,                              2500,                 1,           CALIBRATION_OFFSET}, // CalibrationOffset
-    {                     0,                   MAX_POWER_LIMIT, POWER_LIMIT_STEPS,                  POWER_LIMIT}, // PowerLimit
-    {                     0,                                 1,                 1,   REVERSE_BUTTON_TEMP_CHANGE}, // ReverseButtonTempChangeEnabled
-    {                     5,         TEMP_CHANGE_LONG_STEP_MAX,                 5,        TEMP_CHANGE_LONG_STEP}, // TempChangeLongStep
-    {                     1,        TEMP_CHANGE_SHORT_STEP_MAX,                 1,       TEMP_CHANGE_SHORT_STEP}, // TempChangeShortStep
-    {                     0,                                 9,                 1,                            7}, // HallEffectSensitivity
-    {                     0,                                 9,                 1,                            0}, // AccelMissingWarningCounter
-    {                     0,                                 9,                 1,                            0}, // PDMissingWarningCounter
-    {                     0,                            0xFFFF,                 0,                 41431 /*EN*/}, // UILanguage
-    {                     0,                                50,                 1,                           20}, // PDNegTimeout
-    {                     0,                                 1,                 1,                            0}, // OLEDInversion
-    {        MIN_BRIGHTNESS,                    MAX_BRIGHTNESS,   BRIGHTNESS_STEP,           DEFAULT_BRIGHTNESS}, // OLEDBrightness
-    {                     0,                                 6,                 1,                            1}, // LOGOTime
-    {                     0,                                 1,                 1,                            0}, // CalibrateCJC
-    {                     0,                                 1,                 1,                            0}, // BluetoothLE
-    {                     0,                                 2,                 1,                            1}, // USBPDMode
-    {                     1,                                 5,                 1,                            4}, // ProfilePhases
-    {            MIN_TEMP_C,                        MAX_TEMP_F,                 5,                           90}, // ProfilePreheatTemp
-    {                     1,                                10,                 1,                            1}, // ProfilePreheatSpeed
-    {            MIN_TEMP_C,                        MAX_TEMP_F,                 5,                          130}, // ProfilePhase1Temp
-    {                    10,                               180,                 5,                           90}, // ProfilePhase1Duration
-    {            MIN_TEMP_C,                        MAX_TEMP_F,                 5,                          140}, // ProfilePhase2Temp
-    {                    10,                               180,                 5,                           30}, // ProfilePhase2Duration
-    {            MIN_TEMP_C,                        MAX_TEMP_F,                 5,                          165}, // ProfilePhase3Temp
-    {                    10,                               180,                 5,                           30}, // ProfilePhase3Duration
-    {            MIN_TEMP_C,                        MAX_TEMP_F,                 5,                          140}, // ProfilePhase4Temp
-    {                    10,                               180,                 5,                           30}, // ProfilePhase4Duration
-    {            MIN_TEMP_C,                        MAX_TEMP_F,                 5,                           90}, // ProfilePhase5Temp
-    {                    10,                               180,                 5,                           30}, // ProfilePhase5Duration
-    {                     1,                                10,                 1,                            2}, // ProfileCooldownSpeed
-    {                     0,                                12,                 1,                            0}, // HallEffectSleepTime
+    {            MIN_TEMP_C,                                                            MAX_TEMP_F,                 5,               SOLDERING_TEMP}, // SolderingTemp
+    {            MIN_TEMP_C,                                                            MAX_TEMP_F,                 5,                          150}, // SleepTemp
+    {                     0,                                                                    15,                 1,                   SLEEP_TIME}, // SleepTime
+    {                     0,                                                                     4,                 1,              CUT_OUT_SETTING}, // MinDCVoltageCells
+    {                    24,                                                                    38,                 1,               RECOM_VOL_CELL}, // MinVoltageCells
+    {                    90,                                                        QC_VOLTAGE_MAX,                 2,                           90}, // QCIdealVoltage
+    {                     0,                                                  MAX_ORIENTATION_MODE,                 1,             ORIENTATION_MODE}, // OrientationMode
+    {                     0,                                                                     9,                 1,                  SENSITIVITY}, // Sensitivity
+    {                     0,                                                                     1,                 1,               ANIMATION_LOOP}, // AnimationLoop
+    {                     0,                                      settingOffSpeed_t::MAX_VALUE - 1,                 1,              ANIMATION_SPEED}, // AnimationSpeed
+    {                     0,                                                                     3,                 1,              AUTO_START_MODE}, // AutoStartMode
+    {                     0,                                                                    60,                 1,                SHUTDOWN_TIME}, // ShutdownTime
+    {                     0,                                                                     1,                 1,           COOLING_TEMP_BLINK}, // CoolingTempBlink
+    {                     0,                                                                     1,                 1,                DETAILED_IDLE}, // DetailedIDLE
+    {                     0,                                                                     1,                 1,           DETAILED_SOLDERING}, // DetailedSoldering
+    {                     0,                                     (uint16_t)(HasFahrenheit ? 1 : 0),                 1,              TEMPERATURE_INF}, // TemperatureInF
+    {                     0,                                                                     1,                 1,     DESCRIPTION_SCROLL_SPEED}, // DescriptionScrollSpeed
+    {                     0,                                                                     2,                 1,                 LOCKING_MODE}, // LockingMode
+    {                     0,                                                                    99,                 1,          POWER_PULSE_DEFAULT}, // KeepAwakePulse
+    {                     1,                                                  POWER_PULSE_WAIT_MAX,                 1,     POWER_PULSE_WAIT_DEFAULT}, // KeepAwakePulseWait
+    {                     1,                                              POWER_PULSE_DURATION_MAX,                 1, POWER_PULSE_DURATION_DEFAULT}, // KeepAwakePulseDuration
+    {                   360,                                                                   900,                 1,                  VOLTAGE_DIV}, // VoltageDiv
+    {                     0,                                                            MAX_TEMP_F,                10,                   BOOST_TEMP}, // BoostTemp
+    {MIN_CALIBRATION_OFFSET,                                                                  2500,                 1,           CALIBRATION_OFFSET}, // CalibrationOffset
+    {                     0,                                                       MAX_POWER_LIMIT, POWER_LIMIT_STEPS,                  POWER_LIMIT}, // PowerLimit
+    {                     0,                                                                     1,                 1,   REVERSE_BUTTON_TEMP_CHANGE}, // ReverseButtonTempChangeEnabled
+    {                     5,                                             TEMP_CHANGE_LONG_STEP_MAX,                 5,        TEMP_CHANGE_LONG_STEP}, // TempChangeLongStep
+    {                     1,                                            TEMP_CHANGE_SHORT_STEP_MAX,                 1,       TEMP_CHANGE_SHORT_STEP}, // TempChangeShortStep
+    {                     0,                                                                     9,                 1,                            7}, // HallEffectSensitivity
+    {                     0,                                                                     9,                 1,                            0}, // AccelMissingWarningCounter
+    {                     0,                                                                     9,                 1,                            0}, // PDMissingWarningCounter
+    {                     0,                                                                0xFFFF,                 0,                 41431 /*EN*/}, // UILanguage
+    {                     0,                                                                    50,                 1,                           20}, // PDNegTimeout
+    {                     0,                                                                     1,                 1,                            0}, // OLEDInversion
+    {        MIN_BRIGHTNESS,                                                        MAX_BRIGHTNESS,   BRIGHTNESS_STEP,           DEFAULT_BRIGHTNESS}, // OLEDBrightness
+    {                     0,                                                                     6,                 1,                            1}, // LOGOTime
+    {                     0,                                                                     1,                 1,                            0}, // CalibrateCJC
+    {                     0,                                                                     1,                 1,                            0}, // BluetoothLE
+    {                     0,                                                                     2,                 1,                            1}, // USBPDMode
+    {                     1,                                                                     5,                 1,                            4}, // ProfilePhases
+    {            MIN_TEMP_C,                                                            MAX_TEMP_F,                 5,                           90}, // ProfilePreheatTemp
+    {                     1,                                                                    10,                 1,                            1}, // ProfilePreheatSpeed
+    {            MIN_TEMP_C,                                                            MAX_TEMP_F,                 5,                          130}, // ProfilePhase1Temp
+    {                    10,                                                                   180,                 5,                           90}, // ProfilePhase1Duration
+    {            MIN_TEMP_C,                                                            MAX_TEMP_F,                 5,                          140}, // ProfilePhase2Temp
+    {                    10,                                                                   180,                 5,                           30}, // ProfilePhase2Duration
+    {            MIN_TEMP_C,                                                            MAX_TEMP_F,                 5,                          165}, // ProfilePhase3Temp
+    {                    10,                                                                   180,                 5,                           30}, // ProfilePhase3Duration
+    {            MIN_TEMP_C,                                                            MAX_TEMP_F,                 5,                          140}, // ProfilePhase4Temp
+    {                    10,                                                                   180,                 5,                           30}, // ProfilePhase4Duration
+    {            MIN_TEMP_C,                                                            MAX_TEMP_F,                 5,                           90}, // ProfilePhase5Temp
+    {                    10,                                                                   180,                 5,                           30}, // ProfilePhase5Duration
+    {                     1,                                                                    10,                 1,                            2}, // ProfileCooldownSpeed
+    {                     0,                                                                    12,                 1,                            0}, // HallEffectSleepTime
+    {                     0, (tipType_t::TIP_TYPE_MAX - 1) > 0 ? (tipType_t::TIP_TYPE_MAX - 1) : 0,                 1,                            0}, // SolderingTipType
 };
 static_assert((sizeof(settingsConstants) / sizeof(SettingConstants)) == ((int)SettingsOptions::SettingsOptionsLength));
 
@@ -290,5 +295,78 @@ uint8_t lookupVoltageLevel() {
     return 90; // 9V since iron does not function effectively below this
   } else {
     return (minVoltageOnCell * minVoltageCellCount) + (minVoltageCellCount * 2);
+  }
+}
+
+const char *lookupTipName() {
+  // Get the name string for the current soldering tip
+  tipType_t value = (tipType_t)getSettingValue(SettingsOptions::SolderingTipType);
+
+  switch (value) {
+#ifdef AUTO_TIP_SELECTION
+  case tipType_t::TIP_TYPE_AUTO:
+    return translatedString(Tr->TipTypeAuto);
+    break;
+#endif
+#ifdef TIPTYPE_T12
+  case tipType_t::T12_8_OHM:
+    return translatedString(Tr->TipTypeT12Long);
+    break;
+  case tipType_t::T12_6_2_OHM:
+    return translatedString(Tr->TipTypeT12Short);
+    break;
+  case tipType_t::T12_4_OHM:
+    return translatedString(Tr->TipTypeT12PTS);
+    break;
+#endif
+#ifdef TIPTYE_TS80
+  case tipType_t::TS80_4_5_OHM:
+    return translatedString(Tr->TipTypeTS80);
+    break;
+#endif
+#ifdef TIPTYPE_JBC
+  case tipType_t::JBC_210_2_5_OHM:
+    return translatedString(Tr->TipTypeJBCC210);
+    break;
+#endif
+  default:
+    return nullptr;
+    break;
+  }
+}
+// Returns the resistance for the current tip selected by the user or 0 for auto
+uint8_t getUserSelectedTipResistance() {
+  tipType_t value = (tipType_t)getSettingValue(SettingsOptions::SolderingTipType);
+
+  switch (value) {
+#ifdef AUTO_TIP_SELECTION
+  case tipType_t::TIP_TYPE_AUTO:
+    return 0;
+    break;
+#endif
+#ifdef TIPTYPE_T12
+  case tipType_t::T12_8_OHM:
+    return 80;
+    break;
+  case tipType_t::T12_6_2_OHM:
+    return 62;
+    break;
+  case tipType_t::T12_4_OHM:
+    return 40;
+    break;
+#endif
+#ifdef TIPTYE_TS80
+  case tipType_t::TS80_4_5_OHM:
+    return 45;
+    break;
+#endif
+#ifdef TIPTYPE_JBC
+  case tipType_t::JBC_210_2_5_OHM:
+    return 25;
+    break;
+#endif
+  default:
+    return 0;
+    break;
   }
 }

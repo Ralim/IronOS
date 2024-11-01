@@ -1,6 +1,5 @@
 #ifndef CONFIGURATION_H_
 #define CONFIGURATION_H_
-#include "Settings.h"
 #include <stdint.h>
 /**
  * Configuration.h
@@ -181,6 +180,7 @@
 #define I2C_SOFT_BUS_1 1
 #define OLED_I2CBB1    1
 #define ACCEL_I2CBB1   1
+#define TIPTYPE_T12    1 // Can manually pick a T12 tip
 
 #define TEMP_TMP36
 #endif /* TS100 */
@@ -213,6 +213,8 @@
 #define TEMP_NTC             1
 #define ACCEL_I2CBB1         1
 #define POW_EPR              1
+#define AUTO_TIP_SELECTION   1 // Can auto-select the tip
+#define TIPTYPE_T12          1 // Can manually pick a T12 tip
 #define HAS_POWER_DEBUG_MENU
 #define DEBUG_POWER_MENU_BUTTON_B
 
@@ -230,6 +232,8 @@
 #define I2C_SOFT_BUS_2   1
 #define LIS_ORI_FLIP
 #define OLED_FLIP
+#define TIPTYPE_TS80 1 // Only one tip type so far
+
 #endif /* TS80(P) */
 
 #ifdef MODEL_TS80

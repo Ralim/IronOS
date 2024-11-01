@@ -212,6 +212,30 @@
     {
       "id": "USBPDModeSafe",
       "description": "When in this mode we enable all PD features, but we don't pad resistance slightly to account for cable and PCB trace loss"
+    },
+    {
+      "id": "TipTypeAuto",
+      "description": "This is for automatic best-effort tip selection based on resistance"
+    },
+    {
+      "id": "TipTypeT12Long",
+      "description": "Hakko T12 or older (long) TS100 tips"
+    },
+    {
+      "id": "TipTypeT12Short",
+      "description": "Pine 6.2 ohm short TS100 style tips"
+    },
+    {
+      "id": "TipTypeT12PTS",
+      "description": "PTS200 4 ohm short TS100 style tips"
+    },
+    {
+      "id": "TipTypeTS80",
+      "description": "Miniware TS80(P) tips"
+    },
+    {
+      "id": "TipTypeJBCC210",
+      "description": "JBC (or clone) tips"
     }
   ],
   "menuOptions": [
@@ -545,6 +569,12 @@
       "maxLen": 7,
       "maxLen2": 15,
       "description": "Changes the device language on multi-lingual builds."
+    },
+    {
+      "id": "SolderingTipType",
+      "maxLen": 7,
+      "maxLen2": 15,
+      "description": "For manually selecting the type of tip fitted"
     }
   ]
 }

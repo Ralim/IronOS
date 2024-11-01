@@ -2,6 +2,7 @@
 #define OPERATING_MODE_UTILITIES_H_
 #include "Buttons.hpp"
 #include "OLED.hpp"
+#include "Settings.h"
 #include <stdbool.h>
 
 void     GUIDelay();                               //
