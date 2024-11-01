@@ -86,16 +86,6 @@
                   </li>
                   <li class="toctree-l1 current"><a class="reference internal current" href="#">Hardware Notes</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#ts100">TS100</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#ts80">TS80</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#ts80p">TS80P</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#mhp30">MHP30</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#pinecil">Pinecil</a>
-    </li>
     </ul>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../Troubleshooting/">Troubleshooting</a>
@@ -145,8 +135,20 @@
             <div class="section" itemprop="articleBody">
               
                 <h2 id="notes-on-the-various-supported-hardware">Notes on the various supported hardware</h2>
+<p>Below are short summaries / notes around the hardware. This is not an in-depth comparison of the features of the units. Please do your own research before purchasing.</p>
+<p>Due to descisions out of our control, Miniware no longer provides source-code/schematics/support for any open source firmware on their devices. This does mean that only (TS100/TS80/TS80P) are "open" to any extent. TS80P is pushing that as it was never open at all but just happens to be very close to the TS80. While this generally shouldn't affect the performance of the device, it does mean that their newer products can be slow to be supported or some issues are harder to resolve.</p>
+<p>Sequre has so far been supportive of the S60 by providing schematics.</p>
+<p>The Pine64 units (Pinecil) are schematics-available (i.e you can download them on the Pine64 Wiki). They are currently the only vendor that has provided financial support of the project. They are also the only vendor that allows contact directly to the engineering teams for hardware issues. This results in generally better support for these devices. It does <strong>not</strong> mean that this firmware is designed around them, but it does help however that they are designed with this firmware in mind as Ralim talks to them. Where possible features are designed to work across all devices but the time for support may vary depending on the hardware and its quirks.</p>
+<h2 id="a-quick-note-on-power-supplies">A quick note on power supplies</h2>
+<p>For all devices listed <strong>except</strong> the MHP30:</p>
+<p>These soldering irons do <em>NOT</em> contain DC/DC converters.
+This means that your power at the tip is a function of the supplied voltage. Just because the iron "supports" running at a wide range of voltages, you should always use a voltage near the upper limit where possible.
+It is highly recommended to use a PD adapter where possible as this allows the iron to <em>know</em> the limitations of your supply.
+The marked irons can only turn the tip on and off in software, this means that they can't control the maximum power drawn from the supply. This is why when using PD the iron may select a lower voltage than your power supplies maximum. This is to prevent your power supply failing from over current. For more information about power management underhood, please, <a href="https://ralim.github.io/IronOS/Power/">see the related documentation section</a>.</p>
+<p>For the MHP30, it contains a buck DC/DC, which means it can utilise most power supplies fairly well, but you should still aim for highest voltage that is reasonable to use.</p>
 <h3 id="ts100">TS100</h3>
-<p>TS100* is a neat soldering iron:</p>
+<p>The TS100 was the first supported soldering iron, and is generally a very capable device.
+Its now generally not reccomended to buy new as other devices have all of its features and more, and can often be the same price or cheaper. It's still fully supported though, nothing will be taken away from it.</p>
 <ul>
 <li>can run from 9-25V DC;</li>
 <li>provides a power range that is determined by the input voltage;</li>
@@ -154,18 +156,24 @@
 <li>the original firmware can be found <a href="https://e-design.com.cn/en/NewsDetail/4203645.html">here</a>(<a href="https://github.com/Ralim/IronOS-Meta/tree/main/Firmware/Miniware">mirror backup</a>).</li>
 </ul>
 <p><img alt="" src="https://brushlesswhoop.com/images/ts100-og.jpg" /></p>
+<h3 id="ts101">TS101</h3>
+<p>The TS101 is the direct replacement of the TS100 with the same tip compatibility.
+It adds a spring pressure tip holding mechanism instead of using a screw so tips are easier to swap on the fly (But are held less securely and can pull out depending on the use case). It adds USB-C PD support and the hardware is compatible with 28V EPR power supplies (under both IronOS and official firmware).</p>
+<p>It unfortunately uses an STM32 clone MCU with quirks, so performance of the screen isn't as good as it could be but its perfectly usable. The bootloader for programming is the biggest weakness of this device and programming can be a pain. Fortunately, IronOS is relatively stable feature wise, so you shouldn't need to update the device often.</p>
+<p>The Miniware bootup logo is burned into their bootloader, so IronOS cant remove this. IronOS can show your own logo when it starts however. There are quirks to loading a logo on this device, so be sure to read the documentation if you are coming from other devices.</p>
 <h3 id="ts80">TS80</h3>
-<p>TS80* is a successor to TS100:</p>
+<p>TS80 is a successor to TS100, it moves to custom smaller tips that perform better at lower wattages. It is optimised for a 9V/2A Quick Charge 3.0 power supply. This is commonly found on older power banks on the USB-A port.
+It does <strong>not</strong> support USB-PD and will not work when powered from a USB-C power supply in most cases.</p>
 <ul>
 <li>uses <em>Quick Charge 3.0</em> / <em>QC3</em> capable charger only (18W max);</li>
 <li>doesn't support PD as it is not designed on the hardware level;</li>
 <li>the original firmware can be found <a href="https://e-design.com.cn/en/NewsDetail/4203645.html">here</a>(<a href="https://github.com/Ralim/IronOS-Meta/tree/main/Firmware/Miniware">mirror backup</a>).</li>
 </ul>
-<p><img alt="" src="https://core-electronics.com.au/media/catalog/product/4/2/4244-01.jpg" /></p>
+<p><img alt="Image of TS80" src="https://core-electronics.com.au/media/catalog/product/4/2/4244-01.jpg" /></p>
 <h3 id="ts80p">TS80P</h3>
-<p>TS80P* is a successor to TS80:</p>
+<p>The TS80P is the direct successor to the TS80 and essentially what the TS80 should have been from its debut. It is nearly identical except it adds USB-PD support for far better compatibility with modern power banks as well as a faster tip removal method.</p>
 <ul>
-<li>supports <em>Quick Charge 3.0</em> (<em>QC3</em>: 9V/3A, 18W max);</li>
+<li>supports <em>Quick Charge 3.0</em> (<em>QC3</em>: 9V/2A,12V/1.5A 18W max);</li>
 <li>supports <em>Power Delivery</em> (<em>PD</em>: 9V/3A &amp; 12V/3A, 30W max)**;</li>
 <li>the original firmware can be found <a href="https://e-design.com.cn/en/NewsDetail/4203645.html">here</a>(<a href="https://github.com/Ralim/IronOS-Meta/tree/main/Firmware/Miniware">mirror backup</a>).</li>
 </ul>
@@ -181,13 +189,12 @@
 <li>the original firmware can be found <a href="https://e-design.com.cn/en/NewsDetail/4203645.html">here</a>(<a href="https://github.com/Ralim/IronOS-Meta/tree/main/Firmware/Miniware">mirror backup</a>).</li>
 </ul>
 <h3 id="pinecil">Pinecil</h3>
-<p>Pincecil*:</p>
+<p>Pincecil:</p>
 <ul>
 <li>first model of soldering iron from PINE64;</li>
 <li>the default firmware can be found <a href="https://files.pine64.org/os/Pinecil/Pinecil_firmware_20201115.zip">here</a>.</li>
 </ul>
 <p><img alt="" src="https://pine64.com/wp-content/uploads/2020/11/pinecil-bb2-04.jpg?v=0446c16e2e66" /></p>
-<p>*: Please note: these soldering irons do <em>NOT</em> contain DC/DC converters. This means that your power at the tip is a function of the supplied voltage. Just because the iron "supports" running at a wide range of voltages, you should always use a voltage near the upper limit where possible. It is highly recommended to use a PD adapter where possible as this allows the iron to <em>know</em> the limitations of your supply. The marked irons can only turn the tip on and off in software, this means that they can't control the maximum power drawn from the supply. This is why when using PD the iron may select a lower voltage than your power supplies maximum. This is to prevent your power supply failing from over current. For more information about power management underhood, please, <a href="https://ralim.github.io/IronOS/Power/">see the related documentation section</a>.</p>
               
             </div>
           </div><footer>
