@@ -114,6 +114,24 @@
     },
     "USBPDModeSafe": {
       "displayText": "Safe\nMode"
+    },
+    "TipTypeAuto": {
+      "displayText": "Auto\nSense"
+    },
+    "TipTypeT12Long": {
+      "displayText": "TS100\nLong"
+    },
+    "TipTypeT12Short": {
+      "displayText": "Pine\nShort"
+    },
+    "TipTypeT12PTS": {
+      "displayText": "PTS\n200"
+    },
+    "TipTypeTS80": {
+      "displayText": "TS80\n"
+    },
+    "TipTypeJBCC210": {
+      "displayText": "JBC\nC210"
     }
   },
   "menuOptions": {
@@ -233,7 +251,9 @@
       "displayText": "磁場敏感度",
       "description": "磁場感應器用嚟啓動待機模式嘅敏感度 <1=最低敏感度 | ... | 9=最高敏感度>"
     },
-    "HallEffSleepTimeout": {                                            "displayText": "HallSensor\nSleepTime",                           "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+    "HallEffSleepTimeout": {
+      "displayText": "HallSensor\nSleepTime",
+      "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
     },
     "TemperatureUnit": {
       "displayText": "温度單位",
@@ -318,6 +338,10 @@
     "LanguageSwitch": {
       "displayText": "語言： 廣東話",
       "description": ""
+    },
+    "SolderingTipType": {
+      "displayText": "Soldering\nTip Type",
+      "description": "Select the tip type fitted"
     }
   }
 }

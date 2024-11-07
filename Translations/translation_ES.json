@@ -31,7 +31,7 @@
       "message": "Térmico\nFuera de control"
     },
     "WarningTipShorted": {
-      "message": "!Tip Shorted!"
+      "message": "¡Punta en Corto!"
     },
     "SettingsCalibrationWarning": {
       "message": "¡Antes de reiniciar, asegúrese de que la punta y el mango estén a temperatura ambiente!"
@@ -107,13 +107,31 @@
   },
   "menuValues": {
     "USBPDModeDefault": {
-      "displayText": "Default\nMode"
+      "displayText": "Modo por\nDefecto"
     },
     "USBPDModeNoDynamic": {
-      "displayText": "No\nDynamic"
+      "displayText": "Dinámico\nNo"
     },
     "USBPDModeSafe": {
-      "displayText": "Safe\nMode"
+      "displayText": "Modo\nSeguro"
+    },
+    "TipTypeAuto": {
+      "displayText": "Auto\nSense"
+    },
+    "TipTypeT12Long": {
+      "displayText": "TS100\nLong"
+    },
+    "TipTypeT12Short": {
+      "displayText": "Pine\nShort"
+    },
+    "TipTypeT12PTS": {
+      "displayText": "PTS\n200"
+    },
+    "TipTypeTS80": {
+      "displayText": "TS80\n"
+    },
+    "TipTypeJBCC210": {
+      "displayText": "JBC\nC210"
     }
   },
   "menuOptions": {
@@ -233,7 +251,9 @@
       "displayText": "Hall Eff\nSensibilidad",
       "description": "Sensibilidad del sensor de efecto Hall en la detección de reposo (1=menos sensible | ... | 9=más sensible)"
     },
-    "HallEffSleepTimeout": {                                            "displayText": "HallSensor\nSleepTime",                           "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+    "HallEffSleepTimeout": {                                           
+      "displayText": "Tiempo reposo\nSensor Hall", 
+      "description": "Intervalo antes de que \"sleep mode\" empiece cuando sensorhall supera límite"
     },
     "TemperatureUnit": {
       "displayText": "Unidad de\ntemperatura",
@@ -318,6 +338,10 @@
     "LanguageSwitch": {
       "displayText": "Idioma:\n ES  Castellano",
       "description": ""
+    },
+    "SolderingTipType": {
+      "displayText": "Soldering\nTip Type",
+      "description": "Select the tip type fitted"
     }
   }
 }

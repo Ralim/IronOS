@@ -114,6 +114,24 @@
     },
     "USBPDModeSafe": {
       "displayText": "Вкл.без\nискане"
+    },
+    "TipTypeAuto": {
+      "displayText": "Auto\nSense"
+    },
+    "TipTypeT12Long": {
+      "displayText": "TS100\nLong"
+    },
+    "TipTypeT12Short": {
+      "displayText": "Pine\nShort"
+    },
+    "TipTypeT12PTS": {
+      "displayText": "PTS\n200"
+    },
+    "TipTypeTS80": {
+      "displayText": "TS80\n"
+    },
+    "TipTypeJBCC210": {
+      "displayText": "JBC\nC210"
     }
   },
   "menuOptions": {
@@ -233,7 +251,9 @@
       "displayText": "Датчик\nна Хол",
       "description": "Чувствителност на сензора към магнитно поле (1=Слабо | ... | 9=Силно)"
     },
-    "HallEffSleepTimeout": {                                            "displayText": "HallSensor\nSleepTime",                           "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+    "HallEffSleepTimeout": {
+      "displayText": "HallSensor\nSleepTime",
+      "description": "Интервалът преди началото на \"режим на заспиване\", когато ефектът на Хол надвиши прага"
     },
     "TemperatureUnit": {
       "displayText": "Единици за\nтемпературата",
@@ -318,6 +338,10 @@
     "LanguageSwitch": {
       "displayText": "Език:\n BG   Български",
       "description": ""
+    },
+    "SolderingTipType": {
+      "displayText": "Soldering\nTip Type",
+      "description": "Select the tip type fitted"
     }
   }
 }

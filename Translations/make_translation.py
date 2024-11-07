@@ -203,9 +203,9 @@ def get_letter_counts(defs: dict, lang: dict, build_version: str) -> Dict:
     """From the source definitions, language file and build version; calculates the ranked symbol list
 
     Args:
-        defs (dict): _description_
-        lang (dict): _description_
-        build_version (str): _description_
+        defs (dict): Definitions
+        lang (dict): Language lookup
+        build_version (str): The build version id to ensure its letters are included
 
     Returns:
         Dict: _description_

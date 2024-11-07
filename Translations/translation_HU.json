@@ -114,6 +114,24 @@
     },
     "USBPDModeSafe": {
       "displayText": "Safe\nMode"
+    },
+    "TipTypeAuto": {
+      "displayText": "Auto\nSense"
+    },
+    "TipTypeT12Long": {
+      "displayText": "TS100\nLong"
+    },
+    "TipTypeT12Short": {
+      "displayText": "Pine\nShort"
+    },
+    "TipTypeT12PTS": {
+      "displayText": "PTS\n200"
+    },
+    "TipTypeTS80": {
+      "displayText": "TS80\n"
+    },
+    "TipTypeJBCC210": {
+      "displayText": "JBC\nC210"
     }
   },
   "menuOptions": {
@@ -233,7 +251,9 @@
       "displayText": "Alvásérzékelő\nérzékenység",
       "description": "Alvásérzékelő gyorsulásmérő érzékenysége (1=legkevésbé érzékeny | ... | 9=legérzékenyebb)"
     },
-    "HallEffSleepTimeout": {                                            "displayText": "HallSensor\nSleepTime",                           "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+    "HallEffSleepTimeout": {
+      "displayText": "HallSensor\nSleepTime",
+      "description": "Az \"alvó üzemmód\" előtti intervallum akkor kezdődik, amikor a hall-effektus meghaladja a küszöbértéket"
     },
     "TemperatureUnit": {
       "displayText": "Hőmérséklet\nmértékegysége",
@@ -318,6 +338,10 @@
     "LanguageSwitch": {
       "displayText": "Nyelv:\n HU      Magyar",
       "description": ""
+    },
+    "SolderingTipType": {
+      "displayText": "Soldering\nTip Type",
+      "description": "Select the tip type fitted"
     }
   }
 }

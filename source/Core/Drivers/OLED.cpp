@@ -6,6 +6,7 @@
  */
 
 #include "Buttons.hpp"
+#include "Settings.h"
 #include "Translation.h"
 #include "cmsis_os.h"
 #include "configuration.h"

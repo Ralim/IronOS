@@ -114,6 +114,24 @@
     },
     "USBPDModeSafe": {
       "displayText": "Safe\nMode"
+    },
+    "TipTypeAuto": {
+      "displayText": "Auto\nSense"
+    },
+    "TipTypeT12Long": {
+      "displayText": "TS100\nLong"
+    },
+    "TipTypeT12Short": {
+      "displayText": "Pine\nShort"
+    },
+    "TipTypeT12PTS": {
+      "displayText": "PTS\n200"
+    },
+    "TipTypeTS80": {
+      "displayText": "TS80\n"
+    },
+    "TipTypeJBCC210": {
+      "displayText": "JBC\nC210"
     }
   },
   "menuOptions": {
@@ -233,7 +251,9 @@
       "displayText": "Sensibilité\ncapteur effet hall",
       "description": "Sensibilité du capteur à effet Hall pour la mise en veille (1=peu sensible | ... | 9=très sensible)"
     },
-    "HallEffSleepTimeout": {                                            "displayText": "HallSensor\nSleepTime",                           "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+    "HallEffSleepTimeout": {
+      "displayText": "HallSensor\nSleepTime",
+      "description": "Intervalle avant le démarrage du \"mode veille\" lorsque l'effet Hall est supérieur au seuil"
     },
     "TemperatureUnit": {
       "displayText": "Unité de\ntempérature",
@@ -318,6 +338,10 @@
     "LanguageSwitch": {
       "displayText": "Langue:\n FR    Français",
       "description": ""
+    },
+    "SolderingTipType": {
+      "displayText": "Soldering\nTip Type",
+      "description": "Select the tip type fitted"
     }
   }
 }

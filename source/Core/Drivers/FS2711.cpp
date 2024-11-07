@@ -1,12 +1,13 @@
+#include "configuration.h"
+
+#if POW_PD_EXT == 2
+#include "BSP.h"
 #include "FS2711.hpp"
 #include "FS2711_defines.h"
 #include "I2CBB1.hpp"
 #include "I2CBB2.hpp"
 #include "Settings.h"
 #include "Utils.h"
-#include "configuration.h"
-#if POW_PD_EXT == 2
-#include "BSP.h"
 #include "cmsis_os.h"
 #include <stdbool.h>
 #include <stdint.h>

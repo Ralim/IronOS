@@ -114,6 +114,24 @@
     },
     "USBPDModeSafe": {
       "displayText": "Бяспечны\nрэжым"
+    },
+    "TipTypeAuto": {
+      "displayText": "Auto\nSense"
+    },
+    "TipTypeT12Long": {
+      "displayText": "TS100\nLong"
+    },
+    "TipTypeT12Short": {
+      "displayText": "Pine\nShort"
+    },
+    "TipTypeT12PTS": {
+      "displayText": "PTS\n200"
+    },
+    "TipTypeTS80": {
+      "displayText": "TS80\n"
+    },
+    "TipTypeJBCC210": {
+      "displayText": "JBC\nC210"
     }
   },
   "menuOptions": {
@@ -233,7 +251,9 @@
       "displayText": "Эфект Хола\nадчувальнасць",
       "description": "Узровень адчувальнасці датчыка хола ў рэжыме сну (1=Мін. | ... | 9=Макс.)"
     },
-    "HallEffSleepTimeout": {                                            "displayText": "HallSensor\nSleepTime",                           "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+    "HallEffSleepTimeout": {
+      "displayText": "HallSensor\nSleepTime",
+      "description": "Інтэрвал перад пачаткам \"рэжыму сну\", калі эфект Хола перавышае парог"
     },
     "TemperatureUnit": {
       "displayText": "Адзінкі\nтэмпературы",
@@ -318,6 +338,10 @@
     "LanguageSwitch": {
       "displayText": "Мова:\n BY  Беларуская",
       "description": ""
+    },
+    "SolderingTipType": {
+      "displayText": "Soldering\nTip Type",
+      "description": "Select the tip type fitted"
     }
   }
 }
