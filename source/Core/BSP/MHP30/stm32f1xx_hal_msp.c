@@ -60,7 +60,7 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef *hadc) {
     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
     HAL_GPIO_Init(TIP_TEMP_GPIO_Port, &GPIO_InitStruct);
     GPIO_InitStruct.Pin  = TMP36_INPUT_Pin;
-    GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
+    GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
     HAL_GPIO_Init(TMP36_INPUT_GPIO_Port, &GPIO_InitStruct);
     GPIO_InitStruct.Pin  = VIN_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
