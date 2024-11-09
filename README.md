@@ -154,6 +154,6 @@ Other components such as _FreeRTOS_ and _USB-PD_ have their own licenses.
 
 ## Commercial Use
 
-This software is provided as-is, so I cannot provide any commercial support for the firmware.
+This software is provided "AS IS", so I cannot provide any commercial support for the firmware.
 However, you are more than welcome to distribute links to the firmware or provide hardware with this firmware.
 **Please do not re-host the files, but rather link to this page, so that there are no old versions of the firmware scattered around**.
