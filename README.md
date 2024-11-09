@@ -93,15 +93,18 @@ For notes on installation for your device, please refer to the flashing guide fo
 
 ## Basic control
 
-Supported device is [usually] controlled by two buttons only which can be pressed in the following ways: short (~1 second or so), long (more than 1 second), and both buttons are pressed.
+Supported device is controlled by two buttons which can be pressed in the following ways:
+ - short: ~1 second or so;
+ - long: more than 1 second;
+ - both (press & hold both of them together).
 
 Available buttons are (by default because they can be swapped in settings):
- - _+/A button_: near the front closer to the tip (for irons) or on the left side of the device (for plates);
- - _-/B button_: near the back far from the tip (for irons) or on the right side of the device (for plates).
+ - `+/A` button: near the front closer to the tip (for irons) or on the left side of the device (for plates);
+ - `-/B` button: near the back far from the tip (for irons) or on the right side of the device (for plates).
 
 After powering on the device for the first time with _IronOS_ installed and having the tip/plate plugged in, on the main menu in _standby mode_ the unit shows a pair of prompts for the two most common operations:
-- pressing the _+/A button_ enters the _soldering mode_;
-- pressing the _-/B button_ enters the _settings menu_;
+- pressing the `+/A` button enters the _soldering mode_;
+- pressing the `-/B` button enters the _settings menu_;
 - in _soldering mode_:
   - short press of _+/A_ / _-/B_ buttons changes the soldering temperature;
   - long press of the _+/A button_ enables _boost mode_ (increasing soldering temperature to the adjustable setting as long as the button is pressed);
