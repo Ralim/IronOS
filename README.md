@@ -106,15 +106,15 @@ After powering on the device for the first time with _IronOS_ installed and havi
 - pressing the `+/A` button enters the _soldering mode_;
 - pressing the `-/B` button enters the _settings menu_;
 - in _soldering mode_:
-  - short press of _+/A_ / _-/B_ buttons changes the soldering temperature;
-  - long press of the _+/A button_ enables _boost mode_ (increasing soldering temperature to the adjustable setting as long as the button is pressed);
-  - long press of the _-/B button_ enters _standby mode_ and stops heating;
+  - short press of `+/A` / `-/B` buttons changes the soldering temperature;
+  - long press of the `+/A` button enables _boost mode_ (increasing soldering temperature to the adjustable setting as long as the button is pressed);
+  - long press of the `-/B` button enters _standby mode_ and stops heating;
 - in _standby mode_:
-  - long press of the _+/A button_ enters _soldering temperature adjust mode_ (the same as the one in the _soldering mode_, but allows to adjust the temperature before heating up);
-  - long hold of the _-/B button_ enters the [_debug menu_](https://ralim.github.io/IronOS/DebugMenu/);
+  - long press of the `+/A` button enters _soldering temperature adjust mode_ (the same as the one in the _soldering mode_, but allows to adjust the temperature before heating up);
+  - long hold of the `-/B` button enters the [_debug menu_](https://ralim.github.io/IronOS/DebugMenu/);
 - in _menu mode_ (to make it short here):
-  - _-/B_ scrolls & cycles through menus and submenus;
-  - _-/A_ enters to menu & submenu settings or changes their values if they are activated already.
+  - `-/B` scrolls & cycles through menus and submenus;
+  - `-/A` enters to menu & submenu settings or changes their values if they are activated already.
 
 Additional details are described in the [menu information](https://ralim.github.io/IronOS/Menu/).
 
