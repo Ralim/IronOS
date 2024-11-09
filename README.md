@@ -7,15 +7,15 @@
 
 _This repository was formerly known as TS100, it's the same great code. Just with more supported devices._
 
-Originally conceived as an alternative firmware for the _TS100_, this firmware has evolved into a complex soldering equipment control firmware.
+Originally conceived as an alternative firmware for the _TS100_, this firmware has evolved into a complex soldering hardware control firmware.
 
-The firmware implements all of the standard features of a 'smart' soldering iron, with lots of little extras and tweaks.
-I highly recommend reading the installation guide fully when installing on your iron. And after install just explore the settings menu.
+The firmware implements all of the standard features of a _smart_ soldering hardware, with lots of little extras and tweaks.
+I highly recommend reading the installation guide fully when installing on your device. And after install just explore the settings menu.
 
-For soldering hardware that are designed to be powered by 'smart' power sources (PD and QC), the firmware supports settings around the negotiated power and voltage.
+For soldering hardware that are designed to be powered by _smart_ power sources (PD and QC), the firmware supports settings around the negotiated power and voltage.
 For soldering hardware that are designed to be powered by batteries (_TS100_ & _Pinecil_), settings for a cutoff voltage for battery protection are supported.
 
-Currently **31** languages are supported. When downloading the firmware for your soldering hardware, take note of the language code in the file name.
+Currently **31** languages are supported. When downloading the firmware for your soldering hardware, take note of the _language code_ in the file name.
 
 This project is considered feature complete for use on a daily basis, _so please suggest any feature improvements you would like!_
 
