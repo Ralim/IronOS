@@ -21,7 +21,7 @@ This project is considered feature complete for use on a daily basis, _so please
 
 _This firmware does **NOT** support the USB port while running for changing settings (this is done through the onscreen menu only). Custom logos are edited on a computer and flashed in the same manner as firmware._
 
-## Support
+## Supported Hardware
 
 |     Device     | DC  | QC  | PD  | EPR | BLE | Tip Sense | Recommended Purchase |                  Notes                  |
 | :------------: | :-: | :-: | :-: | :-: | :-: | :-------: | :------------------: | :-------------------------------------: |
