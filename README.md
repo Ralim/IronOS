@@ -98,7 +98,7 @@ Supported device is controlled by two buttons which can be pressed in the follow
  - long: more than 1 second;
  - both (press & hold both of them together).
 
-Available buttons are (by default because they can be swapped in settings):
+Available buttons are:
  - `+/A` button: near the front closer to the tip (for irons) or on the left side of the device (for plates);
  - `-/B` button: near the back far from the tip (for irons) or on the right side of the device (for plates).
 
