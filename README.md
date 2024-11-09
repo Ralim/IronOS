@@ -42,11 +42,11 @@ _Recommended Purchase_ is only referring to if you are buying a **new** device. 
 
 The _TS101_ & _S60(P)_ irons and _MHP30_ & _T55_ plates feature a higher resolution OLED than other devices. Work is ongoing to support this fully, for now a cropped view is usable.
 
-** \* ** _PinecilV1_ stopped being manufactured a long time ago now, all models for sale online are generally clones (or old stock). Vendors are trying to sell these for more than _Pine64_ sells the _V2_ for now. Thus the _V1_ is **_no longer recommended_**.
+\* _PinecilV1_ stopped being manufactured a long time ago now, all models for sale online are generally clones (or old stock). Vendors are trying to sell these for more than _Pine64_ sells the _V2_ for now. Thus the _V1_ is **_no longer recommended_**.
 
-** \*\* ** Please note that _Miniware_ started shipping _TS100_'s using **cloned STM32 chips**. While these do work with _IronOS_, their **DFU bootloader** works terribly, and it is hard to get it to successfully flash larger firmware images like _IronOS_ without timing out. This is the main reason why the _TS100_ is **_no longer recommended_**.
+\*\* Please note that _Miniware_ started shipping _TS100_'s using **cloned STM32 chips**. While these do work with _IronOS_, their **DFU bootloader** works terribly, and it is hard to get it to successfully flash larger firmware images like _IronOS_ without timing out. This is the main reason why the _TS100_ is **_no longer recommended_**.
 
-** \*\*\* ** _TS80_ is replaced by _TS80P_. Production ramped down a long time ago and it's just existing stock clearing the system. It's marked not recommended being optimistic that people might pause and buy the far superior _TS80P_ instead. This is the main reason why the _TS80_ is **_no longer recommended_**.
+\*\*\* _TS80_ is replaced by _TS80P_. Production ramped down a long time ago and it's just existing stock clearing the system. It's marked not recommended being optimistic that people might pause and buy the far superior _TS80P_ instead. This is the main reason why the _TS80_ is **_no longer recommended_**.
 
 ## Getting Started
 
