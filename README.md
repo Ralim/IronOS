@@ -19,7 +19,7 @@ Currently **31** languages are supported. When downloading the firmware for your
 
 This project is considered feature complete for use on a daily basis, _so please suggest any feature improvements you would like!_
 
-_This firmware does **NOT** support the USB port while running for changing settings. This is done through the onscreen menu only. Logos are edited on a computer and flashed like firmware._
+_This firmware does **NOT** support the USB port while running for changing settings (this is done through the onscreen menu only). Custom logos are edited on a computer and flashed in the same manner as firmware._
 
 ## Support
 
