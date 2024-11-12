@@ -1,6 +1,50 @@
 # Version Changes
 
 
+# V2.22
+
+## New Hardware Support
+
+### Sequre S60
+
+The [Sequre S60](https://sequremall.com/products/sequre-s60-nano-electric-soldering-iron-support-pd-qc-power-supply-compatible-with-c210-soldering-iron-tips-precision-electronic-mobile-phone-repair-tool-anti-static-soldering-pen?variant=42361945096380) uses JBC tips, which makes it quite useful for the smaller tip types and extra options available.
+
+### TS101
+
+The TS101 is the evolution of the TS100, picking up USB-PD.
+It has otherwise similar tip support to the TS100/Pinecil/PinecilV2.
+
+Absolutely massive kudos goes to @VioletEternity for her work on the reverse engineering of this. If you at all are helped by IronOS running on this device more credit goes to her than to I. Also big thanks to @whitequark for organising + supporting + magic.
+
+## Features & changes
+
+### PinecilV2 notes
+
+1. BLE is fixed on all devices.
+2. Bootup Logo support is finalised and working.
+3. Improved the tip control, improving accuracy and remove most oscillations.
+
+### Profile heating mode for MHP30
+
+This lets you define a heat profile and run this profile akin to a proper reflow device.
+This can be used on the MHP30 by long-holding the A button (aka start button).
+Profile can be edited in settings.
+
+### Note on newer OLED's
+
+To prevent this release being held up forever, the TS101 and S60 are being released with a limitation on the OLED screen.
+The current code will only draw to the upper left corner of the screen.
+Assets have been made for rendering this at full size, but the code is not complete yet.
+
+### Smaller updates
+
+- Filtering added to MHP tilt-exit to make it less sensitive
+- Warning if a tip is detected to be shorted (TS101 + PinecilV2)
+- Translation updates ❤️
+- Documentation updates
+- Lots of tooling and code cleanups
+
+
 # V2.21
 
 ### Features & changes
