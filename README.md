@@ -12,8 +12,8 @@ Originally conceived as an alternative firmware for the _TS100_, this firmware h
 The firmware implements all of the standard features of a _smart_ soldering hardware, with lots of little extras and tweaks.
 I highly recommend reading the installation guide fully when installing on your device. And after install just explore the settings menu.
 
-For soldering hardware that are designed to be powered by _smart_ power sources such as _PD_ or _QC_, the firmware supports settings around the negotiated power and voltage.
-For soldering hardware that are designed to be powered by batteries (_TS100_ & _Pinecil_), settings for a cutoff voltage for battery protection are supported.
+For soldering hardware that is designed to be powered by _smart_ power sources such as _PD_ or _QC_, the firmware supports settings around the negotiated power and voltage.
+For soldering hardware that is designed to be powered by batteries (_TS100_ & _Pinecil_), settings for a cutoff voltage for battery protection are supported.
 
 Currently **31** languages are supported. When downloading the firmware for your soldering hardware, take note of the _language code_ in the file name.
 
@@ -114,7 +114,7 @@ After powering on the device for the first time with _IronOS_ installed and havi
   - long hold of the `-/B` button enters the [_debug menu_](https://ralim.github.io/IronOS/DebugMenu/);
 - in _menu mode_ (to make it short here):
   - `-/B` scrolls & cycles through menus and submenus;
-  - `-/A` enters to menu & submenu settings or changes their values if they are activated already.
+  - `+/A` enters to menu & submenu settings or changes their values if they are activated already.
 
 Additional details are described in the [menu information](https://ralim.github.io/IronOS/Menu/).
 
