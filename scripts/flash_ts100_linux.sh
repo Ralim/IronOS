@@ -126,14 +126,13 @@ echo "Found TS100 config disk device on $DEVICE"
 
 mount_ts100
 echo "Mounted config disk drive, flashing..."
-cp -v "$1" "$HEX_FIRMWARE"
-sync
+dd if="$1" of="$HEX_FIRMWARE" oflag=direct
+umount_ts100
 
 echo "Waiting for TS100 to flash"
 sleep 5
 
 echo "Remounting config disk drive"
-umount_ts100
 wait_for_ts100
 mount_ts100
 check_flash
