@@ -75,7 +75,7 @@ umount_ts100() {
         echo "Failed to unmount $DIR_TMP"
         exit 1
     fi
-    rmdir "$DIR_TMP"
+    sudo rmdir "$DIR_TMP"
 }
 
 check_flash() {
