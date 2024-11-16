@@ -1,0 +1,319 @@
+{
+    "languageCode": "UZ",
+    "languageLocalName": "O‘zbek",
+    "tempUnitFahrenheit": false,
+    "messagesWarn": {
+        "CalibrationDone": {
+            "message": "Kalibrovka\nyakunlandi!"
+        },
+        "ResetOKMessage": {
+            "message": "Sozlamalar tiklandi"
+        },
+        "SettingsResetMessage": {
+            "message": "Ayrim sozlamalar\no‘zgartirildi"
+        },
+        "NoAccelerometerMessage": {
+            "message": "Akselerometr\ntopilmadi!"
+        },
+        "NoPowerDeliveryMessage": {
+            "message": "USB-PD IC\ntopilmadi!"
+        },
+        "LockingKeysString": {
+            "message": "QULFLANDI"
+        },
+        "UnlockingKeysString": {
+            "message": "QULF OCHILDI"
+        },
+        "WarningKeysLockedString": {
+            "message": "!QULFLANGAN!"
+        },
+        "WarningThermalRunaway": {
+            "message": "Issiqlik\nqochishi"
+        },
+        "WarningTipShorted": {
+            "message": "!Uchida qisqa tutashuv!"
+        },
+        "SettingsCalibrationWarning": {
+            "message": "Qayta yuklashdan oldin, uchi va tutqich xona haroratida ekanligiga ishonch hosil qiling!"
+        },
+        "CJCCalibrating": {
+            "message": "Kalibrovka\nqilinmoqda\n"
+        },
+        "SettingsResetWarning": {
+            "message": "Sozlamalarni standart holatga qaytarishni istaysizmi?"
+        },
+        "UVLOWarningString": {
+            "message": "DC PAST"
+        },
+        "UndervoltageString": {
+            "message": "Past kuchlanish\n"
+        },
+        "InputVoltageString": {
+            "message": "Kirish kuchlanishi: \n"
+        },
+        "SleepingSimpleString": {
+            "message": "Zzzz"
+        },
+        "SleepingAdvancedString": {
+            "message": "Uyqu holati...\n"
+        },
+        "SleepingTipAdvancedString": {
+            "message": "Uch: \n"
+        },
+        "OffString": {
+            "message": "O‘chirilgan"
+        },
+        "ProfilePreheatString": {
+            "message": "Qizdirish\n"
+        },
+        "ProfileCooldownString": {
+            "message": "Sovutish\n"
+        },
+        "DeviceFailedValidationWarning": {
+            "message": "Qurilmangiz soxta bo‘lishi mumkin!"
+        },
+        "TooHotToStartProfileWarning": {
+            "message": "Profilni boshlash uchun\njuda issiq"
+        }
+    },
+    "characters": {
+        "SettingRightChar": "R",
+        "SettingLeftChar": "L",
+        "SettingAutoChar": "A",
+        "SettingOffChar": "O",
+        "SettingSlowChar": "S",
+        "SettingMediumChar": "M",
+        "SettingFastChar": "F",
+        "SettingStartNoneChar": "O",
+        "SettingStartSolderingChar": "S",
+        "SettingStartSleepChar": "Z",
+        "SettingStartSleepOffChar": "R",
+        "SettingLockDisableChar": "D",
+        "SettingLockBoostChar": "B",
+        "SettingLockFullChar": "F"
+    },
+    "menuGroups": {
+        "PowerMenu": {
+            "displayText": "Quvvat\nsozlamalari",
+            "description": ""
+        },
+        "SolderingMenu": {
+            "displayText": "Paylash\nsozlamalari",
+            "description": ""
+        },
+        "PowerSavingMenu": {
+            "displayText": "Uyqu\nrejimi",
+            "description": ""
+        },
+        "UIMenu": {
+            "displayText": "Foydalanuvchi\ninterfeysi",
+            "description": ""
+        },
+        "AdvancedMenu": {
+            "displayText": "Kengaytirilgan\nsozlamalar",
+            "description": ""
+        }
+    },
+    "menuOptions": {
+        "DCInCutoff": {
+            "displayText": "Quvvat\nmanbai",
+            "description": "Batareya haddan tashqari zaryadsizlanishini oldini olish uchun kuchlanish chegarasini o‘rnatish (DC 10V) (S=3.3V har bir yacheyka uchun, quvvat PWR chegarasini o‘chirish)"			
+        },
+        "MinVolCell": {
+            "displayText": "Minimal\nkuchlanish",
+            "description": "Batareya yacheyka uchun minimal ruxsat etilgan kuchlanish (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"       
+        },
+        "QCMaxVoltage": {
+            "displayText": "QC\nkuchlanishi",
+            "description": "Max QC voltage the iron should negotiate for"
+        },
+        "PDNegTimeout": {
+            "displayText": "PD\ntimeout",
+            "description": "PD o‘rnatish timeouti 100ms qadamlar bilan QC zaryadlovchi qurilmalar bilan moslikni ta'minlash uchun"
+        },
+        "PDVpdo": {
+            "displayText": "PD\nVPDO",
+            "description": "PPS & EPR rejimlarini faollashtiradi"
+        },
+        "BoostTemperature": {
+            "displayText": "Kuchaytirish\nharorati",
+            "description": "\"Boost mode\" rejimida uch harorati"
+        },
+        "AutoStart": {
+            "displayText": "Boshlash\nholati",
+            "description": "O=o‘chgan | S=paylash temperaturasigacha qizdirish | Z=qo‘zg‘atilmagunicha uyqu rejimida ushlash | R=qo‘zg‘atilmagunicha qizdirilmagan holda ushlash"
+        },
+        "TempChangeShortStep": {
+            "displayText": "Tugmaning qisqa\nbosilishi",
+            "description": "Qisqa bosilgandagi harorat o‘zgarishi-oshirish"
+        },
+        "TempChangeLongStep": {
+            "displayText": "Tugmaning uzoqroq\nbosilishi",
+            "description": "Uzoqroq bosilgandagi harorat o‘zgarishi-oshirish"
+        },
+        "LockingMode": {
+            "displayText": "Tugmalarni qulflashni\nfaollashtirish",
+            "description": "Qulflash uchun paylash davomida ikkala tugmani bosib turing (D=Nofaol | B=faqat boost mode uchun | F=to‘liq qulflash)"
+        },
+        "ProfilePhases": {
+            "displayText": "Profil\nbosqichlari",
+            "description": "Profil rejimlarida bosqichlar soni"
+        },
+        "ProfilePreheatTemp": {
+            "displayText": "Dastlabgi\nHarorat",
+            "description": "Profil rejimida dastlab ushbu haroratga qizdirish"
+        },
+        "ProfilePreheatSpeed": {
+            "displayText": "Qizdirish\nTezligi",
+            "description": "Ushbu tezlikda qizdirish (1 sekundda shuncha daraja)"
+        },
+        "ProfilePhase1Temp": {
+            "displayText": "1-faza\nHarorati",
+            "description": "Bu fazaning oxirida mo‘ljallangan harorat"
+        },
+        "ProfilePhase1Duration": {
+            "displayText": "1-faza\nDavomiyligi",
+            "description": "Ushbu fazaning davomiyligi (sekund)"
+        },
+        "ProfilePhase2Temp": {
+            "displayText": "2-faza\nHarorati",
+            "description": ""
+        },
+        "ProfilePhase2Duration": {
+            "displayText": "2-faza\nDavomiyligi",
+            "description": ""
+        },
+        "ProfilePhase3Temp": {
+            "displayText": "3-faza\nHarorati",
+            "description": ""
+        },
+        "ProfilePhase3Duration": {
+            "displayText": "3-faza\nDavomiyligi",
+            "description": ""
+        },
+        "ProfilePhase4Temp": {
+            "displayText": "4-faza\nHarorati",
+            "description": ""
+        },
+        "ProfilePhase4Duration": {
+            "displayText": "4-faza\nDavomiyligi",
+            "description": ""
+        },
+        "ProfilePhase5Temp": {
+            "displayText": "5-faza\nHarorati",
+            "description": ""
+        },
+        "ProfilePhase5Duration": {
+            "displayText": "5-faza\nDavomiyligi",
+            "description": ""
+        },
+        "ProfileCooldownSpeed": {
+            "displayText": "Sovutish\ntezligi",
+            "description": "Profil rejimi oxirida bu tezlikda sovutish (1 sekundda shuncha daraja)"
+        },
+        "MotionSensitivity": {
+            "displayText": "Harakat\nsezgirligi",
+            "description": "0=nofaol | 1=quyi sezgirlik | ... | 9=eng yuqori sezgirlik"
+        },
+        "SleepTemperature": {
+            "displayText": "Uyqu\nharorati",
+            "description": "\"Uyqu holati\"dagi uch harorati"
+        },
+        "SleepTimeout": {
+            "displayText": "Uyquga ketish\nvaqti",
+            "description": "\"Uyqu holati\" boshlanishidan oldingi interval sleep mode (s=sekund | m=minut)"
+        },
+        "ShutdownTimeout": {
+            "displayText": "O‘chish\nvaqti",
+            "description": "Temirni o‘chirishdan oldingi interval (m=minut)"
+        },
+        "HallEffSensitivity": {
+            "displayText": "Hall sensori\nsezgirligi",
+            "description": "Magnitlarga nisbatan sezgirlik darajasi (0=nofaol | 1=quyi sezgirlik | ... | 9=eng yuqori sezgirlik)"
+        },
+        "TemperatureUnit": {
+            "displayText": "Harorat o‘lchov\nbirligi",
+            "description": "C=°Selsiy | F=°Fahrenheit"
+        },
+        "DisplayRotation": {
+            "displayText": "Ekran\nyo‘nalishi",
+            "description": "R=o‘ng qo‘l | L=chap qo‘l | A=avtomatik"
+        },
+        "CooldownBlink": {
+            "displayText": "Sovutish\nindikatori",
+            "description": "Uchi qizigan bo‘sh turgan holatida harorat o‘lchovini yangilab turish"
+        },
+        "ScrollingSpeed": {
+            "displayText": "Matn aylanish\ntezligi",
+            "description": "Matn aylanish tezligini sozlash (S=sekin | F=tez)"
+        },
+        "ReverseButtonTempChange": {
+            "displayText": "(+) va (-) tugmalarni\nalmashtirish",
+            "description": "Harorat o‘zgarishi uchun tugmachalarni vazifasini almashish"
+        },
+        "AnimSpeed": {
+            "displayText": "Anim.\ntezligi",
+            "description": "Menyudagi ikonka animatsiyalari tezligini sozlash (O=o‘chirilgan | S=sekin | M=o‘rtacha | F=tez)"
+        },
+        "AnimLoop": {
+            "displayText": "Anim.\nqaytarilishi",
+            "description": "Bosh menyudagi ikonka anim. qaytarilishi"
+        },
+        "Brightness": {
+            "displayText": "Ekran\nyorqinligi",
+            "description": "OLED ekran yorqinligini sozlash"
+        },
+        "ColourInversion": {
+            "displayText": "Ranglarni\ninvert qilish",
+            "description": "OLED ekran ranglarini teskari qilish"
+        },
+        "LOGOTime": {
+            "displayText": "Yuklanish logosi\ndavomiyligi",
+            "description": "Yuklanish logosi davomiyligini o‘rnatish (s=sekund)"
+        },
+        "AdvancedIdle": {
+            "displayText": "Batafsil\nbo‘sh turgandagi ekran",
+            "description": "B‘sh turgandagi ekranda kichik shriftda batafsil ma’lumotni ko‘rsatish"
+        },
+        "AdvancedSoldering": {
+            "displayText": "Batafsil\npayvandlash ekrani",
+            "description": "Payvandlash ekrani uchun kichik shrift bilan batafsil ma’lumotni ko‘rsatish"
+        },
+        "BluetoothLE": {
+            "displayText": "Bluetooth\n",
+            "description": "Faollashtirish BLE"
+        },
+        "PowerLimit": {
+            "displayText": "Quvvat\nchegarasi",
+            "description": "Temir foydalanishi mumkin bo‘lgan o‘rtacha maksimal quvvat (W=watt)"
+        },
+        "CalibrateCJC": {
+            "displayText": "Keyingi yuklashda\nCJC kalibrovkasi",
+            "description": "Keyingi yuklashda Sovuq Tugun Kompensatsiyasini (CJC) kalibrlash (Delta T < 5°C bo‘lsa, talab qilinmaydi)"
+        },
+        "VoltageCalibration": {
+            "displayText": "Kirish kuchlanishini\nkalibrlash",
+            "description": "VIN kalibrovkasini boshlash (chiqish uchun uzoq bosib turing)"
+        },
+        "PowerPulsePower": {
+            "displayText": "Quvvat\npulsi",
+            "description": "Uxlashdan saqlash pulsining quvvat intensivligi (W=watt)"
+        },
+        "PowerPulseWait": {
+            "displayText": "Quvvat pulsi\nkechikishi",
+            "description": "Uxlashdan saqlash pulsi boshlanishigacha bo‘lgan kechikish (x 2.5 soniya)"
+        },
+        "PowerPulseDuration": {
+            "displayText": "Quvvat pulsi\ndavomiyligi",
+            "description": "Uxlashdan saqlash pulsi davomiyligi (x 250ms)"
+        },
+        "SettingsReset": {
+            "displayText": "Sozlamalarni\nqayta tiklash",
+            "description": "Barcha sozlamalarni odatiy holatga qaytarish"
+        },
+        "LanguageSwitch": {
+            "displayText": "Til:\n UZ     O‘zbek tili",
+            "description": ""
+        }
+    }
+}
