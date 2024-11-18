@@ -145,21 +145,21 @@ docker_file="-f ${root_dir}/${docker_conf}"
 # (compose sub-command must be included, i.e. DOCKER_BIN="/usr/local/bin/docker compose" ./deploy.sh)
 
 if [ -z "${DOCKER_BIN}" ]; then
-	docker_bin=""
+	docker_app=""
 else
-	docker_bin="${DOCKER_BIN}"
+	docker_app="${DOCKER_BIN}"
 fi;
 
 # detect availability of docker
 
 docker_compose="$(command -v docker-compose)"
-if [ -n "${docker_compose}" ] && [ -z "${docker_bin}" ]; then
-	docker_bin="${docker_compose}"
+if [ -n "${docker_compose}" ] && [ -z "${docker_app}" ]; then
+	docker_app="${docker_compose}"
 fi;
 
 docker_tool="$(command -v docker)"
-if [ -n "${docker_tool}" ] && [ -z "${docker_bin}" ]; then
-	docker_bin="${docker_tool}  compose"
+if [ -n "${docker_tool}" ] && [ -z "${docker_app}" ]; then
+	docker_app="${docker_tool}  compose"
 fi;
 
 # give function argument a name
@@ -207,7 +207,7 @@ fi;
 
 # if docker is not presented in any way show warning & exit
 
-if [ -z "${docker_bin}" ]; then
+if [ -z "${docker_app}" ]; then
 	echo "ERROR: Can't find docker-compose nor docker tool. Please, install docker and try again."
 	exit 1
 fi;
@@ -235,6 +235,6 @@ if [ "${cmd}" = "shell" ]; then
 echo -e "\t* type \"exit\" to end the session when done;"
 fi;
 echo -e "\t* type \"${0} clean\" to delete created container (but not cached data)"
-echo -e "\n====>>>> ${docker_bin}  ${docker_file}  ${docker_cmd}\n"
-eval "${docker_bin}  ${docker_file}  ${docker_cmd}"
+echo -e "\n====>>>> ${docker_app}  ${docker_file}  ${docker_cmd}\n"
+eval "${docker_app}  ${docker_file}  ${docker_cmd}"
 exit "${?}"
