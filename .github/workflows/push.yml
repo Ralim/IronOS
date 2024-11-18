@@ -221,6 +221,7 @@ jobs:
         with:
           submodules: true
           fetch-tags: true
+          fetch-depth: 0
 
       - name: Git ownership exception
         run: git config --global --add safe.directory /__w/IronOS/IronOS && git config --global safe.directory "$GITHUB_WORKSPACE"
