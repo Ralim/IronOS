@@ -221,5 +221,8 @@ jobs:
         with:
           submodules: true
 
+      - name: Git ownership exception
+        run: git config --global --add safe.directory /__w/IronOS/IronOS && git config --global safe.directory "$GITHUB_WORKSPACE"
+
       - name: Check and verify documentation
         run: /bin/sh ./scripts/deploy.sh docs
