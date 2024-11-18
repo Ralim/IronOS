@@ -208,7 +208,7 @@ jobs:
           exclude: "./.git/*" # Optional.
           check_all_files_with_shebangs: "false" # Optional.
 
-  check_readme:
+  check_docs:
     runs-on: ubuntu-22.04
     container:
       image: alpine:3.19
