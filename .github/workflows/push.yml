@@ -220,6 +220,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: true
+          fetch-tags: true
 
       - name: Git ownership exception
         run: git config --global --add safe.directory /__w/IronOS/IronOS && git config --global safe.directory "$GITHUB_WORKSPACE"
