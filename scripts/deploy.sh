@@ -74,16 +74,18 @@ EOF
 }
 
 # Documentation/History.md automagical changelog routine
-docs_readme()
+docs_history()
 {
 	md="Documentation/History.md"
-	ver_md="`sed -ne 's/^## //1p' "${md}" | head -1`"
+	ver_md="$(sed -ne 's/^## //1p' "${md}" | head -1)"
 	echo "Latest changelog: ${ver_md}"
-	ver_git="`git tag -l | sort | grep -e "^v" | grep -v "rc" | tail -1`"
+	ver_git="$(git tag -l | sort | grep -e "^v" | grep -v "rc" | tail -1)"
 	echo "Latest release tag: ${ver_git}"
 	ret=0
 	if [ "${ver_md}" != "${ver_git}" ]; then
 		ret=1
+		echo "It seems there is no changelog information for ${ver_git} in ${md} yet."
+		echo "Please, update changelog information in ${md}."
 	fi;
 	return "${ret}"
 }
@@ -171,7 +173,7 @@ if [ "docs" = "${cmd}" ]; then
 	readme="${?}"
 	docs_history
 	hist="${?}"
-	if [ "${readme}" -eq 0 && "${hist}" -eq 0 ]; then
+	if [ "${readme}" -eq 0 ] && [ "${hist}" -eq 0 ]; then
 		ret=0
 	else
 		ret=1
