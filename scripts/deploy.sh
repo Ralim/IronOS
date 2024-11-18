@@ -80,6 +80,7 @@ docs_history()
 	ver_md="$(sed -ne 's/^## //1p' "${md}" | head -1)"
 	echo "Latest changelog: ${ver_md}"
 	ver_git="$(git tag -l | sort | grep -e "^v" | grep -v "rc" | tail -1)"
+	git tag -l
 	echo "Latest release tag: ${ver_git}"
 	ret=0
 	if [ "${ver_md}" != "${ver_git}" ]; then
