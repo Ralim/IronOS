@@ -62,6 +62,28 @@ For notes on installation for your device, please refer to the flashing guide fo
 - [TS80 / TS80P](https://ralim.github.io/IronOS/Flashing/TS80%28P%29/)
 - [TS100](https://ralim.github.io/IronOS/Flashing/TS100)
 
+## Builds
+
+The links in the table below allow to download available builds directly.
+
+Current stable release is `v2.22`.  
+_Devel builds_ **dynamically** provide _**the latest successful build**_ from **`dev`** branch.
+
+|        Device         | Stable Release | Devel Build |
+|:---------------------:|:--------------:|:-----------:|
+| Pinecil  V1           | [Pinecil.zip](https://github.com/Ralim/IronOS/releases/download/v2.22/Pinecil.zip)                           | [Pinecil.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/Pinecil.zip)                           |
+| Pinecil  V1/multilang | [Pinecil_multi-lang.zip](https://github.com/Ralim/IronOS/releases/download/v2.22/Pinecil_multi-lang.zip)     | [Pinecil_multi-lang.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/Pinecil_multi-lang.zip)     |
+| Pinecil  V2           | [PinecilV2.zip](https://github.com/Ralim/IronOS/releases/download/v2.22/PinecilV2.zip)                       | [PinecilV2.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/Pinecilv2.zip)                       |
+| Pinecil  V2/multilang | [PinecilV2_multi-lang.zip](https://github.com/Ralim/IronOS/releases/download/v2.22/PinecilV2_multi-lang.zip) | [PinecilV2_multi-lang.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/Pinecilv2_multi-lang.zip) |
+| Miniware TS100        | [TS100.zip](https://github.com/Ralim/IronOS/releases/download/v2.22/TS100.zip)                               | [TS100.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/TS100.zip)                               |
+| Miniware TS101        | [TS101.zip](https://github.com/Ralim/IronOS/releases/download/v2.22/TS101.zip)                               | [TS101.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/TS101.zip)                               |
+| Miniware TS80         | [TS80.zip](https://github.com/Ralim/IronOS/releases/download/v2.22/TS80.zip)                                 | [TS80.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/TS80.zip)                                 |
+| Miniware TS80P        | [TS80P.zip](https://github.com/Ralim/IronOS/releases/download/v2.22/TS80P.zip)                               | [TS80P.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/TS80P.zip)                               |
+| Miniware MHP30        | [MHP30.zip](https://github.com/Ralim/IronOS/releases/download/v2.22/MHP30.zip)                               | [MHP30.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/MHP30.zip)                               |
+| Sequre   S60          | [S60.zip](https://github.com/Ralim/IronOS/releases/download/v2.22/S60.zip)                                   | [S60.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/S60.zip)                                   |
+| Sequre   S60P         | Not Released                                                                                                 | [S60P.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/S60P.zip)                                 |
+| Sequre   T55          | Not Released                                                                                                 | [T55.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/T55.zip)                                   |
+
 ## Key Features
 
 - PID style iron temperature control;
