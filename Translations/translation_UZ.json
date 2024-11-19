@@ -1,73 +1,73 @@
 {
-  "languageCode": "EN",
-  "languageLocalName": "English",
-  "tempUnitFahrenheit": true,
+  "languageCode": "UZ",
+  "languageLocalName": "O‘zbek",
+  "tempUnitFahrenheit": false,
   "messagesWarn": {
   "CalibrationDone": {
-    "message": "Calibration\ndone!"
+    "message": "Kalibrovka\nyakunlandi!"
   },
   "ResetOKMessage": {
-    "message": "Reset OK"
+    "message": "Sozlamalar tiklandi"
   },
   "SettingsResetMessage": {
-    "message": "Certain settings\nchanged!"
+    "message": "Ayrim sozlamalar\no‘zgartirildi"
   },
   "NoAccelerometerMessage": {
-    "message": "No accelerometer\ndetected!"
+    "message": "Akselerometr\ntopilmadi!"
   },
   "NoPowerDeliveryMessage": {
-    "message": "No USB-PD IC\ndetected!"
+    "message": "USB-PD IC\ntopilmadi!"
   },
   "LockingKeysString": {
-    "message": "LOCKED"
+    "message": "QULFLANDI"
   },
   "UnlockingKeysString": {
-    "message": "UNLOCKED"
+    "message": "QULF OCHILDI"
   },
   "WarningKeysLockedString": {
-    "message": "!LOCKED!"
+    "message": "!QULFLANGAN!"
   },
   "WarningThermalRunaway": {
-    "message": "Thermal\nRunaway"
+    "message": "Issiqlik\nqochishi"
   },
   "WarningTipShorted": {
-    "message": "!Tip Shorted!"
+    "message": "!Uchida qisqa tutashuv!"
   },
   "SettingsCalibrationWarning": {
-    "message": "Before rebooting, make sure tip & handle are at room temperature!"
+    "message": "Qayta yuklashdan oldin, uchi va tutqich xona haroratida ekanligiga ishonch hosil qiling!"
   },
   "CJCCalibrating": {
-    "message": "calibrating\n"
+    "message": "Kalibrovka\nqilinmoqda\n"
   },
   "SettingsResetWarning": {
-    "message": "Are you sure you want to restore default settings?"
+    "message": "Sozlamalarni standart holatga qaytarishni istaysizmi?"
   },
   "UVLOWarningString": {
-    "message": "DC LOW"
+    "message": "DC PAST"
   },
   "UndervoltageString": {
-    "message": "Undervoltage\n"
+    "message": "Past kuchlanish\n"
   },
   "InputVoltageString": {
-    "message": "Input V: \n"
+    "message": "Kirish kuchlanishi: \n"
   },
   "SleepingAdvancedString": {
-    "message": "Sleeping...\n"
+    "message": "Uyqu holati...\n"
   },
   "SleepingTipAdvancedString": {
     "message": "Tip: \n"
   },
   "ProfilePreheatString": {
-    "message": "Preheat\n"
+    "message": "Qizdirish\n"
   },
   "ProfileCooldownString": {
-    "message": "Cooldown\n"
+    "message": "Sovutish\n"
   },
   "DeviceFailedValidationWarning": {
-    "message": "Your device is most likely a counterfeit!"
+    "message": "Qurilmangiz soxta bo‘lishi mumkin!"
   },
   "TooHotToStartProfileWarning": {
-    "message": "Too hot to\nstart profile"
+    "message": "Profilni boshlash uchun\njuda issiq"
   }
   },
   "characters": {
