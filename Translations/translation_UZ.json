@@ -256,87 +256,87 @@
       "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
     },
     "TemperatureUnit": {
-      "displayText": "Temperature\nunit",
-      "description": "C=°Celsius | F=°Fahrenheit"
+      "displayText": "Harorat o‘lchov\nbirligi",
+      "description": "C=°Selsiy | F=°Fahrenheit"
     },
     "DisplayRotation": {
-      "displayText": "Display\norientation",
-      "description": "R=right-handed | L=left-handed | A=automatic"
+      "displayText": "Ekran\nyo‘nalishi",
+      "description": "R=o‘ng qo‘l | L=chap qo‘l | A=avtomatik"
     },
     "CooldownBlink": {
-      "displayText": "Cooldown\nflashing",
-      "description": "Flash temp reading at idle while tip is hot"
+      "displayText": "Sovutish\nindikatori",
+      "description": "Uchi qizigan bo‘sh turgan holatida harorat o‘lchovini yangilab turish"
     },
     "ScrollingSpeed": {
-      "displayText": "Scrolling\nspeed",
-      "description": "Scrolling speed of info text (S=slow | F=fast)"
+      "displayText": "Matn aylanish\ntezligi",
+      "description": "Matn aylanish tezligini sozlash (S=sekin | F=tez)"
     },
     "ReverseButtonTempChange": {
-      "displayText": "Swap\n+ - keys",
-      "description": "Reverse assignment of buttons for temperature adjustment"
+      "displayText": "(+) va (-) tugmalarni\nalmashtirish",
+      "description": "Harorat o‘zgarishi uchun tugmachalarni vazifasini almashish"
     },
     "AnimSpeed": {
-      "displayText": "Anim.\nspeed",
-      "description": "Pace of icon animations in menu (S=slow | M=medium | F=fast)"
+      "displayText": "Anim.\ntezligi",
+      "description": "Menyudagi ikonka animatsiyalari tezligini sozlash (O=o‘chirilgan | S=sekin | M=o‘rtacha | F=tez)"
     },
     "AnimLoop": {
-      "displayText": "Anim.\nloop",
-      "description": "Loop icon animations in main menu"
+      "displayText": "Anim.\nqaytarilishi",
+      "description": "Bosh menyudagi ikonka anim. qaytarilishi"
     },
     "Brightness": {
-      "displayText": "Screen\nbrightness",
-      "description": "Adjust the OLED screen brightness"
+      "displayText": "Ekran\nyorqinligi",
+      "description": "OLED ekran yorqinligini sozlash"
     },
     "ColourInversion": {
-      "displayText": "Invert\nscreen",
-      "description": "Invert the OLED screen colors"
+      "displayText": "Ranglarni\ninvert qilish",
+      "description": "OLED ekran ranglarini teskari qilish"
     },
     "LOGOTime": {
-      "displayText": "Boot logo\nduration",
-      "description": "Set boot logo duration (s=seconds)"
+      "displayText": "Yuklanish logosi\ndavomiyligi",
+      "description": "Yuklanish logosi davomiyligini o‘rnatish (s=sekund)"
     },
     "AdvancedIdle": {
-      "displayText": "Detailed\nidle screen",
-      "description": "Display detailed info in a smaller font on idle screen"
+      "displayText": "Batafsil\nbo‘sh turgandagi ekran",
+      "description": "B‘sh turgandagi ekranda kichik shriftda batafsil ma’lumotni ko‘rsatish"
     },
     "AdvancedSoldering": {
-      "displayText": "Detailed\nsolder screen",
-      "description": "Display detailed info in a smaller font on soldering screen"
+      "displayText": "Batafsil\npayvandlash ekrani",
+      "description": "Payvandlash ekrani uchun kichik shrift bilan batafsil ma’lumotni ko‘rsatish"
     },
     "BluetoothLE": {
       "displayText": "Bluetooth\n",
-      "description": "Enables BLE"
+      "description": "Faollashtirish BLE"
     },
     "PowerLimit": {
-      "displayText": "Power\nlimit",
-      "description": "Average maximum power the iron can use (W=watt)"
+      "displayText": "Quvvat\nchegarasi",
+      "description": "Temir foydalanishi mumkin bo‘lgan o‘rtacha maksimal quvvat (W=watt)"
     },
     "CalibrateCJC": {
-      "displayText": "Calibrate CJC\nat next boot",
-      "description": "Calibrate Cold Junction Compensation at next boot (not required if Delta T is < 5°C)"
+      "displayText": "Keyingi yuklashda\nCJC kalibrovkasi",
+      "description": "Keyingi yuklashda Sovuq Tugun Kompensatsiyasini (CJC) kalibrlash (Delta T < 5°C bo‘lsa, talab qilinmaydi)"
     },
     "VoltageCalibration": {
-      "displayText": "Calibrate\ninput voltage",
-      "description": "Start VIN calibration (long press to exit)"
+      "displayText": "Kirish kuchlanishini\nkalibrlash",
+      "description": "VIN kalibrovkasini boshlash (chiqish uchun uzoq bosib turing)"
     },
     "PowerPulsePower": {
-      "displayText": "Power\npulse",
-      "description": "Intensity of power of keep-awake-pulse (W=watt)"
+      "displayText": "Quvvat\npulsi",
+      "description": "Uxlashdan saqlash pulsining quvvat intensivligi (W=watt)"
     },
     "PowerPulseWait": {
-      "displayText": "Power pulse\ndelay",
-      "description": "Delay before keep-awake-pulse is triggered (x 2.5s)"
+      "displayText": "Quvvat pulsi\nkechikishi",
+      "description": "Uxlashdan saqlash pulsi boshlanishigacha bo‘lgan kechikish (x 2.5 soniya)"
     },
     "PowerPulseDuration": {
-      "displayText": "Power pulse\nduration",
-      "description": "Keep-awake-pulse duration (x 250ms)"
+      "displayText": "Quvvat pulsi\ndavomiyligi",
+      "description": "Uxlashdan saqlash pulsi davomiyligi (x 250ms)"
     },
     "SettingsReset": {
-      "displayText": "Restore default\nsettings",
-      "description": "Reset all settings to default"
+      "displayText": "Sozlamalarni\nqayta tiklash",
+      "description": "Barcha sozlamalarni odatiy holatga qaytarish"
     },
     "LanguageSwitch": {
-      "displayText": "Language:\n EN     English",
+      "displayText": "Til:\n UZ   O‘zbek tili",
       "description": ""
     },
     "SolderingTipType": {
