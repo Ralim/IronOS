@@ -1,319 +1,347 @@
 {
-    "languageCode": "UZ",
-    "languageLocalName": "O‘zbek",
-    "tempUnitFahrenheit": false,
-    "messagesWarn": {
-        "CalibrationDone": {
-            "message": "Kalibrovka\nyakunlandi!"
-        },
-        "ResetOKMessage": {
-            "message": "Sozlamalar tiklandi"
-        },
-        "SettingsResetMessage": {
-            "message": "Ayrim sozlamalar\no‘zgartirildi"
-        },
-        "NoAccelerometerMessage": {
-            "message": "Akselerometr\ntopilmadi!"
-        },
-        "NoPowerDeliveryMessage": {
-            "message": "USB-PD IC\ntopilmadi!"
-        },
-        "LockingKeysString": {
-            "message": "QULFLANDI"
-        },
-        "UnlockingKeysString": {
-            "message": "QULF OCHILDI"
-        },
-        "WarningKeysLockedString": {
-            "message": "!QULFLANGAN!"
-        },
-        "WarningThermalRunaway": {
-            "message": "Issiqlik\nqochishi"
-        },
-        "WarningTipShorted": {
-            "message": "!Uchida qisqa tutashuv!"
-        },
-        "SettingsCalibrationWarning": {
-            "message": "Qayta yuklashdan oldin, uchi va tutqich xona haroratida ekanligiga ishonch hosil qiling!"
-        },
-        "CJCCalibrating": {
-            "message": "Kalibrovka\nqilinmoqda\n"
-        },
-        "SettingsResetWarning": {
-            "message": "Sozlamalarni standart holatga qaytarishni istaysizmi?"
-        },
-        "UVLOWarningString": {
-            "message": "DC PAST"
-        },
-        "UndervoltageString": {
-            "message": "Past kuchlanish\n"
-        },
-        "InputVoltageString": {
-            "message": "Kirish kuchlanishi: \n"
-        },
-        "SleepingSimpleString": {
-            "message": "Zzzz"
-        },
-        "SleepingAdvancedString": {
-            "message": "Uyqu holati...\n"
-        },
-        "SleepingTipAdvancedString": {
-            "message": "Uch: \n"
-        },
-        "OffString": {
-            "message": "O‘chirilgan"
-        },
-        "ProfilePreheatString": {
-            "message": "Qizdirish\n"
-        },
-        "ProfileCooldownString": {
-            "message": "Sovutish\n"
-        },
-        "DeviceFailedValidationWarning": {
-            "message": "Qurilmangiz soxta bo‘lishi mumkin!"
-        },
-        "TooHotToStartProfileWarning": {
-            "message": "Profilni boshlash uchun\njuda issiq"
-        }
+  "languageCode": "EN",
+  "languageLocalName": "English",
+  "tempUnitFahrenheit": true,
+  "messagesWarn": {
+    "CalibrationDone": {
+      "message": "Calibration\ndone!"
     },
-    "characters": {
-        "SettingRightChar": "R",
-        "SettingLeftChar": "L",
-        "SettingAutoChar": "A",
-        "SettingOffChar": "O",
-        "SettingSlowChar": "S",
-        "SettingMediumChar": "M",
-        "SettingFastChar": "F",
-        "SettingStartNoneChar": "O",
-        "SettingStartSolderingChar": "S",
-        "SettingStartSleepChar": "Z",
-        "SettingStartSleepOffChar": "R",
-        "SettingLockDisableChar": "D",
-        "SettingLockBoostChar": "B",
-        "SettingLockFullChar": "F"
+    "ResetOKMessage": {
+      "message": "Reset OK"
     },
-    "menuGroups": {
-        "PowerMenu": {
-            "displayText": "Quvvat\nsozlamalari",
-            "description": ""
-        },
-        "SolderingMenu": {
-            "displayText": "Paylash\nsozlamalari",
-            "description": ""
-        },
-        "PowerSavingMenu": {
-            "displayText": "Uyqu\nrejimi",
-            "description": ""
-        },
-        "UIMenu": {
-            "displayText": "Foydalanuvchi\ninterfeysi",
-            "description": ""
-        },
-        "AdvancedMenu": {
-            "displayText": "Kengaytirilgan\nsozlamalar",
-            "description": ""
-        }
+    "SettingsResetMessage": {
+      "message": "Certain settings\nchanged!"
     },
-    "menuOptions": {
-        "DCInCutoff": {
-            "displayText": "Quvvat\nmanbai",
-            "description": "Batareya haddan tashqari zaryadsizlanishini oldini olish uchun kuchlanish chegarasini o‘rnatish (DC 10V) (S=3.3V har bir yacheyka uchun, quvvat PWR chegarasini o‘chirish)"			
-        },
-        "MinVolCell": {
-            "displayText": "Minimal\nkuchlanish",
-            "description": "Batareya yacheyka uchun minimal ruxsat etilgan kuchlanish (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"       
-        },
-        "QCMaxVoltage": {
-            "displayText": "QC\nkuchlanishi",
-            "description": "Max QC voltage the iron should negotiate for"
-        },
-        "PDNegTimeout": {
-            "displayText": "PD\ntimeout",
-            "description": "PD o‘rnatish timeouti 100ms qadamlar bilan QC zaryadlovchi qurilmalar bilan moslikni ta'minlash uchun"
-        },
-        "PDVpdo": {
-            "displayText": "PD\nVPDO",
-            "description": "PPS & EPR rejimlarini faollashtiradi"
-        },
-        "BoostTemperature": {
-            "displayText": "Kuchaytirish\nharorati",
-            "description": "\"Boost mode\" rejimida uch harorati"
-        },
-        "AutoStart": {
-            "displayText": "Boshlash\nholati",
-            "description": "O=o‘chgan | S=paylash temperaturasigacha qizdirish | Z=qo‘zg‘atilmagunicha uyqu rejimida ushlash | R=qo‘zg‘atilmagunicha qizdirilmagan holda ushlash"
-        },
-        "TempChangeShortStep": {
-            "displayText": "Tugmaning qisqa\nbosilishi",
-            "description": "Qisqa bosilgandagi harorat o‘zgarishi-oshirish"
-        },
-        "TempChangeLongStep": {
-            "displayText": "Tugmaning uzoqroq\nbosilishi",
-            "description": "Uzoqroq bosilgandagi harorat o‘zgarishi-oshirish"
-        },
-        "LockingMode": {
-            "displayText": "Tugmalarni qulflashni\nfaollashtirish",
-            "description": "Qulflash uchun paylash davomida ikkala tugmani bosib turing (D=Nofaol | B=faqat boost mode uchun | F=to‘liq qulflash)"
-        },
-        "ProfilePhases": {
-            "displayText": "Profil\nbosqichlari",
-            "description": "Profil rejimlarida bosqichlar soni"
-        },
-        "ProfilePreheatTemp": {
-            "displayText": "Dastlabgi\nHarorat",
-            "description": "Profil rejimida dastlab ushbu haroratga qizdirish"
-        },
-        "ProfilePreheatSpeed": {
-            "displayText": "Qizdirish\nTezligi",
-            "description": "Ushbu tezlikda qizdirish (1 sekundda shuncha daraja)"
-        },
-        "ProfilePhase1Temp": {
-            "displayText": "1-faza\nHarorati",
-            "description": "Bu fazaning oxirida mo‘ljallangan harorat"
-        },
-        "ProfilePhase1Duration": {
-            "displayText": "1-faza\nDavomiyligi",
-            "description": "Ushbu fazaning davomiyligi (sekund)"
-        },
-        "ProfilePhase2Temp": {
-            "displayText": "2-faza\nHarorati",
-            "description": ""
-        },
-        "ProfilePhase2Duration": {
-            "displayText": "2-faza\nDavomiyligi",
-            "description": ""
-        },
-        "ProfilePhase3Temp": {
-            "displayText": "3-faza\nHarorati",
-            "description": ""
-        },
-        "ProfilePhase3Duration": {
-            "displayText": "3-faza\nDavomiyligi",
-            "description": ""
-        },
-        "ProfilePhase4Temp": {
-            "displayText": "4-faza\nHarorati",
-            "description": ""
-        },
-        "ProfilePhase4Duration": {
-            "displayText": "4-faza\nDavomiyligi",
-            "description": ""
-        },
-        "ProfilePhase5Temp": {
-            "displayText": "5-faza\nHarorati",
-            "description": ""
-        },
-        "ProfilePhase5Duration": {
-            "displayText": "5-faza\nDavomiyligi",
-            "description": ""
-        },
-        "ProfileCooldownSpeed": {
-            "displayText": "Sovutish\ntezligi",
-            "description": "Profil rejimi oxirida bu tezlikda sovutish (1 sekundda shuncha daraja)"
-        },
-        "MotionSensitivity": {
-            "displayText": "Harakat\nsezgirligi",
-            "description": "0=nofaol | 1=quyi sezgirlik | ... | 9=eng yuqori sezgirlik"
-        },
-        "SleepTemperature": {
-            "displayText": "Uyqu\nharorati",
-            "description": "\"Uyqu holati\"dagi uch harorati"
-        },
-        "SleepTimeout": {
-            "displayText": "Uyquga ketish\nvaqti",
-            "description": "\"Uyqu holati\" boshlanishidan oldingi interval sleep mode (s=sekund | m=minut)"
-        },
-        "ShutdownTimeout": {
-            "displayText": "O‘chish\nvaqti",
-            "description": "Temirni o‘chirishdan oldingi interval (m=minut)"
-        },
-        "HallEffSensitivity": {
-            "displayText": "Hall sensori\nsezgirligi",
-            "description": "Magnitlarga nisbatan sezgirlik darajasi (0=nofaol | 1=quyi sezgirlik | ... | 9=eng yuqori sezgirlik)"
-        },
-        "TemperatureUnit": {
-            "displayText": "Harorat o‘lchov\nbirligi",
-            "description": "C=°Selsiy | F=°Fahrenheit"
-        },
-        "DisplayRotation": {
-            "displayText": "Ekran\nyo‘nalishi",
-            "description": "R=o‘ng qo‘l | L=chap qo‘l | A=avtomatik"
-        },
-        "CooldownBlink": {
-            "displayText": "Sovutish\nindikatori",
-            "description": "Uchi qizigan bo‘sh turgan holatida harorat o‘lchovini yangilab turish"
-        },
-        "ScrollingSpeed": {
-            "displayText": "Matn aylanish\ntezligi",
-            "description": "Matn aylanish tezligini sozlash (S=sekin | F=tez)"
-        },
-        "ReverseButtonTempChange": {
-            "displayText": "(+) va (-) tugmalarni\nalmashtirish",
-            "description": "Harorat o‘zgarishi uchun tugmachalarni vazifasini almashish"
-        },
-        "AnimSpeed": {
-            "displayText": "Anim.\ntezligi",
-            "description": "Menyudagi ikonka animatsiyalari tezligini sozlash (O=o‘chirilgan | S=sekin | M=o‘rtacha | F=tez)"
-        },
-        "AnimLoop": {
-            "displayText": "Anim.\nqaytarilishi",
-            "description": "Bosh menyudagi ikonka anim. qaytarilishi"
-        },
-        "Brightness": {
-            "displayText": "Ekran\nyorqinligi",
-            "description": "OLED ekran yorqinligini sozlash"
-        },
-        "ColourInversion": {
-            "displayText": "Ranglarni\ninvert qilish",
-            "description": "OLED ekran ranglarini teskari qilish"
-        },
-        "LOGOTime": {
-            "displayText": "Yuklanish logosi\ndavomiyligi",
-            "description": "Yuklanish logosi davomiyligini o‘rnatish (s=sekund)"
-        },
-        "AdvancedIdle": {
-            "displayText": "Batafsil\nbo‘sh turgandagi ekran",
-            "description": "B‘sh turgandagi ekranda kichik shriftda batafsil ma’lumotni ko‘rsatish"
-        },
-        "AdvancedSoldering": {
-            "displayText": "Batafsil\npayvandlash ekrani",
-            "description": "Payvandlash ekrani uchun kichik shrift bilan batafsil ma’lumotni ko‘rsatish"
-        },
-        "BluetoothLE": {
-            "displayText": "Bluetooth\n",
-            "description": "Faollashtirish BLE"
-        },
-        "PowerLimit": {
-            "displayText": "Quvvat\nchegarasi",
-            "description": "Temir foydalanishi mumkin bo‘lgan o‘rtacha maksimal quvvat (W=watt)"
-        },
-        "CalibrateCJC": {
-            "displayText": "Keyingi yuklashda\nCJC kalibrovkasi",
-            "description": "Keyingi yuklashda Sovuq Tugun Kompensatsiyasini (CJC) kalibrlash (Delta T < 5°C bo‘lsa, talab qilinmaydi)"
-        },
-        "VoltageCalibration": {
-            "displayText": "Kirish kuchlanishini\nkalibrlash",
-            "description": "VIN kalibrovkasini boshlash (chiqish uchun uzoq bosib turing)"
-        },
-        "PowerPulsePower": {
-            "displayText": "Quvvat\npulsi",
-            "description": "Uxlashdan saqlash pulsining quvvat intensivligi (W=watt)"
-        },
-        "PowerPulseWait": {
-            "displayText": "Quvvat pulsi\nkechikishi",
-            "description": "Uxlashdan saqlash pulsi boshlanishigacha bo‘lgan kechikish (x 2.5 soniya)"
-        },
-        "PowerPulseDuration": {
-            "displayText": "Quvvat pulsi\ndavomiyligi",
-            "description": "Uxlashdan saqlash pulsi davomiyligi (x 250ms)"
-        },
-        "SettingsReset": {
-            "displayText": "Sozlamalarni\nqayta tiklash",
-            "description": "Barcha sozlamalarni odatiy holatga qaytarish"
-        },
-        "LanguageSwitch": {
-            "displayText": "Til:\n UZ     O‘zbek tili",
-            "description": ""
-        }
+    "NoAccelerometerMessage": {
+      "message": "No accelerometer\ndetected!"
+    },
+    "NoPowerDeliveryMessage": {
+      "message": "No USB-PD IC\ndetected!"
+    },
+    "LockingKeysString": {
+      "message": "LOCKED"
+    },
+    "UnlockingKeysString": {
+      "message": "UNLOCKED"
+    },
+    "WarningKeysLockedString": {
+      "message": "!LOCKED!"
+    },
+    "WarningThermalRunaway": {
+      "message": "Thermal\nRunaway"
+    },
+    "WarningTipShorted": {
+      "message": "!Tip Shorted!"
+    },
+    "SettingsCalibrationWarning": {
+      "message": "Before rebooting, make sure tip & handle are at room temperature!"
+    },
+    "CJCCalibrating": {
+      "message": "calibrating\n"
+    },
+    "SettingsResetWarning": {
+      "message": "Are you sure you want to restore default settings?"
+    },
+    "UVLOWarningString": {
+      "message": "DC LOW"
+    },
+    "UndervoltageString": {
+      "message": "Undervoltage\n"
+    },
+    "InputVoltageString": {
+      "message": "Input V: \n"
+    },
+    "SleepingAdvancedString": {
+      "message": "Sleeping...\n"
+    },
+    "SleepingTipAdvancedString": {
+      "message": "Tip: \n"
+    },
+    "ProfilePreheatString": {
+      "message": "Preheat\n"
+    },
+    "ProfileCooldownString": {
+      "message": "Cooldown\n"
+    },
+    "DeviceFailedValidationWarning": {
+      "message": "Your device is most likely a counterfeit!"
+    },
+    "TooHotToStartProfileWarning": {
+      "message": "Too hot to\nstart profile"
     }
+  },
+  "characters": {
+    "SettingRightChar": "R",
+    "SettingLeftChar": "L",
+    "SettingAutoChar": "A",
+    "SettingSlowChar": "S",
+    "SettingMediumChar": "M",
+    "SettingFastChar": "F",
+    "SettingStartSolderingChar": "S",
+    "SettingStartSleepChar": "Z",
+    "SettingStartSleepOffChar": "R",
+    "SettingLockBoostChar": "B",
+    "SettingLockFullChar": "F"
+  },
+  "menuGroups": {
+    "PowerMenu": {
+      "displayText": "Power\nsettings",
+      "description": ""
+    },
+    "SolderingMenu": {
+      "displayText": "Soldering\nsettings",
+      "description": ""
+    },
+    "PowerSavingMenu": {
+      "displayText": "Sleep\nmode",
+      "description": ""
+    },
+    "UIMenu": {
+      "displayText": "User\ninterface",
+      "description": ""
+    },
+    "AdvancedMenu": {
+      "displayText": "Advanced\nsettings",
+      "description": ""
+    }
+  },
+  "menuValues": {
+    "USBPDModeDefault": {
+      "displayText": "Default\nMode"
+    },
+    "USBPDModeNoDynamic": {
+      "displayText": "No\nDynamic"
+    },
+    "USBPDModeSafe": {
+      "displayText": "Safe\nMode"
+    },
+    "TipTypeAuto": {
+      "displayText": "Auto\nSense"
+    },
+    "TipTypeT12Long": {
+      "displayText": "TS100\nLong"
+    },
+    "TipTypeT12Short": {
+      "displayText": "Pine\nShort"
+    },
+    "TipTypeT12PTS": {
+      "displayText": "PTS\n200"
+    },
+    "TipTypeTS80": {
+      "displayText": "TS80\n"
+    },
+    "TipTypeJBCC210": {
+      "displayText": "JBC\nC210"
+    }
+  },
+  "menuOptions": {
+    "DCInCutoff": {
+      "displayText": "Power\nsource",
+      "description": "Set cutoff voltage to prevent battery overdischarge (DC=10V) (S=3.3V per cell, disable PWR limit)"
+    },
+    "MinVolCell": {
+      "displayText": "Minimum\nvoltage",
+      "description": "Minimum allowed voltage per battery cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+    },
+    "QCMaxVoltage": {
+      "displayText": "QC\nvoltage",
+      "description": "Max QC voltage the iron should negotiate for"
+    },
+    "PDNegTimeout": {
+      "displayText": "PD\ntimeout",
+      "description": "PD negotiation timeout in 100ms steps for compatibility with some QC chargers"
+    },
+    "USBPDMode": {
+      "displayText": "PD\nMode",
+      "description": "No Dynamic disables EPR & PPS, Safe mode does not use padding resistance"
+    },
+    "BoostTemperature": {
+      "displayText": "Boost\ntemp",
+      "description": "Tip temperature used in \"boost mode\""
+    },
+    "AutoStart": {
+      "displayText": "Start-up\nbehavior",
+      "description": "S=heat to soldering temp | Z=standby at sleep temp until moved | R=standby without heating until moved"
+    },
+    "TempChangeShortStep": {
+      "displayText": "Temp change\nshort",
+      "description": "Temperature-change-increment on short button press"
+    },
+    "TempChangeLongStep": {
+      "displayText": "Temp change\nlong",
+      "description": "Temperature-change-increment on long button press"
+    },
+    "LockingMode": {
+      "displayText": "Allow locking\nbuttons",
+      "description": "While soldering, hold down both buttons to toggle locking them (B=boost mode only | F=full locking)"
+    },
+    "ProfilePhases": {
+      "displayText": "Profile\nPhases",
+      "description": "Number of phases in profile mode"
+    },
+    "ProfilePreheatTemp": {
+      "displayText": "Preheat\nTemp",
+      "description": "Preheat to this temperature at the start of profile mode"
+    },
+    "ProfilePreheatSpeed": {
+      "displayText": "Preheat\nSpeed",
+      "description": "Preheat at this rate (degrees per second)"
+    },
+    "ProfilePhase1Temp": {
+      "displayText": "Phase 1\nTemp",
+      "description": "Target temperature for the end of this phase"
+    },
+    "ProfilePhase1Duration": {
+      "displayText": "Phase 1\nDuration",
+      "description": "Target duration of this phase (seconds)"
+    },
+    "ProfilePhase2Temp": {
+      "displayText": "Phase 2\nTemp",
+      "description": ""
+    },
+    "ProfilePhase2Duration": {
+      "displayText": "Phase 2\nDuration",
+      "description": ""
+    },
+    "ProfilePhase3Temp": {
+      "displayText": "Phase 3\nTemp",
+      "description": ""
+    },
+    "ProfilePhase3Duration": {
+      "displayText": "Phase 3\nDuration",
+      "description": ""
+    },
+    "ProfilePhase4Temp": {
+      "displayText": "Phase 4\nTemp",
+      "description": ""
+    },
+    "ProfilePhase4Duration": {
+      "displayText": "Phase 4\nDuration",
+      "description": ""
+    },
+    "ProfilePhase5Temp": {
+      "displayText": "Phase 5\nTemp",
+      "description": ""
+    },
+    "ProfilePhase5Duration": {
+      "displayText": "Phase 5\nDuration",
+      "description": ""
+    },
+    "ProfileCooldownSpeed": {
+      "displayText": "Cooldown\nSpeed",
+      "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
+    },
+    "MotionSensitivity": {
+      "displayText": "Motion\nsensitivity",
+      "description": "1=least sensitive | ... | 9=most sensitive"
+    },
+    "SleepTemperature": {
+      "displayText": "Sleep\ntemp",
+      "description": "Tip temperature while in \"sleep mode\""
+    },
+    "SleepTimeout": {
+      "displayText": "Sleep\ntimeout",
+      "description": "Interval before \"sleep mode\" starts (s=seconds | m=minutes)"
+    },
+    "ShutdownTimeout": {
+      "displayText": "Shutdown\ntimeout",
+      "description": "Interval before the iron shuts down (m=minutes)"
+    },
+    "HallEffSensitivity": {
+      "displayText": "Hall sensor\nsensitivity",
+      "description": "Sensitivity to magnets (1=least sensitive | ... | 9=most sensitive)"
+    },
+    "HallEffSleepTimeout": {
+      "displayText": "HallSensor\nSleepTime",
+      "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+    },
+    "TemperatureUnit": {
+      "displayText": "Temperature\nunit",
+      "description": "C=°Celsius | F=°Fahrenheit"
+    },
+    "DisplayRotation": {
+      "displayText": "Display\norientation",
+      "description": "R=right-handed | L=left-handed | A=automatic"
+    },
+    "CooldownBlink": {
+      "displayText": "Cooldown\nflashing",
+      "description": "Flash temp reading at idle while tip is hot"
+    },
+    "ScrollingSpeed": {
+      "displayText": "Scrolling\nspeed",
+      "description": "Scrolling speed of info text (S=slow | F=fast)"
+    },
+    "ReverseButtonTempChange": {
+      "displayText": "Swap\n+ - keys",
+      "description": "Reverse assignment of buttons for temperature adjustment"
+    },
+    "AnimSpeed": {
+      "displayText": "Anim.\nspeed",
+      "description": "Pace of icon animations in menu (S=slow | M=medium | F=fast)"
+    },
+    "AnimLoop": {
+      "displayText": "Anim.\nloop",
+      "description": "Loop icon animations in main menu"
+    },
+    "Brightness": {
+      "displayText": "Screen\nbrightness",
+      "description": "Adjust the OLED screen brightness"
+    },
+    "ColourInversion": {
+      "displayText": "Invert\nscreen",
+      "description": "Invert the OLED screen colors"
+    },
+    "LOGOTime": {
+      "displayText": "Boot logo\nduration",
+      "description": "Set boot logo duration (s=seconds)"
+    },
+    "AdvancedIdle": {
+      "displayText": "Detailed\nidle screen",
+      "description": "Display detailed info in a smaller font on idle screen"
+    },
+    "AdvancedSoldering": {
+      "displayText": "Detailed\nsolder screen",
+      "description": "Display detailed info in a smaller font on soldering screen"
+    },
+    "BluetoothLE": {
+      "displayText": "Bluetooth\n",
+      "description": "Enables BLE"
+    },
+    "PowerLimit": {
+      "displayText": "Power\nlimit",
+      "description": "Average maximum power the iron can use (W=watt)"
+    },
+    "CalibrateCJC": {
+      "displayText": "Calibrate CJC\nat next boot",
+      "description": "Calibrate Cold Junction Compensation at next boot (not required if Delta T is < 5°C)"
+    },
+    "VoltageCalibration": {
+      "displayText": "Calibrate\ninput voltage",
+      "description": "Start VIN calibration (long press to exit)"
+    },
+    "PowerPulsePower": {
+      "displayText": "Power\npulse",
+      "description": "Intensity of power of keep-awake-pulse (W=watt)"
+    },
+    "PowerPulseWait": {
+      "displayText": "Power pulse\ndelay",
+      "description": "Delay before keep-awake-pulse is triggered (x 2.5s)"
+    },
+    "PowerPulseDuration": {
+      "displayText": "Power pulse\nduration",
+      "description": "Keep-awake-pulse duration (x 250ms)"
+    },
+    "SettingsReset": {
+      "displayText": "Restore default\nsettings",
+      "description": "Reset all settings to default"
+    },
+    "LanguageSwitch": {
+      "displayText": "Language:\n EN     English",
+      "description": ""
+    },
+    "SolderingTipType": {
+      "displayText": "Soldering\nTip Type",
+      "description": "Select the tip type fitted"
+    }
+  }
 }
