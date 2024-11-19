@@ -55,7 +55,7 @@
     "message": "Uyqu holati...\n"
   },
   "SleepingTipAdvancedString": {
-    "message": "Tip: \n"
+    "message": "Uch: \n"
   },
   "ProfilePreheatString": {
     "message": "Qizdirish\n"
@@ -136,12 +136,12 @@
   },
   "menuOptions": {
     "DCInCutoff": {
-      "displayText": "Power\nsource",
-      "description": "Set cutoff voltage to prevent battery overdischarge (DC=10V) (S=3.3V per cell, disable PWR limit)"
+      "displayText": "Quvvat\nmanbai",
+      "description": "Batareya haddan tashqari zaryadsizlanishini oldini olish uchun kuchlanish chegarasini o‘rnatish (DC 10V) (S=3.3V har bir yacheyka uchun, quvvat PWR chegarasini o‘chirish)"			
     },
     "MinVolCell": {
-      "displayText": "Minimum\nvoltage",
-      "description": "Minimum allowed voltage per battery cell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+      "displayText": "Minimal\nkuchlanish",
+      "description": "Batareya yacheyka uchun minimal ruxsat etilgan kuchlanish (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"   
     },
     "QCMaxVoltage": {
       "displayText": "QC\nvoltage",
@@ -156,24 +156,24 @@
       "description": "No Dynamic disables EPR & PPS, Safe mode does not use padding resistance"
     },
     "BoostTemperature": {
-      "displayText": "Boost\ntemp",
-      "description": "Tip temperature used in \"boost mode\""
+      "displayText": "Kuchaytirish\nharorati",
+      "description": "\"Boost mode\" rejimida uch harorati"
     },
     "AutoStart": {
-      "displayText": "Start-up\nbehavior",
-      "description": "S=heat to soldering temp | Z=standby at sleep temp until moved | R=standby without heating until moved"
+      "displayText": "Boshlash\nholati",
+      "description": "O=o‘chgan | S=paylash temperaturasigacha qizdirish | Z=qo‘zg‘atilmagunicha uyqu rejimida ushlash | R=qo‘zg‘atilmagunicha qizdirilmagan holda ushlash"
     },
     "TempChangeShortStep": {
-      "displayText": "Temp change\nshort",
-      "description": "Temperature-change-increment on short button press"
+      "displayText": "Tugmaning qisqa\nbosilishi",
+      "description": "Qisqa bosilgandagi harorat o‘zgarishi-oshirish"
     },
     "TempChangeLongStep": {
-      "displayText": "Temp change\nlong",
-      "description": "Temperature-change-increment on long button press"
+      "displayText": "Tugmaning uzoqroq\nbosilishi",
+      "description": "Uzoqroq bosilgandagi harorat o‘zgarishi-oshirish"
     },
     "LockingMode": {
-      "displayText": "Allow locking\nbuttons",
-      "description": "While soldering, hold down both buttons to toggle locking them (B=boost mode only | F=full locking)"
+      "displayText": "Tugmalarni qulflashni\nfaollashtirish",
+      "description": "Qulflash uchun paylash davomida ikkala tugmani bosib turing (D=Nofaol | B=faqat boost mode uchun | F=to‘liq qulflash)"
     },
     "ProfilePhases": {
       "displayText": "Profile\nPhases",
