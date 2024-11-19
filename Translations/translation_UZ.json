@@ -3,85 +3,85 @@
   "languageLocalName": "English",
   "tempUnitFahrenheit": true,
   "messagesWarn": {
-    "CalibrationDone": {
-      "message": "Calibration\ndone!"
-    },
-    "ResetOKMessage": {
-      "message": "Reset OK"
-    },
-    "SettingsResetMessage": {
-      "message": "Certain settings\nchanged!"
-    },
-    "NoAccelerometerMessage": {
-      "message": "No accelerometer\ndetected!"
-    },
-    "NoPowerDeliveryMessage": {
-      "message": "No USB-PD IC\ndetected!"
-    },
-    "LockingKeysString": {
-      "message": "LOCKED"
-    },
-    "UnlockingKeysString": {
-      "message": "UNLOCKED"
-    },
-    "WarningKeysLockedString": {
-      "message": "!LOCKED!"
-    },
-    "WarningThermalRunaway": {
-      "message": "Thermal\nRunaway"
-    },
-    "WarningTipShorted": {
-      "message": "!Tip Shorted!"
-    },
-    "SettingsCalibrationWarning": {
-      "message": "Before rebooting, make sure tip & handle are at room temperature!"
-    },
-    "CJCCalibrating": {
-      "message": "calibrating\n"
-    },
-    "SettingsResetWarning": {
-      "message": "Are you sure you want to restore default settings?"
-    },
-    "UVLOWarningString": {
-      "message": "DC LOW"
-    },
-    "UndervoltageString": {
-      "message": "Undervoltage\n"
-    },
-    "InputVoltageString": {
-      "message": "Input V: \n"
-    },
-    "SleepingAdvancedString": {
-      "message": "Sleeping...\n"
-    },
-    "SleepingTipAdvancedString": {
-      "message": "Tip: \n"
-    },
-    "ProfilePreheatString": {
-      "message": "Preheat\n"
-    },
-    "ProfileCooldownString": {
-      "message": "Cooldown\n"
-    },
-    "DeviceFailedValidationWarning": {
-      "message": "Your device is most likely a counterfeit!"
-    },
-    "TooHotToStartProfileWarning": {
-      "message": "Too hot to\nstart profile"
-    }
+  "CalibrationDone": {
+    "message": "Calibration\ndone!"
+  },
+  "ResetOKMessage": {
+    "message": "Reset OK"
+  },
+  "SettingsResetMessage": {
+    "message": "Certain settings\nchanged!"
+  },
+  "NoAccelerometerMessage": {
+    "message": "No accelerometer\ndetected!"
+  },
+  "NoPowerDeliveryMessage": {
+    "message": "No USB-PD IC\ndetected!"
+  },
+  "LockingKeysString": {
+    "message": "LOCKED"
+  },
+  "UnlockingKeysString": {
+    "message": "UNLOCKED"
+  },
+  "WarningKeysLockedString": {
+    "message": "!LOCKED!"
+  },
+  "WarningThermalRunaway": {
+    "message": "Thermal\nRunaway"
+  },
+  "WarningTipShorted": {
+    "message": "!Tip Shorted!"
+  },
+  "SettingsCalibrationWarning": {
+    "message": "Before rebooting, make sure tip & handle are at room temperature!"
+  },
+  "CJCCalibrating": {
+    "message": "calibrating\n"
+  },
+  "SettingsResetWarning": {
+    "message": "Are you sure you want to restore default settings?"
+  },
+  "UVLOWarningString": {
+    "message": "DC LOW"
+  },
+  "UndervoltageString": {
+    "message": "Undervoltage\n"
+  },
+  "InputVoltageString": {
+    "message": "Input V: \n"
+  },
+  "SleepingAdvancedString": {
+    "message": "Sleeping...\n"
+  },
+  "SleepingTipAdvancedString": {
+    "message": "Tip: \n"
+  },
+  "ProfilePreheatString": {
+    "message": "Preheat\n"
+  },
+  "ProfileCooldownString": {
+    "message": "Cooldown\n"
+  },
+  "DeviceFailedValidationWarning": {
+    "message": "Your device is most likely a counterfeit!"
+  },
+  "TooHotToStartProfileWarning": {
+    "message": "Too hot to\nstart profile"
+  }
   },
   "characters": {
-    "SettingRightChar": "R",
-    "SettingLeftChar": "L",
-    "SettingAutoChar": "A",
-    "SettingSlowChar": "S",
-    "SettingMediumChar": "M",
-    "SettingFastChar": "F",
-    "SettingStartSolderingChar": "S",
-    "SettingStartSleepChar": "Z",
-    "SettingStartSleepOffChar": "R",
-    "SettingLockBoostChar": "B",
-    "SettingLockFullChar": "F"
+  "SettingRightChar": "R",
+  "SettingLeftChar": "L",
+  "SettingAutoChar": "A",
+  "SettingSlowChar": "S",
+  "SettingMediumChar": "M",
+  "SettingFastChar": "F",
+  "SettingStartSolderingChar": "S",
+  "SettingStartSleepChar": "Z",
+  "SettingStartSleepOffChar": "R",
+  "SettingLockBoostChar": "B",
+  "SettingLockFullChar": "F"
   },
   "menuGroups": {
     "PowerMenu": {
