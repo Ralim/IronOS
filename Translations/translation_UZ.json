@@ -85,23 +85,23 @@
   },
   "menuGroups": {
     "PowerMenu": {
-      "displayText": "Power\nsettings",
+      "displayText": "Quvvat\nsozlamalari",
       "description": ""
     },
     "SolderingMenu": {
-      "displayText": "Soldering\nsettings",
+      "displayText": "Paylash\nsozlamalari",
       "description": ""
     },
     "PowerSavingMenu": {
-      "displayText": "Sleep\nmode",
+      "displayText": "Uyqu\nrejimi",
       "description": ""
     },
     "UIMenu": {
-      "displayText": "User\ninterface",
+      "displayText": "Foydalanuvchi\ninterfeysi",
       "description": ""
     },
     "AdvancedMenu": {
-      "displayText": "Advanced\nsettings",
+      "displayText": "Kengaytirilgan\nsozlamalar",
       "description": ""
     }
   },
