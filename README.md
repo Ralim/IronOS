@@ -2,6 +2,7 @@
 [![Total Downloads](https://img.shields.io/github/downloads/ralim/IronOS/total)](https://github.com/Ralim/IronOS)
 [![Contributors](https://img.shields.io/github/contributors-anon/ralim/ironos?color=blue&style=flat)](https://github.com/Ralim/IronOS/graphs/contributors)
 [![Latest Release](https://img.shields.io/github/v/release/ralim/IronOS)](https://github.com/Ralim/IronOS/releases/latest)
+[![Gurubase](https://img.shields.io/badge/Gurubase-Ask%20IronOS%20Guru-006BFF)](https://gurubase.io/g/ironos)
 
 # IronOS - Open Source Flexible Firmware for Soldering Hardware
 
