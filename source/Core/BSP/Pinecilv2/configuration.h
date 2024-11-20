@@ -136,7 +136,7 @@
 #define POWER_LIMIT_STEPS          5                         //
 #define OP_AMP_GAIN_STAGE          OP_AMP_GAIN_STAGE_PINECIL // Uses TS100 resistors
 #define TEMP_uV_LOOKUP_HAKKO                                 // Use Hakko lookup table
-#define USB_PD_VMAX                28                        // Maximum voltage for PD to negotiate
+#define USB_PD_VMAX                21                        // Maximum voltage for PD to negotiate
 #define PID_TIM_HZ                 (10)                      // Tick rate of the PID loop
 #define MAX_TEMP_C                 450                       // Max soldering temp selectable °C
 #define MAX_TEMP_F                 850                       // Max soldering temp selectable °F
