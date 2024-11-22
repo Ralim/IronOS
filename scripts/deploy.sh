@@ -94,13 +94,14 @@ docs_history()
 build_langs()
 {
 	mk="../source/Makefile"
-	cd Translations/
-	langs=$(echo $(ls *.json | sed -ne 's,^translation_,,; s,\.json$,,; /[A-Z]/p' ; sed -ne 's/^ALL_LANGUAGES=//p;' ../source/Makefile) | sed 's, ,\n,g; s,\r,,g' | sort | uniq -u)
+	cd Translations/ || exit 1
+	langs="$(echo "$(find ./*.json | sed -ne 's,^\./translation_,,; s,\.json$,,; /[A-Z]/p' ; sed -ne 's/^ALL_LANGUAGES=//p;' "${mk}")" | sed 's, ,\n,g; s,\r,,g' | sort | uniq -u)"
 	ret=0
 	if [ -n "${langs}" ]; then
 		ret=1
 		echo "It seems there is mismatch between supported languages and enabled builds."
-		echo "Please, check files in Translations/ and ALL_LANGUAGES variable in source/Makefile for ${langs}"
+		echo "Please, check files in Translations/ and ALL_LANGUAGES variable in source/Makefile for:"
+		echo "${langs}"
 	fi;
 	return "${ret}"
 }
