@@ -209,7 +209,7 @@ When running the <code>make</code> command, specify which model of the device an
 <pre><code>make -j$(nproc) model=Pinecil firmware-multi_European
 </code></pre>
 <p>To build a Cyrillic compressed multi-language firmware for the Pinecil with as many simultaneous jobs as there are logical processors on macOS:</p>
-<pre><code>make -j$(sysctl -n hw.logicalcpu) model=Pinecil firmware-multi_compressed_Bulgarian+Russian+Serbian+Ukrainian
+<pre><code>make -j$(sysctl -n hw.logicalcpu) model=Pinecil firmware-multi_compressed_Belorussian+Bulgarian+Russian+Serbian+Ukrainian
 </code></pre>
 <p>To build a custom multi-language firmware including English and Simplified Chinese for the TS80:</p>
 <pre><code>make -j8 model=TS80 custom_multi_langs=&quot;EN ZH_CN&quot; firmware-multi_Custom
