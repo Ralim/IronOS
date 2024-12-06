@@ -52,6 +52,8 @@ bool i2c_probe(uint8_t addr) {
 }
 
 uint8_t FS2711::detect_i2c_bus_num() {
+  I2CBB2::probe(88);
+  I2CBB2::probe(89);
   if (I2CBB2::probe(FS2711_ADDR)) {
     I2C_PORT = 2;
   } else {
