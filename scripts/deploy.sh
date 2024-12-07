@@ -90,6 +90,20 @@ docs_history()
 	return "${ret}"
 }
 
+# Check for links to release builds in README.md
+docs_links()
+{
+	ver_git="$(git tag -l | sort | grep -e "^v" | grep -v "rc" | tail -1)"
+	md="README.md"
+	ver_md="$(grep -c "${ver_git}" "${md}")"
+	ret=0
+	if [ "${ver_md}" -ne 0 ]; then
+		ret=1
+		echo "Please, update mention & links in ${md} inside Builds section for release builds with version ${ver_git}."
+	fi;
+	return "${ret}"
+}
+
 # source/Makefile:ALL_LANGUAGES & Translations/*.json automagical routine
 build_langs()
 {
@@ -191,7 +205,9 @@ if [ "docs" = "${cmd}" ]; then
 	hist="${?}"
 	build_langs
 	langs="${?}"
-	if [ "${readme}" -eq 0 ] && [ "${hist}" -eq 0 ] && [ "${langs}" -eq 0 ]; then
+	docs_links
+	links="${?}"
+	if [ "${readme}" -eq 0 ] && [ "${hist}" -eq 0 ] && [ "${langs}" -eq 0 ] && [ "${links}" -eq 0 ]; then
 		ret=0
 	else
 		ret=1
@@ -215,6 +231,11 @@ fi;
 
 if [ "build_langs" = "${cmd}" ]; then
 	build_langs
+	exit "${?}"
+fi;
+
+if [ "docs_links" = "${cmd}" ]; then
+	docs_links
 	exit "${?}"
 fi;
 
