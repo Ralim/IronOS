@@ -30,7 +30,7 @@ int32_t                    powerSupplyWattageLimit = 0;
 bool                       heaterThermalRunaway    = false;
 
 static int32_t getPIDResultX10Watts(TemperatureType_t set_point, TemperatureType_t current_value);
-static void detectThermalRunaway(const TemperatureType_t currentTipTempInC, const uint32_t x10WattsOut) ;
+static void    detectThermalRunaway(const TemperatureType_t currentTipTempInC, const uint32_t x10WattsOut);
 static void    setOutputx10WattsViaFilters(int32_t x10Watts);
 static int32_t getX10WattageLimits();
 
@@ -93,7 +93,7 @@ void startPIDTask(void const *argument __unused) {
         }
 
         x10WattsOut = getPIDResultX10Watts(PIDTempTarget, currentTipTempInC);
-        detectThermalRunaway(currentTipTempInC,x10WattsOut);
+        detectThermalRunaway(currentTipTempInC, x10WattsOut);
       } else {
         detectThermalRunaway(currentTipTempInC, 0);
       }
