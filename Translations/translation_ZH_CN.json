@@ -46,10 +46,10 @@
       "message": "电压过低"
     },
     "UndervoltageString": {
-      "message": "Undervoltage"
+      "message": "Undervoltage\n"
     },
     "InputVoltageString": {
-      "message": "VIN: "
+      "message": "VIN: \n"
     },
     "SleepingAdvancedString": {
       "message": "Zzzz..."
