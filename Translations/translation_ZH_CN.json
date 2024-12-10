@@ -152,7 +152,7 @@
       "description": "设定USB-PD协议交涉的超时时限；为兼容某些QC电源而设 <x100ms（亳秒）>"
     },
     "USBPDMode": {
-      "displayText": "PD VPDO",
+      "displayText": "PD\nVPDO",
       "description": "启用PPS和EPR快充支持"
     },
     "BoostTemperature": {
