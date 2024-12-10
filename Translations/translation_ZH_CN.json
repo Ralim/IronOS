@@ -316,7 +316,7 @@
       "description": "在下次重启时校正烙铁头热电偶冷接点补偿值（CJC）（温差小于5摄氏度时无需校正）"
     },
     "VoltageCalibration": {
-      "displayText": "输入电压校正？",
+      "displayText": "输入电压校正",
       "description": "开始校正输入电压（VIN）<长按以退出>"
     },
     "PowerPulsePower": {
@@ -332,7 +332,7 @@
       "description": "为保持电源处于唤醒状态，每次通电脉冲的时间长度 <x250ms（亳秒）>"
     },
     "SettingsReset": {
-      "displayText": "全部重置？",
+      "displayText": "全部重置",
       "description": "将所有设定重置为默认值"
     },
     "LanguageSwitch": {
