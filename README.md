@@ -69,7 +69,7 @@ The links in the table below allow to download available builds directly.
 Current stable release is `v2.22`.  
 _Devel builds_ **dynamically** provide _**the latest successful build**_ from **`dev`** branch.
 
-|        Device         | Stable Release | Devel Build |
+|        Device         | Stable Release | Development Build |
 |:---------------------:|:--------------:|:-----------:|
 | Pinecil  V1           | [Pinecil.zip](https://github.com/Ralim/IronOS/releases/download/v2.22/Pinecil.zip)                           | [Pinecil.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/Pinecil.zip)                           |
 | Pinecil  V1/multilang | [Pinecil_multi-lang.zip](https://github.com/Ralim/IronOS/releases/download/v2.22/Pinecil_multi-lang.zip)     | [Pinecil_multi-lang.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/Pinecil_multi-lang.zip)     |
