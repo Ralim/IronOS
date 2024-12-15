@@ -67,7 +67,7 @@ For notes on installation for your device, please refer to the flashing guide fo
 The links in the table below allow to download available builds directly.
 
 Current stable release is `v2.22`.  
-_Development builds_ **dynamically** provide _**the latest successful build**_ from **`dev`** branch.
+_Development Build_ **dynamically** provides _**the latest successful build**_ from **`dev`** branch.
 
 |        Device         | Stable Release | Development Build |
 |:---------------------:|:--------------:|:-----------------:|
