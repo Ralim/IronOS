@@ -64,13 +64,12 @@ For notes on installation for your device, please refer to the flashing guide fo
 
 ## Builds
 
-The links in the table below allow to download available builds directly.
-
-Current stable release is `v2.22`.  
-_Devel builds_ **dynamically** provide _**the latest successful build**_ from **`dev`** branch.
+The links in the table below allow to download available builds directly:
+- current _Stable Release_ is **`v2.22`**;
+- _Development Build_ **dynamically** provides _**the latest successful build**_ from **`dev`** branch.
 
 |        Device         | Stable Release | Development Build |
-|:---------------------:|:--------------:|:-----------:|
+|:---------------------:|:--------------:|:-----------------:|
 | Pinecil  V1           | [Pinecil.zip](https://github.com/Ralim/IronOS/releases/download/v2.22/Pinecil.zip)                           | [Pinecil.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/Pinecil.zip)                           |
 | Pinecil  V1/multilang | [Pinecil_multi-lang.zip](https://github.com/Ralim/IronOS/releases/download/v2.22/Pinecil_multi-lang.zip)     | [Pinecil_multi-lang.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/Pinecil_multi-lang.zip)     |
 | Pinecil  V2           | [PinecilV2.zip](https://github.com/Ralim/IronOS/releases/download/v2.22/PinecilV2.zip)                       | [PinecilV2.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/Pinecilv2.zip)                       |
