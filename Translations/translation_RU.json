@@ -116,19 +116,19 @@
       "displayText": "Вкл.без\nзапроса"
     },
     "TipTypeAuto": {
-      "displayText": "Auto\nSense"
+      "displayText": "Авто\nопред-е"
     },
     "TipTypeT12Long": {
-      "displayText": "TS100\nLong"
+      "displayText": "TS100\nстанд."
     },
     "TipTypeT12Short": {
-      "displayText": "Pine\nShort"
+      "displayText": "Pine\nкоротк."
     },
     "TipTypeT12PTS": {
       "displayText": "PTS\n200"
     },
     "TipTypeTS80": {
-      "displayText": "TS80\n"
+      "displayText": "TS80(P)\n"
     },
     "TipTypeJBCC210": {
       "displayText": "JBC\nC210"
@@ -252,8 +252,8 @@
       "description": "Чувствительность датчика Холла к магнитному полю (1=мин. | ... | 9=макс.)"
     },
     "HallEffSleepTimeout": {
-      "displayText": "HallSensor\nSleepTime",
-      "description": "Интервал перед запуском \"спящего режима\", когда эффект Холла превышает пороговое значение"
+      "displayText": "Интервал\nдатчика Холла",
+      "description": "Время между превышением датчиком Холла порогового значения и режимом сна"
     },
     "TemperatureUnit": {
       "displayText": "Единицы\nизмерения",
@@ -340,8 +340,8 @@
       "description": ""
     },
     "SolderingTipType": {
-      "displayText": "Soldering\nTip Type",
-      "description": "Select the tip type fitted"
+      "displayText": "Тип\nжала",
+      "description": "Выбор типа установленного жала"
     }
   }
 }
