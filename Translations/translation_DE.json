@@ -340,7 +340,7 @@
       "description": ""
     },
     "SolderingTipType": {
-      "displayText": "Lötspitzentyp",
+      "displayText": "Löt-\nspitzentyp",
       "description": "Wählen Sie den Typ der eingesetzten Spitze"
     }
   }
