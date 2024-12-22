@@ -39,7 +39,7 @@ The model should be replaced by one of the following options:
 - `pinecilv1` for the Pinecil V1
 - `pinecilv2` for the Pinecil V2
 - `ts101` for the Miniware TS101 [^1] [^2]
-- `s60` for the Squire S60 [^1]
+- `s60` for the Sequre S60 [^1]
 - `mhp30` for the Miniware MHP30
 
 Different models are used for different flash locations for the image storage.
