@@ -133,7 +133,7 @@
 #define TEMP_uV_LOOKUP_S60
 #define USB_PD_VMAX              12 // Maximum voltage for PD to negotiate
 #define THERMAL_RUNAWAY_TIME_SEC 20
-#define THERMAL_RUNAWAY_TEMP_C   10
+#define THERMAL_RUNAWAY_TEMP_C   3
 
 #define HARDWARE_MAX_WATTAGE_X10 600
 
@@ -167,7 +167,7 @@
 #define TEMP_uV_LOOKUP_S60
 #define USB_PD_VMAX              20 // Maximum voltage for PD to negotiate
 #define THERMAL_RUNAWAY_TIME_SEC 20
-#define THERMAL_RUNAWAY_TEMP_C   10
+#define THERMAL_RUNAWAY_TEMP_C   3
 
 #define HARDWARE_MAX_WATTAGE_X10 600
 
@@ -218,8 +218,8 @@
 
 #define TIP_THERMAL_MASS         30 // X10 watts to raise 1 deg C in 1 second
 #define TIP_THERMAL_INERTIA      10 // We use a large inertia value to smooth out the drive to the tip since its stupidly sensitive
-#define THERMAL_RUNAWAY_TIME_SEC 60
-#define THERMAL_RUNAWAY_TEMP_C   3
+#define THERMAL_RUNAWAY_TIME_SEC 30
+#define THERMAL_RUNAWAY_TEMP_C   2
 
 #define COPPER_HEATER_COIL 1  // Have a heater coil that changes resistance on us
 #define TIP_RESISTANCE     52 // PCB heater, measured at ~19C. Will shift by temp a decent amount
