@@ -388,8 +388,8 @@ uint8_t getTipResistanceX10() {
     return lastTipResistance; // Auto mode
   }
   return user_selected_tip;
-#else
 
+#else
   uint8_t user_selected_tip = getUserSelectedTipResistance();
   if (user_selected_tip == 0) {
     return TIP_RESISTANCE; // Auto mode
