@@ -379,8 +379,6 @@ uint8_t preStartChecksDone() {
 #endif
 }
 
-#ifdef TIP_TYPE_SUPPORT
-// new version for models supporting tips of different length/resistance
 uint8_t getTipResistanceX10() {
 #ifdef TIP_RESISTANCE_SENSE_Pin
   // Return tip resistance in x10 ohms
@@ -398,17 +396,6 @@ uint8_t getTipResistanceX10() {
   return user_selected_tip;
 #endif
 }
-#else /* no tip type support: legacy version */
-uint8_t getTipResistanceX10() {
-#ifdef TIP_RESISTANCE_SENSE_Pin
-  // Return tip resistance in x10 ohms
-  // We can measure this using the op-amp
-  return lastTipResistance;
-#else
-  return TIP_RESISTANCE;
-#endif
-}
-#endif /* TIP_TYPE_SUPPORT */
 
 #ifdef TIP_RESISTANCE_SENSE_Pin
 bool isTipShorted() { return tipShorted; }

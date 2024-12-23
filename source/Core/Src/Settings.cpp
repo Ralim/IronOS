@@ -374,4 +374,6 @@ uint8_t getUserSelectedTipResistance() {
     break;
   }
 }
+#else
+uint8_t getUserSelectedTipResistance() { return tipType_t::TIP_TYPE_AUTO; }
 #endif /* TIP_TYPE_SUPPORT */

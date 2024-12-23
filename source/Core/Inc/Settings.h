@@ -143,10 +143,15 @@ typedef enum {
   // #endif
   TIP_TYPE_MAX, // Max value marker
 } tipType_t;
-uint8_t getUserSelectedTipResistance(); // returns the resistance matching the selected tip type or 0 for auto
 #else
-typedef enum { TIP_TYPE_MAX = 0 } tipType_t;
+typedef enum {
+  TIP_TYPE_AUTO = 0, // value for the default case
+  TIP_TYPE_MAX  = 0, // marker for settings when not supported
+} tipType_t;
 #endif /* TIP_TYPE_SUPPORT */
+
+// returns the resistance matching the selected tip type or 0 for auto and when not supported
+uint8_t getUserSelectedTipResistance();
 
 // Settings wide operations
 void saveSettings();
