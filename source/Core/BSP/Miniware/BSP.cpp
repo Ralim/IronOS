@@ -389,6 +389,7 @@ uint8_t getTipResistanceX10() {
   }
   return user_selected_tip;
 #else
+
   uint8_t user_selected_tip = getUserSelectedTipResistance();
   if (user_selected_tip == 0) {
     return TIP_RESISTANCE; // Auto mode
@@ -396,7 +397,6 @@ uint8_t getTipResistanceX10() {
   return user_selected_tip;
 #endif
 }
-
 #ifdef TIP_RESISTANCE_SENSE_Pin
 bool isTipShorted() { return tipShorted; }
 #else
