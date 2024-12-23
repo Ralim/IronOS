@@ -218,6 +218,7 @@
 #define TEMP_NTC             1
 #define ACCEL_I2CBB1         1
 #define POW_EPR              1
+#define TIP_TYPE_SUPPORT     1 // Support for tips of different types, i.e. resistance
 #define AUTO_TIP_SELECTION   1 // Can auto-select the tip
 #define TIPTYPE_T12          1 // Can manually pick a T12 tip
 #define HAS_POWER_DEBUG_MENU
