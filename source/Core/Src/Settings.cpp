@@ -298,6 +298,7 @@ uint8_t lookupVoltageLevel() {
   }
 }
 
+#ifdef TIP_TYPE_SUPPORT
 const char *lookupTipName() {
   // Get the name string for the current soldering tip
   tipType_t value = (tipType_t)getSettingValue(SettingsOptions::SolderingTipType);
@@ -334,7 +335,10 @@ const char *lookupTipName() {
     break;
   }
 }
+#endif /* TIP_TYPE_SUPPORT */
+
 // Returns the resistance for the current tip selected by the user or 0 for auto
+#ifdef TIP_TYPE_SUPPORT
 uint8_t getUserSelectedTipResistance() {
   tipType_t value = (tipType_t)getSettingValue(SettingsOptions::SolderingTipType);
 
@@ -370,3 +374,6 @@ uint8_t getUserSelectedTipResistance() {
     break;
   }
 }
+#else
+uint8_t getUserSelectedTipResistance() { return tipType_t::TIP_TYPE_AUTO; }
+#endif /* TIP_TYPE_SUPPORT */
