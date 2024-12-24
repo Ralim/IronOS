@@ -304,11 +304,6 @@ const char *lookupTipName() {
   tipType_t value = (tipType_t)getSettingValue(SettingsOptions::SolderingTipType);
 
   switch (value) {
-#ifdef AUTO_TIP_SELECTION
-  case tipType_t::TIP_TYPE_AUTO:
-    return translatedString(Tr->TipTypeAuto);
-    break;
-#endif
 #ifdef TIPTYPE_T12
   case tipType_t::T12_8_OHM:
     return translatedString(Tr->TipTypeT12Long);
@@ -320,7 +315,7 @@ const char *lookupTipName() {
     return translatedString(Tr->TipTypeT12PTS);
     break;
 #endif
-#ifdef TIPTYE_TS80
+#ifdef TIPTYPE_TS80
   case tipType_t::TS80_4_5_OHM:
     return translatedString(Tr->TipTypeTS80);
     break;
@@ -330,8 +325,11 @@ const char *lookupTipName() {
     return translatedString(Tr->TipTypeJBCC210);
     break;
 #endif
+#ifdef AUTO_TIP_SELECTION
+  case tipType_t::TIP_TYPE_AUTO:
+#endif
   default:
-    return nullptr;
+    return translatedString(Tr->TipTypeAuto);
     break;
   }
 }
