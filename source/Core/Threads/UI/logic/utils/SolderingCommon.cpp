@@ -39,6 +39,8 @@ bool checkExitSoldering(void) {
   }
 #endif
 
+  // If we have tripped thermal runaway, turn off heater and show warning
+
   return false;
 }
 
