@@ -46,10 +46,10 @@
       "message": "电压过低"
     },
     "UndervoltageString": {
-      "message": "Undervoltage"
+      "message": "欠压"
     },
     "InputVoltageString": {
-      "message": "VIN: "
+      "message": "VIN: \n"
     },
     "SleepingAdvancedString": {
       "message": "Zzzz..."
@@ -58,16 +58,16 @@
       "message": "<--- "
     },
     "ProfilePreheatString": {
-      "message": "Preheat"
+      "message": "预热中"
     },
     "ProfileCooldownString": {
-      "message": "Cooldown"
+      "message": "冷却"
     },
     "DeviceFailedValidationWarning": {
       "message": "这支电烙铁很有可能是冒牌货！"
     },
     "TooHotToStartProfileWarning": {
-      "message": "Too hot to start profile"
+      "message": "设备过热"
     }
   },
   "characters": {
@@ -107,16 +107,16 @@
   },
   "menuValues": {
     "USBPDModeDefault": {
-      "displayText": "Default\nMode"
+      "displayText": "默认模式"
     },
     "USBPDModeNoDynamic": {
       "displayText": "No\nDynamic"
     },
     "USBPDModeSafe": {
-      "displayText": "Safe\nMode"
+      "displayText": "安全模式"
     },
     "TipTypeAuto": {
-      "displayText": "Auto\nSense"
+      "displayText": "自动检测"
     },
     "TipTypeT12Long": {
       "displayText": "TS100\nLong"
@@ -152,7 +152,7 @@
       "description": "设定USB-PD协议交涉的超时时限；为兼容某些QC电源而设 <x100ms（亳秒）>"
     },
     "USBPDMode": {
-      "displayText": "PD VPDO",
+      "displayText": "PD\nVPDO",
       "description": "启用PPS和EPR快充支持"
     },
     "BoostTemperature": {
@@ -176,60 +176,60 @@
       "description": "焊接模式时，同时长按两个按键启用按键锁定 <增=只容许增热模式 | 全=完全锁定>"
     },
     "ProfilePhases": {
-      "displayText": "Profile Phases",
-      "description": "Number of phases in profile mode"
+      "displayText": "配置阶数",
+      "description": "配置模式下的阶段数量"
     },
     "ProfilePreheatTemp": {
-      "displayText": "Preheat Temp",
-      "description": "Preheat to this temperature at the start of profile mode"
+      "displayText": "预热温度",
+      "description": "配置开始时的目标温度"
     },
     "ProfilePreheatSpeed": {
-      "displayText": "Preheat Speed",
-      "description": "Preheat at this rate (degrees per second)"
+      "displayText": "预热速度",
+      "description": "将以此速度进行预热 (度/秒)"
     },
     "ProfilePhase1Temp": {
-      "displayText": "Phase 1 Temp",
-      "description": "Target temperature for the end of this phase"
+      "displayText": "阶段1温度",
+      "description": "此阶段结束时的目标温度"
     },
     "ProfilePhase1Duration": {
-      "displayText": "Phase 1 Duration",
-      "description": "Target duration of this phase (seconds)"
+      "displayText": "阶段1时间",
+      "description": "此阶段的目标持续时间（秒）"
     },
     "ProfilePhase2Temp": {
-      "displayText": "Phase 2 Temp",
-      "description": ""
+      "displayText": "阶段2温度",
+      "description": "此阶段结束时的目标温度"
     },
     "ProfilePhase2Duration": {
-      "displayText": "Phase 2 Duration",
-      "description": ""
+      "displayText": "阶段2时间",
+      "description": "此阶段的目标持续时间（秒）"
     },
     "ProfilePhase3Temp": {
-      "displayText": "Phase 3 Temp",
-      "description": ""
+      "displayText": "阶段3温度",
+      "description": "此阶段结束时的目标温度"
     },
     "ProfilePhase3Duration": {
-      "displayText": "Phase 3 Duration",
-      "description": ""
+      "displayText": "阶段3时间",
+      "description": "此阶段的目标持续时间（秒）"
     },
     "ProfilePhase4Temp": {
-      "displayText": "Phase 4 Temp",
-      "description": ""
+      "displayText": "阶段4温度",
+      "description": "此阶段结束时的目标温度"
     },
     "ProfilePhase4Duration": {
-      "displayText": "Phase 4 Duration",
-      "description": ""
+      "displayText": "阶段4时间",
+      "description": "此阶段的目标持续时间（秒）"
     },
     "ProfilePhase5Temp": {
-      "displayText": "Phase 5 Temp",
-      "description": ""
+      "displayText": "阶段5温度",
+      "description": "此阶段结束时的目标温度"
     },
     "ProfilePhase5Duration": {
-      "displayText": "Phase 5 Duration",
-      "description": ""
+      "displayText": "阶段5时间",
+      "description": "此阶段的目标持续时间（秒）"
     },
     "ProfileCooldownSpeed": {
-      "displayText": "Cooldown Speed",
-      "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
+      "displayText": "冷却速度",
+      "description": "在配置模式结束时以此速度进行冷却（度/秒）"
     },
     "MotionSensitivity": {
       "displayText": "动作灵敏度",
@@ -252,8 +252,8 @@
       "description": "霍尔效应传感器用作启动待机模式的灵敏度 <1=最低灵敏度 | ... | 9=最高灵敏度>"
     },
     "HallEffSleepTimeout": {
-      "displayText": "HallSensor\nSleepTime",
-      "description": "Interval before \"sleep mode\" starts when hall effect is above threshold"
+      "displayText": "霍尔传感器休眠时间",
+      "description": "当霍尔传感器检测值高于阈值时，进入“睡眠模式”前的间隔时间"
     },
     "TemperatureUnit": {
       "displayText": "温度单位",
@@ -316,7 +316,7 @@
       "description": "在下次重启时校正烙铁头热电偶冷接点补偿值（CJC）（温差小于5摄氏度时无需校正）"
     },
     "VoltageCalibration": {
-      "displayText": "输入电压校正？",
+      "displayText": "输入电压校正",
       "description": "开始校正输入电压（VIN）<长按以退出>"
     },
     "PowerPulsePower": {
@@ -332,7 +332,7 @@
       "description": "为保持电源处于唤醒状态，每次通电脉冲的时间长度 <x250ms（亳秒）>"
     },
     "SettingsReset": {
-      "displayText": "全部重置？",
+      "displayText": "全部重置",
       "description": "将所有设定重置为默认值"
     },
     "LanguageSwitch": {
@@ -340,8 +340,8 @@
       "description": ""
     },
     "SolderingTipType": {
-      "displayText": "Soldering\nTip Type",
-      "description": "Select the tip type fitted"
+      "displayText": "焊接头类型",
+      "description": "选择安装合适的尖端类型"
     }
   }
 }

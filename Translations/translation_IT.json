@@ -116,13 +116,13 @@
       "displayText": "Modalità\nsicura"
     },
     "TipTypeAuto": {
-      "displayText": "Auto\nSense"
+      "displayText": "Rilevaz.\nauto"
     },
     "TipTypeT12Long": {
-      "displayText": "TS100\nLong"
+      "displayText": "TS100\nlunga"
     },
     "TipTypeT12Short": {
-      "displayText": "Pine\nShort"
+      "displayText": "Pine\ncorta"
     },
     "TipTypeT12PTS": {
       "displayText": "PTS\n200"
@@ -149,7 +149,7 @@
     },
     "PDNegTimeout": {
       "displayText": "Abilitazione\nUSB PD",
-      "description": "Regola il massimo tempo utile per la negoziazione del protocollo USB Power Delivery con alimentatori compatibili [0: disattiva; multipli di 100 ms]"
+      "description": "Imposta il tempo di negoziazione del protocollo USB Power Delivery con alimentatori compatibili [0: disattiva; multipli di 100 ms]"
     },
     "USBPDMode": {
       "displayText": "PD\nMode",
@@ -177,7 +177,7 @@
     },
     "ProfilePhases": {
       "displayText": "Fasi modalità\nprofilo",
-      "description": "Imposta il numero di fasi da attuare per un profilo di riscaldamento personalizzato"
+      "description": "Imposta il numero di fasi da implementare per un profilo di riscaldamento personalizzato"
     },
     "ProfilePreheatTemp": {
       "displayText": "Temperatura\npreriscaldamento",
@@ -340,8 +340,8 @@
       "description": ""
     },
     "SolderingTipType": {
-      "displayText": "Soldering\nTip Type",
-      "description": "Select the tip type fitted"
+      "displayText": "Tipo di\npunta",
+      "description": "Seleziona il modello della punta in uso"
     }
   }
 }

@@ -105,7 +105,7 @@
 #define DETAILED_IDLE      0 // 0: Disable 1: Enable - Default 0
 
 #define THERMAL_RUNAWAY_TIME_SEC 20
-#define THERMAL_RUNAWAY_TEMP_C   20
+#define THERMAL_RUNAWAY_TEMP_C   3
 
 #define CUT_OUT_SETTING          0  // default to no cut-off voltage
 #define RECOM_VOL_CELL           33 // Minimum voltage per cell (Recommended 3.3V (33))
@@ -155,6 +155,7 @@
 #define POW_EPR                    1
 #define ENABLE_QC2                 1
 #define MAG_SLEEP_SUPPORT          1
+#define TIP_TYPE_SUPPORT           1 // Support for tips of different types, i.e. resistance
 #define AUTO_TIP_SELECTION         1 // Can auto-select the tip
 #define TIPTYPE_T12                1 // Can manually pick a T12 tip
 #define DEVICE_HAS_VALIDATION_SUPPORT

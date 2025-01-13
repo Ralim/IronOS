@@ -123,6 +123,7 @@ typedef enum {
  * Some devices allow multiple types of tips to be fitted, this allows selecting them or overriding the logic
  * The first type will be the default (gets value of 0)
  */
+#ifdef TIP_TYPE_SUPPORT
 typedef enum {
 #ifdef AUTO_TIP_SELECTION
   TIP_TYPE_AUTO, // If the hardware supports automatic detection
@@ -142,7 +143,15 @@ typedef enum {
   // #endif
   TIP_TYPE_MAX, // Max value marker
 } tipType_t;
-uint8_t getUserSelectedTipResistance(); // returns the resistance matching the selected tip type or 0 for auto
+#else
+typedef enum {
+  TIP_TYPE_AUTO = 0, // value for the default case
+  TIP_TYPE_MAX  = 0, // marker for settings when not supported
+} tipType_t;
+#endif /* TIP_TYPE_SUPPORT */
+
+// returns the resistance matching the selected tip type or 0 for auto and when not supported
+uint8_t getUserSelectedTipResistance();
 
 // Settings wide operations
 void saveSettings();
@@ -162,5 +171,7 @@ void setSettingValue(const enum SettingsOptions option, const uint16_t newValue)
 // Special access helpers, to reduce logic duplication
 uint8_t     lookupVoltageLevel();
 uint16_t    lookupHallEffectThreshold();
+#ifdef TIP_TYPE_SUPPORT
 const char *lookupTipName(); // Get the name string for the current soldering tip
+#endif /* TIP_TYPE_SUPPORT */
 #endif                       /* SETTINGS_H_ */

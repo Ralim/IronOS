@@ -4,7 +4,7 @@
   "tempUnitFahrenheit": false,
   "messagesWarn": {
     "CalibrationDone": {
-      "message": "Kalibracja\nwykonana!"
+      "message": "Skalibrowano!"
     },
     "ResetOKMessage": {
       "message": "Reset OK"
@@ -19,7 +19,7 @@
       "message": "Nie rozpoznano\nkont. USB-PD IC!"
     },
     "LockingKeysString": {
-      "message": " ZABLOK."
+      "message": "ZABLOK."
     },
     "UnlockingKeysString": {
       "message": "ODBLOK."
@@ -31,7 +31,7 @@
       "message": "Ucieczka\ntermiczna"
     },
     "WarningTipShorted": {
-      "message": "!Tip Shorted!"
+      "message": "!Zwarty grot!"
     },
     "SettingsCalibrationWarning": {
       "message": "Upewnij się, że końcówka i uchwyt mają temperaturę pokojową podczas następnego rozruchu!"
@@ -58,16 +58,16 @@
       "message": "Grot: \n"
     },
     "ProfilePreheatString": {
-      "message": "Preheat\n"
+      "message": "Rozgrzewanie\n"
     },
     "ProfileCooldownString": {
-      "message": "Cooldown\n"
+      "message": "Schładzanie\n"
     },
     "DeviceFailedValidationWarning": {
       "message": "Twoje urządzenie jest najprawdopodobniej podróbką!"
     },
     "TooHotToStartProfileWarning": {
-      "message": "Too hot to\nstart profile"
+      "message": "Zbyt gorące, aby\nuruchomić profil"
     }
   },
   "characters": {
@@ -107,22 +107,22 @@
   },
   "menuValues": {
     "USBPDModeDefault": {
-      "displayText": "Default\nMode"
+      "displayText": "Tryb\ndomyślny"
     },
     "USBPDModeNoDynamic": {
-      "displayText": "No\nDynamic"
+      "displayText": "Nie\ndynamiczny"
     },
     "USBPDModeSafe": {
-      "displayText": "Safe\nMode"
+      "displayText": "Tryb\nbezpieczny"
     },
     "TipTypeAuto": {
-      "displayText": "Auto\nSense"
+      "displayText": "Auto\nwykrycie"
     },
     "TipTypeT12Long": {
-      "displayText": "TS100\nLong"
+      "displayText": "Długi\nTS100"
     },
     "TipTypeT12Short": {
-      "displayText": "Pine\nShort"
+      "displayText": "Krótki\nPine"
     },
     "TipTypeT12PTS": {
       "displayText": "PTS\n200"
@@ -137,27 +137,27 @@
   "menuOptions": {
     "DCInCutoff": {
       "displayText": "Źródło\nzasilania",
-      "description": "Źródło zasilania. Ustaw napięcie odcięcia. (DC 10V) (S 3.3V dla ogniw Li, wyłącz limit mocy)"
+      "description": "Źródło zasilania. Ustaw napięcie odcięcia. (DC 10V) (S=3.3V dla ogniw Li, wyłącz limit mocy)"
     },
     "MinVolCell": {
       "displayText": "Minimalne\nnapięcie",
       "description": "Minimalne dozwolone napięcie na komórkę (3S: 3 - 3,7V | 4-6S: 2,4 - 3,7V)"
     },
     "QCMaxVoltage": {
-      "displayText": "QC\nnapięcie",
+      "displayText": "Napięcie QC",
       "description": "Maksymalne napięcie, które lutownica będzie próbowała wynegocjować z ładowarką Quick Charge (V)"
     },
     "PDNegTimeout": {
       "displayText": "Limit czasu\nPD",
-      "description": "Limit czasu negocjacji PD w krokach co 100 ms dla zgodności z niektórymi ładowarkami QC (0: wyłączone)"
+      "description": "Limit czasu negocjacji PD w krokach co 100ms dla zgodności z niektórymi ładowarkami QC (0: wyłączone)"
     },
     "USBPDMode": {
-      "displayText": "PD\nMode",
+      "displayText": "Tryb PD",
       "description": "Włącza tryby PPS & EPR."
     },
     "BoostTemperature": {
       "displayText": "Temp.\nboost",
-      "description": "Temperatura w trybie \"boost\" "
+      "description": "Temp. w trybie \"boost\" "
     },
     "AutoStart": {
       "displayText": "Aut. uruch.\ntr. lutowania",
@@ -176,60 +176,60 @@
       "description": "W trybie lutowania, wciśnij oba przyciski aby je zablokować (B=tylko Boost | P=pełna blokada)"
     },
     "ProfilePhases": {
-      "displayText": "Profile\nPhases",
-      "description": "Number of phases in profile mode"
+      "displayText": "Fazy\nprofilu",
+      "description": "Liczba faz w trybie profilu"
     },
     "ProfilePreheatTemp": {
-      "displayText": "Preheat\nTemp",
-      "description": "Preheat to this temperature at the start of profile mode"
+      "displayText": "Temp.\nrozgrzewania",
+      "description": "Rozgrzanie do tej temp. na początku trybu profilu"
     },
     "ProfilePreheatSpeed": {
-      "displayText": "Preheat\nSpeed",
-      "description": "Preheat at this rate (degrees per second)"
+      "displayText": "Prędk.\nrozgrzewania",
+      "description": "Tempo rozgrzewania (stopnie na sekundę)"
     },
     "ProfilePhase1Temp": {
-      "displayText": "Phase 1\nTemp",
-      "description": "Target temperature for the end of this phase"
+      "displayText": "Temp.\nfazy 1",
+      "description": "Docelowa temp. na koniec tej fazy"
     },
     "ProfilePhase1Duration": {
-      "displayText": "Phase 1\nDuration",
-      "description": "Target duration of this phase (seconds)"
+      "displayText": "Dług.\nfazy 1",
+      "description": "Docelowy czas trwania tej fazy (sekundy)"
     },
     "ProfilePhase2Temp": {
-      "displayText": "Phase 2\nTemp",
+      "displayText": "Temp.\nfazy 2",
       "description": ""
     },
     "ProfilePhase2Duration": {
-      "displayText": "Phase 2\nDuration",
+      "displayText": "Dług.\nfazy 2",
       "description": ""
     },
     "ProfilePhase3Temp": {
-      "displayText": "Phase 3\nTemp",
+      "displayText": "Temp.\nfazy 3",
       "description": ""
     },
     "ProfilePhase3Duration": {
-      "displayText": "Phase 3\nDuration",
+      "displayText": "Dług.\nfazy 3",
       "description": ""
     },
     "ProfilePhase4Temp": {
-      "displayText": "Phase 4\nTemp",
+      "displayText": "Temp.\nfazy 4",
       "description": ""
     },
     "ProfilePhase4Duration": {
-      "displayText": "Phase 4\nDuration",
+      "displayText": "Dług.\nfazy 4",
       "description": ""
     },
     "ProfilePhase5Temp": {
-      "displayText": "Phase 5\nTemp",
+      "displayText": "Temp.\nfazy 5",
       "description": ""
     },
     "ProfilePhase5Duration": {
-      "displayText": "Phase 5\nDuration",
+      "displayText": "Dług.\nfazy 5",
       "description": ""
     },
     "ProfileCooldownSpeed": {
-      "displayText": "Cooldown\nSpeed",
-      "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
+      "displayText": "Prędk.\nschładzania",
+      "description": "Tempo schładzania na koniec trybu profilu (stopnie na sekundę)"
     },
     "MotionSensitivity": {
       "displayText": "Czułość\nwykr. ruchu",
@@ -264,8 +264,8 @@
       "description": "Obrót ekranu (P: dla praworęcznych | L: dla leworęcznych | A: automatycznie)"
     },
     "CooldownBlink": {
-      "displayText": "Mig. podczas\nwychładzania",
-      "description": "Temperatura miga podczas wychładzania, gdy grot jest wciąż gorący"
+      "displayText": "Mig. podczas\nschładzania",
+      "description": "Temperatura miga podczas schładzania, gdy grot jest wciąż gorący"
     },
     "ScrollingSpeed": {
       "displayText": "Sz. przew.\ntekstu",
@@ -296,7 +296,7 @@
       "description": "Ustawia czas wyświetlania loga podczas uruchamiania (s=sekund)"
     },
     "AdvancedIdle": {
-      "displayText": "Szeczegółowy\nekran bezczy.",
+      "displayText": "Szczegółowy\nekran bezczyn.",
       "description": "Wyświetla szczegółowe informacje za pomocą mniejszej czcionki na ekranie bezczynności"
     },
     "AdvancedSoldering": {
@@ -305,7 +305,7 @@
     },
     "BluetoothLE": {
       "displayText": "Bluetooth\n",
-      "description": "Enables BLE"
+      "description": "Włącza Bluetooth Low Energy"
     },
     "PowerLimit": {
       "displayText": "Ogr.\nmocy",
@@ -340,8 +340,8 @@
       "description": ""
     },
     "SolderingTipType": {
-      "displayText": "Soldering\nTip Type",
-      "description": "Select the tip type fitted"
+      "displayText": "Typ grotu",
+      "description": "Wybierz typ zamontowanego grotu"
     }
   }
 }

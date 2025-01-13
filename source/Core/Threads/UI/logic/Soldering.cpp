@@ -138,9 +138,7 @@ OperatingMode gui_solderingMode(const ButtonState buttons, guiContext *cxt) {
 
   // Draw in the screen details
   if (getSettingValue(SettingsOptions::DetailedSoldering)) {
-
     ui_draw_soldering_power_status(cxt->scratch_state.state2);
-
   } else {
     ui_draw_soldering_basic_status(cxt->scratch_state.state2);
   }

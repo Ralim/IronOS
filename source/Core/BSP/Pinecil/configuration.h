@@ -104,7 +104,7 @@
 #define DETAILED_IDLE      0 // 0: Disable 1: Enable - Default 0
 
 #define THERMAL_RUNAWAY_TIME_SEC 20
-#define THERMAL_RUNAWAY_TEMP_C   20
+#define THERMAL_RUNAWAY_TEMP_C   3
 
 #define CUT_OUT_SETTING          0  // default to no cut-off voltage
 #define RECOM_VOL_CELL           33 // Minimum voltage per cell (Recommended 3.3V (33))
