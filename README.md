@@ -127,7 +127,7 @@ After powering on the device for the first time with _IronOS_ installed and havi
 - pressing the `+/A` button enters the _soldering mode_;
 - pressing the `-/B` button enters the _settings menu_;
 - in _soldering mode_:
-  - short press of `+/A` / `-/B` buttons changes the soldering temperature;
+  - short press of the `-/B` button changes the soldering temperature;
   - long press of the `+/A` button enables _boost mode_ (increasing soldering temperature to the adjustable setting as long as the button is pressed);
   - long press of the `-/B` button enters _standby mode_ and stops heating;
 - in _standby mode_:
