@@ -39,7 +39,7 @@ OperatingMode handleSolderingButtons(const ButtonState buttons, guiContext *cxt)
         cxt->scratch_state.state2 = 1;
         break;
       }
-    /*Fall through*/
+    /*Fall throuhg*/
     default: // Set timer for and display a lock warning
       cxt->scratch_state.state7 = xTaskGetTickCount() + TICKS_SECOND;
       warnUser(translatedString(Tr->WarningKeysLockedString), buttons);
@@ -65,8 +65,9 @@ OperatingMode handleSolderingButtons(const ButtonState buttons, guiContext *cxt)
     }
     break;
   case BUTTON_F_SHORT:
-    break;
-  case BUTTON_B_SHORT:
+    if (getSettingValue(SettingsOptions::BoostButtonTempChange)) {
+    break;}
+  case BUTTON_B_SHORT:    
     cxt->transitionMode = TransitionAnimation::Left;
     return OperatingMode::TemperatureAdjust;
   case BUTTON_BOTH_LONG:
