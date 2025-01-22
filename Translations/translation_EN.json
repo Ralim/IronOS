@@ -82,6 +82,7 @@
     "SettingStartSleepOffChar": "R",
     "SettingLockBoostChar": "B",
     "SettingLockFullChar": "F",
+    "SettingLockTempChar": "T",
     "SettingLockTempChar": "T"
   },
   "menuGroups": {
