@@ -81,7 +81,8 @@
     "SettingStartSleepChar": "О",
     "SettingStartSleepOffChar": "К",
     "SettingLockBoostChar": "Т",
-    "SettingLockFullChar": "П"
+    "SettingLockFullChar": "П",
+    "SettingLockTempChar": "T"
   },
   "menuGroups": {
     "PowerMenu": {
