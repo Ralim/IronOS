@@ -115,9 +115,9 @@ typedef enum {
 
 typedef enum {
   DISABLED = 0, // All buttons are unlocked
-  BOOST    = 1, // All buttons except boost are locked
+  BOOST    = 1, // All buttons are locked except boost
   FULL     = 2, // All buttons are locked
-  TEMP     = 3, // All buttons are unlocked except the A/+ button's temp change function.
+  TEMP     = 3, // All buttons are locked except -/B to change the temperature
 } lockingMode_t;
 
 /* Selection of the soldering tip

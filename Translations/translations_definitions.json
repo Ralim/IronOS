@@ -170,7 +170,7 @@
       "id": "SettingLockTempChar",
       "len": 1,
       "default": "T",
-      "description": "Shown when the locking mode is set to lock only the boost button's temperature change function"
+      "description": "Shown when the locking mode is set to lock all buttons except for -/B to change the temperature."
     }
   ],
   "menuGroups": [
