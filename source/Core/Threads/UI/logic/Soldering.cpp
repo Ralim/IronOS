@@ -39,7 +39,7 @@ OperatingMode handleSolderingButtons(const ButtonState buttons, guiContext *cxt)
         cxt->scratch_state.state2 = 1;
         break;
       }
-    /*Fall throuhg*/
+    /*Fall through*/
     default: // Set timer for and display a lock warning
       cxt->scratch_state.state7 = xTaskGetTickCount() + TICKS_SECOND;
       warnUser(translatedString(Tr->WarningKeysLockedString), buttons);
