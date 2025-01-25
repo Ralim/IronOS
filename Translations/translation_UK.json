@@ -93,7 +93,7 @@
       "description": ""
     },
     "PowerSavingMenu": {
-      "displayText": "Режим\nсну",
+      "displayText": "Режим сну\n",
       "description": ""
     },
     "UIMenu": {
@@ -164,11 +164,11 @@
       "description": "Режим запуску паяльника (П=Пайка | С=Сон | К=Сон при кімн. темп.)"
     },
     "TempChangeShortStep": {
-      "displayText": "Зміна темп.\nкоротко?",
+      "displayText": "Зміна темп.\nкоротким",
       "description": "Зміна температуру при короткому натисканні!"
     },
     "TempChangeLongStep": {
-      "displayText": "Зміна темп.\nдовго?",
+      "displayText": "Зміна темп.\nдовгим",
       "description": "Зміна температуру при довгому натисканні!"
     },
     "LockingMode": {
