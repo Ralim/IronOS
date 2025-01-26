@@ -237,7 +237,7 @@
     },
     "SleepTemperature": {
       "displayText": "Темпер.\nсну",
-      "description": "t° у режимі сну (C° | F°)"
+      "description": "t° у режимі сну"
     },
     "SleepTimeout": {
       "displayText": "Тайм-аут\nсну",
@@ -253,7 +253,7 @@
     },
     "HallEffSleepTimeout": {
       "displayText": "Датчик Холла\nЧас сну",
-      "description": "Проміжок до \"тайм-ауту сну\" за умови спрацювання датчику Холла"
+      "description": "Проміжок часу до \"часу сну\" за умови спрацювання датчику Холла"
     },
     "TemperatureUnit": {
       "displayText": "Формат темпе-\nратури(°C/°F)",
