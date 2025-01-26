@@ -97,7 +97,7 @@
       "description": ""
     },
     "UIMenu": {
-      "displayText": "Параметри\nінтерфейсу",
+      "displayText": "Параметри\nвзаємодії",
       "description": ""
     },
     "AdvancedMenu": {
@@ -276,7 +276,11 @@
       "description": "Обернути кнопки зміни t°"
     },
 	"ReverseButtonNav": {
-      "displayText": "Обернути\nкнопки AB?",
+      "displayText": "Swap\nA/B keys",
+      "description": "Reverse assignment of buttons for menu navigation"
+    },
+	"ReverseButtonNav": {
+      "displayText": "Обернути\nкнопки A B?",
       "description": "Обернути кнопки навігації"
     },
     "AnimSpeed": {
