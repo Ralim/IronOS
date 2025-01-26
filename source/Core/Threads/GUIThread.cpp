@@ -44,7 +44,7 @@ OperatingMode handle_post_init_state();
 OperatingMode guiHandleDraw(void) {
   OLED::clearScreen(); // Clear ready for render pass
   // Read button state
-  ButtonState buttons = getButtonState(getSettingValue(SettingsOptions::ReverseButtonNavEnabled));
+  ButtonState buttons = getButtonState(getSettingValue(SettingsOptions::ReverseButtonNavEnabled) and !(currentOperatingMode == OperatingMode::TemperatureAdjust));
   // Enforce screen on if buttons pressed, movement, hot tip etc
   if (buttons != BUTTON_NONE) {
     OLED::setDisplayState(OLED::DisplayState::ON);

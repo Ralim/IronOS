@@ -55,7 +55,7 @@ OperatingMode gui_solderingTempAdjust(const ButtonState buttonIn, guiContext *cx
     (*autoRepeatAcceleration) = PRESS_ACCEL_INTERVAL_MAX - PRESS_ACCEL_INTERVAL_MIN;
   }
   // If buttons are flipped; flip the delta
-  if (getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled) xor getSettingValue(SettingsOptions::ReverseButtonNavEnabled)) {
+  if (getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled)) {
     delta = -delta;
   }
   if (delta != 0) {
