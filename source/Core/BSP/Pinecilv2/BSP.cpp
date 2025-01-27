@@ -9,13 +9,13 @@
 #include "Setup.h"
 #include "TipThermoModel.h"
 #include "USBPD.h"
-#include "Utils.h"
 #include "bl702_adc.h"
 #include "configuration.h"
 #include "crc32.h"
 #include "hal_flash.h"
 #include "history.hpp"
 #include "main.hpp"
+#include "../../Drivers/Utils.h"
 
 extern ADC_Gain_Coeff_Type adcGainCoeffCal;
 
