@@ -5,7 +5,7 @@
  *      Author: Ralim
  */
 #include "TipThermoModel.h"
-#include "../../Drivers/Utils.h"
+#include "Utils.h"
 #include "configuration.h"
 
 #ifdef TEMP_uV_LOOKUP_HAKKO
