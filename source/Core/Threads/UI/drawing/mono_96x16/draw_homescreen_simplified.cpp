@@ -13,7 +13,7 @@ void ui_draw_homescreen_simplified(TemperatureType_t tipTemp) {
    OLED::drawArea(isFlipped ? 54 : 0, 0, 42, 16, isFlipped ? (isReverse ? buttonBF : buttonAF) : (isReverse ? buttonB : buttonA));
    OLED::drawArea(isFlipped ? 12 : 42, 0, 42, 16, isFlipped ? (isReverse ? buttonAF : buttonBF) : (isReverse ? buttonA : buttonB));
  
-   if (((tipTemp > 55) && !tipDisconnected) || tipDisconnected) {
+   if ((tipTemp > 55) || tipDisconnected) {
 	   // draw temp over the start soldering button
 	   // Location changes on screen rotation
 	   // in right handed mode we want to draw over the first part
