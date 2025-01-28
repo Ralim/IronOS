@@ -11,7 +11,6 @@ void ui_draw_homescreen_simplified(TemperatureType_t tipTemp) {
   bool isFlipped         = OLED::getRotation();
   bool isReverse         = getSettingValue(SettingsOptions::ReverseButtonNavEnabled);
 
-    // Flip and switch buttons accordingly
    // Flip and switch buttons accordingly
    OLED::drawArea(isFlipped ? 54 : 0, 0, 42, 16, isFlipped ? (isReverse ? buttonBF : buttonAF) : (isReverse ? buttonB : buttonA));
    OLED::drawArea(isFlipped ? 12 : 42, 0, 42, 16, isFlipped ? (isReverse ? buttonAF : buttonBF) : (isReverse ? buttonA : buttonB));
