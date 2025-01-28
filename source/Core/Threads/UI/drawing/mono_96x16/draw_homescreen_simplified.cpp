@@ -20,19 +20,15 @@ void ui_draw_homescreen_simplified(TemperatureType_t tipTemp) {
 	   OLED::fillArea(isReverse ? (isFlipped ? 14 : 42) : (isFlipped ? 55 : 0), 0, 41, 16, 0); // clear the area
 	   OLED::setCursor(isReverse ? (isFlipped ? 15 : 43) : (isFlipped ? 56 : 0), 0);
 	   // If tip is connected draw the temp, otherwise - the notification
-	   if (!tipDisconnected) {
-		   // Draw-in the temp
-		   if (!(getSettingValue(SettingsOptions::CoolingTempBlink) && (xTaskGetTickCount() % 1000 < 300))) {
-			   ui_draw_tip_temperature(false, FontStyle::LARGE); // draw in the temp
-		   }
-		   
-	   } else {
+	   if (tipDisconnected) {
 		   // Draw-in the missing tip symbol
 		   if (isReverse) {
 			   OLED::drawArea(isFlipped ? 12 : 42, 0, 42, 16, isFlipped ? disconnectedTipF : disconnectedTip);
 		   } else {
 			   OLED::drawArea(isFlipped ? 54 : 0, 0, 42, 16, isFlipped ? disconnectedTipF : disconnectedTip);
 		   }
+	   } else if (!(getSettingValue(SettingsOptions::CoolingTempBlink) && (xTaskGetTickCount() % 1000 < 300))) {
+		   ui_draw_tip_temperature(false, FontStyle::LARGE);  // Draw-in the temp
 	   }
    }
    OLED::setCursor(isFlipped ? 0 : 84, 0);
