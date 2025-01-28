@@ -272,15 +272,11 @@
       "description": "Швидкість прокрутки тексту (Н=Низькa | М=Максимальна)"
     },
     "ReverseButtonTempChange": {
-      "displayText": "Обернути\nкнопки +-?",
+      "displayText": "Обернути\nкнопки +/-?",
       "description": "Обернути кнопки зміни t°"
     },
 	"ReverseButtonNav": {
-      "displayText": "Swap\nA/B keys",
-      "description": "Reverse assignment of buttons for menu navigation"
-    },
-	"ReverseButtonNav": {
-      "displayText": "Обернути\nкнопки A B?",
+      "displayText": "Обернути\nкнопки A/B?",
       "description": "Обернути кнопки навігації"
     },
     "AnimSpeed": {
