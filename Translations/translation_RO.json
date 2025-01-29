@@ -275,7 +275,7 @@
       "displayText": "Inversare\n+/- butoane",
       "description": "Inversarea butoanelor de reglare a temperaturii"
     },
-	"ReverseButtonNav": {
+    "ReverseButtonNav": {
       "displayText": "Swap\nA/B keys",
       "description": "Reverse assignment of buttons for menu navigation"
     },

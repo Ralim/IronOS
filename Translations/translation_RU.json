@@ -275,7 +275,7 @@
       "displayText": "Поменять\nкнопки +/-",
       "description": "Поменять кнопки изменения температуры"
     },
-	"ReverseButtonNav": {
+    "ReverseButtonNav": {
       "displayText": "Swap\nA/B keys",
       "description": "Reverse assignment of buttons for menu navigation"
     },

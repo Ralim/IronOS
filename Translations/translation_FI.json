@@ -275,7 +275,7 @@
       "displayText": "Suunnanvaihto\n+ - näppäimille",
       "description": "Lämpötilapainikkeiden suunnan vaihtaminen"
     },
-	"ReverseButtonNav": {
+    "ReverseButtonNav": {
       "displayText": "Swap\nA/B keys",
       "description": "Reverse assignment of buttons for menu navigation"
     },

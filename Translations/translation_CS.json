@@ -275,7 +275,7 @@
       "displayText": "Prohodit\ntl. +-?",
       "description": "Prohodit tlačítka pro změnu teploty"
     },
-	"ReverseButtonNav": {
+    "ReverseButtonNav": {
       "displayText": "Swap\nA/B keys",
       "description": "Reverse assignment of buttons for menu navigation"
     },

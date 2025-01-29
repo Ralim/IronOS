@@ -275,7 +275,7 @@
       "displayText": "Trocar\nbotões +/-",
       "description": "Inverte o funcionamento dos botões de ajuste da temperatura"
     },
-	"ReverseButtonNav": {
+    "ReverseButtonNav": {
       "displayText": "Swap\nA/B keys",
       "description": "Reverse assignment of buttons for menu navigation"
     },

@@ -275,7 +275,7 @@
       "displayText": "+/- gomb\nmegfordítása",
       "description": "Forrasztó hegy hőmérsékletállító gombok felcserélése"
     },
-	"ReverseButtonNav": {
+    "ReverseButtonNav": {
       "displayText": "Swap\nA/B keys",
       "description": "Reverse assignment of buttons for menu navigation"
     },

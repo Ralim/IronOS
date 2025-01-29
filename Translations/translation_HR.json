@@ -275,7 +275,7 @@
       "displayText": "Zamjena\n+ - tipki",
       "description": "Zamjenjuje funkciju gornje i donje tipke za podešavanje temperature"
     },
-	"ReverseButtonNav": {
+    "ReverseButtonNav": {
       "displayText": "Swap\nA/B keys",
       "description": "Reverse assignment of buttons for menu navigation"
     },

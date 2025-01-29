@@ -275,7 +275,7 @@
       "displayText": "Inversione\ntasti +/-",
       "description": "Inverti i tasti per aumentare o diminuire la temperatura della punta"
     },
-	"ReverseButtonNav": {
+    "ReverseButtonNav": {
       "displayText": "Inversione\ntasti A/B",
       "description": "Reverse assignment of buttons for menu navigation"
     },

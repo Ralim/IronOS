@@ -275,7 +275,7 @@
       "displayText": "Αντιστροφή\nπλήκτρων + -",
       "description": "Αντιστροφή διάταξης πλήκτρων στη ρύθμιση θερμοκρασίας"
     },
-	"ReverseButtonNav": {
+    "ReverseButtonNav": {
       "displayText": "Swap\nA/B keys",
       "description": "Reverse assignment of buttons for menu navigation"
     },

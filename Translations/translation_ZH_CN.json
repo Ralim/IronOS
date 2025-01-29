@@ -275,7 +275,7 @@
       "displayText": "调换加减键",
       "description": "调校温度时更换加减键的方向"
     },
-	"ReverseButtonNav": {
+    "ReverseButtonNav": {
       "displayText": "Swap\nA/B keys",
       "description": "Reverse assignment of buttons for menu navigation"
     },

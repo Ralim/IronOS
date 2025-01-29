@@ -275,7 +275,7 @@
       "displayText": "Обернути\nкнопки +/-?",
       "description": "Обернути кнопки зміни t°"
     },
-	"ReverseButtonNav": {
+    "ReverseButtonNav": {
       "displayText": "Обернути\nкнопки A/B?",
       "description": "Обернути кнопки навігації"
     },
