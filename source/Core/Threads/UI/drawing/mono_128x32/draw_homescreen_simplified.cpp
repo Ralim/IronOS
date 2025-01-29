@@ -7,13 +7,13 @@ extern uint8_t buttonBF[sizeof(buttonB)];
 extern uint8_t disconnectedTipF[sizeof(disconnectedTip)];
 
 void ui_draw_homescreen_simplified(TemperatureType_t tipTemp) {
-  bool tipDisconnected  = isTipDisconnected();
-  bool isFlipped        = OLED::getRotation();
-  bool isReverse        = getSettingValue(SettingsOptions::ReverseButtonNavEnabled);
+   bool tipDisconnected = isTipDisconnected();
+   bool isFlipped       = OLED::getRotation();
+   bool isReverse       = getSettingValue(SettingsOptions::ReverseButtonNavEnabled);
   // Flip and switch buttons accordingly
   OLED::drawArea(isFlipped ? 68 : 0, 0, 56, 32, isFlipped ? (isReverse ? buttonBF : buttonAF) : (isReverse ? buttonB : buttonA));
   OLED::drawArea(isFlipped ? 12 : 58, 0, 56, 32, isFlipped ? (isReverse ? buttonAF : buttonBF) : (isReverse ? buttonA : buttonB));
-  
+
   if ((tipTemp > 55) || tipDisconnected) {
     // draw temp over the start soldering button
     // Location changes on screen rotation and due to button swapping
