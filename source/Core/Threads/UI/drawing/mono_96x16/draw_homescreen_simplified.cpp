@@ -6,9 +6,9 @@ extern uint8_t buttonBF[sizeof(buttonB)];
 extern uint8_t disconnectedTipF[sizeof(disconnectedTip)];
 
 void ui_draw_homescreen_simplified(TemperatureType_t tipTemp) {
-   bool tipDisconnected = isTipDisconnected();
-   bool isFlipped       = OLED::getRotation();
-   bool isReverse       = getSettingValue(SettingsOptions::ReverseButtonNavEnabled);
+    bool tipDisconnected = isTipDisconnected();
+    bool isFlipped       = OLED::getRotation();
+    bool isReverse       = getSettingValue(SettingsOptions::ReverseButtonNavEnabled);
   // Flip and switch buttons accordingly
   OLED::drawArea(isFlipped ? 54 : 0, 0, 42, 16, isFlipped ? (isReverse ? buttonBF : buttonAF) : (isReverse ? buttonB : buttonA));
   OLED::drawArea(isFlipped ? 12 : 42, 0, 42, 16, isFlipped ? (isReverse ? buttonAF : buttonBF) : (isReverse ? buttonA : buttonB));
@@ -28,7 +28,7 @@ void ui_draw_homescreen_simplified(TemperatureType_t tipTemp) {
         OLED::drawArea(isFlipped ? 54 : 0, 0, 42, 16, isFlipped ? disconnectedTipF : disconnectedTip);
       }
     } else if (!(getSettingValue(SettingsOptions::CoolingTempBlink) && (xTaskGetTickCount() % 1000 < 300))) {
-       ui_draw_tip_temperature(false, FontStyle::LARGE); // Draw-in the temp
+      ui_draw_tip_temperature(false, FontStyle::LARGE); // Draw-in the temp
     }
   }
   OLED::setCursor(isFlipped ? 0 : 84, 0);
