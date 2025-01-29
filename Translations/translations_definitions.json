@@ -477,7 +477,7 @@
       "id": "ReverseButtonNav",
       "maxLen": 6,
       "maxLen2": 15,
-      "description": "Swaps which button are used as Select and which as Scroll/Go-back on menu screens."
+      "description": "Swaps which buttons are used as Select and which as Scroll/Back in the settings menu."
     },
     {
       "id": "AnimSpeed",
