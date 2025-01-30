@@ -26,25 +26,25 @@ void ui_draw_homescreen_simplified(TemperatureType_t tipTemp) {
     // draw temp over the start soldering button
     // Location changes on screen rotation and due to button swapping
     // in right handed mode we want to draw over the first part
-  #ifdef REVERSE_NAV_EVERYWHERE
+#ifdef REVERSE_NAV_EVERYWHERE
     OLED::fillArea(isReverse ? (isFlipped ? 26 : 58) : (isFlipped ? 68 : 0), 0, 56, 32, 0); // clear the area
     OLED::setCursor(isReverse ? (isFlipped ? 27 : 59) : (isFlipped ? 56 : 0), 0);
-  #else
+#else
     OLED::fillArea(isFlipped ? 68 : 0, 0, 56, 32, 0); // clear the area
     OLED::setCursor(isFlipped ? 56 : 0, 0);
-  #endif
+#endif
     // If tip is disconnected draw the notification, otherwise - the temp
     if (tipDisconnected) {
       // Draw-in the missing tip symbol
-    #ifdef REVERSE_NAV_EVERYWHERE
+#ifdef REVERSE_NAV_EVERYWHERE
       if (isReverse) {
         OLED::drawArea(isFlipped ? 20 : 54, 0, 56, 32, isFlipped ? disconnectedTipF : disconnectedTip);
       } else {
-    #endif
+#endif
         OLED::drawArea(isFlipped ? 54 : 0, 0, 56, 32, isFlipped ? disconnectedTipF : disconnectedTip);
-    #ifdef REVERSE_NAV_EVERYWHERE
+#ifdef REVERSE_NAV_EVERYWHERE
       }
-    #endif
+#endif
     } else if (!(getSettingValue(SettingsOptions::CoolingTempBlink) && (xTaskGetTickCount() % 1000 < 300))) {
       ui_draw_tip_temperature(false, FontStyle::LARGE); // Draw-in the temp
     }
