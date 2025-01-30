@@ -9,7 +9,7 @@ void ui_draw_homescreen_simplified(TemperatureType_t tipTemp) {
   bool isFlipped       = OLED::getRotation();
   bool tipDisconnected = isTipDisconnected();
 #ifdef REVERSE_NAV_EVERYWHERE
-  bool isReverse       = getSettingValue(SettingsOptions::ReverseButtonNavEnabled);
+   bool isReverse = getSettingValue(SettingsOptions::ReverseButtonNavEnabled);
 #endif
 
   // Flip and switch buttons accordingly
