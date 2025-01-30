@@ -45,13 +45,13 @@ OperatingMode guiHandleDraw(void) {
   OLED::clearScreen(); // Clear ready for render pass
   bool d = getSettingValue(SettingsOptions::ReverseButtonNavEnabled);
   bool e = getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled);
-  #ifdef REVERSE_NAV_EVERYWHERE
+#ifdef REVERSE_NAV_EVERYWHERE
   bool f = currentOperatingMode == OperatingMode::TemperatureAdjust;
   // Read button state
   ButtonState buttons = getButtonState((e && f) || (d && !e && !f) || (d && e && !f));
-  #else
+#else
   ButtonState buttons = getButtonState();
-  #endif
+#endif
   // Enforce screen on if buttons pressed, movement, hot tip etc
   if (buttons != BUTTON_NONE) {
     OLED::setDisplayState(OLED::DisplayState::ON);
@@ -117,11 +117,11 @@ OperatingMode guiHandleDraw(void) {
     newMode = gui_SolderingSleepingMode(buttons, &context);
     break;
   case OperatingMode::TemperatureAdjust:
-  #ifdef REVERSE_NAV_EVERYWHERE
+#ifdef REVERSE_NAV_EVERYWHERE
     newMode = gui_solderingTempAdjust(getButtonState(), &context);
-  #else
+#else
     newMode = gui_solderingTempAdjust(getButtonState(e), &context);
-  #endif
+#endif
     break;
   case OperatingMode::DebugMenuReadout:
     newMode = showDebugMenu(buttons, &context);
@@ -130,11 +130,11 @@ OperatingMode guiHandleDraw(void) {
     newMode = performCJCC(buttons, &context);
     break;
   case OperatingMode::SettingsMenu:
-  #ifdef REVERSE_NAV_EVERYWHERE
+#ifdef REVERSE_NAV_EVERYWHERE
     newMode = gui_SettingsMenu(getButtonState(), &context);
-  #else
+#else
     newMode = gui_SettingsMenu(getButtonState(d), &context);
-  #endif
+#endif
     break;
   case OperatingMode::InitialisationDone:
     newMode = handle_post_init_state();
