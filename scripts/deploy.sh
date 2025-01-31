@@ -116,6 +116,7 @@ build_langs()
 		echo "${langs}"
 		return 1
 	fi;
+	cd ..
 	
 	grep -nH $'\11' Translations/translation*.json
 	if [ "${?}" -eq 0 ]; then
