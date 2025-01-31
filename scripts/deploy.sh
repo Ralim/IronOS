@@ -110,14 +110,28 @@ build_langs()
 	mk="../source/Makefile"
 	cd Translations/ || exit 1
 	langs="$(echo "$(find ./*.json | sed -ne 's,^\./translation_,,; s,\.json$,,; /[A-Z]/p' ; sed -ne 's/^ALL_LANGUAGES=//p;' "${mk}")" | sed 's, ,\n,g; s,\r,,g' | sort | uniq -u)"
-	ret=0
 	if [ -n "${langs}" ]; then
-		ret=1
 		echo "It seems there is mismatch between supported languages and enabled builds."
 		echo "Please, check files in Translations/ and ALL_LANGUAGES variable in source/Makefile for:"
 		echo "${langs}"
+		return 1
 	fi;
-	return "${ret}"
+	
+	grep -nH $'\11' Translations/translation*.json
+	if [ "${?}" -eq 0 ]; then
+		echo "Please, remove any tabs as indention from json file(s) in Translations/ directory (see the exact files & lines in the list above)."
+		echo "Use spaces only to indent in the future, please."
+		return 1
+	fi;
+	
+	grep -nH -e "^ [^ ]" -e "^   [^ ]" -e "^     [^ ]" -e "^       [^ ]" -e "^         [^ ]" -e "^           [^ ]" Translations/translation*.json
+	if [ "${?}" -eq 0 ]; then
+		echo "Please, remove any odd amount of extra spaces as indention from json file(s) in Translations/ directory (see the exact files & lines in the list above)."
+		echo "Use even amount of spaces to indent in the future, please (two actual spaces per one indent, not tab)."
+		return 1
+	fi;
+	
+	return 0
 }
 
 # Helper function to check code style using clang-format & grep/sed custom parsers:
