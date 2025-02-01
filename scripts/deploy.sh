@@ -97,7 +97,7 @@ docs_links()
 	md="README.md"
 	ver_md="$(grep -c "${ver_git}" "${md}")"
 	ret=0
-	if [ "${ver_md}" -ne 0 ]; then
+	if [ "${ver_md}" -eq 0 ]; then
 		ret=1
 		echo "Please, update mention & links in ${md} inside Builds section for release builds with version ${ver_git}."
 	fi;
