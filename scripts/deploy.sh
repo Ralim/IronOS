@@ -95,6 +95,7 @@ docs_links()
 {
 	ver_git="$(git tag -l | sort | grep -e "^v" | grep -v "rc" | tail -1)"
 	md="README.md"
+	test -f "${md}" || (echo "deploy.sh: docs_links: ERROR with the project directory structure!" && exit 1)
 	ver_md="$(grep -c "${ver_git}" "${md}")"
 	ret=0
 	if [ "${ver_md}" -eq 0 ]; then
@@ -108,7 +109,7 @@ docs_links()
 build_langs()
 {
 	mk="../source/Makefile"
-	cd Translations/ || exit 1
+	cd Translations/ || (echo "deploy.sh: build_langs: ERROR with the project directory structure!" && exit 1)
 	langs="$(echo "$(find ./*.json | sed -ne 's,^\./translation_,,; s,\.json$,,; /[A-Z]/p' ; sed -ne 's/^ALL_LANGUAGES=//p;' "${mk}")" | sed 's, ,\n,g; s,\r,,g' | sort | uniq -u)"
 	if [ -n "${langs}" ]; then
 		echo "It seems there is mismatch between supported languages and enabled builds."
