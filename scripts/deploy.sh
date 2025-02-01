@@ -130,7 +130,7 @@ build_langs()
 		return 1
 	fi;
 	
-	grep -nH -e "^ [^ ]" -e "^   [^ ]" -e "^     [^ ]" -e "^       [^ ]" -e "^         [^ ]" -e "^           [^ ]" Translations/translation*.json
+	grep -nEH -e "^( {1}| {3}| {5}| {7}| {9}| {11})[^ ]" Translations/translation*.json
 	ret="${?}"
 	if [ "${ret}" -eq 0 ]; then
 		echo -ne "\t^^^^\t^^^^\n"
