@@ -119,14 +119,16 @@ build_langs()
 	cd ..
 	
 	grep -nH $'\11' Translations/translation*.json
-	if [ "${?}" -eq 0 ]; then
+	ret="${?}"
+	if [ "${ret}" -eq 0 ]; then
 		echo "Please, remove any tabs as indention from json file(s) in Translations/ directory (see the exact files & lines in the list above)."
 		echo "Use spaces only to indent in the future, please."
 		return 1
 	fi;
 	
 	grep -nH -e "^ [^ ]" -e "^   [^ ]" -e "^     [^ ]" -e "^       [^ ]" -e "^         [^ ]" -e "^           [^ ]" Translations/translation*.json
-	if [ "${?}" -eq 0 ]; then
+	ret="${?}"
+	if [ "${ret}" -eq 0 ]; then
 		echo "Please, remove any odd amount of extra spaces as indention from json file(s) in Translations/ directory (see the exact files & lines in the list above)."
 		echo "Use even amount of spaces to indent in the future, please (two actual spaces per one indent, not tab)."
 		return 1
