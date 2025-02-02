@@ -143,7 +143,7 @@ Additional details are described in the [menu information](https://ralim.github.
 
 ## Pinecil V2 only
 
-Pinecil V2 has [_Bluetooth Low Energy_ module](https://ralim.github.io/IronOS/Bluetooth), which is supported by _IronOS_ since `2.21` release to control some of the settings using additional tools like [PineSAM](https://github.com/builder555/PineSAM) or [PineTool](https://github.com/lachlanbell/PineTool). In `2.21` and `2.22` releases the module was _on_ by default. However, **_Bluetooth_ is turned off in the settings by default on current `dev` builds and for the next releases** [due to security concerns](#1856). But this is related only to situations when a user restores default settings using menu, or when the _IronOS_ update is taking place on a new device or on a device with a previous firmware version.
+Pinecil V2 has [_Bluetooth Low Energy_ module](https://ralim.github.io/IronOS/Bluetooth), which is supported by _IronOS_ since `2.21` release to control some of the settings using additional tools like [PineSAM](https://github.com/builder555/PineSAM) or [PineTool](https://github.com/lachlanbell/PineTool). In `2.21` and `2.22` releases the module was _on_ by default. However, **_Bluetooth_ is turned off in the settings by default in current `dev` builds and for the next releases** [due to security concerns](#1856).[^ble]
 
 To enable _Bluetooth_ back:
 - go to _Settings_ menu;
@@ -151,6 +151,9 @@ To enable _Bluetooth_ back:
 - press `+/A` button to open submenu;
 - press `+/A` button to toggle/enable _Bluetooth_ feature;
 - press `-/B` **and hold it** for just more than five seconds to exit from the _Settings_ menu.
+
+[^ble]:
+    This is related only to situations when a user restores default settings using menu, or when _IronOS_ update is taking place on a new device or on a device with a previous firmware version.
 
 ## Translations
 
