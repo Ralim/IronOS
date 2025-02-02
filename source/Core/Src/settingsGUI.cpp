@@ -579,7 +579,6 @@ static void setBoostTemp(void) {
     if (value >= MAX_TEMP_F) {
       value = 0; // jump to off
     }
-    setSettingValue(SettingsOptions::BoostTemp, value);
   } else {
     if (value == 0) {
       value = MIN_BOOST_TEMP_C; // loop back at 250
@@ -654,14 +653,13 @@ static void setProfileTemp(const enum SettingsOptions option) {
     if (temp > MAX_TEMP_F) {
       temp = MIN_TEMP_F;
     }
-    setSettingValue(option, temp);
   } else {
     temp += 5;
     if (temp > MAX_TEMP_C) {
       temp = MIN_TEMP_C;
     }
-    setSettingValue(option, temp);
   }
+  setSettingValue(option, temp);
 }
 
 static void setProfilePreheatTemp(void) { return setProfileTemp(SettingsOptions::ProfilePreheatTemp); }
@@ -712,14 +710,13 @@ static void setSleepTemp(void) {
     if (temp > 580) {
       temp = 60;
     }
-    setSettingValue(SettingsOptions::SleepTemp, temp);
   } else {
     temp += 10;
     if (temp > 300) {
       temp = 10;
     }
-    setSettingValue(SettingsOptions::SleepTemp, temp);
   }
+  setSettingValue(SettingsOptions::SleepTemp, temp);
 }
 
 static void displaySleepTemp(void) { OLED::printNumber(getSettingValue(SettingsOptions::SleepTemp), 3, FontStyle::LARGE); }
@@ -759,12 +756,11 @@ static bool showHallEffect(void) { return getHallSensorFitted(); }
 static void displayHallEffectSleepTime(void) {
   if (getSettingValue(SettingsOptions::HallEffectSleepTime)) {
     OLED::printNumber(getSettingValue(SettingsOptions::HallEffectSleepTime) * 5, 2, FontStyle::LARGE, false);
-    OLED::print(LargeSymbolSeconds, FontStyle::LARGE);
   } else {
     // When sleep time is set to zero, we sleep for 1 second anyways. This is the default.
     OLED::printNumber(1, 2, FontStyle::LARGE, false);
-    OLED::print(LargeSymbolSeconds, FontStyle::LARGE);
   }
+  OLED::print(LargeSymbolSeconds, FontStyle::LARGE);
 }
 #endif /* HALL_SENSOR */
 
