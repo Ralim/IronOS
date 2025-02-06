@@ -18,7 +18,7 @@
 #include <aes.h>
 #include <constants.h>
 #include <hmac_prng.h>
-#include <utils.hpp>
+#include <utils.h>
 
 #define BT_DBG_ENABLED  IS_ENABLED(CONFIG_BT_DEBUG_HCI_CORE)
 #define LOG_MODULE_NAME bt_crypto

@@ -32,7 +32,7 @@
 
 #include "sha256.h"
 #include "constants.h"
-#include "utils.hpp"
+#include "utils.h"
 
 static void compress(unsigned int *iv, const uint8_t *data);
 

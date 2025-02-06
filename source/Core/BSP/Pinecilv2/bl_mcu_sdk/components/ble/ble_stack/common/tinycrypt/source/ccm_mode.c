@@ -32,7 +32,7 @@
 
 #include "ccm_mode.h"
 #include "constants.h"
-#include "utils.hpp"
+#include "utils.h"
 
 #include <stdio.h>
 

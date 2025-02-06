@@ -23,7 +23,7 @@
 #include <aes.h>
 #include <cmac_mode.h>
 #include <constants.h>
-#include <utils.hpp>
+#include <utils.h>
 
 #define BT_DBG_ENABLED  IS_ENABLED(CONFIG_BT_DEBUG_RPA)
 #define LOG_MODULE_NAME bt_rpa

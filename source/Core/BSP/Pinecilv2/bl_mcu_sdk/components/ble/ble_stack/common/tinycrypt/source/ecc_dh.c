@@ -58,7 +58,7 @@
 #include "constants.h"
 #include "ecc.h"
 #if defined(BFLB_BLE)
-#include "utils.hpp"
+#include "utils.h"
 #endif
 #include <string.h>
 #if defined(BL_MCU_SDK)

@@ -30,7 +30,7 @@
  *  POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "utils.hpp"
+#include "utils.h"
 #include "constants.h"
 
 #include <string.h>

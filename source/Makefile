@@ -287,7 +287,7 @@ DEV_GLOBAL_DEFS=-DCFG_FREERTOS                                       \
 # -DCONFIG_BT_SMP
 
 # Required to be turned off due to their drivers tripping warnings
-DEV_CFLAGS=-Wno-error=enum-conversion -Wno-type-limits -Wno-implicit-fallthrough -Wno-implicit-function-declaration -Wno-incompatible-pointer-types -Wno-sign-compare -Wsign-compare -Wnarrowing
+DEV_CFLAGS=-Wno-error=enum-conversion -Wno-type-limits -Wno-implicit-fallthrough -Wno-error=implicit-function-declaration -Wno-error=incompatible-pointer-types
 DEV_CXXFLAGS=$(DEV_CFLAGS)
 flash_size=128k
 bootldr_size=0x0
