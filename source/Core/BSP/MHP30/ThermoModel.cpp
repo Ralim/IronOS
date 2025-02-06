@@ -7,7 +7,7 @@
 #include "Setup.h"
 #include "TipThermoModel.h"
 #include "Types.h"
-#include "Utils.h"
+#include "Utils.hpp"
 #include "configuration.h"
 
 extern uint16_t   tipSenseResistancex10Ohms;
