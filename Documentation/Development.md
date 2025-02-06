@@ -21,14 +21,14 @@ When running the `make` command, specify which model of the device and the langu
 ```
 $ pacman -S mingw-w64-x86_64-arm-none-eabi-gcc mingw-w64-x86_64-libwinpthread-git python3 python3-pip make unzip git
 ```
-3. Download _3rd party RISC-V toolchain_ `xpack-riscv-none-elf-gcc-...-win32-x64.zip` from [repository](https://github.com/xpack-dev-tools/riscv-none-elf-gcc-xpack/releases);
-4. Move downloaded `xpack-riscv-none-elf-gcc-...-win32-x64.zip` into `msys64` environment location (e.g., `C:\msys64\`);
+3. Download _3rd party RISC-V toolchain_ `xpack-riscv-none-elf-gcc-...-win32-x64.zip` from [this repository](https://github.com/xpack-dev-tools/riscv-none-elf-gcc-xpack/releases);
+4. Move downloaded `xpack-riscv-none-elf-gcc-...-win32-x64.zip` to `msys64` _Windows_ directory (e.g., `C:\msys64\`);
 5. Extract files from `xpack-riscv-none-elf-gcc-...-win32-x64.zip`:
 ```
 $ cd /
 $ unzip xpack-riscv-none-elf-gcc-...-win32-x64.zip
 ```
-6. Permanently set `PATH` environment variable, so all required toolchains could be available for `make` and other build scripts:
+6. Permanently set `PATH` environment variable, so all required toolchains could be available for `make` and for other build scripts:
 ```
 $ echo 'export PATH=/xpack-riscv-none-elf-gcc-.../bin:${PATH}' >> ~/.bashrc
 $ source ~/.bashrc
@@ -38,7 +38,7 @@ $ source ~/.bashrc
 $ pacman -S mingw-w64-x86_64-openocd
 $ pacman -S mingw-w64-x86_64-stlink
 ```
-8. clone _IronOS_ repo:
+8. Clone _IronOS_ repo:
 ```
 $ git clone --recursive https://github.com/Ralim/IronOS.git
 $ cd IronOS
