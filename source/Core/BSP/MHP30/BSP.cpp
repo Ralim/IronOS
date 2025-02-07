@@ -6,7 +6,7 @@
 #include "Pins.h"
 #include "Setup.h"
 #include "TipThermoModel.h"
-#include "Utils.h"
+#include "Utils.hpp"
 #include "WS2812.h"
 #include "configuration.h"
 #include "history.hpp"
