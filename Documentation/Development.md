@@ -23,10 +23,11 @@ $ pacman -S mingw-w64-x86_64-arm-none-eabi-gcc mingw-w64-x86_64-libwinpthread-gi
 ```
 3. Download _3rd party RISC-V toolchain_ `xpack-riscv-none-elf-gcc-...-win32-x64.zip` from [this repository](https://github.com/xpack-dev-tools/riscv-none-elf-gcc-xpack/releases);
 4. Move downloaded `xpack-riscv-none-elf-gcc-...-win32-x64.zip` to `msys64` _Windows_ directory (e.g., `C:\msys64\`);
-5. Extract files from `xpack-riscv-none-elf-gcc-...-win32-x64.zip`:
+5. Extract files from `xpack-riscv-none-elf-gcc-...-win32-x64.zip` and go back to _home_ directory:
 ```
 $ cd /
 $ unzip xpack-riscv-none-elf-gcc-...-win32-x64.zip
+$ cd ~
 ```
 6. Permanently set `PATH` environment variable, so all required toolchains could be available for `make` and for other build scripts:
 ```
