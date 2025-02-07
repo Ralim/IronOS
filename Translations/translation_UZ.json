@@ -137,7 +137,7 @@
   "menuOptions": {
     "DCInCutoff": {
       "displayText": "Quvvat\nmanbai",
-      "description": "Batareya haddan tashqari zaryadsizlanishini oldini olish uchun kuchlanish chegarasini o'rnatish (DC 10V) (S=3.3V har bir yacheyka uchun, quvvat PWR chegarasini o'chirish)"			
+      "description": "Batareya haddan tashqari zaryadsizlanishini oldini olish uchun kuchlanish chegarasini o'rnatish (DC 10V) (S=3.3V har bir yacheyka uchun, quvvat PWR chegarasini o'chirish)"
     },
     "MinVolCell": {
       "displayText": "Minimal\nkuchlanish",

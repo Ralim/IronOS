@@ -149,7 +149,7 @@ test-md:
 	@echo ""
 	@echo "---- Checking documentation... ----"
 	@echo ""
-	@/bin/sh  ./scripts/deploy.sh  docs
+	@./scripts/deploy.sh  docs
 
 # shell style & linter check (github CI version of shellcheck is more recent than alpine one so the latter may not catch some policies)
 test-sh:

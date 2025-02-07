@@ -95,9 +95,10 @@ docs_links()
 {
 	ver_git="$(git tag -l | sort | grep -e "^v" | grep -v "rc" | tail -1)"
 	md="README.md"
+	test -f "${md}" || (echo "deploy.sh: docs_links: ERROR with the project directory structure!" && exit 1)
 	ver_md="$(grep -c "${ver_git}" "${md}")"
 	ret=0
-	if [ "${ver_md}" -ne 0 ]; then
+	if [ "${ver_md}" -eq 0 ]; then
 		ret=1
 		echo "Please, update mention & links in ${md} inside Builds section for release builds with version ${ver_git}."
 	fi;
@@ -108,16 +109,38 @@ docs_links()
 build_langs()
 {
 	mk="../source/Makefile"
-	cd Translations/ || exit 1
+	cd Translations/ || (echo "deploy.sh: build_langs: ERROR with the project directory structure!" && exit 1)
 	langs="$(echo "$(find ./*.json | sed -ne 's,^\./translation_,,; s,\.json$,,; /[A-Z]/p' ; sed -ne 's/^ALL_LANGUAGES=//p;' "${mk}")" | sed 's, ,\n,g; s,\r,,g' | sort | uniq -u)"
-	ret=0
 	if [ -n "${langs}" ]; then
-		ret=1
 		echo "It seems there is mismatch between supported languages and enabled builds."
 		echo "Please, check files in Translations/ and ALL_LANGUAGES variable in source/Makefile for:"
 		echo "${langs}"
+		return 1
 	fi;
-	return "${ret}"
+	cd ..
+	
+	echo -ne "\n"
+	grep -nH $'\11' Translations/translation*.json
+	ret="${?}"
+	if [ "${ret}" -eq 0 ]; then
+		echo -ne "\t^^^^\t^^^^\n"
+		echo "Please, remove any tabs as indention from json file(s) in Translations/ directory (see the exact files & lines in the list above)."
+		echo "Use spaces only to indent in the future, please."
+		echo -ne "\n"
+		return 1
+	fi;
+	
+	grep -nEH -e "^( {1}| {3}| {5}| {7}| {9}| {11})[^ ]" Translations/translation*.json
+	ret="${?}"
+	if [ "${ret}" -eq 0 ]; then
+		echo -ne "\t^^^^\t^^^^\n"
+		echo "Please, remove any odd amount of extra spaces as indention from json file(s) in Translations/ directory (see the exact files & lines in the list above)."
+		echo "Use even amount of spaces to indent in the future, please (two actual spaces per one indent, not tab)."
+		echo -ne "\n"
+		return 1
+	fi;
+	
+	return 0
 }
 
 # Helper function to check code style using clang-format & grep/sed custom parsers:

@@ -215,7 +215,7 @@ jobs:
 
     steps:
       - name: Install dependencies (apk)
-        run: apk add --no-cache git
+        run: apk add --no-cache git bash grep
 
       - uses: actions/checkout@v4
         with:
@@ -227,4 +227,4 @@ jobs:
         run: git config --global --add safe.directory /__w/IronOS/IronOS && git config --global safe.directory "$GITHUB_WORKSPACE"
 
       - name: Check and verify documentation
-        run: /bin/sh ./scripts/deploy.sh docs
+        run: ./scripts/deploy.sh docs

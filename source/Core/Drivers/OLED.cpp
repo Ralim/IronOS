@@ -11,6 +11,7 @@
 #include "cmsis_os.h"
 #include "configuration.h"
 #include <OLED.hpp>
+#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -209,21 +210,18 @@ void OLED::drawChar(const uint16_t charCode, const FontStyle fontStyle, const ui
  * of the indicator in pixels (0..<16).
  */
 void OLED::drawScrollIndicator(uint8_t y, uint8_t height) {
-  union u_type {
-    uint32_t whole;
-    uint8_t  strips[4];
-  } column;
 
-  column.whole = (1 << height) - 1; // preload a set of set bits of height
-  column.whole <<= y;               // Shift down by the y value
-
+  const uint32_t whole = ((1 << height) - 1) << y; // preload a set of set bits of height
+                                                   // Shift down by the y value
+  const uint8_t strips[4] = {static_cast<uint8_t>(whole & 0xff), static_cast<uint8_t>((whole & 0xff00) >> 8 * 1), static_cast<uint8_t>((whole & 0xff0000) >> 8 * 2),
+                             static_cast<uint8_t>((whole & 0xff000000) >> 8 * 3)};
   // Draw a one pixel wide bar to the left with a single pixel as
   // the scroll indicator.
-  fillArea(OLED_WIDTH - 1, 0, 1, 8, column.strips[0]);
-  fillArea(OLED_WIDTH - 1, 8, 1, 8, column.strips[1]);
+  fillArea(OLED_WIDTH - 1, 0, 1, 8, strips[0]);
+  fillArea(OLED_WIDTH - 1, 8, 1, 8, strips[1]);
 #if OLED_HEIGHT == 32
-  fillArea(OLED_WIDTH - 1, 16, 1, 8, column.strips[2]);
-  fillArea(OLED_WIDTH - 1, 24, 1, 8, column.strips[3]);
+  fillArea(OLED_WIDTH - 1, 16, 1, 8, strips[2]);
+  fillArea(OLED_WIDTH - 1, 24, 1, 8, strips[3]);
 
 #endif
 }
