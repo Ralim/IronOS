@@ -495,7 +495,7 @@ static __INLINE q63_t mult32x64(q63_t x, q31_t y) { return ((((q63_t)(x & 0x0000
 /*
   #if defined (ARM_MATH_CM0_FAMILY) && defined ( __CC_ARM   )
   #define __CLZ __clz
-  #endif
+#endif
  */
 /* note: function can be removed when all toolchain support __CLZ for Cortex-M0 */
 #if defined(ARM_MATH_CM0_FAMILY) && ((defined(__ICCARM__)))

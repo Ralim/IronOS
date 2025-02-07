@@ -206,7 +206,7 @@ typedef enum IRQn {
 #ifdef NMSIS_ECLIC_VIRTUAL
     #ifndef NMSIS_ECLIC_VIRTUAL_HEADER_FILE
         #define NMSIS_ECLIC_VIRTUAL_HEADER_FILE "nmsis_eclic_virtual.h"
-    #endif
+  #endif
     #include NMSIS_ECLIC_VIRTUAL_HEADER_FILE
 #else
     #define ECLIC_SetCfgNlbits            __ECLIC_SetCfgNlbits
@@ -238,7 +238,7 @@ typedef enum IRQn {
 #ifdef NMSIS_VECTAB_VIRTUAL
     #ifndef NMSIS_VECTAB_VIRTUAL_HEADER_FILE
         #define NMSIS_VECTAB_VIRTUAL_HEADER_FILE "nmsis_vectab_virtual.h"
-    #endif
+  #endif
     #include NMSIS_VECTAB_VIRTUAL_HEADER_FILE
 #else
     #define ECLIC_SetVector              __ECLIC_SetVector

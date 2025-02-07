@@ -36,9 +36,9 @@
  * \code
  *   #if defined(__NMSIS_VERSION) && (__NMSIS_VERSION >= 0x00010105)
  *      #warning "Yes, we have NMSIS 1.1.5 or later"
- *   #else
+ * #else
  *      #error "We need NMSIS 1.1.5 or later!"
- *   #endif
+ * #endif
  * \endcode
  *
  * @{
