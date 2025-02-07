@@ -106,6 +106,8 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#command-line-tools-and-building-a-release">Command line tools and building a release</a>
         <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#windows-msys2-environment">Windows (MSYS2 environment)</a>
+    </li>
     <li class="toctree-l3"><a class="reference internal" href="#macos">macOS</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#examples">Examples</a>
@@ -165,6 +167,46 @@ You will need to update the build settings for include paths and point to the ne
 <h2 id="command-line-tools-and-building-a-release">Command line tools and building a release</h2>
 <p>In the <code>source</code> folder there is a <code>Makefile</code> that can be used to build the repository using command line tools.
 When running the <code>make</code> command, specify which model of the device and the language(s) you would like to use.</p>
+<h3 id="windows-msys2-environment">Windows (MSYS2 environment)</h3>
+<ol>
+<li>Download <code>msys2</code> install package from the <a href="https://msys2.org">official website</a> and install it according to the instruction there;</li>
+<li>Install requried packages (here and for the future commands use <strong><code>mingw64.exe</code></strong> terminal):</li>
+</ol>
+<pre><code>$ pacman -S mingw-w64-x86_64-arm-none-eabi-gcc mingw-w64-x86_64-libwinpthread-git python3 python3-pip make unzip git
+</code></pre>
+<ol>
+<li>Download <em>3rd party RISC-V toolchain</em> <code>xpack-riscv-none-elf-gcc-...-win32-x64.zip</code> from <a href="https://github.com/xpack-dev-tools/riscv-none-elf-gcc-xpack/releases">this repository</a>;</li>
+<li>Move downloaded <code>xpack-riscv-none-elf-gcc-...-win32-x64.zip</code> to <code>msys64</code> <em>Windows</em> directory (e.g., <code>C:\msys64\</code>);</li>
+<li>Extract files from <code>xpack-riscv-none-elf-gcc-...-win32-x64.zip</code> and go back to <em>home</em> directory:</li>
+</ol>
+<pre><code>$ cd /
+$ unzip xpack-riscv-none-elf-gcc-...-win32-x64.zip
+$ cd ~
+</code></pre>
+<ol>
+<li>Permanently set <code>PATH</code> environment variable, so all required toolchains could be available for <code>make</code> and for other build scripts:</li>
+</ol>
+<pre><code>$ echo 'export PATH=/xpack-riscv-none-elf-gcc-.../bin:${PATH}' &gt;&gt; ~/.bashrc
+$ source ~/.bashrc
+</code></pre>
+<ol>
+<li>Additionally, <code>OpenOCD</code> and/or <code>ST-Link</code> can be installed as well to help with flashing:</li>
+</ol>
+<pre><code>$ pacman -S mingw-w64-x86_64-openocd
+$ pacman -S mingw-w64-x86_64-stlink
+</code></pre>
+<ol>
+<li>Clone <em>IronOS</em> repo:</li>
+</ol>
+<pre><code>$ git clone --recursive https://github.com/Ralim/IronOS.git
+$ cd IronOS
+</code></pre>
+<ol>
+<li>Follow steps <em>4-8</em> from <a href="#macos">macOS section</a>;</li>
+<li><code>pip</code> can be updated inside <code>venv</code> only:</li>
+</ol>
+<pre><code>$ python3 -m pip install --upgrade pip
+</code></pre>
 <h3 id="macos">macOS</h3>
 <p>Use the following steps to set up a build environment for IronOS on the command line (in Terminal).</p>
 <ol>
