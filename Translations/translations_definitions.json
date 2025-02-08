@@ -473,7 +473,7 @@
       "maxLen2": 15,
       "description": "Swaps which button increments and decrements on temperature change screens."
     },
-	{
+    {
       "id": "ReverseButtonNav",
       "maxLen": 6,
       "maxLen2": 15,
