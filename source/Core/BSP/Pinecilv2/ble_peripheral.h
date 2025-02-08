@@ -10,7 +10,7 @@ NOTES
 #ifndef _BLE_TP_SVC_H_
 #define _BLE_TP_SVC_H_
 
-#include "types.h"
+#include <zephyr/types.h>
 #include "ble_config.h"
 
 // read value handle offset 2

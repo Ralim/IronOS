@@ -8,7 +8,7 @@
 #include "BSP_Power.h"
 #include "Settings.h"
 #include "configuration.h"
-#include <Utils.h>
+#include <Utils.hpp>
 
 int32_t Utils::InterpolateLookupTable(const int32_t *lookupTable, const int noItems, const int32_t value) {
   for (int i = 1; i < (noItems - 1); i++) {

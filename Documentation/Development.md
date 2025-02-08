@@ -14,6 +14,42 @@ You will need to update the build settings for include paths and point to the ne
 In the `source` folder there is a `Makefile` that can be used to build the repository using command line tools.
 When running the `make` command, specify which model of the device and the language(s) you would like to use.
 
+### Windows (MSYS2 environment)
+
+1. Download `msys2` install package from the [official website](https://msys2.org) and install it according to the instruction there;
+2. Install requried packages (here and for the future commands use **`mingw64.exe`** terminal):
+```
+$ pacman -S mingw-w64-x86_64-arm-none-eabi-gcc mingw-w64-x86_64-libwinpthread-git python3 python3-pip make unzip git
+```
+3. Download _3rd party RISC-V toolchain_ `xpack-riscv-none-elf-gcc-...-win32-x64.zip` from [this repository](https://github.com/xpack-dev-tools/riscv-none-elf-gcc-xpack/releases);
+4. Move downloaded `xpack-riscv-none-elf-gcc-...-win32-x64.zip` to `msys64` _Windows_ directory (e.g., `C:\msys64\`);
+5. Extract files from `xpack-riscv-none-elf-gcc-...-win32-x64.zip` and go back to _home_ directory:
+```
+$ cd /
+$ unzip xpack-riscv-none-elf-gcc-...-win32-x64.zip
+$ cd ~
+```
+6. Permanently set `PATH` environment variable, so all required toolchains could be available for `make` and for other build scripts:
+```
+$ echo 'export PATH=/xpack-riscv-none-elf-gcc-.../bin:${PATH}' >> ~/.bashrc
+$ source ~/.bashrc
+```
+7. Additionally, `OpenOCD` and/or `ST-Link` can be installed as well to help with flashing:
+```
+$ pacman -S mingw-w64-x86_64-openocd
+$ pacman -S mingw-w64-x86_64-stlink
+```
+8. Clone _IronOS_ repo:
+```
+$ git clone --recursive https://github.com/Ralim/IronOS.git
+$ cd IronOS
+```
+9. Follow steps _4-8_ from [macOS section](#macos);
+10. `pip` can be updated inside `venv` only:
+```
+$ python3 -m pip install --upgrade pip
+```
+
 ### macOS
 
 Use the following steps to set up a build environment for IronOS on the command line (in Terminal).

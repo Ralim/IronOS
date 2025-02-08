@@ -10,7 +10,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <string.h>
-#include "types.h"
+#include <zephyr/types.h>
 #include "bl_port.h"
 
 #define BT_UINT_MAX     0xffffffff

@@ -9,7 +9,7 @@
 #include "BSP.h"
 #include "Settings.h"
 #include "Types.h"
-#include "Utils.h"
+#include "Utils.hpp"
 #include "configuration.h"
 #include "main.hpp"
 #include "power.hpp"

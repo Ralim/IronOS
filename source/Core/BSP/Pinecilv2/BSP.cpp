@@ -9,7 +9,7 @@
 #include "Setup.h"
 #include "TipThermoModel.h"
 #include "USBPD.h"
-#include "Utils.h"
+#include "Utils.hpp"
 #include "bl702_adc.h"
 #include "configuration.h"
 #include "crc32.h"

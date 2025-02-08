@@ -1,12 +1,12 @@
 /*
- * Utils.h
+ * Utils.hpp
  *
  *  Created on: 28 Apr 2021
  *      Author: Ralim
  */
 
-#ifndef CORE_DRIVERS_UTILS_H_
-#define CORE_DRIVERS_UTILS_H_
+#ifndef CORE_DRIVERS_UTILS_HPP_
+#define CORE_DRIVERS_UTILS_HPP_
 #include <stdint.h>
 class Utils {
 public:
@@ -18,4 +18,4 @@ public:
 
 };
 
-#endif /* CORE_DRIVERS_UTILS_H_ */
+#endif /* CORE_DRIVERS_UTILS_HPP_ */
