@@ -48,7 +48,7 @@ The _TS101_ & _S60(P)_ irons and _MHP30_ & _T55_ plates feature a higher resolut
 
 \*\*\* _TS80_ is replaced by _TS80P_. Production ramped down a long time ago and it's just existing stock clearing the system. It's marked not recommended being optimistic that people might pause and buy the far superior _TS80P_ instead. This is the main reason why the _TS80_ is **_no longer recommended_**.
 
-\*\*\*\* **EPR/PPS with 28V support** is _**disabled by default**_ due to [safety concerns](https://github.com/Ralim/IronOS/pull/2073), but to enable it back
+\*\*\*\* **EPR/PPS with 28V support** is _**disabled by default**_ due to [safety concerns](https://github.com/Ralim/IronOS/pull/2073), but to enable it back  
 set _PD Mode_ option in _Power settings_ submenu to _Safe_ or _Default_.
 
 ## Getting Started
