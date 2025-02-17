@@ -45,7 +45,7 @@ OperatingMode guiHandleDraw(void) {
   OLED::clearScreen(); // Clear ready for render pass
   bool d = getSettingValue(SettingsOptions::ReverseButtonMenu);
   bool e = getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled);
-#ifdef REVERSE_NAV_EVERYWHERE
+#ifdef OPT_FULL_BUTTON_REVERSE
   bool f = currentOperatingMode == OperatingMode::TemperatureAdjust;
   // Read button state
   ButtonState buttons = getButtonState((e && f) || (d && !e && !f) || (d && e && !f));
@@ -117,7 +117,7 @@ OperatingMode guiHandleDraw(void) {
     newMode = gui_SolderingSleepingMode(buttons, &context);
     break;
   case OperatingMode::TemperatureAdjust:
-#ifdef REVERSE_NAV_EVERYWHERE
+#ifdef OPT_FULL_BUTTON_REVERSE
     newMode = gui_solderingTempAdjust(getButtonState(), &context);
 #else
     newMode = gui_solderingTempAdjust(getButtonState(e), &context);
@@ -130,7 +130,7 @@ OperatingMode guiHandleDraw(void) {
     newMode = performCJCC(buttons, &context);
     break;
   case OperatingMode::SettingsMenu:
-#ifdef REVERSE_NAV_EVERYWHERE
+#ifdef OPT_FULL_BUTTON_REVERSE
     newMode = gui_SettingsMenu(getButtonState(), &context);
 #else
     newMode = gui_SettingsMenu(getButtonState(d), &context);
