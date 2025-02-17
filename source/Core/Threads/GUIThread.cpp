@@ -41,14 +41,15 @@ OperatingMode currentOperatingMode = OperatingMode::InitialisationDone; // Curre
 guiContext    context;                                                  // Context passed to functions to aid in state during render passes
 
 OperatingMode handle_post_init_state();
+
 OperatingMode guiHandleDraw(void) {
   OLED::clearScreen(); // Clear ready for render pass
-  bool d = getSettingValue(SettingsOptions::ReverseButtonMenu);
-  bool e = getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled);
+  bool swapButtonMenu = getSettingValue(SettingsOptions::ReverseButtonMenu);
+  bool swapButtonTemp = getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled);
 #ifdef OPT_FULL_BUTTON_REVERSE
-  bool f = currentOperatingMode == OperatingMode::TemperatureAdjust;
+  bool isTempAdjust = currentOperatingMode == OperatingMode::TemperatureAdjust;
   // Read button state
-  ButtonState buttons = getButtonState((e && f) || (d && !e && !f) || (d && e && !f));
+  ButtonState buttons = getButtonState((swapButtonTemp && isTempAdjust) || (swapButtonMenu && !swapButtonTemp && !isTempAdjust) || (swapButtonMenu && swapButtonTemp && !isTempAdjust));
 #else
   ButtonState buttons = getButtonState();
 #endif
@@ -120,7 +121,7 @@ OperatingMode guiHandleDraw(void) {
 #ifdef OPT_FULL_BUTTON_REVERSE
     newMode = gui_solderingTempAdjust(getButtonState(), &context);
 #else
-    newMode = gui_solderingTempAdjust(getButtonState(e), &context);
+    newMode = gui_solderingTempAdjust(getButtonState(swapButtonTemp), &context);
 #endif
     break;
   case OperatingMode::DebugMenuReadout:
@@ -133,7 +134,7 @@ OperatingMode guiHandleDraw(void) {
 #ifdef OPT_FULL_BUTTON_REVERSE
     newMode = gui_SettingsMenu(getButtonState(), &context);
 #else
-    newMode = gui_SettingsMenu(getButtonState(d), &context);
+    newMode = gui_SettingsMenu(getButtonState(swapButtonMenu), &context);
 #endif
     break;
   case OperatingMode::InitialisationDone:
@@ -153,6 +154,7 @@ OperatingMode guiHandleDraw(void) {
   };
   return newMode;
 }
+
 void guiRenderLoop(void) {
   OperatingMode newMode = guiHandleDraw(); // This does the screen drawing
 
