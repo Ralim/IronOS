@@ -275,7 +275,7 @@
       "displayText": "Omvända\n+- knappar",
       "description": "Omvänd ordning för temperaturjustering via plus/minus knapparna"
     },
-    "ReverseButtonNav": {
+    "ReverseButtonMenu": {
       "displayText": "Swap\nA/B keys",
       "description": "Reverse assignment of buttons for menu navigation"
     },

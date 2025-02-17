@@ -275,7 +275,7 @@
       "displayText": "キー入れ替え",
       "description": "温度設定時に+ボタンと-ボタンを入れ替える"
     },
-    "ReverseButtonNav": {
+    "ReverseButtonMenu": {
       "displayText": "Swap\nA/B keys",
       "description": "Reverse assignment of buttons for menu navigation"
     },

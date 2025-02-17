@@ -275,7 +275,7 @@
       "displayText": "Zamień przyc.\n+/-",
       "description": "Zamienia działanie przycisków zmiany temperatury grotu"
     },
-    "ReverseButtonNav": {
+    "ReverseButtonMenu": {
       "displayText": "Zamień przyc.\nA/B",
       "description": "Zamienia działanie przycisków nawigacyjne menu"
     },

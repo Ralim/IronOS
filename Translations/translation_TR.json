@@ -275,7 +275,7 @@
       "displayText": "Düğme Yerleri\nRotasyonu",
       "description": "\"Düğme Yerleri Rotasyonu\" Sıcaklık ayar düğmelerinin yerini değiştirin"
     },
-    "ReverseButtonNav": {
+    "ReverseButtonMenu": {
       "displayText": "Swap\nA/B keys",
       "description": "Reverse assignment of buttons for menu navigation"
     },

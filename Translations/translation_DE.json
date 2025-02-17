@@ -275,7 +275,7 @@
       "displayText": "+- Tasten\numkehren",
       "description": "Tastenbelegung zur Temperaturänderung umkehren"
     },
-    "ReverseButtonNav": {
+    "ReverseButtonMenu": {
       "displayText": "Swap\nA/B keys",
       "description": "Reverse assignment of buttons for menu navigation"
     },

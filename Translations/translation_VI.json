@@ -275,7 +275,7 @@
       "displayText": "Đao nguoc\nnút + -",
       "description": "Đao nguoc chuc năng các nút đieu chinh nhiet đo"
     },
-    "ReverseButtonNav": {
+    "ReverseButtonMenu": {
       "displayText": "Swap\nA/B keys",
       "description": "Reverse assignment of buttons for menu navigation"
     },

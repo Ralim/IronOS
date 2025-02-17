@@ -275,7 +275,7 @@
       "displayText": "Bytt\n+ - kn.",
       "description": "Bytt om på knappene for å stille temperatur"
     },
-    "ReverseButtonNav": {
+    "ReverseButtonMenu": {
       "displayText": "Swap\nA/B keys",
       "description": "Reverse assignment of buttons for menu navigation"
     },

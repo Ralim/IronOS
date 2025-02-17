@@ -474,7 +474,7 @@
       "description": "Swaps which button increments and decrements on temperature change screens."
     },
     {
-      "id": "ReverseButtonNav",
+      "id": "ReverseButtonMenu",
       "maxLen": 6,
       "maxLen2": 15,
       "description": "Swaps which buttons are used as Select and which as Scroll/Back in the settings menu."

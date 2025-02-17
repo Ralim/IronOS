@@ -275,7 +275,7 @@
       "displayText": "Inverser les\ntouches +/-",
       "description": "Inverser les boutons d'ajustement de température"
     },
-    "ReverseButtonNav": {
+    "ReverseButtonMenu": {
       "displayText": "Inverser les\ntouches A/B",
       "description": "Inverser les boutons de navigation du menu"
     },

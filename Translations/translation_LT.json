@@ -275,7 +275,7 @@
       "displayText": "Sukeisti + -\nmygtukus?",
       "description": "Sukeisti + - temperatūros keitimo mygtukus vietomis"
     },
-    "ReverseButtonNav": {
+    "ReverseButtonMenu": {
       "displayText": "Swap\nA/B keys",
       "description": "Reverse assignment of buttons for menu navigation"
     },
