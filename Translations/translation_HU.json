@@ -277,7 +277,7 @@
     },
     "ReverseButtonMenu": {
       "displayText": "Swap\nA/B keys",
-      "description": "Reverse assignment of buttons for menu navigation"
+      "description": "Reverse assignment of buttons for Settings menu"
     },
     "AnimSpeed": {
       "displayText": "Animáció\nsebessége",

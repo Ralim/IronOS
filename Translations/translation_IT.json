@@ -277,7 +277,7 @@
     },
     "ReverseButtonMenu": {
       "displayText": "Inversione\ntasti A/B",
-      "description": "Reverse assignment of buttons for menu navigation"
+      "description": "Reverse assignment of buttons for Settings menu"
     },
     "AnimSpeed": {
       "displayText": "Velocità\nanimazioni",
