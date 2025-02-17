@@ -90,7 +90,6 @@ enum class SettingsItemIndex : uint8_t {
   CooldownBlink,
   ScrollingSpeed,
   ReverseButtonTempChange,
-  ReverseButtonNav,
   AnimSpeed,
   AnimLoop,
   Brightness,
@@ -108,6 +107,7 @@ enum class SettingsItemIndex : uint8_t {
   SettingsReset,
   LanguageSwitch,
   SolderingTipType,
+  ReverseButtonMenu,
   NUM_ITEMS,
 };
 

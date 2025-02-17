@@ -47,7 +47,7 @@ static void displayAdvancedSolderingScreens(void);
 static void displayAdvancedIDLEScreens(void);
 static void displayScrollSpeed(void);
 static void displayReverseButtonTempChangeEnabled(void);
-static void displayReverseButtonNavEnabled(void);
+static void displayReverseButtonMenu(void);
 static void displayPowerLimit(void);
 
 #ifdef BLE_ENABLED
@@ -397,7 +397,7 @@ const menuitem UIMenu[] = {
   /* Reverse Temp change buttons +/- */
   {SETTINGS_DESC(SettingsItemIndex::ReverseButtonTempChange), nullptr, displayReverseButtonTempChangeEnabled, nullptr, SettingsOptions::ReverseButtonTempChangeEnabled, SettingsItemIndex::ReverseButtonTempChange, 7},
   /* Reverse menu nav buttons A/B */
-  {SETTINGS_DESC(SettingsItemIndex::ReverseButtonNav), nullptr, displayReverseButtonNavEnabled, nullptr, SettingsOptions::ReverseButtonNavEnabled, SettingsItemIndex::ReverseButtonNav, 7},
+  {SETTINGS_DESC(SettingsItemIndex::ReverseButtonMenu), nullptr, displayReverseButtonMenu, nullptr, SettingsOptions::ReverseButtonMenu, SettingsItemIndex::ReverseButtonMenu, 7},
   /* Animation Speed adjustment */
   {SETTINGS_DESC(SettingsItemIndex::AnimSpeed), nullptr, displayAnimationSpeed, nullptr, SettingsOptions::AnimationSpeed, SettingsItemIndex::AnimSpeed, 7},
   /* Animation Loop switch */
@@ -855,7 +855,8 @@ static void displayCoolingBlinkEnabled(void) { OLED::drawCheckbox(getSettingValu
 static void displayScrollSpeed(void) { OLED::print(translatedString((getSettingValue(SettingsOptions::DescriptionScrollSpeed)) ? Tr->SettingFastChar : Tr->SettingSlowChar), FontStyle::LARGE); }
 
 static void displayReverseButtonTempChangeEnabled(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled)); }
-static void displayReverseButtonNavEnabled(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::ReverseButtonNavEnabled)); }
+
+static void displayReverseButtonMenu(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::ReverseButtonMenu)); }
 
 static void displayAnimationSpeed(void) {
   switch (getSettingValue(SettingsOptions::AnimationSpeed)) {
@@ -952,7 +953,7 @@ static void setCalibrateVIN(void) {
     OLED::setCursor(0, 8);
     OLED::printNumber(getSettingValue(SettingsOptions::VoltageDiv), 3, FontStyle::SMALL);
 
-    switch (getButtonState(getSettingValue(SettingsOptions::ReverseButtonNavEnabled))) {
+    switch (getButtonState(getSettingValue(SettingsOptions::ReverseButtonMenu))) {
     case BUTTON_F_SHORT:
       prevSettingValue(SettingsOptions::VoltageDiv);
       break;

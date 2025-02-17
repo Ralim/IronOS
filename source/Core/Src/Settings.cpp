@@ -81,7 +81,6 @@ static const SettingConstants settingsConstants[(int)SettingsOptions::SettingsOp
     {MIN_CALIBRATION_OFFSET,                                                                  2500,                 1,           CALIBRATION_OFFSET}, // CalibrationOffset
     {                     0,                                                       MAX_POWER_LIMIT, POWER_LIMIT_STEPS,                  POWER_LIMIT}, // PowerLimit
     {                     0,                                                                     1,                 1,   REVERSE_BUTTON_TEMP_CHANGE}, // ReverseButtonTempChangeEnabled
-    {                     0,                                                                     1,                 1,           REVERSE_BUTTON_NAV}, // ReverseButtonNavEnabled
     {                     5,                                             TEMP_CHANGE_LONG_STEP_MAX,                 5,        TEMP_CHANGE_LONG_STEP}, // TempChangeLongStep
     {                     1,                                            TEMP_CHANGE_SHORT_STEP_MAX,                 1,       TEMP_CHANGE_SHORT_STEP}, // TempChangeShortStep
     {                     0,                                                                     9,                 1,                            7}, // HallEffectSensitivity
@@ -111,6 +110,7 @@ static const SettingConstants settingsConstants[(int)SettingsOptions::SettingsOp
     {                     1,                                                                    10,                 1,                            2}, // ProfileCooldownSpeed
     {                     0,                                                                    12,                 1,                            0}, // HallEffectSleepTime
     {                     0, (tipType_t::TIP_TYPE_MAX - 1) > 0 ? (tipType_t::TIP_TYPE_MAX - 1) : 0,                 1,                            0}, // SolderingTipType
+    {                     0,                                                                     1,                 1,           REVERSE_BUTTON_MENU}, // ReverseButtonMenu
 };
 static_assert((sizeof(settingsConstants) / sizeof(SettingConstants)) == ((int)SettingsOptions::SettingsOptionsLength));
 

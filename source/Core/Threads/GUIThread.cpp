@@ -43,7 +43,7 @@ guiContext    context;                                                  // Conte
 OperatingMode handle_post_init_state();
 OperatingMode guiHandleDraw(void) {
   OLED::clearScreen(); // Clear ready for render pass
-  bool d = getSettingValue(SettingsOptions::ReverseButtonNavEnabled);
+  bool d = getSettingValue(SettingsOptions::ReverseButtonMenu);
   bool e = getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled);
 #ifdef REVERSE_NAV_EVERYWHERE
   bool f = currentOperatingMode == OperatingMode::TemperatureAdjust;
