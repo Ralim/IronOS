@@ -92,8 +92,8 @@ int dma_open(struct device *dev, uint16_t oflag) {
   chCfg.dstPeriph      = dma_device->dst_req;
   chCfg.srcAddrInc     = dma_device->src_addr_inc;
   chCfg.destAddrInc    = dma_device->dst_addr_inc;
-  chCfg.srcBurstSzie   = dma_device->src_burst_size;
-  chCfg.dstBurstSzie   = dma_device->dst_burst_size;
+  chCfg.srcBurstSize   = dma_device->src_burst_size;
+  chCfg.dstBurstSize   = dma_device->dst_burst_size;
   chCfg.srcTransfWidth = dma_device->src_width;
   chCfg.dstTransfWidth = dma_device->dst_width;
   DMA_Channel_Init(&chCfg);

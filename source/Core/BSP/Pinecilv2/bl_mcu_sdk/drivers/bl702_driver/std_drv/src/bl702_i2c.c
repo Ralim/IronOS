@@ -205,9 +205,56 @@ void I2C_Enable(I2C_ID_Type i2cNo) {
   /* Check the parameters */
   CHECK_PARAM(IS_I2C_ID_TYPE(i2cNo));
 
+  // Set the M_EN bit
+
   tmpVal = BL_RD_REG(I2Cx, I2C_CONFIG);
   tmpVal = BL_SET_REG_BIT(tmpVal, I2C_CR_I2C_M_EN);
   BL_WR_REG(I2Cx, I2C_CONFIG, tmpVal);
+}
+
+uint8_t I2C_GetTXFIFOAvailable() {
+
+  volatile uint32_t tmpVal;
+  uint32_t          I2Cx = I2C_BASE;
+
+  tmpVal = BL_RD_REG(I2Cx, I2C_FIFO_CONFIG_1);
+  return tmpVal & 0b11; // Lowest two bits
+}
+
+void I2C_DMATxEnable() {
+  uint32_t tmpVal;
+  uint32_t I2Cx = I2C_BASE;
+
+  tmpVal = BL_RD_REG(I2Cx, I2C_FIFO_CONFIG_0);
+  tmpVal = BL_SET_REG_BIT(tmpVal, I2C_DMA_TX_EN);
+  tmpVal = BL_SET_REG_BIT(tmpVal, I2C_TX_FIFO_CLR);
+  tmpVal = BL_SET_REG_BIT(tmpVal, I2C_RX_FIFO_CLR);
+
+  // tmpVal = BL_SET_REG_BIT(tmpVal, I2C_DMA_RX_EN);
+
+  BL_WR_REG(I2Cx, I2C_FIFO_CONFIG_0, tmpVal);
+
+  // Ensure fifo setpoint is as we expect
+  tmpVal = BL_RD_REG(I2Cx, I2C_FIFO_CONFIG_1);
+  tmpVal &= I2C_TX_FIFO_CNT_UMSK;
+  tmpVal |= 1;
+
+  BL_WR_REG(I2Cx, I2C_FIFO_CONFIG_1, tmpVal);
+}
+void I2C_DMATxDisable() {
+  uint32_t tmpVal;
+  uint32_t I2Cx = I2C_BASE;
+
+  tmpVal = BL_RD_REG(I2Cx, I2C_FIFO_CONFIG_0);
+  tmpVal = BL_CLR_REG_BIT(tmpVal, I2C_DMA_TX_EN);
+  // tmpVal = BL_CLR_REG_BIT(tmpVal, I2C_DMA_RX_EN);
+  BL_WR_REG(I2Cx, I2C_FIFO_CONFIG_0, tmpVal);
+
+  tmpVal = BL_RD_REG(I2Cx, I2C_FIFO_CONFIG_1);
+  tmpVal &= I2C_TX_FIFO_CNT_UMSK;
+  tmpVal |= 1;
+
+  BL_WR_REG(I2Cx, I2C_FIFO_CONFIG_1, tmpVal);
 }
 
 /**
@@ -297,15 +344,15 @@ void I2C_Init(I2C_ID_Type i2cNo, I2C_Direction_Type direct, I2C_Transfer_Cfg *cf
     tmpVal = BL_CLR_REG_BIT(tmpVal, I2C_CR_I2C_SUB_ADDR_EN);
   }
 
+  // Packet length <=256 bytes per transaction
+
   tmpVal = BL_SET_REG_BITS_VAL(tmpVal, I2C_CR_I2C_PKT_LEN, cfg->dataSize - 1);
   BL_WR_REG(I2Cx, I2C_CONFIG, tmpVal);
 
   /* Set sub address */
   BL_WR_REG(I2Cx, I2C_SUB_ADDR, cfg->subAddr);
 
-#ifndef BFLB_USE_HAL_DRIVER
   Interrupt_Handler_Register(I2C_IRQn, I2C_IRQHandler);
-#endif
 }
 
 /**
