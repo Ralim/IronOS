@@ -122,7 +122,8 @@ void FRToSI2C::CpltCallback() {
   // Unlock the semaphore && allow task switch if desired by RTOS
   BaseType_t xHigherPriorityTaskWoken = pdFALSE;
 
-  vTaskNotifyGiveFromISR(IRQTaskWaitingHandle, &xHigherPriorityTaskWoken);
+  xSemaphoreGiveFromISR(I2CSemaphore, &xHigherPriorityTaskWoken);
+  xTaskNotifyFromISR(IRQTaskWaitingHandle, IRQFailureMarker ? 2 : 1, eSetValueWithOverwrite, &xHigherPriorityTaskWoken);
   portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 }
 
@@ -168,11 +169,9 @@ bool FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t read_address, uint8_t *p_b
   I2C_Enable(I2C0_ID);
 
   // Wait for transfer in background
-  ulTaskNotifyTake(pdTRUE, TICKS_100MS);
-
-  bool ok = !IRQFailureMarker; // Capture before unlock so it doesnt get overwritten
-  unlock();
-  return ok;
+  uint32_t result = 0;
+  xTaskNotifyWait(0xFFFFFFFF, 0xFFFFFFFF, &result, TICKS_100MS);
+  return result == 1;
 }
 
 bool FRToSI2C::Mem_Write(uint16_t DevAddress, uint16_t MemAddress, uint8_t *p_buffer, uint16_t number_of_byte) {
@@ -211,11 +210,9 @@ bool FRToSI2C::Mem_Write(uint16_t DevAddress, uint16_t MemAddress, uint8_t *p_bu
   I2C_Enable(I2C0_ID);
 
   // Wait for transfer in background
-  ulTaskNotifyTake(pdTRUE, TICKS_100MS);
-
-  bool ok = !IRQFailureMarker; // Capture before unlock so it doesnt get overwritten
-  unlock();
-  return ok;
+  uint32_t result = 0;
+  xTaskNotifyWait(0xFFFFFFFF, 0xFFFFFFFF, &result, TICKS_100MS);
+  return result == 1;
 }
 
 bool FRToSI2C::Transmit(uint16_t DevAddress, uint8_t *pData, uint16_t Size) { return Mem_Write(DevAddress, pData[0], pData + 1, Size - 1); }
