@@ -337,6 +337,13 @@ bool pdbs_dpm_evaluate_capability(const pd_msg *capabilities, pd_msg *request) {
   return true;
 }
 
+void add_v_record(pd_msg *cap, uint16_t voltage_mv, int numobj) {
+
+  uint16_t current = (voltage_mv) / getTipResistanceX10(); // In centi-amps
+
+  /* Add a PDO for the desired power. */
+  cap->obj[numobj] = PD_PDO_TYPE_FIXED | PD_PDO_SNK_FIXED_VOLTAGE_SET(PD_MV2PDV(voltage_mv)) | PD_PDO_SNK_FIXED_CURRENT_SET(current);
+}
 void pdbs_dpm_get_sink_capability(pd_msg *cap, const bool isPD3) {
   /* Keep track of how many PDOs we've added */
   int numobj = 0;
@@ -345,16 +352,30 @@ void pdbs_dpm_get_sink_capability(pd_msg *cap, const bool isPD3) {
    * for vSafe5V */
   /* Minimum current, 5 V, and higher capability. */
   cap->obj[numobj++] = PD_PDO_TYPE_FIXED | PD_PDO_SNK_FIXED_VOLTAGE_SET(PD_MV2PDV(5000)) | PD_PDO_SNK_FIXED_CURRENT_SET(DPM_MIN_CURRENT);
-
-  /* Get the current we want */
-  uint16_t voltage = USB_PD_VMAX * 1000; // in mv
-  if (requested_voltage_mv != 5000) {
-    voltage = requested_voltage_mv;
-  }
-  uint16_t current = (voltage) / getTipResistanceX10(); // In centi-amps
-
-  /* Add a PDO for the desired power. */
-  cap->obj[numobj++] = PD_PDO_TYPE_FIXED | PD_PDO_SNK_FIXED_VOLTAGE_SET(PD_MV2PDV(voltage)) | PD_PDO_SNK_FIXED_CURRENT_SET(current);
+  // Voltages must be in order of lowest -> highest
+#if USB_PD_VMAX >= 20
+  add_v_record(cap, 9000, numobj);
+  numobj++;
+  add_v_record(cap, 15000, numobj);
+  numobj++;
+  add_v_record(cap, 20000, numobj);
+  numobj++;
+#elif USB_PD_VMAX >= 15
+  add_v_record(cap, 9000, numobj);
+  numobj++;
+  add_v_record(cap, 12000, numobj);
+  numobj++;
+  add_v_record(cap, 15000, numobj);
+  numobj++;
+#elif USB_PD_VMAX >= 12
+  add_v_record(cap, 9000, numobj);
+  numobj++;
+  add_v_record(cap, 12000, numobj);
+  numobj++;
+#elif USB_PD_VMAX >= 9
+  add_v_record(cap, 9000, numobj);
+  numobj++;
+#endif
 
   /* Set the USB communications capable flag. */
   cap->obj[0] |= PD_PDO_SNK_FIXED_USB_COMMS;
