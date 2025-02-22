@@ -538,6 +538,8 @@ BL_Err_Type I2C_MasterSendBlocking(I2C_ID_Type i2cNo, I2C_Transfer_Cfg *cfg) {
   uint32_t timeOut = 0;
   uint32_t temp    = 0;
   uint32_t I2Cx    = I2C_BASE;
+  I2C_IntMask(I2C0_ID, I2C_TRANS_END_INT, UNMASK); // This function needs to be able to use the irq status bits
+  I2C_IntMask(I2C0_ID, I2C_NACK_RECV_INT, UNMASK); // This function needs to be able to use the irq status bits
 
   /* Check the parameters */
   CHECK_PARAM(IS_I2C_ID_TYPE(i2cNo));
@@ -618,6 +620,9 @@ BL_Err_Type I2C_MasterReceiveBlocking(I2C_ID_Type i2cNo, I2C_Transfer_Cfg *cfg) 
   I2C_Disable(i2cNo);
   I2C_Init(i2cNo, I2C_READ, cfg);
   I2C_Enable(i2cNo);
+  I2C_IntMask(I2C0_ID, I2C_TRANS_END_INT, UNMASK); // This function needs to be able to use the irq status bits
+  I2C_IntMask(I2C0_ID, I2C_NACK_RECV_INT, UNMASK); // This function needs to be able to use the irq status bits
+
   timeOut = I2C_FIFO_STATUS_TIMEOUT;
   if (cfg->dataSize == 0 && cfg->subAddrSize == 0) {
     while (BL_RD_REG(I2C_BASE, I2C_BUS_BUSY)) {
