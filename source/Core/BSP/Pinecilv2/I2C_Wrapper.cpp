@@ -21,6 +21,7 @@ SemaphoreHandle_t FRToSI2C::I2CSemaphore = nullptr;
 StaticSemaphore_t FRToSI2C::xSemaphoreBuffer;
 #define I2C_TIME_OUT     (uint16_t)(12000)
 #define I2C_TX_FIFO_ADDR (0x4000A300 + 0x88)
+#define I2C_RX_FIFO_ADDR (0x4000A300 + 0x8C)
 
 // Used by the irq handler
 
@@ -60,6 +61,41 @@ void i2c_irq_tx_fifo_low() {
   }
 }
 
+void i2c_rx_pop_fifo() {
+  // Pop one word from the fifo and store it
+  uint32_t value = *((uint32_t *)I2C_RX_FIFO_ADDR);
+
+  for (int i = 0; i < 4 && IRQDataSizeLeft > 0; i++) {
+    *IRQDataPointer = value & 0xFF;
+    IRQDataPointer++;
+    IRQDataSizeLeft--;
+    value >>= 8;
+  }
+}
+
+void i2c_irq_rx_fifo_ready() {
+  // Draining the Rx FiFo
+  while (I2C_GetRXFIFOAvailable() > 0) {
+    i2c_rx_pop_fifo();
+  }
+
+  if (IRQDataSizeLeft == 0) {
+    // Disable IRQ, were done
+    I2C_IntMask(I2C0_ID, I2C_RX_FIFO_READY_INT, MASK);
+  }
+}
+
+void i2c_irq_done_read() {
+  IRQFailureMarker = false;
+  // If there was a non multiple of 4 bytes to be read, they are pushed to the fifo now (end of transfer interrupt)
+  // So we catch them here
+  while (I2C_GetRXFIFOAvailable() > 0) {
+    i2c_rx_pop_fifo();
+  }
+
+  // Mask IRQ's back off
+  FRToSI2C::CpltCallback(); // Causes the lock to be released
+}
 void i2c_irq_done() {
   IRQFailureMarker = false;
   // Mask IRQ's back off
@@ -75,6 +111,7 @@ void i2c_irq_nack() {
 void FRToSI2C::CpltCallback() {
   // This is only triggered from IRQ context
   I2C_IntMask(I2C0_ID, I2C_TX_FIFO_READY_INT, MASK);
+  I2C_IntMask(I2C0_ID, I2C_RX_FIFO_READY_INT, MASK);
   I2C_IntMask(I2C0_ID, I2C_TRANS_END_INT, MASK);
   I2C_IntMask(I2C0_ID, I2C_NACK_RECV_INT, MASK);
 
@@ -110,16 +147,32 @@ bool FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t read_address, uint8_t *p_b
   i2cCfg.data             = p_buffer;
   i2cCfg.subAddrSize      = 1; // one byte address
 
-  vTaskSuspendAll();
-  /* --------------- */
-  err = I2C_MasterReceiveBlocking(I2C0_ID, &i2cCfg);
-  xTaskResumeAll();
-  bool res = err == SUCCESS;
-  if (!res) {
-    I2C_Unstick();
-  }
+  // Store handles for IRQ
+  IRQDataPointer       = p_buffer;
+  IRQDataSizeLeft      = number_of_byte;
+  IRQTaskWaitingHandle = xTaskGetCurrentTaskHandle();
+  IRQFailureMarker     = false;
+
+  I2C_Disable(I2C0_ID);
+  // Setup and run
+  I2C_Init(I2C0_ID, I2C_READ, &i2cCfg); // Setup hardware for the I2C init header with the device address
+  I2C_IntMask(I2C0_ID, I2C_TRANS_END_INT, UNMASK);
+  I2C_IntMask(I2C0_ID, I2C_NACK_RECV_INT, UNMASK);
+  I2C_IntMask(I2C0_ID, I2C_RX_FIFO_READY_INT, UNMASK);
+  I2C_Int_Callback_Install(I2C0_ID, I2C_TRANS_END_INT, i2c_irq_done_read);
+  I2C_Int_Callback_Install(I2C0_ID, I2C_NACK_RECV_INT, i2c_irq_nack);
+  I2C_Int_Callback_Install(I2C0_ID, I2C_RX_FIFO_READY_INT, i2c_irq_rx_fifo_ready);
+  CPU_Interrupt_Enable(I2C_IRQn);
+
+  // Start
+  I2C_Enable(I2C0_ID);
+
+  // Wait for transfer in background
+  ulTaskNotifyTake(pdTRUE, TICKS_100MS);
+
+  bool ok = !IRQFailureMarker; // Capture before unlock so it doesnt get overwritten
   unlock();
-  return res;
+  return ok;
 }
 
 bool FRToSI2C::Mem_Write(uint16_t DevAddress, uint16_t MemAddress, uint8_t *p_buffer, uint16_t number_of_byte) {
