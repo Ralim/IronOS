@@ -397,6 +397,9 @@ BaseType_t xQueueGenericReset( QueueHandle_t xQueue,
         /* Check for multiplication overflow. */
         configASSERT( ( uxItemSize == 0 ) || ( uxQueueLength == ( xQueueSizeInBytes / uxItemSize ) ) );
 
+        /* Check for addition overflow. */
+        configASSERT( ( sizeof( Queue_t ) + xQueueSizeInBytes ) >  xQueueSizeInBytes );
+        
         /* Allocate the queue and storage area.  Justification for MISRA
          * deviation as follows:  pvPortMalloc() always ensures returned memory
          * blocks are aligned per the requirements of the MCU stack.  In this case
