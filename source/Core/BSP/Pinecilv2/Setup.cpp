@@ -69,7 +69,6 @@ void hardware_init() {
   // 200kHz and above works
 
   I2C_ClockSet(I2C0_ID, 300000); // Sets clock to around 25 kHz less than set here
-  CPU_Interrupt_Enable(I2C_IRQn);
 
   TIMER_SetCompValue(TIMER_CH0, TIMER_COMP_ID_0, 0);
 }

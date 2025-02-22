@@ -24,9 +24,10 @@ StaticSemaphore_t FRToSI2C::xSemaphoreBuffer;
 
 // Used by the irq handler
 
-volatile uint8_t *irq_data_ptr;
-volatile uint8_t  irq_data_size_left;
-
+volatile uint8_t     *IRQDataPointer;
+volatile uint8_t      IRQDataSizeLeft;
+volatile bool         IRQFailureMarker;
+volatile TaskHandle_t IRQTaskWaitingHandle = NULL;
 /****** IRQ Handlers ******/
 void i2c_irq_tx_fifo_low() {
   // Filling tx fifo
@@ -34,51 +35,58 @@ void i2c_irq_tx_fifo_low() {
   // FiFo can store up to 2, 32-bit words
   // So we fill it until it has no free room (or we run out of data)
 
-  while (irq_data_size_left > 0 && I2C_GetTXFIFOAvailable() > 0) {
+  while (IRQDataSizeLeft > 0 && I2C_GetTXFIFOAvailable() > 0) {
     // Can put in at least 1 byte
 
     // Build a 32-bit word from bytes
-    uint32_t value = 0;
-    for (int i = 0; i < 4 && irq_data_size_left > 0; i++) {
+    uint32_t value   = 0;
+    int      packing = IRQDataSizeLeft >= 4 ? 0 : 4 - IRQDataSizeLeft;
+    for (int i = 0; i < 4 && IRQDataSizeLeft > 0; i++) {
       value >>= 8;
-      value |= (*irq_data_ptr) << 24; // Shift to the left, adding new data to the higher byte
-      irq_data_ptr++;                 // Shift to next byte
-      irq_data_size_left--;
+      value |= (*IRQDataPointer) << 24; // Shift to the left, adding new data to the higher byte
+      IRQDataPointer++;                 // Shift to next byte
+      IRQDataSizeLeft--;
     }
-
+    // Handle shunting remaining bytes if not a full 4 to send
+    for (int i = 0; i < packing; i++) {
+      value >>= 8;
+    }
     // Push the new value to the fifo
     *((volatile uint32_t *)I2C_TX_FIFO_ADDR) = value;
   }
-  if (irq_data_size_left == 0) {
+  if (IRQDataSizeLeft == 0) {
     // Disable IRQ, were done
     I2C_IntMask(I2C0_ID, I2C_TX_FIFO_READY_INT, MASK);
   }
 }
 
 void i2c_irq_done() {
-
+  IRQFailureMarker = false;
   // Mask IRQ's back off
-  I2C_IntMask(I2C0_ID, I2C_TRANS_END_INT, MASK);
-  I2C_IntMask(I2C0_ID, I2C_NACK_RECV_INT, MASK);
   FRToSI2C::CpltCallback(); // Causes the lock to be released
 }
 void i2c_irq_nack() {
-
+  IRQFailureMarker = true;
   // Mask IRQ's back off
-  I2C_IntMask(I2C0_ID, I2C_TRANS_END_INT, MASK);
-  I2C_IntMask(I2C0_ID, I2C_NACK_RECV_INT, MASK);
   FRToSI2C::CpltCallback(); // Causes the lock to be released
 }
 
 /****** END IRQ Handlers ******/
 void FRToSI2C::CpltCallback() {
   // This is only triggered from IRQ context
+  I2C_IntMask(I2C0_ID, I2C_TX_FIFO_READY_INT, MASK);
+  I2C_IntMask(I2C0_ID, I2C_TRANS_END_INT, MASK);
+  I2C_IntMask(I2C0_ID, I2C_NACK_RECV_INT, MASK);
+
+  CPU_Interrupt_Disable(I2C_IRQn); // Disable IRQ's
 
   I2C_Disable(I2C0_ID); // Disable I2C to tidy up
 
   // Unlock the semaphore && allow task switch if desired by RTOS
   BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+
   xSemaphoreGiveFromISR(I2CSemaphore, &xHigherPriorityTaskWoken);
+  vTaskNotifyGiveFromISR(IRQTaskWaitingHandle, &xHigherPriorityTaskWoken);
   portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 }
 
@@ -129,36 +137,31 @@ bool FRToSI2C::Mem_Write(uint16_t DevAddress, uint16_t MemAddress, uint8_t *p_bu
   i2cCfg.data             = p_buffer;
   i2cCfg.subAddrSize      = 1; // one byte address
 
-  if (number_of_byte <= 32) {
-    vTaskSuspendAll();
-    /* --------------- */
-    err = I2C_MasterSendBlocking(I2C0_ID, &i2cCfg);
-    xTaskResumeAll();
-    bool res = err == SUCCESS;
-    if (!res) {
-      I2C_Unstick();
-    }
-    unlock();
-    return res;
-  } else {
-    // Store handles for IRQ
-    irq_data_ptr       = p_buffer;
-    irq_data_size_left = number_of_byte;
+  // Store handles for IRQ
+  IRQDataPointer       = p_buffer;
+  IRQDataSizeLeft      = number_of_byte;
+  IRQTaskWaitingHandle = xTaskGetCurrentTaskHandle();
+  IRQFailureMarker     = false;
 
-    // Setup and run
-    I2C_Init(I2C0_ID, I2C_WRITE, &i2cCfg); // Setup hardware for the I2C init header with the device address
-    I2C_IntMask(I2C0_ID, I2C_TRANS_END_INT, UNMASK);
-    I2C_IntMask(I2C0_ID, I2C_NACK_RECV_INT, UNMASK);
-    I2C_IntMask(I2C0_ID, I2C_TX_FIFO_READY_INT, UNMASK);
-    I2C_Int_Callback_Install(I2C0_ID, I2C_TRANS_END_INT, i2c_irq_done);
-    I2C_Int_Callback_Install(I2C0_ID, I2C_NACK_RECV_INT, i2c_irq_nack);
-    I2C_Int_Callback_Install(I2C0_ID, I2C_TX_FIFO_READY_INT, i2c_irq_tx_fifo_low);
-    i2c_irq_tx_fifo_low(); // Pre-fill fifo
-    // Start
-    I2C_Enable(I2C0_ID);
-    // Dont unlock as tx is still ongoing, will be cleared in irq of i2c finishing
-    return true;
-  }
+  // Setup and run
+  I2C_Init(I2C0_ID, I2C_WRITE, &i2cCfg); // Setup hardware for the I2C init header with the device address
+  I2C_IntMask(I2C0_ID, I2C_TRANS_END_INT, UNMASK);
+  I2C_IntMask(I2C0_ID, I2C_NACK_RECV_INT, UNMASK);
+  I2C_IntMask(I2C0_ID, I2C_TX_FIFO_READY_INT, UNMASK);
+  I2C_Int_Callback_Install(I2C0_ID, I2C_TRANS_END_INT, i2c_irq_done);
+  I2C_Int_Callback_Install(I2C0_ID, I2C_NACK_RECV_INT, i2c_irq_nack);
+  I2C_Int_Callback_Install(I2C0_ID, I2C_TX_FIFO_READY_INT, i2c_irq_tx_fifo_low);
+  CPU_Interrupt_Enable(I2C_IRQn);
+
+  i2c_irq_tx_fifo_low();
+
+  // Start
+  I2C_Enable(I2C0_ID);
+
+  // Wait for transfer in background
+  ulTaskNotifyTake(pdTRUE, TICKS_100MS);
+  MSG((char *)"-");
+  return !IRQFailureMarker;
 }
 
 bool FRToSI2C::Transmit(uint16_t DevAddress, uint8_t *pData, uint16_t Size) { return Mem_Write(DevAddress, pData[0], pData + 1, Size - 1); }
