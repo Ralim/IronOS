@@ -161,7 +161,6 @@
 #define OLED_96x16 1
 #define TEMP_NTC
 #define ACCEL_BMA
-#define CUSTOM_MAX_TEMP_C 1 // Uses custom max temp lookup
 #define ACCEL_SC7
 #define HALL_SENSOR
 #define HALL_SI7210
