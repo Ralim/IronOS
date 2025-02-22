@@ -221,6 +221,15 @@ uint8_t I2C_GetTXFIFOAvailable() {
   return tmpVal & 0b11; // Lowest two bits
 }
 
+uint8_t I2C_GetRXFIFOAvailable() {
+
+  volatile uint32_t tmpVal;
+  uint32_t          I2Cx = I2C_BASE;
+
+  tmpVal = BL_RD_REG(I2Cx, I2C_FIFO_CONFIG_1);
+  return (tmpVal >> 8) & 0b11; // Lowest two bits of byte 2
+}
+
 void I2C_DMATxEnable() {
   uint32_t tmpVal;
   uint32_t I2Cx = I2C_BASE;
@@ -641,6 +650,7 @@ BL_Err_Type I2C_MasterReceiveBlocking(I2C_ID_Type i2cNo, I2C_Transfer_Cfg *cfg) 
       return TIMEOUT;
     }
   }
+
   /* Read I2C data */
   while (cfg->dataSize - i >= 4) {
     timeOut = I2C_FIFO_STATUS_TIMEOUT;

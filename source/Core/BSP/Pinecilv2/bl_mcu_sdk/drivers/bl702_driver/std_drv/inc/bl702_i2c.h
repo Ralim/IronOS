@@ -170,6 +170,7 @@ void        I2C_Disable(I2C_ID_Type i2cNo);
 BL_Err_Type I2C_SetDeglitchCount(I2C_ID_Type i2cNo, uint8_t cnt);
 BL_Err_Type I2C_Reset(I2C_ID_Type i2cNo);
 uint8_t     I2C_GetTXFIFOAvailable();
+uint8_t     I2C_GetRXFIFOAvailable();
 void        I2C_DMATxEnable();
 void        I2C_DMATxDisable();
 void        I2C_SetPrd(I2C_ID_Type i2cNo, uint8_t phase);
