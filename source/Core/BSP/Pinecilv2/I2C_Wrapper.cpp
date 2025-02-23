@@ -165,12 +165,14 @@ bool FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t read_address, uint8_t *p_b
   I2C_Int_Callback_Install(I2C0_ID, I2C_RX_FIFO_READY_INT, i2c_irq_rx_fifo_ready);
   CPU_Interrupt_Enable(I2C_IRQn);
 
+  CPU_Interrupt_Disable(BLE_IRQn);
   // Start
   I2C_Enable(I2C0_ID);
 
   // Wait for transfer in background
   uint32_t result = 0;
   xTaskNotifyWait(0xFFFFFFFF, 0xFFFFFFFF, &result, TICKS_100MS);
+  CPU_Interrupt_Enable(BLE_IRQn);
   return result == 1;
 }
 
@@ -206,12 +208,14 @@ bool FRToSI2C::Mem_Write(uint16_t DevAddress, uint16_t MemAddress, uint8_t *p_bu
 
   i2c_irq_tx_fifo_low();
 
+  CPU_Interrupt_Disable(BLE_IRQn);
   // Start
   I2C_Enable(I2C0_ID);
 
   // Wait for transfer in background
   uint32_t result = 0;
   xTaskNotifyWait(0xFFFFFFFF, 0xFFFFFFFF, &result, TICKS_100MS);
+  CPU_Interrupt_Enable(BLE_IRQn);
   return result == 1;
 }
 
