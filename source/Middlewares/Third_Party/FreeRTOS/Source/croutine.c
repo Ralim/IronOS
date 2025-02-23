@@ -1,6 +1,8 @@
 /*
- * FreeRTOS Kernel V10.4.1
- * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * FreeRTOS Kernel V11.1.0
+ * Copyright (C) 2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *
+ * SPDX-License-Identifier: MIT
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -28,7 +30,7 @@
 #include "task.h"
 #include "croutine.h"
 
-/* Remove the whole file is co-routines are not being used. */
+/* Remove the whole file if co-routines are not being used. */
 #if ( configUSE_CO_ROUTINES != 0 )
 
 /*
@@ -41,17 +43,19 @@
 
 
 /* Lists for ready and blocked co-routines. --------------------*/
-    static List_t pxReadyCoRoutineLists[ configMAX_CO_ROUTINE_PRIORITIES ]; /*< Prioritised ready co-routines. */
-    static List_t xDelayedCoRoutineList1;                                   /*< Delayed co-routines. */
-    static List_t xDelayedCoRoutineList2;                                   /*< Delayed co-routines (two lists are used - one for delays that have overflowed the current tick count. */
-    static List_t * pxDelayedCoRoutineList = NULL;                          /*< Points to the delayed co-routine list currently being used. */
-    static List_t * pxOverflowDelayedCoRoutineList = NULL;                  /*< Points to the delayed co-routine list currently being used to hold co-routines that have overflowed the current tick count. */
-    static List_t xPendingReadyCoRoutineList;                               /*< Holds co-routines that have been readied by an external event.  They cannot be added directly to the ready lists as the ready lists cannot be accessed by interrupts. */
+    static List_t pxReadyCoRoutineLists[ configMAX_CO_ROUTINE_PRIORITIES ]; /**< Prioritised ready co-routines. */
+    static List_t xDelayedCoRoutineList1;                                   /**< Delayed co-routines. */
+    static List_t xDelayedCoRoutineList2;                                   /**< Delayed co-routines (two lists are used - one for delays that have overflowed the current tick count. */
+    static List_t * pxDelayedCoRoutineList = NULL;                          /**< Points to the delayed co-routine list currently being used. */
+    static List_t * pxOverflowDelayedCoRoutineList = NULL;                  /**< Points to the delayed co-routine list currently being used to hold co-routines that have overflowed the current tick count. */
+    static List_t xPendingReadyCoRoutineList;                               /**< Holds co-routines that have been readied by an external event.  They cannot be added directly to the ready lists as the ready lists cannot be accessed by interrupts. */
 
 /* Other file private variables. --------------------------------*/
     CRCB_t * pxCurrentCoRoutine = NULL;
-    static UBaseType_t uxTopCoRoutineReadyPriority = 0;
-    static TickType_t xCoRoutineTickCount = 0, xLastTickCount = 0, xPassedTicks = 0;
+    static UBaseType_t uxTopCoRoutineReadyPriority = ( UBaseType_t ) 0U;
+    static TickType_t xCoRoutineTickCount = ( TickType_t ) 0U;
+    static TickType_t xLastTickCount = ( TickType_t ) 0U;
+    static TickType_t xPassedTicks = ( TickType_t ) 0U;
 
 /* The initial state of the co-routine when it is created. */
     #define corINITIAL_STATE    ( 0 )
@@ -63,14 +67,14 @@
  * This macro accesses the co-routine ready lists and therefore must not be
  * used from within an ISR.
  */
-    #define prvAddCoRoutineToReadyQueue( pxCRCB )                                                                       \
-    {                                                                                                                   \
-        if( pxCRCB->uxPriority > uxTopCoRoutineReadyPriority )                                                          \
-        {                                                                                                               \
-            uxTopCoRoutineReadyPriority = pxCRCB->uxPriority;                                                           \
-        }                                                                                                               \
-        vListInsertEnd( ( List_t * ) &( pxReadyCoRoutineLists[ pxCRCB->uxPriority ] ), &( pxCRCB->xGenericListItem ) ); \
-    }
+    #define prvAddCoRoutineToReadyQueue( pxCRCB )                                                                               \
+    do {                                                                                                                        \
+        if( ( pxCRCB )->uxPriority > uxTopCoRoutineReadyPriority )                                                              \
+        {                                                                                                                       \
+            uxTopCoRoutineReadyPriority = ( pxCRCB )->uxPriority;                                                               \
+        }                                                                                                                       \
+        vListInsertEnd( ( List_t * ) &( pxReadyCoRoutineLists[ ( pxCRCB )->uxPriority ] ), &( ( pxCRCB )->xGenericListItem ) ); \
+    } while( 0 )
 
 /*
  * Utility to ready all the lists used by the scheduler.  This is called
@@ -105,7 +109,12 @@
         BaseType_t xReturn;
         CRCB_t * pxCoRoutine;
 
+        traceENTER_xCoRoutineCreate( pxCoRoutineCode, uxPriority, uxIndex );
+
         /* Allocate the memory that will store the co-routine control block. */
+        /* MISRA Ref 11.5.1 [Malloc memory assignment] */
+        /* More details at: https://github.com/FreeRTOS/FreeRTOS-Kernel/blob/main/MISRA.md#rule-115 */
+        /* coverity[misra_c_2012_rule_11_5_violation] */
         pxCoRoutine = ( CRCB_t * ) pvPortMalloc( sizeof( CRCB_t ) );
 
         if( pxCoRoutine )
@@ -154,6 +163,8 @@
             xReturn = errCOULD_NOT_ALLOCATE_REQUIRED_MEMORY;
         }
 
+        traceRETURN_xCoRoutineCreate( xReturn );
+
         return xReturn;
     }
 /*-----------------------------------------------------------*/
@@ -162,6 +173,8 @@
                                      List_t * pxEventList )
     {
         TickType_t xTimeToWake;
+
+        traceENTER_vCoRoutineAddToDelayedList( xTicksToDelay, pxEventList );
 
         /* Calculate the time to wake - this may overflow but this is
          * not a problem. */
@@ -194,6 +207,8 @@
              * function must be called with interrupts disabled. */
             vListInsert( pxEventList, &( pxCurrentCoRoutine->xEventListItem ) );
         }
+
+        traceRETURN_vCoRoutineAddToDelayedList();
     }
 /*-----------------------------------------------------------*/
 
@@ -281,6 +296,8 @@
 
     void vCoRoutineSchedule( void )
     {
+        traceENTER_vCoRoutineSchedule();
+
         /* Only run a co-routine after prvInitialiseCoRoutineLists() has been
          * called.  prvInitialiseCoRoutineLists() is called automatically when a
          * co-routine is created. */
@@ -311,6 +328,8 @@
             /* Call the co-routine. */
             ( pxCurrentCoRoutine->pxCoRoutineFunction )( pxCurrentCoRoutine, pxCurrentCoRoutine->uxIndex );
         }
+
+        traceRETURN_vCoRoutineSchedule();
     }
 /*-----------------------------------------------------------*/
 
@@ -339,6 +358,8 @@
         CRCB_t * pxUnblockedCRCB;
         BaseType_t xReturn;
 
+        traceENTER_xCoRoutineRemoveFromEventList( pxEventList );
+
         /* This function is called from within an interrupt.  It can only access
          * event lists and the pending ready list.  This function assumes that a
          * check has already been made to ensure pxEventList is not empty. */
@@ -355,7 +376,30 @@
             xReturn = pdFALSE;
         }
 
+        traceRETURN_xCoRoutineRemoveFromEventList( xReturn );
+
         return xReturn;
     }
+/*-----------------------------------------------------------*/
+
+/*
+ * Reset state in this file. This state is normally initialized at start up.
+ * This function must be called by the application before restarting the
+ * scheduler.
+ */
+    void vCoRoutineResetState( void )
+    {
+        /* Lists for ready and blocked co-routines. */
+        pxDelayedCoRoutineList = NULL;
+        pxOverflowDelayedCoRoutineList = NULL;
+
+        /* Other file private variables. */
+        pxCurrentCoRoutine = NULL;
+        uxTopCoRoutineReadyPriority = ( UBaseType_t ) 0U;
+        xCoRoutineTickCount = ( TickType_t ) 0U;
+        xLastTickCount = ( TickType_t ) 0U;
+        xPassedTicks = ( TickType_t ) 0U;
+    }
+/*-----------------------------------------------------------*/
 
 #endif /* configUSE_CO_ROUTINES == 0 */

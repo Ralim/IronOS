@@ -11,7 +11,6 @@
 #define configMAX_PRIORITIES                    (4)
 #define configMINIMAL_STACK_SIZE                ((unsigned short)128)
 #define configMAX_TASK_NAME_LEN                 24
-#define configUSE_16_BIT_TICKS                  0
 #define configIDLE_SHOULD_YIELD                 0
 #define configUSE_TASK_NOTIFICATIONS            1
 #define configUSE_MUTEXES                       1
@@ -22,6 +21,7 @@
 #define configUSE_TIME_SLICING                  1
 #define configUSE_NEWLIB_REENTRANT              0
 #define configENABLE_BACKWARD_COMPATIBILITY     0
+#define configTICK_TYPE_WIDTH_IN_BITS           TICK_TYPE_WIDTH_32_BITS
 
 #define INCLUDE_uxTaskGetStackHighWaterMark 1
 #define INCLUDE_xTaskGetSchedulerState      1
@@ -62,11 +62,11 @@
 #define configMAX_SYSCALL_INTERRUPT_PRIORITY         (configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY << (8 - configPRIO_BITS))
 
 /* Define to trap errors during development. */
-#define configASSERT(x)       \
-  if ((x) == 0) {             \
-    taskDISABLE_INTERRUPTS(); \
-    for (;;)                  \
-      ;                       \
+#define configASSERT(x)                                                                                                                                                                                \
+  if ((x) == 0) {                                                                                                                                                                                      \
+    taskDISABLE_INTERRUPTS();                                                                                                                                                                          \
+    for (;;)                                                                                                                                                                                           \
+      ;                                                                                                                                                                                                \
   }
 
 #define INCLUDE_vTaskPrioritySet            1
