@@ -1,7 +1,7 @@
 # Default Reference Distro for development env & deploy:
-# * Alpine Linux, version 3.19 *
+# * Alpine Linux, version 3.21 *
 
-FROM alpine:3.19
+FROM alpine:3.21
 LABEL maintainer="Ben V. Brown <ralim@ralimtek.com>"
 
 # Default current dir when container starts
