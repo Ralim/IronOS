@@ -30,6 +30,8 @@
 #define configUSE_PORT_OPTIMISED_TASK_SELECTION 1
 #define configUSE_STATS_FORMATTING_FUNCTIONS    0
 #define configUSE_TICKLESS_IDLE                 0
+#define configTASK_NOTIFICATION_ARRAY_ENTRIES   2
+#define configUSE_TASK_NOTIFICATIONS            1
 
 /* Co-routine definitions. */
 #define configUSE_CO_ROUTINES 0
