@@ -20,6 +20,7 @@ extern "C" {
 SemaphoreHandle_t FRToSI2C::I2CSemaphore = nullptr;
 StaticSemaphore_t FRToSI2C::xSemaphoreBuffer;
 #define I2C_TIME_OUT     (uint16_t)(12000)
+#define I2C_NOTIFY_INDEX 1
 #define I2C_TX_FIFO_ADDR (0x4000A300 + 0x88)
 #define I2C_RX_FIFO_ADDR (0x4000A300 + 0x8C)
 
@@ -123,7 +124,7 @@ void FRToSI2C::CpltCallback() {
   BaseType_t xHigherPriorityTaskWoken = pdFALSE;
 
   xSemaphoreGiveFromISR(I2CSemaphore, &xHigherPriorityTaskWoken);
-  xTaskNotifyFromISR(IRQTaskWaitingHandle, IRQFailureMarker ? 2 : 1, eSetValueWithOverwrite, &xHigherPriorityTaskWoken);
+  xTaskNotifyIndexedFromISR(IRQTaskWaitingHandle, I2C_NOTIFY_INDEX, IRQFailureMarker ? 2 : 1, eSetValueWithOverwrite, &xHigherPriorityTaskWoken);
   portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 }
 
@@ -171,12 +172,14 @@ bool FRToSI2C::Mem_Read(uint16_t DevAddress, uint16_t read_address, uint8_t *p_b
 
   // Wait for transfer in background
   uint32_t result = 0;
-  xTaskNotifyWait(0xFFFFFFFF, 0xFFFFFFFF, &result, TICKS_100MS);
+  xTaskNotifyWaitIndexed(I2C_NOTIFY_INDEX, 0xFFFFFFFF, 0xFFFFFFFF, &result, 0xFFFFFFFF);
   CPU_Interrupt_Enable(BLE_IRQn);
+
   return result == 1;
 }
 
 bool FRToSI2C::Mem_Write(uint16_t DevAddress, uint16_t MemAddress, uint8_t *p_buffer, uint16_t number_of_byte) {
+
   if (!lock()) {
     return false;
   }
@@ -208,14 +211,15 @@ bool FRToSI2C::Mem_Write(uint16_t DevAddress, uint16_t MemAddress, uint8_t *p_bu
 
   i2c_irq_tx_fifo_low();
 
-  CPU_Interrupt_Disable(BLE_IRQn);
+  CPU_Interrupt_Disable(BLE_IRQn); // Shut up BLE while we do the transfer
   // Start
   I2C_Enable(I2C0_ID);
 
   // Wait for transfer in background
   uint32_t result = 0;
-  xTaskNotifyWait(0xFFFFFFFF, 0xFFFFFFFF, &result, TICKS_100MS);
-  CPU_Interrupt_Enable(BLE_IRQn);
+  xTaskNotifyWaitIndexed(I2C_NOTIFY_INDEX, 0xFFFFFFFF, 0xFFFFFFFF, &result, 0xFFFFFFFF);
+  CPU_Interrupt_Enable(BLE_IRQn); // Now BLE can run
+
   return result == 1;
 }
 
