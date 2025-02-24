@@ -28,28 +28,28 @@
       "message": "! VERR. !"
     },
     "WarningThermalRunaway": {
-      "message": "Emballement\nthermique"
+      "message": "Surchauffe\ncritique"
     },
     "WarningTipShorted": {
-      "message": "!Tip Shorted!"
+      "message": "!Panne en court-circuit!"
     },
     "SettingsCalibrationWarning": {
       "message": "Avant de redémarrer, assurez-vous que la panne et la poignée sont à température ambiante !"
     },
     "CJCCalibrating": {
-      "message": "Etalonnage\n"
+      "message": "Étalonnage\n"
     },
     "SettingsResetWarning": {
       "message": "Voulez-vous vraiment réinitialiser les paramètres aux valeurs par défaut ?"
     },
     "UVLOWarningString": {
-      "message": "DC FAIBL"
+      "message": "TENSION FAIBLE"
     },
     "UndervoltageString": {
       "message": "Sous-tension\n"
     },
     "InputVoltageString": {
-      "message": "V d'entrée: \n"
+      "message": "Tension d'entrée:\n"
     },
     "SleepingAdvancedString": {
       "message": "En veille...\n"
@@ -97,7 +97,7 @@
       "description": ""
     },
     "UIMenu": {
-      "displayText": "Interface\nutilisateur",
+      "displayText": "Interface\nUtilisateur",
       "description": ""
     },
     "AdvancedMenu": {
@@ -137,11 +137,11 @@
   "menuOptions": {
     "DCInCutoff": {
       "displayText": "Source\nd'alim.",
-      "description": "Source d'alimentation. Règle la tension de coupure (DC 10V) (S 3.3V par cellules, désactive la limite de puissance)"
+      "description": "Source d'alimentation. Définit la tension de coupure (DC 10V) (S 3.3V par cellule, désactive la limite de puissance)"
     },
     "MinVolCell": {
       "displayText": "Tension\nminimale",
-      "description": "Tension minimale autorisée par cellule (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+      "description": "Tension minimale autorisée par cellule (3S : 3 - 3.7V | 4-6S : 2.4 - 3.7V)"
     },
     "QCMaxVoltage": {
       "displayText": "Tension\nQC",
@@ -149,7 +149,7 @@
     },
     "PDNegTimeout": {
       "displayText": "Délai\nexpir. PD",
-      "description": "Délai de la negociation PD par étapes de 100ms pour la compatiblité avec certains chargeurs QC"
+      "description": "Délai de négociation PD par paliers de 100ms pour la compatibilité avec certains chargeurs QC"
     },
     "USBPDMode": {
       "displayText": "PD\nMode",
@@ -161,7 +161,7 @@
     },
     "AutoStart": {
       "displayText": "Chauffer au\ndémarrage",
-      "description": "A=activé | V=mode veille | O=mode veille à température ambiante"
+      "description": "A = activé | V = mode veille | O = mode veille à température ambiante"
     },
     "TempChangeShortStep": {
       "displayText": "Incrément\nappui court",
@@ -233,7 +233,7 @@
     },
     "MotionSensitivity": {
       "displayText": "Sensibilité\nau mouvement",
-      "description": "1=peu sensible | ... | 9=très sensible"
+      "description": "1 = très peu sensible | ... | 9 = extrêmement sensible"
     },
     "SleepTemperature": {
       "displayText": "Temp.\nveille",
@@ -241,11 +241,11 @@
     },
     "SleepTimeout": {
       "displayText": "Délai\nveille",
-      "description": "Délai avant mise en veille (s=secondes | m=minutes)"
+      "description": "Délai avant mise en veille (s = secondes | m = minutes)"
     },
     "ShutdownTimeout": {
       "displayText": "Délai\narrêt",
-      "description": "Délai avant l'arrêt du fer à souder (m=minutes)"
+      "description": "Délai avant l'arrêt du fer à souder (m = minutes)"
     },
     "HallEffSensitivity": {
       "displayText": "Sensibilité\ncapteur effet hall",
@@ -269,7 +269,7 @@
     },
     "ScrollingSpeed": {
       "displayText": "Vitesse de\ndéfilement",
-      "description": "Vitesse de défilement du texte (R=rapide | L=lent)"
+      "description": "Vitesse de défilement du texte (R = rapide | L = lent)"
     },
     "ReverseButtonTempChange": {
       "displayText": "Inverser les\ntouches + -",
@@ -277,7 +277,7 @@
     },
     "AnimSpeed": {
       "displayText": "Vitesse\nanim. icônes",
-      "description": "Vitesse des animations des icônes dans le menu (L=lente | M=moyenne | R=rapide)"
+      "description": "Vitesse des animations des icônes dans le menu (L = lente | M = moyenne | R = rapide)"
     },
     "AnimLoop": {
       "displayText": "Rejouer\nanim. icônes",
@@ -293,7 +293,7 @@
     },
     "LOGOTime": {
       "displayText": "Durée logo\ndémarrage",
-      "description": "Définit la durée d'affichage du logo au démarrage (s=secondes)"
+      "description": "Définit la durée d'affichage du logo au démarrage (s = secondes)"
     },
     "AdvancedIdle": {
       "displayText": "Écran veille\ndétaillé",
@@ -309,7 +309,7 @@
     },
     "PowerLimit": {
       "displayText": "Limite de\npuissance",
-      "description": "Puissance maximale utilisable (W=watts)"
+      "description": "Puissance maximale utilisable (W = watts)"
     },
     "CalibrateCJC": {
       "displayText": "Étalonner CJC\nau prochain démarrage",
