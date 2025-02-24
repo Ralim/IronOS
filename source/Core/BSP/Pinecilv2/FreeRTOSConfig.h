@@ -17,7 +17,6 @@
 #define configTOTAL_HEAP_SIZE                   ((size_t)1024 * 8)
 #define configMAX_TASK_NAME_LEN                 (24)
 #define configUSE_TRACE_FACILITY                0
-#define configUSE_16_BIT_TICKS                  0
 #define configIDLE_SHOULD_YIELD                 0
 #define configUSE_MUTEXES                       1
 #define configQUEUE_REGISTRY_SIZE               8
@@ -32,6 +31,7 @@
 #define configUSE_TICKLESS_IDLE                 0
 #define configTASK_NOTIFICATION_ARRAY_ENTRIES   2
 #define configUSE_TASK_NOTIFICATIONS            1
+#define configTICK_TYPE_WIDTH_IN_BITS           TICK_TYPE_WIDTH_32_BITS
 
 /* Co-routine definitions. */
 #define configUSE_CO_ROUTINES 0
