@@ -186,7 +186,6 @@ void guiRenderLoop(void) {
   }
   // Render done, draw it out
   OLED::refresh();
-  osDelay(10);
 }
 
 OperatingMode handle_post_init_state() {
