@@ -28,7 +28,7 @@ _This firmware does **NOT** support the USB port while running for changing sett
 | Miniware MHP30 | ❌  | ❌  | ✔️  | ❌  | ❌  |    ✔️     |          ✔️          |                                         |
 |   Pinecil V1   | ✔️  | ✔️  | ✔️  | ❌  | ❌  |    ❌     |        ❌ \*         |                                         |
 |   Pinecil V2   | ✔️  | ✔️  | ✔️  | ✔️  | ✔️  |    ✔️     |          ✔️          |                                         |
-| Miniware TS101 | ✔️  | ❌  | ✔️  | ✔️  | ❌  |    ✔️     |          ✔️          | Full OLED resolution supported in upcoming v2.23. [OLED issues with DFU:1.06](https://github.com/Ralim/IronOS/issues/2063) |
+| Miniware TS101 | ✔️  | ❌  | ✔️  | ✔️  | ❌  |    ✔️     |      ✔️ \*\*\*\*     | Full OLED resolution not yet supported. |
 |   Sequre S60   | ❌  | ❌  | ✔️  | ❌  | ❌  |    ❌     |          ✔️          | Full OLED resolution not yet supported. |
 |  Sequre S60P   | ❌  | ❌  | ✔️  | ❌  | ❌  |    ❌     |          ✔️          | Full OLED resolution not yet supported. |
 |   Sequre T55   | ❌  | ❌  | ✔️  | ❌  | ❌  |    N/A    |          ✔️          | Full OLED resolution not yet supported. |
@@ -50,6 +50,8 @@ The _TS101_ & _S60(P)_ irons and _MHP30_ & _T55_ plates feature a higher resolut
 
 \*\*\*\* **EPR/PPS with 28V support** is _**disabled by default**_ due to [safety concerns](https://github.com/Ralim/IronOS/pull/2073), but to turn it back on set  
 _PD Mode_ option in _Power settings_ submenu to _Safe_ or _Default_.
+
+\*\*\*\*\* Some users confirm that there is a version of newer _TS101_ revision with another OLED screen model, which is not supported yet at all by _IronOS_ unfortunately. See [this bug report](https://github.com/Ralim/IronOS/issues/2063) for more information.
 
 ## Getting Started
 
