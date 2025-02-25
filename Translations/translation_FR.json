@@ -43,7 +43,7 @@
       "message": "Voulez-vous vraiment réinitialiser les paramètres aux valeurs par défaut ?"
     },
     "UVLOWarningString": {
-      "message": "TENSION FAIBLE"
+      "message": "DC FAIBLE"
     },
     "UndervoltageString": {
       "message": "Sous-tension\n"
