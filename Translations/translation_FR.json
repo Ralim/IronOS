@@ -263,9 +263,17 @@
       "displayText": "Orientation de l'écran",
       "description": "D=droitier | G=gaucher | A=automatique"
     },
+    "CooldownBlink": {
+      "displayText": "Cooldown\nflashing",
+      "description": "Flash temp reading at idle while tip is hot"
+    },
     "ScrollingSpeed": {
       "displayText": "Vitesse de défilement",
       "description": "Vitesse de défilement du texte (R=rapide | L=lent)"
+    },
+    "ReverseButtonTempChange": {
+      "displayText": "Swap\n+ - keys",
+      "description": "Reverse assignment of buttons for temperature adjustment"
     },
     "AnimSpeed": {
       "displayText": "Vitesse anim. icônes",
