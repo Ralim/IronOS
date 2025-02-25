@@ -107,7 +107,7 @@
   },
   "menuValues": {
     "USBPDModeDefault": {
-      "displayText": "Mode\npar\nDéfaut"
+      "displayText": "Mode\npar Défaut"
     },
     "USBPDModeNoDynamic": {
       "displayText": "Non\nDynamique"
