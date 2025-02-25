@@ -264,8 +264,8 @@
       "description": "D=droitier | G=gaucher | A=automatique"
     },
     "CooldownBlink": {
-      "displayText": "Cooldown\nflashing",
-      "description": "Flash temp reading at idle while tip is hot"
+      "displayText": "Refroidir en\nclignotant",
+      "description": "Faire clignoter la température lors du refroidissement tant que la panne est chaude"
     },
     "ScrollingSpeed": {
       "displayText": "Vitesse de défilement",
