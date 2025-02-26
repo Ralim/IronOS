@@ -19,10 +19,10 @@
       "message": "USB-PD\nnon détecté !"
     },
     "LockingKeysString": {
-      "message": "VERROUILLÉ"
+      "message": "VEROUILLÉ"
     },
     "UnlockingKeysString": {
-      "message": "DEVERROUILLÉ"
+      "message": "DÉVÉROUILLÉ"
     },
     "WarningKeysLockedString": {
       "message": "! VERR. !"
@@ -43,19 +43,19 @@
       "message": "Voulez-vous vraiment réinitialiser les paramètres aux valeurs par défaut ?"
     },
     "UVLOWarningString": {
-      "message": "TENSION FAIBLE"
+      "message": "DC FAIBLE"
     },
     "UndervoltageString": {
       "message": "Sous-tension\n"
     },
     "InputVoltageString": {
-      "message": "Tension d'entrée:\n"
+      "message": "Tension:\n"
     },
     "SleepingAdvancedString": {
       "message": "En veille...\n"
     },
     "SleepingTipAdvancedString": {
-      "message": "Panne: \n"
+      "message": "Panne:\n"
     },
     "ProfilePreheatString": {
       "message": "Préchauffage\n"
@@ -67,7 +67,7 @@
       "message": "Votre appareil semble être une contrefaçon !"
     },
     "TooHotToStartProfileWarning": {
-      "message": "Too hot to\nstart profile"
+      "message": "Trop chaud pour\nactiver le profile"
     }
   },
   "characters": {
@@ -160,7 +160,7 @@
       "description": "Température utilisée en \"mode boost\""
     },
     "AutoStart": {
-      "displayText": "Chauffer audémarrage",
+      "displayText": "Chauffer\nau démarrage",
       "description": "A=activé | V=mode veille | O=mode veille à température ambiante"
     },
     "TempChangeShortStep": {
@@ -248,19 +248,19 @@
       "description": "Délai avant l'arrêt du fer à souder (m=minutes)"
     },
     "HallEffSensitivity": {
-      "displayText": "Sensibilité\ncapteur effet hall",
+      "displayText": "Sensibilité capteur\neffet hall",
       "description": "Sensibilité du capteur à effet Hall pour la mise en veille (1=peu sensible | ... | 9=très sensible)"
     },
     "HallEffSleepTimeout": {
-      "displayText": "TempsVeille\nCapteurHall",
+      "displayText": "Temps de veille\ncapteur effet hall",
       "description": "Intervalle avant le démarrage du \"mode veille\" lorsque l'effet Hall est supérieur au seuil"
     },
     "TemperatureUnit": {
-      "displayText": "Unité de température",
+      "displayText": "Unité de\ntempérature",
       "description": "C=Celsius | F=Fahrenheit"
     },
     "DisplayRotation": {
-      "displayText": "Orientation de l'écran",
+      "displayText": "Orientation\nde l'écran",
       "description": "D=droitier | G=gaucher | A=automatique"
     },
     "CooldownBlink": {
@@ -268,7 +268,7 @@
       "description": "Faire clignoter la température lors du refroidissement tant que la panne est chaude"
     },
     "ScrollingSpeed": {
-      "displayText": "Vitesse de défilement",
+      "displayText": "Vitesse\nde défilement",
       "description": "Vitesse de défilement du texte (R=rapide | L=lent)"
     },
     "ReverseButtonTempChange": {
@@ -276,7 +276,7 @@
       "description": "Inverser les boutons d'ajustement de température"
     },
     "AnimSpeed": {
-      "displayText": "Vitesse anim. icônes",
+      "displayText": "Vitesse\nanim. icônes",
       "description": "Vitesse des animations des icônes dans le menu (L=lente | M=moyenne | R=rapide)"
     },
     "AnimLoop": {
@@ -312,7 +312,7 @@
       "description": "Puissance maximale utilisable (W=watts)"
     },
     "CalibrateCJC": {
-      "displayText": "Étalonner CJC\nau prochain démarrage",
+      "displayText": "Étalonner CJC\nau reboot",
       "description": "Au prochain démarrage, la compensation de soudure froide sera calibrée (non nécessaire si Delta T est < 5°C)."
     },
     "VoltageCalibration": {
