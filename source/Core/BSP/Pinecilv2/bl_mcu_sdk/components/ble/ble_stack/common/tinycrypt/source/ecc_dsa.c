@@ -100,7 +100,7 @@ static void bits2int(uECC_word_t *native, const uint8_t *bits, unsigned bits_siz
 int uECC_sign_with_k(const uint8_t *private_key, const uint8_t *message_hash, unsigned hash_size, uECC_word_t *k, uint8_t *signature, uECC_Curve curve) {
   uECC_word_t  tmp[NUM_ECC_WORDS];
   uECC_word_t  s[NUM_ECC_WORDS];
-  uECC_word_t *k2[2] = {tmp, s};
+  uECC_word_t *k2[2]     = {tmp, s};
   uECC_word_t *initial_Z = 0;
   uECC_word_t  p[NUM_ECC_WORDS * 2];
   uECC_word_t  carry;
@@ -117,10 +117,10 @@ int uECC_sign_with_k(const uint8_t *private_key, const uint8_t *message_hash, un
   /* If an RNG function was specified, try to get a random initial Z value to improve
      protection against side-channel attacks. */
   if (g_rng_function) {
-      if (!uECC_generate_random_int(k2[carry], curve->p, num_words)) {
-          return 0;
-      }
-      initial_Z = k2[carry];
+    if (!uECC_generate_random_int(k2[carry], curve->p, num_words)) {
+        return 0;
+    }
+    initial_Z = k2[carry];
   }
   EccPoint_mult(p, curve->G, k2[!carry], initial_Z, num_n_bits + 1, curve);
   if (uECC_vli_isZero(p, num_words)) {
