@@ -118,7 +118,7 @@ int uECC_sign_with_k(const uint8_t *private_key, const uint8_t *message_hash, un
      protection against side-channel attacks. */
   if (g_rng_function) {
     if (!uECC_generate_random_int(k2[carry], curve->p, num_words)) {
-        return 0;
+      return 0;
     }
     initial_Z = k2[carry];
   }
