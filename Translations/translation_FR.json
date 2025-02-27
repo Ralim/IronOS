@@ -4,7 +4,7 @@
   "tempUnitFahrenheit": false,
   "messagesWarn": {
     "CalibrationDone": {
-      "message": "Étalonnage\nterminé!"
+      "message": "Étalonnage\nterminé !"
     },
     "ResetOKMessage": {
       "message": "Reset OK"
@@ -19,55 +19,55 @@
       "message": "USB-PD\nnon détecté !"
     },
     "LockingKeysString": {
-      "message": "VERROUIL"
+      "message": "VEROUILLÉ"
     },
     "UnlockingKeysString": {
-      "message": "DEVERROU"
+      "message": "DÉVÉROUILLÉ"
     },
     "WarningKeysLockedString": {
       "message": "! VERR. !"
     },
     "WarningThermalRunaway": {
-      "message": "Emballement\nthermique"
+      "message": "Surchauffe\ncritique"
     },
     "WarningTipShorted": {
-      "message": "!Tip Shorted!"
+      "message": "!Court-circuit Panne!"
     },
     "SettingsCalibrationWarning": {
       "message": "Avant de redémarrer, assurez-vous que la panne et la poignée sont à température ambiante !"
     },
     "CJCCalibrating": {
-      "message": "Etalonnage\n"
+      "message": "Étalonnage\n"
     },
     "SettingsResetWarning": {
       "message": "Voulez-vous vraiment réinitialiser les paramètres aux valeurs par défaut ?"
     },
     "UVLOWarningString": {
-      "message": "DC FAIBL"
+      "message": "DC FAIBLE"
     },
     "UndervoltageString": {
       "message": "Sous-tension\n"
     },
     "InputVoltageString": {
-      "message": "V d'entrée: \n"
+      "message": "Tension:\n"
     },
     "SleepingAdvancedString": {
       "message": "En veille...\n"
     },
     "SleepingTipAdvancedString": {
-      "message": "Panne: \n"
+      "message": "Panne:\n"
     },
     "ProfilePreheatString": {
-      "message": "Preheat\n"
+      "message": "Préchauffage\n"
     },
     "ProfileCooldownString": {
-      "message": "Cooldown\n"
+      "message": "Refroidissement\n"
     },
     "DeviceFailedValidationWarning": {
       "message": "Votre appareil semble être une contrefaçon !"
     },
     "TooHotToStartProfileWarning": {
-      "message": "Too hot to\nstart profile"
+      "message": "Trop chaud pour\nactiver le profile"
     }
   },
   "characters": {
@@ -107,22 +107,22 @@
   },
   "menuValues": {
     "USBPDModeDefault": {
-      "displayText": "Default\nMode"
+      "displayText": "Mode\npar Défaut"
     },
     "USBPDModeNoDynamic": {
-      "displayText": "No\nDynamic"
+      "displayText": "Non\nDynamique"
     },
     "USBPDModeSafe": {
-      "displayText": "Safe\nMode"
+      "displayText": "Mode\nSafe"
     },
     "TipTypeAuto": {
-      "displayText": "Auto\nSense"
+      "displayText": "Détéction\nAuto."
     },
     "TipTypeT12Long": {
       "displayText": "TS100\nLong"
     },
     "TipTypeT12Short": {
-      "displayText": "Pine\nShort"
+      "displayText": "Pine\nCourt"
     },
     "TipTypeT12PTS": {
       "displayText": "PTS\n200"
@@ -137,11 +137,11 @@
   "menuOptions": {
     "DCInCutoff": {
       "displayText": "Source\nd'alim.",
-      "description": "Source d'alimentation. Règle la tension de coupure (DC 10V) (S 3.3V par cellules, désactive la limite de puissance)"
+      "description": "Source d'alimentation. Définit la tension de coupure (DC 10V) (S 3.3V par cellule, désactive la limite de puissance)"
     },
     "MinVolCell": {
       "displayText": "Tension\nminimale",
-      "description": "Tension minimale autorisée par cellule (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+      "description": "Tension minimale autorisée par cellule (3S : 3 - 3.7V | 4-6S : 2.4 - 3.7V)"
     },
     "QCMaxVoltage": {
       "displayText": "Tension\nQC",
@@ -149,18 +149,18 @@
     },
     "PDNegTimeout": {
       "displayText": "Délai\nexpir. PD",
-      "description": "Délai de la negociation PD par étapes de 100ms pour la compatiblité avec certains chargeurs QC"
+      "description": "Délai de négociation PD par paliers de 100ms pour la compatibilité avec certains chargeurs QC"
     },
     "USBPDMode": {
-      "displayText": "PD\nMode",
-      "description": "No Dynamic disables EPR & PPS, Safe mode does not use padding resistance"
+      "displayText": "Mode\nPD",
+      "description": "Aucune dynamique ne désactive EPR & PPS, le mode sécurisé n'utilise pas de résistance de protection"
     },
     "BoostTemperature": {
       "displayText": "Temp.\nboost",
       "description": "Température utilisée en \"mode boost\""
     },
     "AutoStart": {
-      "displayText": "Chauffer au\ndémarrage",
+      "displayText": "Chauffer\nau démarrage",
       "description": "A=activé | V=mode veille | O=mode veille à température ambiante"
     },
     "TempChangeShortStep": {
@@ -177,23 +177,23 @@
     },
     "ProfilePhases": {
       "displayText": "Profile\nPhases",
-      "description": "Number of phases in profile mode"
+      "description": "Nombre de phases dans le mode de profile"
     },
     "ProfilePreheatTemp": {
-      "displayText": "Preheat\nTemp",
-      "description": "Preheat to this temperature at the start of profile mode"
+      "displayText": "Temp.\nPréchauffage",
+      "description": "Préchauffer à cette température au début du mode de profile"
     },
     "ProfilePreheatSpeed": {
-      "displayText": "Preheat\nSpeed",
-      "description": "Preheat at this rate (degrees per second)"
+      "displayText": "Vitesse\nPréchauffage",
+      "description": "Préchauffer à cette vitesse (degrés par seconde)"
     },
     "ProfilePhase1Temp": {
-      "displayText": "Phase 1\nTemp",
-      "description": "Target temperature for the end of this phase"
+      "displayText": "Temp.\nPhase 1",
+      "description": "Température séléctionnée pour la fin de cette phase"
     },
     "ProfilePhase1Duration": {
-      "displayText": "Phase 1\nDuration",
-      "description": "Target duration of this phase (seconds)"
+      "displayText": "Durée\nPhase 1",
+      "description": "Durée séléctionnée pour cette phase (secondes)"
     },
     "ProfilePhase2Temp": {
       "displayText": "Phase 2\nTemp",
@@ -228,12 +228,12 @@
       "description": ""
     },
     "ProfileCooldownSpeed": {
-      "displayText": "Cooldown\nSpeed",
-      "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
+      "displayText": "Vitesse de\nRefroidissement",
+      "description": "Refroidissement à ce rythme à la fin du mode profil (degrés par seconde)"
     },
     "MotionSensitivity": {
       "displayText": "Sensibilité\nau mouvement",
-      "description": "1=peu sensible | ... | 9=très sensible"
+      "description": "1=très peu sensible | ... | 9=extrêmement sensible"
     },
     "SleepTemperature": {
       "displayText": "Temp.\nveille",
@@ -248,11 +248,11 @@
       "description": "Délai avant l'arrêt du fer à souder (m=minutes)"
     },
     "HallEffSensitivity": {
-      "displayText": "Sensibilité\ncapteur effet hall",
+      "displayText": "Sensibilité capteur\neffet hall",
       "description": "Sensibilité du capteur à effet Hall pour la mise en veille (1=peu sensible | ... | 9=très sensible)"
     },
     "HallEffSleepTimeout": {
-      "displayText": "HallSensor\nSleepTime",
+      "displayText": "Temps de veille\ncapteur effet hall",
       "description": "Intervalle avant le démarrage du \"mode veille\" lorsque l'effet Hall est supérieur au seuil"
     },
     "TemperatureUnit": {
@@ -268,7 +268,7 @@
       "description": "Faire clignoter la température lors du refroidissement tant que la panne est chaude"
     },
     "ScrollingSpeed": {
-      "displayText": "Vitesse de\ndéfilement",
+      "displayText": "Vitesse\nde défilement",
       "description": "Vitesse de défilement du texte (R=rapide | L=lent)"
     },
     "ReverseButtonTempChange": {
@@ -312,7 +312,7 @@
       "description": "Puissance maximale utilisable (W=watts)"
     },
     "CalibrateCJC": {
-      "displayText": "Étalonner CJC\nau prochain démarrage",
+      "displayText": "Étalonner CJC\nau reboot",
       "description": "Au prochain démarrage, la compensation de soudure froide sera calibrée (non nécessaire si Delta T est < 5°C)."
     },
     "VoltageCalibration": {
@@ -340,8 +340,8 @@
       "description": ""
     },
     "SolderingTipType": {
-      "displayText": "Soldering\nTip Type",
-      "description": "Select the tip type fitted"
+      "displayText": "Soudure\nType de panne",
+      "description": "Séléctionner le type de panne utilisé"
     }
   }
 }
