@@ -105,12 +105,12 @@ extern uint32_t SystemCoreClock;
 #define configMINIMAL_STACK_SIZE                ((uint16_t)256)
 #define configTOTAL_HEAP_SIZE                   ((size_t)1024 * 14) /*Currently use about 9000*/
 #define configMAX_TASK_NAME_LEN                 (32)
-#define configUSE_16_BIT_TICKS                  0
 #define configUSE_MUTEXES                       1
 #define configQUEUE_REGISTRY_SIZE               8
 #define configUSE_TIMERS                        0
 #define configUSE_PORT_OPTIMISED_TASK_SELECTION 1
 #define configCHECK_FOR_STACK_OVERFLOW          2 /*Bump this to 2 during development and bug hunting*/
+#define configTICK_TYPE_WIDTH_IN_BITS           TICK_TYPE_WIDTH_32_BITS
 
 /* Co-routine definitions. */
 #define configUSE_CO_ROUTINES           0
@@ -156,11 +156,11 @@ extern uint32_t SystemCoreClock;
 /* Normal assert() semantics without relying on the provision of an assert.h
  header file. */
 /* USER CODE BEGIN 1 */
-#define configASSERT(x)       \
-  if ((x) == 0) {             \
-    taskDISABLE_INTERRUPTS(); \
-    for (;;)                  \
-      ;                       \
+#define configASSERT(x)                                                                                                                                                                                \
+  if ((x) == 0) {                                                                                                                                                                                      \
+    taskDISABLE_INTERRUPTS();                                                                                                                                                                          \
+    for (;;)                                                                                                                                                                                           \
+      ;                                                                                                                                                                                                \
   }
 /* USER CODE END 1 */
 
