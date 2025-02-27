@@ -64,6 +64,12 @@
     </li>
         </ul>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#pinecil-v2">Pinecil V2</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#troubleshooting">Troubleshooting</a>
+    </li>
+        </ul>
+    </li>
     </ul>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../TS80%28P%29/">TS80(P)</a>
@@ -160,7 +166,7 @@ Head to the <a href="https://github.com/Ralim/IronOS/actions">Actions</a> page a
 In general you probably want <code>master</code>.</p>
 <p>Once you click on a run, scroll down to the "Artifacts" section and then click on your device model name to download a zip file.
 Then this works the same as a production release (use the correct file).</p>
-<h1 id="pinecil-v2">Pinecil V2</h1>
+<h2 id="pinecil-v2">Pinecil V2</h2>
 <ul>
 <li>The MCU in Pinecil V2 is Bouffalo BL706 and does <em>not</em> use usb-dfu for flashing as the previous Pinecil V1 MCU did.</li>
 <li>See the Pinecil Wiki page <a href="https://wiki.pine64.org/wiki/Pinecil#Firmware_&amp;_Updates">here</a> for instructions.</li>
@@ -171,6 +177,13 @@ Then this works the same as a production release (use the correct file).</p>
 <li>USB-C cable is required to do an update. Generally, all USB controllers work, but some hubs have issues, so it is preferred to avoid USB hubs for updates.</li>
 <li>Background on the <a href="https://lupyuen.github.io/articles/bl706">BL706 chipset</a></li>
 </ul>
+<h3 id="troubleshooting">Troubleshooting</h3>
+<p>If you are running into issues such as timeouts during the programming or bootloader errors, the BL702 has a not-amazing USB PHY built in. This can cause problems on cheap cables (especially "thin" ones that tend not to have shielding). One of the authors (Ralim) has found this especially common on the cables supplied with Apple chargers when used with newer Ryzen processor ports.</p>
+<p>It is <em>strongly</em> reccomended to use a good quality cable, ideally <em>short</em>.
+Also try other USB ports, as on some devices they can use different hub's or lengths of signalling, and this can fix the issue.</p>
+<p>By the PinecilV2's design, by default some of the internal buses are exposed on the USB3 pins, to enable hacking/debugging/mods. This is suspected it <em>may</em> play poorly on some chipsets. Try using a USB2.0 cable. Others have had luck with chaining USB-C-&gt;USB-A-&gt;USB-C. This may be due to this, as a lot of these adaptors are USB2 or only USB3 5gbps (half USB3 pins).</p>
+<p>Another workaround is to put a USB hub somewhere in the chain, as these will re-form the signal and can work around the issue.</p>
+<p><em>Finally</em>, some users have reported issues under Windows that were fixed by changing OS (Typically to a Linux live cd).</p>
               
             </div>
           </div><footer>
