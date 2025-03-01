@@ -319,6 +319,9 @@ static void MX_TIM2_Init(void) {
   TIM_ClockConfigTypeDef  sClockSourceConfig;
   TIM_MasterConfigTypeDef sMasterConfig;
   TIM_OC_InitTypeDef      sConfigOC;
+  memset(&sConfigOC, 0, sizeof(sConfigOC));
+  memset(&sClockSourceConfig, 0, sizeof(sClockSourceConfig));
+  memset(&sMasterConfig, 0, sizeof(sMasterConfig));
 
   // Timer 2 is fairly slow as its being used to run the PWM and trigger the ADC
   // in the PWM off time.
