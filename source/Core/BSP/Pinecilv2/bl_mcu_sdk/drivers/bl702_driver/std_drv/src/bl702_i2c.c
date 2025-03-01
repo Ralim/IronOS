@@ -205,9 +205,65 @@ void I2C_Enable(I2C_ID_Type i2cNo) {
   /* Check the parameters */
   CHECK_PARAM(IS_I2C_ID_TYPE(i2cNo));
 
+  // Set the M_EN bit
+
   tmpVal = BL_RD_REG(I2Cx, I2C_CONFIG);
   tmpVal = BL_SET_REG_BIT(tmpVal, I2C_CR_I2C_M_EN);
   BL_WR_REG(I2Cx, I2C_CONFIG, tmpVal);
+}
+
+uint8_t I2C_GetTXFIFOAvailable() {
+
+  volatile uint32_t tmpVal;
+  uint32_t          I2Cx = I2C_BASE;
+
+  tmpVal = BL_RD_REG(I2Cx, I2C_FIFO_CONFIG_1);
+  return tmpVal & 0b11; // Lowest two bits
+}
+
+uint8_t I2C_GetRXFIFOAvailable() {
+
+  volatile uint32_t tmpVal;
+  uint32_t          I2Cx = I2C_BASE;
+
+  tmpVal = BL_RD_REG(I2Cx, I2C_FIFO_CONFIG_1);
+  return (tmpVal >> 8) & 0b11; // Lowest two bits of byte 2
+}
+
+void I2C_DMATxEnable() {
+  uint32_t tmpVal;
+  uint32_t I2Cx = I2C_BASE;
+
+  tmpVal = BL_RD_REG(I2Cx, I2C_FIFO_CONFIG_0);
+  tmpVal = BL_SET_REG_BIT(tmpVal, I2C_DMA_TX_EN);
+  tmpVal = BL_SET_REG_BIT(tmpVal, I2C_TX_FIFO_CLR);
+  tmpVal = BL_SET_REG_BIT(tmpVal, I2C_RX_FIFO_CLR);
+
+  // tmpVal = BL_SET_REG_BIT(tmpVal, I2C_DMA_RX_EN);
+
+  BL_WR_REG(I2Cx, I2C_FIFO_CONFIG_0, tmpVal);
+
+  // Ensure fifo setpoint is as we expect
+  tmpVal = BL_RD_REG(I2Cx, I2C_FIFO_CONFIG_1);
+  tmpVal &= I2C_TX_FIFO_CNT_UMSK;
+  tmpVal |= 1;
+
+  BL_WR_REG(I2Cx, I2C_FIFO_CONFIG_1, tmpVal);
+}
+void I2C_DMATxDisable() {
+  uint32_t tmpVal;
+  uint32_t I2Cx = I2C_BASE;
+
+  tmpVal = BL_RD_REG(I2Cx, I2C_FIFO_CONFIG_0);
+  tmpVal = BL_CLR_REG_BIT(tmpVal, I2C_DMA_TX_EN);
+  // tmpVal = BL_CLR_REG_BIT(tmpVal, I2C_DMA_RX_EN);
+  BL_WR_REG(I2Cx, I2C_FIFO_CONFIG_0, tmpVal);
+
+  tmpVal = BL_RD_REG(I2Cx, I2C_FIFO_CONFIG_1);
+  tmpVal &= I2C_TX_FIFO_CNT_UMSK;
+  tmpVal |= 1;
+
+  BL_WR_REG(I2Cx, I2C_FIFO_CONFIG_1, tmpVal);
 }
 
 /**
@@ -297,15 +353,15 @@ void I2C_Init(I2C_ID_Type i2cNo, I2C_Direction_Type direct, I2C_Transfer_Cfg *cf
     tmpVal = BL_CLR_REG_BIT(tmpVal, I2C_CR_I2C_SUB_ADDR_EN);
   }
 
+  // Packet length <=256 bytes per transaction
+
   tmpVal = BL_SET_REG_BITS_VAL(tmpVal, I2C_CR_I2C_PKT_LEN, cfg->dataSize - 1);
   BL_WR_REG(I2Cx, I2C_CONFIG, tmpVal);
 
   /* Set sub address */
   BL_WR_REG(I2Cx, I2C_SUB_ADDR, cfg->subAddr);
 
-#ifndef BFLB_USE_HAL_DRIVER
   Interrupt_Handler_Register(I2C_IRQn, I2C_IRQHandler);
-#endif
 }
 
 /**
@@ -491,6 +547,8 @@ BL_Err_Type I2C_MasterSendBlocking(I2C_ID_Type i2cNo, I2C_Transfer_Cfg *cfg) {
   uint32_t timeOut = 0;
   uint32_t temp    = 0;
   uint32_t I2Cx    = I2C_BASE;
+  I2C_IntMask(I2C0_ID, I2C_TRANS_END_INT, UNMASK); // This function needs to be able to use the irq status bits
+  I2C_IntMask(I2C0_ID, I2C_NACK_RECV_INT, UNMASK); // This function needs to be able to use the irq status bits
 
   /* Check the parameters */
   CHECK_PARAM(IS_I2C_ID_TYPE(i2cNo));
@@ -571,6 +629,9 @@ BL_Err_Type I2C_MasterReceiveBlocking(I2C_ID_Type i2cNo, I2C_Transfer_Cfg *cfg) 
   I2C_Disable(i2cNo);
   I2C_Init(i2cNo, I2C_READ, cfg);
   I2C_Enable(i2cNo);
+  I2C_IntMask(I2C0_ID, I2C_TRANS_END_INT, UNMASK); // This function needs to be able to use the irq status bits
+  I2C_IntMask(I2C0_ID, I2C_NACK_RECV_INT, UNMASK); // This function needs to be able to use the irq status bits
+
   timeOut = I2C_FIFO_STATUS_TIMEOUT;
   if (cfg->dataSize == 0 && cfg->subAddrSize == 0) {
     while (BL_RD_REG(I2C_BASE, I2C_BUS_BUSY)) {
@@ -589,6 +650,7 @@ BL_Err_Type I2C_MasterReceiveBlocking(I2C_ID_Type i2cNo, I2C_Transfer_Cfg *cfg) 
       return TIMEOUT;
     }
   }
+
   /* Read I2C data */
   while (cfg->dataSize - i >= 4) {
     timeOut = I2C_FIFO_STATUS_TIMEOUT;

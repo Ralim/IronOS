@@ -133,6 +133,8 @@ int ble_char_read_status_callback(struct bt_conn *conn, const struct bt_gatt_att
     memcpy(buf, &temp, sizeof(temp));
     return sizeof(temp);
     break;
+  default:
+    break;
   }
   MSG((char *)"Unhandled attr read %d | %d\n", (uint32_t)attr->uuid, uuid_value);
   return 0;
@@ -150,7 +152,7 @@ int ble_char_read_bulk_value_callback(struct bt_conn *conn, const struct bt_gatt
     // Bulk data
     {
       uint32_t bulkData[] = {
-          TipThermoModel::getTipInC(),                                         // 0  - Current temp
+          (uint32_t)TipThermoModel::getTipInC(),                               // 0  - Current temp
           getSettingValue(SettingsOptions::SolderingTemp),                     // 1  - Setpoint
           getInputVoltageX10(getSettingValue(SettingsOptions::VoltageDiv), 0), // 2  - Input voltage
           getHandleTemperature(0),                                             // 3  - Handle X10 Temp in C
@@ -159,9 +161,9 @@ int ble_char_read_bulk_value_callback(struct bt_conn *conn, const struct bt_gatt
           getTipResistanceX10(),                                               // 6  - Tip resistance
           xTaskGetTickCount() / TICKS_100MS,                                   // 7  - uptime in deciseconds
           lastMovementTime / TICKS_100MS,                                      // 8  - last movement time (deciseconds)
-          TipThermoModel::getTipMaxInC(),                                      // 9  - max temp
+          (uint32_t)TipThermoModel::getTipMaxInC(),                            // 9  - max temp
           TipThermoModel::convertTipRawADCTouV(getTipRawTemp(0), true),        // 10 - Raw tip in μV
-          abs(getRawHallEffect()),                                             // 11 - hall sensor
+          (uint32_t)abs(getRawHallEffect()),                                   // 11 - hall sensor
           (uint32_t)currentOperatingMode,                                      // 12 - Operating mode
           x10WattHistory.average(),                                            // 13 - Estimated Wattage *10
       };

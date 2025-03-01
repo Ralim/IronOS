@@ -10,9 +10,9 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     container:
-      image: alpine:3.19
+      image: alpine:3.21
     strategy:
       matrix:
         model:
@@ -70,9 +70,9 @@ jobs:
           if-no-files-found: error
 
   build_multi-lang:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     container:
-      image: alpine:3.19
+      image: alpine:3.21
     strategy:
       matrix:
         model: ["Pinecil", "Pinecilv2"]
@@ -136,9 +136,9 @@ jobs:
           if-no-files-found: error
 
   tests:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     container:
-      image: alpine:3.19
+      image: alpine:3.21
 
     steps:
       - name: Install dependencies (apk)
@@ -158,9 +158,9 @@ jobs:
         run: make  -C source/  Objects/host/brieflz/libbrieflz.so && ./Translations/brieflz_test.py
 
   check_c-cpp:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     container:
-      image: alpine:3.19
+      image: alpine:3.21
 
     steps:
       - name: Install dependencies (apk)
@@ -174,9 +174,9 @@ jobs:
         run: make  clean  check-style
 
   check_python:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     container:
-      image: alpine:3.19
+      image: alpine:3.21
 
     steps:
       - name: Install dependencies (apk)
@@ -209,9 +209,9 @@ jobs:
           check_all_files_with_shebangs: "false" # Optional.
 
   check_docs:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     container:
-      image: alpine:3.19
+      image: alpine:3.21
 
     steps:
       - name: Install dependencies (apk)

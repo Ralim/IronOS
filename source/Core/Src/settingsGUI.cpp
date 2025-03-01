@@ -450,11 +450,11 @@ const menuitem advancedMenu[] = {
 
 /* clang-format on */
 
-const menuitem *subSettingsMenus[] {
+const menuitem *subSettingsMenus[]{
 #if defined(POW_DC) || defined(POW_QC) || defined(POW_PD)
-  powerMenu,
+    powerMenu,
 #endif
-      solderingMenu, PowerSavingMenu, UIMenu, advancedMenu,
+    solderingMenu, PowerSavingMenu, UIMenu, advancedMenu,
 };
 /* ^^^ !!!ENABLE CLANG-FORMAT back!!! ^^^ */
 

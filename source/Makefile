@@ -425,6 +425,7 @@ CHECKOPTIONS=-Wtrigraphs                  \
              -Wmissing-field-initializers \
              -Wshadow                     \
              -Wno-unused-parameter        \
+             -Wno-undef                   \
              -Wdouble-promotion
 
 CHECKOPTIONS_C=$(CHECKOPTIONS) -Wbad-function-cast
@@ -454,6 +455,7 @@ CFLAGS=$(DEV_CFLAGS)     \
      -D${COMPILER}       \
      -MMD                \
      -std=gnu11          \
+     -g3                 \
        $(OPTIM)          \
      -T$(LDSCRIPT)       \
      -c

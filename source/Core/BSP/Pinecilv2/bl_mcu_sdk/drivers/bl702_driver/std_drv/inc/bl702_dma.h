@@ -39,6 +39,10 @@
 #include "dma_reg.h"
 #include "bl702_common.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /** @addtogroup  BL702_Peripheral_Driver
  *  @{
  */
@@ -168,9 +172,9 @@ typedef struct
     DMA_Chan_Type ch;                    /*!< Channel select 0-7 */
     DMA_Trans_Width_Type srcTransfWidth; /*!< Transfer width. 0: 8  bits, 1: 16  bits, 2: 32  bits */
     DMA_Trans_Width_Type dstTransfWidth; /*!< Transfer width. 0: 8  bits, 1: 16  bits, 2: 32  bits */
-    DMA_Burst_Size_Type srcBurstSzie;    /*!< Number of data items for burst transaction length. Each item width is as same as tansfer width.
+    DMA_Burst_Size_Type srcBurstSize;    /*!< Number of data items for burst transaction length. Each item width is as same as tansfer width.
                                                  0: 1 item, 1: 4 items, 2: 8 items, 3: 16 items */
-    DMA_Burst_Size_Type dstBurstSzie;    /*!< Number of data items for burst transaction length. Each item width is as same as tansfer width.
+    DMA_Burst_Size_Type dstBurstSize;    /*!< Number of data items for burst transaction length. Each item width is as same as tansfer width.
                                                  0: 1 item, 1: 4 items, 2: 8 items, 3: 16 items */
     BL_Fun_Type dstAddMode;              /*!<  */
     BL_Fun_Type dstMinMode;              /*!<  */
@@ -181,16 +185,6 @@ typedef struct
     DMA_Periph_Req_Type dstPeriph;       /*!< Destination peripheral select */
 } DMA_Channel_Cfg_Type;
 
-/**
- *  @brief DMA LLI control structure type definition
- */
-typedef struct
-{
-    uint32_t srcDmaAddr;            /*!< Source address of DMA transfer */
-    uint32_t destDmaAddr;           /*!< Destination address of DMA transfer */
-    uint32_t nextLLI;               /*!< Next LLI address */
-    struct DMA_Control_Reg dmaCtrl; /*!< DMA transaction control */
-} DMA_LLI_Ctrl_Type;
 
 /**
  *  @brief DMA LLI configuration structure type definition
@@ -202,31 +196,6 @@ typedef struct
     DMA_Periph_Req_Type dstPeriph; /*!< Destination peripheral select */
 } DMA_LLI_Cfg_Type;
 
-/**
- *  @brief DMA LLI Ping-Pong Buf definition
- */
-typedef struct
-{
-    uint8_t idleIndex;                             /*!< Index Idle lliListHeader */
-    uint8_t dmaChan;                               /*!< DMA LLI Channel used */
-    DMA_LLI_Ctrl_Type *lliListHeader[2];           /*!< Ping-Pong BUf List Header */
-    void (*onTransCompleted)(DMA_LLI_Ctrl_Type *); /*!< Completed Transmit One List Callback Function */
-} DMA_LLI_PP_Buf;
-
-/**
- *  @brief DMA LLI Ping-Pong Structure definition
- */
-typedef struct
-{
-    uint8_t trans_index;                  /*!< Ping or Pong Trigger TC */
-    uint8_t dmaChan;                      /*!< DMA LLI Channel used */
-    struct DMA_Control_Reg dmaCtrlRegVal; /*!< DMA Basic Pararmeter */
-    DMA_LLI_Cfg_Type *DMA_LLI_Cfg;        /*!< LLI Config parameter */
-    uint32_t operatePeriphAddr;           /*!< Operate Peripheral register address */
-    uint32_t chache_buf_addr[2];          /*!< Ping-Pong structure chache */
-    BL_Fun_Type is_single_mode;           /*!< is Ping-pong running forever or single mode ,if is single mode ping-pong will run only once
-                                                 after one start */
-} DMA_LLI_PP_Struct;
 
 /*@} end of group DMA_Public_Types */
 
@@ -346,21 +315,16 @@ void DMA_Channel_Disable(uint8_t ch);
 void DMA_LLI_Init(uint8_t ch, DMA_LLI_Cfg_Type *lliCfg);
 void DMA_LLI_Update(uint8_t ch, uint32_t LLI);
 void DMA_IntMask(uint8_t ch, DMA_INT_Type intType, BL_Mask_Type intMask);
-void DMA_LLI_PpBuf_Start_New_Transmit(DMA_LLI_PP_Buf *dmaPpBuf);
-DMA_LLI_Ctrl_Type *DMA_LLI_PpBuf_Remove_Completed_List(DMA_LLI_PP_Buf *dmaPpBuf);
-void DMA_LLI_PpBuf_Append(DMA_LLI_PP_Buf *dmaPpBuf, DMA_LLI_Ctrl_Type *dmaLliList);
-void DMA_LLI_PpBuf_Destroy(DMA_LLI_PP_Buf *dmaPpBuf);
 void DMA_Int_Callback_Install(DMA_Chan_Type dmaChan, DMA_INT_Type intType, intCallback_Type *cbFun);
-void DMA_LLI_PpStruct_Start(DMA_LLI_PP_Struct *dmaPpStruct);
-void DMA_LLI_PpStruct_Stop(DMA_LLI_PP_Struct *dmaPpStruct);
-BL_Err_Type DMA_LLI_PpStruct_Init(DMA_LLI_PP_Struct *dmaPpStruct);
-BL_Err_Type DMA_LLI_PpStruct_Set_Transfer_Len(DMA_LLI_PP_Struct *dmaPpStruct,
-                                              uint16_t Ping_Transfer_len, uint16_t Pong_Transfer_len);
 
 /*@} end of group DMA_Public_Functions */
 
 /*@} end of group DMA */
 
 /*@} end of group BL702_Peripheral_Driver */
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* __BL702_DMA_H__ */

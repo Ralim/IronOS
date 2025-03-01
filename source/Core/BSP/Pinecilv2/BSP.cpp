@@ -278,7 +278,7 @@ uint8_t getDeviceValidationStatus() {
 }
 
 void showBootLogo(void) {
-  uint8_t scratch[1024];
+  alignas(uint32_t) uint8_t scratch[1024];
   flash_read(FLASH_LOGOADDR - 0x23000000, scratch, 1024);
 
   BootLogo::handleShowingLogo(scratch);

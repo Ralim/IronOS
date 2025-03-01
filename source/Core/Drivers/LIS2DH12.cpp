@@ -17,7 +17,7 @@ static const ACCEL_I2C_CLASS::I2C_REG i2c_registers[] = {
     {    LIS_CTRL_REG4, 0b00001000, 0}, // Block update mode off, HR on
     {    LIS_CTRL_REG5, 0b00000010, 0}, //
     {    LIS_CTRL_REG6, 0b01100010, 0},
- // Basically setup the unit to run, and enable 4D orientation detection
+    // Basically setup the unit to run, and enable 4D orientation detection
     {     LIS_INT2_CFG, 0b01111110, 0}, // setup for movement detection
     {     LIS_INT2_THS,       0x28, 0}, //
     {LIS_INT2_DURATION,         64, 0}, //
