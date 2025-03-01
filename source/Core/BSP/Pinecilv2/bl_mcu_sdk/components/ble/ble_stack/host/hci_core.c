@@ -260,7 +260,11 @@ struct event_handler {
 };
 
 #define EVENT_HANDLER(_evt, _handler, _min_len)                                                                                                                                                        \
-  { .event = _evt, .handler = _handler, .min_len = _min_len, }
+  {                                                                                                                                                                                                    \
+      .event   = _evt,                                                                                                                                                                                 \
+      .handler = _handler,                                                                                                                                                                             \
+      .min_len = _min_len,                                                                                                                                                                             \
+  }
 
 static inline void handle_event(u8_t event, struct net_buf *buf, const struct event_handler *handlers, size_t num_handlers) {
   size_t i;
@@ -5240,11 +5244,11 @@ int bt_recv(struct net_buf *buf) {
 }
 
 static const struct event_handler prio_events[] = {
-  EVENT_HANDLER(BT_HCI_EVT_CMD_COMPLETE, hci_cmd_complete, sizeof(struct bt_hci_evt_cmd_complete)),
-  EVENT_HANDLER(BT_HCI_EVT_CMD_STATUS, hci_cmd_status, sizeof(struct bt_hci_evt_cmd_status)),
+    EVENT_HANDLER(BT_HCI_EVT_CMD_COMPLETE, hci_cmd_complete, sizeof(struct bt_hci_evt_cmd_complete)),
+    EVENT_HANDLER(BT_HCI_EVT_CMD_STATUS, hci_cmd_status, sizeof(struct bt_hci_evt_cmd_status)),
 #if defined(CONFIG_BT_CONN)
-  EVENT_HANDLER(BT_HCI_EVT_DATA_BUF_OVERFLOW, hci_data_buf_overflow, sizeof(struct bt_hci_evt_data_buf_overflow)),
-  EVENT_HANDLER(BT_HCI_EVT_NUM_COMPLETED_PACKETS, hci_num_completed_packets, sizeof(struct bt_hci_evt_num_completed_packets)),
+    EVENT_HANDLER(BT_HCI_EVT_DATA_BUF_OVERFLOW, hci_data_buf_overflow, sizeof(struct bt_hci_evt_data_buf_overflow)),
+    EVENT_HANDLER(BT_HCI_EVT_NUM_COMPLETED_PACKETS, hci_num_completed_packets, sizeof(struct bt_hci_evt_num_completed_packets)),
 #endif /* CONFIG_BT_CONN */
 };
 
@@ -5618,7 +5622,7 @@ extern struct net_buf_pool prep_pool;
 #if defined(CONFIG_BT_BREDR)
 extern struct net_buf_pool br_sig_pool;
 extern struct net_buf_pool sdp_pool;
-#if defined                CONFIG_BT_HFP
+#if defined CONFIG_BT_HFP
 extern struct net_buf_pool hf_pool;
 extern struct net_buf_pool dummy_pool;
 #endif

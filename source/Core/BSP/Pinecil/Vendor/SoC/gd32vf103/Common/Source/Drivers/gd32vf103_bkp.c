@@ -45,8 +45,7 @@ OF SUCH DAMAGE.
     \param[out] none
     \retval     none
 */
-void bkp_deinit(void) { /* reset BKP domain register*/
-}
+void bkp_deinit(void) { /* reset BKP domain register*/ }
 
 /*!
     \brief      write BKP data register

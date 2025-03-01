@@ -2059,14 +2059,14 @@ void bt_att_mtu_changed(struct bt_l2cap_chan *chan, u16_t mtu) { bt_gatt_mtu_cha
 static int bt_att_accept(struct bt_conn *conn, struct bt_l2cap_chan **chan) {
   int                             i;
   static struct bt_l2cap_chan_ops ops = {
-    .connected    = bt_att_connected,
-    .disconnected = bt_att_disconnected,
-    .recv         = bt_att_recv,
+      .connected    = bt_att_connected,
+      .disconnected = bt_att_disconnected,
+      .recv         = bt_att_recv,
 #if defined(CONFIG_BT_SMP)
-    .encrypt_change = bt_att_encrypt_change,
+      .encrypt_change = bt_att_encrypt_change,
 #endif /* CONFIG_BT_SMP */
 #if defined(BFLB_BLE_MTU_CHANGE_CB)
-    .mtu_changed = bt_att_mtu_changed,
+      .mtu_changed = bt_att_mtu_changed,
 #endif
   };
 

@@ -8,7 +8,7 @@
 #define configCPU_CLOCK_HZ                      ((uint32_t)SystemCoreClock)
 #define configRTC_CLOCK_HZ                      ((uint32_t)32768)
 #define configTICK_RATE_HZ                      ((TickType_t)1000)
-#define configMAX_PRIORITIES                    (4)
+#define configMAX_PRIORITIES                    (7)
 #define configMINIMAL_STACK_SIZE                ((unsigned short)128)
 #define configMAX_TASK_NAME_LEN                 24
 #define configIDLE_SHOULD_YIELD                 0
