@@ -54,9 +54,9 @@
 #ifdef ARCH_ARM
 #ifndef __GNUC__
 __WEAK
-__ASM void ATTR_TCM_SECTION ASM_Delay_Us(uint32_t core, uint32_t cnt) {
-  lsrs r0, #0x10 muls r0, r1, r0 mov r2, r0 lsrs r2, #0x04 lsrs r2, #0x03 cmp r2, #0x01 beq end cmp r2, #0x00 beq end loop mov r0, r0 mov r0, r0 mov r0, r0 mov r0, r0 mov r0, r0 subs r2, r2,
-      #0x01 cmp r2, #0x00 bne loop end bx lr
+__ASM void ATTR_TCM_SECTION ASM_Delay_Us(uint32_t core, uint32_t cnt){
+    lsrs r0, #0x10 muls r0, r1, r0 mov r2, r0 lsrs r2, #0x04 lsrs r2, #0x03 cmp r2, #0x01 beq end cmp r2, #0x00 beq end loop mov r0, r0 mov r0, r0 mov r0, r0 mov r0, r0 mov r0, r0 subs r2, r2,
+# 0x01 cmp r2, #0x00 bne loop end bx lr
 }
 #else
 __WEAK
