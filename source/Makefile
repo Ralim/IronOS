@@ -425,6 +425,7 @@ CHECKOPTIONS=-Wtrigraphs                  \
              -Wmissing-field-initializers \
              -Wshadow                     \
              -Wno-unused-parameter        \
+             -Wno-undef                   \
              -Wdouble-promotion
 
 CHECKOPTIONS_C=$(CHECKOPTIONS) -Wbad-function-cast
