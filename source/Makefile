@@ -455,6 +455,7 @@ CFLAGS=$(DEV_CFLAGS)     \
      -D${COMPILER}       \
      -MMD                \
      -std=gnu11          \
+     -g3                 \
        $(OPTIM)          \
      -T$(LDSCRIPT)       \
      -c
