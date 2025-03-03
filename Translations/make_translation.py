@@ -152,7 +152,7 @@ def get_constants() -> List[Tuple[str, str]]:
 
 def get_debug_menu() -> List[str]:
     return [
-        datetime.today().strftime("%Y-%m-%d"),
+        datetime.today().strftime("%Y%m%d %H%M%S"),
         "ID ",
         "ACC   ",
         "PWR   ",
@@ -629,7 +629,7 @@ def make_font_table_named_cpp(
     if name:
         output_table = f"const uint8_t {name}[] = {{\n"
     for i, sym in enumerate(sym_list):
-        output_table += f"{bytes_to_c_hex(font_map[sym])}//0x{i+2:X} -> {sym}\n"
+        output_table += f"{bytes_to_c_hex(font_map[sym])}//0x{i + 2:X} -> {sym}\n"
     if name:
         output_table += f"}}; // {name}\n"
     return output_table
@@ -643,7 +643,7 @@ def make_font_table_06_cpp(sym_list: List[str], font_map: FontMapsPerFont) -> st
             font_line = bytes_to_c_hex(font_bytes)
         else:
             font_line = "//                                 "  # placeholder
-        output_table += f"{font_line}//0x{i+2:X} -> {sym}\n"
+        output_table += f"{font_line}//0x{i + 2:X} -> {sym}\n"
     output_table += "};\n"
     return output_table
 
@@ -995,7 +995,7 @@ def write_languages(
         f.write("};\n")
     f.write(
         "const uint8_t LanguageCount = sizeof(LanguageMetas) / sizeof(LanguageMetas[0]);\n\n"
-        f"alignas(TranslationData) uint8_t translation_data_out_buffer[{max_decompressed_translation_size }];\n"
+        f"alignas(TranslationData) uint8_t translation_data_out_buffer[{max_decompressed_translation_size}];\n"
         "const uint16_t translation_data_out_buffer_size = sizeof(translation_data_out_buffer);\n\n"
     )
 

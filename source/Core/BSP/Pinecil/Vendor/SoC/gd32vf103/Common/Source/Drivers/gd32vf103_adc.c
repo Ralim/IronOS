@@ -632,7 +632,7 @@ uint32_t adc_sync_mode_convert_value_read(void) {
     \retval     none
 */
 void adc_watchdog_single_channel_enable(uint32_t adc_periph, uint8_t adc_channel) {
-  ADC_CTL0(adc_periph) &= (uint32_t) ~(ADC_CTL0_RWDEN | ADC_CTL0_IWDEN | ADC_CTL0_WDSC | ADC_CTL0_WDCHSEL);
+  ADC_CTL0(adc_periph) &= (uint32_t)~(ADC_CTL0_RWDEN | ADC_CTL0_IWDEN | ADC_CTL0_WDSC | ADC_CTL0_WDCHSEL);
   /* analog watchdog channel select */
   ADC_CTL0(adc_periph) |= (uint32_t)adc_channel;
   ADC_CTL0(adc_periph) |= (uint32_t)(ADC_CTL0_RWDEN | ADC_CTL0_IWDEN | ADC_CTL0_WDSC);
@@ -650,7 +650,7 @@ void adc_watchdog_single_channel_enable(uint32_t adc_periph, uint8_t adc_channel
     \retval     none
 */
 void adc_watchdog_group_channel_enable(uint32_t adc_periph, uint8_t adc_channel_group) {
-  ADC_CTL0(adc_periph) &= (uint32_t) ~(ADC_CTL0_RWDEN | ADC_CTL0_IWDEN | ADC_CTL0_WDSC);
+  ADC_CTL0(adc_periph) &= (uint32_t)~(ADC_CTL0_RWDEN | ADC_CTL0_IWDEN | ADC_CTL0_WDSC);
   /* select the group */
   switch (adc_channel_group) {
   case ADC_REGULAR_CHANNEL:
@@ -676,7 +676,7 @@ void adc_watchdog_group_channel_enable(uint32_t adc_periph, uint8_t adc_channel_
     \param[out] none
     \retval     none
 */
-void adc_watchdog_disable(uint32_t adc_periph) { ADC_CTL0(adc_periph) &= (uint32_t) ~(ADC_CTL0_RWDEN | ADC_CTL0_IWDEN | ADC_CTL0_WDSC | ADC_CTL0_WDCHSEL); }
+void adc_watchdog_disable(uint32_t adc_periph) { ADC_CTL0(adc_periph) &= (uint32_t)~(ADC_CTL0_RWDEN | ADC_CTL0_IWDEN | ADC_CTL0_WDSC | ADC_CTL0_WDCHSEL); }
 
 /*!
     \brief      configure ADC analog watchdog threshold

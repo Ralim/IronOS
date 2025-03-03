@@ -24,9 +24,9 @@ OLED::DisplayState OLED::displayState;
 int16_t            OLED::cursor_x, OLED::cursor_y;
 bool               OLED::initDone = false;
 uint8_t            OLED::displayOffset;
-uint8_t            OLED::screenBuffer[16 + (OLED_WIDTH * (OLED_HEIGHT / 8)) + 10]; // The data buffer
-uint8_t            OLED::secondFrameBuffer[16 + (OLED_WIDTH * (OLED_HEIGHT / 8)) + 10];
-uint32_t           OLED::displayChecksum;
+alignas(uint32_t) uint8_t OLED::screenBuffer[16 + (OLED_WIDTH * (OLED_HEIGHT / 8)) + 10]; // The data buffer
+alignas(uint32_t) uint8_t OLED::secondFrameBuffer[16 + (OLED_WIDTH * (OLED_HEIGHT / 8)) + 10];
+uint32_t OLED::displayChecksum;
 /*
  * Setup params for the OLED screen
  * http://www.displayfuture.com/Display/datasheet/controller/SSD1307.pdf
@@ -34,7 +34,7 @@ uint32_t           OLED::displayChecksum;
  * Data packets are prefixed with 0x40
  */
 I2C_CLASS::I2C_REG OLED_Setup_Array[] = {
-  /**/
+    /**/
     {0x80,         OLED_OFF, 0}, /* Display off */
     {0x80,     OLED_DIVIDER, 0}, /* Set display clock divide ratio / osc freq */
     {0x80,             0x52, 0}, /* Divide ratios */

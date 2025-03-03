@@ -519,8 +519,7 @@ void _premain_init(void) {
  * by __libc_fini_array function, so we defined a new function
  * to do initialization
  */
-void _postmain_fini(int status) { /* TODO: Add your own finishing code here, called after main */
-}
+void _postmain_fini(int status) { /* TODO: Add your own finishing code here, called after main */ }
 
 /**
  * \brief _init function called in __libc_init_array()
@@ -531,8 +530,7 @@ void _postmain_fini(int status) { /* TODO: Add your own finishing code here, cal
  * \note
  * Please use \ref _premain_init function now
  */
-void _init(void) { /* Don't put any code here, please use _premain_init now */
-}
+void _init(void) { /* Don't put any code here, please use _premain_init now */ }
 
 /**
  * \brief _fini function called in __libc_fini_array()
@@ -543,7 +541,6 @@ void _init(void) { /* Don't put any code here, please use _premain_init now */
  * \note
  * Please use \ref _postmain_fini function now
  */
-void _fini(void) { /* Don't put any code here, please use _postmain_fini now */
-}
+void _fini(void) { /* Don't put any code here, please use _postmain_fini now */ }
 
 /** @} */ /* End of Doxygen Group NMSIS_Core_SystemAndClock */

@@ -65,7 +65,7 @@ typedef uint32_t blz_word;
 
 #define LOOKUP_SIZE (1UL << BLZ_HASH_BITS)
 
-#define NO_MATCH_POS ((blz_word)-1)
+#define NO_MATCH_POS ((blz_word) - 1)
 
 // Internal data structure
 struct blz_state {

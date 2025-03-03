@@ -10,6 +10,7 @@
 #include "FreeRTOSConfig.h"
 #include "IRQ.h"
 #include "Pins.h"
+#include "bl702_dma.h"
 #include "bl702_sec_eng.h"
 #include "history.hpp"
 #include <string.h>
@@ -66,7 +67,9 @@ void hardware_init() {
   I2C_SetDeglitchCount(I2C0_ID, 1); // Turn on de-glitch
   // Note on I2C clock rate @ 100Khz the screen update == 20ms which is too long for USB-PD to work
   // 200kHz and above works
+
   I2C_ClockSet(I2C0_ID, 300000); // Sets clock to around 25 kHz less than set here
+
   TIMER_SetCompValue(TIMER_CH0, TIMER_COMP_ID_0, 0);
 }
 void setup_pwm(void) {

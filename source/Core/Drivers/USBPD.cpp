@@ -337,68 +337,51 @@ bool pdbs_dpm_evaluate_capability(const pd_msg *capabilities, pd_msg *request) {
   return true;
 }
 
+void add_v_record(pd_msg *cap, uint16_t voltage_mv, int numobj) {
+
+  uint16_t current = (voltage_mv) / getTipResistanceX10(); // In centi-amps
+
+  /* Add a PDO for the desired power. */
+  cap->obj[numobj] = PD_PDO_TYPE_FIXED | PD_PDO_SNK_FIXED_VOLTAGE_SET(PD_MV2PDV(voltage_mv)) | PD_PDO_SNK_FIXED_CURRENT_SET(current);
+}
 void pdbs_dpm_get_sink_capability(pd_msg *cap, const bool isPD3) {
   /* Keep track of how many PDOs we've added */
-  // int numobj = 0;
+  int numobj = 0;
 
-  // /* If we have no configuration or want something other than 5 V, add a PDO
-  //  * for vSafe5V */
-  // /* Minimum current, 5 V, and higher capability. */
-  // cap->obj[numobj++] = PD_PDO_TYPE_FIXED | PD_PDO_SNK_FIXED_VOLTAGE_SET(PD_MV2PDV(5000)) | PD_PDO_SNK_FIXED_CURRENT_SET(DPM_MIN_CURRENT);
+  /* If we have no configuration or want something other than 5 V, add a PDO
+   * for vSafe5V */
+  /* Minimum current, 5 V, and higher capability. */
+  cap->obj[numobj++] = PD_PDO_TYPE_FIXED | PD_PDO_SNK_FIXED_VOLTAGE_SET(PD_MV2PDV(5000)) | PD_PDO_SNK_FIXED_CURRENT_SET(DPM_MIN_CURRENT);
+  // Voltages must be in order of lowest -> highest
+#if USB_PD_VMAX >= 20
+  add_v_record(cap, 9000, numobj);
+  numobj++;
+  add_v_record(cap, 15000, numobj);
+  numobj++;
+  add_v_record(cap, 20000, numobj);
+  numobj++;
+#elif USB_PD_VMAX >= 15
+  add_v_record(cap, 9000, numobj);
+  numobj++;
+  add_v_record(cap, 12000, numobj);
+  numobj++;
+  add_v_record(cap, 15000, numobj);
+  numobj++;
+#elif USB_PD_VMAX >= 12
+  add_v_record(cap, 9000, numobj);
+  numobj++;
+  add_v_record(cap, 12000, numobj);
+  numobj++;
+#elif USB_PD_VMAX >= 9
+  add_v_record(cap, 9000, numobj);
+  numobj++;
+#endif
 
-  // /* Get the current we want */
-  // uint16_t voltage = USB_PD_VMAX * 1000; // in mv
-  // if (requested_voltage_mv != 5000) {
-  //   voltage = requested_voltage_mv;
-  // }
-  // uint16_t current = (voltage) / getTipResistanceX10(); // In centi-amps
+  /* Set the USB communications capable flag. */
+  cap->obj[0] |= PD_PDO_SNK_FIXED_USB_COMMS;
 
-  // /* Add a PDO for the desired power. */
-  // cap->obj[numobj++] = PD_PDO_TYPE_FIXED | PD_PDO_SNK_FIXED_VOLTAGE_SET(PD_MV2PDV(voltage)) | PD_PDO_SNK_FIXED_CURRENT_SET(current);
-
-  // /* Get the PDO from the voltage range */
-  // int8_t i = dpm_get_range_fixed_pdo_index(cap);
-
-  // /* If it's vSafe5V, set our vSafe5V's current to what we want */
-  // if (i == 0) {
-  //   cap->obj[0] &= ~PD_PDO_SNK_FIXED_CURRENT;
-  //   cap->obj[0] |= PD_PDO_SNK_FIXED_CURRENT_SET(current);
-  // } else {
-  //   /* If we want more than 5 V, set the Higher Capability flag */
-  //   if (PD_MV2PDV(voltage) != PD_MV2PDV(5000)) {
-  //     cap->obj[0] |= PD_PDO_SNK_FIXED_HIGHER_CAP;
-  //   }
-
-  //   /* If the range PDO is a different voltage than the preferred
-  //    * voltage, add it to the array. */
-  //   if (i > 0 && PD_PDO_SRC_FIXED_VOLTAGE_GET(cap->obj[i]) != PD_MV2PDV(voltage)) {
-  //     cap->obj[numobj++] = PD_PDO_TYPE_FIXED | PD_PDO_SNK_FIXED_VOLTAGE_SET(PD_PDO_SRC_FIXED_VOLTAGE_GET(cap->obj[i])) | PD_PDO_SNK_FIXED_CURRENT_SET(PD_PDO_SRC_FIXED_CURRENT_GET(cap->obj[i]));
-  //   }
-
-  //   /* If we have three PDOs at this point, make sure the last two are
-  //    * sorted by voltage. */
-  //   if (numobj == 3 && (cap->obj[1] & PD_PDO_SNK_FIXED_VOLTAGE) > (cap->obj[2] & PD_PDO_SNK_FIXED_VOLTAGE)) {
-  //     cap->obj[1] ^= cap->obj[2];
-  //     cap->obj[2] ^= cap->obj[1];
-  //     cap->obj[1] ^= cap->obj[2];
-  //   }
-  //   /* If we're using PD 3.0, add a PPS APDO for our desired voltage */
-  //   if ((hdr_template & PD_HDR_SPECREV) >= PD_SPECREV_3_0) {
-  //     cap->obj[numobj++]
-  //         = PD_PDO_TYPE_AUGMENTED | PD_APDO_TYPE_PPS | PD_APDO_PPS_MAX_VOLTAGE_SET(PD_MV2PAV(voltage)) | PD_APDO_PPS_MIN_VOLTAGE_SET(PD_MV2PAV(voltage)) |
-  //         PD_APDO_PPS_CURRENT_SET(PD_CA2PAI(current));
-  //   }
-  // }
-
-  // /* Set the unconstrained power flag. */
-  // if (_unconstrained_power) {
-  //   cap->obj[0] |= PD_PDO_SNK_FIXED_UNCONSTRAINED;
-  // }
-  // /* Set the USB communications capable flag. */
-  // cap->obj[0] |= PD_PDO_SNK_FIXED_USB_COMMS;
-
-  // /* Set the Sink_Capabilities message header */
-  // cap->hdr = hdr_template | PD_MSGTYPE_SINK_CAPABILITIES | PD_NUMOBJ(numobj);
+  /* Set the Sink_Capabilities message header */
+  cap->hdr = PD_DATAROLE_UFP | PD_SPECREV_3_0 | PD_POWERROLE_SINK | PD_MSGTYPE_SINK_CAPABILITIES | PD_NUMOBJ(numobj);
 }
 
 #endif
