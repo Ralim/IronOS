@@ -1,0 +1,187 @@
+diff --git a/source/Core/Threads/GUIThread.cpp b/source/Core/Threads/GUIThread.cpp
+index 5be04951..58cdaf9c 100644
+--- a/source/Core/Threads/GUIThread.cpp
++++ b/source/Core/Threads/GUIThread.cpp
+@@ -46,8 +46,13 @@ OperatingMode guiHandleDraw(void) {
+   OLED::clearScreen(); // Clear ready for render pass
+   bool swapButtonMenu = getSettingValue(SettingsOptions::ReverseButtonMenu);
+   bool swapButtonTemp = getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled);
++#ifdef OPT_FULL_BUTTON_REVERSE
++  bool isTempAdjust = currentOperatingMode == OperatingMode::TemperatureAdjust;
+   // Read button state
++  ButtonState buttons = getButtonState((swapButtonTemp && isTempAdjust) || (swapButtonMenu && !swapButtonTemp && !isTempAdjust) || (swapButtonMenu && swapButtonTemp && !isTempAdjust));
++#else
+   ButtonState buttons = getButtonState();
++#endif
+   // Enforce screen on if buttons pressed, movement, hot tip etc
+   if (buttons != BUTTON_NONE) {
+     OLED::setDisplayState(OLED::DisplayState::ON);
+@@ -113,7 +118,11 @@ OperatingMode guiHandleDraw(void) {
+     newMode = gui_SolderingSleepingMode(buttons, &context);
+     break;
+   case OperatingMode::TemperatureAdjust:
++#ifdef OPT_FULL_BUTTON_REVERSE
++    newMode = gui_solderingTempAdjust(getButtonState(), &context);
++#else
+     newMode = gui_solderingTempAdjust(getButtonState(swapButtonTemp), &context);
++#endif
+     break;
+   case OperatingMode::DebugMenuReadout:
+     newMode = showDebugMenu(buttons, &context);
+@@ -122,7 +131,11 @@ OperatingMode guiHandleDraw(void) {
+     newMode = performCJCC(buttons, &context);
+     break;
+   case OperatingMode::SettingsMenu:
++#ifdef OPT_FULL_BUTTON_REVERSE
++    newMode = gui_SettingsMenu(getButtonState(), &context);
++#else
+     newMode = gui_SettingsMenu(getButtonState(swapButtonMenu), &context);
++#endif
+     break;
+   case OperatingMode::InitialisationDone:
+     newMode = handle_post_init_state();
+diff --git a/source/Core/Threads/UI/drawing/mono_128x32/draw_homescreen_simplified.cpp b/source/Core/Threads/UI/drawing/mono_128x32/draw_homescreen_simplified.cpp
+index 7064e9ba..cf69795e 100644
+--- a/source/Core/Threads/UI/drawing/mono_128x32/draw_homescreen_simplified.cpp
++++ b/source/Core/Threads/UI/drawing/mono_128x32/draw_homescreen_simplified.cpp
+@@ -9,21 +9,42 @@ extern uint8_t disconnectedTipF[sizeof(disconnectedTip)];
+ void ui_draw_homescreen_simplified(TemperatureType_t tipTemp) {
+   bool isFlipped       = OLED::getRotation();
+   bool tipDisconnected = isTipDisconnected();
++#ifdef OPT_FULL_BUTTON_REVERSE
++  bool swapButtonMenu = getSettingValue(SettingsOptions::ReverseButtonMenu);
++#endif
+ 
+   // Flip and switch buttons accordingly
++#ifdef OPT_FULL_BUTTON_REVERSE
++  OLED::drawArea(isFlipped ? 68 : 0, 0, 56, 32, isFlipped ? (swapButtonMenu ? buttonBF : buttonAF) : (swapButtonMenu ? buttonB : buttonA));
++  OLED::drawArea(isFlipped ? 12 : 58, 0, 56, 32, isFlipped ? (swapButtonMenu ? buttonAF : buttonBF) : (swapButtonMenu ? buttonA : buttonB));
++#else
+   OLED::drawArea(isFlipped ? 68 : 0, 0, 56, 32, isFlipped ? buttonAF : buttonA);
+   OLED::drawArea(isFlipped ? 12 : 58, 0, 56, 32, isFlipped ? buttonBF : buttonB);
++#endif
+ 
+   if ((tipTemp > 55) || tipDisconnected) {
+     // draw temp over the start soldering button
+     // Location changes on screen rotation and due to button swapping
+     // in right handed mode we want to draw over the first part
++#ifdef OPT_FULL_BUTTON_REVERSE
++    OLED::fillArea(swapButtonMenu ? (isFlipped ? 26 : 58) : (isFlipped ? 68 : 0), 0, 56, 32, 0); // clear the area
++    OLED::setCursor(swapButtonMenu ? (isFlipped ? 27 : 59) : (isFlipped ? 56 : 0), 0);
++#else
+     OLED::fillArea(isFlipped ? 68 : 0, 0, 56, 32, 0); // clear the area
+     OLED::setCursor(isFlipped ? 56 : 0, 0);
++#endif
+     // If tip is disconnected draw the notification, otherwise - the temp
+     if (tipDisconnected) {
+       // Draw-in the missing tip symbol
+-      OLED::drawArea(isFlipped ? 54 : 0, 0, 56, 32, isFlipped ? disconnectedTipF : disconnectedTip);
++#ifdef OPT_FULL_BUTTON_REVERSE
++      if (swapButtonMenu) {
++        OLED::drawArea(isFlipped ? 20 : 54, 0, 56, 32, isFlipped ? disconnectedTipF : disconnectedTip);
++      } else {
++#endif
++        OLED::drawArea(isFlipped ? 54 : 0, 0, 56, 32, isFlipped ? disconnectedTipF : disconnectedTip);
++#ifdef OPT_FULL_BUTTON_REVERSE
++      }
++#endif
+     } else if (!(getSettingValue(SettingsOptions::CoolingTempBlink) && (xTaskGetTickCount() % 1000 < 300))) {
+       ui_draw_tip_temperature(false, FontStyle::LARGE); // Draw-in the temp
+     }
+@@ -31,5 +52,4 @@ void ui_draw_homescreen_simplified(TemperatureType_t tipTemp) {
+   OLED::setCursor(isFlipped ? 0 : 116, 0);
+   ui_draw_power_source_icon();
+ }
+-
+ #endif
+diff --git a/source/Core/Threads/UI/drawing/mono_96x16/draw_homescreen_simplified.cpp b/source/Core/Threads/UI/drawing/mono_96x16/draw_homescreen_simplified.cpp
+index 7a353478..870ef639 100644
+--- a/source/Core/Threads/UI/drawing/mono_96x16/draw_homescreen_simplified.cpp
++++ b/source/Core/Threads/UI/drawing/mono_96x16/draw_homescreen_simplified.cpp
+@@ -1,7 +1,6 @@
+ #include "ui_drawing.hpp"
+ 
+ #ifdef OLED_96x16
+-
+ extern uint8_t buttonAF[sizeof(buttonA)];
+ extern uint8_t buttonBF[sizeof(buttonB)];
+ extern uint8_t disconnectedTipF[sizeof(disconnectedTip)];
+@@ -9,21 +8,42 @@ extern uint8_t disconnectedTipF[sizeof(disconnectedTip)];
+ void ui_draw_homescreen_simplified(TemperatureType_t tipTemp) {
+   bool isFlipped       = OLED::getRotation();
+   bool tipDisconnected = isTipDisconnected();
++#ifdef OPT_FULL_BUTTON_REVERSE
++  bool swapButtonMenu = getSettingValue(SettingsOptions::ReverseButtonMenu);
++#endif
+ 
+   // Flip and switch buttons accordingly
++#ifdef OPT_FULL_BUTTON_REVERSE
++  OLED::drawArea(isFlipped ? 54 : 0, 0, 42, 16, isFlipped ? (swapButtonMenu ? buttonBF : buttonAF) : (swapButtonMenu ? buttonB : buttonA));
++  OLED::drawArea(isFlipped ? 12 : 42, 0, 42, 16, isFlipped ? (swapButtonMenu ? buttonAF : buttonBF) : (swapButtonMenu ? buttonA : buttonB));
++#else
+   OLED::drawArea(isFlipped ? 54 : 0, 0, 42, 16, isFlipped ? buttonAF : buttonA);
+   OLED::drawArea(isFlipped ? 12 : 42, 0, 42, 16, isFlipped ? buttonBF : buttonB);
++#endif
+ 
+   if ((tipTemp > 55) || tipDisconnected) {
+     // draw temp over the start soldering button
+     // Location changes on screen rotation and due to button swapping
+     // in right handed mode we want to draw over the first part
++#ifdef OPT_FULL_BUTTON_REVERSE
++    OLED::fillArea(swapButtonMenu ? (isFlipped ? 14 : 42) : (isFlipped ? 55 : 0), 0, 41, 16, 0); // clear the area
++    OLED::setCursor(swapButtonMenu ? (isFlipped ? 15 : 43) : (isFlipped ? 56 : 0), 0);
++#else
+     OLED::fillArea(isFlipped ? 55 : 0, 0, 41, 16, 0); // clear the area
+     OLED::setCursor(isFlipped ? 56 : 0, 0);
++#endif
+     // If tip is disconnected draw the notification, otherwise - the temp
+     if (tipDisconnected) {
+       // Draw-in the missing tip symbol
+-      OLED::drawArea(isFlipped ? 54 : 0, 0, 42, 16, isFlipped ? disconnectedTipF : disconnectedTip);
++#ifdef OPT_FULL_BUTTON_REVERSE
++      if (swapButtonMenu) {
++        OLED::drawArea(isFlipped ? 12 : 42, 0, 42, 16, isFlipped ? disconnectedTipF : disconnectedTip);
++      } else {
++#endif
++        OLED::drawArea(isFlipped ? 54 : 0, 0, 42, 16, isFlipped ? disconnectedTipF : disconnectedTip);
++#ifdef OPT_FULL_BUTTON_REVERSE
++      }
++#endif
+     } else if (!(getSettingValue(SettingsOptions::CoolingTempBlink) && (xTaskGetTickCount() % 1000 < 300))) {
+       ui_draw_tip_temperature(false, FontStyle::LARGE); // Draw-in the temp
+     }
+@@ -31,5 +51,4 @@ void ui_draw_homescreen_simplified(TemperatureType_t tipTemp) {
+   OLED::setCursor(isFlipped ? 0 : 84, 0);
+   ui_draw_power_source_icon();
+ }
+-
+ #endif
+diff --git a/source/Core/Threads/UI/logic/utils/shouldDeviceShutdown.cpp b/source/Core/Threads/UI/logic/utils/shouldDeviceShutdown.cpp
+index 541a2669..271285cf 100644
+--- a/source/Core/Threads/UI/logic/utils/shouldDeviceShutdown.cpp
++++ b/source/Core/Threads/UI/logic/utils/shouldDeviceShutdown.cpp
+@@ -17,7 +17,11 @@ bool shouldShutdown(void) {
+       }
+     }
+   }
++#ifdef OPT_FULL_BUTTON_REVERSE
++  if (getButtonState(getSettingValue(SettingsOptions::ReverseButtonMenu) == BUTTON_B_LONG) { // allow also if back button is pressed long
++#else
+   if (getButtonState() == BUTTON_B_LONG) { // allow also if back button is pressed long
++#endif
+     return true;
+   }
+   return false;
+diff --git a/source/Makefile b/source/Makefile
+index 6de3b6d4..4ab23087 100644
+--- a/source/Makefile
++++ b/source/Makefile
+@@ -355,7 +355,7 @@ OPTIM=-Os                             \
+       -fsingle-precision-constant
+ 
+ # Global defines ---------------------------------------------------------------
+-GLOBAL_DEFINES+=$(DEV_GLOBAL_DEFS) -D USE_RTOS_SYSTICK -D MODEL_$(model) -D VECT_TAB_OFFSET=$(bootldr_size)U -fshort-wchar
++GLOBAL_DEFINES+=$(DEV_GLOBAL_DEFS) -D USE_RTOS_SYSTICK -D MODEL_$(model) -D VECT_TAB_OFFSET=$(bootldr_size)U -fshort-wchar -DOPT_FULL_BUTTON_REVERSE
+ 
+ ifdef swd_enable
+ GLOBAL_DEFINES+=-DSWD_ENABLE
