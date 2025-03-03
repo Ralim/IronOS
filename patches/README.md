@@ -5,7 +5,7 @@ This directory contains patches with code placed out of the main source tree for
 
 ## Content
 
- - `reverse-buttons-fully.diff`: swap two buttons on supported hardware **completely**.
+ - `reverse-buttons-fully.diff`: swap two buttons on supported hardware **completely** (see [here](https://github.com/Ralim/IronOS/pull/2059) for more details).
 
 
 ## Instruction
