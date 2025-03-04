@@ -41,8 +41,11 @@ OperatingMode currentOperatingMode = OperatingMode::InitialisationDone; // Curre
 guiContext    context;                                                  // Context passed to functions to aid in state during render passes
 
 OperatingMode handle_post_init_state();
+
 OperatingMode guiHandleDraw(void) {
   OLED::clearScreen(); // Clear ready for render pass
+  bool swapButtonMenu = getSettingValue(SettingsOptions::ReverseButtonMenu);
+  bool swapButtonTemp = getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled);
   // Read button state
   ButtonState buttons = getButtonState();
   // Enforce screen on if buttons pressed, movement, hot tip etc
@@ -110,7 +113,7 @@ OperatingMode guiHandleDraw(void) {
     newMode = gui_SolderingSleepingMode(buttons, &context);
     break;
   case OperatingMode::TemperatureAdjust:
-    newMode = gui_solderingTempAdjust(buttons, &context);
+    newMode = gui_solderingTempAdjust(getButtonState(swapButtonTemp), &context);
     break;
   case OperatingMode::DebugMenuReadout:
     newMode = showDebugMenu(buttons, &context);
@@ -119,7 +122,7 @@ OperatingMode guiHandleDraw(void) {
     newMode = performCJCC(buttons, &context);
     break;
   case OperatingMode::SettingsMenu:
-    newMode = gui_SettingsMenu(buttons, &context);
+    newMode = gui_SettingsMenu(getButtonState(swapButtonMenu), &context);
     break;
   case OperatingMode::InitialisationDone:
     newMode = handle_post_init_state();
@@ -138,6 +141,7 @@ OperatingMode guiHandleDraw(void) {
   };
   return newMode;
 }
+
 void guiRenderLoop(void) {
   OperatingMode newMode = guiHandleDraw(); // This does the screen drawing
 
