@@ -27,8 +27,7 @@ enum ButtonState {
 };
 
 // Returns what buttons are pressed (if any)
-ButtonState getButtonState(bool swapButtonMenu = 0);
-
+ButtonState getButtonState();
 // Helpers
 void waitForButtonPressOrTimeout(TickType_t timeout);
 void waitForButtonPress();

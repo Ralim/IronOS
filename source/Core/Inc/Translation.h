@@ -54,11 +54,6 @@ extern const char *DebugMenu[];
 extern const char *AccelTypeNames[];
 extern const char *PowerSourceNames[];
 
-/* !
- * The order of the items inside this enum class SettingsItemIndex
- * must be the same as the order of the related items
- * in the "menuOptions" section of translations_definitions.json file.
- */
 enum class SettingsItemIndex : uint8_t {
   DCInCutoff,
   MinVolCell,
@@ -95,7 +90,6 @@ enum class SettingsItemIndex : uint8_t {
   CooldownBlink,
   ScrollingSpeed,
   ReverseButtonTempChange,
-  ReverseButtonMenu,
   AnimSpeed,
   AnimLoop,
   Brightness,
