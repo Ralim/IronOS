@@ -1,6 +1,7 @@
 #include "Pins.h"
 #include "Setup.h"
 #include "stm32f1xx_hal.h"
+#include "string.h"
 /**
  * Initializes the Global MSP.
  */
@@ -29,6 +30,7 @@ void HAL_MspInit(void) {
 void HAL_ADC_MspInit(ADC_HandleTypeDef *hadc) {
 
   GPIO_InitTypeDef GPIO_InitStruct;
+  memset(&GPIO_InitStruct, 0, sizeof(GPIO_InitStruct));
   if (hadc->Instance == ADC1) {
     __HAL_RCC_ADC1_CLK_ENABLE();
 
@@ -51,6 +53,7 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef *hadc) {
     HAL_NVIC_EnableIRQ(ADC1_2_IRQn);
   } else {
     __HAL_RCC_ADC2_CLK_ENABLE();
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
 
     /**ADC2 GPIO Configuration
      PB0     ------> ADC2_IN8
@@ -59,9 +62,11 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef *hadc) {
     GPIO_InitStruct.Pin  = TIP_TEMP_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
     HAL_GPIO_Init(TIP_TEMP_GPIO_Port, &GPIO_InitStruct);
+
     GPIO_InitStruct.Pin  = TMP36_INPUT_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
     HAL_GPIO_Init(TMP36_INPUT_GPIO_Port, &GPIO_InitStruct);
+
     GPIO_InitStruct.Pin  = VIN_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
     HAL_GPIO_Init(VIN_GPIO_Port, &GPIO_InitStruct);
