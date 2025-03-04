@@ -11,7 +11,7 @@
 #include <Buttons.hpp>
 TickType_t lastButtonTime = 0;
 
-ButtonState getButtonState(bool swapButtonMenu) {
+ButtonState getButtonState() {
   /*
    * Read in the buttons and then determine if a state change needs to occur
    */
@@ -28,8 +28,8 @@ ButtonState getButtonState(bool swapButtonMenu) {
   static TickType_t previousStateChange = 0;
   const TickType_t  timeout             = TICKS_100MS * 4;
   uint8_t           currentState;
-  currentState = (getButtonA()) << (0 xor swapButtonMenu);
-  currentState |= (getButtonB()) << (1 xor swapButtonMenu);
+  currentState = (getButtonA()) << 0;
+  currentState |= (getButtonB()) << 1;
 
   if (currentState) {
     lastButtonTime = xTaskGetTickCount();
