@@ -118,7 +118,7 @@ jobs:
 
   upload_metadata:
     needs: [build, build_multi-lang]
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Download all prebuilts
@@ -197,7 +197,7 @@ jobs:
 
   check_shell:
     name: check_shell
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - name: shellcheck
