@@ -275,6 +275,10 @@
       "displayText": "Zamień przyc.\n+ -",
       "description": "Zamienia działanie przycisków zmiany temperatury grotu"
     },
+    "AnimSlide": {
+      "displayText": "Anim.\nsliding",
+      "description": "Use slide-scroll animation"
+    },
     "AnimSpeed": {
       "displayText": "Prędkosć\nanimacji",
       "description": "Prędkość animacji ikon w menu (W: mała | M: średnia | S: duża)"

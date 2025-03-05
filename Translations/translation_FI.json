@@ -275,6 +275,10 @@
       "displayText": "Suunnanvaihto\n+ - näppäimille",
       "description": "Lämpötilapainikkeiden suunnan vaihtaminen"
     },
+    "AnimSlide": {
+      "displayText": "Anim.\nsliding",
+      "description": "Use slide-scroll animation"
+    },
     "AnimSpeed": {
       "displayText": "Animaation\nnopeus",
       "description": "Animaatioiden nopeus valikossa (A=alhainen | K=keskiverto | S=suuri)"

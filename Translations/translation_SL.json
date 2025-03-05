@@ -275,6 +275,10 @@
       "displayText": "Obrni\ntipki + -?",
       "description": "Zamenjaj funkciji gumbov."
     },
+    "AnimSlide": {
+      "displayText": "Anim.\nsliding",
+      "description": "Use slide-scroll animation"
+    },
     "AnimSpeed": {
       "displayText": "Anim.\nspeed",
       "description": "Pace of icon animations in menu (P=slow | M=medium | H=fast)"

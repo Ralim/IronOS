@@ -275,6 +275,10 @@
       "displayText": "Inversione\ntasti",
       "description": "Inverti i tasti per aumentare o diminuire la temperatura della punta"
     },
+    "AnimSlide": {
+      "displayText": "Anim.\nsliding",
+      "description": "Use slide-scroll animation"
+    },
     "AnimSpeed": {
       "displayText": "Velocità\nanimazioni",
       "description": "Imposta la velocità di riproduzione delle animazioni del menù principale [L: lenta; M: media; V: veloce]"

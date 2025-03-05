@@ -474,6 +474,12 @@
       "description": "Swaps which button increments and decrements on temperature change screens."
     },
     {
+      "id": "AnimSlide",
+      "maxLen": 6,
+      "maxLen2": 13,
+      "description": "Use slide-scroll animation."
+    },
+    {
       "id": "AnimSpeed",
       "maxLen": 6,
       "maxLen2": 13,

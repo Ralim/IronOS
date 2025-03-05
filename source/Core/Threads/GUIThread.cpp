@@ -158,7 +158,7 @@ void guiRenderLoop(void) {
     currentOperatingMode = newMode;
   }
   // If the transition marker is set, we need to make the next draw occur to the secondary buffer so we have something to transition to
-  if (context.transitionMode != TransitionAnimation::None) {
+  if (getSettingValue(SettingsOptions::AnimationSlide) && context.transitionMode != TransitionAnimation::None) {
     OLED::useSecondaryFramebuffer(true);
     // Now we need to fill the secondary buffer with the _next_ frame to transistion to
     guiHandleDraw();

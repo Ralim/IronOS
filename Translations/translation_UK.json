@@ -275,6 +275,10 @@
       "displayText": "Інвертувати\nкнопки +-?",
       "description": "Інвертувати кнопки зміни температури."
     },
+    "AnimSlide": {
+      "displayText": "Anim.\nsliding",
+      "description": "Use slide-scroll animation"
+    },
     "AnimSpeed": {
       "displayText": "Швидкість\nанімації",
       "description": "Швидкість анімації іконок у меню (Н=Низькa | С=Середня | М=Максимальна)"

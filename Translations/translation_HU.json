@@ -275,6 +275,10 @@
       "displayText": "+/- gomb\nmegfordítása",
       "description": "Forrasztó hegy hőmérsékletállító gombok felcserélése"
     },
+    "AnimSlide": {
+      "displayText": "Anim.\nsliding",
+      "description": "Use slide-scroll animation"
+    },
     "AnimSpeed": {
       "displayText": "Animáció\nsebessége",
       "description": "Menüikonok animációjának sebessége (L=lassú | K=közepes | Gy=gyors)"

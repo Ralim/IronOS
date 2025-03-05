@@ -275,6 +275,10 @@
       "displayText": "Zamjena\n+ - tipki",
       "description": "Zamjenjuje funkciju gornje i donje tipke za podešavanje temperature"
     },
+    "AnimSlide": {
+      "displayText": "Anim.\nsliding",
+      "description": "Use slide-scroll animation"
+    },
     "AnimSpeed": {
       "displayText": "Brzina\nanimacije",
       "description": "Brzina animacije ikona u menijima (S=sporo | M=srednje | B=brzo)"

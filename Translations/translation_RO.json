@@ -275,6 +275,10 @@
       "displayText": "Inversare\n+ - butoane",
       "description": "Inversarea butoanelor de reglare a temperaturii"
     },
+    "AnimSlide": {
+      "displayText": "Anim.\nsliding",
+      "description": "Use slide-scroll animation"
+    },
     "AnimSpeed": {
       "displayText": "Animaţii\nviteză",
       "description": "Ritmul animaţiilor pictogramei din meniu (Î=încet | M=mediu | R=rapid)"

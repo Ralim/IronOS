@@ -275,6 +275,10 @@
       "displayText": "Bytt\n+ - kn.",
       "description": "Bytt om på knappene for å stille temperatur"
     },
+    "AnimSlide": {
+      "displayText": "Anim.\nsliding",
+      "description": "Use slide-scroll animation"
+    },
     "AnimSpeed": {
       "displayText": "Anim.\nhastighet",
       "description": "Hastigheten til animasjonene i menyen (S=slow | M=medium | F=fast)"

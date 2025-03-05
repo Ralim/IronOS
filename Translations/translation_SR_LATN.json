@@ -275,6 +275,10 @@
       "displayText": "Swap\n+ - keys",
       "description": "Reverse assignment of buttons for temperature adjustment"
     },
+    "AnimSlide": {
+      "displayText": "Anim.\nsliding",
+      "description": "Use slide-scroll animation"
+    },
     "AnimSpeed": {
       "displayText": "Anim.\nspeed",
       "description": "Pace of icon animations in menu (S=slow | M=medium | B=fast)"

@@ -90,6 +90,7 @@ enum class SettingsItemIndex : uint8_t {
   CooldownBlink,
   ScrollingSpeed,
   ReverseButtonTempChange,
+  AnimSlide,
   AnimSpeed,
   AnimLoop,
   Brightness,

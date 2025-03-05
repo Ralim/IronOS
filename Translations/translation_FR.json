@@ -275,6 +275,10 @@
       "displayText": "Inverser les\ntouches + -",
       "description": "Inverser les boutons d'ajustement de température"
     },
+    "AnimSlide": {
+      "displayText": "Anim.\nsliding",
+      "description": "Use slide-scroll animation"
+    },
     "AnimSpeed": {
       "displayText": "Vitesse\nanim. icônes",
       "description": "Vitesse des animations des icônes dans le menu (L=lente | M=moyenne | R=rapide)"

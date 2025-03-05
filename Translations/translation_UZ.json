@@ -275,6 +275,10 @@
       "displayText": "(+) va (-) tugmalarni\nalmashtirish",
       "description": "Harorat o'zgarishi uchun tugmachalarni vazifasini almashish"
     },
+    "AnimSlide": {
+      "displayText": "Anim.\nsliding",
+      "description": "Use slide-scroll animation"
+    },
     "AnimSpeed": {
       "displayText": "Anim.\ntezligi",
       "description": "Menyudagi ikonka animatsiyalari tezligini sozlash (S=sekin | O=o'rtacha | T=tez)"

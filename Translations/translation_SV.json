@@ -275,6 +275,10 @@
       "displayText": "Omvända\n+- knappar",
       "description": "Omvänd ordning för temperaturjustering via plus/minus knapparna"
     },
+    "AnimSlide": {
+      "displayText": "Anim.\nsliding",
+      "description": "Use slide-scroll animation"
+    },
     "AnimSpeed": {
       "displayText": "Anim.-\nhastighet",
       "description": "Animationshastighet för ikoner i menyer (L=långsam | M=medel | S=snabb)"

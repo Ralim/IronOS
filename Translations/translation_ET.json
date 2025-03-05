@@ -275,6 +275,10 @@
       "displayText": "Vaheta\n+ - nupud",
       "description": "Temperatuurinuppude asukohtade vahetus"
     },
+    "AnimSlide": {
+      "displayText": "Anim.\nsliding",
+      "description": "Use slide-scroll animation"
+    },
     "AnimSpeed": {
       "displayText": "Anim.\nkiirus",
       "description": "Menüüikoonide animatsiooni kiirus (A=aeglane | K=keskmine | T=tempokas)"

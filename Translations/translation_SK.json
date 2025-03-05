@@ -275,6 +275,10 @@
       "displayText": "Otočenie\ntlačidiel +/-",
       "description": "Prehodenie tlačidiel na nastavovanie teploty"
     },
+    "AnimSlide": {
+      "displayText": "Anim.\nsliding",
+      "description": "Use slide-scroll animation"
+    },
     "AnimSpeed": {
       "displayText": "Rýchlosť\nanimácií",
       "description": "Rýchlosť animácií ikoniek v menu (P=pomaly | S=stredne | R=rýchlo)"

@@ -275,6 +275,10 @@
       "displayText": "Prohodit\ntl. +-?",
       "description": "Prohodit tlačítka pro změnu teploty"
     },
+    "AnimSlide": {
+      "displayText": "Anim.\nsliding",
+      "description": "Use slide-scroll animation"
+    },
     "AnimSpeed": {
       "displayText": "Anim.\nrychlost",
       "description": "Tempo animace ikon v menu (P=pomalu | S=středně | R=rychle)"

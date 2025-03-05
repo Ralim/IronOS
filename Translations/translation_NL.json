@@ -275,6 +275,10 @@
       "displayText": "Wissel\n+ - knoppen",
       "description": "Wissel de knoppen voor temperatuur controle om"
     },
+    "AnimSlide": {
+      "displayText": "Anim.\nsliding",
+      "description": "Use slide-scroll animation"
+    },
     "AnimSpeed": {
       "displayText": "Anim.\nsnelheid",
       "description": "Snelheid van de icoon animaties in het menu (Langzaam | Middel | Snel)"

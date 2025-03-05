@@ -275,6 +275,10 @@
       "displayText": "Размяна\nбутони +/-",
       "description": "Обръщане на бутоните + и - за промяна на температурата на човка на поялника"
     },
+    "AnimSlide": {
+      "displayText": "Anim.\nsliding",
+      "description": "Use slide-scroll animation"
+    },
     "AnimSpeed": {
       "displayText": "Скорост на\nанимацията",
       "description": "Скорост на анимация на иконата в главното меню (Н=Ниска | C=Средна | B=Висока)"
