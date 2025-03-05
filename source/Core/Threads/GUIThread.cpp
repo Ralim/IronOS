@@ -57,6 +57,9 @@ OperatingMode guiHandleDraw(void) {
       setStatusLED(LED_OFF);
     } else {
       OLED::setDisplayState(OLED::DisplayState::ON);
+    }
+    if (currentOperatingMode != OperatingMode::Soldering && currentOperatingMode != OperatingMode::SolderingProfile) {
+      // Not in soldering mode, so set this based on temp
       if (tipTemp > 55) {
         setStatusLED(LED_COOLING_STILL_HOT);
       } else {

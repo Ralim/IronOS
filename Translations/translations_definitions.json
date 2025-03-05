@@ -172,7 +172,7 @@
       "id": "PowerMenu",
       "maxLen": 5,
       "maxLen2": 11,
-      "include": ["POW_DC", "POW_QC"],
+      "include": ["POW_DC", "POW_PD", "POW_QC"],
       "description": "Menu for settings related to power. Main settings to do with the input voltage."
     },
     {
