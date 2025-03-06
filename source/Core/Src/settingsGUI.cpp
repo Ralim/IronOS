@@ -856,7 +856,20 @@ static void displayScrollSpeed(void) { OLED::print(translatedString((getSettingV
 
 static void displayReverseButtonTempChangeEnabled(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled)); }
 
-static void displayAnimationSlide(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::AnimationSlide)); }
+static void displayAnimationSlide(void) {
+  switch (getSettingValue(SettingsOptions::AnimationSlide)) {
+  case slidingMode_t::DYNAMIC:
+    OLED::print(translatedString(Tr->SettingAnimSlideFull), FontStyle::LARGE);
+    break;
+  case slidingMode_t::SETTINGS:
+    OLED::print(translatedString(Tr->SettingAnimSlideSettings), FontStyle::LARGE);
+    break;
+  case slidingMode_t::STATIC:
+  default:
+    OLED::drawUnavailableIcon();
+    break;
+  }
+}
 
 static void displayAnimationSpeed(void) {
   switch (getSettingValue(SettingsOptions::AnimationSpeed)) {

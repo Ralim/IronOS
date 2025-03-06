@@ -120,6 +120,12 @@ typedef enum {
   FULL     = 2, // Locking buttons for Boost mode AND for Soldering mode
 } lockingMode_t;
 
+typedef enum {
+  STATIC   = 0, // Sliding animation is disabled
+  SETTINGS = 1, // Sliding animation is enabled in Settings menu only
+  DYNAMIC  = 2, // Sliding animation is enabled
+} slidingMode_t;
+
 /* Selection of the soldering tip
  * Some devices allow multiple types of tips to be fitted, this allows selecting them or overriding the logic
  * The first type will be the default (gets value of 0)

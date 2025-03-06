@@ -81,7 +81,9 @@
     "SettingStartSleepChar": "R",
     "SettingStartSleepOffChar": "K",
     "SettingLockBoostChar": "B",
-    "SettingLockFullChar": "V"
+    "SettingLockFullChar": "V",
+    "SettingAnimSlideFull": "E",
+    "SettingAnimSlideSettings": "S"
   },
   "menuGroups": {
     "PowerMenu": {
@@ -277,7 +279,7 @@
     },
     "AnimSlide": {
       "displayText": "Anim.\nsliding",
-      "description": "Use slide-scroll animation"
+      "description": "Use slide-scroll animation (E=everywhere | S=in settings only)"
     },
     "AnimSpeed": {
       "displayText": "Anim.\nGeschw.",

@@ -148,6 +148,8 @@ struct TranslationIndexTable {
   uint16_t SettingStartSleepOffChar;
   uint16_t SettingLockBoostChar;
   uint16_t SettingLockFullChar;
+  uint16_t SettingAnimSlideFull;
+  uint16_t SettingAnimSlideSettings;
   uint16_t USBPDModeDefault;
   uint16_t USBPDModeNoDynamic;
   uint16_t USBPDModeSafe;
