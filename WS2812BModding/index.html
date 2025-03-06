@@ -3,18 +3,18 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://ralim.github.io/IronOS/HardwareIssues/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://ralim.github.io/IronOS/WS2812BModding/" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Known Hardware Issues - IronOS</title>
+    <title>WS2812B RGB Modding (Pinecil V2) - IronOS</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Known Hardware Issues";
-        var mkdocs_page_input_path = "HardwareIssues.md";
-        var mkdocs_page_url = "/IronOS/HardwareIssues/";
+        var mkdocs_page_name = "WS2812B RGB Modding (Pinecil V2)";
+        var mkdocs_page_input_path = "WS2812BModding.md";
+        var mkdocs_page_url = "/IronOS/WS2812BModding/";
       </script>
     
     <!--[if lt IE 9]>
@@ -88,23 +88,23 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../Troubleshooting/">Troubleshooting</a>
                   </li>
-                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Known Hardware Issues</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#no-accelerometer-detected">No Accelerometer detected</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#no-usb-pd-ic-detected">No USB-PD IC detected</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#no-tip-detected">No tip detected</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#iron-will-not-heat-up-and-displays-a-high-temperature">Iron will not heat up and displays a high temperature</a>
-    </li>
-    </ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../HardwareIssues/">Known Hardware Issues</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../PowerSources/">Power sources</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../PortingToNewDevice/">New Hardware Requirements</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../WS2812BModding/">WS2812B RGB Modding (Pinecil V2)</a>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">WS2812B RGB Modding (Pinecil V2)</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#what-is-it">What is it?</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#electrical-considerations">Electrical considerations</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#how-to-wire-it">How to wire it?</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#how-to-enable-it-in-the-code">How to enable it in the code?</a>
+    </li>
+    </ul>
                   </li>
               </ul>
               <ul>
@@ -134,9 +134,9 @@
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
           <li class="breadcrumb-item">Hardware</li>
-      <li class="breadcrumb-item active">Known Hardware Issues</li>
+      <li class="breadcrumb-item active">WS2812B RGB Modding (Pinecil V2)</li>
     <li class="wy-breadcrumbs-aside">
-          <a href="https://github.com/ralim/IronOS/edit/dev/Documentation/HardwareIssues.md" class="icon icon-github"> Edit on GitHub</a>
+          <a href="https://github.com/ralim/IronOS/edit/dev/Documentation/WS2812BModding.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
   <hr/>
@@ -144,34 +144,37 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="hardware-issues">Hardware Issues</h1>
-<p>While we would love everything to work perfectly, sometimes that just doesn't happen.
-Please do not email maintainers directly, these will generally be ignored.
-Keep issue discussions to GitHub issues or the discussions page so that the whole community can help and work together.</p>
-<h2 id="no-accelerometer-detected">No Accelerometer detected</h2>
-<p>If your iron was previously working, this could be a bug (and we are very sorry). Please check the currently open and recently closed issues to check if anyone else has run into this. You can try going back to a release on the firmware to test if this is a new issue before opening an issue.</p>
-<p>If this is a new iron, also feel free to open an issue if you don't see any; a vendor <em>could</em> have changed the model of the accelerometer on us without warning <em>again</em>. In which case, support should come shortly.</p>
-<p>If your iron is new, there is a slim chance your accelerometer may be DOA and need replacement.</p>
-<p><strong>Note this warning will only be shown the first few times until settings are reset</strong></p>
-<h2 id="no-usb-pd-ic-detected">No USB-PD IC detected</h2>
-<p>Generally, this means either something went very awry in the firmware, or the chip is not answering as would normally be expected. Try rolling back to an earlier release to confirm if the issue still persists then the device may need repair. If you have some form of seller protection/support, you most likely want to reach out to this to be safe. If you don't, you can always attempt to replace the IC yourself. As of writing both the TS80P and Pinecil use the FUSB302.</p>
-<p><strong>Note this warning will only be shown the first few times until settings are reset</strong></p>
-<h2 id="no-tip-detected">No tip detected</h2>
-<p>If your tip is not being detected, the most likely cause is that the heater element inside the tip has been damaged from over-temperature, being dropped or bad luck. As the heater coil is part of the temperature measurement circuit neither will work if it's damaged.</p>
-<p>The best way to see if this is the case is to measure the resistance across the contacts to the tip using a multimeter.
-you are expecting to see measurements in the range of 4-10 ohms. Anything higher than 10 ohms is <em>generally</em> an issue.</p>
-<h2 id="iron-will-not-heat-up-and-displays-a-high-temperature">Iron will not heat up and displays a high temperature</h2>
-<p>Check the Rtip and CHan numbers (<a href="https://ralim.github.io/IronOS/DebugMenu/">see debug menu</a>). Extremly high CHan is suspect to a problem with the cold junction compensation temperature sensor.</p>
-<p>For Pinecil V1, inspect near U10 which is the TMP36 sensor (<a href="https://github.com/Ralim/IronOS/issues/1234">see issue here</a>). You may be able to reflow/resolder the TMP36 chip at U10 to correct a weak solder joint.</p>
-<p>If it worked on older firmware, but not on 2.16+, weak solder joints are suspect. The newer firmware runs the ADC a bit faster to keep tighter control of the tip temperature. Normally this wont cause an issue as the output from the TMP36 is powerful enough to keep up without any issue. But if you have a weak or cold solder joint this could cause issues.</p>
-<p>If the CHan is extremely high, and reflowing the temperature sensor does not resolve the issue; inspect the pins in the main MCU, possibly try giving them a light squeeze to the board while watching CHan.</p>
-<p>If you have a different device, follow the same logic and locate the temperature sensor on your device.</p>
+                <h1 id="ws2812b-rgb-modding-pinecil-v2">WS2812B RGB Modding (Pinecil V2)</h1>
+<h2 id="what-is-it">What is it?</h2>
+<p>The idea of this mod is to bring the RGB feature of the MHP30 to the Pinecil V2.
+Use a transparent shell for a better effect.</p>
+<p>Pinecil V2 has a free GPIO_12 accessible through TP10, which is along the screen, cf <a href="https://files.pine64.org/doc/Pinecil/Pinecil_PCB_placement_v2.0_20220608.pdf">Pinecil PCB placement v2.0</a> page 3. (TP9 (GPIO_14) is also available but hidden below the screen. If you want to use it, change <code>WS2812B_Pin</code> in <code>source/Core/BSP/Pinecilv2/Pins.h</code>.)</p>
+<p>We'll using it to drive a WS2812B and let the color logic already present for the MHP30 do its magic:</p>
+<ul>
+<li>green when temperature is safe (&lt; 55°C)</li>
+<li>pulsing red when heating</li>
+<li>solid red when desired temperature is reached</li>
+<li>orange when cooling down</li>
+</ul>
+<h2 id="electrical-considerations">Electrical considerations</h2>
+<p>WS2812B requires a Vdd between 3.5 and 5.3V and Vih (high level of input signal) must be at least 0.7*Vdd.
+Pinecil V2 GPIO levels are 3.3V and the 5V rail is actually max 4.6V.
+So we can directly power the WS2812B on the 5V rail and command it with the GPIO without need for a level shifter, or for a Zener diode to clamp Vdd.</p>
+<h2 id="how-to-wire-it">How to wire it?</h2>
+<ul>
+<li>WS2812B pin 1 (Vdd) is connected to the "5V" rail, e.g. on the C8 capacitor as illustrated <a href="https://github.com/Ralim/IronOS/issues/1410#issuecomment-1296064392">here</a>.</li>
+<li>WS2812B pin 3 (Vss) is connected to the Pinecil GND, e.g. on the U10 pad at the back of the PCB, below R35, as illustrated <a href="https://github.com/Ralim/IronOS/issues/1410#issuecomment-1296064392">here</a>.</li>
+<li>WS2812B pin 4 (Din) is connected to TP10.</li>
+</ul>
+<p>You can use e.g. 0.1-mm enameled wire and isolate connections with UV glue to avoid any shortcut.</p>
+<h2 id="how-to-enable-it-in-the-code">How to enable it in the code?</h2>
+<p><code>make firmware-EN model=Pinecilv2 ws2812b_enable=1</code></p>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../Troubleshooting/" class="btn btn-neutral float-left" title="Troubleshooting"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../PowerSources/" class="btn btn-neutral float-right" title="Power sources">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../PortingToNewDevice/" class="btn btn-neutral float-left" title="New Hardware Requirements"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../Translation/" class="btn btn-neutral float-right" title="Translations">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -198,10 +201,10 @@ you are expecting to see measurements in the range of 4-10 ohms. Anything higher
         </span>
     
     
-      <span><a href="../Troubleshooting/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../PortingToNewDevice/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../PowerSources/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../Translation/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
