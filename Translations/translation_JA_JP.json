@@ -81,7 +81,9 @@
     "SettingStartSleepChar": "待",
     "SettingStartSleepOffChar": "室",
     "SettingLockBoostChar": "ブ",
-    "SettingLockFullChar": "全"
+    "SettingLockFullChar": "全",
+    "SettingAnimSlideFull": "E",
+    "SettingAnimSlideSettings": "S"
   },
   "menuGroups": {
     "PowerMenu": {
@@ -274,6 +276,10 @@
     "ReverseButtonTempChange": {
       "displayText": "キー入れ替え",
       "description": "温度設定時に+ボタンと-ボタンを入れ替える"
+    },
+    "AnimSlide": {
+      "displayText": "Anim.\nsliding",
+      "description": "Use slide-scroll animation (E=everywhere | S=in settings only)"
     },
     "AnimSpeed": {
       "displayText": "動画の速度",

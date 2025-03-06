@@ -81,7 +81,9 @@
     "SettingStartSleepChar": "D",
     "SettingStartSleepOffChar": "R",
     "SettingLockBoostChar": "B",
-    "SettingLockFullChar": "F"
+    "SettingLockFullChar": "F",
+    "SettingAnimSlideFull": "E",
+    "SettingAnimSlideSettings": "S"
   },
   "menuGroups": {
     "PowerMenu": {
@@ -274,6 +276,10 @@
     "ReverseButtonTempChange": {
       "displayText": "Bytt\n+ - kn.",
       "description": "Bytt om på knappene for å stille temperatur"
+    },
+    "AnimSlide": {
+      "displayText": "Anim.\nsliding",
+      "description": "Use slide-scroll animation (E=everywhere | S=in settings only)"
     },
     "AnimSpeed": {
       "displayText": "Anim.\nhastighet",

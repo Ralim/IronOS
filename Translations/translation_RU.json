@@ -81,7 +81,9 @@
     "SettingStartSleepChar": "С",
     "SettingStartSleepOffChar": "К",
     "SettingLockBoostChar": "Т",
-    "SettingLockFullChar": "П"
+    "SettingLockFullChar": "П",
+    "SettingAnimSlideFull": "E",
+    "SettingAnimSlideSettings": "S"
   },
   "menuGroups": {
     "PowerMenu": {
@@ -274,6 +276,10 @@
     "ReverseButtonTempChange": {
       "displayText": "Поменять\nкнопки +/-",
       "description": "Поменять кнопки изменения температуры"
+    },
+    "AnimSlide": {
+      "displayText": "Anim.\nsliding",
+      "description": "Use slide-scroll animation (E=everywhere | S=in settings only)"
     },
     "AnimSpeed": {
       "displayText": "Скорость\nанимации",

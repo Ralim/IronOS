@@ -81,7 +81,9 @@
     "SettingStartSleepChar": "R",
     "SettingStartSleepOffChar": "F",
     "SettingLockBoostChar": "B",
-    "SettingLockFullChar": "F"
+    "SettingLockFullChar": "F",
+    "SettingAnimSlideFull": "E",
+    "SettingAnimSlideSettings": "S"
   },
   "menuGroups": {
     "PowerMenu": {
@@ -274,6 +276,10 @@
     "ReverseButtonTempChange": {
       "displayText": "Invertir\nbotones +/-",
       "description": "Invertir botones de ajuste de temperatura"
+    },
+    "AnimSlide": {
+      "displayText": "Anim.\nsliding",
+      "description": "Use slide-scroll animation (E=everywhere | S=in settings only)"
     },
     "AnimSpeed": {
       "displayText": "Anim.\nvelocidad",

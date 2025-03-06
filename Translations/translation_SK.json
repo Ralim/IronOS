@@ -81,7 +81,9 @@
     "SettingStartSleepChar": "S",
     "SettingStartSleepOffChar": "I",
     "SettingLockBoostChar": "B",
-    "SettingLockFullChar": "P"
+    "SettingLockFullChar": "P",
+    "SettingAnimSlideFull": "E",
+    "SettingAnimSlideSettings": "S"
   },
   "menuGroups": {
     "PowerMenu": {
@@ -274,6 +276,10 @@
     "ReverseButtonTempChange": {
       "displayText": "Otočenie\ntlačidiel +/-",
       "description": "Prehodenie tlačidiel na nastavovanie teploty"
+    },
+    "AnimSlide": {
+      "displayText": "Anim.\nsliding",
+      "description": "Use slide-scroll animation (E=everywhere | S=in settings only)"
     },
     "AnimSpeed": {
       "displayText": "Rýchlosť\nanimácií",

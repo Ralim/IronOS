@@ -81,7 +81,9 @@
     "SettingStartSleepChar": "M",
     "SettingStartSleepOffChar": "K",
     "SettingLockBoostChar": "T",
-    "SettingLockFullChar": "V"
+    "SettingLockFullChar": "V",
+    "SettingAnimSlideFull": "E",
+    "SettingAnimSlideSettings": "S"
   },
   "menuGroups": {
     "PowerMenu": {
@@ -274,6 +276,10 @@
     "ReverseButtonTempChange": {
       "displayText": "Sukeisti + -\nmygtukus?",
       "description": "Sukeisti + - temperatūros keitimo mygtukus vietomis"
+    },
+    "AnimSlide": {
+      "displayText": "Anim.\nsliding",
+      "description": "Use slide-scroll animation (E=everywhere | S=in settings only)"
     },
     "AnimSpeed": {
       "displayText": "Animacijų\ngreitis",

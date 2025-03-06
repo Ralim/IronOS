@@ -102,6 +102,7 @@ static void displayPowerPulse(void);
 static bool displayAnimationOptions(void);
 static void displayAnimationSpeed(void);
 static void displayAnimationLoop(void);
+static void displayAnimationSlide(void);
 static void displayPowerPulseWait(void);
 static bool showPowerPulseOptions(void);
 static void displayPowerPulseDuration(void);
@@ -395,6 +396,8 @@ const menuitem UIMenu[] = {
   {SETTINGS_DESC(SettingsItemIndex::ScrollingSpeed), nullptr, displayScrollSpeed, nullptr, SettingsOptions::DescriptionScrollSpeed, SettingsItemIndex::ScrollingSpeed, 7},
   /* Reverse Temp change buttons +/- */
   {SETTINGS_DESC(SettingsItemIndex::ReverseButtonTempChange), nullptr, displayReverseButtonTempChangeEnabled, nullptr, SettingsOptions::ReverseButtonTempChangeEnabled, SettingsItemIndex::ReverseButtonTempChange, 7},
+  /* Animation Slide switch */
+  {SETTINGS_DESC(SettingsItemIndex::AnimSlide), nullptr, displayAnimationSlide, nullptr, SettingsOptions::AnimationSlide, SettingsItemIndex::AnimSlide, 7},
   /* Animation Speed adjustment */
   {SETTINGS_DESC(SettingsItemIndex::AnimSpeed), nullptr, displayAnimationSpeed, nullptr, SettingsOptions::AnimationSpeed, SettingsItemIndex::AnimSpeed, 7},
   /* Animation Loop switch */
@@ -852,6 +855,21 @@ static void displayCoolingBlinkEnabled(void) { OLED::drawCheckbox(getSettingValu
 static void displayScrollSpeed(void) { OLED::print(translatedString((getSettingValue(SettingsOptions::DescriptionScrollSpeed)) ? Tr->SettingFastChar : Tr->SettingSlowChar), FontStyle::LARGE); }
 
 static void displayReverseButtonTempChangeEnabled(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled)); }
+
+static void displayAnimationSlide(void) {
+  switch (getSettingValue(SettingsOptions::AnimationSlide)) {
+  case slidingMode_t::DYNAMIC:
+    OLED::print(translatedString(Tr->SettingAnimSlideFull), FontStyle::LARGE);
+    break;
+  case slidingMode_t::SETTINGS:
+    OLED::print(translatedString(Tr->SettingAnimSlideSettings), FontStyle::LARGE);
+    break;
+  case slidingMode_t::STATIC:
+  default:
+    OLED::drawUnavailableIcon();
+    break;
+  }
+}
 
 static void displayAnimationSpeed(void) {
   switch (getSettingValue(SettingsOptions::AnimationSpeed)) {

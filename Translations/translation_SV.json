@@ -81,7 +81,9 @@
     "SettingStartSleepChar": "V",
     "SettingStartSleepOffChar": "R",
     "SettingLockBoostChar": "T",
-    "SettingLockFullChar": "F"
+    "SettingLockFullChar": "F",
+    "SettingAnimSlideFull": "E",
+    "SettingAnimSlideSettings": "S"
   },
   "menuGroups": {
     "PowerMenu": {
@@ -274,6 +276,10 @@
     "ReverseButtonTempChange": {
       "displayText": "Omvända\n+- knappar",
       "description": "Omvänd ordning för temperaturjustering via plus/minus knapparna"
+    },
+    "AnimSlide": {
+      "displayText": "Anim.\nsliding",
+      "description": "Use slide-scroll animation (E=everywhere | S=in settings only)"
     },
     "AnimSpeed": {
       "displayText": "Anim.-\nhastighet",

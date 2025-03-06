@@ -76,8 +76,9 @@ enum SettingsOptions {
   ProfileCooldownSpeed           = 52, // Maximum allowed cooldown speed in degrees per second
   HallEffectSleepTime            = 53, // Seconds (/5) timeout to sleep when hall effect over threshold
   SolderingTipType               = 54, // Selecting the type of soldering tip fitted
+  AnimationSlide                 = 55, // Enable slide-scroll animation
   //
-  SettingsOptionsLength = 55, // End marker
+  SettingsOptionsLength = 56, // End marker
 };
 
 typedef enum {
@@ -118,6 +119,12 @@ typedef enum {
   BOOST    = 1, // Locking buttons for Boost mode only
   FULL     = 2, // Locking buttons for Boost mode AND for Soldering mode
 } lockingMode_t;
+
+typedef enum {
+  STATIC   = 0, // Sliding animation is disabled
+  SETTINGS = 1, // Sliding animation is enabled in Settings menu only
+  DYNAMIC  = 2, // Sliding animation is enabled
+} slidingMode_t;
 
 /* Selection of the soldering tip
  * Some devices allow multiple types of tips to be fitted, this allows selecting them or overriding the logic

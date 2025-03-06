@@ -81,7 +81,9 @@
     "SettingStartSleepChar": "L",
     "SettingStartSleepOffChar": "H",
     "SettingLockBoostChar": "V",
-    "SettingLockFullChar": "K"
+    "SettingLockFullChar": "K",
+    "SettingAnimSlideFull": "E",
+    "SettingAnimSlideSettings": "S"
   },
   "menuGroups": {
     "PowerMenu": {
@@ -274,6 +276,10 @@
     "ReverseButtonTempChange": {
       "displayText": "Suunnanvaihto\n+ - näppäimille",
       "description": "Lämpötilapainikkeiden suunnan vaihtaminen"
+    },
+    "AnimSlide": {
+      "displayText": "Anim.\nsliding",
+      "description": "Use slide-scroll animation (E=everywhere | S=in settings only)"
     },
     "AnimSpeed": {
       "displayText": "Animaation\nnopeus",

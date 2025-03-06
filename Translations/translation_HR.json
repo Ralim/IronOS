@@ -81,7 +81,9 @@
     "SettingStartSleepChar": "T",
     "SettingStartSleepOffChar": "H",
     "SettingLockBoostChar": "B",
-    "SettingLockFullChar": "Z"
+    "SettingLockFullChar": "Z",
+    "SettingAnimSlideFull": "E",
+    "SettingAnimSlideSettings": "S"
   },
   "menuGroups": {
     "PowerMenu": {
@@ -274,6 +276,10 @@
     "ReverseButtonTempChange": {
       "displayText": "Zamjena\n+ - tipki",
       "description": "Zamjenjuje funkciju gornje i donje tipke za podešavanje temperature"
+    },
+    "AnimSlide": {
+      "displayText": "Anim.\nsliding",
+      "description": "Use slide-scroll animation (E=everywhere | S=in settings only)"
     },
     "AnimSpeed": {
       "displayText": "Brzina\nanimacije",

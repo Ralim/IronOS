@@ -81,7 +81,9 @@
     "SettingStartSleepChar": "Z",
     "SettingStartSleepOffChar": "P",
     "SettingLockBoostChar": "B",
-    "SettingLockFullChar": "T"
+    "SettingLockFullChar": "T",
+    "SettingAnimSlideFull": "E",
+    "SettingAnimSlideSettings": "S"
   },
   "menuGroups": {
     "PowerMenu": {
@@ -274,6 +276,10 @@
     "ReverseButtonTempChange": {
       "displayText": "Vaheta\n+ - nupud",
       "description": "Temperatuurinuppude asukohtade vahetus"
+    },
+    "AnimSlide": {
+      "displayText": "Anim.\nsliding",
+      "description": "Use slide-scroll animation (E=everywhere | S=in settings only)"
     },
     "AnimSpeed": {
       "displayText": "Anim.\nkiirus",

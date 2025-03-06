@@ -165,6 +165,18 @@
       "len": 1,
       "default": "F",
       "description": "Shown when the locking mode is set to lock all buttons."
+    },
+    {
+      "id": "SettingAnimSlideFull",
+      "len": 1,
+      "default": "F",
+      "description": "Shown when the animation sliding is set to full scroll-side animation."
+    },
+    {
+      "id": "SettingAnimSlideSettings",
+      "len": 1,
+      "default": "S",
+      "description": "Shown when the animation sliding is set to scroll-side animation in settings menu only."
     }
   ],
   "menuGroups": [
@@ -472,6 +484,12 @@
       "maxLen": 6,
       "maxLen2": 15,
       "description": "Swaps which button increments and decrements on temperature change screens."
+    },
+    {
+      "id": "AnimSlide",
+      "maxLen": 6,
+      "maxLen2": 13,
+      "description": "Use slide-scroll animation."
     },
     {
       "id": "AnimSpeed",

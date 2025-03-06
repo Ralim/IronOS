@@ -160,8 +160,14 @@ void guiRenderLoop(void) {
     memset(&context.scratch_state, 0, sizeof(context.scratch_state));
     currentOperatingMode = newMode;
   }
+
+  uint16_t animationSlide = getSettingValue(SettingsOptions::AnimationSlide);
+  if (context.transitionMode == TransitionAnimation::None || !animationSlide) {
+    return OLED::refresh();
+  }
+
   // If the transition marker is set, we need to make the next draw occur to the secondary buffer so we have something to transition to
-  if (context.transitionMode != TransitionAnimation::None) {
+  if ((animationSlide == slidingMode_t::SETTINGS && (newMode == OperatingMode::SettingsMenu || context.previousMode == OperatingMode::SettingsMenu)) || animationSlide == slidingMode_t::DYNAMIC) {
     OLED::useSecondaryFramebuffer(true);
     // Now we need to fill the secondary buffer with the _next_ frame to transistion to
     guiHandleDraw();

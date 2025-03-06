@@ -81,7 +81,9 @@
     "SettingStartSleepChar": "U",
     "SettingStartSleepOffChar": "X",
     "SettingLockBoostChar": "B",
-    "SettingLockFullChar": "T"
+    "SettingLockFullChar": "T",
+    "SettingAnimSlideFull": "E",
+    "SettingAnimSlideSettings": "S"
   },
   "menuGroups": {
     "PowerMenu": {
@@ -274,6 +276,10 @@
     "ReverseButtonTempChange": {
       "displayText": "(+) va (-) tugmalarni\nalmashtirish",
       "description": "Harorat o'zgarishi uchun tugmachalarni vazifasini almashish"
+    },
+    "AnimSlide": {
+      "displayText": "Anim.\nsliding",
+      "description": "Use slide-scroll animation (E=everywhere | S=in settings only)"
     },
     "AnimSpeed": {
       "displayText": "Anim.\ntezligi",

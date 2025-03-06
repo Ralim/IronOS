@@ -81,7 +81,9 @@
     "SettingStartSleepChar": "待",
     "SettingStartSleepOffChar": "室",
     "SettingLockBoostChar": "增",
-    "SettingLockFullChar": "全"
+    "SettingLockFullChar": "全",
+    "SettingAnimSlideFull": "E",
+    "SettingAnimSlideSettings": "S"
   },
   "menuGroups": {
     "PowerMenu": {
@@ -274,6 +276,10 @@
     "ReverseButtonTempChange": {
       "displayText": "調換加減鍵",
       "description": "調校溫度時調換加減鍵的方向"
+    },
+    "AnimSlide": {
+      "displayText": "Anim.\nsliding",
+      "description": "Use slide-scroll animation (E=everywhere | S=in settings only)"
     },
     "AnimSpeed": {
       "displayText": "動畫速度",
