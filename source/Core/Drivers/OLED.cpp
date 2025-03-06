@@ -760,28 +760,33 @@ void OLED::fillArea(int16_t x, int8_t y, uint8_t wide, uint8_t height, const uin
 }
 
 void OLED::drawFilledRect(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, bool clear) {
-  //!! LSB is at the top of the screen !!
+  // Ensure coordinates are within bounds
+  if (x0 >= OLED_WIDTH || y0 >= OLED_HEIGHT || x1 >= OLED_WIDTH || y1 >= OLED_HEIGHT) {
+    return;
+  }
 
-  // Draw this in 3 sections
-  uint8_t remainingHeight = y1 - y0;
-  for (uint8_t currentRow = y0 / 8; (currentRow < (OLED_HEIGHT / 8)) && remainingHeight; currentRow++) {
-    uint8_t maskTop = (0xFF) << (y0 % 8); // Shift off the mask
-    y0              = 0;                  // Blank out any start offset for future iterations
-                                          // If we are terminating the bottom of the rectangle in this row, we mask the bottom side of things too
-    if (remainingHeight <= 8) {
-      uint8_t maskBottom = ~((0xFF) << y1 % 8);  // Create mask for
-      maskTop            = maskTop & maskBottom; // AND the two masks together for final write mask
+  // Calculate the height in rows
+  uint8_t startRow  = y0 / 8;
+  uint8_t endRow    = y1 / 8;
+  uint8_t startMask = 0xFF << (y0 % 8);
+  uint8_t endMask   = 0xFF >> (7 - (y1 % 8));
+
+  for (uint8_t row = startRow; row <= endRow; row++) {
+    uint8_t mask = 0xFF;
+    if (row == startRow) {
+      mask &= startMask;
+    }
+    if (row == endRow) {
+      mask &= endMask;
     }
 
-    for (uint8_t xpos = x0; xpos < x1; xpos++) {
+    for (uint8_t x = x0; x <= x1; x++) {
       if (clear) {
-        stripPointers[currentRow][xpos] &= ~maskTop;
+        stripPointers[row][x] &= ~mask;
       } else {
-        stripPointers[currentRow][xpos] |= maskTop;
+        stripPointers[row][x] |= mask;
       }
     }
-
-    remainingHeight -= 8; // Reduce remaining height but the row stripe height
   }
 }
 
@@ -791,8 +796,20 @@ void OLED::drawHeatSymbol(uint8_t state) {
   // the levels masks the symbol nicely
   state /= 31; // 0-> 8 range
   // Then we want to draw down (16-(5+state)
-  uint8_t cursor_x_temp = cursor_x;
+  uint16_t cursor_x_temp = cursor_x;
   drawSymbol(14);
+  /*
+       / / / / /
+      / / / / /
+      +---------+
+      |         |
+      +---------+
+
+
+      <- 14 px ->
+      What we are doing is aiming to clear a section of the screen, down to the base depending on how much PWM we are using.
+      Larger numbers mean more heat, so we clear less of the screen.
+  */
   drawFilledRect(cursor_x_temp, 0, cursor_x_temp + 12, 2 + (8 - state), true);
 }
 
