@@ -42,6 +42,7 @@ nav:
       - Known Hardware Issues: HardwareIssues.md
       - Power sources: PowerSources.md
       - New Hardware Requirements: PortingToNewDevice.md
+      - WS2812B RGB Modding (Pinecil V2): WS2812BModding.md
   - Translations: Translation.md
   - Development: Development.md
   - Changelog: History.md
