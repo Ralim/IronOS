@@ -20,5 +20,6 @@ void preRToSInit() {
   gpio_write(OLED_RESET_Pin, 0);
   delay_ms(10);
   gpio_write(OLED_RESET_Pin, 1);
+  BSPInit();
   FRToSI2C::FRToSInit();
 }

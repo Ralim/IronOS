@@ -8,6 +8,7 @@ AVAILABLE_LANGUAGES=()
 BUILD_LANGUAGES=()
 AVAILABLE_MODELS=("TS100" "TS80" "TS80P" "Pinecil" "MHP30" "Pinecilv2" "S60" "S60P" "T55" "TS101")
 BUILD_MODELS=()
+OPTIONS=()
 
 builder_info() {
     echo -e "
@@ -28,17 +29,19 @@ usage() {
     builder_info
     echo -e "
 Usage : 
-    $(basename "$0") [-l <LANG_CODES>] [-m <MODELS>] [-h]
+    $(basename "$0") [-l <LANG_CODES>] [-m <MODELS>] [-o <OPTIONS>] [-h]
 
 Parameters :
     -l LANG_CODE : Force a specific language (${AVAILABLE_LANGUAGES[*]})
     -m MODEL     : Force a specific model (${AVAILABLE_MODELS[*]})
+    -o key=val   : Pass options to make
     -h           : Show this help message
 
 Example : 
     $(basename "$0") -l EN -m TS100                     (Build one language and model)
     $(basename "$0") -l EN -m \"TS100 MHP30\"             (Build one language and multi models)
     $(basename "$0") -l \"DE EN\" -m \"TS100 MHP30\"        (Build multi languages and models)
+    $(basename "$0") -l EN -m Pinecilv2 -o ws2812b_enable=1
 
 INFO : 
     By default, without parameters, the build is for all platforms and all languages
@@ -84,8 +87,9 @@ isInArray() {
 
 declare -a margs=()
 declare -a largs=()
+declare -a oargs=()
 
-while getopts "h:l:m:" option; do
+while getopts "h:l:m:o:" option; do
     case "${option}" in
     h)
         usage
@@ -95,6 +99,9 @@ while getopts "h:l:m:" option; do
         ;;
     m)
         IFS=' ' read -r -a margs <<<"${OPTARG}"
+        ;;
+    o)
+        IFS=' ' read -r -a oargs <<< "${OPTARG}"
         ;;
     *)
         usage
@@ -156,6 +163,16 @@ fi
 
 echo "********************************************"
 
+echo -n "Requested options : "
+if ((${#oargs[@]})); then
+    for i in "${oargs[@]}"; do
+        echo -n "$i "
+        OPTIONS+=("$i")
+    done
+    echo ""
+fi
+
+echo "********************************************"
 ##
 #StartBuild
 
@@ -168,7 +185,7 @@ if [ ${#BUILD_LANGUAGES[@]} -gt 0 ] && [ ${#BUILD_MODELS[@]} -gt 0 ]; then
 
     for model in "${BUILD_MODELS[@]}"; do
         echo "Building firmware for $model in ${BUILD_LANGUAGES[*]}"
-        make -j"$(nproc)" model="$model" "${BUILD_LANGUAGES[@]/#/firmware-}" >/dev/null
+        make -j"$(nproc)" model="$model" "${BUILD_LANGUAGES[@]/#/firmware-}" "${OPTIONS[@]}" >/dev/null
         checkLastCommand
     done
 else

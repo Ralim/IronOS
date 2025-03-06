@@ -28,6 +28,7 @@
       - [Known Hardware Issues](../Documentation/HardwareIssues.md)
       - [Power sources](../Documentation/PowerSources.md)
       - [New Hardware Requirements](../Documentation/PortingToNewDevice.md)
+      - [WS2812B RGB Modding (Pinecil V2)](../Documentation/WS2812BModding.md)
   - [Translations](../Documentation/Translation.md)
   - [Development](../Documentation/Development.md)
   - [Changelog](../Documentation/History.md)

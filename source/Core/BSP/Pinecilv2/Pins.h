@@ -41,4 +41,11 @@
 #define UART_TX_Pin GPIO_PIN_22
 #define UART_RX_Pin GPIO_PIN_23
 
+#if defined(WS2812B_ENABLE)
+// WS2812B mod using TP10
+#define WS2812B_Pin GPIO_PIN_12
+// WS2812B mod using TP9 is doable too, but harder to reach. Thanks @t3chguy
+//#define WS2812B_Pin GPIO_PIN_14
+#endif
+
 #endif /* BSP_PINE64_PINS_H_ */
