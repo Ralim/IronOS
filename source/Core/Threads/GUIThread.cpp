@@ -162,7 +162,8 @@ void guiRenderLoop(void) {
   }
 
   bool detailedView = getSettingValue(SettingsOptions::DetailedIDLE) && getSettingValue(SettingsOptions::DetailedSoldering);
-  if (detailedView && ((newMode == OperatingMode::HomeScreen && context.previousMode == OperatingMode::Soldering) || (newMode == OperatingMode::Soldering && context.previousMode == OperatingMode::HomeScreen))) {
+  if (detailedView &&
+      ((newMode == OperatingMode::HomeScreen && context.previousMode == OperatingMode::Soldering) || (newMode == OperatingMode::Soldering && context.previousMode == OperatingMode::HomeScreen))) {
     // Exclude side-slide-scroll animation if we do transition between soldering/home back and forth while detailed view setting for both modes is set
     return OLED::refresh();
   }
