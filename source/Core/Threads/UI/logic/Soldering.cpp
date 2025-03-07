@@ -157,7 +157,7 @@ OperatingMode gui_solderingMode(const ButtonState buttons, guiContext *cxt) {
   if (shouldShutdown()) {
     // shutdown
     currentTempTargetDegC = 0;
-    cxt->transitionMode = detailedView ? TransitionAnimation::None : TransitionAnimation::Right;
+    cxt->transitionMode   = detailedView ? TransitionAnimation::None : TransitionAnimation::Right;
     return OperatingMode::HomeScreen;
   }
 #endif
