@@ -160,6 +160,13 @@ void guiRenderLoop(void) {
     memset(&context.scratch_state, 0, sizeof(context.scratch_state));
     currentOperatingMode = newMode;
   }
+
+  bool detailedView = getSettingValue(SettingsOptions::DetailedIDLE) && getSettingValue(SettingsOptions::DetailedSoldering);
+  if (detailedView && ((newMode == OperatingMode::HomeScreen && context.previousMode == OperatingMode::Soldering) || (newMode == OperatingMode::Soldering && context.previousMode == OperatingMode::HomeScreen))) {
+    // Exclude side-slide-scroll animation if we do transition between soldering/home back and forth while detailed view setting for both modes is set
+    return OLED::refresh();
+  }
+
   // If the transition marker is set, we need to make the next draw occur to the secondary buffer so we have something to transition to
   if (context.transitionMode != TransitionAnimation::None) {
     OLED::useSecondaryFramebuffer(true);
