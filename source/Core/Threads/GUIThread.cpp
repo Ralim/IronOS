@@ -160,6 +160,7 @@ void guiRenderLoop(void) {
     memset(&context.scratch_state, 0, sizeof(context.scratch_state));
     currentOperatingMode = newMode;
   }
+
   // If the transition marker is set, we need to make the next draw occur to the secondary buffer so we have something to transition to
   if (context.transitionMode != TransitionAnimation::None) {
     OLED::useSecondaryFramebuffer(true);
