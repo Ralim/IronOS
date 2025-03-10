@@ -193,11 +193,11 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
   };
 
   // Set buttons actions according to the settings
-  bool    swapButtonsSettings = getSettingValue(SettingsOptions::ReverseButtonSettings);
-  uint8_t button_enter        = swapButtonsSettings ? BUTTON_B_SHORT : BUTTON_F_SHORT;
-  uint8_t button_enter_long   = swapButtonsSettings ? BUTTON_B_LONG : BUTTON_F_LONG;
-  uint8_t button_next         = swapButtonsSettings ? BUTTON_F_SHORT : BUTTON_B_SHORT;
-  uint8_t button_next_long    = swapButtonsSettings ? BUTTON_F_LONG : BUTTON_B_LONG;
+  bool    swapButtonSettings = getSettingValue(SettingsOptions::ReverseButtonSettings);
+  uint8_t button_enter       = swapButtonSettings ? BUTTON_B_SHORT : BUTTON_F_SHORT;
+  uint8_t button_enter_long  = swapButtonSettings ? BUTTON_B_LONG : BUTTON_F_LONG;
+  uint8_t button_next        = swapButtonSettings ? BUTTON_F_SHORT : BUTTON_B_SHORT;
+  uint8_t button_next_long   = swapButtonSettings ? BUTTON_F_LONG : BUTTON_B_LONG;
 
   OperatingMode newMode = OperatingMode::SettingsMenu;
   if (BUTTON_NONE == buttons) {
