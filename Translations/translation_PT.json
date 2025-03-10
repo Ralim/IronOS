@@ -275,6 +275,10 @@
       "displayText": "Trocar\nbotões + -",
       "description": "Inverte o funcionamento dos botões de ajuste da temperatura"
     },
+    "ReverseButtonSettings": {
+      "displayText": "Swap\nA B keys",
+      "description": "Reverse assignment of buttons for Settings menu"
+    },
     "AnimSpeed": {
       "displayText": "Velocidade\nde animação",
       "description": "Velocidade das animações no menu (S=lenta | M=média | F=rápida)"

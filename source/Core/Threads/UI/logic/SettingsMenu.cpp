@@ -152,9 +152,9 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
     if (currentVirtualPosition > 0) {
       currentVirtualPosition--;
     }
+
     // The height of the indicator is screen res height / total menu entries
     uint8_t indicatorHeight = OLED_HEIGHT / *currentMenuLength;
-
     if (indicatorHeight == 0) {
       indicatorHeight = 1; // always at least 1 pixel
     }
@@ -181,8 +181,8 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
       OLED::drawScrollIndicator((uint8_t)position, indicatorHeight);
     }
   }
-  // Now handle user button input
 
+  // Now handle user button input
   auto callIncrementHandler = [&]() {
     if (currentMenu[currentScreen].incrementHandler != nullptr) {
       currentMenu[currentScreen].incrementHandler();
@@ -192,14 +192,18 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
     return false;
   };
 
-  //
+  // Set buttons actions according to the settings
+  bool    swapButtonsSettings = getSettingValue(SettingsOptions::ReverseButtonSettings);
+  uint8_t button_enter        = swapButtonsSettings ? BUTTON_B_SHORT : BUTTON_F_SHORT;
+  uint8_t button_enter_long   = swapButtonsSettings ? BUTTON_B_LONG : BUTTON_F_LONG;
+  uint8_t button_next         = swapButtonsSettings ? BUTTON_F_SHORT : BUTTON_B_SHORT;
+  uint8_t button_next_long    = swapButtonsSettings ? BUTTON_F_LONG : BUTTON_B_LONG;
+
   OperatingMode newMode = OperatingMode::SettingsMenu;
-  switch (buttons) {
-  case BUTTON_NONE:
+  if (BUTTON_NONE == buttons) {
     (*autoRepeatAcceleration) = 0; // reset acceleration
     (*autoRepeatTimer)        = 0; // reset acceleration
-    break;
-  case BUTTON_BOTH:
+  } else if (BUTTON_BOTH == buttons) {
     if (*subEntry == 0) {
       saveSettings();
       cxt->transitionMode = TransitionAnimation::Left;
@@ -209,9 +213,7 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
       *subEntry           = 0;
       return OperatingMode::SettingsMenu;
     }
-    break;
-
-  case BUTTON_F_LONG:
+  } else if (button_enter_long == buttons) {
     if (xTaskGetTickCount() + (*autoRepeatAcceleration) > (*autoRepeatTimer) + PRESS_ACCEL_INTERVAL_MAX) {
       callIncrementHandler();
       // Update the check for if its the last version
@@ -229,8 +231,7 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
       (*autoRepeatAcceleration) += PRESS_ACCEL_STEP;
       *currentMenuLength = 0; // Reset incase menu visible changes
     }
-    break;
-  case BUTTON_F_SHORT:
+  } else if (button_enter == buttons) {
     // Increment setting
     if (*isRenderingHelp) {
       *isRenderingHelp = 0;
@@ -248,24 +249,19 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
         callIncrementHandler();
       }
     }
-    break;
-  case BUTTON_B_LONG:
+  } else if (button_next_long == buttons) {
     if (xTaskGetTickCount() + (*autoRepeatAcceleration) > (*autoRepeatTimer) + PRESS_ACCEL_INTERVAL_MAX) {
       (*autoRepeatTimer) = xTaskGetTickCount();
       (*autoRepeatAcceleration) += PRESS_ACCEL_STEP;
-    } else {
-      break;
+      newMode = moveToNextEntry(cxt);
     }
-    /* Fall through*/
-  case BUTTON_B_SHORT:
+  } else if (button_next == buttons) {
     // Increment menu item
-
     newMode = moveToNextEntry(cxt);
-    break;
-
-  default:
-    break;
+  } else {
+    // default
   }
+
   if ((PRESS_ACCEL_INTERVAL_MAX - (*autoRepeatAcceleration)) < PRESS_ACCEL_INTERVAL_MIN) {
     (*autoRepeatAcceleration) = PRESS_ACCEL_INTERVAL_MAX - PRESS_ACCEL_INTERVAL_MIN;
   }
