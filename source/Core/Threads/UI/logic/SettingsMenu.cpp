@@ -192,18 +192,34 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
     return false;
   };
 
-  // Set buttons actions according to the settings
+  // Modify a button value before processing a key press if setting to swap buttons is enabled
   bool    swapButtonSettings = getSettingValue(SettingsOptions::ReverseButtonSettings);
-  uint8_t button_enter       = swapButtonSettings ? BUTTON_B_SHORT : BUTTON_F_SHORT;
-  uint8_t button_enter_long  = swapButtonSettings ? BUTTON_B_LONG : BUTTON_F_LONG;
-  uint8_t button_next        = swapButtonSettings ? BUTTON_F_SHORT : BUTTON_B_SHORT;
-  uint8_t button_next_long   = swapButtonSettings ? BUTTON_F_LONG : BUTTON_B_LONG;
+  uint8_t buttonPress;
+  switch (buttons) {
+  case BUTTON_F_LONG:
+    buttonPress = swapButtonSettings ? BUTTON_B_LONG : BUTTON_F_LONG;
+    break;
+  case BUTTON_F_SHORT:
+    buttonPress = swapButtonSettings ? BUTTON_B_SHORT : BUTTON_F_SHORT;
+    break;
+  case BUTTON_B_LONG:
+    buttonPress = swapButtonSettings ? BUTTON_F_LONG : BUTTON_B_LONG;
+    break;
+  case BUTTON_B_SHORT:
+    buttonPress = swapButtonSettings ? BUTTON_F_SHORT : BUTTON_B_SHORT;
+    break;
+  default:
+    buttonPress = buttons;
+    break;
+  }
 
   OperatingMode newMode = OperatingMode::SettingsMenu;
-  if (BUTTON_NONE == buttons) {
+  switch (buttonPress) {
+  case BUTTON_NONE:
     (*autoRepeatAcceleration) = 0; // reset acceleration
     (*autoRepeatTimer)        = 0; // reset acceleration
-  } else if (BUTTON_BOTH == buttons) {
+    break;
+  case BUTTON_BOTH:
     if (*subEntry == 0) {
       saveSettings();
       cxt->transitionMode = TransitionAnimation::Left;
@@ -213,7 +229,8 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
       *subEntry           = 0;
       return OperatingMode::SettingsMenu;
     }
-  } else if (button_enter_long == buttons) {
+    break;
+  case BUTTON_F_LONG:
     if (xTaskGetTickCount() + (*autoRepeatAcceleration) > (*autoRepeatTimer) + PRESS_ACCEL_INTERVAL_MAX) {
       callIncrementHandler();
       // Update the check for if its the last version
@@ -231,7 +248,8 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
       (*autoRepeatAcceleration) += PRESS_ACCEL_STEP;
       *currentMenuLength = 0; // Reset incase menu visible changes
     }
-  } else if (button_enter == buttons) {
+    break;
+  case BUTTON_F_SHORT:
     // Increment setting
     if (*isRenderingHelp) {
       *isRenderingHelp = 0;
@@ -249,17 +267,21 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
         callIncrementHandler();
       }
     }
-  } else if (button_next_long == buttons) {
+    break;
+  case BUTTON_B_LONG:
     if (xTaskGetTickCount() + (*autoRepeatAcceleration) > (*autoRepeatTimer) + PRESS_ACCEL_INTERVAL_MAX) {
       (*autoRepeatTimer) = xTaskGetTickCount();
       (*autoRepeatAcceleration) += PRESS_ACCEL_STEP;
-      newMode = moveToNextEntry(cxt);
+    } else {
+      break;
     }
-  } else if (button_next == buttons) {
+    /* Fall through*/
+  case BUTTON_B_SHORT:
     // Increment menu item
     newMode = moveToNextEntry(cxt);
-  } else {
-    // default
+    break;
+  default:
+    break;
   }
 
   if ((PRESS_ACCEL_INTERVAL_MAX - (*autoRepeatAcceleration)) < PRESS_ACCEL_INTERVAL_MIN) {
