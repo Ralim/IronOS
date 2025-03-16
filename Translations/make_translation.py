@@ -10,7 +10,7 @@ import pickle
 import re
 import subprocess
 import sys
-from datetime import datetime
+import time
 from pathlib import Path
 from typing import Dict, List, Optional, TextIO, Tuple, Union
 from dataclasses import dataclass
@@ -152,7 +152,10 @@ def get_constants() -> List[Tuple[str, str]]:
 
 def get_debug_menu() -> List[str]:
     return [
-        datetime.today().strftime("%Y%m%d %H%M%S"),
+        time.strftime(
+            "%Y%m%d %H%M%S",
+            time.gmtime(int(os.environ.get("SOURCE_DATE_EPOCH", time.time()))),
+        ),
         "ID ",
         "ACC   ",
         "PWR   ",
