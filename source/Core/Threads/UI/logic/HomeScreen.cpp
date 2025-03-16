@@ -19,7 +19,7 @@ OperatingMode handleHomeButtons(const ButtonState buttons, guiContext *cxt) {
     break;
 
   case BUTTON_B_LONG:
-    cxt->transitionMode = TransitionAnimation::Up;
+    cxt->transitionMode = TransitionAnimation::Down;
     return OperatingMode::DebugMenuReadout;
     break;
   case BUTTON_F_LONG:
