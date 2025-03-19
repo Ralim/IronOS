@@ -110,6 +110,7 @@ static const SettingConstants settingsConstants[(int)SettingsOptions::SettingsOp
     {                     1,                                                                    10,                 1,                            2}, // ProfileCooldownSpeed
     {                     0,                                                                    12,                 1,                            0}, // HallEffectSleepTime
     {                     0, (tipType_t::TIP_TYPE_MAX - 1) > 0 ? (tipType_t::TIP_TYPE_MAX - 1) : 0,                 1,                            0}, // SolderingTipType
+    {                     0,                                                                     1,                 1,                            0}, // ReverseButtonSettings
 };
 static_assert((sizeof(settingsConstants) / sizeof(SettingConstants)) == ((int)SettingsOptions::SettingsOptionsLength));
 

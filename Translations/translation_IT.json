@@ -275,6 +275,10 @@
       "displayText": "Inversione\ntasti",
       "description": "Inverti i tasti per aumentare o diminuire la temperatura della punta"
     },
+    "ReverseButtonSettings": {
+      "displayText": "Swap\nA B keys",
+      "description": "Reverse assignment of buttons for Settings menu"
+    },
     "AnimSpeed": {
       "displayText": "Velocità\nanimazioni",
       "description": "Imposta la velocità di riproduzione delle animazioni del menù principale [L: lenta; M: media; V: veloce]"

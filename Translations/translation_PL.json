@@ -275,6 +275,10 @@
       "displayText": "Zamień przyc.\n+ -",
       "description": "Zamienia działanie przycisków zmiany temperatury grotu"
     },
+    "ReverseButtonSettings": {
+      "displayText": "Swap\nA B keys",
+      "description": "Reverse assignment of buttons for Settings menu"
+    },
     "AnimSpeed": {
       "displayText": "Prędkosć\nanimacji",
       "description": "Prędkość animacji ikon w menu (W: mała | M: średnia | S: duża)"
