@@ -164,7 +164,7 @@ test-py:
 	@echo "---- Checking python code... ----"
 	@echo ""
 	flake8  Translations
-	black  --check  Translations
+	black  --diff  --check  Translations
 	@$(MAKE)  -C source/  Objects/host/brieflz/libbrieflz.so
 	./Translations/brieflz_test.py
 	./Translations/make_translation_test.py
