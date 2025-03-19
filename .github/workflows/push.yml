@@ -190,7 +190,7 @@ jobs:
         run: python3 -m pip install --break-system-packages bdflib flake8
 
       - name: Check python formatting with black
-        run: black --check Translations
+        run: black --diff --check Translations
 
       - name: Check python with flake8
         run: flake8 Translations
