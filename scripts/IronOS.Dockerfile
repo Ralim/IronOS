@@ -21,7 +21,7 @@ ARG APK_MISC="findutils make git diffutils zip"
 ARG APK_DEV="musl-dev clang bash clang-extra-tools shellcheck"
 
 # PIP packages to check & test Python code, and generate docs
-ARG PIP_PKGS='bdflib flake8 pymdown-extensions mkdocs mkdocs-autolinks-plugin mkdocs-awesome-pages-plugin mkdocs-git-revision-date-plugin'
+ARG PIP_PKGS='bdflib flake8 pymdown-extensions mkdocs mkdocs-autolinks-plugin mkdocs-awesome-pages-plugin mkdocs-git-revision-date-plugin pyyaml'
 
 # Install system packages using alpine package manager
 RUN apk add --no-cache ${APK_COMPS} ${APK_PYTHON} ${APK_MISC} ${APK_DEV}

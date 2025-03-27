@@ -1,0 +1,281 @@
+settings:
+  - default: SOLDERING_TEMP
+    increment: 5
+    max: MAX_TEMP_F
+    min: MIN_TEMP_C
+    name: SolderingTemp
+  - default: 150
+    increment: 5
+    max: MAX_TEMP_F
+    min: MIN_TEMP_C
+    name: SleepTemp
+  - default: SLEEP_TIME
+    increment: 1
+    max: 15
+    min: 0
+    name: SleepTime
+  - default: CUT_OUT_SETTING
+    increment: 1
+    max: 4
+    min: 0
+    name: MinDCVoltageCells
+  - default: RECOM_VOL_CELL
+    increment: 1
+    max: 38
+    min: 24
+    name: MinVoltageCells
+  - default: 90
+    increment: 2
+    max: QC_VOLTAGE_MAX
+    min: 90
+    name: QCIdealVoltage
+  - default: ORIENTATION_MODE
+    increment: 1
+    max: MAX_ORIENTATION_MODE
+    min: 0
+    name: OrientationMode
+  - default: SENSITIVITY
+    increment: 1
+    max: 9
+    min: 0
+    name: Sensitivity
+  - default: ANIMATION_LOOP
+    increment: 1
+    max: 1
+    min: 0
+    name: AnimationLoop
+  - default: ANIMATION_SPEED
+    increment: 1
+    max: settingOffSpeed_t::MAX_VALUE - 1
+    min: 0
+    name: AnimationSpeed
+  - default: AUTO_START_MODE
+    increment: 1
+    max: 3
+    min: 0
+    name: AutoStartMode
+  - default: SHUTDOWN_TIME
+    increment: 1
+    max: 60
+    min: 0
+    name: ShutdownTime
+  - default: COOLING_TEMP_BLINK
+    increment: 1
+    max: 1
+    min: 0
+    name: CoolingTempBlink
+  - default: DETAILED_IDLE
+    increment: 1
+    max: 1
+    min: 0
+    name: DetailedIDLE
+  - default: DETAILED_SOLDERING
+    increment: 1
+    max: 1
+    min: 0
+    name: DetailedSoldering
+  - default: TEMPERATURE_INF
+    increment: 1
+    max: "(uint16_t)(HasFahrenheit ? 1 : 0)"
+    min: 0
+    name: TemperatureInF
+  - default: DESCRIPTION_SCROLL_SPEED
+    increment: 1
+    max: 1
+    min: 0
+    name: DescriptionScrollSpeed
+  - default: LOCKING_MODE
+    increment: 1
+    max: 2
+    min: 0
+    name: LockingMode
+  - default: POWER_PULSE_DEFAULT
+    increment: 1
+    max: 99
+    min: 0
+    name: KeepAwakePulse
+  - default: POWER_PULSE_WAIT_DEFAULT
+    increment: 1
+    max: POWER_PULSE_WAIT_MAX
+    min: 1
+    name: KeepAwakePulseWait
+  - default: POWER_PULSE_DURATION_DEFAULT
+    increment: 1
+    max: POWER_PULSE_DURATION_MAX
+    min: 1
+    name: KeepAwakePulseDuration
+  - default: VOLTAGE_DIV
+    increment: 1
+    max: 900
+    min: 360
+    name: VoltageDiv
+  - default: BOOST_TEMP
+    increment: 10
+    max: MAX_TEMP_F
+    min: 0
+    name: BoostTemp
+  - default: CALIBRATION_OFFSET
+    increment: 1
+    max: 2500
+    min: MIN_CALIBRATION_OFFSET
+    name: CalibrationOffset
+  - default: POWER_LIMIT
+    increment: POWER_LIMIT_STEPS
+    max: MAX_POWER_LIMIT
+    min: 0
+    name: PowerLimit
+  - default: REVERSE_BUTTON_TEMP_CHANGE
+    increment: 1
+    max: 1
+    min: 0
+    name: ReverseButtonTempChangeEnabled
+  - default: TEMP_CHANGE_LONG_STEP
+    increment: 5
+    max: TEMP_CHANGE_LONG_STEP_MAX
+    min: 5
+    name: TempChangeLongStep
+  - default: TEMP_CHANGE_SHORT_STEP
+    increment: 1
+    max: TEMP_CHANGE_SHORT_STEP_MAX
+    min: 1
+    name: TempChangeShortStep
+  - default: 7
+    increment: 1
+    max: 9
+    min: 0
+    name: HallEffectSensitivity
+  - default: 0
+    increment: 1
+    max: 9
+    min: 0
+    name: AccelMissingWarningCounter
+  - default: 0
+    increment: 1
+    max: 9
+    min: 0
+    name: PDMissingWarningCounter
+  - default: 41431 /*EN*/
+    increment: 0
+    max: 0xFFFF
+    min: 0
+    name: UILanguage
+  - default: 20
+    increment: 1
+    max: 50
+    min: 0
+    name: PDNegTimeout
+  - default: 0
+    increment: 1
+    max: 1
+    min: 0
+    name: OLEDInversion
+  - default: DEFAULT_BRIGHTNESS
+    increment: BRIGHTNESS_STEP
+    max: MAX_BRIGHTNESS
+    min: MIN_BRIGHTNESS
+    name: OLEDBrightness
+  - default: 1
+    increment: 1
+    max: 6
+    min: 0
+    name: LOGOTime
+  - default: 0
+    increment: 1
+    max: 1
+    min: 0
+    name: CalibrateCJC
+  - default: 0
+    increment: 1
+    max: 1
+    min: 0
+    name: BluetoothLE
+  - default: 0
+    increment: 1
+    max: 2
+    min: 0
+    name: USBPDMode
+  - default: 4
+    increment: 1
+    max: 5
+    min: 1
+    name: ProfilePhases
+  - default: 90
+    increment: 5
+    max: MAX_TEMP_F
+    min: MIN_TEMP_C
+    name: ProfilePreheatTemp
+  - default: 1
+    increment: 1
+    max: 10
+    min: 1
+    name: ProfilePreheatSpeed
+  - default: 130
+    increment: 5
+    max: MAX_TEMP_F
+    min: MIN_TEMP_C
+    name: ProfilePhase1Temp
+  - default: 90
+    increment: 5
+    max: 180
+    min: 10
+    name: ProfilePhase1Duration
+  - default: 140
+    increment: 5
+    max: MAX_TEMP_F
+    min: MIN_TEMP_C
+    name: ProfilePhase2Temp
+  - default: 30
+    increment: 5
+    max: 180
+    min: 10
+    name: ProfilePhase2Duration
+  - default: 165
+    increment: 5
+    max: MAX_TEMP_F
+    min: MIN_TEMP_C
+    name: ProfilePhase3Temp
+  - default: 30
+    increment: 5
+    max: 180
+    min: 10
+    name: ProfilePhase3Duration
+  - default: 140
+    increment: 5
+    max: MAX_TEMP_F
+    min: MIN_TEMP_C
+    name: ProfilePhase4Temp
+  - default: 30
+    increment: 5
+    max: 180
+    min: 10
+    name: ProfilePhase4Duration
+  - default: 90
+    increment: 5
+    max: MAX_TEMP_F
+    min: MIN_TEMP_C
+    name: ProfilePhase5Temp
+  - default: 30
+    increment: 5
+    max: 180
+    min: 10
+    name: ProfilePhase5Duration
+  - default: 2
+    increment: 1
+    max: 10
+    min: 1
+    name: ProfileCooldownSpeed
+  - default: 0
+    increment: 1
+    max: 12
+    min: 0
+    name: HallEffectSleepTime
+  - default: 0
+    increment: 1
+    max: "(tipType_t::TIP_TYPE_MAX - 1) > 0 ? (tipType_t::TIP_TYPE_MAX - 1) : 0"
+    min: 0
+    name: SolderingTipType
+  - default: 0
+    increment: 1
+    max: 1
+    min: 0
+    name: ReverseButtonSettings
