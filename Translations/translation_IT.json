@@ -276,8 +276,8 @@
       "description": "Inverti i tasti per aumentare o diminuire la temperatura della punta"
     },
     "ReverseButtonSettings": {
-      "displayText": "Swap\nA B keys",
-      "description": "Reverse assignment of buttons for Settings menu"
+      "displayText": "Inversione\ntasti A/B",
+      "description": "Inverti il funzionamento dei tasti del saldatore"
     },
     "AnimSpeed": {
       "displayText": "Velocità\nanimazioni",
@@ -325,11 +325,11 @@
     },
     "PowerPulsePower": {
       "displayText": "Potenza\nimpulso",
-      "description": "Regola la potenza di un \"impulso sveglia\" atto a prevenire lo standby eventuale dell'alimentatore [watt]"
+      "description": "Regola la potenza di un segnale di attività per prevenire lo standby eventuale dell'alimentatore [watt]"
     },
     "PowerPulseWait": {
       "displayText": "Distanza\nimpulsi",
-      "description": "Imposta il tempo che deve intercorrere tra due \"impulsi sveglia\" [multipli di 2,5 s]"
+      "description": "Imposta il tempo che deve intercorrere tra un segnale di attività e il successivo [multipli di 2,5 s]"
     },
     "PowerPulseDuration": {
       "displayText": "Durata\nimpulso",
