@@ -277,7 +277,7 @@
     },
     "ReverseButtonSettings": {
       "displayText": "Inversione\ntasti A/B",
-      "description": "Inverti il funzionamento dei tasti del saldatore"
+      "description": "Inverti il funzionamento dei tasti del saldatore all'interno del menù principale"
     },
     "AnimSpeed": {
       "displayText": "Velocità\nanimazioni",
@@ -333,7 +333,7 @@
     },
     "PowerPulseDuration": {
       "displayText": "Durata\nimpulso",
-      "description": "Regola la durata dell'«impulso sveglia» [multipli di 250 ms]"
+      "description": "Regola la durata del segnale di attività [multipli di 250 ms]"
     },
     "SettingsReset": {
       "displayText": "Ripristino\nimpostazioni",
