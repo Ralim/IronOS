@@ -170,9 +170,10 @@ You can checkout the repository or use the download-as-zip button in the Github 
 <p>Inside the download code is a <code>Boot Logos</code> folder, inside here is the python script required for logo conversion.
 It is easiest if you copy your logo file to be converted into this folder too, in order to keep commands shorter.</p>
 <p>The image can be in color and any size, but it will be resized and converted to 1-bit color. However, it looks best if you create a 96x16 image (<code>png</code> or <code>bmp</code>) in any image editor and color the pixels black &amp; white manually. The thresholding used for converting colour to B&amp;W may not always work as well as one would hope.</p>
-<p>The converter requires at least Python3 and Pillow apps. Follow online instructions for installing Python and Pillow on your machine. Any reasonably recent version should work well.</p>
-<p>When running the script on the Windows operating system; it is recommended to use <code>Powershell</code> rather than the old <code>Command Prompt</code>.</p>
-<p>For installing pillow; you can install it via your package manager (Debian and similar distros) or via pip. To install via pip the command should be <code>python -m pip install pillow</code>.</p>
+<p>The converter requires at least Python3 and Pillow apps as well as the IntelHex library for Python. Follow online instructions for installing Python, Pillow, and IntelHex on your machine. Any reasonably recent version should work well.</p>
+<p>When running the script on the Windows operating system it is recommended to use <code>Powershell</code> rather than the old <code>Command Prompt</code>.</p>
+<p>For installing pillow, you can install it via your package manager (Debian and similar distros) or via pip. To install via pip the command should be <code>python -m pip install pillow</code>.</p>
+<p>For installing IntelHex you can use the same pip command as above but replace <code>pillow</code> with <code>intelhex</code> so that it becomes <code>python -m pip install intelhex</code>.</p>
 <p>In your shell you can now execute <code>python img2logo.py input.png out -m ${model}</code> to convert the file <code>input.png</code> and create output files in the folder <code>out</code>.
 The model should be replaced by one of the following options:</p>
 <ul>
