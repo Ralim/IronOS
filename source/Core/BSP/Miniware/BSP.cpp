@@ -342,7 +342,7 @@ void performTipMeasurementStep() {
 uint8_t preStartChecks() {
 #ifdef TIP_RESISTANCE_SENSE_Pin
   performTipMeasurementStep();
-  if (preStartChecksDone() != 1) {
+  if (tipMeasurementDone() != 1) {
     return 0;
   }
 #endif
@@ -371,7 +371,7 @@ uint64_t getDeviceID() {
   return HAL_GetUIDw0() | ((uint64_t)HAL_GetUIDw1() << 32);
 }
 
-uint8_t preStartChecksDone() {
+uint8_t tipMeasurementDone() {
 #ifdef TIP_RESISTANCE_SENSE_Pin
   return (lastTipResistance == 0 || tipResistanceReadingSlot < numTipResistanceReadings || tipMeasurementOccuring || tipShorted) ? 0 : 1;
 #else

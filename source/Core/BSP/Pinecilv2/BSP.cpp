@@ -271,10 +271,10 @@ void                performTipMeasurementStep() {
 
 uint8_t preStartChecks() {
   performTipMeasurementStep();
-  return preStartChecksDone();
+  return tipMeasurementDone();
 }
 // If we are still measuring the tip; or tip is shorted; prevent heating
-uint8_t preStartChecksDone() { return (lastTipResistance == 0 || tipResistanceReadingSlot < numTipResistanceReadings || tipMeasurementOccuring || tipShorted) ? 0 : 1; }
+uint8_t tipMeasurementDone() { return (lastTipResistance == 0 || tipResistanceReadingSlot < numTipResistanceReadings || tipMeasurementOccuring || tipShorted) ? 0 : 1; }
 
 // Return hardware unique ID if possible
 uint64_t getDeviceID() {

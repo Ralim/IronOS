@@ -102,7 +102,7 @@ uint8_t getTipResistanceX10() {
   return user_selected_tip;
 }
 bool    isTipShorted() { return false; }
-uint8_t preStartChecksDone() { return 1; }
+uint8_t tipMeasurementDone() { return 1; }
 
 uint16_t getTipThermalMass() { return TIP_THERMAL_MASS; }
 uint16_t getTipInertia() { return TIP_THERMAL_MASS; }

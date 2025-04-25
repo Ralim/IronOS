@@ -102,7 +102,7 @@ void setBuzzer(bool on);
 // By the PID, after each ADC sample comes in
 // For example, on the MHP30 this is used to figure out the resistance of the hotplate
 uint8_t preStartChecks();
-uint8_t preStartChecksDone();
+uint8_t tipMeasurementDone();
 
 // Check if the tip or output mosfet is shorted (if possible)
 bool isTipShorted();
