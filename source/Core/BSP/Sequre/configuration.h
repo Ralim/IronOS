@@ -64,9 +64,9 @@
  * OLED Orientation
  *
  */
-#define ORIENTATION_MODE           1 // 0: Right 1:Left (2:Automatic N/A)
+#define ORIENTATION_MODE           0 // 0: Right 1:Left (2:Automatic N/A)
 #define MAX_ORIENTATION_MODE       1 // Disable auto mode
-#define REVERSE_BUTTON_TEMP_CHANGE 1 // 0:Default 1:Reverse - Reverse the plus and minus button assigment for temperature change
+#define REVERSE_BUTTON_TEMP_CHANGE 0 // 0:Default 1:Reverse - Reverse the plus and minus button assigment for temperature change
 
 /**
  * Temp change settings
@@ -238,10 +238,6 @@
 
 #define MODEL_HAS_DCDC // We dont have DC/DC but have reallly fast PWM that gets us roughly the same place
 #endif                 /* T55 */
-
-
-
-
 
 
 //Si012Pro
