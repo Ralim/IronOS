@@ -64,9 +64,9 @@
  * OLED Orientation
  *
  */
-#define ORIENTATION_MODE           0 // 0: Right 1:Left (2:Automatic N/A)
+#define ORIENTATION_MODE           1 // 0: Right 1:Left (2:Automatic N/A)
 #define MAX_ORIENTATION_MODE       1 // Disable auto mode
-#define REVERSE_BUTTON_TEMP_CHANGE 0 // 0:Default 1:Reverse - Reverse the plus and minus button assigment for temperature change
+#define REVERSE_BUTTON_TEMP_CHANGE 1 // 0:Default 1:Reverse - Reverse the plus and minus button assigment for temperature change
 
 /**
  * Temp change settings
@@ -264,11 +264,11 @@
 #define TIP_THERMAL_MASS    10  // X10 watts to raise 1 deg C in 1 second
 #define TIP_THERMAL_INERTIA 128 // We use a large inertia value to smooth out the drive to the tip since its stupidly sensitive
 
-#define TIP_RESISTANCE 20 //(actually 2.5 ish but we need to be more conservative on pwm'ing watt limit) x10 ohms
+#define TIP_RESISTANCE 62 //(actually 2.5 ish but we need to be more conservative on pwm'ing watt limit) x10 ohms
 
 #define OLED_128x32
 #define GPIO_VIBRATION
-#define POW_PD_EXT                2
+#define POW_PD_EXT                1  //HUSB238
 #define USB_PD_EPR_WATTAGE        0 /*No EPR*/
 #define DEBUG_POWER_MENU_BUTTON_B 1
 #define HAS_POWER_DEBUG_MENU
