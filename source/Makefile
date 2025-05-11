@@ -117,6 +117,7 @@ DEVICE_DFU_VID_PID=0x1209:0xDB42
 endif # ALL_MINIWARE_MODELS
 
 
+//
 ifeq ($(model),$(filter $(model),$(ALL_SEQURE_MODELS)))
 $(info Building for Sequre )
 
@@ -153,6 +154,8 @@ DEVICE_DFU_ADDRESS=0x08004C00
 endif
 DEVICE_DFU_VID_PID=0x1209:0xDB42
 endif # ALL_SEQURE_MODELS
+
+//
 
 ifeq ($(model),$(filter $(model),$(ALL_MHP30_MODELS)))
 $(info Building for MHP30 )
