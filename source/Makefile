@@ -91,7 +91,7 @@ DEVICE_DFU_ADDRESS=0x08008000
 else
 flash_size=62k
 bootldr_size=0x4000
-DEVICE_DFU_ADDRESS=0x08004000
+DEVICE_DFU_ADDRESS=0x08004C00
 endif
 
 DEV_GLOBAL_DEFS=-D STM32F103T8Ux       \
@@ -116,6 +116,7 @@ CPUFLAGS=-mcpu=cortex-m3  \
 DEVICE_DFU_VID_PID=0x1209:0xDB42
 endif # ALL_MINIWARE_MODELS
 
+//
 ifeq ($(model),$(filter $(model),$(ALL_SEQURE_MODELS)))
 $(info Building for Sequre )
 
@@ -142,16 +143,18 @@ CPUFLAGS=-mcpu=cortex-m3  \
          -mfloat-abi=soft
 
 flash_size=62k
-ifeq ($(model), S60P)
-bootldr_size=0x5000
-DEVICE_DFU_ADDRESS=0x08005000
+ifeq ($(model), Si012Pro)
+bootldr_size=0x4C00
+DEVICE_DFU_ADDRESS=0x08004C00
 else 
 # S60 or T55
-bootldr_size=0x4400
-DEVICE_DFU_ADDRESS=0x08004400
+bootldr_size=0x4C00
+DEVICE_DFU_ADDRESS=0x08004C00
 endif
 DEVICE_DFU_VID_PID=0x1209:0xDB42
 endif # ALL_SEQURE_MODELS
+
+//
 
 ifeq ($(model),$(filter $(model),$(ALL_MHP30_MODELS)))
 $(info Building for MHP30 )
