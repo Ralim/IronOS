@@ -276,7 +276,7 @@
       "description": "Tastenbelegung zur Temperaturänderung umkehren"
     },
     "ReverseButtonSettings": {
-      "displayText": "A B Taste\n vertauschen",
+      "displayText": "A B Tasten\nvertauschen",
       "description": "Umgekehrte Belegung der Tasten für das Einstellungsmenü"
     },
     "AnimSpeed": {
