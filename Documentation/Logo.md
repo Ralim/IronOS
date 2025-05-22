@@ -100,4 +100,4 @@ For these flash as per usual using the `.dfu` file. Afterwards power cycle and t
 
 ### Upload via blisp (PinecilV2)
 
-For the PinecilV2 we suggest `blisp` as the command line tool to use if you are not using a GUI tool. `blsip` has been updated to accept `.dfu` files as well as the `.bin` files it historically used. As such you use the `.dfu` file for the logo and flash as per normal otherwise and it will work and reboot at the end. It should show you your new logo after flashing.
+For the PinecilV2 we suggest `blisp` as the command line tool to use if you are not using a GUI tool. `blisp` has been updated to accept `.dfu` files as well as the `.bin` files it historically used. As such you use the `.dfu` file for the logo and flash as per normal otherwise and it will work and reboot at the end. It should show you your new logo after flashing.
