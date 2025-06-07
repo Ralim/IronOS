@@ -276,8 +276,8 @@
       "description": "Поменять кнопки изменения температуры"
     },
     "ReverseButtonSettings": {
-      "displayText": "Swap\nA B keys",
-      "description": "Reverse assignment of buttons for Settings menu"
+      "displayText": "Поменять\nкнопки A/B",
+      "description": "Поменять назначение кнопок A/B в меню настроек"
     },
     "AnimSpeed": {
       "displayText": "Скорость\nанимации",
