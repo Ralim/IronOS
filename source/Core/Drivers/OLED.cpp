@@ -11,6 +11,7 @@
 #include "cmsis_os.h"
 #include "configuration.h"
 #include <OLED.hpp>
+#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -23,9 +24,9 @@ OLED::DisplayState OLED::displayState;
 int16_t            OLED::cursor_x, OLED::cursor_y;
 bool               OLED::initDone = false;
 uint8_t            OLED::displayOffset;
-uint8_t            OLED::screenBuffer[16 + (OLED_WIDTH * (OLED_HEIGHT / 8)) + 10]; // The data buffer
-uint8_t            OLED::secondFrameBuffer[16 + (OLED_WIDTH * (OLED_HEIGHT / 8)) + 10];
-uint32_t           OLED::displayChecksum;
+alignas(uint32_t) uint8_t OLED::screenBuffer[16 + (OLED_WIDTH * (OLED_HEIGHT / 8)) + 10]; // The data buffer
+alignas(uint32_t) uint8_t OLED::secondFrameBuffer[16 + (OLED_WIDTH * (OLED_HEIGHT / 8)) + 10];
+uint32_t OLED::displayChecksum;
 /*
  * Setup params for the OLED screen
  * http://www.displayfuture.com/Display/datasheet/controller/SSD1307.pdf
@@ -33,7 +34,7 @@ uint32_t           OLED::displayChecksum;
  * Data packets are prefixed with 0x40
  */
 I2C_CLASS::I2C_REG OLED_Setup_Array[] = {
-  /**/
+    /**/
     {0x80,         OLED_OFF, 0}, /* Display off */
     {0x80,     OLED_DIVIDER, 0}, /* Set display clock divide ratio / osc freq */
     {0x80,             0x52, 0}, /* Divide ratios */
@@ -209,21 +210,18 @@ void OLED::drawChar(const uint16_t charCode, const FontStyle fontStyle, const ui
  * of the indicator in pixels (0..<16).
  */
 void OLED::drawScrollIndicator(uint8_t y, uint8_t height) {
-  union u_type {
-    uint32_t whole;
-    uint8_t  strips[4];
-  } column;
 
-  column.whole = (1 << height) - 1; // preload a set of set bits of height
-  column.whole <<= y;               // Shift down by the y value
-
+  const uint32_t whole = ((1 << height) - 1) << y; // preload a set of set bits of height
+                                                   // Shift down by the y value
+  const uint8_t strips[4] = {static_cast<uint8_t>(whole & 0xff), static_cast<uint8_t>((whole & 0xff00) >> 8 * 1), static_cast<uint8_t>((whole & 0xff0000) >> 8 * 2),
+                             static_cast<uint8_t>((whole & 0xff000000) >> 8 * 3)};
   // Draw a one pixel wide bar to the left with a single pixel as
   // the scroll indicator.
-  fillArea(OLED_WIDTH - 1, 0, 1, 8, column.strips[0]);
-  fillArea(OLED_WIDTH - 1, 8, 1, 8, column.strips[1]);
+  fillArea(OLED_WIDTH - 1, 0, 1, 8, strips[0]);
+  fillArea(OLED_WIDTH - 1, 8, 1, 8, strips[1]);
 #if OLED_HEIGHT == 32
-  fillArea(OLED_WIDTH - 1, 16, 1, 8, column.strips[2]);
-  fillArea(OLED_WIDTH - 1, 24, 1, 8, column.strips[3]);
+  fillArea(OLED_WIDTH - 1, 16, 1, 8, strips[2]);
+  fillArea(OLED_WIDTH - 1, 24, 1, 8, strips[3]);
 
 #endif
 }
@@ -762,28 +760,33 @@ void OLED::fillArea(int16_t x, int8_t y, uint8_t wide, uint8_t height, const uin
 }
 
 void OLED::drawFilledRect(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, bool clear) {
-  //!! LSB is at the top of the screen !!
+  // Ensure coordinates are within bounds
+  if (x0 >= OLED_WIDTH || y0 >= OLED_HEIGHT || x1 >= OLED_WIDTH || y1 >= OLED_HEIGHT) {
+    return;
+  }
 
-  // Draw this in 3 sections
-  uint8_t remainingHeight = y1 - y0;
-  for (uint8_t currentRow = y0 / 8; (currentRow < (OLED_HEIGHT / 8)) && remainingHeight; currentRow++) {
-    uint8_t maskTop = (0xFF) << (y0 % 8); // Shift off the mask
-    y0              = 0;                  // Blank out any start offset for future iterations
-                                          // If we are terminating the bottom of the rectangle in this row, we mask the bottom side of things too
-    if (remainingHeight <= 8) {
-      uint8_t maskBottom = ~((0xFF) << y1 % 8);  // Create mask for
-      maskTop            = maskTop & maskBottom; // AND the two masks together for final write mask
+  // Calculate the height in rows
+  uint8_t startRow  = y0 / 8;
+  uint8_t endRow    = y1 / 8;
+  uint8_t startMask = 0xFF << (y0 % 8);
+  uint8_t endMask   = 0xFF >> (7 - (y1 % 8));
+
+  for (uint8_t row = startRow; row <= endRow; row++) {
+    uint8_t mask = 0xFF;
+    if (row == startRow) {
+      mask &= startMask;
+    }
+    if (row == endRow) {
+      mask &= endMask;
     }
 
-    for (uint8_t xpos = x0; xpos < x1; xpos++) {
+    for (uint8_t x = x0; x <= x1; x++) {
       if (clear) {
-        stripPointers[currentRow][xpos] &= ~maskTop;
+        stripPointers[row][x] &= ~mask;
       } else {
-        stripPointers[currentRow][xpos] |= maskTop;
+        stripPointers[row][x] |= mask;
       }
     }
-
-    remainingHeight -= 8; // Reduce remaining height but the row stripe height
   }
 }
 
@@ -793,8 +796,20 @@ void OLED::drawHeatSymbol(uint8_t state) {
   // the levels masks the symbol nicely
   state /= 31; // 0-> 8 range
   // Then we want to draw down (16-(5+state)
-  uint8_t cursor_x_temp = cursor_x;
+  uint16_t cursor_x_temp = cursor_x;
   drawSymbol(14);
+  /*
+       / / / / /
+      / / / / /
+      +---------+
+      |         |
+      +---------+
+
+
+      <- 14 px ->
+      What we are doing is aiming to clear a section of the screen, down to the base depending on how much PWM we are using.
+      Larger numbers mean more heat, so we clear less of the screen.
+  */
   drawFilledRect(cursor_x_temp, 0, cursor_x_temp + 12, 2 + (8 - state), true);
 }
 

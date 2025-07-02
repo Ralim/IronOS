@@ -26,11 +26,13 @@ It is easiest if you copy your logo file to be converted into this folder too, i
 
 The image can be in color and any size, but it will be resized and converted to 1-bit color. However, it looks best if you create a 96x16 image (`png` or `bmp`) in any image editor and color the pixels black & white manually. The thresholding used for converting colour to B&W may not always work as well as one would hope.
 
-The converter requires at least Python3 and Pillow apps. Follow online instructions for installing Python and Pillow on your machine. Any reasonably recent version should work well.
+The converter requires at least Python3 and Pillow apps as well as the IntelHex library for Python. Follow online instructions for installing Python, Pillow, and IntelHex on your machine. Any reasonably recent version should work well.
 
-When running the script on the Windows operating system; it is recommended to use `Powershell` rather than the old `Command Prompt`.
+When running the script on the Windows operating system it is recommended to use `Powershell` rather than the old `Command Prompt`.
 
-For installing pillow; you can install it via your package manager (Debian and similar distros) or via pip. To install via pip the command should be `python -m pip install pillow`.
+For installing pillow, you can install it via your package manager (Debian and similar distros) or via pip. To install via pip the command should be `python -m pip install pillow`.
+
+For installing IntelHex you can use the same pip command as above but replace `pillow` with `intelhex` so that it becomes `python -m pip install intelhex`.
 
 In your shell you can now execute `python img2logo.py input.png out -m ${model}` to convert the file `input.png` and create output files in the folder `out`.
 The model should be replaced by one of the following options:
@@ -98,4 +100,4 @@ For these flash as per usual using the `.dfu` file. Afterwards power cycle and t
 
 ### Upload via blisp (PinecilV2)
 
-For the PinecilV2 we suggest `blisp` as the command line tool to use if you are not using a GUI tool. `blsip` has been updated to accept `.dfu` files as well as the `.bin` files it historically used. As such you use the `.dfu` file for the logo and flash as per normal otherwise and it will work and reboot at the end. It should show you your new logo after flashing.
+For the PinecilV2 we suggest `blisp` as the command line tool to use if you are not using a GUI tool. `blisp` has been updated to accept `.dfu` files as well as the `.bin` files it historically used. As such you use the `.dfu` file for the logo and flash as per normal otherwise and it will work and reboot at the end. It should show you your new logo after flashing.

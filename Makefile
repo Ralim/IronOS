@@ -149,7 +149,7 @@ test-md:
 	@echo ""
 	@echo "---- Checking documentation... ----"
 	@echo ""
-	@/bin/sh  ./scripts/deploy.sh  docs
+	@./scripts/deploy.sh  docs
 
 # shell style & linter check (github CI version of shellcheck is more recent than alpine one so the latter may not catch some policies)
 test-sh:
@@ -164,7 +164,7 @@ test-py:
 	@echo "---- Checking python code... ----"
 	@echo ""
 	flake8  Translations
-	black  --check  Translations
+	black  --diff  --check  Translations
 	@$(MAKE)  -C source/  Objects/host/brieflz/libbrieflz.so
 	./Translations/brieflz_test.py
 	./Translations/make_translation_test.py

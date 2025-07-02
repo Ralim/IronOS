@@ -290,7 +290,7 @@ DEV_GLOBAL_DEFS=-DCFG_FREERTOS                                       \
 # -DCONFIG_BT_SMP
 
 # Required to be turned off due to their drivers tripping warnings
-DEV_CFLAGS=-Wno-error=enum-conversion -Wno-type-limits -Wno-implicit-fallthrough
+DEV_CFLAGS=-Wno-error=enum-conversion -Wno-type-limits -Wno-implicit-fallthrough -Wno-error=implicit-function-declaration -Wno-error=incompatible-pointer-types
 DEV_CXXFLAGS=$(DEV_CFLAGS)
 flash_size=128k
 bootldr_size=0x0
@@ -364,6 +364,12 @@ ifdef swd_enable
 GLOBAL_DEFINES+=-DSWD_ENABLE
 endif
 
+ifeq ($(model),$(filter $(model),$(ALL_PINECIL_V2_MODELS)))
+ifdef ws2812b_enable
+	GLOBAL_DEFINES += -DWS2812B_ENABLE
+endif
+endif
+
 # Libs -------------------------------------------------------------------------
 LIBS=
 
@@ -428,6 +434,7 @@ CHECKOPTIONS=-Wtrigraphs                  \
              -Wmissing-field-initializers \
              -Wshadow                     \
              -Wno-unused-parameter        \
+             -Wno-undef                   \
              -Wdouble-promotion
 
 CHECKOPTIONS_C=$(CHECKOPTIONS) -Wbad-function-cast
@@ -457,6 +464,7 @@ CFLAGS=$(DEV_CFLAGS)     \
      -D${COMPILER}       \
      -MMD                \
      -std=gnu11          \
+     -g3                 \
        $(OPTIM)          \
      -T$(LDSCRIPT)       \
      -c

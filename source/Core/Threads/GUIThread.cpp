@@ -57,6 +57,9 @@ OperatingMode guiHandleDraw(void) {
       setStatusLED(LED_OFF);
     } else {
       OLED::setDisplayState(OLED::DisplayState::ON);
+    }
+    if (currentOperatingMode != OperatingMode::Soldering && currentOperatingMode != OperatingMode::SolderingProfile) {
+      // Not in soldering mode, so set this based on temp
       if (tipTemp > 55) {
         setStatusLED(LED_COOLING_STILL_HOT);
       } else {
@@ -157,6 +160,7 @@ void guiRenderLoop(void) {
     memset(&context.scratch_state, 0, sizeof(context.scratch_state));
     currentOperatingMode = newMode;
   }
+
   // If the transition marker is set, we need to make the next draw occur to the secondary buffer so we have something to transition to
   if (context.transitionMode != TransitionAnimation::None) {
     OLED::useSecondaryFramebuffer(true);

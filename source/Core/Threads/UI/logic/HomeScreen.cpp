@@ -19,7 +19,7 @@ OperatingMode handleHomeButtons(const ButtonState buttons, guiContext *cxt) {
     break;
 
   case BUTTON_B_LONG:
-    cxt->transitionMode = TransitionAnimation::Up;
+    cxt->transitionMode = TransitionAnimation::Down;
     return OperatingMode::DebugMenuReadout;
     break;
   case BUTTON_F_LONG:
@@ -37,7 +37,8 @@ OperatingMode handleHomeButtons(const ButtonState buttons, guiContext *cxt) {
     break;
   case BUTTON_F_SHORT:
     if (!isTipDisconnected()) {
-      cxt->transitionMode = TransitionAnimation::Left;
+      bool detailedView   = getSettingValue(SettingsOptions::DetailedIDLE) && getSettingValue(SettingsOptions::DetailedSoldering);
+      cxt->transitionMode = detailedView ? TransitionAnimation::None : TransitionAnimation::Left;
       return OperatingMode::Soldering;
     }
     break;

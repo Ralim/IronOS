@@ -275,6 +275,10 @@
       "displayText": "Размяна\nбутони +/-",
       "description": "Обръщане на бутоните + и - за промяна на температурата на човка на поялника"
     },
+    "ReverseButtonSettings": {
+      "displayText": "Swap\nA B keys",
+      "description": "Reverse assignment of buttons for Settings menu"
+    },
     "AnimSpeed": {
       "displayText": "Скорост на\nанимацията",
       "description": "Скорост на анимация на иконата в главното меню (Н=Ниска | C=Средна | B=Висока)"

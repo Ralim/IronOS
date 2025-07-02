@@ -1,6 +1,6 @@
 #include "HUB238.hpp"
 #include "I2CBB2.hpp"
-#include "Utils.h"
+#include "Utils.hpp"
 #include "configuration.h"
 
 #if POW_PD_EXT == 1

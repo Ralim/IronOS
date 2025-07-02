@@ -152,9 +152,9 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
     if (currentVirtualPosition > 0) {
       currentVirtualPosition--;
     }
+
     // The height of the indicator is screen res height / total menu entries
     uint8_t indicatorHeight = OLED_HEIGHT / *currentMenuLength;
-
     if (indicatorHeight == 0) {
       indicatorHeight = 1; // always at least 1 pixel
     }
@@ -181,8 +181,8 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
       OLED::drawScrollIndicator((uint8_t)position, indicatorHeight);
     }
   }
-  // Now handle user button input
 
+  // Now handle user button input
   auto callIncrementHandler = [&]() {
     if (currentMenu[currentScreen].incrementHandler != nullptr) {
       currentMenu[currentScreen].incrementHandler();
@@ -192,9 +192,29 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
     return false;
   };
 
-  //
-  OperatingMode newMode = OperatingMode::SettingsMenu;
+  // Modify a button value before processing a key press if setting to swap buttons is enabled
+  bool    swapButtonSettings = getSettingValue(SettingsOptions::ReverseButtonSettings);
+  uint8_t buttonPress;
   switch (buttons) {
+  case BUTTON_F_LONG:
+    buttonPress = swapButtonSettings ? BUTTON_B_LONG : BUTTON_F_LONG;
+    break;
+  case BUTTON_F_SHORT:
+    buttonPress = swapButtonSettings ? BUTTON_B_SHORT : BUTTON_F_SHORT;
+    break;
+  case BUTTON_B_LONG:
+    buttonPress = swapButtonSettings ? BUTTON_F_LONG : BUTTON_B_LONG;
+    break;
+  case BUTTON_B_SHORT:
+    buttonPress = swapButtonSettings ? BUTTON_F_SHORT : BUTTON_B_SHORT;
+    break;
+  default:
+    buttonPress = buttons;
+    break;
+  }
+
+  OperatingMode newMode = OperatingMode::SettingsMenu;
+  switch (buttonPress) {
   case BUTTON_NONE:
     (*autoRepeatAcceleration) = 0; // reset acceleration
     (*autoRepeatTimer)        = 0; // reset acceleration
@@ -210,7 +230,6 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
       return OperatingMode::SettingsMenu;
     }
     break;
-
   case BUTTON_F_LONG:
     if (xTaskGetTickCount() + (*autoRepeatAcceleration) > (*autoRepeatTimer) + PRESS_ACCEL_INTERVAL_MAX) {
       callIncrementHandler();
@@ -259,13 +278,12 @@ OperatingMode gui_SettingsMenu(const ButtonState buttons, guiContext *cxt) {
     /* Fall through*/
   case BUTTON_B_SHORT:
     // Increment menu item
-
     newMode = moveToNextEntry(cxt);
     break;
-
   default:
     break;
   }
+
   if ((PRESS_ACCEL_INTERVAL_MAX - (*autoRepeatAcceleration)) < PRESS_ACCEL_INTERVAL_MIN) {
     (*autoRepeatAcceleration) = PRESS_ACCEL_INTERVAL_MAX - PRESS_ACCEL_INTERVAL_MIN;
   }

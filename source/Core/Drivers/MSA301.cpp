@@ -13,8 +13,8 @@
 bool MSA301::detect() { return ACCEL_I2C_CLASS::probe(MSA301_I2C_ADDRESS); }
 
 static const ACCEL_I2C_CLASS::I2C_REG i2c_registers[] = {
-  //
-  //
+    //
+    //
     {      MSA301_REG_ODR, 0b00001000, 1}, // X/Y/Z enabled @ 250Hz
     {MSA301_REG_POWERMODE,  0b0001001, 1}, // Normal mode
     { MSA301_REG_RESRANGE, 0b00000001, 0}, // 14bit resolution @ 4G range

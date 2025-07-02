@@ -47,6 +47,7 @@ static void displayAdvancedSolderingScreens(void);
 static void displayAdvancedIDLEScreens(void);
 static void displayScrollSpeed(void);
 static void displayReverseButtonTempChangeEnabled(void);
+static void displayReverseButtonSettings(void);
 static void displayPowerLimit(void);
 
 #ifdef BLE_ENABLED
@@ -395,6 +396,8 @@ const menuitem UIMenu[] = {
   {SETTINGS_DESC(SettingsItemIndex::ScrollingSpeed), nullptr, displayScrollSpeed, nullptr, SettingsOptions::DescriptionScrollSpeed, SettingsItemIndex::ScrollingSpeed, 7},
   /* Reverse Temp change buttons +/- */
   {SETTINGS_DESC(SettingsItemIndex::ReverseButtonTempChange), nullptr, displayReverseButtonTempChangeEnabled, nullptr, SettingsOptions::ReverseButtonTempChangeEnabled, SettingsItemIndex::ReverseButtonTempChange, 7},
+  /* Reverse Settings menu buttons A/B */
+  {SETTINGS_DESC(SettingsItemIndex::ReverseButtonSettings), nullptr, displayReverseButtonSettings, nullptr, SettingsOptions::ReverseButtonSettings, SettingsItemIndex::ReverseButtonSettings, 7},
   /* Animation Speed adjustment */
   {SETTINGS_DESC(SettingsItemIndex::AnimSpeed), nullptr, displayAnimationSpeed, nullptr, SettingsOptions::AnimationSpeed, SettingsItemIndex::AnimSpeed, 7},
   /* Animation Loop switch */
@@ -450,11 +453,11 @@ const menuitem advancedMenu[] = {
 
 /* clang-format on */
 
-const menuitem *subSettingsMenus[] {
+const menuitem *subSettingsMenus[]{
 #if defined(POW_DC) || defined(POW_QC) || defined(POW_PD) || POW_PD_EXT == 2
-  powerMenu,
+    powerMenu,
 #endif
-      solderingMenu, PowerSavingMenu, UIMenu, advancedMenu,
+    solderingMenu, PowerSavingMenu, UIMenu, advancedMenu,
 };
 /* ^^^ !!!ENABLE CLANG-FORMAT back!!! ^^^ */
 
@@ -579,7 +582,6 @@ static void setBoostTemp(void) {
     if (value >= MAX_TEMP_F) {
       value = 0; // jump to off
     }
-    setSettingValue(SettingsOptions::BoostTemp, value);
   } else {
     if (value == 0) {
       value = MIN_BOOST_TEMP_C; // loop back at 250
@@ -654,14 +656,13 @@ static void setProfileTemp(const enum SettingsOptions option) {
     if (temp > MAX_TEMP_F) {
       temp = MIN_TEMP_F;
     }
-    setSettingValue(option, temp);
   } else {
     temp += 5;
     if (temp > MAX_TEMP_C) {
       temp = MIN_TEMP_C;
     }
-    setSettingValue(option, temp);
   }
+  setSettingValue(option, temp);
 }
 
 static void setProfilePreheatTemp(void) { return setProfileTemp(SettingsOptions::ProfilePreheatTemp); }
@@ -712,14 +713,13 @@ static void setSleepTemp(void) {
     if (temp > 580) {
       temp = 60;
     }
-    setSettingValue(SettingsOptions::SleepTemp, temp);
   } else {
     temp += 10;
     if (temp > 300) {
       temp = 10;
     }
-    setSettingValue(SettingsOptions::SleepTemp, temp);
   }
+  setSettingValue(SettingsOptions::SleepTemp, temp);
 }
 
 static void displaySleepTemp(void) { OLED::printNumber(getSettingValue(SettingsOptions::SleepTemp), 3, FontStyle::LARGE); }
@@ -759,12 +759,11 @@ static bool showHallEffect(void) { return getHallSensorFitted(); }
 static void displayHallEffectSleepTime(void) {
   if (getSettingValue(SettingsOptions::HallEffectSleepTime)) {
     OLED::printNumber(getSettingValue(SettingsOptions::HallEffectSleepTime) * 5, 2, FontStyle::LARGE, false);
-    OLED::print(LargeSymbolSeconds, FontStyle::LARGE);
   } else {
     // When sleep time is set to zero, we sleep for 1 second anyways. This is the default.
     OLED::printNumber(1, 2, FontStyle::LARGE, false);
-    OLED::print(LargeSymbolSeconds, FontStyle::LARGE);
   }
+  OLED::print(LargeSymbolSeconds, FontStyle::LARGE);
 }
 #endif /* HALL_SENSOR */
 
@@ -856,6 +855,8 @@ static void displayCoolingBlinkEnabled(void) { OLED::drawCheckbox(getSettingValu
 static void displayScrollSpeed(void) { OLED::print(translatedString((getSettingValue(SettingsOptions::DescriptionScrollSpeed)) ? Tr->SettingFastChar : Tr->SettingSlowChar), FontStyle::LARGE); }
 
 static void displayReverseButtonTempChangeEnabled(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled)); }
+
+static void displayReverseButtonSettings(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::ReverseButtonSettings)); }
 
 static void displayAnimationSpeed(void) {
   switch (getSettingValue(SettingsOptions::AnimationSpeed)) {

@@ -275,6 +275,10 @@
       "displayText": "Inversare\n+ - butoane",
       "description": "Inversarea butoanelor de reglare a temperaturii"
     },
+    "ReverseButtonSettings": {
+      "displayText": "Swap\nA B keys",
+      "description": "Reverse assignment of buttons for Settings menu"
+    },
     "AnimSpeed": {
       "displayText": "Animaţii\nviteză",
       "description": "Ritmul animaţiilor pictogramei din meniu (Î=încet | M=mediu | R=rapid)"

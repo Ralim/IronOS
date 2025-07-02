@@ -275,6 +275,10 @@
       "displayText": "+- Tasten\numkehren",
       "description": "Tastenbelegung zur Temperaturänderung umkehren"
     },
+    "ReverseButtonSettings": {
+      "displayText": "A B Tasten\nvertauschen",
+      "description": "Umgekehrte Belegung der Tasten für das Einstellungsmenü"
+    },
     "AnimSpeed": {
       "displayText": "Anim.\nGeschw.",
       "description": "Geschwindigkeit der Icon-Animationen im Menü (L=langsam | M=mittel | S=schnell)"

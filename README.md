@@ -23,12 +23,12 @@ _This firmware does **NOT** support the USB port while running for changing sett
 
 ## Supported Hardware
 
-|     Device     | DC  | QC  | PD  | EPR | BLE | Tip Sense | Recommended Purchase |                  Notes                  |
+|     Device     | DC  | QC  | PD  | EPR\*\*\*\* | BLE | Tip Sense | Recommended Purchase |                  Notes                  |
 | :------------: | :-: | :-: | :-: | :-: | :-: | :-------: | :------------------: | :-------------------------------------: |
 | Miniware MHP30 | ❌  | ❌  | ✔️  | ❌  | ❌  |    ✔️     |          ✔️          |                                         |
 |   Pinecil V1   | ✔️  | ✔️  | ✔️  | ❌  | ❌  |    ❌     |        ❌ \*         |                                         |
 |   Pinecil V2   | ✔️  | ✔️  | ✔️  | ✔️  | ✔️  |    ✔️     |          ✔️          |                                         |
-| Miniware TS101 | ✔️  | ❌  | ✔️  | ✔️  | ❌  |    ✔️     |          ✔️          | Full OLED resolution not yet supported. |
+| Miniware TS101 | ✔️  | ❌  | ✔️  | ✔️  | ❌  |    ✔️     |     ✔️ \*\*\*\*\*    | Full OLED resolution not yet supported. |
 |   Sequre S60   | ❌  | ❌  | ✔️  | ❌  | ❌  |    ❌     |          ✔️          | Full OLED resolution not yet supported. |
 |  Sequre S60P   | ✔️  | ❌  | ✔️  | ❌  | ❌  |    ❌     |          ✔️          | Full OLED resolution not yet supported. |
 |  Sequre S99    | ✔️  | ❌  | ✔️  | ❌  | ❌  |    ❌     |          ✔️          | Full OLED resolution not yet supported. |
@@ -48,6 +48,11 @@ The _TS101_ & _S60(P)_ irons and _MHP30_ & _T55_ plates feature a higher resolut
 \*\* Please note that _Miniware_ started shipping _TS100_'s using **cloned STM32 chips**. While these do work with _IronOS_, their **DFU bootloader** works terribly, and it is hard to get it to successfully flash larger firmware images like _IronOS_ without timing out. This is the main reason why the _TS100_ is **_no longer recommended_**.
 
 \*\*\* _TS80_ is replaced by _TS80P_. Production ramped down a long time ago and it's just existing stock clearing the system. It's marked not recommended being optimistic that people might pause and buy the far superior _TS80P_ instead. This is the main reason why the _TS80_ is **_no longer recommended_**.
+
+\*\*\*\* **EPR/PPS with 28V support** is _**disabled by default**_ due to [safety concerns](https://github.com/Ralim/IronOS/pull/2073), but to turn it back on set  
+_PD Mode_ option in _Power settings_ submenu to _Safe_ or _Default_.
+
+\*\*\*\*\* Some users confirm that there is a version of newer _TS101_ revision with another OLED screen model, which is not supported yet at all by _IronOS_ unfortunately. See [this bug report](https://github.com/Ralim/IronOS/issues/2063) for more information.
 
 ## Getting Started
 
@@ -140,6 +145,22 @@ After powering on the device for the first time with _IronOS_ installed and havi
 
 Additional details are described in the [menu information](https://ralim.github.io/IronOS/Menu/).
 
+## Remote Control
+
+### Pinecil V2 only
+
+Pinecil V2 has [_Bluetooth Low Energy_ module](https://ralim.github.io/IronOS/Bluetooth), which is supported by _IronOS_ since `2.21` release to control some of the settings using additional tools like [PineSAM](https://github.com/builder555/PineSAM) or [PineTool](https://github.com/lachlanbell/PineTool). In `2.21` and `2.22` releases the module was _on_ by default. However, **_Bluetooth_ is turned off in the settings by default in current `dev` builds and for the next releases** [due to security concerns](#1856).[^ble]
+
+To enable _Bluetooth_ back:
+- go to _Settings_ menu;
+- press `-/B` button four times to scroll the menu for `Advanced settings`;
+- press `+/A` button to open submenu;
+- press `+/A` button to toggle/enable _Bluetooth_ feature;
+- press `-/B` **and hold it** for just more than five seconds to exit from the _Settings_ menu.
+
+[^ble]:
+    This is related only to situations when a user restores default settings using menu, or when _IronOS_ update is taking place on a new device or on a device with a previous firmware version.
+
 ## Translations
 
 Is your preferred language missing localisation of some of the text?
@@ -176,6 +197,6 @@ Other components such as _FreeRTOS_ and _USB-PD_ have their own licenses.
 
 ## Commercial Use
 
-This software is provided "AS IS", so I cannot provide any commercial support for the firmware.
+This software is provided _**"AS IS"**_, so I cannot provide any commercial support for the firmware.
 However, you are more than welcome to distribute links to the firmware or provide hardware with this firmware.
 **Please do not re-host the files, but rather link to this page, so that there are no old versions of the firmware scattered around**.

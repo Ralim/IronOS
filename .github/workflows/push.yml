@@ -10,9 +10,9 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     container:
-      image: alpine:3.19
+      image: alpine:3.21
     strategy:
       matrix:
         model:
@@ -71,9 +71,9 @@ jobs:
           if-no-files-found: error
 
   build_multi-lang:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     container:
-      image: alpine:3.19
+      image: alpine:3.21
     strategy:
       matrix:
         model: ["Pinecil", "Pinecilv2"]
@@ -119,7 +119,7 @@ jobs:
 
   upload_metadata:
     needs: [build, build_multi-lang]
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Download all prebuilts
@@ -137,9 +137,9 @@ jobs:
           if-no-files-found: error
 
   tests:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     container:
-      image: alpine:3.19
+      image: alpine:3.21
 
     steps:
       - name: Install dependencies (apk)
@@ -159,9 +159,9 @@ jobs:
         run: make  -C source/  Objects/host/brieflz/libbrieflz.so && ./Translations/brieflz_test.py
 
   check_c-cpp:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     container:
-      image: alpine:3.19
+      image: alpine:3.21
 
     steps:
       - name: Install dependencies (apk)
@@ -175,9 +175,9 @@ jobs:
         run: make  clean  check-style
 
   check_python:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     container:
-      image: alpine:3.19
+      image: alpine:3.21
 
     steps:
       - name: Install dependencies (apk)
@@ -191,14 +191,14 @@ jobs:
         run: python3 -m pip install --break-system-packages bdflib flake8
 
       - name: Check python formatting with black
-        run: black --check Translations
+        run: black --diff --check Translations
 
       - name: Check python with flake8
         run: flake8 Translations
 
   check_shell:
     name: check_shell
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - name: shellcheck
@@ -210,13 +210,13 @@ jobs:
           check_all_files_with_shebangs: "false" # Optional.
 
   check_docs:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     container:
-      image: alpine:3.19
+      image: alpine:3.21
 
     steps:
       - name: Install dependencies (apk)
-        run: apk add --no-cache git
+        run: apk add --no-cache git bash grep
 
       - uses: actions/checkout@v4
         with:
@@ -228,4 +228,4 @@ jobs:
         run: git config --global --add safe.directory /__w/IronOS/IronOS && git config --global safe.directory "$GITHUB_WORKSPACE"
 
       - name: Check and verify documentation
-        run: /bin/sh ./scripts/deploy.sh docs
+        run: ./scripts/deploy.sh docs
