@@ -145,7 +145,7 @@ flash_size=62k
 ifeq ($(model), S60P)
 bootldr_size=0x5000
 DEVICE_DFU_ADDRESS=0x08005000
-else 
+else
 # S60 or T55
 bootldr_size=0x4400
 DEVICE_DFU_ADDRESS=0x08004400
@@ -502,6 +502,7 @@ $(HEXFILE_DIR)/$(model)_%.elf: \
 		$(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP)    \
 		$(OUTPUT_DIR)/Core/Gen/Translation.%.o       \
 		$(OUTPUT_DIR)/Core/LangSupport/lang_single.o \
+		$(OUTPUT_DIR)/Core/Gen/settings_gen.$(model).o \
 		Makefile $(LDSCRIPT)
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Linking $@
@@ -562,11 +563,23 @@ Core/Gen/Translation.%.cpp $(OUTPUT_DIR)/Core/Gen/translation.files/%.pickle: ..
 		--output-pickled "$(OUTPUT_DIR)/Core/Gen/translation.files/$*.pickle" \
 		$*
 
+Core/Gen/settings_gen.%.cpp: Settings/settings.yaml \
+		Settings/generate_settings.py           \
+		Settings/settings_gen.cpp.template
+	@test -d Core/Gen || mkdir -p Core/Gen
+	@echo 'Generating settings file for model $*'
+	@$(HOST_PYTHON) Settings/generate_settings.py $* Settings/settings.yaml Core/Gen/settings_gen.$*.cpp
+
 Core/Gen/macros.txt: Makefile
 	@test -d "$(CURDIR)/Core/Gen" || mkdir -p "$(CURDIR)/Core/Gen"
 	echo "#include <configuration.h>" | $(CC) -dM -E $(CFLAGS) -MF "$(CURDIR)/Core/Gen/macros.tmp" - > "$(CURDIR)/Core/Gen/macros.txt"
 
 # The recipes to produce compressed translation data
+
+$(OUTPUT_DIR)/Core/Gen/settings_gen.%.o: Core/Gen/settings_gen.%.cpp
+	@test -d $(@D) || mkdir -p $(@D)
+	@echo Generating $@
+	@$(CPP) -c $(CXXFLAGS) $< -o $@
 
 $(OUTPUT_DIR)/Core/Gen/translation.files/%.o: Core/Gen/Translation.%.cpp
 	@test -d $(@D) || mkdir -p $(@D)

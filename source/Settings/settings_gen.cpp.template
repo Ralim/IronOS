@@ -27,16 +27,11 @@ bool sanitiseSettings();
 #endif /* POW_QC_20V */
 
 
-// For every setting we need to store the min/max/increment values
-typedef struct {
-  const uint16_t min;          // Inclusive minimum value
-  const uint16_t max;          // Inclusive maximum value
-  const uint16_t increment;    // Standard increment
-  const uint16_t defaultValue; // Default vaue after reset
-} SettingConstants;
-
-static const SettingConstants settingsConstants[(int)SettingsOptions::SettingsOptionsLength] = {
+const SettingConstants settingsConstants[(int)SettingsOptions::SettingsOptionsLength] = {
     //{                   min,                               max,         increment,                      default}
 $SETTINGSTABLE
 };
 static_assert((sizeof(settingsConstants) / sizeof(SettingConstants)) == ((int)SettingsOptions::SettingsOptionsLength));
+
+//~1024 is common programming size, setting threshold to be lower so we have warning
+static_assert(sizeof(systemSettingsType) < 512);

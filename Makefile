@@ -46,7 +46,7 @@ DOCKER_FILE=$(CURDIR)/scripts/IronOS.Dockerfile
 DOCKER_DEPS=$(DOCKER_YML) $(DOCKER_FILE)
 
 # compose docker-compose command
-DOCKER_CMD=$(DOCKER_BIN)  -f $(DOCKER_YML)  run  --rm  builder
+DOCKER_CMD=$(DOCKER_BIN) -f $(DOCKER_YML)  run  --rm  builder
 
 # MkDocs config
 MKDOCS_YML=$(CURDIR)/scripts/IronOS-mkdocs.yml
