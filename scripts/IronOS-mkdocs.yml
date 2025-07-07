@@ -35,13 +35,14 @@ nav:
       - Temperature: Temperature.md
   - Startup Logo: Logo.md
   - Hardware:
-      - Hall Sensor (Pinecil): HallSensor.md
       - Bluetooth (Pinecil V2): Bluetooth.md
+      - Debugging USB-PD: DebuggingPD.md
+      - Hall Sensor (Pinecil): HallSensor.md
       - Hardware Notes: Hardware.md
-      - Troubleshooting: Troubleshooting.md
       - Known Hardware Issues: HardwareIssues.md
-      - Power sources: PowerSources.md
       - New Hardware Requirements: PortingToNewDevice.md
+      - Power sources: PowerSources.md
+      - Troubleshooting: Troubleshooting.md
       - WS2812B RGB Modding (Pinecil V2): WS2812BModding.md
   - Translations: Translation.md
   - Development: Development.md
