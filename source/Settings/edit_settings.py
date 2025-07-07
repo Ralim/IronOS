@@ -1,32 +1,18 @@
-#! python3
-import yaml
-from typing import List
-import os
-
-
-class SettingsEntry:
-    def __init__(self, min, max, increment, default):
-        self.min = min
-        self.max = max
-        self.increment = increment
-        self.default = default
-
-
-class Settings:
-  settings:List[SettingsEntry] = []
-
-
-def load_settings(file_path):
-    with open(file_path, 'r') as f:
-        data = yaml.safe_load(f)
-        settings_obj = Settings()
-        settings_obj.settings = data['settings']
-        return settings_obj
-
-
-settings_data = load_settings( 'settings.yaml')
-
+#!/usr/bin/env python3
 """
-If the user has provided a settings binary dump, we load it and update the settings data
-If the user has requested to edit the settings, we provide a menu to edit each setting
+IronOS Settings Editor - Refactored
+
+A tool to edit and generate settings binary files for IronOS.
+This is a refactored version of the original edit_settings.py,
+with functionality split into separate modules for better maintainability.
 """
+
+import sys
+from lib import run_editing_settings_file_cli
+
+if __name__ == "__main__":
+    try:
+        run_editing_settings_file_cli()
+    except KeyboardInterrupt:
+        print("\nOperation cancelled by user")
+        sys.exit(1)
