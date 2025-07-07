@@ -507,6 +507,7 @@ $(HEXFILE_DIR)/$(model)_%.elf: \
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Linking $@
 	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
+        $(OUTPUT_DIR)/Core/Gen/settings_gen.$(model).o \
 		$(OUTPUT_DIR)/Core/Gen/Translation.$*.o      \
 		$(OUTPUT_DIR)/Core/LangSupport/lang_single.o \
 		$(LIBS) $(LINKER_FLAGS) -o$@ -Wl,-Map=$@.map
@@ -515,10 +516,12 @@ $(HEXFILE_DIR)/$(model)_string_compressed_%.elf: \
 		$(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP)      \
 		$(OUTPUT_DIR)/Core/Gen/Translation_brieflz.%.o \
 		$(OUTPUT_DIR)/Core/LangSupport/lang_single.o   \
+		$(OUTPUT_DIR)/Core/Gen/settings_gen.$(model).o \
 		Makefile $(LDSCRIPT)
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Linking $@
 	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
+	    $(OUTPUT_DIR)/Core/Gen/settings_gen.$(model).o \
 		$(OUTPUT_DIR)/Core/Gen/Translation_brieflz.$*.o \
 		$(OUTPUT_DIR)/Core/LangSupport/lang_single.o    \
 		$(LIBS) $(LINKER_FLAGS) -o$@ -Wl,-Map=$@.map
@@ -527,10 +530,12 @@ $(HEXFILE_DIR)/$(model)_font_compressed_%.elf: \
 		$(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP)           \
 		$(OUTPUT_DIR)/Core/Gen/Translation_brieflz_font.%.o \
 		$(OUTPUT_DIR)/Core/LangSupport/lang_single.o        \
+		$(OUTPUT_DIR)/Core/Gen/settings_gen.$(model).o \
 		Makefile $(LDSCRIPT)
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Linking $@
 	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
+        $(OUTPUT_DIR)/Core/Gen/settings_gen.$(model).o \
 		$(OUTPUT_DIR)/Core/Gen/Translation_brieflz_font.$*.o  \
 		$(OUTPUT_DIR)/Core/LangSupport/lang_single.o          \
 		$(LIBS) $(LINKER_FLAGS) -o$@ -Wl,-Map=$@.map
@@ -625,23 +630,27 @@ $(HEXFILE_DIR)/$(model)_multi_$(2).elf: \
 		$(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP)       \
 		$(OUTPUT_DIR)/Core/Gen/Translation_multi.$(1).o \
 		$(OUTPUT_DIR)/Core/LangSupport/lang_multi.o     \
+		$(OUTPUT_DIR)/Core/Gen/settings_gen.$(model).o     \
 		Makefile $(LDSCRIPT)
 	@test -d $$(@D) || mkdir -p $$(@D)
 	@echo Linking $$@
 	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
 		$(OUTPUT_DIR)/Core/Gen/Translation_multi.$(1).o       \
 		$(OUTPUT_DIR)/Core/LangSupport/lang_multi.o           \
+		$(OUTPUT_DIR)/Core/Gen/settings_gen.$(model).o     \
 		$(LIBS) $(LINKER_FLAGS) -o$$@ -Wl,-Map=$$@.map
 
 $(HEXFILE_DIR)/$(model)_multi_compressed_$(2).elf: \
 		$(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP)               \
 		$(OUTPUT_DIR)/Core/Gen/Translation_brieflz_multi.$(1).o \
 		$(OUTPUT_DIR)/Core/LangSupport/lang_multi.o             \
+		$(OUTPUT_DIR)/Core/Gen/settings_gen.$(model).o     \
 		Makefile $(LDSCRIPT)
 	@test -d $$(@D) || mkdir -p $$(@D)
 	@echo Linking $$@
 	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP)   \
 		$(OUTPUT_DIR)/Core/Gen/Translation_brieflz_multi.$(1).o \
+		$(OUTPUT_DIR)/Core/Gen/settings_gen.$(model).o     \
 		$(OUTPUT_DIR)/Core/LangSupport/lang_multi.o             \
 		$(LIBS) $(LINKER_FLAGS) -o$$@ -Wl,-Map=$$@.map
 
@@ -724,6 +733,5 @@ check-style:
 # Pull in dependency info for *existing* .o files
 -include $(OUT_OBJS:.o=.d)
 -include $(OUT_OBJS_CPP:.o=.d)
--include $(OUTPUT_DIR)/Core/Gen/Translation.*.d
--include $(OUTPUT_DIR)/Core/Gen/Translation_*.d
+-include $(OUTPUT_DIR)/Core/Gen/*.d
 -include $(OUTPUT_DIR)/Core/Gen/translation.files/*.d

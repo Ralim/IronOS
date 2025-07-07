@@ -88,6 +88,7 @@ typedef struct {
   const uint16_t increment;    // Standard increment
   const uint16_t defaultValue; // Default vaue after reset
 } SettingConstants;
+extern const SettingConstants settingsConstants[(int)SettingsOptions::SettingsOptionsLength];
 
 /*
  * This struct must be a multiple of 2 bytes as it is saved / restored from

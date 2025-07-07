@@ -27,8 +27,7 @@ bool sanitiseSettings();
 #endif /* POW_QC_20V */
 
 // char (*__kaboom)[sizeof(systemSettingsType)] = 1; // Uncomment to print size at compile time
-volatile systemSettingsType   systemSettings;
-extern const SettingConstants settingsConstants[(int)SettingsOptions::SettingsOptionsLength];
+volatile systemSettingsType systemSettings;
 
 void saveSettings() {
 #ifdef CANT_DIRECT_READ_SETTINGS
