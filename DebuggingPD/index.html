@@ -3,18 +3,18 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://ralim.github.io/IronOS/HallSensor/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://ralim.github.io/IronOS/DebuggingPD/" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Hall Sensor (Pinecil) - IronOS</title>
+    <title>Debugging USB-PD - IronOS</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Hall Sensor (Pinecil)";
-        var mkdocs_page_input_path = "HallSensor.md";
-        var mkdocs_page_url = "/IronOS/HallSensor/";
+        var mkdocs_page_name = "Debugging USB-PD";
+        var mkdocs_page_input_path = "DebuggingPD.md";
+        var mkdocs_page_url = "/IronOS/DebuggingPD/";
       </script>
     
     <!--[if lt IE 9]>
@@ -82,17 +82,21 @@
               <ul class="current">
                   <li class="toctree-l1"><a class="reference internal" href="../Bluetooth/">Bluetooth (Pinecil V2)</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../DebuggingPD/">Debugging USB-PD</a>
-                  </li>
-                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Hall Sensor (Pinecil)</a>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Debugging USB-PD</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#sleep-mode-menu">Sleep Mode Menu</a>
+    <li class="toctree-l2"><a class="reference internal" href="#if-the-unit-doesnt-power-up-at-all">If the unit doesn't power up at all</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#optional-hall-effect-feature-pinecil-v1v2-only">Optional Hall Effect Feature (Pinecil (v1/v2) only):</a>
+    <li class="toctree-l3"><a class="reference internal" href="#no-power">No power</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#powers-up-on-other-supplies">Powers up on other supplies</a>
     </li>
         </ul>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#if-the-unit-powers-up-but-keeps-rebooting">If the unit powers up but keeps rebooting</a>
+    </li>
     </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../HallSensor/">Hall Sensor (Pinecil)</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../Hardware/">Hardware Notes</a>
                   </li>
@@ -134,9 +138,9 @@
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
           <li class="breadcrumb-item">Hardware</li>
-      <li class="breadcrumb-item active">Hall Sensor (Pinecil)</li>
+      <li class="breadcrumb-item active">Debugging USB-PD</li>
     <li class="wy-breadcrumbs-aside">
-          <a href="https://github.com/ralim/IronOS/edit/dev/Documentation/HallSensor.md" class="icon icon-github"> Edit on GitHub</a>
+          <a href="https://github.com/ralim/IronOS/edit/dev/Documentation/DebuggingPD.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
   <hr/>
@@ -144,30 +148,44 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="hall-effect-sensor">Hall Effect Sensor</h1>
-<h2 id="sleep-mode-menu">Sleep Mode Menu</h2>
-<p>In sleep mode, the iron automatically lowers the temperature to 150°C (default). This default setting was chosen as it is just below the melting point of a wide range of solders. A lower standby temperature helps reduce the oxidation rate and prevent damage to the soldering tips. As a general rule, when not in use, unplug the unit or let it go into sleep mode to extend the life of the replaceable tips. The default sleep temperature can be adjusted to your preference.</p>
-<p>Simply moving the iron or pressing any button will wake it back up into soldering mode. The sensitivity is adjustable. It is recommended to adjust this to suit your environment so that it reliably stays in sleep mode when not in use, but does not go into sleep mode when in use. (This may vary depending on the amount of movement during soldering.)</p>
-<h3 id="optional-hall-effect-feature-pinecil-v1v2-only">Optional Hall Effect Feature (Pinecil (v1/v2) only):</h3>
-<p>Inside the <a href="https://ralim.github.io/IronOS/Settings/#setting-sleep-temp">Sleep Menu</a> is an additional type of sleep setting. Pinecil has an unpopulated footprint (<strong>U14</strong>) for a hall effect sensor, Silicon Labs <strong>Si7210-B-00-IV</strong>. After installing the hall effect sensor (HES), it is possible to auto-trigger Pinecil to enter sleep mode when it enters the stand, and <em>Zzzz</em> will appear (or text in detailed mode). This could be a fun enhancement for any Pinecil and adds a feature typically only found in more expensive high-end irons. The HES is available at many electronic stores for ~$2-$6.</p>
-<p>After installing the HES on the PCB, place a magnet on the stand close enough to the sensor to activate one of ten user selectable settings.</p>
-<ul>
-<li>0=off, 1=1000, 2=750, 3=500, 4=250, 5=150, 6=100, 7=75, 8=50, 9=25 (9 has the highest sensitivity to magnets)</li>
-<li>Setting of 1 might be used if you solder on PCBs with magnets and do not wish Pinecil to auto-sleep constantly. A very strong/large magnet would be required on the stand to activate the sleep mode if you use setting 1.</li>
-<li>Setting of 9 would be useful if you only had a small magnet and are not concerned about Pinecil falsely triggering sleep mode near magnetized items/tools.</li>
-<li>Actively watch the <em>hall</em> number change while you slowly move the magnet around to seek the best locations &amp; whether you have too many or too few magnets. Position the magnet(s) where you have the highest hall number will ensure consistent sleep mode when you place the iron in the stand. This requires some experimenting.</li>
-<li><a href="https://ralim.github.io/IronOS/DebugMenu/">See debug menu for how to display the <em>Hall</em> number</a></li>
-<li>Note that the sensor is physically located near the copper contacts for the tip at the front of the handle. <a href="https://files.pine64.org/doc/Pinecil/Pinecil_schematic_v1.0a_20201120.pdf">Reference Schematics U14</a>.</li>
-<li>Neodymium magnets are recommended. If using small magnets, 2-3 may be required, but too many could also be detrimental.</li>
-<li>Positioning/type/quantity of magnets is important for best results. Sometimes too many magnets breaks the effect by distorting the magnetic field <strong><a href="https://www.youtube.com/shorts/afkqKwCX00I">as seen in this demo video</a></strong>. The video shows magnets at the top of the stand, and the pinecil goes correctly into Zzzz with <em>only</em> those magnets. When more magnets are added at the side, the Pinecil did not go to sleep, which is contrary to the goal. See the PDF below for details on magnetic fields with SI7210-B.</li>
-<li>Orientation of North and South faces of magnets is important to increase reaction of the hall sensor <a href="https://www.silabs.com/documents/public/application-notes/an1018-si72xx-sensors.pdf">see data sheet SI7210-B-00-IV</a>.</li>
-</ul>
+                <h1 id="debugging-pd">Debugging PD</h1>
+<p>When using many of these soldering irons, the recommended power source is to use a USB-PD power supply.</p>
+<p>Occasionally, issues are run into where the iron reboots or appears to not boot when connected to this supply.</p>
+<p>There are generally a few different reasons for this to occur, the first is of course a bug or incompatibility in the IronOS PD-stack / firmware, but there are also power adapters that either have issues or try to be <em>smart</em> to the detriment of compatibility.</p>
+<p>It also helps to remember that driving a soldering iron is not like a normal load that these power supplies are designed for. Normally a laptop or phone will gently ramp the power draw up and down. Where as the soldering iron will rapidly go from 0 to full power, and then back to 0 again. This can cause issues with some power supplies tripping out.</p>
+<p>In general, a normal, boring 60-100W PD supply is recommended. Watch out for adapters with multiple ports that are used by marketing to advertise a higher number. It's somewhat common to see 65W adapters being pushed that have two ports, one of which is 45W and one that is 20W. These cannot support 65W output on one typically.</p>
+<p>Smarter chargers that try to implement every known protocol can come with quirks. Often slight shortcuts are taken in the PD implementation that can cause hard to debug issues.</p>
+<h2 id="if-the-unit-doesnt-power-up-at-all">If the unit doesn't power up at all</h2>
+<p>This can be the most frustrating one to diagnose.</p>
+<p>First, test the device powers up when powered by a USB-A -&gt; USB-C cable. Or a DC power supply. This can rule out other issues that cause the device to appear off (bad flashing).</p>
+<h3 id="no-power">No power</h3>
+<p>If your device won't power up on any other supply type, look into if you can boot into the bootloader. This is usually done by holding down a button while connecting it to a computer and then checking if it's detected.</p>
+<p>If the device shows up to a computer, but doesn't operate when powered up normally, the two most likely causes are a bad flash/firmware OR a non-functioning display.</p>
+<p>Testing alternative firmware builds or trying to heat the unit (pressing the front button) can be ways to test this.</p>
+<h3 id="powers-up-on-other-supplies">Powers up on other supplies</h3>
+<p>If the device powers up on other supplies, but not on the USB-PD supply, it could be a problem with the USB-PD supply itself. Try using a different USB-PD supply to see if the issue persists.</p>
+<p>If the unit does not power on any PD supplies it could be damage to the PD PHY or the USB connector. USB-PD uses the CC pins on the connector, which are not used for normal data so a USB-A adapter for example doesn't use these at all.</p>
+<h2 id="if-the-unit-powers-up-but-keeps-rebooting">If the unit powers up but keeps rebooting</h2>
+<p>There are two causes of this:
+1. If the reboot occurs when the unit starts to heat up, then it is the power supply being unable to supply the power requested.
+2. The unit reboots frequently even without any buttons being pressed.</p>
+<p>If this is the issue that you are seeing, then the problem is that something during the PD initialisation is failing.</p>
+<p>The <em>best</em> way to resolve this is to be able to capture the USB PD traffic. This is the only way to know what is <strong>really</strong> going on and why the two devices can't negotiate.</p>
+<p>To capture PD traffic requires a device that can capture this data. A logic analyser can be used on the CC pins, though note that the signalling voltage is &lt; 3.3V so it will require a logic analyser that can handle this or buffering.</p>
+<p>Alternatively, a lot of the higher-end USB power meter units can capture the packets. It doesn't matter if it only shows these on screen or if it can save these out to a file (ideally a file though).</p>
+<p><strong>Without a traffic capture, all debugging is guessing</strong></p>
+<p>On firmwares 2.23+ there is a toggle in advanced settings to change the PD mode. This will adjust how the firmware negotiates with the PD supply slightly. This can enable/disable the PPS and EPR modes (dynamic voltage negotiation).</p>
+<p>PPS is known to be incorrectly implemented on some supplies, so turning off these features can improve compatibility.</p>
+<p>If the device is <em>sometimes</em> stable, you can on Pinecil devices boot while holding the front button to enter the PD debug menu. This will show what voltages &amp; power levels are being advertised by the device. This can be used to cross-check with what is printed on the adapter. Take into consideration that non e-marked cables will be limited to 3A and that EPR requires specifically marked cables.</p>
+<p>If you take the tip out of the iron, it will result in most devices not negotiating a PD profile (the irons wait to know what kind of tip is installed). This can be used to stop the failing negotiations in some situations to allow viewing this menu.</p>
+<p>Before filing a support request, please try testing other power adapters &amp; cables to try and narrow down the possibilities of the issue being a one-off.
+If you have the capability to capture the PD traffic, that makes the problem exponentially easier to rectify.</p>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../DebuggingPD/" class="btn btn-neutral float-left" title="Debugging USB-PD"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../Hardware/" class="btn btn-neutral float-right" title="Hardware Notes">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../Bluetooth/" class="btn btn-neutral float-left" title="Bluetooth (Pinecil V2)"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../HallSensor/" class="btn btn-neutral float-right" title="Hall Sensor (Pinecil)">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -194,10 +212,10 @@
         </span>
     
     
-      <span><a href="../DebuggingPD/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../Bluetooth/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../Hardware/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../HallSensor/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
