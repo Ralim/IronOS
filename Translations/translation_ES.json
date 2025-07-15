@@ -31,7 +31,7 @@
       "message": "Térmico\nFuera de control"
     },
     "WarningTipShorted": {
-      "message": "¡Punta en Corto!"
+      "message": "¡Punta en cortocircuito!"
     },
     "SettingsCalibrationWarning": {
       "message": "¡Antes de reiniciar, asegúrese de que la punta y el mango estén a temperatura ambiente!"
@@ -145,11 +145,11 @@
     },
     "QCMaxVoltage": {
       "displayText": "Potencia de\nentrada",
-      "description": "Potencia en Watts del adaptador de corriente utilizado"
+      "description": "Potencia en vatios del adaptador de corriente utilizado"
     },
     "PDNegTimeout": {
       "displayText": "PD\ntiempo de espera",
-      "description": "Timeout de negociación de PD en pasos de 100ms para compatibilidad con algunos cargadores QC (0: apagado)"
+      "description": "Tiempo de espera de negociación de PD en pasos de 100ms para compatibilidad con algunos cargadores QC (0: apagado)"
     },
     "USBPDMode": {
       "displayText": "PD\nMode",
@@ -253,7 +253,7 @@
     },
     "HallEffSleepTimeout": {                                           
       "displayText": "Tiempo reposo\nSensor Hall", 
-      "description": "Intervalo antes de que \"sleep mode\" empiece cuando sensorhall supera límite"
+      "description": "Intervalo antes de que \"modo resposo\" empiece cuando sensorhall supera límite"
     },
     "TemperatureUnit": {
       "displayText": "Unidad de\ntemperatura",
@@ -276,8 +276,8 @@
       "description": "Invertir botones de ajuste de temperatura"
     },
     "ReverseButtonSettings": {
-      "displayText": "Swap\nA B keys",
-      "description": "Reverse assignment of buttons for Settings menu"
+      "displayText": "Cambiar\nteclas A B",
+      "description": "Asignación inversa de botonos para el menú de configuración"
     },
     "AnimSpeed": {
       "displayText": "Anim.\nvelocidad",
@@ -313,11 +313,11 @@
     },
     "PowerLimit": {
       "displayText": "Potencia\nlímite",
-      "description": "Elige el límite de potencia máxima del soldador (en Watts)"
+      "description": "Elige el límite de potencia máxima del soldador (en vatios)"
     },
     "CalibrateCJC": {
       "displayText": "Calibrar CJC\nen el próximo inicio",
-      "description": "Al siguinte inicio el Cold Junction Compensation sera calibrado (no requerido si el Delta T es < 5°C)"
+      "description": "Al siguinte inicio la compensación de referencia será calibrada (no requerido si el Delta T es < 5°C)"
     },
     "VoltageCalibration": {
       "displayText": "Calibrar voltaje\nde entrada",
@@ -325,7 +325,7 @@
     },
     "PowerPulsePower": {
       "displayText": "Pulsos bat.\nconstantes",
-      "description": "Intensidad de la potencia del pulso para mantener encendido (W=Watt)"
+      "description": "Intensidad de la potencia del pulso para mantener encendido (W=Vatio)"
     },
     "PowerPulseWait": {
       "displayText": "Tiempor entre\n pulso de energia",
@@ -344,8 +344,8 @@
       "description": ""
     },
     "SolderingTipType": {
-      "displayText": "Soldering\nTip Type",
-      "description": "Select the tip type fitted"
+      "displayText": "Tipo de\nTpunta",
+      "description": "Selecciona la punta montada"
     }
   }
 }
