@@ -7,7 +7,7 @@
 #include "I2CBB1.hpp"
 #include "I2CBB2.hpp"
 #include "Settings.h"
-#include "Utils.h"
+#include "Utils.hpp"
 #include "cmsis_os.h"
 #include <stdbool.h>
 #include <stdint.h>
