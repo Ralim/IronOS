@@ -51,7 +51,7 @@ In the menu there are a few main categories that are used to keep the list manag
     for menu in defs.get("menuGroups", {}):
         menu_id = menu.get("id", "")
         entry = translation_data.get("menuGroups", {}).get(menu_id, "")
-        name = " ".join(entry.get("text2", []))
+        name = " ".join(entry.get("displayText").split("\n"))
         desc = menu.get("description", "")
         section = f"""
 ### Category: {name}
@@ -80,9 +80,9 @@ This is the "on device help text".
     for menu in defs.get("menuOptions", {}):
         menu_id = menu.get("id", "")
         entry = translation_data.get("menuOptions", {}).get(menu_id, "")
-        name = " ".join(entry.get("text2", []))
+        name = " ".join(entry.get("displayText").split("\n"))
         desc = menu.get("description", "")
-        on_device_desc = entry.get("desc", "")
+        on_device_desc = entry.get("description", "")
         section = f"""
 ### Setting: {name}
 
@@ -99,8 +99,8 @@ def main() -> None:
     json_dir = HERE
     print(json_dir)
     logging.info("Loading translation definitions")
-    defs = load_json(TRANSLATION_DEFS_PATH)
-    eng_translation = load_json(ENGLISH_TRANSLATION_PATH)
+    defs = load_json(TRANSLATION_DEFS_PATH,False)
+    eng_translation = load_json(ENGLISH_TRANSLATION_PATH,False)
     with open(MENU_DOCS_FILE_PATH, "w") as outputf:
         write_header(outputf)
         write_menu_categories(outputf, defs, eng_translation)
