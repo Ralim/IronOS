@@ -99,8 +99,8 @@ def main() -> None:
     json_dir = HERE
     print(json_dir)
     logging.info("Loading translation definitions")
-    defs = load_json(TRANSLATION_DEFS_PATH,False)
-    eng_translation = load_json(ENGLISH_TRANSLATION_PATH,False)
+    defs = load_json(TRANSLATION_DEFS_PATH, False)
+    eng_translation = load_json(ENGLISH_TRANSLATION_PATH, False)
     with open(MENU_DOCS_FILE_PATH, "w") as outputf:
         write_header(outputf)
         write_menu_categories(outputf, defs, eng_translation)
