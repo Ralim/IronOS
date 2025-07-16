@@ -52,6 +52,7 @@ void    USBPowerDelivery::step() {
 }
 
 void USBPowerDelivery::PPSTimerCallback() { pe.TimersCallback(); }
+void USBPowerDelivery::reNegotiate() { pe.renegotiate(); }
 bool USBPowerDelivery::negotiationInProgress() {
   if (USBPowerDelivery::negotiationComplete()) {
     return false;
