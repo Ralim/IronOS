@@ -272,7 +272,7 @@
       "maxLen": 7,
       "maxLen2": 15,
       "include": ["POW_PD"],
-      "description": "No Dynamic disables EPR & PPS, Safe mode does not use padding resistance"
+      "description": "Adjusts how the USB-PD Logic selects the voltage. No Dynamic disables EPR & PPS protocols, Safe mode does not use padding resistance (will select a slightly lower voltage)."
     },
     {
       "id": "BoostTemperature",
@@ -538,7 +538,7 @@
       "id": "CalibrateCJC",
       "maxLen": 8,
       "maxLen2": 15,
-      "description": "Used to calibrate the ADC+Op-amp offsets for the tip. This calibration must be performed when the tip temperature and the handle temperature are equal. Generally not required unless your device is reading more than 5°C off target."
+      "description": "Note:\r\nIf the difference between the target temperature and the measured temperature is less than 5°C, **calibration is NOT required at all**.\r\n\r\nThis is used to calibrate the offset between ADC and Op-amp of the tip **at next boot** (Ideally it has to be done at boot, before internal components get warm.). If the checkbox is set, the calibration will only be performed at the next boot. After a successful calibration the checkbox will be unchecked again! If you need to repeat the calibration however, you have to set the checkbox *again*, unplug your device and let it cool down to room/ambient temperature & power it up, ideally while it sits on the desk.\r\n\r\n\r\nAlso, the calibration will only take place if both of the following conditions are met:\r\n- The tip must be installed.\r\n- The temperature difference between tip and handle must be less than 10°C. (~ ambient / room temperature)\r\n\r\nOtherwise, the calibration will be performed the next time the device is started and both conditions are met, unless the corresponding checkbox is unchecked.\r\nHence, never repeat the calibration in quick succession!"
     },
     {
       "id": "VoltageCalibration",

@@ -173,6 +173,15 @@ jobs:
       - name: Check format style with clang-format
         run: make  clean  check-style
 
+  check-settings-docs:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run the menu docs generator
+        run: python Translations/gen_menu_docs.py
+      - name: Check that Documentation/Settings.md didn't change
+        run: git diff --exit-code
+
   check_python:
     runs-on: ubuntu-24.04
     container:
