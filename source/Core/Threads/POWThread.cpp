@@ -22,7 +22,7 @@
 // Small worker thread to handle power (PD + QC) related steps
 
 void startPOWTask(void const *argument __unused) {
-  bool haveNegotiatedHigherPower = false;
+  bool haveDoneSecondNegotiation = false;
   // Init any other misc sensors
   postRToSInit();
   // You have to run this once we are willing to answer PD messages
@@ -56,8 +56,11 @@ void startPOWTask(void const *argument __unused) {
     USBPowerDelivery::PPSTimerCallback();
     USBPowerDelivery::step();
     // Once tip measurement is done, and we have done the basic negotiation, we want to do the higher voltage negotiation steps
-    if (tipMeasurementDone() == 1 && !haveNegotiatedHigherPower) {
-      USBPowerDelivery::reNegotiate();
+    if (tipMeasurementDone() == 1 && !haveDoneSecondNegotiation) {
+      if (USBPowerDelivery::negotiationComplete()) {
+        USBPowerDelivery::reNegotiate();
+        haveDoneSecondNegotiation = true;
+      }
     }
 #else
     (void)res;
@@ -66,8 +69,9 @@ void startPOWTask(void const *argument __unused) {
     hub238_check_negotiation();
 #endif
 #if POW_PD_EXT == 2
-    if (tipMeasurementDone() == 1) {
+    if (tipMeasurementDone() == 1 && !haveDoneSecondNegotiation) {
       FS2711::negotiate();
+      haveDoneSecondNegotiation = true;
     }
 #endif
     power_check();

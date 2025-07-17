@@ -135,6 +135,10 @@ bool parseCapabilitiesArray(const uint8_t numCaps, uint8_t *bestIndex, uint16_t 
   *bestIndex   = 0xFF; // Mark unselected
   *bestVoltage = 5000; // Default 5V
 
+  if (tipMeasurementDone() != 1) {
+    // Tip measurement not done, so we cannot select anything other than 5V
+    return false;
+  }
   // Fudge of 0.5 ohms to round up a little to account for us always having off periods in PWM
   uint8_t tipResistance = getTipResistanceX10();
   if (getSettingValue(SettingsOptions::USBPDMode) == usbpdMode_t::DEFAULT) {
