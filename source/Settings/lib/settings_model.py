@@ -166,7 +166,7 @@ class Settings:
             print(f"Error loading settings from file: {e}")
             return False, 0
 
-    def save_to_binary(self, file_path: str, base_address: int = 0) -> bool:
+    def save_to_binary(self, file_path: str, base_address:int, versionMarker:int) -> bool:
         """Save settings to a binary or hex file
 
         Args:
@@ -186,10 +186,14 @@ class Settings:
 
         # Create binary data
         binary_data = bytearray()
+        binary_data.extend(struct.pack("<H", versionMarker))
+        binary_data.extend(struct.pack("<H", len(self.values)))  # Number of settings
         for value in self.values:
             # Pack as 16-bit little-endian
             binary_data.extend(struct.pack("<H", value))
-
+        # Add u32 padding at the end
+        binary_data.extend(struct.pack("<H", 0))
+        binary_data.extend(struct.pack("<H", 0))
         # Check file extension to determine format
         is_hex_file = file_path.lower().endswith(".hex")
 
