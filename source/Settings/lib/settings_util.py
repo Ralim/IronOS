@@ -18,15 +18,15 @@ def get_base_address(model_code: str) -> int:
         The base address for the settings in flash memory
     """
     base_addresses = {
-        "TS100": 0,
-        "TS80": 0,
-        "TS80P": 0,
-        "TS101": 0,
-        "Pinecil": 0,
+        "TS100": (0x08000000 + (63 * 1024)),
+        "TS80": (0x08000000 + (63 * 1024)),
+        "TS80P": (0x08000000 + (63 * 1024)),
+        "TS101": (0x08000000 + (127 * 1024)),
+        "Pinecil": (0x08000000 + (127 * 1024)),
         "Pinecilv2": 0x23000000 + (1023 * 1024),
-        "S60": 0,
-        "S60P": 0,
-        "MHP30": 0,
+        "S60": (0x08000000 + (63 * 1024)),
+        "S60P": (0x08000000 + (63 * 1024)),
+        "MHP30": 0x08000000 + (127 * 1024),
     }
     # If the model code is not found, exit with an error
     if model_code not in base_addresses:
