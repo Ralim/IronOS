@@ -1,20 +1,21 @@
 #!/bin/bash
 # TS100 Flasher for Linux by Alex Wigen (https://github.com/awigen)
 # Jan 2021 - Update by Ysard (https://github.com/ysard)
+# Jul 2025 - Update by Karakurt
 
-DIR_TMP="/tmp/ts100"
+DIR_TMP="/tmp/ironos"
 HEX_FIRMWARE="$DIR_TMP/ts100.hex"
 MAX_TRIES=5
 
 usage() {
     echo
-    echo "#################"
-    echo "# TS100 Flasher #"
-    echo "#################"
+    echo "#######################"
+    echo "# TS100/TS101 Flasher #"
+    echo "#######################"
     echo
     echo " Usage: $0 <HEXFILE>"
     echo
-    echo "This script has been tested to work on Fedora."
+    echo "This script has been tested to work on Fedora and Arch Linux."
     echo "If you experience any issues please open a ticket at:"
     echo "https://github.com/Ralim/IronOS/issues/new"
     echo
@@ -45,12 +46,12 @@ is_attached() {
 }
 
 instructions="not printed"
-wait_for_ts100() {
+wait_for_iron() {
     while ! is_attached; do
         if [ "$instructions" = "not printed" ]; then
             echo
             echo "#####################################################"
-            echo "#   Waiting for TS100 config disk device to appear  #"
+            echo "#     Waiting for config disk device to appear      #"
             echo "#                                                   #"
             echo "# Connect the soldering iron with a USB cable while #"
             echo "# holding the button closest to the tip pressed     #"
@@ -62,7 +63,7 @@ wait_for_ts100() {
     done
 }
 
-mount_ts100() {
+mount_iron() {
     mkdir -p "$DIR_TMP"
     user="${UID:-$(id -u)}"
     if ! sudo mount -t msdos -o uid=$user "$DEVICE" "$DIR_TMP"; then
@@ -71,7 +72,7 @@ mount_ts100() {
     fi
 }
 
-umount_ts100() {
+umount_iron() {
     if ! (mountpoint "$DIR_TMP" > /dev/null && sudo umount "$DIR_TMP"); then
         echo "Failed to unmount $DIR_TMP"
         exit 1
@@ -101,7 +102,7 @@ check_flash() {
 cleanup() {
     enable_gautomount
     if [ -d "$DIR_TMP" ]; then
-        umount_ts100
+        umount_iron
     fi
 }
 trap cleanup EXIT
@@ -128,20 +129,21 @@ disable_gautomount
 
 TRIES=0
 while [ $TRIES -lt $MAX_TRIES ]; do
-	wait_for_ts100
-	echo "Found TS100 config disk device on $DEVICE"
+	wait_for_iron
+	NAME=$(sudo fatlabel "$DEVICE" 2>/dev/null)
+	echo "Found $NAME config disk device on $DEVICE"
 
-	mount_ts100
+	mount_iron
 	echo "Mounted config disk drive, flashing..."
 	dd if="$1" of="$HEX_FIRMWARE" oflag=direct
-	umount_ts100
+	umount_iron
 
-	echo "Waiting for TS100 to flash"
+	echo "Waiting for $NAME to flash"
 	sleep 5
 
 	echo "Remounting config disk drive"
-	wait_for_ts100
-	mount_ts100
+	wait_for_iron
+	mount_iron
 	check_flash && exit 0
 
 	echo "Retrying automatically..."
