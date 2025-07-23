@@ -135,8 +135,9 @@ bool parseCapabilitiesArray(const uint8_t numCaps, uint8_t *bestIndex, uint16_t 
   *bestVoltage = 5000; // Default 5V
 
   // Fudge of 0.5 ohms to round up a little to account for us always having off periods in PWM
-  uint8_t tipResistance = getTipResistanceX10();
-  if (getSettingValue(SettingsOptions::USBPDMode) == usbpdMode_t::DEFAULT) {
+  uint8_t     tipResistance = getTipResistanceX10();
+  usbpdMode_t pd_mode       = (usbpdMode_t)getSettingValue(SettingsOptions::USBPDMode);
+  if (pd_mode == usbpdMode_t::DEFAULT) {
     tipResistance += 5;
   }
 #ifdef MODEL_HAS_DCDC
@@ -156,21 +157,23 @@ bool parseCapabilitiesArray(const uint8_t numCaps, uint8_t *bestIndex, uint16_t 
       int min_resistance_ohmsx10 = voltage_mv / current_a_x100;
       if (voltage_mv > 0) {
         if (voltage_mv <= (USB_PD_VMAX * 1000)) {
-          if (min_resistance_ohmsx10 <= tipResistance) {
-            // This is a valid power source we can select as
-            if (voltage_mv > *bestVoltage) {
+          if (voltage_mv <= 20000 || (pd_mode != usbpdMode_t::NO_DYNAMIC)) {
+            if (min_resistance_ohmsx10 <= tipResistance) {
+              // This is a valid power source we can select as
+              if (voltage_mv > *bestVoltage) {
 
-              // Higher voltage and valid, select this instead
-              *bestIndex   = i;
-              *bestVoltage = voltage_mv;
-              *bestCurrent = current_a_x100;
-              *bestIsPPS   = false;
-              *bestIsAVS   = false;
+                // Higher voltage and valid, select this instead
+                *bestIndex   = i;
+                *bestVoltage = voltage_mv;
+                *bestCurrent = current_a_x100;
+                *bestIsPPS   = false;
+                *bestIsAVS   = false;
+              }
             }
           }
         }
       }
-    } else if ((lastCapabilities[i] & PD_PDO_TYPE) == PD_PDO_TYPE_AUGMENTED && getSettingValue(SettingsOptions::USBPDMode)) {
+    } else if (((lastCapabilities[i] & PD_PDO_TYPE) == PD_PDO_TYPE_AUGMENTED) && (pd_mode != usbpdMode_t::NO_DYNAMIC)) {
       bool sourceIsEPRCapable = lastCapabilities[0] & PD_PDO_SRC_FIXED_EPR_CAPABLE;
       bool isPPS              = false;
       bool isAVS              = false;
@@ -210,6 +213,7 @@ bool parseCapabilitiesArray(const uint8_t numCaps, uint8_t *bestIndex, uint16_t 
       else if (isAVS) {
         uint16_t max_voltage = PD_PAV2MV(PD_APDO_AVS_MAX_VOLTAGE_GET(lastCapabilities[i]));
         uint8_t  max_wattage = PD_APDO_AVS_MAX_POWER_GET(lastCapabilities[i]);
+        tipResistance        = getTipResistanceX10(); // Dont use fudge factor for EPR
 
         // W = v^2/tip_resistance => Wattage*tip_resistance == Max_voltage^2
         auto ideal_max_voltage = sqrtI((max_wattage * tipResistance) / 10) * 1000;
