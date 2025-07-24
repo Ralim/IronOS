@@ -7,7 +7,7 @@
       "message": "Étalonnage\nterminé !"
     },
     "ResetOKMessage": {
-      "message": "Reset OK"
+      "message": "Réin. OK"
     },
     "SettingsResetMessage": {
       "message": "Réglages\nréinitialisés !"
@@ -19,10 +19,10 @@
       "message": "USB-PD\nnon détecté !"
     },
     "LockingKeysString": {
-      "message": "VEROUILLÉ"
+      "message": "Vérr."
     },
     "UnlockingKeysString": {
-      "message": "DÉVÉROUILLÉ"
+      "message": "Déverr."
     },
     "WarningKeysLockedString": {
       "message": "! VERR. !"
@@ -113,7 +113,7 @@
       "displayText": "Non\nDynamique"
     },
     "USBPDModeSafe": {
-      "displayText": "Mode\nSafe"
+      "displayText": "Mode\nSécurisé"
     },
     "TipTypeAuto": {
       "displayText": "Détéction\nAuto."
@@ -153,7 +153,7 @@
     },
     "USBPDMode": {
       "displayText": "Mode\nPD",
-      "description": "Aucune dynamique ne désactive EPR & PPS, le mode sécurisé n'utilise pas de résistance de protection"
+      "description": "Le mode Non Dynamique désactive EPR & PPS, le mode Sécurisé n'utilise pas de résistance à la protection"
     },
     "BoostTemperature": {
       "displayText": "Temp.\nboost",
@@ -276,8 +276,8 @@
       "description": "Inverser les boutons d'ajustement de température"
     },
     "ReverseButtonSettings": {
-      "displayText": "Swap\nA B keys",
-      "description": "Reverse assignment of buttons for Settings menu"
+      "displayText": "Inverser les\ntouches A B",
+      "description": "Inverser les boutons pour le menu Paramètres"
     },
     "AnimSpeed": {
       "displayText": "Vitesse\nanim. icônes",
@@ -317,7 +317,7 @@
     },
     "CalibrateCJC": {
       "displayText": "Étalonner CJC\nau reboot",
-      "description": "Au prochain démarrage, la compensation de soudure froide sera calibrée (non nécessaire si Delta T est < 5°C)."
+      "description": "Au prochain démarrage, la compensation de soudure froide (CJC) sera calibrée (non nécessaire si Delta T est < 5°C)."
     },
     "VoltageCalibration": {
       "displayText": "Étalonner\ntension d'entrée",
@@ -344,7 +344,7 @@
       "description": ""
     },
     "SolderingTipType": {
-      "displayText": "Soudure\nType de panne",
+      "displayText": "Type\nde panne",
       "description": "Séléctionner le type de panne utilisé"
     }
   }
