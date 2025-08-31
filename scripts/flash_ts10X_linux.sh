@@ -66,7 +66,7 @@ wait_for_iron() {
 mount_iron() {
     mkdir -p "$DIR_TMP"
     user="${UID:-$(id -u)}"
-    if ! sudo mount -t msdos -o uid=$user "$DEVICE" "$DIR_TMP"; then
+    if ! sudo mount -t msdos -o uid="$user" "$DEVICE" "$DIR_TMP"; then
         echo "Failed to mount $DEVICE on $DIR_TMP"
         exit 1
     fi
