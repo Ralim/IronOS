@@ -110,6 +110,12 @@
               <ul class="current">
                 <li class="toctree-l1 current"><a class="reference internal current" href="#">Changelog</a>
     <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#v223">v2.23</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#high-level-changes">High level changes</a>
+    </li>
+        </ul>
+    </li>
     <li class="toctree-l2"><a class="reference internal" href="#v222">v2.22</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#new-hardware-support">New Hardware Support</a>
@@ -256,6 +262,30 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="version-changes">Version Changes</h1>
+<h2 id="v223">v2.23</h2>
+<h3 id="high-level-changes">High level changes</h3>
+<ul>
+<li>Miniware I2C changed to bit-bang for improved compatibility with newer devices with STM32 clone IC's</li>
+<li>Looping Boot Logo option (loops until button press)</li>
+<li>More fixes for GD32 clones with Miniware devices</li>
+<li>Bluetooth BLE is off by default (security)</li>
+<li>Large internal code refactoring to make the screen drawing more flexible for larger OLEDs</li>
+<li>Further improvements to drawing on larger screen resolutions</li>
+<li>4 Ohm tip support on Pinecil 1/2 + TS10x (Note this is at your own risk, not all hardware is designed for this)</li>
+<li>Fixes for PPS mode on some USB-PD supplies</li>
+<li>Rework of thermal runaway detection</li>
+<li>Fixes to the ID numbers used for operating modes over BLE</li>
+<li>Rework of the I2C on PinecilV2 to remove issues with temperature regulation and screen glitching</li>
+<li>Default for USB-PD negotiation changed to use "safe" profile, to be conservative in selecting voltages.</li>
+<li>Fixes for USB-PD to implement device capabilites. This should fix unit reboot issues with some laptops</li>
+<li>Looots of translation &amp; documentation updates ❤️</li>
+<li>Fixes for RTOS issues / updated FreeRTOS version</li>
+<li>Multiple fixes for <em>MHP30</em> to help with clone STM32's</li>
+<li>Share missing settings over <em>BLE</em> for <em>Pinecil V2</em></li>
+<li>Add code for <code>ws2812b</code> LED mod for <em>Pinecil V2</em> (Must be hand compiled).</li>
+<li>Add option to swap A/B buttons in Settings menu</li>
+<li>Disable <em>"double slide"</em> animation between home and soldering screens if detailed view is set for both modes.</li>
+</ul>
 <h2 id="v222">v2.22</h2>
 <h3 id="new-hardware-support">New Hardware Support</h3>
 <h4 id="sequre-s60">Sequre S60</h4>
@@ -381,8 +411,8 @@ Assets have been made for rendering this at full size, but the code is not compl
 <li>USB-PD improvements (version one and two)</li>
 <li>More configuration options for power pulse</li>
 <li>All font / character encoding has been very reworked</li>
-<li>More translation updates than one can count </li>
-<li>More languages 😱 </li>
+<li>More translation updates than one can count</li>
+<li>More languages 😱</li>
 </ul>
 <h3 id="mhp30-support">MHP30 support</h3>
 <p>The MHP30 is a small reflow station from Miniware.
