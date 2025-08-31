@@ -19,7 +19,9 @@ usage()
 	echo -e "\tbuild - compile builds of IronOS inside docker container for supported hardware"
 	echo -e "\tclean - delete created docker image for IronOS & its build cache objects\n"
 	echo "CMD (helper routines):"
+	echo -e "\tdocs - high level target to run docs_readme and docs_history (see below)\n"
 	echo -e "\tdocs_readme - generate & OVERWRITE(!) README.md inside Documentation/ based on nav section from mkdocs.yml if it changed\n"
+	echo -e "\tdocs_history - check if History.md has the changelog for the latest stable release\n"
 	echo -e "\tcheck_style_file SRC - run code style checks based on clang-format & custom parsers for source code file SRC\n"
 	echo -e "\tcheck_style_log - run clang-format using source/Makefile and generate gcc-compatible error log in source/check-style.log\n"
 	echo -e "STORAGE NOTICE: for \"shell\" and \"build\" commands extra files will be downloaded so make sure that you have ~5GB of free space.\n"
@@ -71,6 +73,76 @@ EOF
 	return "${ret}"
 }
 
+# Documentation/History.md automagical changelog routine
+docs_history()
+{
+	md="Documentation/History.md"
+	ver_md="$(sed -ne 's/^## //1p' "${md}" | head -1)"
+	echo "Latest changelog: ${ver_md}"
+	ver_git="$(git tag -l | sort | grep -e "^v" | grep -v "rc" | tail -1)"
+	echo "Latest release tag: ${ver_git}"
+	ret=0
+	if [ "${ver_md}" != "${ver_git}" ]; then
+		ret=1
+		echo "It seems there is no changelog information for ${ver_git} in ${md} yet."
+		echo "Please, update changelog information in ${md}."
+	fi;
+	return "${ret}"
+}
+
+# Check for links to release builds in README.md
+docs_links()
+{
+	ver_git="$(git tag -l | sort | grep -e "^v" | grep -v "rc" | tail -1)"
+	md="README.md"
+	test -f "${md}" || (echo "deploy.sh: docs_links: ERROR with the project directory structure!" && exit 1)
+	ver_md="$(grep -c "${ver_git}" "${md}")"
+	ret=0
+	if [ "${ver_md}" -eq 0 ]; then
+		ret=1
+		echo "Please, update mention & links in ${md} inside Builds section for release builds with version ${ver_git}."
+	fi;
+	return "${ret}"
+}
+
+# source/Makefile:ALL_LANGUAGES & Translations/*.json automagical routine
+build_langs()
+{
+	mk="../source/Makefile"
+	cd Translations/ || (echo "deploy.sh: build_langs: ERROR with the project directory structure!" && exit 1)
+	langs="$(echo "$(find ./*.json | sed -ne 's,^\./translation_,,; s,\.json$,,; /[A-Z]/p' ; sed -ne 's/^ALL_LANGUAGES=//p;' "${mk}")" | sed 's, ,\n,g; s,\r,,g' | sort | uniq -u)"
+	if [ -n "${langs}" ]; then
+		echo "It seems there is mismatch between supported languages and enabled builds."
+		echo "Please, check files in Translations/ and ALL_LANGUAGES variable in source/Makefile for:"
+		echo "${langs}"
+		return 1
+	fi;
+	cd ..
+	
+	echo -ne "\n"
+	grep -nH $'\11' Translations/translation*.json
+	ret="${?}"
+	if [ "${ret}" -eq 0 ]; then
+		echo -ne "\t^^^^\t^^^^\n"
+		echo "Please, remove any tabs as indention from json file(s) in Translations/ directory (see the exact files & lines in the list above)."
+		echo "Use spaces only to indent in the future, please."
+		echo -ne "\n"
+		return 1
+	fi;
+	
+	grep -nEH -e "^( {1}| {3}| {5}| {7}| {9}| {11})[^ ]" Translations/translation*.json
+	ret="${?}"
+	if [ "${ret}" -eq 0 ]; then
+		echo -ne "\t^^^^\t^^^^\n"
+		echo "Please, remove any odd amount of extra spaces as indention from json file(s) in Translations/ directory (see the exact files & lines in the list above)."
+		echo "Use even amount of spaces to indent in the future, please (two actual spaces per one indent, not tab)."
+		echo -ne "\n"
+		return 1
+	fi;
+	
+	return 0
+}
+
 # Helper function to check code style using clang-format & grep/sed custom parsers:
 # - basic logic moved from source/Makefile : `check-style` target for better maintainance since a lot of sh script involved;
 # - output goes in gcc-like error compatible format for IDEs/editors.
@@ -90,21 +162,6 @@ check_style_file()
 			echo "${src}"
 		fi;
 		ret=1
-	fi;
-	# - clang-format has neat option for { } in condition blocks but it's available only since version 15:
-	#   * https://clang.llvm.org/docs/ClangFormatStyleOptions.html#insertbraces
-	# - since reference env is alpine 3.16 with clang-format 13, implement custom parser to do the similar thing here with grep:
-	#   it used to trace missing { and } for if/else/do/while/for BUT IT'S VERY SPECULATIVE, very-very hacky & dirty.
-	# - if file is problematic but filename only requested make final grep in pipe silent ... UPD: make code messy but shellcheck happy
-	if [ -z "${LIST}" ]; then
-		grep -H -n  -e "^ .*if .*)$"  -e "^ .*else$"  -e "^ .* do$"  -e "^ .*while .*)$"  -e "^ .*for .*)$"  "${src}" | grep -v  -e "^.*//"  -e "^.*:.*: .*if ((.*[^)])$" | sed 's,^,\n\n,; s,: ,:1: error: probably missing { or } for conditional or loop block:\n>>>,;' | grep -e "^.*$"
-	else
-		grep -H -n  -e "^ .*if .*)$"  -e "^ .*else$"  -e "^ .* do$"  -e "^ .*while .*)$"  -e "^ .*for .*)$"  "${src}" | grep -v  -e "^.*//"  -e "^.*:.*: .*if ((.*[^)])$" | sed 's,^,\n\n,; s,: ,:1: error: probably missing { or } for conditional or loop block:\n>>>,;' | grep -q -e "^.*$"
-	fi;
-	if [ "${?}" -ne 1 ]; then
-		# ... and only print the filename
-		test -z "${LIST}" || echo "${src}"
-		ret=1;
 	fi;
 	return "${ret}"
 }
@@ -141,31 +198,67 @@ docker_file="-f ${root_dir}/${docker_conf}"
 # (compose sub-command must be included, i.e. DOCKER_BIN="/usr/local/bin/docker compose" ./deploy.sh)
 
 if [ -z "${DOCKER_BIN}" ]; then
-	docker_bin=""
+	docker_app=""
 else
-	docker_bin="${DOCKER_BIN}"
+	docker_app="${DOCKER_BIN}"
 fi;
 
 # detect availability of docker
 
 docker_compose="$(command -v docker-compose)"
-if [ -n "${docker_compose}" ] && [ -z "${docker_bin}" ]; then
-	docker_bin="${docker_compose}"
+if [ -n "${docker_compose}" ] && [ -z "${docker_app}" ]; then
+	docker_app="${docker_compose}"
 fi;
 
 docker_tool="$(command -v docker)"
-if [ -n "${docker_tool}" ] && [ -z "${docker_bin}" ]; then
-	docker_bin="${docker_tool}  compose"
+if [ -n "${docker_tool}" ] && [ -z "${docker_app}" ]; then
+	docker_app="${docker_tool}  compose"
 fi;
 
 # give function argument a name
 
 cmd="${1}"
 
+# meta target to verify markdown documents
+
+if [ "docs" = "${cmd}" ]; then
+	docs_readme
+	readme="${?}"
+	docs_history
+	hist="${?}"
+	build_langs
+	langs="${?}"
+	docs_links
+	links="${?}"
+	if [ "${readme}" -eq 0 ] && [ "${hist}" -eq 0 ] && [ "${langs}" -eq 0 ] && [ "${links}" -eq 0 ]; then
+		ret=0
+	else
+		ret=1
+	fi;
+	exit ${ret}
+fi;
+
 # if only README.md for Documentation update is required then run it & exit
 
 if [ "docs_readme" = "${cmd}" ]; then
 	docs_readme
+	exit "${?}"
+fi;
+
+# if only History.md for Documentation update is required then run it & exit
+
+if [ "docs_history" = "${cmd}" ]; then
+	docs_history
+	exit "${?}"
+fi;
+
+if [ "build_langs" = "${cmd}" ]; then
+	build_langs
+	exit "${?}"
+fi;
+
+if [ "docs_links" = "${cmd}" ]; then
+	docs_links
 	exit "${?}"
 fi;
 
@@ -181,7 +274,7 @@ fi;
 
 # if docker is not presented in any way show warning & exit
 
-if [ -z "${docker_bin}" ]; then
+if [ -z "${docker_app}" ]; then
 	echo "ERROR: Can't find docker-compose nor docker tool. Please, install docker and try again."
 	exit 1
 fi;
@@ -209,6 +302,6 @@ if [ "${cmd}" = "shell" ]; then
 echo -e "\t* type \"exit\" to end the session when done;"
 fi;
 echo -e "\t* type \"${0} clean\" to delete created container (but not cached data)"
-echo -e "\n====>>>> ${docker_bin}  ${docker_file}  ${docker_cmd}\n"
-eval "${docker_bin}  ${docker_file}  ${docker_cmd}"
+echo -e "\n====>>>> ${docker_app}  ${docker_file}  ${docker_cmd}\n"
+eval "${docker_app}  ${docker_file}  ${docker_cmd}"
 exit "${?}"

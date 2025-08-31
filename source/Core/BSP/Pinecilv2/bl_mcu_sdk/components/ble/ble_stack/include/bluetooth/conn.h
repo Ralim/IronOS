@@ -106,6 +106,7 @@ struct bt_conn *bt_conn_lookup_addr_le(u8_t id, const bt_addr_le_t *peer);
 
 #if defined(BFLB_BLE)
 bool le_check_valid_conn(void);
+void notify_disconnected(struct bt_conn *conn);
 #if defined(BFLB_HOST_ASSISTANT)
 void bt_notify_disconnected(void);
 #endif
@@ -490,6 +491,17 @@ struct bt_conn_cb {
 	 */
     void (*le_param_updated)(struct bt_conn *conn, u16_t interval,
                              u16_t latency, u16_t timeout);
+
+    /** @brief The PHY of the connection has changed.
+	 *
+	 *  This callback notifies the application that the PHY of the
+	 *  connection has changed.
+	 *
+	 *  @param conn Connection object.
+	 *  @param tx_phy Transmit phy.
+	 *  @param rx_phy Receive phy.
+	 */
+    void (*le_phy_updated)(struct bt_conn *conn, u8_t tx_phy, u8_t rx_phy);
 #if defined(CONFIG_BT_SMP)
     /** @brief Remote Identity Address has been resolved.
 	 *

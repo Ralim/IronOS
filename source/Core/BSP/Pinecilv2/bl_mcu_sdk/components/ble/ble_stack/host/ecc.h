@@ -1,5 +1,5 @@
 /* ecc.h - ECDH helpers */
-
+#include "types.h"
 /*
  * Copyright (c) 2016 Intel Corporation
  *
@@ -8,17 +8,17 @@
 
 /*  @brief Container for public key callback */
 struct bt_pub_key_cb {
-    /** @brief Callback type for Public Key generation.
-	 *
-	 *  Used to notify of the local public key or that the local key is not
-	 *  available (either because of a failure to read it or because it is
-	 *  being regenerated).
-	 *
-	 *  @param key The local public key, or NULL in case of no key.
-	 */
-    void (*func)(const u8_t key[64]);
+  /** @brief Callback type for Public Key generation.
+   *
+   *  Used to notify of the local public key or that the local key is not
+   *  available (either because of a failure to read it or because it is
+   *  being regenerated).
+   *
+   *  @param key The local public key, or NULL in case of no key.
+   */
+  void (*func)(const uint8_t key[64]);
 
-    struct bt_pub_key_cb *_next;
+  struct bt_pub_key_cb *_next;
 };
 
 /*  @brief Generate a new Public Key.
@@ -40,7 +40,7 @@ int bt_pub_key_gen(struct bt_pub_key_cb *cb);
  *
  *  @return Current key, or NULL if not available.
  */
-const u8_t *bt_pub_key_get(void);
+const uint8_t *bt_pub_key_get(void);
 
 /*  @typedef bt_dh_key_cb_t
  *  @brief Callback type for DH Key calculation.
@@ -49,7 +49,7 @@ const u8_t *bt_pub_key_get(void);
  *
  *  @param key The DH Key, or NULL in case of failure.
  */
-typedef void (*bt_dh_key_cb_t)(const u8_t key[32]);
+typedef void (*bt_dh_key_cb_t)(const uint8_t key[32]);
 
 /*  @brief Calculate a DH Key from a remote Public Key.
  *
@@ -60,4 +60,4 @@ typedef void (*bt_dh_key_cb_t)(const u8_t key[32]);
  *
  *  @return Zero on success or negative error code otherwise
  */
-int bt_dh_key_gen(const u8_t remote_pk[64], bt_dh_key_cb_t cb);
+int bt_dh_key_gen(const uint8_t remote_pk[64], bt_dh_key_cb_t cb);

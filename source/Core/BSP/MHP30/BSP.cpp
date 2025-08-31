@@ -6,7 +6,7 @@
 #include "Pins.h"
 #include "Setup.h"
 #include "TipThermoModel.h"
-#include "Utils.h"
+#include "Utils.hpp"
 #include "WS2812.h"
 #include "configuration.h"
 #include "history.hpp"
@@ -230,8 +230,9 @@ uint16_t getInputVoltageX10(uint16_t divisor, uint8_t sample) {
   static uint32_t samples[BATTFILTERDEPTH];
   static uint8_t  index = 0;
   if (preFillneeded) {
-    for (uint8_t i = 0; i < BATTFILTERDEPTH; i++)
+    for (uint8_t i = 0; i < BATTFILTERDEPTH; i++) {
       samples[i] = getADC(1);
+    }
     preFillneeded--;
   }
   if (sample) {
@@ -240,8 +241,9 @@ uint16_t getInputVoltageX10(uint16_t divisor, uint8_t sample) {
   }
   uint32_t sum = 0;
 
-  for (uint8_t i = 0; i < BATTFILTERDEPTH; i++)
+  for (uint8_t i = 0; i < BATTFILTERDEPTH; i++) {
     sum += samples[i];
+  }
 
   sum /= BATTFILTERDEPTH;
   if (divisor == 0) {
@@ -263,25 +265,6 @@ void unstick_I2C() {
   int              timeout     = 100;
   int              timeout_cnt = 0;
 
-  // 1. Clear PE bit.
-  hi2c1.Instance->CR1 &= ~(0x0001);
-  /**I2C1 GPIO Configuration
-   PB6     ------> I2C1_SCL
-   PB7     ------> I2C1_SDA
-   */
-  //  2. Configure the SCL and SDA I/Os as General Purpose Output Open-Drain, High level (Write 1 to GPIOx_ODR).
-  GPIO_InitStruct.Mode  = GPIO_MODE_OUTPUT_OD;
-  GPIO_InitStruct.Pull  = GPIO_PULLUP;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-
-  GPIO_InitStruct.Pin = SCL_Pin;
-  HAL_GPIO_Init(SCL_GPIO_Port, &GPIO_InitStruct);
-  HAL_GPIO_WritePin(SCL_GPIO_Port, SCL_Pin, GPIO_PIN_SET);
-
-  GPIO_InitStruct.Pin = SDA_Pin;
-  HAL_GPIO_Init(SDA_GPIO_Port, &GPIO_InitStruct);
-  HAL_GPIO_WritePin(SDA_GPIO_Port, SDA_Pin, GPIO_PIN_SET);
-
   while (GPIO_PIN_SET != HAL_GPIO_ReadPin(SDA_GPIO_Port, SDA_Pin)) {
     // Move clock to release I2C
     HAL_GPIO_WritePin(SCL_GPIO_Port, SCL_Pin, GPIO_PIN_RESET);
@@ -292,39 +275,10 @@ void unstick_I2C() {
     HAL_GPIO_WritePin(SCL_GPIO_Port, SCL_Pin, GPIO_PIN_SET);
 
     timeout_cnt++;
-    if (timeout_cnt > timeout)
+    if (timeout_cnt > timeout) {
       return;
+    }
   }
-
-  // 12. Configure the SCL and SDA I/Os as Alternate function Open-Drain.
-  GPIO_InitStruct.Mode  = GPIO_MODE_AF_OD;
-  GPIO_InitStruct.Pull  = GPIO_PULLUP;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-
-  GPIO_InitStruct.Pin = SCL_Pin;
-  HAL_GPIO_Init(SCL_GPIO_Port, &GPIO_InitStruct);
-
-  GPIO_InitStruct.Pin = SDA_Pin;
-  HAL_GPIO_Init(SDA_GPIO_Port, &GPIO_InitStruct);
-
-  HAL_GPIO_WritePin(SCL_GPIO_Port, SCL_Pin, GPIO_PIN_SET);
-  HAL_GPIO_WritePin(SDA_GPIO_Port, SDA_Pin, GPIO_PIN_SET);
-
-  // 13. Set SWRST bit in I2Cx_CR1 register.
-  hi2c1.Instance->CR1 |= 0x8000;
-
-  asm("nop");
-
-  // 14. Clear SWRST bit in I2Cx_CR1 register.
-  hi2c1.Instance->CR1 &= ~0x8000;
-
-  asm("nop");
-
-  // 15. Enable the I2C peripheral by setting the PE bit in I2Cx_CR1 register
-  hi2c1.Instance->CR1 |= 0x0001;
-
-  // Call initialization function.
-  HAL_I2C_Init(&hi2c1);
 }
 
 uint8_t getButtonA() { return HAL_GPIO_ReadPin(KEY_A_GPIO_Port, KEY_A_Pin) == GPIO_PIN_RESET ? 1 : 0; }
@@ -341,15 +295,9 @@ void setPlatePullup(bool pullingUp) {
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   GPIO_InitStruct.Pin   = PLATE_SENSOR_PULLUP_Pin;
   GPIO_InitStruct.Pull  = GPIO_NOPULL;
-  if (pullingUp) {
-    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-    HAL_GPIO_WritePin(PLATE_SENSOR_PULLUP_GPIO_Port, PLATE_SENSOR_PULLUP_Pin, GPIO_PIN_SET);
-  } else {
-    // Hi-z
-    GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
-    HAL_GPIO_WritePin(PLATE_SENSOR_PULLUP_GPIO_Port, PLATE_SENSOR_PULLUP_Pin, GPIO_PIN_RESET);
-  }
+  GPIO_InitStruct.Mode  = pullingUp ? GPIO_MODE_OUTPUT_PP : GPIO_MODE_INPUT;
   HAL_GPIO_Init(PLATE_SENSOR_PULLUP_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_WritePin(PLATE_SENSOR_PULLUP_GPIO_Port, PLATE_SENSOR_PULLUP_Pin, pullingUp ? GPIO_PIN_SET : GPIO_PIN_RESET);
 }
 
 void performTipMeasurementStep(bool start) {

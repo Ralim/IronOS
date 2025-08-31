@@ -10,7 +10,7 @@ import pickle
 import re
 import subprocess
 import sys
-from datetime import datetime
+import time
 from pathlib import Path
 from typing import Dict, List, Optional, TextIO, Tuple, Union
 from dataclasses import dataclass
@@ -76,13 +76,13 @@ def filter_translation(lang: dict, defs: dict, macros: frozenset):
 
         return False
 
-    for category in ("menuOptions", "menuGroups"):
-        for index, record in enumerate(defs[category]):
+    for category in ("menuOptions", "menuGroups", "menuValues"):
+        for _, record in enumerate(defs[category]):
             if check_excluded(record):
                 lang[category][record["id"]]["displayText"] = ""
                 lang[category][record["id"]]["description"] = ""
 
-    for index, record in enumerate(defs["messagesWarn"]):
+    for _, record in enumerate(defs["messagesWarn"]):
         if check_excluded(record):
             lang["messagesWarn"][record["id"]]["message"] = ""
 
@@ -146,12 +146,16 @@ def get_constants() -> List[Tuple[str, str]]:
         ("SmallSymbolState", "State"),
         ("SmallSymbolNoVBus", "No VBus"),
         ("SmallSymbolVBus", "VBus"),
+        ("LargeSymbolSleep", "Zzz "),
     ]
 
 
 def get_debug_menu() -> List[str]:
     return [
-        datetime.today().strftime("%d-%m-%y"),
+        time.strftime(
+            "%Y%m%d %H%M%S",
+            time.gmtime(int(os.environ.get("SOURCE_DATE_EPOCH", time.time()))),
+        ),
         "ID ",
         "ACC   ",
         "PWR   ",
@@ -202,9 +206,9 @@ def get_letter_counts(defs: dict, lang: dict, build_version: str) -> Dict:
     """From the source definitions, language file and build version; calculates the ranked symbol list
 
     Args:
-        defs (dict): _description_
-        lang (dict): _description_
-        build_version (str): _description_
+        defs (dict): Definitions
+        lang (dict): Language lookup
+        build_version (str): The build version id to ensure its letters are included
 
     Returns:
         Dict: _description_
@@ -247,6 +251,15 @@ def get_letter_counts(defs: dict, lang: dict, build_version: str) -> Dict:
         eid = mod["id"]
         msg = obj[eid]["description"]
         big_font_messages.append(msg)
+
+    obj = lang["menuValues"]
+    for mod in defs["menuValues"]:
+        eid = mod["id"]
+        msg = obj[eid]["displayText"]
+        if test_is_small_font(msg):
+            small_font_messages.append(msg)
+        else:
+            big_font_messages.append(msg)
 
     obj = lang["menuGroups"]
     for mod in defs["menuGroups"]:
@@ -619,7 +632,7 @@ def make_font_table_named_cpp(
     if name:
         output_table = f"const uint8_t {name}[] = {{\n"
     for i, sym in enumerate(sym_list):
-        output_table += f"{bytes_to_c_hex(font_map[sym])}//0x{i+2:X} -> {sym}\n"
+        output_table += f"{bytes_to_c_hex(font_map[sym])}//0x{i + 2:X} -> {sym}\n"
     if name:
         output_table += f"}}; // {name}\n"
     return output_table
@@ -633,7 +646,7 @@ def make_font_table_06_cpp(sym_list: List[str], font_map: FontMapsPerFont) -> st
             font_line = bytes_to_c_hex(font_bytes)
         else:
             font_line = "//                                 "  # placeholder
-        output_table += f"{font_line}//0x{i+2:X} -> {sym}\n"
+        output_table += f"{font_line}//0x{i + 2:X} -> {sym}\n"
     output_table += "};\n"
     return output_table
 
@@ -985,7 +998,7 @@ def write_languages(
         f.write("};\n")
     f.write(
         "const uint8_t LanguageCount = sizeof(LanguageMetas) / sizeof(LanguageMetas[0]);\n\n"
-        f"alignas(TranslationData) uint8_t translation_data_out_buffer[{max_decompressed_translation_size }];\n"
+        f"alignas(TranslationData) uint8_t translation_data_out_buffer[{max_decompressed_translation_size}];\n"
         "const uint16_t translation_data_out_buffer_size = sizeof(translation_data_out_buffer);\n\n"
     )
 
@@ -1113,6 +1126,12 @@ def get_translation_strings_and_indices_text(
         encode_string_and_add(
             lang_data["displayText"], "menuOptions" + record["id"] + "displayText"
         )
+    for index, record in enumerate(defs["menuValues"]):
+        lang_data = lang["menuValues"][record["id"]]
+        # Add to translations the menu text and the description
+        encode_string_and_add(
+            lang_data["displayText"], "menuValues" + record["id"] + "displayText"
+        )
 
     for index, record in enumerate(defs["menuGroups"]):
         lang_data = lang["menuGroups"][record["id"]]
@@ -1200,6 +1219,21 @@ def get_translation_strings_and_indices_text(
             f"    .{record['id']} = {start_index}, // {escape(lang_data)}\n"
         )
 
+    for _, record in enumerate(defs["menuValues"]):
+        # Add to translations the menu text and the description
+        lang_data = lang["menuValues"][record["id"]]
+        key = "menuValues" + record["id"] + "displayText"
+        translated_index = translated_string_lookups[key]
+        string_index = translated_index.byte_encoded_translation_index
+        start_index = (
+            string_index_commulative_lengths[string_index]
+            + translated_index.str_start_offset
+        )
+
+        translation_indices_text += (
+            f"    .{record['id']} = {start_index}, // {escape(lang_data)}\n"
+        )
+
     translation_indices_text += "\n"
 
     # Now for the fun ones, where they are nested and ordered
@@ -1229,6 +1263,7 @@ def get_translation_strings_and_indices_text(
     translation_indices_text = write_grouped_indexes(
         translation_indices_text, "SettingsShortNames", "menuOptions", "displayText"
     )
+
     translation_indices_text = write_grouped_indexes(
         translation_indices_text,
         "SettingsMenuEntriesDescriptions",

@@ -12,8 +12,12 @@ import sys
 
 if len(sys.argv) < 2 or len(sys.argv) > 3:
     print("Usage: metadata.py OUTPUT_FILE [model]")
-    print("  OUTPUT_FILE      - the name of output file in json format with meta info about binary files")
-    print("  model [optional] - name of the model (as for `make model=NAME`) to scan files for explicitly (all files in source/Hexfile by default otherwise)")
+    print(
+        "  OUTPUT_FILE      - the name of output file in json format with meta info about binary files"
+    )
+    print(
+        "  model [optional] - name of the model (as for `make model=NAME`) to scan files for explicitly (all files in source/Hexfile by default otherwise)"
+    )
     exit(1)
 
 # If model is provided explicitly to scan related files only for json output, then process the argument
@@ -30,15 +34,18 @@ HexFileFolder = os.path.join(HERE, "Hexfile")
 OutputJSONPath = os.path.join(HexFileFolder, sys.argv[1])
 TranslationsFilesPath = os.path.join(HERE.parent, "Translations")
 
+
 def load_json(filename: str):
     with open(filename) as f:
         return json.loads(f.read())
+
 
 def read_git_tag():
     if os.environ.get("GITHUB_CI_PR_SHA", "") != "":
         return os.environ["GITHUB_CI_PR_SHA"][:7].upper()
     else:
         return f"{subprocess.check_output(['git', 'rev-parse', '--short=7', 'HEAD']).strip().decode('ascii').upper()}"
+
 
 def read_version():
     with open(HERE / "version.h") as version_file:
@@ -49,9 +56,18 @@ def read_version():
                     return matches[0]
     raise Exception("Could not parse version")
 
+
 # Fetch our file listings
-translation_files = [os.path.join(TranslationsFilesPath, f) for f in os.listdir(TranslationsFilesPath) if os.path.isfile(os.path.join(TranslationsFilesPath, f)) and f.endswith(".json")]
-output_files = [os.path.join(HexFileFolder, f) for f in sorted(os.listdir(HexFileFolder)) if os.path.isfile(os.path.join(HexFileFolder, f))]
+translation_files = [
+    os.path.join(TranslationsFilesPath, f)
+    for f in os.listdir(TranslationsFilesPath)
+    if os.path.isfile(os.path.join(TranslationsFilesPath, f)) and f.endswith(".json")
+]
+output_files = [
+    os.path.join(HexFileFolder, f)
+    for f in sorted(os.listdir(HexFileFolder))
+    if os.path.isfile(os.path.join(HexFileFolder, f))
+]
 
 parsed_languages = {}
 for path in translation_files:
@@ -74,7 +90,9 @@ for file_path in output_files:
             if not name.startswith(ModelName + "_"):
                 continue
             # If build of interest is not multi-lang one but scanning one is not MODEL_LANG-ID here, then skip it to avoid mess in json between MODEL_LANG-ID & MODEL_multi'
-            if not ModelName.endswith("_multi") and not re.match(r"^" + ModelName + "_" + "([A-Z]+).*$", name):
+            if not ModelName.endswith("_multi") and not re.match(
+                r"^" + ModelName + "_" + "([A-Z]+).*$", name
+            ):
                 continue
         matches = re.findall(r"^([a-zA-Z0-9]+)_(.+)\.(.+)$", name)
         if matches:
@@ -86,10 +104,17 @@ for file_path in output_files:
                 lang_file = parsed_languages.get(lang_code, None)
                 if lang_file is None and lang_code.startswith("multi_"):
                     # Multi files wont match, but we fake this by just taking the filename to it
-                    lang_file = {"languageLocalName": lang_code.replace("multi_", "").replace("compressed_", "")}
+                    lang_file = {
+                        "languageLocalName": lang_code.replace("multi_", "").replace(
+                            "compressed_", ""
+                        )
+                    }
                 if lang_file is None:
                     raise Exception(f"Could not match language code {lang_code}")
-                file_record = {"language_code": lang_code, "language_name": lang_file.get("languageLocalName", None)}
+                file_record = {
+                    "language_code": lang_code,
+                    "language_name": lang_file.get("languageLocalName", None),
+                }
                 output_json["contents"][name] = file_record
             else:
                 print(f"failed to parse {matches}")

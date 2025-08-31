@@ -16,15 +16,21 @@
 #include "power.hpp"
 #include "task.h"
 
-static TickType_t          powerPulseWaitUnit      = 25 * TICKS_100MS;      // 2.5 s
-static TickType_t          powerPulseDurationUnit  = (5 * TICKS_100MS) / 2; // 250 ms
-TaskHandle_t               pidTaskNotification     = NULL;
-volatile TemperatureType_t currentTempTargetDegC   = 0; // Current temperature target in C
-int32_t                    powerSupplyWattageLimit = 0;
-bool                       heaterThermalRunaway    = false;
+#ifdef POW_PD
+#if POW_PD == 1
+#include "USBPD.h"
+#endif
+#endif
+
+static TickType_t          powerPulseWaitUnit          = 25 * TICKS_100MS;      // 2.5 s
+static TickType_t          powerPulseDurationUnit      = (5 * TICKS_100MS) / 2; // 250 ms
+TaskHandle_t               pidTaskNotification         = NULL;
+volatile TemperatureType_t currentTempTargetDegC       = 0; // Current temperature target in C
+int32_t                    powerSupplyWattageLimit     = 0;
+uint8_t                    heaterThermalRunawayCounter = 0;
 
 static int32_t getPIDResultX10Watts(TemperatureType_t set_point, TemperatureType_t current_value);
-static void    detectThermalRunaway(const TemperatureType_t currentTipTempInC, const TemperatureType_t tError);
+static void    detectThermalRunaway(const TemperatureType_t currentTipTempInC, const uint32_t x10WattsOut);
 static void    setOutputx10WattsViaFilters(int32_t x10Watts);
 static int32_t getX10WattageLimits();
 
@@ -38,7 +44,9 @@ void startPIDTask(void const *argument __unused) {
 
   currentTempTargetDegC = 0; // Force start with no output (off). If in sleep / soldering this will
                              // be over-ridden rapidly
-  pidTaskNotification             = xTaskGetCurrentTaskHandle();
+
+  pidTaskNotification = xTaskGetCurrentTaskHandle();
+
   TemperatureType_t PIDTempTarget = 0;
   // Pre-seed the adc filters
   for (int i = 0; i < 32; i++) {
@@ -51,8 +59,20 @@ void startPIDTask(void const *argument __unused) {
     resetWatchdog();
     ulTaskNotifyTake(pdTRUE, 2000);
   }
+// Wait for PD if its in the middle of negotiation
+#ifdef POW_PD
+#if POW_PD == 1
+  // This is an FUSB based PD capable device
+  // Wait up to 3 seconds for USB-PD to settle
+  while (USBPowerDelivery::negotiationInProgress() && xTaskGetTickCount() < (TICKS_SECOND * 3)) {
+    resetWatchdog();
+    ulTaskNotifyTake(pdTRUE, TICKS_100MS);
+  }
+#endif
+#endif
 
-  int32_t x10WattsOut = 0;
+  int32_t    x10WattsOut             = 0;
+  TickType_t lastThermalRunawayDecay = xTaskGetTickCount();
 
   for (;;) {
     x10WattsOut = 0;
@@ -73,8 +93,8 @@ void startPIDTask(void const *argument __unused) {
           PIDTempTarget = TipThermoModel::getTipMaxInC();
         }
 
-        detectThermalRunaway(currentTipTempInC, PIDTempTarget - currentTipTempInC);
         x10WattsOut = getPIDResultX10Watts(PIDTempTarget, currentTipTempInC);
+        detectThermalRunaway(currentTipTempInC, x10WattsOut);
       } else {
         detectThermalRunaway(currentTipTempInC, 0);
       }
@@ -86,6 +106,12 @@ void startPIDTask(void const *argument __unused) {
 #ifdef DEBUG_UART_OUTPUT
     log_system_state(x10WattsOut);
 #endif
+    if (xTaskGetTickCount() - lastThermalRunawayDecay > TICKS_SECOND) {
+      lastThermalRunawayDecay = xTaskGetTickCount();
+      if (heaterThermalRunawayCounter > 0) {
+        heaterThermalRunawayCounter--;
+      }
+    }
   }
 }
 
@@ -124,10 +150,11 @@ template <class T, T Kp, T Ki, T Kd, T integral_limit_scale> struct PID {
     T output = kp_result + ki_result + kd_result;
 
     // Restrict to max / 0
-    if (output > max_output)
+    if (output > max_output) {
       output = max_output;
-    else if (output < 0)
+    } else if (output < 0) {
       output = 0;
+    }
 
     // Save target_delta to previous target_delta
     previous_error_term = target_delta;
@@ -208,31 +235,59 @@ int32_t getPIDResultX10Watts(TemperatureType_t set_point, TemperatureType_t curr
 #endif
 }
 
-void detectThermalRunaway(const TemperatureType_t currentTipTempInC, const TemperatureType_t tError) {
-  static TemperatureType_t tipTempCRunawayTemp   = 0;
-  static TickType_t        runawaylastChangeTime = 0;
+/*
+ * Detection of thermal runaway
+ * The goal of this is to handle cases where something has gone wrong
+ * 1. The tip MOSFET is broken, so power is being constantly applied to the tip
+ * a. This can show as temp being stuck at max
+ * b. Or temp rising when the heater is off
+ * 2. Broken temperature sense
+ * a. Temp is stuck at a value
+ * These boil down to either a constantly rising temperature or a temperature that is stuck at a value
+ * These are both covered; but looking at the eye/delta between min and max temp seen
+ */
+void detectThermalRunaway(const TemperatureType_t currentTipTempInC, const uint32_t x10WattsOut) {
 
-  // Check for thermal runaway, where it has been x seconds with negligible (y) temp rise
-  // While trying to actively heat
+  static TemperatureType_t tiptempMin         = 0xFFFF; // Min tip temp seen
+  static TemperatureType_t tipTempMax         = 0;      // Max tip temp seen while heater is on
+  bool                     thisCycleIsHeating = x10WattsOut > 0;
+  static TickType_t        heatCycleStart     = 0;
 
-  // If we are more than 20C below the setpoint
-  if ((tError > THERMAL_RUNAWAY_TEMP_C)) {
+  static bool haveSeenDelta = false;
 
-    // If we have heated up by more than 20C since last sample point, snapshot time and tip temp
-    TemperatureType_t delta = currentTipTempInC - tipTempCRunawayTemp;
-    if (delta > THERMAL_RUNAWAY_TEMP_C) {
-      // We have heated up more than the threshold, reset the timer
-      tipTempCRunawayTemp   = currentTipTempInC;
-      runawaylastChangeTime = xTaskGetTickCount();
-    } else {
-      if ((xTaskGetTickCount() - runawaylastChangeTime) > (THERMAL_RUNAWAY_TIME_SEC * TICKS_SECOND)) {
-        // It has taken too long to rise
-        heaterThermalRunaway = true;
-      }
+  // Check for readings being pegged at the top of the ADC while the heater is off
+  if (!thisCycleIsHeating && (getTipRawTemp(0) > (ADC_MAX_READING - 8)) && heaterThermalRunawayCounter < 255) {
+    heaterThermalRunawayCounter++;
+  }
+
+  if (haveSeenDelta) {
+    return;
+  }
+
+  if (currentTipTempInC < tiptempMin) {
+    tiptempMin = currentTipTempInC;
+  }
+  if (thisCycleIsHeating && currentTipTempInC > tipTempMax) {
+    tipTempMax = currentTipTempInC;
+  }
+  if (thisCycleIsHeating) {
+    if (heatCycleStart == 0) {
+      heatCycleStart = xTaskGetTickCount();
     }
   } else {
-    tipTempCRunawayTemp   = currentTipTempInC;
-    runawaylastChangeTime = xTaskGetTickCount();
+    heatCycleStart = 0;
+  }
+
+  if ((xTaskGetTickCount() - heatCycleStart) > (THERMAL_RUNAWAY_TIME_SEC * TICKS_SECOND)) {
+    if (tipTempMax > tiptempMin) {
+      // Have been heating for min seconds, check if the delta is large enough
+      TemperatureType_t delta = tipTempMax - tiptempMin;
+      haveSeenDelta           = true;
+
+      if (delta < THERMAL_RUNAWAY_TEMP_C && heaterThermalRunawayCounter < 255) {
+        heaterThermalRunawayCounter++;
+      }
+    }
   }
 }
 
@@ -274,7 +329,7 @@ void setOutputx10WattsViaFilters(int32_t x10WattsOut) {
   if (getTipRawTemp(0) > (0x7FFF - 32)) {
     x10WattsOut = 0;
   }
-  if (heaterThermalRunaway) {
+  if (heaterThermalRunawayCounter > 8) {
     x10WattsOut = 0;
   }
 #ifdef SLEW_LIMIT

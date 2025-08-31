@@ -199,11 +199,13 @@ void adc_calibration_enable(uint32_t adc_periph) {
   /* reset the selected ADC1 calibration registers */
   ADC_CTL1(adc_periph) |= (uint32_t)ADC_CTL1_RSTCLB;
   /* check the RSTCLB bit state */
-  while ((uint32_t)RESET != (ADC_CTL1(adc_periph) & ADC_CTL1_RSTCLB)) {}
+  while ((uint32_t)RESET != (ADC_CTL1(adc_periph) & ADC_CTL1_RSTCLB)) {
+  }
   /* enable ADC calibration process */
   ADC_CTL1(adc_periph) |= ADC_CTL1_CLB;
   /* check the CLB bit state */
-  while ((uint32_t)RESET != (ADC_CTL1(adc_periph) & ADC_CTL1_CLB)) {}
+  while ((uint32_t)RESET != (ADC_CTL1(adc_periph) & ADC_CTL1_CLB)) {
+  }
 }
 
 /*!
@@ -630,7 +632,7 @@ uint32_t adc_sync_mode_convert_value_read(void) {
     \retval     none
 */
 void adc_watchdog_single_channel_enable(uint32_t adc_periph, uint8_t adc_channel) {
-  ADC_CTL0(adc_periph) &= (uint32_t) ~(ADC_CTL0_RWDEN | ADC_CTL0_IWDEN | ADC_CTL0_WDSC | ADC_CTL0_WDCHSEL);
+  ADC_CTL0(adc_periph) &= (uint32_t)~(ADC_CTL0_RWDEN | ADC_CTL0_IWDEN | ADC_CTL0_WDSC | ADC_CTL0_WDCHSEL);
   /* analog watchdog channel select */
   ADC_CTL0(adc_periph) |= (uint32_t)adc_channel;
   ADC_CTL0(adc_periph) |= (uint32_t)(ADC_CTL0_RWDEN | ADC_CTL0_IWDEN | ADC_CTL0_WDSC);
@@ -648,7 +650,7 @@ void adc_watchdog_single_channel_enable(uint32_t adc_periph, uint8_t adc_channel
     \retval     none
 */
 void adc_watchdog_group_channel_enable(uint32_t adc_periph, uint8_t adc_channel_group) {
-  ADC_CTL0(adc_periph) &= (uint32_t) ~(ADC_CTL0_RWDEN | ADC_CTL0_IWDEN | ADC_CTL0_WDSC);
+  ADC_CTL0(adc_periph) &= (uint32_t)~(ADC_CTL0_RWDEN | ADC_CTL0_IWDEN | ADC_CTL0_WDSC);
   /* select the group */
   switch (adc_channel_group) {
   case ADC_REGULAR_CHANNEL:
@@ -674,7 +676,7 @@ void adc_watchdog_group_channel_enable(uint32_t adc_periph, uint8_t adc_channel_
     \param[out] none
     \retval     none
 */
-void adc_watchdog_disable(uint32_t adc_periph) { ADC_CTL0(adc_periph) &= (uint32_t) ~(ADC_CTL0_RWDEN | ADC_CTL0_IWDEN | ADC_CTL0_WDSC | ADC_CTL0_WDCHSEL); }
+void adc_watchdog_disable(uint32_t adc_periph) { ADC_CTL0(adc_periph) &= (uint32_t)~(ADC_CTL0_RWDEN | ADC_CTL0_IWDEN | ADC_CTL0_WDSC | ADC_CTL0_WDCHSEL); }
 
 /*!
     \brief      configure ADC analog watchdog threshold

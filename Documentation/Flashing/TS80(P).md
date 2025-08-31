@@ -26,9 +26,9 @@ Then this works the same as a production release (use the correct file).
 
 # TS80 / TS80P
 
-This is completely safe, but if it goes wrong just put the `.hex` file from the official website ([TS80](https://www.minidso.com/forum.php?mod=viewthread&tid=868&extra=page%3D1)/[TS80P](https://www.minidso.com/forum.php?mod=viewthread&tid=4070&extra=page%3D1) onto the unit and you're back to the old firmware. Downloads for the `.hex` files to flash are available on the [releases page.](https://github.com/Ralim/IronOS/releases) The file you want is called TS80.zip or TS80P.zip. Inside the zip file (make sure to extract the file before flashing with it) will be a file called `TS80_{Language-Code}.hex`/`TS80P_{Language-Code}.hex`.
+This is completely safe, but if it goes wrong just put the corresponding `.hex` file from [the official website](https://e-design.com.cn/en/NewsDetail/4203645.html) ([mirror backup](https://github.com/Ralim/IronOS-Meta/tree/main/Firmware/Miniware)) onto the unit and you're back to the old firmware. Downloads for the `.hex` files to flash are available on the [releases page.](https://github.com/Ralim/IronOS/releases) The file you want is called TS80.zip or TS80P.zip. Inside the zip file (make sure to extract the file before flashing with it) will be a file called `TS80_{Language-Code}.hex`/`TS80P_{Language-Code}.hex`.
 
-Officially the bootloader on the devices only works under Windows (use the built-in File Explorer, as alternative file managers or copy handlers like Teracopy will fail). However, users have reported that it does work under Mac, and can be made to work under Linux _sometimes_. Details over on the [wiki page](https://github.com/Ralim/TS80/wiki/Upgrading-Firmware).
+Officially the bootloader on the devices only works under Windows (use the built-in File Explorer, as alternative file managers or copy handlers like Teracopy will fail). However, users have reported that it does work under [Mac](#mac), and can be made to work under [Linux](#linux) _sometimes_ (look for details below).
 
 1. Hold the button closest to the tip (MHP30 the left button on the back), and plug in the USB to the computer.
 2. The unit will appear as a USB drive. (Screen will say `DFU` on it.)
@@ -38,6 +38,8 @@ Officially the bootloader on the devices only works under Windows (use the built
 6. If it ends with _.RDY_ you're done! Otherwise, something went wrong.
 7. If it didn't work the first time, try copying the file again without disconnecting the device, often it will work on the second shot.
 8. Disconnect the USB and power up the device. You're good to go.
+
+If you get a message when copying: "Are you sure you want to move this file without its properties?" then this can cause an issue where the iron thinks that the file has finished copying before it actually has and can cause a .ERR file. Since this dialog prompt is caused by copying a file from NTFS to FAT (the iron's filesystem) in windows, you can fix this by formatting a thumbdrive as FAT32 and then storing the hex file on that before copying the file to the iron. As there will be no NTFS properties on the file when stored on a FAT32 filesystem, there will be no prompt, and the copy will then proceed normally.
 
 For the more adventurous out there, you can also load this firmware onto the device using an SWD programmer, for easier installation follow the guide at the end of this document.
 

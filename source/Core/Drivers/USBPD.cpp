@@ -1,9 +1,9 @@
 #include "USBPD.h"
 #include "configuration.h"
 #ifdef POW_PD
-
 #include "BSP_PD.h"
 #include "FreeRTOS.h"
+#include "Settings.h"
 #include "fusb302b.h"
 #include "main.hpp"
 #include "pd.h"
@@ -27,8 +27,9 @@ bool         pdbs_dpm_evaluate_capability(const pd_msg *capabilities, pd_msg *re
 void         pdbs_dpm_get_sink_capability(pd_msg *cap, const bool isPD3);
 bool         EPREvaluateCapabilityFunc(const epr_pd_msg *capabilities, pd_msg *request);
 FUSB302      fusb((0x22 << 1), fusb_read_buf, fusb_write_buf, ms_delay); // Create FUSB driver
-PolicyEngine pe(fusb, get_ms_timestamp, ms_delay, pdbs_dpm_get_sink_capability, pdbs_dpm_evaluate_capability, EPREvaluateCapabilityFunc, 140);
+PolicyEngine pe(fusb, get_ms_timestamp, ms_delay, pdbs_dpm_get_sink_capability, pdbs_dpm_evaluate_capability, EPREvaluateCapabilityFunc, USB_PD_EPR_WATTAGE);
 int          USBPowerDelivery::detectionState = 0;
+bool         haveSeenCapabilityOffer          = false;
 uint16_t     requested_voltage_mv             = 0;
 
 /* The current draw when the output is disabled */
@@ -46,10 +47,20 @@ void    USBPowerDelivery::IRQOccured() { pe.IRQOccured(); }
 bool    USBPowerDelivery::negotiationHasWorked() { return pe.pdHasNegotiated(); }
 uint8_t USBPowerDelivery::getStateNumber() { return pe.currentStateCode(true); }
 void    USBPowerDelivery::step() {
-  while (pe.thread()) {}
+  while (pe.thread()) {
+  }
 }
 
 void USBPowerDelivery::PPSTimerCallback() { pe.TimersCallback(); }
+bool USBPowerDelivery::negotiationInProgress() {
+  if (USBPowerDelivery::negotiationComplete()) {
+    return false;
+  }
+  if (haveSeenCapabilityOffer) {
+    return false;
+  }
+  return true;
+}
 bool USBPowerDelivery::negotiationComplete() {
   if (!fusbPresent()) {
     return true;
@@ -124,7 +135,11 @@ bool parseCapabilitiesArray(const uint8_t numCaps, uint8_t *bestIndex, uint16_t 
   *bestVoltage = 5000; // Default 5V
 
   // Fudge of 0.5 ohms to round up a little to account for us always having off periods in PWM
-  uint8_t tipResistance = getTipResistanceX10() + 5;
+  uint8_t     tipResistance = getTipResistanceX10();
+  usbpdMode_t pd_mode       = (usbpdMode_t)getSettingValue(SettingsOptions::USBPDMode);
+  if (pd_mode == usbpdMode_t::DEFAULT) {
+    tipResistance += 5;
+  }
 #ifdef MODEL_HAS_DCDC
   // If this device has step down DC/DC inductor to smooth out current spikes
   // We can instead ignore resistance and go for max voltage we can accept; and rely on the DC/DC regulation to keep under current limit
@@ -142,70 +157,84 @@ bool parseCapabilitiesArray(const uint8_t numCaps, uint8_t *bestIndex, uint16_t 
       int min_resistance_ohmsx10 = voltage_mv / current_a_x100;
       if (voltage_mv > 0) {
         if (voltage_mv <= (USB_PD_VMAX * 1000)) {
-          if (min_resistance_ohmsx10 <= tipResistance) {
-            // This is a valid power source we can select as
-            if (voltage_mv > *bestVoltage) {
+          if (voltage_mv <= 20000 || (pd_mode != usbpdMode_t::NO_DYNAMIC)) {
+            if (min_resistance_ohmsx10 <= tipResistance) {
+              // This is a valid power source we can select as
+              if (voltage_mv > *bestVoltage) {
 
-              // Higher voltage and valid, select this instead
-              *bestIndex   = i;
-              *bestVoltage = voltage_mv;
-              *bestCurrent = current_a_x100;
-              *bestIsPPS   = false;
-              *bestIsAVS   = false;
+                // Higher voltage and valid, select this instead
+                *bestIndex   = i;
+                *bestVoltage = voltage_mv;
+                *bestCurrent = current_a_x100;
+                *bestIsPPS   = false;
+                *bestIsAVS   = false;
+              }
             }
           }
         }
       }
-    } else if ((lastCapabilities[i] & PD_PDO_TYPE) == PD_PDO_TYPE_AUGMENTED && (((lastCapabilities[i] & PD_APDO_TYPE) == PD_APDO_TYPE_PPS)) && getSettingValue(SettingsOptions::PDVpdo)) {
-      // If this is a PPS slot, calculate the max voltage in the PPS range that can we be used and maintain
-      uint16_t max_voltage = PD_PAV2MV(PD_APDO_PPS_MAX_VOLTAGE_GET(lastCapabilities[i]));
-      // uint16_t min_voltage = PD_PAV2MV(PD_APDO_PPS_MIN_VOLTAGE_GET(lastCapabilities[i]));
-      uint16_t max_current = PD_PAI2CA(PD_APDO_PPS_CURRENT_GET(lastCapabilities[i])); // max current in 10mA units
-      // Using the current and tip resistance, calculate the ideal max voltage
-      // if this is range, then we will work with this voltage
-      // if this is not in range; then max_voltage can be safely selected
-      int ideal_voltage_mv = (tipResistance * max_current);
-      if (ideal_voltage_mv > max_voltage) {
-        ideal_voltage_mv = max_voltage; // constrain to what this PDO offers
+    } else if (((lastCapabilities[i] & PD_PDO_TYPE) == PD_PDO_TYPE_AUGMENTED) && (pd_mode != usbpdMode_t::NO_DYNAMIC)) {
+      bool sourceIsEPRCapable = lastCapabilities[0] & PD_PDO_SRC_FIXED_EPR_CAPABLE;
+      bool isPPS              = false;
+      bool isAVS              = false;
+      if (sourceIsEPRCapable) {
+        isPPS = (lastCapabilities[i] & PD_APDO_TYPE) == PD_APDO_TYPE_PPS;
+        isAVS = (lastCapabilities[i] & PD_APDO_TYPE) == PD_APDO_TYPE_AVS;
+      } else {
+        isPPS = true; // Assume PPS if no EPR support
       }
-      if (ideal_voltage_mv > 20000) {
-        ideal_voltage_mv = 20000; // Limit to 20V as some advertise 21 but are not stable at 21
+      if (isPPS) {
+        // If this is a PPS slot, calculate the max voltage in the PPS range that can we be used and maintain
+        uint16_t max_voltage = PD_PAV2MV(PD_APDO_PPS_MAX_VOLTAGE_GET(lastCapabilities[i]));
+        // uint16_t min_voltage = PD_PAV2MV(PD_APDO_PPS_MIN_VOLTAGE_GET(lastCapabilities[i]));
+        uint16_t max_current = PD_PAI2CA(PD_APDO_PPS_CURRENT_GET(lastCapabilities[i])); // max current in 10mA units
+        // Using the current and tip resistance, calculate the ideal max voltage
+        // if this is range, then we will work with this voltage
+        // if this is not in range; then max_voltage can be safely selected
+        int ideal_voltage_mv = (tipResistance * max_current);
+        if (ideal_voltage_mv > max_voltage) {
+          ideal_voltage_mv = max_voltage; // constrain to what this PDO offers
+        }
+        if (ideal_voltage_mv > 20000) {
+          ideal_voltage_mv = 20000; // Limit to 20V as some advertise 21 but are not stable at 21
+        }
+        if (ideal_voltage_mv > (USB_PD_VMAX * 1000)) {
+          ideal_voltage_mv = (USB_PD_VMAX * 1000); // constrain to model max voltage safe to select
+        }
+        if (ideal_voltage_mv > *bestVoltage) {
+          *bestIndex   = i;
+          *bestVoltage = ideal_voltage_mv;
+          *bestCurrent = max_current;
+          *bestIsPPS   = true;
+          *bestIsAVS   = false;
+        }
       }
-      if (ideal_voltage_mv > (USB_PD_VMAX * 1000)) {
-        ideal_voltage_mv = (USB_PD_VMAX * 1000); // constrain to model max voltage safe to select
-      }
-      if (ideal_voltage_mv > *bestVoltage) {
-        *bestIndex   = i;
-        *bestVoltage = ideal_voltage_mv;
-        *bestCurrent = max_current;
-        *bestIsPPS   = true;
-        *bestIsAVS   = false;
-      }
-    }
 #ifdef POW_EPR
-    else if ((lastCapabilities[i] & PD_PDO_TYPE) == PD_PDO_TYPE_AUGMENTED && (((lastCapabilities[i] & PD_APDO_TYPE) == PD_APDO_TYPE_AVS)) && getSettingValue(SettingsOptions::PDVpdo)) {
-      uint16_t max_voltage = PD_PAV2MV(PD_APDO_AVS_MAX_VOLTAGE_GET(lastCapabilities[i]));
-      uint8_t  max_wattage = PD_APDO_AVS_MAX_POWER_GET(lastCapabilities[i]);
+      else if (isAVS) {
+        uint16_t max_voltage = PD_PAV2MV(PD_APDO_AVS_MAX_VOLTAGE_GET(lastCapabilities[i]));
+        uint8_t  max_wattage = PD_APDO_AVS_MAX_POWER_GET(lastCapabilities[i]);
+        tipResistance        = getTipResistanceX10(); // Dont use fudge factor for EPR
 
-      // W = v^2/tip_resistance => Wattage*tip_resistance == Max_voltage^2
-      auto ideal_max_voltage = sqrtI((max_wattage * tipResistance) / 10) * 1000;
-      if (ideal_max_voltage > (USB_PD_VMAX * 1000)) {
-        ideal_max_voltage = (USB_PD_VMAX * 1000); // constrain to model max voltage safe to select
-      }
-      if (ideal_max_voltage > (max_voltage)) {
-        ideal_max_voltage = (max_voltage); // constrain to model max voltage safe to select
-      }
-      auto operating_current = (ideal_max_voltage / tipResistance); // Current in centiamps
+        // W = v^2/tip_resistance => Wattage*tip_resistance == Max_voltage^2
+        auto ideal_max_voltage = sqrtI((max_wattage * tipResistance) / 10) * 1000;
+        if (ideal_max_voltage > (USB_PD_VMAX * 1000)) {
+          ideal_max_voltage = (USB_PD_VMAX * 1000); // constrain to model max voltage safe to select
+        }
+        if (ideal_max_voltage > (max_voltage)) {
+          ideal_max_voltage = (max_voltage); // constrain to model max voltage safe to select
+        }
+        auto operating_current = (ideal_max_voltage / tipResistance); // Current in centiamps
 
-      if (ideal_max_voltage > *bestVoltage) {
-        *bestIndex   = i;
-        *bestVoltage = ideal_max_voltage;
-        *bestCurrent = operating_current;
-        *bestIsAVS   = true;
-        *bestIsPPS   = false;
+        if (ideal_max_voltage > *bestVoltage) {
+          *bestIndex   = i;
+          *bestVoltage = ideal_max_voltage;
+          *bestCurrent = operating_current;
+          *bestIsAVS   = true;
+          *bestIsPPS   = false;
+        }
       }
-    }
 #endif
+    }
   }
   // Now that the best index is known, set the current values
   return *bestIndex != 0xFF; // have we selected one
@@ -267,6 +296,7 @@ bool EPREvaluateCapabilityFunc(const epr_pd_msg *capabilities, pd_msg *request) 
 bool pdbs_dpm_evaluate_capability(const pd_msg *capabilities, pd_msg *request) {
   memset(lastCapabilities, 0, sizeof(lastCapabilities));
   memcpy(lastCapabilities, capabilities->obj, sizeof(uint32_t) * 7);
+  haveSeenCapabilityOffer = true;
   /* Get the number of PDOs */
   uint8_t numobj = PD_NUMOBJ_GET(capabilities);
 
@@ -311,68 +341,51 @@ bool pdbs_dpm_evaluate_capability(const pd_msg *capabilities, pd_msg *request) {
   return true;
 }
 
+void add_v_record(pd_msg *cap, uint16_t voltage_mv, int numobj) {
+
+  uint16_t current = (voltage_mv) / getTipResistanceX10(); // In centi-amps
+
+  /* Add a PDO for the desired power. */
+  cap->obj[numobj] = PD_PDO_TYPE_FIXED | PD_PDO_SNK_FIXED_VOLTAGE_SET(PD_MV2PDV(voltage_mv)) | PD_PDO_SNK_FIXED_CURRENT_SET(current);
+}
 void pdbs_dpm_get_sink_capability(pd_msg *cap, const bool isPD3) {
   /* Keep track of how many PDOs we've added */
-  // int numobj = 0;
+  int numobj = 0;
 
-  // /* If we have no configuration or want something other than 5 V, add a PDO
-  //  * for vSafe5V */
-  // /* Minimum current, 5 V, and higher capability. */
-  // cap->obj[numobj++] = PD_PDO_TYPE_FIXED | PD_PDO_SNK_FIXED_VOLTAGE_SET(PD_MV2PDV(5000)) | PD_PDO_SNK_FIXED_CURRENT_SET(DPM_MIN_CURRENT);
+  /* If we have no configuration or want something other than 5 V, add a PDO
+   * for vSafe5V */
+  /* Minimum current, 5 V, and higher capability. */
+  cap->obj[numobj++] = PD_PDO_TYPE_FIXED | PD_PDO_SNK_FIXED_VOLTAGE_SET(PD_MV2PDV(5000)) | PD_PDO_SNK_FIXED_CURRENT_SET(DPM_MIN_CURRENT);
+  // Voltages must be in order of lowest -> highest
+#if USB_PD_VMAX >= 20
+  add_v_record(cap, 9000, numobj);
+  numobj++;
+  add_v_record(cap, 15000, numobj);
+  numobj++;
+  add_v_record(cap, 20000, numobj);
+  numobj++;
+#elif USB_PD_VMAX >= 15
+  add_v_record(cap, 9000, numobj);
+  numobj++;
+  add_v_record(cap, 12000, numobj);
+  numobj++;
+  add_v_record(cap, 15000, numobj);
+  numobj++;
+#elif USB_PD_VMAX >= 12
+  add_v_record(cap, 9000, numobj);
+  numobj++;
+  add_v_record(cap, 12000, numobj);
+  numobj++;
+#elif USB_PD_VMAX >= 9
+  add_v_record(cap, 9000, numobj);
+  numobj++;
+#endif
 
-  // /* Get the current we want */
-  // uint16_t voltage = USB_PD_VMAX * 1000; // in mv
-  // if (requested_voltage_mv != 5000) {
-  //   voltage = requested_voltage_mv;
-  // }
-  // uint16_t current = (voltage) / getTipResistanceX10(); // In centi-amps
+  /* Set the USB communications capable flag. */
+  cap->obj[0] |= PD_PDO_SNK_FIXED_USB_COMMS;
 
-  // /* Add a PDO for the desired power. */
-  // cap->obj[numobj++] = PD_PDO_TYPE_FIXED | PD_PDO_SNK_FIXED_VOLTAGE_SET(PD_MV2PDV(voltage)) | PD_PDO_SNK_FIXED_CURRENT_SET(current);
-
-  // /* Get the PDO from the voltage range */
-  // int8_t i = dpm_get_range_fixed_pdo_index(cap);
-
-  // /* If it's vSafe5V, set our vSafe5V's current to what we want */
-  // if (i == 0) {
-  //   cap->obj[0] &= ~PD_PDO_SNK_FIXED_CURRENT;
-  //   cap->obj[0] |= PD_PDO_SNK_FIXED_CURRENT_SET(current);
-  // } else {
-  //   /* If we want more than 5 V, set the Higher Capability flag */
-  //   if (PD_MV2PDV(voltage) != PD_MV2PDV(5000)) {
-  //     cap->obj[0] |= PD_PDO_SNK_FIXED_HIGHER_CAP;
-  //   }
-
-  //   /* If the range PDO is a different voltage than the preferred
-  //    * voltage, add it to the array. */
-  //   if (i > 0 && PD_PDO_SRC_FIXED_VOLTAGE_GET(cap->obj[i]) != PD_MV2PDV(voltage)) {
-  //     cap->obj[numobj++] = PD_PDO_TYPE_FIXED | PD_PDO_SNK_FIXED_VOLTAGE_SET(PD_PDO_SRC_FIXED_VOLTAGE_GET(cap->obj[i])) | PD_PDO_SNK_FIXED_CURRENT_SET(PD_PDO_SRC_FIXED_CURRENT_GET(cap->obj[i]));
-  //   }
-
-  //   /* If we have three PDOs at this point, make sure the last two are
-  //    * sorted by voltage. */
-  //   if (numobj == 3 && (cap->obj[1] & PD_PDO_SNK_FIXED_VOLTAGE) > (cap->obj[2] & PD_PDO_SNK_FIXED_VOLTAGE)) {
-  //     cap->obj[1] ^= cap->obj[2];
-  //     cap->obj[2] ^= cap->obj[1];
-  //     cap->obj[1] ^= cap->obj[2];
-  //   }
-  //   /* If we're using PD 3.0, add a PPS APDO for our desired voltage */
-  //   if ((hdr_template & PD_HDR_SPECREV) >= PD_SPECREV_3_0) {
-  //     cap->obj[numobj++]
-  //         = PD_PDO_TYPE_AUGMENTED | PD_APDO_TYPE_PPS | PD_APDO_PPS_MAX_VOLTAGE_SET(PD_MV2PAV(voltage)) | PD_APDO_PPS_MIN_VOLTAGE_SET(PD_MV2PAV(voltage)) |
-  //         PD_APDO_PPS_CURRENT_SET(PD_CA2PAI(current));
-  //   }
-  // }
-
-  // /* Set the unconstrained power flag. */
-  // if (_unconstrained_power) {
-  //   cap->obj[0] |= PD_PDO_SNK_FIXED_UNCONSTRAINED;
-  // }
-  // /* Set the USB communications capable flag. */
-  // cap->obj[0] |= PD_PDO_SNK_FIXED_USB_COMMS;
-
-  // /* Set the Sink_Capabilities message header */
-  // cap->hdr = hdr_template | PD_MSGTYPE_SINK_CAPABILITIES | PD_NUMOBJ(numobj);
+  /* Set the Sink_Capabilities message header */
+  cap->hdr = PD_DATAROLE_UFP | PD_SPECREV_3_0 | PD_POWERROLE_SINK | PD_MSGTYPE_SINK_CAPABILITIES | PD_NUMOBJ(numobj);
 }
 
 #endif

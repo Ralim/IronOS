@@ -529,6 +529,13 @@ ssize_t bt_gatt_attr_read_chrc(struct bt_conn *conn,
                                const struct bt_gatt_attr *attr, void *buf,
                                u16_t len, u16_t offset);
 
+#define BT_GATT_CHRC_INIT(_uuid, _handle, _props) \
+    {                                             \
+        .uuid = _uuid,                            \
+        .value_handle = _handle,                  \
+        .properties = _props,                     \
+    }
+
 /** @def BT_GATT_CHARACTERISTIC
  *  @brief Characteristic and Value Declaration Macro.
  *
@@ -545,10 +552,8 @@ ssize_t bt_gatt_attr_read_chrc(struct bt_conn *conn,
 #define BT_GATT_CHARACTERISTIC(_uuid, _props, _perm, _read, _write, _value) \
     BT_GATT_ATTRIBUTE(BT_UUID_GATT_CHRC, BT_GATT_PERM_READ,                 \
                       bt_gatt_attr_read_chrc, NULL,                         \
-                      (&(struct bt_gatt_chrc){                              \
-                          .uuid = _uuid,                                    \
-                          .value_handle = 0U,                               \
-                          .properties = _props,                             \
+                      ((struct bt_gatt_chrc[]){                             \
+                          BT_GATT_CHRC_INIT(_uuid, 0U, _props),             \
                       })),                                                  \
         BT_GATT_ATTRIBUTE(_uuid, _perm, _read, _write, _value)
 
@@ -784,10 +789,11 @@ ssize_t bt_gatt_attr_read_cpf(struct bt_conn *conn,
 #define BT_GATT_ATTRIBUTE(_uuid, _perm, _read, _write, _value) \
     {                                                          \
         .uuid = _uuid,                                         \
-        .perm = _perm,                                         \
         .read = _read,                                         \
         .write = _write,                                       \
         .user_data = _value,                                   \
+        .handle = 0,                                           \
+        .perm = _perm,                                         \
     }
 
 /** @brief Notification complete result callback.
@@ -1370,7 +1376,12 @@ void bt_gatt_cancel(struct bt_conn *conn, void *params);
 typedef void (*bt_gatt_mtu_changed_cb_t)(struct bt_conn *conn, int mtu);
 void bt_gatt_register_mtu_callback(bt_gatt_mtu_changed_cb_t cb);
 #endif
-
+#if defined(CONFIG_BT_GATT_CLIENT)
+#if defined(BFLB_BLE_NOTIFY_ALL)
+typedef void (*bt_notification_all_cb_t)(struct bt_conn *conn, u16_t handle, const void *data, u16_t length);
+void bt_gatt_register_notification_callback(bt_notification_all_cb_t cb);
+#endif
+#endif
 #if defined(BFLB_BLE)
 /** @brief load gatt ccc from flash
  *

@@ -1,6 +1,6 @@
 #ifndef TYPES_H_
 #define TYPES_H_
-#include <stddef.h>
+#include <stdint.h>
 
 // Used for temperature represented in C or x10C.
 //

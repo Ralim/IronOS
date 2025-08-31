@@ -323,7 +323,7 @@ void peripheral_clock_init(void) {
 #if BSP_PWM_CLOCK_SOURCE == ROOT_CLOCK_SOURCE_32K_CLK
 
   for (int i = 0; i < 5; i++) {
-    PWMx    = PWM_BASE + PWM_CHANNEL_OFFSET + (i)*0x20;
+    PWMx    = PWM_BASE + PWM_CHANNEL_OFFSET + (i) * 0x20;
     tmp_pwm = BL_RD_REG(PWMx, PWM_CONFIG);
     BL_WR_REG(PWMx, PWM_CONFIG, BL_SET_REG_BIT(tmp_pwm, PWM_STOP_EN));
 
@@ -343,7 +343,7 @@ void peripheral_clock_init(void) {
 #elif BSP_PWM_CLOCK_SOURCE == ROOT_CLOCK_SOURCE_BCLK
 
   for (int i = 0; i < 5; i++) {
-    PWMx    = PWM_BASE + PWM_CHANNEL_OFFSET + (i)*0x20;
+    PWMx    = PWM_BASE + PWM_CHANNEL_OFFSET + (i) * 0x20;
     tmp_pwm = BL_RD_REG(PWMx, PWM_CONFIG);
     BL_WR_REG(PWMx, PWM_CONFIG, BL_SET_REG_BIT(tmp_pwm, PWM_STOP_EN));
 
@@ -363,7 +363,7 @@ void peripheral_clock_init(void) {
 #elif BSP_PWM_CLOCK_SOURCE == ROOT_CLOCK_SOURCE_XCLK
 
   for (int i = 0; i < 5; i++) {
-    PWMx    = PWM_BASE + PWM_CHANNEL_OFFSET + (i)*0x20;
+    PWMx    = PWM_BASE + PWM_CHANNEL_OFFSET + (i) * 0x20;
     tmp_pwm = BL_RD_REG(PWMx, PWM_CONFIG);
     BL_WR_REG(PWMx, PWM_CONFIG, BL_SET_REG_BIT(tmp_pwm, PWM_STOP_EN));
 
@@ -456,6 +456,11 @@ void peripheral_clock_init(void) {
   tmpVal |= (1 << BL_AHB_SLAVE1_USB);
   GLB_Set_USB_CLK(1);
 #endif
+
+#if defined(BSP_USING_DMA)
+  tmpVal |= (1 << BL_AHB_SLAVE1_DMA);
+#endif
+
   BL_WR_REG(GLB_BASE, GLB_CGEN_CFG1, tmpVal);
 }
 

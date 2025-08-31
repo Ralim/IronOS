@@ -46,9 +46,9 @@ extern "C" {
 #define OLED_GRAM_START_FLIP 0
 #define OLED_GRAM_END_FLIP   0x7F
 
-#define OLED_VCOM_LAYOUT     0x12
+#define OLED_VCOM_LAYOUT 0x12
 #define OLED_SEGMENT_MAP_REVERSED
-#define OLED_DIVIDER         0xD3
+#define OLED_DIVIDER 0xD3
 
 #else
 
@@ -59,14 +59,14 @@ extern "C" {
 #define OLED_GRAM_START_FLIP 0
 #define OLED_GRAM_END_FLIP   95
 
-#define OLED_VCOM_LAYOUT     0x02
-#define OLED_SEGMENT_MAP     0xA0
-#define OLED_DIVIDER         0xD5
+#define OLED_VCOM_LAYOUT 0x02
+#define OLED_SEGMENT_MAP 0xA0
+#define OLED_DIVIDER     0xD5
 
 #endif /* OLED_128x32 */
 
-#define OLED_ON   0xAF
-#define OLED_OFF  0xAE
+#define OLED_ON  0xAF
+#define OLED_OFF 0xAE
 
 #define FRAMEBUFFER_START 17
 
@@ -117,10 +117,10 @@ public:
   static void    setInverseDisplay(bool inverted);
   static int16_t getCursorX() { return cursor_x; }
   // Draw a string to the current location, with selected font; optionally - with MAX length only
-  static void    print(const char *string, FontStyle fontStyle, uint8_t length = 255);
-  static void    printWholeScreen(const char *string);
+  static void print(const char *string, FontStyle fontStyle, uint8_t length = 255, const uint8_t soft_x_limit = 0);
+  static void printWholeScreen(const char *string);
   // Print *F or *C - in font style of Small, Large (by default) or Extra based on input arg
-  static void    printSymbolDeg(FontStyle fontStyle = FontStyle::LARGE);
+  static void printSymbolDeg(FontStyle fontStyle = FontStyle::LARGE);
   // Set the cursor location by pixels
   static void setCursor(int16_t x, int16_t y) {
     cursor_x = x;
@@ -136,6 +136,7 @@ public:
   static void drawBattery(uint8_t state) { drawSymbol(3 + (state > 10 ? 10 : state)); }
   // Draws a checkbox
   static void drawCheckbox(bool state) { drawSymbol((state) ? 16 : 17); }
+  inline static void drawUnavailableIcon() { drawArea(OLED_WIDTH - OLED_HEIGHT - 2, 0, OLED_HEIGHT, OLED_HEIGHT, UnavailableIcon); }
   static void debugNumber(int32_t val, FontStyle fontStyle);
   static void drawHex(uint32_t x, FontStyle fontStyle, uint8_t digits);
   static void drawSymbol(uint8_t symbolID);                                                           // Used for drawing symbols of a predictable width
@@ -146,9 +147,10 @@ public:
   static void drawHeatSymbol(uint8_t state);
   static void drawScrollIndicator(uint8_t p, uint8_t h); // Draws a scrolling position indicator
   static void maskScrollIndicatorOnOLED();
-  static void transitionSecondaryFramebuffer(bool forwardNavigation);
+  static void transitionSecondaryFramebuffer(const bool forwardNavigation, const TickType_t viewEnterTime);
   static void useSecondaryFramebuffer(bool useSecondary);
-  static void transitionScrollDown();
+  static void transitionScrollDown(const TickType_t viewEnterTime);
+  static void transitionScrollUp(const TickType_t viewEnterTime);
 
 private:
   static bool checkDisplayBufferChecksum() {
@@ -162,7 +164,7 @@ private:
     displayChecksum = hash;
     return result;
   }
-  static void         drawChar(uint16_t charCode, FontStyle fontStyle); // Draw a character to the current cursor location
+  static void         drawChar(uint16_t charCode, FontStyle fontStyle, const uint8_t soft_x_limit); // Draw a character to the current cursor location
   static void         setFramebuffer(uint8_t *buffer);
   static uint8_t     *stripPointers[4]; // Pointers to the strips to allow for buffer having extra content
   static bool         inLeftHandedMode; // Whether the screen is in left or not (used for offsets in GRAM)

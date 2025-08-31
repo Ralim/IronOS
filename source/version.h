@@ -21,4 +21,4 @@
  * * BUILD_VERSION = 'v2.22' -> from stable git release: 'v2.22R.5E6F7G8H'
  */
 
-#define BUILD_VERSION "v2.22"
+#define BUILD_VERSION "v2.23"

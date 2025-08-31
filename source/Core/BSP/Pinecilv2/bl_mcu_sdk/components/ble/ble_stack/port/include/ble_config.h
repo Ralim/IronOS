@@ -2,16 +2,13 @@
 #define BLE_CONFIG_H
 
 #include "FreeRTOSConfig.h"
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 /**
  * CONFIG_BLUETOOTH: Enable the bluetooh stack
  */
-//#ifndef CONFIG_BLUETOOTH
-//#error "CONFIG_BLUETOOTH not defined,this header shoudn't include"
-//#endif
+// #ifndef CONFIG_BLUETOOTH
+// #error "CONFIG_BLUETOOTH not defined,this header shoudn't include"
+// #endif
 
 #ifdef CONFIG_BT_BONDABLE
 #undef CONFIG_BT_BONDABLE
@@ -26,25 +23,25 @@ extern "C" {
 #define PTS_CHARC_LEN_EQUAL_MTU_SIZE
 #endif
 
-//#ifndef  CONFIG_BT_STACK_PTS_SM_SLA_KDU_BI_01
-//#define  CONFIG_BT_STACK_PTS_SM_SLA_KDU_BI_01
-//#endif
+// #ifndef  CONFIG_BT_STACK_PTS_SM_SLA_KDU_BI_01
+// #define  CONFIG_BT_STACK_PTS_SM_SLA_KDU_BI_01
+// #endif
 
-//#ifndef  PTS_GAP_SLAVER_CONFIG_READ_CHARC
-//#define  PTS_GAP_SLAVER_CONFIG_READ_CHARC
-//#endif
+// #ifndef  PTS_GAP_SLAVER_CONFIG_READ_CHARC
+// #define  PTS_GAP_SLAVER_CONFIG_READ_CHARC
+// #endif
 
-//#ifndef  PTS_GAP_SLAVER_CONFIG_WRITE_CHARC
-//#define  PTS_GAP_SLAVER_CONFIG_WRITE_CHARC
-//#endif
+// #ifndef  PTS_GAP_SLAVER_CONFIG_WRITE_CHARC
+// #define  PTS_GAP_SLAVER_CONFIG_WRITE_CHARC
+// #endif
 
-//#ifndef  PTS_GAP_SLAVER_CONFIG_NOTIFY_CHARC
-//#define  PTS_GAP_SLAVER_CONFIG_NOTIFY_CHARC
-//#endif
+// #ifndef  PTS_GAP_SLAVER_CONFIG_NOTIFY_CHARC
+// #define  PTS_GAP_SLAVER_CONFIG_NOTIFY_CHARC
+// #endif
 
-//#ifndef  PTS_GAP_SLAVER_CONFIG_INDICATE_CHARC
-//#define  PTS_GAP_SLAVER_CONFIG_INDICATE_CHARC
-//#endif
+// #ifndef  PTS_GAP_SLAVER_CONFIG_INDICATE_CHARC
+// #define  PTS_GAP_SLAVER_CONFIG_INDICATE_CHARC
+// #endif
 #define CONFIG_BT_GATT_READ_MULTIPLE 1
 #endif
 
@@ -55,11 +52,29 @@ extern "C" {
 #define CONFIG_BT_HCI_RX_STACK_SIZE 512
 #endif
 
+/**
+ * BL_BLE_CO_THREAD: combine tx rx thread
+ */
+#define BFLB_BT_CO_THREAD 1
+
+#if (BFLB_BT_CO_THREAD)
+#define CONFIG_BT_CO_TASK_PRIO (configMAX_PRIORITIES - 3)
+#if defined(CONFIG_BT_MESH)
+#define CONFIG_BT_CO_STACK_SIZE 3072 // 2048//1536//1024
+#else
+#define CONFIG_BT_CO_STACK_SIZE 2048 // 2048//1536//1024
+#endif
+#endif
+
 #ifndef CONFIG_BT_RX_STACK_SIZE
 #if defined(CONFIG_BT_MESH)
 #define CONFIG_BT_RX_STACK_SIZE 3072 // 2048//1536//1024
 #else
+#if !defined(CONFIG_BT_CONN)
+#define CONFIG_BT_RX_STACK_SIZE 1024
+#else
 #define CONFIG_BT_RX_STACK_SIZE 2048 // 1536//1024
+#endif
 #endif
 #endif
 
@@ -77,7 +92,11 @@ extern "C" {
  */
 
 #ifndef CONFIG_BT_HCI_TX_STACK_SIZE
+#if !defined(CONFIG_BT_CONN)
+#define CONFIG_BT_HCI_TX_STACK_SIZE 1024
+#else
 #define CONFIG_BT_HCI_TX_STACK_SIZE 1536 // 1024//200
+#endif
 #endif
 
 /**
@@ -89,13 +108,6 @@ extern "C" {
 
 #ifndef CONFIG_BT_CTLR_RX_PRIO
 #define CONFIG_BT_CTLR_RX_PRIO (configMAX_PRIORITIES - 4)
-#endif
-
-/**
- * BL_BLE_CO_THREAD: combine tx rx thread
- */
-#ifndef BFLB_BLE_CO_THREAD
-#define BFLB_BLE_CO_THREAD 0
 #endif
 
 /**
@@ -291,7 +303,11 @@ extern "C" {
  * range 1 to 65535,seconds
  */
 #ifndef CONFIG_BT_RPA_TIMEOUT
+#if defined(CONFIG_AUTO_PTS)
+#define CONFIG_BT_RPA_TIMEOUT 60
+#else
 #define CONFIG_BT_RPA_TIMEOUT 900
+#endif
 #endif
 #endif
 
@@ -355,7 +371,7 @@ extern "C" {
 #elif defined(BL702)
 #define CONFIG_BT_DEVICE_NAME "BL702-BLE-DEV"
 #else
-#define CONFIG_BT_DEVICE_NAME "BL606P-BTBLE"
+#define CONFIG_BT_DEVICE_NAME "BTBLE-DEV"
 #endif
 #endif
 #endif
@@ -384,8 +400,12 @@ extern "C" {
 #ifndef CONFIG_BT_MESH
 #define CONFIG_BT_WORK_QUEUE_STACK_SIZE 1536 // 1280//512
 #else
+#if !defined(CONFIG_BT_CONN)
+#define CONFIG_BT_WORK_QUEUE_STACK_SIZE 1024
+#else
 #define CONFIG_BT_WORK_QUEUE_STACK_SIZE 2048
 #endif /* CONFIG_BT_MESH */
+#endif
 #endif
 
 /**
@@ -520,7 +540,7 @@ extern "C" {
 #define CONFIG_BT_ID_MAX 1
 #endif
 
-//#define PTS_GAP_SLAVER_CONFIG_NOTIFY_CHARC 1
+// #define PTS_GAP_SLAVER_CONFIG_NOTIFY_CHARC 1
 
 #ifndef CONFIG_BT_L2CAP_TX_FRAG_COUNT
 #define CONFIG_BT_L2CAP_TX_FRAG_COUNT 0
@@ -541,6 +561,10 @@ extern "C" {
 #define CONFIG_BT_PERIPHERAL_PREF_MAX_INT       0x0028
 #define CONFIG_BT_PERIPHERAL_PREF_SLAVE_LATENCY 0
 #define CONFIG_BT_PERIPHERAL_PREF_TIMEOUT       400
+#endif
+
+#ifndef CONFIG_BT_PHY_UPDATE
+#define CONFIG_BT_PHY_UPDATE 1
 #endif
 
 #if defined(CONFIG_BT_BREDR)
@@ -564,17 +588,25 @@ extern "C" {
 
 /*******************************Bouffalo Lab Modification******************************/
 
-//#define BFLB_BLE_DISABLE_STATIC_ATTR
-//#define BFLB_BLE_DISABLE_STATIC_CHANNEL
+// #define BFLB_BLE_DISABLE_STATIC_ATTR
+// #define BFLB_BLE_DISABLE_STATIC_CHANNEL
 #define BFLB_DISABLE_BT
 #define BFLB_FIXED_IRK 0
 #define BFLB_DYNAMIC_ALLOC_MEM
+#if defined(CFG_BLE_PDS) && defined(BL702) && defined(BFLB_BLE) && defined(BFLB_DYNAMIC_ALLOC_MEM)
+#define BFLB_STATIC_ALLOC_MEM 1
+#else
+#define BFLB_STATIC_ALLOC_MEM 0
+#endif
+#define CONFIG_BT_SCAN_WITH_IDENTITY 1
+
 #if defined(CONFIG_AUTO_PTS)
+#define CONFIG_BT_L2CAP_DYNAMIC_CHANNEL
 #define CONFIG_BT_DEVICE_NAME_GATT_WRITABLE 1
 #define CONFIG_BT_GATT_SERVICE_CHANGED      1
 #define CONFIG_BT_GATT_CACHING              1
 #define CONFIG_BT_SCAN_WITH_IDENTITY        1
-//#define CONFIG_BT_ADV_WITH_PUBLIC_ADDR 1
+// #define CONFIG_BT_ADV_WITH_PUBLIC_ADDR 1
 #define CONFIG_BT_ATT_PREPARE_COUNT 64
 #endif
 #endif // BFLB_BLE
@@ -590,9 +622,11 @@ happens, which cause memory leak issue.*/
 /*To avoid duplicated pubkey callback.*/
 #define BFLB_BLE_PATCH_AVOID_DUPLI_PUBKEY_CB
 /*The flag @conn_ref is not clean up after disconnect*/
-#define BFLB_BLE_PATCH_CLEAN_UP_CONNECT_REF
+// #define BFLB_BLE_PATCH_CLEAN_UP_CONNECT_REF
+#if !defined(CONFIG_AUTO_PTS)
 /*To avoid sevice changed indication sent at the very beginning, without any new service added.*/
 #define BFLB_BLE_PATCH_SET_SCRANGE_CHAGD_ONLY_IN_CONNECTED_STATE
+#endif
 #ifdef CONFIG_BT_SETTINGS
 /*Semaphore is used during flash operation. Make sure that freertos has already run up when it
   intends to write information to flash.*/
@@ -610,10 +644,14 @@ BT_SMP_DIST_ENC_KEY bit is not cleared while remote ENC_KEY is received.*/
 #define BFLB_BLE_PATCH_CLEAR_REMOTE_KEY_BIT
 
 #if defined(CONFIG_BT_CENTRAL) || defined(CONFIG_BT_OBSERVER)
-// #define BFLB_BLE_NOTIFY_ADV_DISCARDED
+#if defined(BL602) || defined(BL702)
+#define BFLB_BLE_NOTIFY_ADV_DISCARDED
 #endif
-#ifdef __cplusplus
-};
+#endif
+
+#if defined(CONFIG_BT_CENTRAL)
+#define BFLB_BLE_NOTIFY_ALL
+#define BFLB_BLE_DISCOVER_ONGOING
 #endif
 
 #endif /* BLE_CONFIG_H */

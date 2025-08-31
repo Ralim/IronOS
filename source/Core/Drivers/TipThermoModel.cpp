@@ -9,7 +9,7 @@
 #include "BSP.h"
 #include "Settings.h"
 #include "Types.h"
-#include "Utils.h"
+#include "Utils.hpp"
 #include "configuration.h"
 #include "main.hpp"
 #include "power.hpp"
@@ -89,7 +89,11 @@ TemperatureType_t TipThermoModel::getTipInF(bool sampleNow) {
 }
 
 TemperatureType_t TipThermoModel::getTipMaxInC() {
+#ifdef CUSTOM_MAX_TEMP_C
+  return getCustomTipMaxInC();
+#else
   TemperatureType_t maximumTipTemp = TipThermoModel::convertTipRawADCToDegC(ADC_MAX_READING - 1);
   maximumTipTemp += getHandleTemperature(0) / 10; // Add handle offset
   return maximumTipTemp - 1;
+#endif
 }

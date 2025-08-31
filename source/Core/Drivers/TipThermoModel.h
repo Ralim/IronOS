@@ -5,11 +5,11 @@
  *      Author: ralim
  */
 
-#ifndef SRC_TIPTHERMOMODEL_H_
-#define SRC_TIPTHERMOMODEL_H_
 #include "BSP.h"
 #include "Types.h"
 #include "stdint.h"
+#ifndef SRC_TIPTHERMOMODEL_H_
+#define SRC_TIPTHERMOMODEL_H_
 class TipThermoModel {
 public:
   // These are the main two functions

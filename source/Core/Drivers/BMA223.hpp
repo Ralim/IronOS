@@ -9,7 +9,10 @@
 #define CORE_DRIVERS_BMA223_HPP_
 #include "BMA223_defines.h"
 #include "BSP.h"
+#include "accelerometers_common.h"
 #include "I2C_Wrapper.hpp"
+#include "accelerometers_common.h"
+
 
 class BMA223 {
 public:
@@ -17,7 +20,7 @@ public:
   static bool initalize();
   // 1 = rh, 2,=lh, 8=flat
   static Orientation getOrientation() {
-    uint8_t val = FRToSI2C::I2C_RegisterRead(BMA223_ADDRESS, BMA223_INT_STATUS_3);
+    uint8_t val = ACCEL_I2C_CLASS::I2C_RegisterRead(BMA223_ADDRESS, BMA223_INT_STATUS_3);
     val >>= 4; // we dont need high values
     val &= 0b11;
     if (val & 0b10) {

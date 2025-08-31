@@ -175,7 +175,7 @@ SECTIONS
 
         . = ALIGN(4);
         __tcm_code_end__ = .;
-    } > itcm_memory
+    } > dtcm_memory
 
     __hbn_load_addr = __itcm_load_addr + SIZEOF(.itcm_region);
 
@@ -203,25 +203,7 @@ SECTIONS
         . = ALIGN(4);
         __tcm_data_end__ = .;
     } > dtcm_memory
-    /*************************************************************************/
-    /* .stack_dummy section doesn't contains any symbols. It is only
-     * used for linker to calculate size of stack sections, and assign
-     * values to stack symbols later */
-    .stack_dummy (NOLOAD):
-    {
-        . = ALIGN(0x4);
-        . = . + StackSize;
-        . = ALIGN(0x4);
-    } > dtcm_memory
-
-    /* Set stack top to end of RAM, and stack limit move down by
-     * size of stack_dummy section */
-    __StackTop = ORIGIN(dtcm_memory) + LENGTH(dtcm_memory);
-    PROVIDE( __freertos_irq_stack_top = __StackTop);
-    __StackLimit = __StackTop - SIZEOF(.stack_dummy);
-    /* Check if data + heap + stack exceeds RAM limit */
-    ASSERT(__StackLimit >= __tcm_data_end__, "region RAM overflowed with stack")
-    /*************************************************************************/
+   
 
     /*************************************************************************/
     /* .stack_dummy section doesn't contains any symbols. It is only

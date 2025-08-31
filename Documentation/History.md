@@ -1,7 +1,77 @@
 # Version Changes
 
+## v2.23
 
-# V2.21
+
+### High level changes
+
+- Miniware I2C changed to bit-bang for improved compatibility with newer devices with STM32 clone IC's
+- Looping Boot Logo option (loops until button press)
+- More fixes for GD32 clones with Miniware devices
+- Bluetooth BLE is off by default (security)
+- Large internal code refactoring to make the screen drawing more flexible for larger OLEDs
+- Further improvements to drawing on larger screen resolutions
+- 4 Ohm tip support on Pinecil 1/2 + TS10x (Note this is at your own risk, not all hardware is designed for this)
+- Fixes for PPS mode on some USB-PD supplies
+- Rework of thermal runaway detection
+- Fixes to the ID numbers used for operating modes over BLE
+- Rework of the I2C on PinecilV2 to remove issues with temperature regulation and screen glitching
+- Default for USB-PD negotiation changed to use "safe" profile, to be conservative in selecting voltages.
+- Fixes for USB-PD to implement device capabilites. This should fix unit reboot issues with some laptops
+- Looots of translation & documentation updates ❤️
+- Fixes for RTOS issues / updated FreeRTOS version
+- Multiple fixes for _MHP30_ to help with clone STM32's
+- Share missing settings over _BLE_ for _Pinecil V2_
+- Add code for `ws2812b` LED mod for _Pinecil V2_ (Must be hand compiled).
+- Add option to swap A/B buttons in Settings menu
+- Disable _"double slide"_ animation between home and soldering screens if detailed view is set for both modes.
+
+
+## v2.22
+
+### New Hardware Support
+
+#### Sequre S60
+
+The [Sequre S60](https://sequremall.com/products/sequre-s60-nano-electric-soldering-iron-support-pd-qc-power-supply-compatible-with-c210-soldering-iron-tips-precision-electronic-mobile-phone-repair-tool-anti-static-soldering-pen?variant=42361945096380) uses JBC tips, which makes it quite useful for the smaller tip types and extra options available.
+
+#### TS101
+
+The TS101 is the evolution of the TS100, picking up USB-PD.
+It has otherwise similar tip support to the TS100/Pinecil/PinecilV2.
+
+Absolutely massive kudos goes to @VioletEternity for her work on the reverse engineering of this. If you at all are helped by IronOS running on this device more credit goes to her than to I. Also big thanks to @whitequark for organising + supporting + magic.
+
+### Features & changes
+
+#### PinecilV2 notes
+
+1. BLE is fixed on all devices.
+2. Bootup Logo support is finalised and working.
+3. Improved the tip control, improving accuracy and remove most oscillations.
+
+#### Profile heating mode for MHP30
+
+This lets you define a heat profile and run this profile akin to a proper reflow device.
+This can be used on the MHP30 by long-holding the A button (aka start button).
+Profile can be edited in settings.
+
+#### Note on newer OLED's
+
+To prevent this release being held up forever, the TS101 and S60 are being released with a limitation on the OLED screen.
+The current code will only draw to the upper left corner of the screen.
+Assets have been made for rendering this at full size, but the code is not complete yet.
+
+#### Smaller updates
+
+- Filtering added to MHP tilt-exit to make it less sensitive
+- Warning if a tip is detected to be shorted (TS101 + PinecilV2)
+- Translation updates ❤️
+- Documentation updates
+- Lots of tooling and code cleanups
+
+
+## v2.21
 
 ### Features & changes
 
@@ -20,7 +90,7 @@ Alternatively you can use Spagett1's PineFlash tool that should provide a GUI in
 For a small number of V2 Pinecil devices there appears to be an interference issue between the Bluetooth Low Energy and some devices; more information here. If this occurs to you, please let us know in the issue and rollback to 2.20 for now.
 
 
-# V2.20
+## v2.20
 
 - First "full" release for PinecilV2
 - Loots of documentation updates
@@ -29,7 +99,7 @@ For a small number of V2 Pinecil devices there appears to be an interference iss
 - Cold Junction Calibration was reworked and now occurs _at next boot_ to make it easier to perform when the device is cold
 
 
-# V2.19
+## v2.19
 
 - Bug-fix Infinite Boot Logo
 - Shutdown settings for MHP30
@@ -40,7 +110,7 @@ For a small number of V2 Pinecil devices there appears to be an interference iss
 - Improved documents, added features table
 
 
-# V2.18
+## v2.18
 
 - Support for animated bootup logo's
 - Bootup logo's moved to their own IronOS-Meta repo
@@ -50,7 +120,7 @@ For a small number of V2 Pinecil devices there appears to be an interference iss
 - Better Instructions/documents
 
 
-# V2.17
+## v2.17
 
 ### Features & changes
 
@@ -78,7 +148,7 @@ For a small number of V2 Pinecil devices there appears to be an interference iss
 - -> Release has been updated to build `e065be3` after one bug with the BMA223 was found.
 
 
-# V2.16
+## v2.16
 
 - Overhaul of the Timer+ADC setup with help from @sandmanRO
 - Overhaul of the PID with help from @sandmanRO
@@ -96,7 +166,7 @@ For a small number of V2 Pinecil devices there appears to be an interference iss
 - Romanian language added
 
 
-# V2.15
+## v2.15
 
 ### Features & changes
 
@@ -106,8 +176,8 @@ For a small number of V2 Pinecil devices there appears to be an interference iss
 - USB-PD improvements (version one and two)
 - More configuration options for power pulse
 - All font / character encoding has been very reworked
-- More translation updates than one can count 
-- More languages 😱 
+- More translation updates than one can count
+- More languages 😱
 
 ### MHP30 support
 
@@ -121,7 +191,7 @@ Programs the same as any one Miniware unit using drag and drop.
 The flood doors are now open for feature requests for this unit :)
 
 
-# V2.14
+## v2.14
 
 - Fixing auto rotation bug in the LIS accelerometer in the TS80/TS80P
 - Adds support for two new accelerometers
@@ -139,7 +209,7 @@ The flood doors are now open for feature requests for this unit :)
 - clang-format spec setup #801
 
 
-# V2.13
+## v2.13
 
 - First _official_ Pinecil release
 - All of the wire for Pinecil releases added
@@ -157,7 +227,7 @@ The flood doors are now open for feature requests for this unit :)
 - Rework of all of the temperature curves for better accuracy
 
 
-# V2.12
+## v2.12
 
 - Only released as pre-release
 - [TS80P] Improvements to the PD negotiation to handle a few more adapters cleanly
@@ -166,21 +236,21 @@ The flood doors are now open for feature requests for this unit :)
 - Removing the very old single line menu style.
 
 
-# V2.11
+## v2.11
 
 - First TS80P support
 - Added in a USB-PD driver stack for the FUSB302
 - Fixed some graphical glitches
 
 
-# V2.10
+## v2.10
 
 - GUI polish (animations and scroll bars)
 - Power pulse to keep power supplies alive
 - Adjustable tip response gain
 
 
-# V2.09
+## v2.09
 
 - Adjustable steps in temperature adjustment
 - Git hash now in build string
@@ -188,19 +258,19 @@ The flood doors are now open for feature requests for this unit :)
 - Some minor QC3 improvements
 
 
-# V2.08
+## v2.08
 
 - Fixes auto start in sleep mode
 - Power limiters
 
 
-# V2.07
+## v2.07
 
 - QC fixes
 - Cosmetic fixes for leading 0's
 
 
-# V2.06
+## v2.06
 
 - Warning on settings reset
 - Temp temp re-write
@@ -209,32 +279,32 @@ The flood doors are now open for feature requests for this unit :)
 - Menu timeouts
 
 
-# V2.05
+## v2.05
 
 - Language updates
 
 
-# V2.04
+## v2.04
 
 - GUI updates
 
 
-# V2.03
+## v2.03
 
 - Support for new accelerometers
 
 
-# V2.02
+## v2.02
 
 - Adds small font
 
 
-# V2.01
+## v2.01
 
 - Newer settings menu
 
 
-# V2.00
+## v2.00
 
 - Complete re-write of the low layer system to use the STM32 HAL for easier development
 - This allowed easier setup for the new ADC auto measuring system
@@ -245,7 +315,7 @@ The flood doors are now open for feature requests for this unit :)
 - Added smaller font for said screen views
 
 
-# V1.17
+## v1.17
 
 - Added blinking cooldown display
 - Allowed smaller sleep timeout values
@@ -253,72 +323,72 @@ The flood doors are now open for feature requests for this unit :)
 - Automatic startup option
 
 
-# V1.16
+## v1.16
 
 - Added automatic rotation support
 - Added power display graph
 
 
-# V1.15
+## v1.15
 
 - Added support for a custom bootup logo to be programmed via the DFU bootloader
 
 
-# V1.14
+## v1.14
 
 - Changed input voltage cutoff to be based on cell count rather than voltage
 
 
-# V1.13
+## v1.13
 
 - Swapped buttons for menu to prevent accidentally changing first menu item
 - Added auto key repeat
 
 
-# V1.12
+## v1.12
 
 - Increases sensitivity options to be 1\*9 with 0 off state
 - Fixes issue where going from COOL \*> soldering can leave screen off
 
 
-# V1.11
+## v1.11
 
 - Boost mode
 - Change sensitivity options to be 1\*8
 
 
-# V1.10
+## v1.10
 
 - Adds help text to settings
 - Improves settings for the display update rate
 
 
-# V1.09
+## v1.09
 
 - Adds display modes, for slowing down or simplifying the display
 
 
-# V1.08
+## v1.08
 
 - Fix settings menu not showing flip display
 
 
-# V1.07
+## v1.07
 
 - Adds shutdown time to automatically shutdown the iron after inactivity
 
 
-# V1.06
+## v1.06
 
 - Changes H and C when the iron is heating to the minidso chevron like images
 
 
-# V1.05
+## v1.05
 
 - Adds ability to calibrate the input voltage measurement
 
 
-# V1.04
+## v1.04
 
 - Increased accuracy of the temperature control
 - Improved PID response slightly
@@ -326,14 +396,14 @@ The flood doors are now open for feature requests for this unit :)
 - Nicer idle screen
 
 
-# V1.03
+## v1.03
 
 - Improved Button handling
 - Ability to set motion sensitivity
 - DC voltmeter page shows input voltage
 
 
-# V1.02
+## v1.02
 
 - Adds hold both buttons on IDLE to access the therometer mode
 - Changes the exit soldering mode to be holding both buttons (Like original firmware)

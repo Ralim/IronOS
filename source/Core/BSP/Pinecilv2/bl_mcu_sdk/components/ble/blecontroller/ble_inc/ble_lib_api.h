@@ -6,6 +6,9 @@
 
 void ble_controller_init(uint8_t task_priority);
 void ble_controller_deinit(void);
+#if !defined(CFG_FREERTOS) && !defined(CFG_AOS)
+void blecontroller_main(void);
+#endif
 #if defined(CFG_BT_RESET)
 void ble_controller_reset(void);
 #endif
@@ -69,6 +72,7 @@ int     le_rx_test_cmd_handler(uint16_t src_id, void *param, bool from_hci);
 int     le_tx_test_cmd_handler(uint16_t src_id, void *param, bool from_hci);
 int     le_test_end_cmd_handler(bool from_hci);
 uint8_t le_get_direct_test_type(void);
+void    le_test_mode_custom_aa(uint32_t access_code);
 
 #if defined(CONFIG_BLE_MFG_HCI_CMD)
 int reset_cmd_handler(void);

@@ -2,11 +2,11 @@
 
 ## Sleep Mode Menu
 
-In Sleep mode, the iron automatically lowers the temperature to 150 °C (default). This default was chosen as it is just below the melting point of many solders. A stand-by lower temperature helps reduce the rate of oxidation and prevents damage to iron tips. In general, when not using the iron, unplug it or let it sleep to increase the longevity of replaceable tips. The default sleep temperature can be customized.
+In sleep mode, the iron automatically lowers the temperature to 150°C (default). This default setting was chosen as it is just below the melting point of a wide range of solders. A lower standby temperature helps reduce the oxidation rate and prevent damage to the soldering tips. As a general rule, when not in use, unplug the unit or let it go into sleep mode to extend the life of the replaceable tips. The default sleep temperature can be adjusted to your preference.
 
-Simply moving the iron or pressing any button will wake it back up into soldering mode.
+Simply moving the iron or pressing any button will wake it back up into soldering mode. The sensitivity is adjustable. It is recommended to adjust this to suit your environment so that it reliably stays in sleep mode when not in use, but does not go into sleep mode when in use. (This may vary depending on the amount of movement during soldering.)
 
-### Optional Hall Effect Feature (Pinecil only):
+### Optional Hall Effect Feature (Pinecil (v1/v2) only):
 
 Inside the [Sleep Menu](https://ralim.github.io/IronOS/Settings/#setting-sleep-temp) is an additional type of sleep setting. Pinecil has an unpopulated footprint (**U14**) for a hall effect sensor, Silicon Labs **Si7210-B-00-IV**. After installing the hall effect sensor (HES), it is possible to auto-trigger Pinecil to enter sleep mode when it enters the stand, and _Zzzz_ will appear (or text in detailed mode). This could be a fun enhancement for any Pinecil and adds a feature typically only found in more expensive high-end irons. The HES is available at many electronic stores for ~$2-$6.
 

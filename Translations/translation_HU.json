@@ -1,319 +1,351 @@
 {
-    "languageCode": "HU",
-    "languageLocalName": "Magyar",
-    "tempUnitFahrenheit": false,
-    "messagesWarn": {
-        "CalibrationDone": {
-            "message": "Kalibráció\nkész!"
-        },
-        "ResetOKMessage": {
-            "message": "Törlés OK"
-        },
-        "SettingsResetMessage": {
-            "message": "Beállítások\nvisszaállítva!"
-        },
-        "NoAccelerometerMessage": {
-            "message": "Nincs\ngyorsulásmérő!"
-        },
-        "NoPowerDeliveryMessage": {
-            "message": "Nincs\nUSB-PD IC!"
-        },
-        "LockingKeysString": {
-            "message": "LEZÁRVA"
-        },
-        "UnlockingKeysString": {
-            "message": "FELOLDVA"
-        },
-        "WarningKeysLockedString": {
-            "message": "!LEZÁRVA!"
-        },
-        "WarningThermalRunaway": {
-            "message": "Kontrollálatlan\nhőmérséklet!"
-        },
-        "WarningTipShorted": {
-            "message": "!Tip Shorted!"
-        },
-        "SettingsCalibrationWarning": {
-            "message": "Újraindítás előtt a hegy és az eszköz legyen szobahőmérsékletű!"
-        },
-        "CJCCalibrating": {
-            "message": "Kalibrálás\n"
-        },
-        "SettingsResetWarning": {
-            "message": "Biztos visszaállítja a beállításokat alapértékekre?"
-        },
-        "UVLOWarningString": {
-            "message": "DC túl alacsony"
-        },
-        "UndervoltageString": {
-            "message": "Alulfeszültség\n"
-        },
-        "InputVoltageString": {
-            "message": "Bemenet V: \n"
-        },
-        "SleepingSimpleString": {
-            "message": "Zzzz"
-        },
-        "SleepingAdvancedString": {
-            "message": "Alvás...\n"
-        },
-        "SleepingTipAdvancedString": {
-            "message": "Hegy: \n"
-        },
-        "OffString": {
-            "message": "Ki"
-        },
-        "ProfilePreheatString": {
-            "message": "Preheat\n"
-        },
-        "ProfileCooldownString": {
-            "message": "Cooldown\n"
-        },
-        "DeviceFailedValidationWarning": {
-            "message": "Az eszköz valószínűleg nem eredeti!"
-        },
-        "TooHotToStartProfileWarning": {
-            "message": "Too hot to\nstart profile"
-        }
+  "languageCode": "HU",
+  "languageLocalName": "Magyar",
+  "tempUnitFahrenheit": false,
+  "messagesWarn": {
+    "CalibrationDone": {
+      "message": "Kalibráció\nkész!"
     },
-    "characters": {
-        "SettingRightChar": "J",
-        "SettingLeftChar": "B",
-        "SettingAutoChar": "A",
-        "SettingOffChar": "0",
-        "SettingSlowChar": "L",
-        "SettingMediumChar": "K",
-        "SettingFastChar": "Gy",
-        "SettingStartNoneChar": "K",
-        "SettingStartSolderingChar": "F",
-        "SettingStartSleepChar": "A",
-        "SettingStartSleepOffChar": "Sz",
-        "SettingLockDisableChar": "K",
-        "SettingLockBoostChar": "B",
-        "SettingLockFullChar": "T"
+    "ResetOKMessage": {
+      "message": "Törlés OK"
     },
-    "menuGroups": {
-        "PowerMenu": {
-            "displayText": "Táp\nbeállítások",
-            "description": ""
-        },
-        "SolderingMenu": {
-            "displayText": "Forrasztási\nbeállítások",
-            "description": ""
-        },
-        "PowerSavingMenu": {
-            "displayText": "Alvási\nmódok",
-            "description": ""
-        },
-        "UIMenu": {
-            "displayText": "Felhasználói\nfelület",
-            "description": ""
-        },
-        "AdvancedMenu": {
-            "displayText": "Haladó\nbeállítások",
-            "description": ""
-        }
+    "SettingsResetMessage": {
+      "message": "Beállítások\nvisszaállítva!"
     },
-    "menuOptions": {
-        "DCInCutoff": {
-            "displayText": "Áram\nforrás",
-            "description": "Kikapcsolási feszültség beállítása (DC:10V | S:3.3V/LiPo cella | ki)"
-        },
-        "MinVolCell": {
-            "displayText": "Minimum\nfeszültség",
-            "description": "Minimális engedélyezett cellafeszültség (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
-        },
-        "QCMaxVoltage": {
-            "displayText": "Max. USB\nfeszültség",
-            "description": "Maximális USB feszültség (QuickCharge)"
-        },
-        "PDNegTimeout": {
-            "displayText": "PD\nidőtúllépés",
-            "description": "PD egyeztetés időkerete (kompatibilitás QC töltőkkel) (x 100ms)"
-        },
-        "PDVpdo": {
-            "displayText": "PD\nVPDO",
-            "description": "Enables PPS & EPR modes"
-        },
-        "BoostTemperature": {
-            "displayText": "Boost\nhőmérséklet",
-            "description": "Hőmérséklet \"boost\" módban"
-        },
-        "AutoStart": {
-            "displayText": "Automatikus\nindítás",
-            "description": "Bekapcsolás után automatikusan lépjen forrasztás módba (K=ki | F=forrasztás | A=alvó mód | Sz=szobahőmérséklet)"
-        },
-        "TempChangeShortStep": {
-            "displayText": "Hőm. állítás\nrövid",
-            "description": "Hőmérséklet állítás rövid gombnyomásra (C | F)"
-        },
-        "TempChangeLongStep": {
-            "displayText": "Hőm. állítás\nhosszú",
-            "description": "Hőmérséklet állítás hosszú gombnyomásra (C | F)"
-        },
-        "LockingMode": {
-            "displayText": "Lezárás\nengedélyezés",
-            "description": "Forrasztás közben mindkét gombot hosszan lenyomva lezárja a kezelést (K=ki | B=csak \"boost\" módban | T=teljes lezárás)"
-        },
-        "ProfilePhases": {
-            "displayText": "Profile\nPhases",
-            "description": "Number of phases in profile mode"
-        },
-        "ProfilePreheatTemp": {
-            "displayText": "Preheat\nTemp",
-            "description": "Preheat to this temperature at the start of profile mode"
-        },
-        "ProfilePreheatSpeed": {
-            "displayText": "Preheat\nSpeed",
-            "description": "Preheat at this rate (degrees per second)"
-        },
-        "ProfilePhase1Temp": {
-            "displayText": "Phase 1\nTemp",
-            "description": "Target temperature for the end of this phase"
-        },
-        "ProfilePhase1Duration": {
-            "displayText": "Phase 1\nDuration",
-            "description": "Target duration of this phase (seconds)"
-        },
-        "ProfilePhase2Temp": {
-            "displayText": "Phase 2\nTemp",
-            "description": ""
-        },
-        "ProfilePhase2Duration": {
-            "displayText": "Phase 2\nDuration",
-            "description": ""
-        },
-        "ProfilePhase3Temp": {
-            "displayText": "Phase 3\nTemp",
-            "description": ""
-        },
-        "ProfilePhase3Duration": {
-            "displayText": "Phase 3\nDuration",
-            "description": ""
-        },
-        "ProfilePhase4Temp": {
-            "displayText": "Phase 4\nTemp",
-            "description": ""
-        },
-        "ProfilePhase4Duration": {
-            "displayText": "Phase 4\nDuration",
-            "description": ""
-        },
-        "ProfilePhase5Temp": {
-            "displayText": "Phase 5\nTemp",
-            "description": ""
-        },
-        "ProfilePhase5Duration": {
-            "displayText": "Phase 5\nDuration",
-            "description": ""
-        },
-        "ProfileCooldownSpeed": {
-            "displayText": "Cooldown\nSpeed",
-            "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
-        },
-        "MotionSensitivity": {
-            "displayText": "Mozgás\nérzékenység",
-            "description": "Mozgás érzékenység beállítása (0=kikapcsolva | 1=legkevésbé érzékeny | ... | 9=legérzékenyebb)"
-        },
-        "SleepTemperature": {
-            "displayText": "Alvási\nhőmérséklet",
-            "description": "Hőmérséklet alvó módban (C | F)"
-        },
-        "SleepTimeout": {
-            "displayText": "Alvás\nidőzítő",
-            "description": "Alvási időzítő (perc | másodperc)"
-        },
-        "ShutdownTimeout": {
-            "displayText": "Kikapcsolás\nidőzítő",
-            "description": "Kikapcsolási időzítő (perc)"
-        },
-        "HallEffSensitivity": {
-            "displayText": "Alvásérzékelő\nérzékenység",
-            "description": "Alvásérzékelő gyorsulásmérő érzékenysége (0=kikapcsolva | 1=legkevésbé érzékeny | ... | 9=legérzékenyebb)"
-        },
-        "TemperatureUnit": {
-            "displayText": "Hőmérséklet\nmértékegysége",
-            "description": "Hőmérséklet mértékegysége (C=Celsius | F=Fahrenheit)"
-        },
-        "DisplayRotation": {
-            "displayText": "Kijelző\ntájolása",
-            "description": "Kijelző tájolása (J=jobbkezes | B=balkezes | A=automatikus)"
-        },
-        "CooldownBlink": {
-            "displayText": "Villogás\nhűléskor",
-            "description": "Villogjon a hőmérséklet kijelzése hűlés közben, amíg a forrasztó hegy forró"
-        },
-        "ScrollingSpeed": {
-            "displayText": "Görgetés\nsebessége",
-            "description": "Szöveggörgetés sebessége"
-        },
-        "ReverseButtonTempChange": {
-            "displayText": "+/- gomb\nmegfordítása",
-            "description": "Forrasztó hegy hőmérsékletállító gombok felcserélése"
-        },
-        "AnimSpeed": {
-            "displayText": "Animáció\nsebessége",
-            "description": "Menüikonok animációjának sebessége (0=ki | L=lassú | K=közepes | Gy=gyors)"
-        },
-        "AnimLoop": {
-            "displayText": "Folytonos\nanimáció",
-            "description": "Főmenü ikonjainak folytonos animációja"
-        },
-        "Brightness": {
-            "displayText": "Képernyő\nkontraszt",
-            "description": "Képernyő kontrasztjának állítása"
-        },
-        "ColourInversion": {
-            "displayText": "Képernyő\ninvertálás",
-            "description": "Képernyő színeinek invertálása"
-        },
-        "LOGOTime": {
-            "displayText": "Boot logo\nmegjelenítés",
-            "description": "Boot logo megjelenítési idejének beállítása (s=seconds)"
-        },
-        "AdvancedIdle": {
-            "displayText": "Részletes\nkészenlét",
-            "description": "Részletes információk megjelenítése kisebb betűméretben a készenléti képernyőn"
-        },
-        "AdvancedSoldering": {
-            "displayText": "Részletes\nforrasztás infó",
-            "description": "Részletes információk megjelenítése forrasztás közben"
-        },
-        "BluetoothLE": {
-            "displayText": "Bluetooth\n",
-            "description": "Enables BLE"
-        },
-        "PowerLimit": {
-            "displayText": "Teljesítmény\nmaximum",
-            "description": "Maximális felvett teljesitmény beállitása"
-        },
-        "CalibrateCJC": {
-            "displayText": "Calibrate CJC\nköv. indításnál",
-            "description": "Következő indításnál a hegy Cold Junction Compensation kalibrálása (nem szükséges ha Delta T kisebb mint 5°C)"
-        },
-        "VoltageCalibration": {
-            "displayText": "Bemeneti fesz.\nkalibrálása?",
-            "description": "Bemeneti feszültség kalibrálása (hosszan nyomva kilép)"
-        },
-        "PowerPulsePower": {
-            "displayText": "Ébr. pulzus\nnagysága",
-            "description": "Powerbankot ébrentartó áramfelvételi pulzusok nagysága (W)"
-        },
-        "PowerPulseWait": {
-            "displayText": "Ébr. pulzus\nidőköze",
-            "description": "Powerbankot ébrentartó áramfelvételi pulzusok időköze (x 2.5s)"
-        },
-        "PowerPulseDuration": {
-            "displayText": "Ébr. pulzus\nidőtartama",
-            "description": "Powerbankot ébrentartó áramfelvételi pulzusok időtartama (x 250ms)"
-        },
-        "SettingsReset": {
-            "displayText": "Gyári\nbeállítások?",
-            "description": "Beállítások alaphelyzetbe állítása"
-        },
-        "LanguageSwitch": {
-            "displayText": "Nyelv:\n HU      Magyar",
-            "description": ""
-        }
+    "NoAccelerometerMessage": {
+      "message": "Nincs\ngyorsulásmérő!"
+    },
+    "NoPowerDeliveryMessage": {
+      "message": "Nincs\nUSB-PD IC!"
+    },
+    "LockingKeysString": {
+      "message": "LEZÁRVA"
+    },
+    "UnlockingKeysString": {
+      "message": "FELOLDVA"
+    },
+    "WarningKeysLockedString": {
+      "message": "!LEZÁRVA!"
+    },
+    "WarningThermalRunaway": {
+      "message": "Kontrollálatlan\nhőmérséklet!"
+    },
+    "WarningTipShorted": {
+      "message": "!Tip Shorted!"
+    },
+    "SettingsCalibrationWarning": {
+      "message": "Újraindítás előtt a hegy és az eszköz legyen szobahőmérsékletű!"
+    },
+    "CJCCalibrating": {
+      "message": "Kalibrálás\n"
+    },
+    "SettingsResetWarning": {
+      "message": "Biztos visszaállítja a beállításokat alapértékekre?"
+    },
+    "UVLOWarningString": {
+      "message": "DC túl alacsony"
+    },
+    "UndervoltageString": {
+      "message": "Alulfeszültség\n"
+    },
+    "InputVoltageString": {
+      "message": "Bemenet V: \n"
+    },
+    "SleepingAdvancedString": {
+      "message": "Alvás...\n"
+    },
+    "SleepingTipAdvancedString": {
+      "message": "Hegy: \n"
+    },
+    "ProfilePreheatString": {
+      "message": "Preheat\n"
+    },
+    "ProfileCooldownString": {
+      "message": "Cooldown\n"
+    },
+    "DeviceFailedValidationWarning": {
+      "message": "Az eszköz valószínűleg nem eredeti!"
+    },
+    "TooHotToStartProfileWarning": {
+      "message": "Too hot to\nstart profile"
     }
+  },
+  "characters": {
+    "SettingRightChar": "J",
+    "SettingLeftChar": "B",
+    "SettingAutoChar": "A",
+    "SettingSlowChar": "L",
+    "SettingMediumChar": "K",
+    "SettingFastChar": "Gy",
+    "SettingStartSolderingChar": "F",
+    "SettingStartSleepChar": "A",
+    "SettingStartSleepOffChar": "Sz",
+    "SettingLockBoostChar": "B",
+    "SettingLockFullChar": "T"
+  },
+  "menuGroups": {
+    "PowerMenu": {
+      "displayText": "Táp\nbeállítások",
+      "description": ""
+    },
+    "SolderingMenu": {
+      "displayText": "Forrasztási\nbeállítások",
+      "description": ""
+    },
+    "PowerSavingMenu": {
+      "displayText": "Alvási\nmódok",
+      "description": ""
+    },
+    "UIMenu": {
+      "displayText": "Felhasználói\nfelület",
+      "description": ""
+    },
+    "AdvancedMenu": {
+      "displayText": "Haladó\nbeállítások",
+      "description": ""
+    }
+  },
+  "menuValues": {
+    "USBPDModeDefault": {
+      "displayText": "Default\nMode"
+    },
+    "USBPDModeNoDynamic": {
+      "displayText": "No\nDynamic"
+    },
+    "USBPDModeSafe": {
+      "displayText": "Safe\nMode"
+    },
+    "TipTypeAuto": {
+      "displayText": "Auto\nSense"
+    },
+    "TipTypeT12Long": {
+      "displayText": "TS100\nLong"
+    },
+    "TipTypeT12Short": {
+      "displayText": "Pine\nShort"
+    },
+    "TipTypeT12PTS": {
+      "displayText": "PTS\n200"
+    },
+    "TipTypeTS80": {
+      "displayText": "TS80\n"
+    },
+    "TipTypeJBCC210": {
+      "displayText": "JBC\nC210"
+    }
+  },
+  "menuOptions": {
+    "DCInCutoff": {
+      "displayText": "Áram\nforrás",
+      "description": "Kikapcsolási feszültség beállítása (DC:10V | S:3.3V/LiPo cella | ki)"
+    },
+    "MinVolCell": {
+      "displayText": "Minimum\nfeszültség",
+      "description": "Minimális engedélyezett cellafeszültség (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+    },
+    "QCMaxVoltage": {
+      "displayText": "Max. USB\nfeszültség",
+      "description": "Maximális USB feszültség (QuickCharge)"
+    },
+    "PDNegTimeout": {
+      "displayText": "PD\nidőtúllépés",
+      "description": "PD egyeztetés időkerete (kompatibilitás QC töltőkkel) (x 100ms)"
+    },
+    "USBPDMode": {
+      "displayText": "PD\nMode",
+      "description": "No Dynamic disables EPR & PPS, Safe mode does not use padding resistance"
+    },
+    "BoostTemperature": {
+      "displayText": "Boost\nhőmérséklet",
+      "description": "Hőmérséklet \"boost\" módban"
+    },
+    "AutoStart": {
+      "displayText": "Automatikus\nindítás",
+      "description": "Bekapcsolás után automatikusan lépjen forrasztás módba (F=forrasztás | A=alvó mód | Sz=szobahőmérséklet)"
+    },
+    "TempChangeShortStep": {
+      "displayText": "Hőm. állítás\nrövid",
+      "description": "Hőmérséklet állítás rövid gombnyomásra (C | F)"
+    },
+    "TempChangeLongStep": {
+      "displayText": "Hőm. állítás\nhosszú",
+      "description": "Hőmérséklet állítás hosszú gombnyomásra (C | F)"
+    },
+    "LockingMode": {
+      "displayText": "Lezárás\nengedélyezés",
+      "description": "Forrasztás közben mindkét gombot hosszan lenyomva lezárja a kezelést (B=csak \"boost\" módban | T=teljes lezárás)"
+    },
+    "ProfilePhases": {
+      "displayText": "Profile\nPhases",
+      "description": "Number of phases in profile mode"
+    },
+    "ProfilePreheatTemp": {
+      "displayText": "Preheat\nTemp",
+      "description": "Preheat to this temperature at the start of profile mode"
+    },
+    "ProfilePreheatSpeed": {
+      "displayText": "Preheat\nSpeed",
+      "description": "Preheat at this rate (degrees per second)"
+    },
+    "ProfilePhase1Temp": {
+      "displayText": "Phase 1\nTemp",
+      "description": "Target temperature for the end of this phase"
+    },
+    "ProfilePhase1Duration": {
+      "displayText": "Phase 1\nDuration",
+      "description": "Target duration of this phase (seconds)"
+    },
+    "ProfilePhase2Temp": {
+      "displayText": "Phase 2\nTemp",
+      "description": ""
+    },
+    "ProfilePhase2Duration": {
+      "displayText": "Phase 2\nDuration",
+      "description": ""
+    },
+    "ProfilePhase3Temp": {
+      "displayText": "Phase 3\nTemp",
+      "description": ""
+    },
+    "ProfilePhase3Duration": {
+      "displayText": "Phase 3\nDuration",
+      "description": ""
+    },
+    "ProfilePhase4Temp": {
+      "displayText": "Phase 4\nTemp",
+      "description": ""
+    },
+    "ProfilePhase4Duration": {
+      "displayText": "Phase 4\nDuration",
+      "description": ""
+    },
+    "ProfilePhase5Temp": {
+      "displayText": "Phase 5\nTemp",
+      "description": ""
+    },
+    "ProfilePhase5Duration": {
+      "displayText": "Phase 5\nDuration",
+      "description": ""
+    },
+    "ProfileCooldownSpeed": {
+      "displayText": "Cooldown\nSpeed",
+      "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
+    },
+    "MotionSensitivity": {
+      "displayText": "Mozgás\nérzékenység",
+      "description": "Mozgás érzékenység beállítása (1=legkevésbé érzékeny | ... | 9=legérzékenyebb)"
+    },
+    "SleepTemperature": {
+      "displayText": "Alvási\nhőmérséklet",
+      "description": "Hőmérséklet alvó módban (C | F)"
+    },
+    "SleepTimeout": {
+      "displayText": "Alvás\nidőzítő",
+      "description": "Alvási időzítő (perc | másodperc)"
+    },
+    "ShutdownTimeout": {
+      "displayText": "Kikapcsolás\nidőzítő",
+      "description": "Kikapcsolási időzítő (perc)"
+    },
+    "HallEffSensitivity": {
+      "displayText": "Alvásérzékelő\nérzékenység",
+      "description": "Alvásérzékelő gyorsulásmérő érzékenysége (1=legkevésbé érzékeny | ... | 9=legérzékenyebb)"
+    },
+    "HallEffSleepTimeout": {
+      "displayText": "HallSensor\nSleepTime",
+      "description": "Az \"alvó üzemmód\" előtti intervallum akkor kezdődik, amikor a hall-effektus meghaladja a küszöbértéket"
+    },
+    "TemperatureUnit": {
+      "displayText": "Hőmérséklet\nmértékegysége",
+      "description": "Hőmérséklet mértékegysége (C=Celsius | F=Fahrenheit)"
+    },
+    "DisplayRotation": {
+      "displayText": "Kijelző\ntájolása",
+      "description": "Kijelző tájolása (J=jobbkezes | B=balkezes | A=automatikus)"
+    },
+    "CooldownBlink": {
+      "displayText": "Villogás\nhűléskor",
+      "description": "Villogjon a hőmérséklet kijelzése hűlés közben, amíg a forrasztó hegy forró"
+    },
+    "ScrollingSpeed": {
+      "displayText": "Görgetés\nsebessége",
+      "description": "Szöveggörgetés sebessége"
+    },
+    "ReverseButtonTempChange": {
+      "displayText": "+/- gomb\nmegfordítása",
+      "description": "Forrasztó hegy hőmérsékletállító gombok felcserélése"
+    },
+    "ReverseButtonSettings": {
+      "displayText": "Swap\nA B keys",
+      "description": "Reverse assignment of buttons for Settings menu"
+    },
+    "AnimSpeed": {
+      "displayText": "Animáció\nsebessége",
+      "description": "Menüikonok animációjának sebessége (L=lassú | K=közepes | Gy=gyors)"
+    },
+    "AnimLoop": {
+      "displayText": "Folytonos\nanimáció",
+      "description": "Főmenü ikonjainak folytonos animációja"
+    },
+    "Brightness": {
+      "displayText": "Képernyő\nkontraszt",
+      "description": "Képernyő kontrasztjának állítása"
+    },
+    "ColourInversion": {
+      "displayText": "Képernyő\ninvertálás",
+      "description": "Képernyő színeinek invertálása"
+    },
+    "LOGOTime": {
+      "displayText": "Boot logo\nmegjelenítés",
+      "description": "Boot logo megjelenítési idejének beállítása (s=seconds)"
+    },
+    "AdvancedIdle": {
+      "displayText": "Részletes\nkészenlét",
+      "description": "Részletes információk megjelenítése kisebb betűméretben a készenléti képernyőn"
+    },
+    "AdvancedSoldering": {
+      "displayText": "Részletes\nforrasztás infó",
+      "description": "Részletes információk megjelenítése forrasztás közben"
+    },
+    "BluetoothLE": {
+      "displayText": "Bluetooth\n",
+      "description": "Enables BLE"
+    },
+    "PowerLimit": {
+      "displayText": "Teljesítmény\nmaximum",
+      "description": "Maximális felvett teljesitmény beállitása"
+    },
+    "CalibrateCJC": {
+      "displayText": "Calibrate CJC\nköv. indításnál",
+      "description": "Következő indításnál a hegy Cold Junction Compensation kalibrálása (nem szükséges ha Delta T kisebb mint 5°C)"
+    },
+    "VoltageCalibration": {
+      "displayText": "Bemeneti fesz.\nkalibrálása?",
+      "description": "Bemeneti feszültség kalibrálása (hosszan nyomva kilép)"
+    },
+    "PowerPulsePower": {
+      "displayText": "Ébr. pulzus\nnagysága",
+      "description": "Powerbankot ébrentartó áramfelvételi pulzusok nagysága (W)"
+    },
+    "PowerPulseWait": {
+      "displayText": "Ébr. pulzus\nidőköze",
+      "description": "Powerbankot ébrentartó áramfelvételi pulzusok időköze (x 2.5s)"
+    },
+    "PowerPulseDuration": {
+      "displayText": "Ébr. pulzus\nidőtartama",
+      "description": "Powerbankot ébrentartó áramfelvételi pulzusok időtartama (x 250ms)"
+    },
+    "SettingsReset": {
+      "displayText": "Gyári\nbeállítások?",
+      "description": "Beállítások alaphelyzetbe állítása"
+    },
+    "LanguageSwitch": {
+      "displayText": "Nyelv:\n HU      Magyar",
+      "description": ""
+    },
+    "SolderingTipType": {
+      "displayText": "Soldering\nTip Type",
+      "description": "Select the tip type fitted"
+    }
+  }
 }

@@ -20,10 +20,22 @@
 #define BT_VOICE_CVSD_16BIT 0x0060
 #define BT_VOICE_MSBC_16BIT 0x0063
 
+#if (BFLB_BT_CO_THREAD)
+enum {
+    BT_CMD_SYNC_NONE = 0,
+    BT_CMD_SYNC_TX = 1,
+    BT_CMD_SYNC_TX_DONE = 2
+};
+#endif
+
 /* k_poll event tags */
 enum {
     BT_EVENT_CMD_TX,
     BT_EVENT_CONN_TX_QUEUE,
+#if (BFLB_BT_CO_THREAD)
+    BT_EVENT_RX_QUEUE,
+    BT_EVENT_WORK_QUEUE,
+#endif
 };
 
 /* bt_dev flags: the flags defined here represent BT controller state */
@@ -58,6 +70,10 @@ enum {
 
 #if defined(CONFIG_BT_STACK_PTS)
     BT_DEV_ADV_ADDRESS_IS_PUBLIC,
+#endif
+
+#if defined(CONFIG_AUTO_PTS)
+    BT_DEV_SETTED_NON_RESOLV_ADDR, //The non-reslovable address have been set.
 #endif
 
 #if defined(BFLB_HOST_ASSISTANT)
@@ -262,8 +278,9 @@ int set_adv_channel_map(u8_t channel);
 int bt_get_local_public_address(bt_addr_le_t *adv_addr);
 int bt_get_local_ramdon_address(bt_addr_le_t *adv_addr);
 int bt_le_set_data_len(struct bt_conn *conn, u16_t tx_octets, u16_t tx_time);
-int hci_le_set_phy(struct bt_conn *conn);
-int hci_le_set_default_phy(struct bt_conn *conn, u8_t default_phy);
+int hci_le_set_phy(struct bt_conn *conn, uint8_t all_phys,
+                   uint8_t pref_tx_phy, uint8_t pref_rx_phy, uint8_t phy_opts);
+int hci_le_set_default_phy(u8_t default_phy);
 
 #if defined(CONFIG_SET_TX_PWR)
 int bt_set_tx_pwr(int8_t power);
@@ -281,5 +298,8 @@ int bt_le_set_event_mask(void);
 void bt_hci_reset_complete(struct net_buf *buf);
 void bt_register_host_assist_cb(struct blhast_cb *cb);
 #endif
+
+typedef void (*bredr_name_callback)(const char *name);
+int remote_name_req(const bt_addr_t *addr, bredr_name_callback cb);
 
 #endif

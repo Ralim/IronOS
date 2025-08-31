@@ -11,10 +11,6 @@ ADC_HandleTypeDef hadc1;
 ADC_HandleTypeDef hadc2;
 DMA_HandleTypeDef hdma_adc1;
 
-I2C_HandleTypeDef hi2c1;
-DMA_HandleTypeDef hdma_i2c1_rx;
-DMA_HandleTypeDef hdma_i2c1_tx;
-
 IWDG_HandleTypeDef hiwdg;
 TIM_HandleTypeDef  htim2;
 TIM_HandleTypeDef  htim3;
@@ -25,7 +21,7 @@ uint32_t ADCReadings[ADC_SAMPLES * ADC_CHANNELS]; // room for 32 lots of the pai
 // Functions
 static void SystemClock_Config(void);
 static void MX_ADC1_Init(void);
-static void MX_I2C1_Init(void);
+
 static void MX_IWDG_Init(void);
 static void MX_TIM3_Init(void);
 static void MX_TIM2_Init(void);
@@ -39,7 +35,7 @@ void        Setup_HAL() {
 
   MX_GPIO_Init();
   MX_DMA_Init();
-  MX_I2C1_Init();
+
   MX_ADC1_Init();
   MX_ADC2_Init();
   MX_TIM3_Init();
@@ -196,19 +192,6 @@ static void MX_ADC2_Init(void) {
     ;
   }
 }
-/* I2C1 init function */
-static void MX_I2C1_Init(void) {
-  hi2c1.Instance             = I2C1;
-  hi2c1.Init.ClockSpeed      = 300000;
-  hi2c1.Init.DutyCycle       = I2C_DUTYCYCLE_2;
-  hi2c1.Init.OwnAddress1     = 0;
-  hi2c1.Init.AddressingMode  = I2C_ADDRESSINGMODE_7BIT;
-  hi2c1.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
-  hi2c1.Init.OwnAddress2     = 0;
-  hi2c1.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
-  hi2c1.Init.NoStretchMode   = I2C_NOSTRETCH_DISABLE;
-  HAL_I2C_Init(&hi2c1);
-}
 
 /* IWDG init function */
 static void MX_IWDG_Init(void) {
@@ -353,8 +336,8 @@ static void MX_GPIO_Init(void) {
   GPIO_InitStruct.Pin  = GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6 | GPIO_PIN_7 | GPIO_PIN_8 | GPIO_PIN_10 | GPIO_PIN_15;
   GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-  GPIO_InitStruct.Pin = GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6 | GPIO_PIN_7 | GPIO_PIN_8 | GPIO_PIN_9 | GPIO_PIN_10 | GPIO_PIN_11 | GPIO_PIN_12
-                        | GPIO_PIN_13 | GPIO_PIN_14 | GPIO_PIN_15;
+  GPIO_InitStruct.Pin = GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6 | GPIO_PIN_7 | GPIO_PIN_8 | GPIO_PIN_9 | GPIO_PIN_10 | GPIO_PIN_11 | GPIO_PIN_12 |
+                        GPIO_PIN_13 | GPIO_PIN_14 | GPIO_PIN_15;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /*Configure GPIO pins : KEY_B_Pin KEY_A_Pin */

@@ -1,6 +1,5 @@
 #ifndef CONFIGURATION_H_
 #define CONFIGURATION_H_
-#include "Settings.h"
 #include <stdint.h>
 /**
  * Configuration.h
@@ -57,14 +56,20 @@
  *
  */
 #define ORIENTATION_MODE           2 // 0: Right 1:Left 2:Automatic - Default Automatic
+#define MAX_ORIENTATION_MODE       2 // Up to auto
 #define REVERSE_BUTTON_TEMP_CHANGE 0 // 0:Default 1:Reverse - Reverse the plus and minus button assigment for temperature change
 
 /**
  * OLED Brightness
  *
  */
-#define MIN_BRIGHTNESS     0   // Min OLED brightness selectable
-#define MAX_BRIGHTNESS     100 // Max OLED brightness selectable
+#if defined(MODEL_TS101)
+  #define MIN_BRIGHTNESS     1   // Min OLED brightness selectable
+  #define MAX_BRIGHTNESS     101 // Max OLED brightness selectable
+#else
+  #define MIN_BRIGHTNESS     0   // Min OLED brightness selectable
+  #define MAX_BRIGHTNESS     100 // Max OLED brightness selectable
+#endif
 #define BRIGHTNESS_STEP    25  // OLED brightness increment
 #define DEFAULT_BRIGHTNESS 25  // default OLED brightness
 
@@ -86,7 +91,7 @@
 #define POWER_PULSE_DEFAULT 0
 #else
 #define POWER_PULSE_DEFAULT 5
-#endif /* TS100 */
+#endif                                 /* TS100 */
 #define POWER_PULSE_WAIT_DEFAULT     4 // Default rate of the power pulse: 4*2500 = 10000 ms = 10 s
 #define POWER_PULSE_DURATION_DEFAULT 1 // Default duration of the power pulse: 1*250 = 250 ms
 
@@ -104,7 +109,7 @@
 #define DETAILED_IDLE      0 // 0: Disable 1: Enable - Default 0
 
 #define THERMAL_RUNAWAY_TIME_SEC 20
-#define THERMAL_RUNAWAY_TEMP_C   10
+#define THERMAL_RUNAWAY_TEMP_C   3
 
 #define CUT_OUT_SETTING          0  // default to no cut-off voltage
 #define RECOM_VOL_CELL           33 // Minimum voltage per cell (Recommended 3.3V (33))
@@ -156,6 +161,10 @@
 #define MIN_BOOST_TEMP_C       250 // The min settable temp for boost mode °C
 #define MIN_BOOST_TEMP_F       480 // The min settable temp for boost mode °F
 
+// Miniware cant be trusted, and keep using the GD32 randomly now, so assume they will clones in the future
+
+#define I2C_SOFT_BUS_1 1
+
 #ifdef MODEL_TS100
 #define VOLTAGE_DIV        467 // 467 - Default divider from schematic
 #define CALIBRATION_OFFSET 900 // 900 - Default adc offset in uV
@@ -165,13 +174,18 @@
 #define POWER_LIMIT_STEPS  5
 #define OP_AMP_GAIN_STAGE  OP_AMP_GAIN_STAGE_TS100
 #define TEMP_uV_LOOKUP_HAKKO
-#define USB_PD_VMAX 20 // Maximum voltage for PD to negotiate
-
+#define USB_PD_VMAX              20 // Maximum voltage for PD to negotiate
+#define OLED_I2CBB1              1
+#define ACCEL_I2CBB1             1
 #define HARDWARE_MAX_WATTAGE_X10 750
 #define TIP_THERMAL_MASS         65 // X10 watts to raise 1 deg C in 1 second
 #define TIP_RESISTANCE           75 // x10 ohms, 7.5 typical for ts100 tips
 
 #define POW_DC
+#define I2C_SOFT_BUS_1 1
+#define OLED_I2CBB1    1
+#define ACCEL_I2CBB1   1
+#define TIPTYPE_T12    1 // Can manually pick a T12 tip
 
 #define TEMP_TMP36
 #endif /* TS100 */
@@ -185,7 +199,7 @@
 #define POWER_LIMIT_STEPS  5
 #define OP_AMP_GAIN_STAGE  OP_AMP_GAIN_STAGE_TS100
 #define TEMP_uV_LOOKUP_HAKKO
-
+#define ACCEL_LIS_CLONE          1
 #define HARDWARE_MAX_WATTAGE_X10 1000
 #define TIP_THERMAL_MASS         65 // X10 watts to raise 1 deg C in 1 second
 #define TIP_RESISTANCE           75 // x10 ohms, 7.5 typical for ts100 tips
@@ -193,8 +207,8 @@
 #define TIP_HAS_DIRECT_PWM   1
 #define POW_DC               1
 #define POW_PD               1
+#define USB_PD_EPR_WATTAGE   140 /* EPR Supported */
 #define I2C_SOFT_BUS_2       1
-#define I2C_SOFT_BUS_1       1
 #define OLED_I2CBB1          1
 #define USB_PD_I2CBB2        1
 #define USB_PD_VMAX          28 // Device supposedly can do 28V; looks like vmax is 33 ish
@@ -204,6 +218,9 @@
 #define TEMP_NTC             1
 #define ACCEL_I2CBB1         1
 #define POW_EPR              1
+#define TIP_TYPE_SUPPORT     1 // Support for tips of different types, i.e. resistance
+#define AUTO_TIP_SELECTION   1 // Can auto-select the tip
+#define TIPTYPE_T12          1 // Can manually pick a T12 tip
 #define HAS_POWER_DEBUG_MENU
 #define DEBUG_POWER_MENU_BUTTON_B
 
@@ -218,9 +235,11 @@
 
 #define TIP_THERMAL_MASS 40
 #define TIP_RESISTANCE   45 // x10 ohms, 4.5 typical for ts80 tips
-
+#define I2C_SOFT_BUS_2   1
 #define LIS_ORI_FLIP
 #define OLED_FLIP
+#define TIPTYPE_TS80 1 // Only one tip type so far
+
 #endif /* TS80(P) */
 
 #ifdef MODEL_TS80
@@ -228,35 +247,52 @@
 #define CALIBRATION_OFFSET 900 // the adc offset in uV
 #define PID_POWER_LIMIT    35  // Sets the max pwm power limit
 #define POWER_LIMIT        32  // 24 watts default power limit
+#define OLED_I2CBB1        1
+#define ACCEL_I2CBB1       1
 
 #define HARDWARE_MAX_WATTAGE_X10 320
 
 #define POW_QC
 
 #define TEMP_TMP36
+#define I2C_SOFT_BUS_1 1
+#define OLED_I2CBB1    1
+#define ACCEL_I2CBB1   1
 #endif /* TS80 */
 
 #ifdef MODEL_TS80P
-#define VOLTAGE_DIV        650  // Default for TS80P with slightly different resistors
-#define CALIBRATION_OFFSET 1500 // the adc offset in uV
-#define PID_POWER_LIMIT    35   // Sets the max pwm power limit
-#define POWER_LIMIT        32   // 30 watts default power limit
-
+#define VOLTAGE_DIV              650  // Default for TS80P with slightly different resistors
+#define CALIBRATION_OFFSET       1500 // the adc offset in uV
+#define PID_POWER_LIMIT          35   // Sets the max pwm power limit
+#define POWER_LIMIT              32   // 30 watts default power limit
+#define I2C_SOFT_BUS_2           1
 #define HARDWARE_MAX_WATTAGE_X10 320
+#define OLED_I2CBB1              1
+#define ACCEL_I2CBB1             1
 
-#define POW_PD 1
-#define POW_QC 1
+#define POW_PD             1
+#define USB_PD_EPR_WATTAGE 0 /*No EPR*/
+#define POW_QC             1
 #define TEMP_NTC
 #define I2C_SOFT_BUS_2 1
+#define I2C_SOFT_BUS_1 1
+#define OLED_I2CBB1    1
+#define ACCEL_I2CBB1   1
 #define SC7_ORI_FLIP
 #endif /* TS80P */
 
 #ifdef MODEL_TS101
-#define FLASH_LOGOADDR      (0x08000000 + (126 * 1024))
+// For whatever reason, Miniware decided to not build a reliable DFU bootloader
+// It can't appear to flash to some of the upper pages of flash,
+// I'm slightly suspect a watchdog or something runs out
+// as device resets before file finishes copying
+// So logo has to be located on page 99 or else it cant be flashed on stock bootloader
+#define FLASH_LOGOADDR      (0x08000000 + (99 * 1024))
 #define SETTINGS_START_PAGE (0x08000000 + (127 * 1024))
 #else
-#define FLASH_LOGOADDR      (0x08000000 +  (62 * 1024))
-#define SETTINGS_START_PAGE (0x08000000 +  (63 * 1024))
+#define FLASH_LOGOADDR      (0x08000000 + (62 * 1024))
+#define SETTINGS_START_PAGE (0x08000000 + (63 * 1024))
+#define OLED_96x16          1
 #endif /* TS101 */
 
 #endif /* CONFIGURATION_H_ */

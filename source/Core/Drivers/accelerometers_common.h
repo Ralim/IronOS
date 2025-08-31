@@ -1,6 +1,6 @@
 #ifndef CORE_DRIVERS_ACCELEROMTERS_COMMON_H_
 #define CORE_DRIVERS_ACCELEROMTERS_COMMON_H_
-
+#include "configuration.h"
 #if defined(ACCEL_I2CBB2)
 #include "I2CBB2.hpp"
 #define ACCEL_I2C_CLASS I2CBB2

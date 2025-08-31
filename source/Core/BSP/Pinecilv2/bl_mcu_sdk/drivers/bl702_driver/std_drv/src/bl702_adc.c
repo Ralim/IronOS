@@ -50,16 +50,16 @@
  */
 #undef MSG
 #define MSG(...)
-#define AON_CLK_SET_DUMMY_WAIT \
-  {                            \
-    __NOP();                   \
-    __NOP();                   \
-    __NOP();                   \
-    __NOP();                   \
-    __NOP();                   \
-    __NOP();                   \
-    __NOP();                   \
-    __NOP();                   \
+#define AON_CLK_SET_DUMMY_WAIT                                                                                                                                                                         \
+  {                                                                                                                                                                                                    \
+    __NOP();                                                                                                                                                                                           \
+    __NOP();                                                                                                                                                                                           \
+    __NOP();                                                                                                                                                                                           \
+    __NOP();                                                                                                                                                                                           \
+    __NOP();                                                                                                                                                                                           \
+    __NOP();                                                                                                                                                                                           \
+    __NOP();                                                                                                                                                                                           \
+    __NOP();                                                                                                                                                                                           \
   }
 #define ADC_RESTART_DUMMY_WAIT BL702_Delay_US(100)
 
@@ -74,11 +74,11 @@
 /** @defgroup  ADC_Private_Variables
  *  @{
  */
-static intCallback_Type   *adcIntCbfArra[ADC_INT_ALL] = {NULL};
-static ADC_Gain_Coeff_Type adcGainCoeffCal            = {
-               .adcGainCoeffEnable = DISABLE,
-               .adcgainCoeffVal    = 0,
-               .coe                = 1,
+static intCallback_Type *adcIntCbfArra[ADC_INT_ALL] = {NULL};
+ADC_Gain_Coeff_Type      adcGainCoeffCal            = {
+                    .adcGainCoeffEnable = DISABLE,
+                    .adcgainCoeffVal    = 0,
+                    .coe                = 1,
 };
 
 /*@} end of group ADC_Private_Variables */
@@ -185,7 +185,7 @@ void ADC_Init(ADC_CFG_Type *cfg) {
   CHECK_PARAM(IS_ADC_DATA_WIDTH_TYPE(cfg->resWidth));
 
   /* config 1 */
-  regCfg1 = 0; // BL_RD_REG(AON_BASE, AON_GPADC_REG_CONFIG1);
+  regCfg1 = BL_RD_REG(AON_BASE, AON_GPADC_REG_CONFIG1);
   regCfg1 = BL_SET_REG_BITS_VAL(regCfg1, AON_GPADC_V18_SEL, cfg->v18Sel);
   regCfg1 = BL_SET_REG_BITS_VAL(regCfg1, AON_GPADC_V11_SEL, cfg->v11Sel);
   regCfg1 = BL_CLR_REG_BIT(regCfg1, AON_GPADC_DITHER_EN);
@@ -200,13 +200,11 @@ void ADC_Init(ADC_CFG_Type *cfg) {
 
   /* config 2 */
   regCfg2 = BL_RD_REG(AON_BASE, AON_GPADC_REG_CONFIG2);
-  regCfg2 = BL_SET_REG_BITS_VAL(regCfg2, AON_GPADC_DLY_SEL, 0x00);
+  regCfg2 = BL_SET_REG_BITS_VAL(regCfg2, AON_GPADC_DLY_SEL, 0x02);
   regCfg2 = BL_SET_REG_BITS_VAL(regCfg2, AON_GPADC_PGA1_GAIN, cfg->gain1);
   regCfg2 = BL_SET_REG_BITS_VAL(regCfg2, AON_GPADC_PGA2_GAIN, cfg->gain2);
   regCfg2 = BL_SET_REG_BITS_VAL(regCfg2, AON_GPADC_BIAS_SEL, cfg->biasSel);
   regCfg2 = BL_SET_REG_BITS_VAL(regCfg2, AON_GPADC_CHOP_MODE, cfg->chopMode);
-  regCfg2 = BL_CLR_REG_BIT(regCfg2, AON_GPADC_VBAT_EN);   // vbat enabled (off)
-  regCfg2 = BL_CLR_REG_BIT(regCfg2, AON_GPADC_TSVBE_LOW); // tsen didoe current
   /* pga_vcmi_en is for mic */
   regCfg2 = BL_CLR_REG_BIT(regCfg2, AON_GPADC_PGA_VCMI_EN);
 
@@ -233,7 +231,7 @@ void ADC_Init(ADC_CFG_Type *cfg) {
   Interrupt_Handler_Register(GPADC_DMA_IRQn, GPADC_DMA_IRQHandler);
 #endif
 
-  // ADC_Gain_Trim();
+  ADC_Gain_Trim();
 }
 
 /****************************************************************************/
@@ -510,8 +508,7 @@ void ADC_Parse_Result(uint32_t *orgVal, uint32_t len, ADC_Result_Type *result) {
   uint32_t            tmpVal1 = 0, tmpVal2 = 0;
   ADC_Data_Width_Type dataType;
   ADC_SIG_INPUT_Type  sigType;
-  float               ref = 2.0;
-  uint32_t            i   = 0;
+  uint32_t            i = 0;
 
   float coe = 1.0;
 
@@ -524,54 +521,52 @@ void ADC_Parse_Result(uint32_t *orgVal, uint32_t len, ADC_Result_Type *result) {
   dataType = BL_GET_REG_BITS_VAL(tmpVal1, AON_GPADC_RES_SEL);
   sigType  = BL_GET_REG_BITS_VAL(tmpVal2, AON_GPADC_DIFF_MODE);
 
-  if (BL_GET_REG_BITS_VAL(tmpVal2, AON_GPADC_VREF_SEL) == ADC_VREF_3P2V) {
-    ref = 3.2;
-  }
-
   if (sigType == ADC_INPUT_SINGLE_END) {
     for (i = 0; i < len; i++) {
       result[i].posChan = orgVal[i] >> 21;
       result[i].negChan = -1;
-
+      uint32_t sample   = 0;
       if (dataType == ADC_DATA_WIDTH_12) {
-        result[i].value = (unsigned int)(((orgVal[i] & 0xffff) >> 4) / coe);
-        result[i].volt  = result[i].value / 4096.0 * ref;
+        sample = ((orgVal[i] & 0xffff) >> 4);
       } else if ((dataType == ADC_DATA_WIDTH_14_WITH_16_AVERAGE) || (dataType == ADC_DATA_WIDTH_14_WITH_64_AVERAGE)) {
-        result[i].value = (unsigned int)(((orgVal[i] & 0xffff) >> 2) / coe);
-        result[i].volt  = result[i].value / 16384.0 * ref;
+        sample = ((orgVal[i] & 0xffff) >> 2);
       } else if ((dataType == ADC_DATA_WIDTH_16_WITH_128_AVERAGE) || (dataType == ADC_DATA_WIDTH_16_WITH_256_AVERAGE)) {
-        result[i].value = (unsigned int)((orgVal[i] & 0xffff) / coe);
-        result[i].volt  = result[i].value / 65536.0 * ref;
-      }
-    }
-  } else {
-    for (i = 0; i < len; i++) {
-      neg               = 0;
-      result[i].posChan = orgVal[i] >> 21;
-      result[i].negChan = (orgVal[i] >> 16) & 0x1F;
-
-      if (orgVal[i] & 0x8000) {
-        orgVal[i] = ~orgVal[i];
-        orgVal[i] += 1;
-        neg = 1;
+        sample = (orgVal[i] & 0xffff);
       }
 
-      if (dataType == ADC_DATA_WIDTH_12) {
-        result[i].value = (unsigned int)(((orgVal[i] & 0xffff) >> 4) / coe);
-        result[i].volt  = result[i].value / 2048.0 * ref;
-      } else if ((dataType == ADC_DATA_WIDTH_14_WITH_16_AVERAGE) || (dataType == ADC_DATA_WIDTH_14_WITH_64_AVERAGE)) {
-        result[i].value = (unsigned int)(((orgVal[i] & 0xffff) >> 2) / coe);
-        result[i].volt  = result[i].value / 8192.0 * ref;
-      } else if ((dataType == ADC_DATA_WIDTH_16_WITH_128_AVERAGE) || (dataType == ADC_DATA_WIDTH_16_WITH_256_AVERAGE)) {
-        result[i].value = (unsigned int)((orgVal[i] & 0xffff) / coe);
-        result[i].volt  = result[i].value / 32768.0 * ref;
-      }
+      result[i].value = (unsigned int)(sample / coe);
 
-      if (neg) {
-        result[i].volt = -result[i].volt;
+      // Saturate at 16 bits
+      if (result[i].value > 0xFFFF) {
+        result[i].value = 0xFFFF;
       }
     }
   }
+  // else {
+  //   for (i = 0; i < len; i++) {
+  //     neg               = 0;
+  //     result[i].posChan = orgVal[i] >> 21;
+  //     result[i].negChan = (orgVal[i] >> 16) & 0x1F;
+
+  //     if (orgVal[i] & 0x8000) {
+  //       orgVal[i] = ~orgVal[i];
+  //       orgVal[i] += 1;
+  //       neg = 1;
+  //     }
+
+  //     if (dataType == ADC_DATA_WIDTH_12) {
+  //       result[i].value = (unsigned int)(((orgVal[i] & 0xffff) >> 4) / coe);
+  //     } else if ((dataType == ADC_DATA_WIDTH_14_WITH_16_AVERAGE) || (dataType == ADC_DATA_WIDTH_14_WITH_64_AVERAGE)) {
+  //       result[i].value = (unsigned int)(((orgVal[i] & 0xffff) >> 2) / coe);
+  //     } else if ((dataType == ADC_DATA_WIDTH_16_WITH_128_AVERAGE) || (dataType == ADC_DATA_WIDTH_16_WITH_256_AVERAGE)) {
+  //       result[i].value = (unsigned int)((orgVal[i] & 0xffff) / coe);
+  //     }
+  //     // Saturate at 16 bits
+  //     if (result[i].value > 0xFFFF) {
+  //       result[i].value = 0xFFFF;
+  //     }
+  //   }
+  // }
 }
 
 /****************************************************************************/

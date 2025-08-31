@@ -57,13 +57,6 @@ void TIM4_IRQHandler(void) {
   HAL_TIM_IRQHandler(handle);
 }
 
-void I2C1_EV_IRQHandler(void) { HAL_I2C_EV_IRQHandler(&hi2c1); }
-void I2C1_ER_IRQHandler(void) { HAL_I2C_ER_IRQHandler(&hi2c1); }
-
-void DMA1_Channel6_IRQHandler(void) { HAL_DMA_IRQHandler(&hdma_i2c1_tx); }
-
-void DMA1_Channel7_IRQHandler(void) { HAL_DMA_IRQHandler(&hdma_i2c1_rx); }
-
 void EXTI9_5_IRQHandler(void) {
 #ifdef INT_PD_Pin
   HAL_GPIO_EXTI_IRQHandler(INT_PD_Pin);

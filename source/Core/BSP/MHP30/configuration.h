@@ -1,6 +1,5 @@
 #ifndef CONFIGURATION_H_
 #define CONFIGURATION_H_
-#include "Settings.h"
 #include <stdint.h>
 /**
  * Configuration.h
@@ -57,6 +56,7 @@
  *
  */
 #define ORIENTATION_MODE           0 // 0: Right 1:Left 2:Automatic - Default right
+#define MAX_ORIENTATION_MODE       1 // Unlikely to ever change
 #define REVERSE_BUTTON_TEMP_CHANGE 0 // 0:Default 1:Reverse - Reverse the plus and minus button assigment for temperature change
 
 /**
@@ -103,8 +103,8 @@
 #define DETAILED_IDLE      0 // 0: Disable 1: Enable - Default 0
 
 // Due to large thermal mass of the PCB being heated we need to pull this back a bit
-#define THERMAL_RUNAWAY_TIME_SEC 45
-#define THERMAL_RUNAWAY_TEMP_C   3
+#define THERMAL_RUNAWAY_TIME_SEC 20
+#define THERMAL_RUNAWAY_TEMP_C   2
 
 #define CUT_OUT_SETTING          0  // default to no cut-off voltage
 #define RECOM_VOL_CELL           33 // Minimum voltage per cell (Recommended 3.3V (33))
@@ -146,16 +146,20 @@
 #define MIN_BOOST_TEMP_F       300                     // The min settable temp for boost mode °F
 #define NO_DISPLAY_ROTATE                              // Disable OLED rotation by accel
 #define SLEW_LIMIT             50                      // Limit to 3.0 Watts per 64ms pid loop update rate slew rate
-
+#define TIPTYPE_MHP30          1                       // It's own special tip
 #define ACCEL_SC7
 #define ACCEL_MSA
 
 #define PROFILE_SUPPORT
-
-#define POW_PD     1
-#define POW_PD_EXT 0
+#define OLED_96x16         1
+#define POW_PD             1
+#define POW_PD_EXT         0
+#define USB_PD_EPR_WATTAGE 0 /*No EPR*/
 #define TEMP_NTC
-#define I2C_SOFT_BUS_2
+#define I2C_SOFT_BUS_2  1
+#define I2C_SOFT_BUS_1  1
+#define OLED_I2CBB1     1
+#define ACCEL_I2CBB1    1
 #define BATTFILTERDEPTH 8
 #define OLED_I2CBB2
 #define ACCEL_EXITS_ON_MOVEMENT

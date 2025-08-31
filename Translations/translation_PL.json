@@ -1,319 +1,351 @@
 {
-    "languageCode": "PL",
-    "languageLocalName": "Polski",
-    "tempUnitFahrenheit": false,
-    "messagesWarn": {
-        "CalibrationDone": {
-            "message": "Kalibracja\nwykonana!"
-        },
-        "ResetOKMessage": {
-            "message": "Reset OK"
-        },
-        "SettingsResetMessage": {
-            "message": "Ust. \nzresetowane"
-        },
-        "NoAccelerometerMessage": {
-            "message": "Nie rozpoznano\nakcelerometru!"
-        },
-        "NoPowerDeliveryMessage": {
-            "message": "Nie rozpoznano\nkont. USB-PD IC!"
-        },
-        "LockingKeysString": {
-            "message": " ZABLOK."
-        },
-        "UnlockingKeysString": {
-            "message": "ODBLOK."
-        },
-        "WarningKeysLockedString": {
-            "message": "!ZABLOK!"
-        },
-        "WarningThermalRunaway": {
-            "message": "Ucieczka\ntermiczna"
-        },
-        "WarningTipShorted": {
-            "message": "!Tip Shorted!"
-        },
-        "SettingsCalibrationWarning": {
-            "message": "Upewnij się, że końcówka i uchwyt mają temperaturę pokojową podczas następnego rozruchu!"
-        },
-        "CJCCalibrating": {
-            "message": "kalibracja\n"
-        },
-        "SettingsResetWarning": {
-            "message": "Czy na pewno chcesz przywrócić ustawienia fabryczne?"
-        },
-        "UVLOWarningString": {
-            "message": "NIS. NAP"
-        },
-        "UndervoltageString": {
-            "message": "Zbyt niskie nap.\n"
-        },
-        "InputVoltageString": {
-            "message": "Nap. wej.: \n"
-        },
-        "SleepingSimpleString": {
-            "message": "Zzz!"
-        },
-        "SleepingAdvancedString": {
-            "message": "Tr. uśpienia\n"
-        },
-        "SleepingTipAdvancedString": {
-            "message": "Grot: \n"
-        },
-        "OffString": {
-            "message": "Wył"
-        },
-        "ProfilePreheatString": {
-            "message": "Preheat\n"
-        },
-        "ProfileCooldownString": {
-            "message": "Cooldown\n"
-        },
-        "DeviceFailedValidationWarning": {
-            "message": "Twoje urządzenie jest najprawdopodobniej podróbką!"
-        },
-        "TooHotToStartProfileWarning": {
-            "message": "Too hot to\nstart profile"
-        }
+  "languageCode": "PL",
+  "languageLocalName": "Polski",
+  "tempUnitFahrenheit": false,
+  "messagesWarn": {
+    "CalibrationDone": {
+      "message": "Skalibrowano!"
     },
-    "characters": {
-        "SettingRightChar": "P",
-        "SettingLeftChar": "L",
-        "SettingAutoChar": "A",
-        "SettingOffChar": "O",
-        "SettingSlowChar": "W",
-        "SettingMediumChar": "M",
-        "SettingFastChar": "S",
-        "SettingStartNoneChar": "B",
-        "SettingStartSolderingChar": "T",
-        "SettingStartSleepChar": "Z",
-        "SettingStartSleepOffChar": "O",
-        "SettingLockDisableChar": "W",
-        "SettingLockBoostChar": "B",
-        "SettingLockFullChar": "P"
+    "ResetOKMessage": {
+      "message": "Reset OK"
     },
-    "menuGroups": {
-        "PowerMenu": {
-            "displayText": "Ustawienia\nzasilania",
-            "description": ""
-        },
-        "SolderingMenu": {
-            "displayText": "Lutowanie\n",
-            "description": ""
-        },
-        "PowerSavingMenu": {
-            "displayText": "Oszcz.\nenergii",
-            "description": ""
-        },
-        "UIMenu": {
-            "displayText": "Interfejs\nużytkownika",
-            "description": ""
-        },
-        "AdvancedMenu": {
-            "displayText": "Ustawienia\nzaawans.",
-            "description": ""
-        }
+    "SettingsResetMessage": {
+      "message": "Ust. \nzresetowane"
     },
-    "menuOptions": {
-        "DCInCutoff": {
-            "displayText": "Źródło\nzasilania",
-            "description": "Źródło zasilania. Ustaw napięcie odcięcia. (DC 10V) (S 3.3V dla ogniw Li, wyłącz limit mocy)"
-        },
-        "MinVolCell": {
-            "displayText": "Minimalne\nnapięcie",
-            "description": "Minimalne dozwolone napięcie na komórkę (3S: 3 - 3,7V | 4-6S: 2,4 - 3,7V)"
-        },
-        "QCMaxVoltage": {
-            "displayText": "QC\nnapięcie",
-            "description": "Maksymalne napięcie, które lutownica będzie próbowała wynegocjować z ładowarką Quick Charge (V)"
-        },
-        "PDNegTimeout": {
-            "displayText": "Limit czasu\nPD",
-            "description": "Limit czasu negocjacji PD w krokach co 100 ms dla zgodności z niektórymi ładowarkami QC (0: wyłączone)"
-        },
-        "PDVpdo": {
-            "displayText": "PD\nVPDO",
-            "description": "Włącza tryby PPS & EPR."
-        },
-        "BoostTemperature": {
-            "displayText": "Temp.\nboost",
-            "description": "Temperatura w trybie \"boost\" "
-        },
-        "AutoStart": {
-            "displayText": "Aut. uruch.\ntr. lutowania",
-            "description": "Automatyczne uruchamianie trybu lutowania po włączeniu zasilania. (B: wyłączone | T: lutowanie | Z: uśpienie | O: uśpienie w temp. pokojowej)"
-        },
-        "TempChangeShortStep": {
-            "displayText": "Zm. temp.\nkr. przyc.",
-            "description": "Wartość zmiany temperatury, po krótkim przyciśnięciu (°C)"
-        },
-        "TempChangeLongStep": {
-            "displayText": "Zm. temp.\ndł. przyc.",
-            "description": "Wartość zmiany temperatury, po długim przyciśnięciu (°C)"
-        },
-        "LockingMode": {
-            "displayText": "Blokada\nprzycisków",
-            "description": "W trybie lutowania, wciśnij oba przyciski aby je zablokować (O=Wyłączona | B=tylko Boost | P=pełna blokada)"
-        },
-        "ProfilePhases": {
-            "displayText": "Profile\nPhases",
-            "description": "Number of phases in profile mode"
-        },
-        "ProfilePreheatTemp": {
-            "displayText": "Preheat\nTemp",
-            "description": "Preheat to this temperature at the start of profile mode"
-        },
-        "ProfilePreheatSpeed": {
-            "displayText": "Preheat\nSpeed",
-            "description": "Preheat at this rate (degrees per second)"
-        },
-        "ProfilePhase1Temp": {
-            "displayText": "Phase 1\nTemp",
-            "description": "Target temperature for the end of this phase"
-        },
-        "ProfilePhase1Duration": {
-            "displayText": "Phase 1\nDuration",
-            "description": "Target duration of this phase (seconds)"
-        },
-        "ProfilePhase2Temp": {
-            "displayText": "Phase 2\nTemp",
-            "description": ""
-        },
-        "ProfilePhase2Duration": {
-            "displayText": "Phase 2\nDuration",
-            "description": ""
-        },
-        "ProfilePhase3Temp": {
-            "displayText": "Phase 3\nTemp",
-            "description": ""
-        },
-        "ProfilePhase3Duration": {
-            "displayText": "Phase 3\nDuration",
-            "description": ""
-        },
-        "ProfilePhase4Temp": {
-            "displayText": "Phase 4\nTemp",
-            "description": ""
-        },
-        "ProfilePhase4Duration": {
-            "displayText": "Phase 4\nDuration",
-            "description": ""
-        },
-        "ProfilePhase5Temp": {
-            "displayText": "Phase 5\nTemp",
-            "description": ""
-        },
-        "ProfilePhase5Duration": {
-            "displayText": "Phase 5\nDuration",
-            "description": ""
-        },
-        "ProfileCooldownSpeed": {
-            "displayText": "Cooldown\nSpeed",
-            "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
-        },
-        "MotionSensitivity": {
-            "displayText": "Czułość\nwykr. ruchu",
-            "description": "Czułość wykrywania ruchu (0: Wyłączona | 1: Minimalna | ... | 9: Maksymalna)"
-        },
-        "SleepTemperature": {
-            "displayText": "Temp.\nuśpienia",
-            "description": "Temperatura w trybie uśpienia (°C)"
-        },
-        "SleepTimeout": {
-            "displayText": "Czas do\nuśpienia",
-            "description": "Czas do przejścia w tryb uśpienia (minuty | sekundy)"
-        },
-        "ShutdownTimeout": {
-            "displayText": "Czas do\nwyłączenia",
-            "description": "Czas do wyłączenia (minuty)"
-        },
-        "HallEffSensitivity": {
-            "displayText": "Czułość\ncz. Halla",
-            "description": "Czułość czujnika Halla, używanego do przechodznia w tryb uśpienia (0: Wyłączona | 1: Minimalna | ... | 9: Maksymalna)"
-        },
-        "TemperatureUnit": {
-            "displayText": "Jednostka\ntemperatury",
-            "description": "Jednostka temperatury (C: Celciusz | F: Fahrenheit)"
-        },
-        "DisplayRotation": {
-            "displayText": "Obrót\nekranu",
-            "description": "Obrót ekranu (P: dla praworęcznych | L: dla leworęcznych | A: automatycznie)"
-        },
-        "CooldownBlink": {
-            "displayText": "Mig. podczas\nwychładzania",
-            "description": "Temperatura miga podczas wychładzania, gdy grot jest wciąż gorący"
-        },
-        "ScrollingSpeed": {
-            "displayText": "Sz. przew.\ntekstu",
-            "description": "Szybkość przewijania tekstu"
-        },
-        "ReverseButtonTempChange": {
-            "displayText": "Zamień przyc.\n+ -",
-            "description": "Zamienia działanie przycisków zmiany temperatury grotu"
-        },
-        "AnimSpeed": {
-            "displayText": "Prędkosć\nanimacji",
-            "description": "Prędkość animacji ikon w menu (O: wył. | W: mała | M: średnia | S: duża)"
-        },
-        "AnimLoop": {
-            "displayText": "Zapętlona\nanimacja",
-            "description": "Zapętla animację ikon w menu głównym"
-        },
-        "Brightness": {
-            "displayText": "Jasność\nwyświetlacza",
-            "description": "Regulacja kontrastu/jasności wyświetlacza OLED"
-        },
-        "ColourInversion": {
-            "displayText": "Odwrócenie\nkolorów",
-            "description": "Odwrócenie kolorów wyświetlacza OLED"
-        },
-        "LOGOTime": {
-            "displayText": "Długość wyś.\nloga",
-            "description": "Ustawia czas wyświetlania loga podczas uruchamiania (s=sekund)"
-        },
-        "AdvancedIdle": {
-            "displayText": "Szeczegółowy\nekran bezczy.",
-            "description": "Wyświetla szczegółowe informacje za pomocą mniejszej czcionki na ekranie bezczynności"
-        },
-        "AdvancedSoldering": {
-            "displayText": "Sz. inf. w\ntr. lutowania",
-            "description": "Wyświetl szczegółowe informacje w trybie lutowania"
-        },
-        "BluetoothLE": {
-            "displayText": "Bluetooth\n",
-            "description": "Enables BLE"
-        },
-        "PowerLimit": {
-            "displayText": "Ogr.\nmocy",
-            "description": "Maksymalna moc (W), jakiej może użyć lutownica"
-        },
-        "CalibrateCJC": {
-            "displayText": "Kalibracja temperatury\nprzy następnym uruchomieniu",
-            "description": "Kalibracja temperatury przy następnym włączeniu (nie jest wymagana, jeśli różnica temperatur jest mniejsza niż 5°C"
-        },
-        "VoltageCalibration": {
-            "displayText": "Kalibracja\nnapięcia",
-            "description": "Kalibracja napięcia wejściowego. Krótkie naciśnięcie, aby ustawić, długie naciśnięcie, aby wyjść."
-        },
-        "PowerPulsePower": {
-            "displayText": "Moc\nimpulsu",
-            "description": "W przypadku używania powerbanku, utrzymuj moc na poziomie (W) aby nie uśpić powerbanku"
-        },
-        "PowerPulseWait": {
-            "displayText": "Czas między\nimp. mocy",
-            "description": "Czas między kolejnymi impulsami mocy zapobiegającymi usypianiu powerbanku (x2,5 s)"
-        },
-        "PowerPulseDuration": {
-            "displayText": "Długość\nimpulsu mocy",
-            "description": "Długość impulsu mocy zapobiegającego usypianiu powerbanku (x250 ms)"
-        },
-        "SettingsReset": {
-            "displayText": "Ustawienia\nfabryczne",
-            "description": "Resetuje wszystkie ustawienia"
-        },
-        "LanguageSwitch": {
-            "displayText": "Język:\n PL      Polski",
-            "description": ""
-        }
+    "NoAccelerometerMessage": {
+      "message": "Nie rozpoznano\nakcelerometru!"
+    },
+    "NoPowerDeliveryMessage": {
+      "message": "Nie rozpoznano\nkont. USB-PD IC!"
+    },
+    "LockingKeysString": {
+      "message": "ZABLOK."
+    },
+    "UnlockingKeysString": {
+      "message": "ODBLOK."
+    },
+    "WarningKeysLockedString": {
+      "message": "!ZABLOK!"
+    },
+    "WarningThermalRunaway": {
+      "message": "Ucieczka\ntermiczna"
+    },
+    "WarningTipShorted": {
+      "message": "!Zwarty grot!"
+    },
+    "SettingsCalibrationWarning": {
+      "message": "Upewnij się, że końcówka i uchwyt mają temperaturę pokojową podczas następnego rozruchu!"
+    },
+    "CJCCalibrating": {
+      "message": "kalibracja\n"
+    },
+    "SettingsResetWarning": {
+      "message": "Czy na pewno chcesz przywrócić ustawienia fabryczne?"
+    },
+    "UVLOWarningString": {
+      "message": "NIS. NAP"
+    },
+    "UndervoltageString": {
+      "message": "Zbyt niskie nap.\n"
+    },
+    "InputVoltageString": {
+      "message": "Nap. wej.: \n"
+    },
+    "SleepingAdvancedString": {
+      "message": "Tr. uśpienia\n"
+    },
+    "SleepingTipAdvancedString": {
+      "message": "Grot: \n"
+    },
+    "ProfilePreheatString": {
+      "message": "Rozgrzewanie\n"
+    },
+    "ProfileCooldownString": {
+      "message": "Schładzanie\n"
+    },
+    "DeviceFailedValidationWarning": {
+      "message": "Twoje urządzenie jest najprawdopodobniej podróbką!"
+    },
+    "TooHotToStartProfileWarning": {
+      "message": "Zbyt gorące, aby\nuruchomić profil"
     }
+  },
+  "characters": {
+    "SettingRightChar": "P",
+    "SettingLeftChar": "L",
+    "SettingAutoChar": "A",
+    "SettingSlowChar": "W",
+    "SettingMediumChar": "M",
+    "SettingFastChar": "S",
+    "SettingStartSolderingChar": "T",
+    "SettingStartSleepChar": "Z",
+    "SettingStartSleepOffChar": "O",
+    "SettingLockBoostChar": "B",
+    "SettingLockFullChar": "P"
+  },
+  "menuGroups": {
+    "PowerMenu": {
+      "displayText": "Ustawienia\nzasilania",
+      "description": ""
+    },
+    "SolderingMenu": {
+      "displayText": "Lutowanie\n",
+      "description": ""
+    },
+    "PowerSavingMenu": {
+      "displayText": "Oszcz.\nenergii",
+      "description": ""
+    },
+    "UIMenu": {
+      "displayText": "Interfejs\nużytkownika",
+      "description": ""
+    },
+    "AdvancedMenu": {
+      "displayText": "Ustawienia\nzaawans.",
+      "description": ""
+    }
+  },
+  "menuValues": {
+    "USBPDModeDefault": {
+      "displayText": "Tryb\ndomyślny"
+    },
+    "USBPDModeNoDynamic": {
+      "displayText": "Nie\ndynamiczny"
+    },
+    "USBPDModeSafe": {
+      "displayText": "Tryb\nbezpieczny"
+    },
+    "TipTypeAuto": {
+      "displayText": "Auto\nwykrycie"
+    },
+    "TipTypeT12Long": {
+      "displayText": "Długi\nTS100"
+    },
+    "TipTypeT12Short": {
+      "displayText": "Krótki\nPine"
+    },
+    "TipTypeT12PTS": {
+      "displayText": "PTS\n200"
+    },
+    "TipTypeTS80": {
+      "displayText": "TS80\n"
+    },
+    "TipTypeJBCC210": {
+      "displayText": "JBC\nC210"
+    }
+  },
+  "menuOptions": {
+    "DCInCutoff": {
+      "displayText": "Źródło\nzasilania",
+      "description": "Źródło zasilania. Ustaw napięcie odcięcia. (DC 10V) (S=3.3V dla ogniw Li, wyłącz limit mocy)"
+    },
+    "MinVolCell": {
+      "displayText": "Minimalne\nnapięcie",
+      "description": "Minimalne dozwolone napięcie na komórkę (3S: 3 - 3,7V | 4-6S: 2,4 - 3,7V)"
+    },
+    "QCMaxVoltage": {
+      "displayText": "Napięcie QC",
+      "description": "Maksymalne napięcie, które lutownica będzie próbowała wynegocjować z ładowarką Quick Charge (V)"
+    },
+    "PDNegTimeout": {
+      "displayText": "Limit czasu\nPD",
+      "description": "Limit czasu negocjacji PD w krokach co 100ms dla zgodności z niektórymi ładowarkami QC (0: wyłączone)"
+    },
+    "USBPDMode": {
+      "displayText": "Tryb PD",
+      "description": "Włącza tryby PPS & EPR."
+    },
+    "BoostTemperature": {
+      "displayText": "Temp.\nboost",
+      "description": "Temp. w trybie \"boost\" "
+    },
+    "AutoStart": {
+      "displayText": "Aut. uruch.\ntr. lutowania",
+      "description": "Automatyczne uruchamianie trybu lutowania po włączeniu zasilania. (T: lutowanie | Z: uśpienie | O: uśpienie w temp. pokojowej)"
+    },
+    "TempChangeShortStep": {
+      "displayText": "Zm. temp.\nkr. przyc.",
+      "description": "Wartość zmiany temperatury, po krótkim przyciśnięciu (°C)"
+    },
+    "TempChangeLongStep": {
+      "displayText": "Zm. temp.\ndł. przyc.",
+      "description": "Wartość zmiany temperatury, po długim przyciśnięciu (°C)"
+    },
+    "LockingMode": {
+      "displayText": "Blokada\nprzycisków",
+      "description": "W trybie lutowania, wciśnij oba przyciski aby je zablokować (B=tylko Boost | P=pełna blokada)"
+    },
+    "ProfilePhases": {
+      "displayText": "Fazy\nprofilu",
+      "description": "Liczba faz w trybie profilu"
+    },
+    "ProfilePreheatTemp": {
+      "displayText": "Temp.\nrozgrzewania",
+      "description": "Rozgrzanie do tej temp. na początku trybu profilu"
+    },
+    "ProfilePreheatSpeed": {
+      "displayText": "Prędk.\nrozgrzewania",
+      "description": "Tempo rozgrzewania (stopnie na sekundę)"
+    },
+    "ProfilePhase1Temp": {
+      "displayText": "Temp.\nfazy 1",
+      "description": "Docelowa temp. na koniec tej fazy"
+    },
+    "ProfilePhase1Duration": {
+      "displayText": "Dług.\nfazy 1",
+      "description": "Docelowy czas trwania tej fazy (sekundy)"
+    },
+    "ProfilePhase2Temp": {
+      "displayText": "Temp.\nfazy 2",
+      "description": ""
+    },
+    "ProfilePhase2Duration": {
+      "displayText": "Dług.\nfazy 2",
+      "description": ""
+    },
+    "ProfilePhase3Temp": {
+      "displayText": "Temp.\nfazy 3",
+      "description": ""
+    },
+    "ProfilePhase3Duration": {
+      "displayText": "Dług.\nfazy 3",
+      "description": ""
+    },
+    "ProfilePhase4Temp": {
+      "displayText": "Temp.\nfazy 4",
+      "description": ""
+    },
+    "ProfilePhase4Duration": {
+      "displayText": "Dług.\nfazy 4",
+      "description": ""
+    },
+    "ProfilePhase5Temp": {
+      "displayText": "Temp.\nfazy 5",
+      "description": ""
+    },
+    "ProfilePhase5Duration": {
+      "displayText": "Dług.\nfazy 5",
+      "description": ""
+    },
+    "ProfileCooldownSpeed": {
+      "displayText": "Prędk.\nschładzania",
+      "description": "Tempo schładzania na koniec trybu profilu (stopnie na sekundę)"
+    },
+    "MotionSensitivity": {
+      "displayText": "Czułość\nwykr. ruchu",
+      "description": "Czułość wykrywania ruchu (1: Minimalna | ... | 9: Maksymalna)"
+    },
+    "SleepTemperature": {
+      "displayText": "Temp.\nuśpienia",
+      "description": "Temperatura w trybie uśpienia (°C)"
+    },
+    "SleepTimeout": {
+      "displayText": "Czas do\nuśpienia",
+      "description": "Czas do przejścia w tryb uśpienia (minuty | sekundy)"
+    },
+    "ShutdownTimeout": {
+      "displayText": "Czas do\nwyłączenia",
+      "description": "Czas do wyłączenia (minuty)"
+    },
+    "HallEffSensitivity": {
+      "displayText": "Czułość\ncz. Halla",
+      "description": "Czułość czujnika Halla, używanego do przechodznia w tryb uśpienia (1: Minimalna | ... | 9: Maksymalna)"
+    },
+    "HallEffSleepTimeout": {
+      "displayText": "HallSensor\nSleepTime",
+      "description": "Odstęp przed rozpoczęciem \"trybu uśpienia\", gdy efekt Halla przekracza próg"
+    },
+    "TemperatureUnit": {
+      "displayText": "Jednostka\ntemperatury",
+      "description": "Jednostka temperatury (C: Celciusz | F: Fahrenheit)"
+    },
+    "DisplayRotation": {
+      "displayText": "Obrót\nekranu",
+      "description": "Obrót ekranu (P: dla praworęcznych | L: dla leworęcznych | A: automatycznie)"
+    },
+    "CooldownBlink": {
+      "displayText": "Mig. podczas\nschładzania",
+      "description": "Temperatura miga podczas schładzania, gdy grot jest wciąż gorący"
+    },
+    "ScrollingSpeed": {
+      "displayText": "Sz. przew.\ntekstu",
+      "description": "Szybkość przewijania tekstu"
+    },
+    "ReverseButtonTempChange": {
+      "displayText": "Zamień przyc.\n+ -",
+      "description": "Zamienia działanie przycisków zmiany temperatury grotu"
+    },
+    "ReverseButtonSettings": {
+      "displayText": "Swap\nA B keys",
+      "description": "Reverse assignment of buttons for Settings menu"
+    },
+    "AnimSpeed": {
+      "displayText": "Prędkosć\nanimacji",
+      "description": "Prędkość animacji ikon w menu (W: mała | M: średnia | S: duża)"
+    },
+    "AnimLoop": {
+      "displayText": "Zapętlona\nanimacja",
+      "description": "Zapętla animację ikon w menu głównym"
+    },
+    "Brightness": {
+      "displayText": "Jasność\nwyświetlacza",
+      "description": "Regulacja kontrastu/jasności wyświetlacza OLED"
+    },
+    "ColourInversion": {
+      "displayText": "Odwrócenie\nkolorów",
+      "description": "Odwrócenie kolorów wyświetlacza OLED"
+    },
+    "LOGOTime": {
+      "displayText": "Długość wyś.\nloga",
+      "description": "Ustawia czas wyświetlania loga podczas uruchamiania (s=sekund)"
+    },
+    "AdvancedIdle": {
+      "displayText": "Szczegółowy\nekran bezczyn.",
+      "description": "Wyświetla szczegółowe informacje za pomocą mniejszej czcionki na ekranie bezczynności"
+    },
+    "AdvancedSoldering": {
+      "displayText": "Sz. inf. w\ntr. lutowania",
+      "description": "Wyświetl szczegółowe informacje w trybie lutowania"
+    },
+    "BluetoothLE": {
+      "displayText": "Bluetooth\n",
+      "description": "Włącza Bluetooth Low Energy"
+    },
+    "PowerLimit": {
+      "displayText": "Ogr.\nmocy",
+      "description": "Maksymalna moc (W), jakiej może użyć lutownica"
+    },
+    "CalibrateCJC": {
+      "displayText": "Kalibracja temperatury\nprzy następnym uruchomieniu",
+      "description": "Kalibracja temperatury przy następnym włączeniu (nie jest wymagana, jeśli różnica temperatur jest mniejsza niż 5°C"
+    },
+    "VoltageCalibration": {
+      "displayText": "Kalibracja\nnapięcia",
+      "description": "Kalibracja napięcia wejściowego. Krótkie naciśnięcie, aby ustawić, długie naciśnięcie, aby wyjść."
+    },
+    "PowerPulsePower": {
+      "displayText": "Moc\nimpulsu",
+      "description": "W przypadku używania powerbanku, utrzymuj moc na poziomie (W) aby nie uśpić powerbanku"
+    },
+    "PowerPulseWait": {
+      "displayText": "Czas między\nimp. mocy",
+      "description": "Czas między kolejnymi impulsami mocy zapobiegającymi usypianiu powerbanku (x2,5 s)"
+    },
+    "PowerPulseDuration": {
+      "displayText": "Długość\nimpulsu mocy",
+      "description": "Długość impulsu mocy zapobiegającego usypianiu powerbanku (x250 ms)"
+    },
+    "SettingsReset": {
+      "displayText": "Ustawienia\nfabryczne",
+      "description": "Resetuje wszystkie ustawienia"
+    },
+    "LanguageSwitch": {
+      "displayText": "Język:\n PL      Polski",
+      "description": ""
+    },
+    "SolderingTipType": {
+      "displayText": "Typ grotu",
+      "description": "Wybierz typ zamontowanego grotu"
+    }
+  }
 }

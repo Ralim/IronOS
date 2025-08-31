@@ -4,6 +4,7 @@
 #include "BootLogo.h"
 #include "I2C_Wrapper.hpp"
 #include "Pins.h"
+#include "Settings.h"
 #include "Setup.h"
 #include "TipThermoModel.h"
 #include "USBPD.h"
@@ -207,8 +208,9 @@ void unstick_I2C() {
     HAL_GPIO_WritePin(SCL_GPIO_Port, SCL_Pin, GPIO_PIN_SET);
 
     timeout_cnt++;
-    if (timeout_cnt > timeout)
+    if (timeout_cnt > timeout) {
       return;
+    }
   }
 
   // 12. Configure the SCL and SDA I/Os as Alternate function Open-Drain.
@@ -307,6 +309,8 @@ void FinishMeasureTipResistance() {
     return;
   } else if (reading < 200) {
     tipShorted = true;
+  } else if (reading < 520) {
+    newRes = 40;
   } else if (reading < 800) {
     newRes = 62;
   } else {
@@ -359,14 +363,7 @@ uint8_t preStartChecks() {
   }
 
 #endif
-#ifdef POW_PD
-  // If we are in the middle of negotiating PD, wait until timeout
-  // Before turning on the heater
-  if (!USBPowerDelivery::negotiationComplete()) {
-    return 0;
-  }
 
-#endif
   return 1;
 }
 uint64_t getDeviceID() {
@@ -386,9 +383,18 @@ uint8_t getTipResistanceX10() {
 #ifdef TIP_RESISTANCE_SENSE_Pin
   // Return tip resistance in x10 ohms
   // We can measure this using the op-amp
-  return lastTipResistance;
+  uint8_t user_selected_tip = getUserSelectedTipResistance();
+  if (user_selected_tip == 0) {
+    return lastTipResistance; // Auto mode
+  }
+  return user_selected_tip;
+
 #else
-  return TIP_RESISTANCE;
+  uint8_t user_selected_tip = getUserSelectedTipResistance();
+  if (user_selected_tip == 0) {
+    return TIP_RESISTANCE; // Auto mode
+  }
+  return user_selected_tip;
 #endif
 }
 #ifdef TIP_RESISTANCE_SENSE_Pin

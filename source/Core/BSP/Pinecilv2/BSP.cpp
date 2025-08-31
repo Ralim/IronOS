@@ -5,15 +5,23 @@
 #include "I2C_Wrapper.hpp"
 #include "IRQ.h"
 #include "Pins.h"
+#include "Settings.h"
 #include "Setup.h"
+#if defined(WS2812B_ENABLE)
+#include "WS2812B.h"
+#endif
 #include "TipThermoModel.h"
 #include "USBPD.h"
-#include "Utils.h"
+#include "Utils.hpp"
+#include "bflb_platform.h"
+#include "bl702_adc.h"
 #include "configuration.h"
 #include "crc32.h"
 #include "hal_flash.h"
 #include "history.hpp"
 #include "main.hpp"
+
+extern ADC_Gain_Coeff_Type adcGainCoeffCal;
 
 // These control the period's of time used for the PWM
 const uint16_t powerPWM         = 255;
@@ -21,6 +29,10 @@ uint8_t        holdoffTicks     = 25; // This is the tick delay before temp meas
 uint8_t        tempMeasureTicks = 25;
 
 uint16_t totalPWM = 255; // Total length of the cycle's ticks
+
+#if defined(WS2812B_ENABLE)
+WS2812B<WS2812B_Pin, 1> ws2812b;
+#endif
 
 void resetWatchdog() {
   // #TODO
@@ -31,52 +43,44 @@ void resetWatchdog() {
 // Stored as ADCReading,Temp in degC
 static const int32_t NTCHandleLookup[] = {
     // ADC Reading , Temp in C x10
-
-    3221,  -400, //
-    4144,  -350, //
-    5271,  -300, //
-    6622,  -250, //
-    8219,  -200, //
-    10075, -150, //
-    12190, -100, //
-    14554, -50,  //
-    17151, 0,    //
-    19937, 50,   //
-    22867, 100,  //
-    25886, 150,  //
-    28944, 200,  //
-    29546, 210,  //
-    30159, 220,  //
-    30769, 230,  //
-    31373, 240,  //
-    31969, 250,  //
-    32566, 260,  //
-    33159, 270,  //
-    33749, 280,  //
-    34334, 290,  //
-    34916, 300,  //
-    35491, 310,  //
-    36062, 320,  //
-    36628, 330,  //
-    37186, 340,  //
-    37739, 350,  //
-    38286, 360,  //
-    38825, 370,  //
-    39358, 380,  //
-    39884, 390,  //
-    40400, 400,  //
-    42879, 450,  //
-    45160, 500,  //
-    47235, 550,  //
-    49111, 600,  //
-    50792, 650,  //
-    52292, 700,  //
-    53621, 750,  //
-    54797, 800,  //
-    55836, 850,  //
-    56748, 900,  //
-    57550, 950,  //
-    58257, 1000, //
+    // Based on NTCG163JF103FTDS thermocouple datasheet values,
+    // arranged in a voltage divider configuration, with the NTC
+    // pulling up towards 3.3V, and with a 10k 1% pull-down resistor.
+    // ADC Reading = 3.3V * 10 / (10 + TypkOhm) / 3.2V * (2 ^ 16)
+    3405,  -400, //
+    4380,  -350, //
+    5572,  -300, //
+    6999,  -250, //
+    8688,  -200, //
+    10650, -150, //
+    12885, -100, //
+    15384, -50,  //
+    18129, 0,    //
+    21074, 50,   //
+    24172, 100,  //
+    27362, 150,  //
+    30595, 200,  //
+    33792, 250,  //
+    36907, 300,  //
+    39891, 350,  //
+    42704, 400,  //
+    45325, 450,  //
+    47736, 500,  //
+    49929, 550,  //
+    51912, 600,  //
+    53689, 650,  //
+    55274, 700,  //
+    56679, 750,  //
+    57923, 800,  //
+    59020, 850,  //
+    59984, 900,  //
+    60832, 950,  //
+    61580, 1000, //
+    62232, 1050, //
+    62810, 1100, //
+    63316, 1150, //
+    63765, 1200, //
+    64158, 1250, //
 
 };
 #endif
@@ -127,6 +131,12 @@ uint8_t getButtonB() {
   return val;
 }
 
+void BSPInit(void) {
+#if defined(WS2812B_ENABLE)
+  ws2812b.init();
+#endif
+}
+
 void reboot() { hal_system_reset(); }
 
 void delay_ms(uint16_t count) {
@@ -146,7 +156,33 @@ bool isTipDisconnected() {
 }
 
 void setStatusLED(const enum StatusLED state) {
-  // Dont have one
+#if defined(WS2812B_ENABLE)
+  static enum StatusLED lastState = LED_UNKNOWN;
+
+  if (lastState != state || state == LED_HEATING) {
+    switch (state) {
+    default:
+    case LED_UNKNOWN:
+    case LED_OFF:
+      ws2812b.led_set_color(0, 0, 0, 0);
+      break;
+    case LED_STANDBY:
+      ws2812b.led_set_color(0, 0, 0xFF, 0); // green
+      break;
+    case LED_HEATING: {
+      ws2812b.led_set_color(0, ((xTaskGetTickCount() / 4) % 192) + 64, 0, 0); // Red fade
+    } break;
+    case LED_HOT:
+      ws2812b.led_set_color(0, 0xFF, 0, 0); // red
+      break;
+    case LED_COOLING_STILL_HOT:
+      ws2812b.led_set_color(0, 0xFF, 0x20, 0x00); // Orange
+      break;
+    }
+    ws2812b.led_update();
+    lastState = state;
+  }
+#endif
 }
 void setBuzzer(bool on) {}
 
@@ -157,7 +193,11 @@ uint8_t       tipResistanceReadingSlot = 0;
 uint8_t       getTipResistanceX10() {
   // Return tip resistance in x10 ohms
   // We can measure this using the op-amp
-  return lastTipResistance;
+  uint8_t user_selected_tip = getUserSelectedTipResistance();
+  if (user_selected_tip == 0) {
+    return lastTipResistance; // Auto mode
+  }
+  return user_selected_tip;
 }
 
 uint16_t getTipThermalMass() { return 120; }
@@ -193,13 +233,14 @@ void FinishMeasureTipResistance() {
                      ((tipResistanceReadings[1] - tipResistanceReadings[2]) + calculatedSkew) // jump 2 - skew
                      )                                                                        //
                     / 2;                                                                      // Take average
-  // lastTipResistance = reading / 100;
-  // // As we are only detecting two resistances; we can split the difference for now
+  // As we are only detecting three resistances; we just bin to nearest
   uint8_t newRes = 0;
   if (reading > 8000) {
-    // return; // Change nothing as probably disconnected tip
+    // Let resistance be cleared to 0
   } else if (reading < 500) {
     tipShorted = true;
+  } else if (reading < 2600) {
+    newRes = 40;
   } else if (reading < 4000) {
     newRes = 62;
   } else {
@@ -276,7 +317,7 @@ uint8_t getDeviceValidationStatus() {
 }
 
 void showBootLogo(void) {
-  uint8_t scratch[1024];
+  alignas(uint32_t) uint8_t scratch[1024];
   flash_read(FLASH_LOGOADDR - 0x23000000, scratch, 1024);
 
   BootLogo::handleShowingLogo(scratch);

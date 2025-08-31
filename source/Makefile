@@ -1,12 +1,12 @@
 ifndef model
-model:=Pinecil
+model:=Pinecilv2
 endif
 
 ALL_MINIWARE_MODELS=TS100 TS80 TS80P TS101
 ALL_PINECIL_MODELS=Pinecil
 ALL_PINECIL_V2_MODELS=Pinecilv2
 ALL_MHP30_MODELS=MHP30
-ALL_SEQURE_MODELS=S60
+ALL_SEQURE_MODELS=S60 S60P T55
 ALL_MODELS=$(ALL_MINIWARE_MODELS) $(ALL_PINECIL_MODELS) $(ALL_MHP30_MODELS) $(ALL_PINECIL_V2_MODELS) $(ALL_SEQURE_MODELS)
 
 ifneq ($(model),$(filter $(model),$(ALL_MODELS)))
@@ -20,7 +20,7 @@ HEXFILE_DIR=Hexfile
 OUTPUT_DIR_BASE=Objects
 OUTPUT_DIR=Objects/$(model)
 
-ALL_LANGUAGES=BG CS DA DE EN ES FI FR HR HU IT JA_JP LT NL NL_BE NB PL PT RU SK SL SR_CYRL SR_LATN SV TR UK VI YUE_HK ZH_CN ZH_TW
+ALL_LANGUAGES=BE BG CS DA DE EL EN ES ET FI FR HR HU IT JA_JP LT NB NL_BE NL PL PT RO RU SK SL SR_CYRL SR_LATN SV TR UK UZ VI YUE_HK ZH_CN ZH_TW
 
 LANGUAGE_GROUP_CJK_LANGS=EN JA_JP YUE_HK ZH_TW ZH_CN
 LANGUAGE_GROUP_CJK_NAME=Chinese+Japanese
@@ -31,8 +31,8 @@ LANGUAGE_GROUP_CUSTOM_LANGS=$(custom_multi_langs)
 LANGUAGE_GROUP_CUSTOM_NAME=Custom
 endif
 
-LANGUAGE_GROUP_CYRILLIC_LANGS=EN BG RU SR_CYRL SR_LATN UK
-LANGUAGE_GROUP_CYRILLIC_NAME=Bulgarian+Russian+Serbian+Ukrainian
+LANGUAGE_GROUP_CYRILLIC_LANGS=EN BE BG RU SR_CYRL SR_LATN UK
+LANGUAGE_GROUP_CYRILLIC_NAME=Belorussian+Bulgarian+Russian+Serbian+Ukrainian
 
 LANGUAGE_GROUP_EUR_LANGS=EN $(filter-out $(LANGUAGE_GROUP_CJK_LANGS) $(LANGUAGE_GROUP_CYRILLIC_LANGS),$(ALL_LANGUAGES))
 LANGUAGE_GROUP_EUR_NAME=European
@@ -55,149 +55,24 @@ HOST_OUTPUT_DIR=Objects/host
 DEVICE_DFU_ADDRESS=0x08000000
 DEVICE_DFU_VID_PID=0x28E9:0x0189
 
+
 # Enumerate all of the include directories (HAL source dirs are used for clang-format only)
 APP_INC_DIR=./Core/Inc
-BRIEFLZ_INC_DIR=./Core/brieflz
-MINIWARE_INC_CMSIS_DEVICE=./Core/BSP/Miniware/Vendor/CMSIS/Device/ST/STM32F1xx/Include
-MINIWARE_CMSIS_CORE_INC_DIR=./Core/BSP/Miniware/Vendor/CMSIS/Include
-MINIWARE_HAL_SRC_DIR=./Core/BSP/Miniware/Vendor/STM32F1xx_HAL_Driver
-MINIWARE_HAL_INC_DIR=./Core/BSP/Miniware/Vendor/STM32F1xx_HAL_Driver/Inc
-MINIWARE_HAL_LEGACY_INC_DIR=./Core/BSP/Miniware/Vendor/STM32F1xx_HAL_Driver/Inc/Legacy
-MINIWARE_STARTUP_DIR=./Startup
-MINIWARE_INC_DIR=./Core/BSP/Miniware
-MINIWARE_LD_FILE=./Core/BSP/Miniware/stm32f103.ld
-
-S60_INC_CMSIS_DEVICE=./Core/BSP/Sequre_S60/Vendor/CMSIS/Device/ST/STM32F1xx/Include
-S60_CMSIS_CORE_INC_DIR=./Core/BSP/Sequre_S60/Vendor/CMSIS/Include
-S60_HAL_SRC_DIR=./Core/BSP/Sequre_S60/Vendor/STM32F1xx_HAL_Driver
-S60_HAL_INC_DIR=./Core/BSP/Sequre_S60/Vendor/STM32F1xx_HAL_Driver/Inc
-S60_HAL_LEGACY_INC_DIR=./Core/BSP/Sequre_S60/Vendor/STM32F1xx_HAL_Driver/Inc/Legacy
-S60_STARTUP_DIR=./Startup
-S60_INC_DIR=./Core/BSP/Sequre_S60
-S60_LD_FILE=./Core/BSP/Sequre_S60/stm32f103.ld
-
-MHP30_INC_CMSIS_DEVICE=./Core/BSP/MHP30/Vendor/CMSIS/Device/ST/STM32F1xx/Include
-MHP30_CMSIS_CORE_INC_DIR=./Core/BSP/MHP30/Vendor/CMSIS/Include
-MHP30_HAL_SRC_DIR=./Core/BSP/MHP30/Vendor/STM32F1xx_HAL_Driver
-MHP30_HAL_INC_DIR=./Core/BSP/MHP30/Vendor/STM32F1xx_HAL_Driver/Inc
-MHP30_HAL_LEGACY_INC_DIR=./Core/BSP/MHP30/Vendor/STM32F1xx_HAL_Driver/Inc/Legacy
-MHP30_STARTUP_DIR=./Startup
-MHP30_INC_DIR=./Core/BSP/MHP30
-MHP30_LD_FILE=./Core/BSP/MHP30/stm32f103.ld
-
-PINE_INC_DIR=./Core/BSP/Pinecil
-PINE_VENDOR_SRC_DIR=./Core/BSP/Pinecil/Vendor/SoC/gd32vf103/Common/Source
-PINE_VENDOR_INC_DIR=./Core/BSP/Pinecil/Vendor/SoC/gd32vf103/Common/Include
-PINE_VENDOR_USB_INC_DIR=./Core/BSP/Pinecil/Vendor/SoC/gd32vf103/Common/Include/Usb
-PINE_NMSIS_INC_DIR=./Core/BSP/Pinecil/Vendor/NMSIS/Core/Include
-PINE_FREERTOS_PORT_INC_DIR=./Core/BSP/Pinecil/Vendor/OS/FreeRTOS/Source/portable/GCC
-
-PINECILV2_DIR=./Core/BSP/Pinecilv2
-PINECILV2_MEM_DIR=$(PINECILV2_DIR)/MemMang
-PINECILV2_SDK_DIR=$(PINECILV2_DIR)/bl_mcu_sdk
-
-PINECILV2_VENDOR_BSP_DIR=$(PINECILV2_SDK_DIR)/bsp
-PINECILV2_VENDOR_BSP_COMMON_DIR=$(PINECILV2_VENDOR_BSP_DIR)/bsp_common
-PINECILV2_VENDOR_BSP_BOARD_DIR=$(PINECILV2_VENDOR_BSP_DIR)/board
-PINECILV2_VENDOR_BSP_PLATFORM_DIR=$(PINECILV2_VENDOR_BSP_COMMON_DIR)/platform
-PINECILV2_VENDOR_BSP_USB_DIR=$(PINECILV2_VENDOR_BSP_COMMON_DIR)/usb
-
-PINECILV2_COMMON_DIR=$(PINECILV2_SDK_DIR)/common
-PINECILV2_COMMON_BL_MATH_DIR=$(PINECILV2_COMMON_DIR)/bl_math
-PINECILV2_COMMON_DEVICE_DIR=$(PINECILV2_COMMON_DIR)/device
-PINECILV2_COMMON_LIST_DIR=$(PINECILV2_COMMON_DIR)/list
-PINECILV2_COMMON_MISC_DIR=$(PINECILV2_COMMON_DIR)/misc
-PINECILV2_COMMON_PARTITION_DIR=$(PINECILV2_COMMON_DIR)/partition
-PINECILV2_COMMON_PID_DIR=$(PINECILV2_COMMON_DIR)/pid
-PINECILV2_COMMON_RING_BUFFERDIR=$(PINECILV2_COMMON_DIR)/ring_buffer
-PINECILV2_COMMON_SOFT_CRC_DIR=$(PINECILV2_COMMON_DIR)/soft_crc
-PINECILV2_COMMON_TIMESTAMP_DIR=$(PINECILV2_COMMON_DIR)/timestamp
-
-PINECILV2_COMPONENTS_DIR=$(PINECILV2_SDK_DIR)/components
-PINECILV2_COMPONENTS_FREERTOS_DIR=$(PINECILV2_COMPONENTS_DIR)/freertos
-PINECILV2_COMPONENTS_FREERTOS_BL602_DIR=$(PINECILV2_COMPONENTS_FREERTOS_DIR)/portable/gcc/risc-v/bl702
-
-PINECILV2_COMPONENTS_BLE_STACK_PORT_INCLUDE_DIR=$(PINECILV2_COMPONENTS_DIR)/ble/ble_stack/port/include
-PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_DIR=$(PINECILV2_COMPONENTS_DIR)/ble/ble_stack/include
-PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_DRIVERS_DIR=$(PINECILV2_COMPONENTS_DIR)/ble/ble_stack/include/drivers
-PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_DRIVERS_BLUETOOTH_DIR=$(PINECILV2_COMPONENTS_DIR)/ble/ble_stack/include/drivers/bluetooth
-PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_BLUETOOTH_DIR=$(PINECILV2_COMPONENTS_DIR)/ble/ble_stack/include/bluetooth
-PINECILV2_COMPONENTS_BLE_STACK_COMMON_DIR=$(PINECILV2_COMPONENTS_DIR)/ble/ble_stack/common
-PINECILV2_COMPONENTS_BLE_STACK_COMMON_INCLUDE_DIR=$(PINECILV2_COMPONENTS_DIR)/ble/ble_stack/common/include
-PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_MISC_DIR=$(PINECILV2_COMPONENTS_DIR)/ble/ble_stack/common/include/misc
-PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_ZEPHYR_DIR=$(PINECILV2_COMPONENTS_DIR)/ble/ble_stack/common/include/zephyr
-PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_NET_DIR=$(PINECILV2_COMPONENTS_DIR)/ble/ble_stack/common/include/net
-PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_TOOLCHAIN_DIR=$(PINECILV2_COMPONENTS_DIR)/ble/ble_stack/common/include/toolchain
-PINECILV2_COMPONENTS_BLE_STACK_TINYCRYPT_DIR=$(PINECILV2_COMPONENTS_DIR)/ble/ble_stack/common/tinycrypt/include
-PINECILV2_COMPONENTS_BLE_STACK_TINYCRYPT_INCLUDE_DIR=$(PINECILV2_COMPONENTS_DIR)/ble/ble_stack/common/tinycrypt/include/tinycrypt
-PINECILV2_COMPONENTS_BLE_STACK_HOST_DIR=$(PINECILV2_COMPONENTS_DIR)/ble/ble_stack/host
-PINECILV2_COMPONENTS_BLE_STACK_BL_HCI_WRAPPER_DIR=$(PINECILV2_COMPONENTS_DIR)/ble/ble_stack/bl_hci_wrapper
-PINECILV2_COMPONENTS_BLE_CONTROLLER_BLE_INC_DIR=$(PINECILV2_COMPONENTS_DIR)/ble/blecontroller/ble_inc
-PINECILV2_COMPONENTS_BLE_STACK_BC_DEC_DIR=$(PINECILV2_COMPONENTS_DIR)/ble/ble_stack/sbc/dec
-
-# Binary blobs suck and they should be ashamed
-PINECILV2_BLE_CRAPWARE_BLOB_DIR=$(PINECILV2_COMPONENTS_DIR)/ble/blecontroller/lib
-PINECILV2_RF_CRAPWARE_BLOB_DIR=$(PINECILV2_COMPONENTS_DIR)/ble/bl702_rf/lib
-
-PINECILV2_COMPONENTS_NMSIS_DIR=$(PINECILV2_COMPONENTS_DIR)/nmsis
-PINECILV2_COMPONENTS_NMSIS_CORE_INC_DIR=$(PINECILV2_COMPONENTS_NMSIS_DIR)/core/inc
-
-PINECILV2_COMPONENTS_USB_STACK_DIR=$(PINECILV2_COMPONENTS_DIR)/usb_stack
-PINECILV2_COMPONENTS_USB_STACK_COMMON_DIR=$(PINECILV2_COMPONENTS_USB_STACK_DIR)/common
-PINECILV2_COMPONENTS_USB_STACK_CORE_DIR=$(PINECILV2_COMPONENTS_USB_STACK_DIR)/core
-PINECILV2_COMPONENTS_USB_STACK_CDC_DIR=$(PINECILV2_COMPONENTS_USB_STACK_DIR)/class/cdc
-PINECILV2_COMPONENTS_USB_STACK_WINUSB_DIR=$(PINECILV2_COMPONENTS_USB_STACK_DIR)/class/winusb
-
-PINECILV2_DRIVERS_DIR=$(PINECILV2_SDK_DIR)/drivers/bl702_driver
-PINECILV2_DRIVERS_HAL_DRV_INC_DIR=$(PINECILV2_DRIVERS_DIR)/hal_drv/inc
-PINECILV2_DRIVERS_HAL_DRV_DEF_DIR=$(PINECILV2_DRIVERS_DIR)/hal_drv/default_config
-PINECILV2_DRIVERS_REGS_DIR=$(PINECILV2_DRIVERS_DIR)/regs
-PINECILV2_DRIVERS_RISCV_DIR=$(PINECILV2_DRIVERS_DIR)/risc-v
-PINECILV2_DRIVERS_STARTUP_DIR=$(PINECILV2_DRIVERS_DIR)/startup
-PINECILV2_DRIVERS_STD_DRV_DIR=$(PINECILV2_DRIVERS_DIR)/std_drv/inc
-
-SOURCE_MIDDLEWARES_DIR=./Middlewares
-FRTOS_CMIS_INC_DIR=./Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS
-FRTOS_INC_DIR=./Middlewares/Third_Party/FreeRTOS/Source/include
-DRIVER_INC_DIR=./Core/Drivers
+MIDDLEWARES_DIR=./Middlewares
 BSP_INC_DIR=./Core/BSP
-THREADS_INC_DIR=./Core/Threads
-THREADS_OP_MODES_INC_DIR=./Core/Threads/OperatingModes
-THREADS_OP_MODES_TOOLS_INC_DIR=./Core/Threads/OperatingModes/utils
-
-SOURCE_THREADS_DIR=./Core/Threads
+THREADS_DIR=./Core/Threads
 SOURCE_CORE_DIR=./Core/Src
-SOURCE_BRIEFLZ_DIR=./Core/brieflz
-SOURCE_DRIVERS_DIR=./Core/Drivers
-INC_PD_DRIVERS_DIR=./Core/Drivers/usb-pd/include
-PD_DRIVER_TESTS_DIR=./Core/Drivers/usb-pd/tests
+BRIEFLZ_DIR=./Core/brieflz
+DRIVERS_DIR=./Core/Drivers
 PD_DRIVER_DIR=./Core/Drivers/usb-pd
+# Exclude USB-PD tests
+PD_DRIVER_TESTS_DIR=./Core/Drivers/usb-pd/tests
+
 
 # Excludes for clang-format
 
-ALL_INCLUDES_EXCEPT:=-path $(BRIEFLZ_INC_DIR)             \
-                  -o -path $(PD_DRIVER_DIR)               \
-                  -o -path $(PINECILV2_SDK_DIR)           \
-                  -o -path $(MINIWARE_HAL_INC_DIR)        \
-                  -o -path $(S60_HAL_INC_DIR)             \
-                  -o -path $(MHP30_HAL_INC_DIR)           \
-                  -o -path $(PINE_VENDOR_INC_DIR)         \
-                  -o -path $(MINIWARE_CMSIS_CORE_INC_DIR) \
-                  -o -path $(S60_CMSIS_CORE_INC_DIR)      \
-                  -o -path $(MINIWARE_INC_CMSIS_DEVICE)   \
-                  -o -path $(S60_INC_CMSIS_DEVICE)        \
-                  -o -path $(MHP30_INC_CMSIS_DEVICE)      \
-                  -o -not -name "configuration.h"
-
-ALL_SOURCE_EXCEPT:=-path $(SOURCE_BRIEFLZ_DIR)   \
-                -o -path $(PD_DRIVER_DIR)        \
-                -o -path $(PINECILV2_SDK_DIR)    \
-                -o -path $(MINIWARE_HAL_SRC_DIR) \
-                -o -path $(S60_HAL_SRC_DIR)      \
-                -o -path $(MHP30_HAL_SRC_DIR)    \
-                -o -path $(PINE_VENDOR_SRC_DIR)  \
-                -o -path $(PINECILV2_MEM_DIR)
-
+ALL_INCLUDES_EXCEPT:=-path $(PD_DRIVER_DIR) -o -not -name "configuration.h"
+ALL_SOURCE_EXCEPT:=-path $(PD_DRIVER_DIR)
 # Find-all's used for formatting; have to exclude external modules
 ALL_INCLUDES=$(shell find  ./Core -type d \( $(ALL_INCLUDES_EXCEPT) \) -prune -false -o \( -type f \( -name '*.h' -o -name '*.hpp' \) \) )
 ALL_SOURCE=$(shell find    ./Core -type d \( $(ALL_SOURCE_EXCEPT)   \) -prune -false -o \( -type f \( -name '*.c' -o -name '*.cpp' \) \) )
@@ -205,18 +80,12 @@ ALL_SOURCE=$(shell find    ./Core -type d \( $(ALL_SOURCE_EXCEPT)   \) -prune -f
 # Device dependent settings
 ifeq ($(model),$(filter $(model),$(ALL_MINIWARE_MODELS)))
 $(info Building for Miniware )
-DEVICE_INCLUDES=-I$(MINIWARE_INC_DIR)            \
-                -I$(MINIWARE_INC_CMSIS_DEVICE)   \
-                -I$(MINIWARE_CMSIS_CORE_INC_DIR) \
-                -I$(MINIWARE_HAL_INC_DIR)        \
-                -I$(MINIWARE_HAL_LEGACY_INC_DIR)
-
 DEVICE_BSP_DIR=./Core/BSP/Miniware
-S_SRCS:=$(shell find $(MINIWARE_STARTUP_DIR) -type f -name '*.S')
-LDSCRIPT=$(MINIWARE_LD_FILE)
+LDSCRIPT=./Core/BSP/Miniware/stm32f103.ld
 
 ifeq ($(model),$(filter $(model),TS101))
-flash_size=126k
+# 128K, but logo must be at 99K so their broken ass DFU can flash it
+flash_size=98k
 bootldr_size=0x8000
 DEVICE_DFU_ADDRESS=0x08008000
 else
@@ -249,15 +118,10 @@ endif # ALL_MINIWARE_MODELS
 
 ifeq ($(model),$(filter $(model),$(ALL_SEQURE_MODELS)))
 $(info Building for Sequre )
-DEVICE_INCLUDES=-I$(S60_INC_DIR)            \
-                -I$(S60_INC_CMSIS_DEVICE)   \
-                -I$(S60_CMSIS_CORE_INC_DIR) \
-                -I$(S60_HAL_INC_DIR)        \
-                -I$(S60_HAL_LEGACY_INC_DIR)
 
-DEVICE_BSP_DIR=./Core/BSP/Sequre_S60
-S_SRCS:=$(shell find $(S60_STARTUP_DIR) -type f -name '*.S')
-LDSCRIPT=$(S60_LD_FILE)
+DEVICE_BSP_DIR=./Core/BSP/Sequre
+S_SRCS:=$(shell find $(DEVICE_BSP_DIR) -type f -name '*.S')
+LDSCRIPT=./Core/BSP/Sequre/stm32f103.ld
 DEV_GLOBAL_DEFS=-D STM32F103T8Ux       \
                 -D STM32F1             \
                 -D STM32               \
@@ -278,22 +142,22 @@ CPUFLAGS=-mcpu=cortex-m3  \
          -mfloat-abi=soft
 
 flash_size=62k
+ifeq ($(model), S60P)
+bootldr_size=0x5000
+DEVICE_DFU_ADDRESS=0x08005000
+else 
+# S60 or T55
 bootldr_size=0x4400
 DEVICE_DFU_ADDRESS=0x08004400
+endif
 DEVICE_DFU_VID_PID=0x1209:0xDB42
 endif # ALL_SEQURE_MODELS
 
 ifeq ($(model),$(filter $(model),$(ALL_MHP30_MODELS)))
 $(info Building for MHP30 )
-DEVICE_INCLUDES=-I$(MHP30_INC_DIR)            \
-                -I$(MHP30_INC_CMSIS_DEVICE)   \
-                -I$(MHP30_CMSIS_CORE_INC_DIR) \
-                -I$(MHP30_HAL_INC_DIR)        \
-                -I$(MHP30_HAL_LEGACY_INC_DIR)
 
 DEVICE_BSP_DIR=./Core/BSP/MHP30
-S_SRCS:=$(shell find $(MHP30_STARTUP_DIR) -type f -name '*.S')
-LDSCRIPT=$(MHP30_LD_FILE)
+LDSCRIPT=./Core/BSP/MHP30/stm32f103.ld
 DEV_GLOBAL_DEFS=-D STM32F103T8Ux    \
                 -D STM32F1          \
                 -D STM32            \
@@ -320,25 +184,20 @@ endif # ALL_MHP30_MODELS
 
 ifeq ($(model),$(ALL_PINECIL_MODELS))
 $(info Building for Pine64 Pinecilv1)
-DEVICE_INCLUDES=-I$(PINE_INC_DIR)               \
-                -I$(PINE_VENDOR_INC_DIR)        \
-                -I$(PINE_VENDOR_USB_INC_DIR)    \
-                -I$(PINE_NMSIS_INC_DIR)         \
-                -I$(PINE_FREERTOS_PORT_INC_DIR)
+
 
 DEVICE_BSP_DIR=./Core/BSP/Pinecil
-S_SRCS:=$(shell find $(PINE_INC_DIR) -type f -name '*.S') $(info $(S_SRCS) )
-ASM_INC=-I$(PINE_RISCV_INC_DIR)
+S_SRCS:=$(shell find $(DEVICE_BSP_DIR) -type f -name '*.S')
 LDSCRIPT=./Core/BSP/Pinecil/Vendor/SoC/gd32vf103/Board/pinecil/Source/GCC/gcc_gd32vf103_flashxip.ld
 flash_size=128k
 bootldr_size=0x0
 
 # Flags
-CPUFLAGS=-march=rv32imac \
-         -mabi=ilp32     \
-         -mcmodel=medany \
-         -fsigned-char   \
-         -fno-builtin    \
+CPUFLAGS=-march=rv32imaczicsr \
+         -mabi=ilp32          \
+         -mcmodel=medany      \
+         -fsigned-char        \
+         -fno-builtin         \
          -nostartfiles
 
 DEV_LDFLAGS=-nostartfiles
@@ -351,66 +210,13 @@ endif # ALL_PINECIL_MODELS
 ifeq ($(model),$(ALL_PINECIL_V2_MODELS))
 $(info Building for Pine64 Pinecilv2 )
 
-DEVICE_INCLUDES=-I$(PINECILV2_DIR)                                                \
-                -I$(PINECILV2_SDK_DIR)                                            \
-                -I$(PINECILV2_VENDOR_BSP_COMMON_DIR)                              \
-                -I$(PINECILV2_VENDOR_BSP_PLATFORM_DIR)                            \
-                -I$(PINECILV2_COMMON_DIR)                                         \
-                -I$(PINECILV2_COMMON_BL_MATH_DIR)                                 \
-                -I$(PINECILV2_COMMON_DEVICE_DIR)                                  \
-                -I$(PINECILV2_COMMON_LIST_DIR)                                    \
-                -I$(PINECILV2_COMMON_MISC_DIR)                                    \
-                -I$(PINECILV2_COMMON_PARTITION_DIR)                               \
-                -I$(PINECILV2_COMMON_PID_DIR)                                     \
-                -I$(PINECILV2_COMMON_RING_BUFFERDIR)                              \
-                -I$(PINECILV2_COMMON_SOFT_CRC_DIR)                                \
-                -I$(PINECILV2_COMMON_TIMESTAMP_DIR)                               \
-                -I$(PINECILV2_COMPONENTS_DIR)                                     \
-                -I$(PINECILV2_COMPONENTS_FREERTOS_DIR)                            \
-                -I$(PINECILV2_COMPONENTS_FREERTOS_BL602_DIR)                      \
-                -I$(PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_DIR)                   \
-                -I$(PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_DRIVERS_DIR)           \
-                -I$(PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_DRIVERS_BLUETOOTH_DIR) \
-                -I$(PINECILV2_COMPONENTS_BLE_STACK_PORT_INCLUDE_DIR)              \
-                -I$(PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_BLUETOOTH_DIR)         \
-                -I$(PINECILV2_COMPONENTS_BLE_STACK_COMMON_INCLUDE_DIR)            \
-                -I$(PINECILV2_COMPONENTS_BLE_STACK_COMMON_DIR)                    \
-                -I$(PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_MISC_DIR)              \
-                -I$(PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_ZEPHYR_DIR)            \
-                -I$(PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_NET_DIR)               \
-                -I$(PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_TOOLCHAIN_DIR)         \
-                -I$(PINECILV2_COMPONENTS_BLE_STACK_INCLUDE_TOOLCHAIN_DIR)         \
-                -I$(PINECILV2_COMPONENTS_BLE_STACK_TINYCRYPT_DIR)                 \
-                -I$(PINECILV2_COMPONENTS_BLE_STACK_TINYCRYPT_INCLUDE_DIR)         \
-                -I$(PINECILV2_COMPONENTS_BLE_STACK_HOST_DIR)                      \
-                -I$(PINECILV2_COMPONENTS_BLE_STACK_BL_HCI_WRAPPER_DIR)            \
-                -I$(PINECILV2_COMPONENTS_BLE_CONTROLLER_BLE_INC_DIR)              \
-                -I$(PINECILV2_COMPONENTS_BLE_STACK_BC_DEC_DIR)                    \
-                -I$(PINECILV2_COMPONENTS_NMSIS_DIR)                               \
-                -I$(PINECILV2_COMPONENTS_USB_STACK_DIR)                           \
-                -I$(PINECILV2_DRIVERS_DIR)                                        \
-                -I$(PINECILV2_DRIVERS_HAL_DRV_INC_DIR)                            \
-                -I$(PINECILV2_DRIVERS_HAL_DRV_DEF_DIR)                            \
-                -I$(PINECILV2_DRIVERS_REGS_DIR)                                   \
-                -I$(PINECILV2_DRIVERS_RISCV_DIR)                                  \
-                -I$(PINECILV2_DRIVERS_STARTUP_DIR)                                \
-                -I$(PINECILV2_DRIVERS_STD_DRV_DIR)                                \
-                -I$(PINECILV2_VENDOR_BSP_PLATFORM_DIR)                            \
-                -I$(PINECILV2_VENDOR_BSP_USB_DIR)                                 \
-                -I$(PINECILV2_COMPONENTS_USB_STACK_COMMON_DIR)                    \
-                -I$(PINECILV2_COMPONENTS_USB_STACK_CORE_DIR)                      \
-                -I$(PINECILV2_COMPONENTS_USB_STACK_CDC_DIR)                       \
-                -I$(PINECILV2_COMPONENTS_USB_STACK_WINUSB_DIR)                    \
-                -I$(PINECILV2_COMPONENTS_NMSIS_CORE_INC_DIR)
 
 DEVICE_BSP_DIR=./Core/BSP/Pinecilv2
-S_SRCS:=$(shell find $(PINECILV2_DIR) -type d  \(  -path $(PINECILV2_VENDOR_BSP_COMMON_DIR) \) -prune -false -o  -type f -name '*.S') $(info $(S_SRCS) )
-ASM_INC=$(DEVICE_INCLUDES)
 LDSCRIPT=./Core/BSP/Pinecilv2/bl_mcu_sdk/drivers/bl702_driver/bl702_flash.ld
 DEVICE_DFU_ADDRESS=0x23000000
 # DFU starts at the beginning of flash
 # Flags
-CPUFLAGS=-march=rv32imafc                                     \
+CPUFLAGS=-march=rv32imafczicsr                                \
          -mabi=ilp32f                                         \
          -mcmodel=medany                                      \
          -fsigned-char                                        \
@@ -420,7 +226,13 @@ CPUFLAGS=-march=rv32imafc                                     \
          -DARCH_RISCV                                         \
          -D__RISCV_FEATURE_MVE=0                              \
          -DBL702                                              \
-         -DBFLB_USE_ROM_DRIVER=1                              \
+         -DBFLB_USE_ROM_DRIVER=0                              \
+
+# Binary blobs suck and they should be ashamed
+PINECILV2_SDK_DIR=$(DEVICE_BSP_DIR)/bl_mcu_sdk
+PINECILV2_COMPONENTS_DIR=$(PINECILV2_SDK_DIR)/components
+PINECILV2_BLE_CRAPWARE_BLOB_DIR=$(PINECILV2_COMPONENTS_DIR)/ble/blecontroller/lib
+PINECILV2_RF_CRAPWARE_BLOB_DIR=$(PINECILV2_COMPONENTS_DIR)/ble/bl702_rf/lib
 
 DEV_LDFLAGS=-nostartfiles                         \
             -L $(PINECILV2_BLE_CRAPWARE_BLOB_DIR) \
@@ -439,7 +251,7 @@ DEV_GLOBAL_DEFS=-DCFG_FREERTOS                                       \
                 -DCFG_BLE                                            \
                 -DOPTIMIZE_DATA_EVT_FLOW_FROM_CONTROLLER             \
                 -DBL_MCU_SDK                                         \
-                -DCFG_CON=2                                          \
+                -DCFG_CON=1                                          \
                 -DCFG_BLE_TX_BUFF_DATA=2                             \
                 -DCONFIG_BT_PERIPHERAL                               \
                 -DCONFIG_BT_L2CAP_DYNAMIC_CHANNEL                    \
@@ -463,57 +275,60 @@ DEV_GLOBAL_DEFS=-DCFG_FREERTOS                                       \
                 -DCONFIG_BT_SETTINGS_CCC_LAZY_LOADING                \
                 -DCONFIG_BT_SETTINGS_USE_PRINTK                      \
                 -DCFG_SLEEP                                          \
-                -DCONFIG_BT_ALLROLES                                 \
-                -DCONFIG_BT_CENTRAL                                  \
                 -DCONFIG_BT_OBSERVER                                 \
                 -DCONFIG_BT_BROADCASTER                              \
-                -DCFG_BLE_STACK_DBG_PRINT                            \
                 -DportasmHANDLE_INTERRUPT=FreeRTOS_Interrupt_Handler \
                 -DCONFIG_BT_DEVICE_NAME=\"Pinecil\"                  \
                 -DCONFIG_BT_DEVICE_APPEARANCE=0x06C1
+                # -DCFG_BLE_STACK_DBG_PRINT                            \
+                # -DCONFIG_BT_CENTRAL                                  \
+                # -DCONFIG_BT_ALLROLES                                 \
 # -DBFLB_USE_HAL_DRIVER \
 # -DCONFIG_BT_SMP
 
 # Required to be turned off due to their drivers tripping warnings
-DEV_CFLAGS=-Wno-error=enum-conversion -Wno-type-limits -Wno-implicit-fallthrough
+DEV_CFLAGS=-Wno-error=enum-conversion -Wno-type-limits -Wno-implicit-fallthrough -Wno-error=implicit-function-declaration -Wno-error=incompatible-pointer-types
 DEV_CXXFLAGS=$(DEV_CFLAGS)
 flash_size=128k
 bootldr_size=0x0
 
 endif # ALL_PINECIL_V2_MODELS
 
-INCLUDES=-I$(APP_INC_DIR)                    \
-         -I$(BRIEFLZ_INC_DIR)                \
-         -I$(FRTOS_CMIS_INC_DIR)             \
-         -I$(FRTOS_INC_DIR)                  \
-         -I$(DRIVER_INC_DIR)                 \
-         -I$(BSP_INC_DIR)                    \
-         -I$(THREADS_INC_DIR)                \
-         -I$(THREADS_OP_MODES_INC_DIR)       \
-         -I$(THREADS_OP_MODES_TOOLS_INC_DIR) \
-         -I$(INC_PD_DRIVERS_DIR)             \
-           $(DEVICE_INCLUDES)
+DEVICE_BSP_INCLUDE_DIRS:= ${shell find ${DEVICE_BSP_DIR} -type d -print}
+THREADS_INCLUDE_DIRS:= ${shell find ${THREADS_DIR} -type d -print}
+DRIVERS_INCLUDE_DIRS:= ${shell find ${DRIVERS_DIR} -type d -print}
+BRIEFLZ_INCLUDE_DIRS:= ${shell find ${BRIEFLZ_DIR} -type d -print}
+MIDDLEWARES_INCLUDE_DIRS:= ${shell find ${MIDDLEWARES_DIR} -type d -print}
 
-EXCLUDED_DIRS:=-path $(PINECILV2_VENDOR_BSP_ES8388_DIR)       \
-            -o -path $(PINECILV2_VENDOR_BSP_IMAGE_SENSOR_DIR) \
-            -o -path $(PINECILV2_VENDOR_BSP_LVGL_DIR)         \
-            -o -path $(PINECILV2_VENDOR_BSP_MCU_LCD_DIR)      \
-            -o -path $(PINECILV2_VENDOR_BSP_BOARD_DIR)        \
-            -o -path $(PINECILV2_VENDOR_BSP_USB_DIR)
 
-SOURCE:=$(shell find $(SOURCE_THREADS_DIR)     -type f -name '*.c') \
-        $(shell find $(SOURCE_CORE_DIR)        -type f -name '*.c') \
-        $(shell find $(SOURCE_DRIVERS_DIR)     -type f -name '*.c') \
-        $(shell find $(DEVICE_BSP_DIR)         -type d  \( $(EXCLUDED_DIRS)  \) -prune -false -o -type f -name '*.c') \
-        $(shell find $(SOURCE_MIDDLEWARES_DIR) -type f -name '*.c') \
-        $(SOURCE_BRIEFLZ_DIR)/depack.c
+INCLUDES=-I$(APP_INC_DIR)                              \
+         -I$(BSP_INC_DIR)                              \
+          ${patsubst %,-I%,${DEVICE_BSP_INCLUDE_DIRS}} \
+          ${patsubst %,-I%,${THREADS_INCLUDE_DIRS}}    \
+          ${patsubst %,-I%,${DRIVERS_INCLUDE_DIRS}}    \
+          ${patsubst %,-I%,${BRIEFLZ_INCLUDE_DIRS}}    \
+          ${patsubst %,-I%,${MIDDLEWARES_INCLUDE_DIRS}}
+
+ASM_INC=$(INCLUDES)
+
+
+SOURCE:=$(shell find ${THREADS_DIR}            -type f -name '*.c') \
+        $(shell find ${SOURCE_CORE_DIR}        -type f -name '*.c') \
+        $(shell find ${DRIVERS_DIR}            -type f -name '*.c') \
+        $(shell find ${DEVICE_BSP_DIR}         -type f -name '*.c') \
+        $(shell find ${MIDDLEWARES_DIR}        -type f -name '*.c') \
+        $(BRIEFLZ_DIR)/depack.c
 
 # We exclude the USB-PD stack tests $(PD_DRIVER_TESTS_DIR)
-SOURCE_CPP:=$(shell find $(SOURCE_THREADS_DIR)     -type f -name '*.cpp') \
-            $(shell find $(SOURCE_CORE_DIR)        -type f -name '*.cpp') \
-            $(shell find $(SOURCE_DRIVERS_DIR)     -path $(PD_DRIVER_TESTS_DIR) -prune -false -o -type f -name '*.cpp')    \
-            $(shell find $(DEVICE_BSP_DIR)         -type d  \( $(EXCLUDED_DIRS) \) -prune -false -o -type f -name '*.cpp') \
-            $(shell find $(SOURCE_MIDDLEWARES_DIR) -type f -name '*.cpp')
+SOURCE_CPP:=$(shell find ${THREADS_DIR}      -type f -name '*.cpp') \
+            $(shell find ${SOURCE_CORE_DIR}  -type f -name '*.cpp') \
+            $(shell find ${DRIVERS_DIR}      -type f -name '*.cpp' -not -path "${PD_DRIVER_TESTS_DIR}/*" ) \
+            $(shell find ${DEVICE_BSP_DIR}   -type f -name '*.cpp') \
+            $(shell find ${MIDDLEWARES_DIR}  -type f -name '*.cpp')
+
+
+S_SRCS:=$(shell find $(DEVICE_BSP_DIR) -type f -name '*.S')
+
 
 # Code optimisation ------------------------------------------------------------
 OPTIM=-Os                             \
@@ -523,7 +338,7 @@ OPTIM=-Os                             \
       -fdevirtualize-at-ltrans        \
       -fmerge-all-constants           \
       -fshort-wchar                   \
-      -flto                           \
+      -flto=auto                      \
       -finline-small-functions        \
       -finline-functions              \
       -findirect-inlining             \
@@ -544,6 +359,12 @@ GLOBAL_DEFINES+=$(DEV_GLOBAL_DEFS) -D USE_RTOS_SYSTICK -D MODEL_$(model) -D VECT
 
 ifdef swd_enable
 GLOBAL_DEFINES+=-DSWD_ENABLE
+endif
+
+ifeq ($(model),$(filter $(model),$(ALL_PINECIL_V2_MODELS)))
+ifdef ws2812b_enable
+	GLOBAL_DEFINES += -DWS2812B_ENABLE
+endif
 endif
 
 # Libs -------------------------------------------------------------------------
@@ -610,6 +431,7 @@ CHECKOPTIONS=-Wtrigraphs                  \
              -Wmissing-field-initializers \
              -Wshadow                     \
              -Wno-unused-parameter        \
+             -Wno-undef                   \
              -Wdouble-promotion
 
 CHECKOPTIONS_C=$(CHECKOPTIONS) -Wbad-function-cast
@@ -639,6 +461,7 @@ CFLAGS=$(DEV_CFLAGS)     \
      -D${COMPILER}       \
      -MMD                \
      -std=gnu11          \
+     -g3                 \
        $(OPTIM)          \
      -T$(LDSCRIPT)       \
      -c
@@ -734,26 +557,26 @@ Core/Gen/Translation.%.cpp $(OUTPUT_DIR)/Core/Gen/translation.files/%.pickle: ..
 	@test -d $(OUTPUT_DIR)/Core/Gen/translation.files || mkdir -p $(OUTPUT_DIR)/Core/Gen/translation.files
 	@echo 'Generating translations for language $*'
 	@$(HOST_PYTHON) ../Translations/make_translation.py \
-		--macros $(CURDIR)/Core/Gen/macros.txt      \
-		-o $(CURDIR)/Core/Gen/Translation.$*.cpp    \
-		--output-pickled $(OUTPUT_DIR)/Core/Gen/translation.files/$*.pickle \
+		--macros "$(CURDIR)/Core/Gen/macros.txt"      \
+		-o "$(CURDIR)/Core/Gen/Translation.$*.cpp"    \
+		--output-pickled "$(OUTPUT_DIR)/Core/Gen/translation.files/$*.pickle" \
 		$*
 
 Core/Gen/macros.txt: Makefile
-	@test -d $(CURDIR)/Core/Gen || mkdir -p $(CURDIR)/Core/Gen
-	echo "#include <configuration.h>" | $(CC) -dM -E $(CFLAGS) -MF $(CURDIR)/Core/Gen/macros.tmp - > $(CURDIR)/Core/Gen/macros.txt
+	@test -d "$(CURDIR)/Core/Gen" || mkdir -p "$(CURDIR)/Core/Gen"
+	echo "#include <configuration.h>" | $(CC) -dM -E $(CFLAGS) -MF "$(CURDIR)/Core/Gen/macros.tmp" - > "$(CURDIR)/Core/Gen/macros.txt"
 
 # The recipes to produce compressed translation data
 
 $(OUTPUT_DIR)/Core/Gen/translation.files/%.o: Core/Gen/Translation.%.cpp
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Generating $@
-	@$(CPP) -c $(filter-out -flto ,$(CXXFLAGS)) $< -o $@
+	@$(CPP) -c $(filter-out -flto=auto ,$(CXXFLAGS)) $< -o $@
 
 $(OUTPUT_DIR)/Core/Gen/translation.files/multi.%.o: Core/Gen/Translation_multi.%.cpp
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Generating $@
-	@$(CPP) -c $(filter-out -flto ,$(CXXFLAGS)) $< -o $@
+	@$(CPP) -c $(filter-out -flto=auto ,$(CXXFLAGS)) $< -o $@
 
 $(HOST_OUTPUT_DIR)/brieflz/libbrieflz.so: Core/brieflz/brieflz.c Core/brieflz/depack.c
 	@test -d $(@D) || mkdir -p $(@D)
@@ -764,10 +587,10 @@ Core/Gen/Translation_brieflz.%.cpp: $(OUTPUT_DIR)/Core/Gen/translation.files/%.o
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Generating BriefLZ compressed translation for $*
 	@OBJCOPY=$(OBJCOPY) $(HOST_PYTHON) ../Translations/make_translation.py \
-		--macros $(CURDIR)/Core/Gen/macros.txt           \
-		-o $(CURDIR)/Core/Gen/Translation_brieflz.$*.cpp \
-		--input-pickled $(OUTPUT_DIR)/Core/Gen/translation.files/$*.pickle \
-		--strings-obj $(OUTPUT_DIR)/Core/Gen/translation.files/$*.o        \
+		--macros "$(CURDIR)/Core/Gen/macros.txt"           \
+		-o "$(CURDIR)/Core/Gen/Translation_brieflz.$*.cpp" \
+		--input-pickled "$(OUTPUT_DIR)/Core/Gen/translation.files/$*.pickle" \
+		--strings-obj "$(OUTPUT_DIR)/Core/Gen/translation.files/$*.o"        \
 		$*
 
 Core/Gen/Translation_brieflz_font.%.cpp: $(OUTPUT_DIR)/Core/Gen/translation.files/%.pickle $(HOST_OUTPUT_DIR)/brieflz/libbrieflz.so Core/Gen/macros.txt
@@ -819,9 +642,9 @@ Core/Gen/Translation_multi.$(1).cpp: $(patsubst %,../Translations/translation_%.
 	@test -d $(OUTPUT_DIR)/Core/Gen/translation.files || mkdir -p $(OUTPUT_DIR)/Core/Gen/translation.files
 	@echo 'Generating translations for multi-language $(2)'
 	@$(HOST_PYTHON) ../Translations/make_translation.py   \
-		--macros $(CURDIR)/Core/Gen/macros.txt           \
-		-o $(CURDIR)/Core/Gen/Translation_multi.$(1).cpp \
-		--output-pickled $(OUTPUT_DIR)/Core/Gen/translation.files/multi.$(1).pickle \
+		--macros "$(CURDIR)/Core/Gen/macros.txt"           \
+		-o "$(CURDIR)/Core/Gen/Translation_multi.$(1).cpp" \
+		--output-pickled "$(OUTPUT_DIR)/Core/Gen/translation.files/multi.$(1).pickle" \
 		$(3)
 
 $(OUTPUT_DIR)/Core/Gen/translation.files/multi.$(1).pickle: Core/Gen/Translation_multi.$(1).cpp
@@ -830,10 +653,10 @@ Core/Gen/Translation_brieflz_multi.$(1).cpp: $(OUTPUT_DIR)/Core/Gen/translation.
 	@test -d $$(@D) || mkdir -p $$(@D)
 	@echo Generating BriefLZ compressed translation for multi-language $(2)
 	@OBJCOPY=$(OBJCOPY) $(HOST_PYTHON) ../Translations/make_translation.py \
-		--macros $(CURDIR)/Core/Gen/macros.txt                   \
-		-o $(CURDIR)/Core/Gen/Translation_brieflz_multi.$(1).cpp \
-		--input-pickled $(OUTPUT_DIR)/Core/Gen/translation.files/multi.$(1).pickle \
-		--strings-obj $(OUTPUT_DIR)/Core/Gen/translation.files/multi.$(1).o        \
+		--macros "$(CURDIR)/Core/Gen/macros.txt"                   \
+		-o "$(CURDIR)/Core/Gen/Translation_brieflz_multi.$(1).cpp" \
+		--input-pickled "$(OUTPUT_DIR)/Core/Gen/translation.files/multi.$(1).pickle" \
+		--strings-obj "$(OUTPUT_DIR)/Core/Gen/translation.files/multi.$(1).o"        \
 		--compress-font \
 		$(3)
 

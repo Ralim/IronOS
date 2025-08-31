@@ -7,15 +7,12 @@
 #include "Setup.h"
 #include "BSP.h"
 #include "Pins.h"
+#include "configuration.h"
 #include "history.hpp"
 #include <stdint.h>
 ADC_HandleTypeDef hadc1;
 ADC_HandleTypeDef hadc2;
 DMA_HandleTypeDef hdma_adc1;
-
-I2C_HandleTypeDef hi2c1;
-DMA_HandleTypeDef hdma_i2c1_rx;
-DMA_HandleTypeDef hdma_i2c1_tx;
 
 IWDG_HandleTypeDef hiwdg;
 TIM_HandleTypeDef  htimADC;
@@ -27,7 +24,6 @@ uint16_t ADCReadings[ADC_SAMPLES]; // Used to store the adc readings for the han
 // Functions
 static void SystemClock_Config(void);
 static void MX_ADC1_Init(void);
-static void MX_I2C1_Init(void);
 static void MX_IWDG_Init(void);
 static void MX_TIP_CONTROL_TIMER_Init(void);
 static void MX_ADC_CONTROL_TIMER_Init(void);
@@ -46,7 +42,7 @@ void        Setup_HAL() {
   MX_GPIO_Init();
   MX_DMA_Init();
 #ifndef I2C_SOFT_BUS_1
-  MX_I2C1_Init();
+#error "Only Bit-Bang now"
 #endif
   MX_ADC1_Init();
   MX_ADC2_Init();
@@ -277,20 +273,6 @@ static void MX_ADC2_Init(void) {
     ;
   }
 }
-/* I2C1 init function */
-static void MX_I2C1_Init(void) {
-  hi2c1.Instance        = I2C1;
-  hi2c1.Init.ClockSpeed = 75000;
-  // OLED doesnt handle >100k when its asleep (off).
-  hi2c1.Init.DutyCycle       = I2C_DUTYCYCLE_2;
-  hi2c1.Init.OwnAddress1     = 0;
-  hi2c1.Init.AddressingMode  = I2C_ADDRESSINGMODE_7BIT;
-  hi2c1.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
-  hi2c1.Init.OwnAddress2     = 0;
-  hi2c1.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
-  hi2c1.Init.NoStretchMode   = I2C_NOSTRETCH_DISABLE;
-  HAL_I2C_Init(&hi2c1);
-}
 
 /* IWDG init function */
 static void MX_IWDG_Init(void) {
@@ -335,7 +317,7 @@ static void MX_TIP_CONTROL_TIMER_Init(void) {
 #ifdef TIP_HAS_DIRECT_PWM
   sConfigOC.Pulse = 0; // PWM is direct to tip
 #else
-  sConfigOC.Pulse        = 127; // 50% duty cycle, that is AC coupled through the cap to provide an on signal (This does not do tip at 50% duty cycle)
+  sConfigOC.Pulse = 127; // 50% duty cycle, that is AC coupled through the cap to provide an on signal (This does not do tip at 50% duty cycle)
 #endif
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_ENABLE;
@@ -354,7 +336,7 @@ static void MX_TIP_CONTROL_TIMER_Init(void) {
   // Remap TIM3_CH1 to be on PB4
   __HAL_AFIO_REMAP_TIM3_PARTIAL();
 #else
-                                // No re-map required
+  // No re-map required
 #endif
   HAL_TIM_PWM_Start(&htimTip, PWM_Out_CHANNEL);
 }
@@ -498,8 +480,8 @@ static void MX_GPIO_Init(void) {
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 #endif
 #else
-                                /* TS80 */
-                                /* Leave USB lines open circuit*/
+  /* TS80 */
+  /* Leave USB lines open circuit*/
 
 #endif
 

@@ -1,319 +1,351 @@
 {
-    "languageCode": "NB",
-    "languageLocalName": "Norsk bokmål",
-    "tempUnitFahrenheit": false,
-    "messagesWarn": {
-        "CalibrationDone": {
-            "message": "Calibration\ndone!"
-        },
-        "ResetOKMessage": {
-            "message": "Tilbakestilling OK"
-        },
-        "SettingsResetMessage": {
-            "message": "Noen innstillinger\nble endret!"
-        },
-        "NoAccelerometerMessage": {
-            "message": "Ingen akselerometer\nfunnet!"
-        },
-        "NoPowerDeliveryMessage": {
-            "message": "Ingen USB-PD IC\nfunnet!"
-        },
-        "LockingKeysString": {
-            "message": "LÅST"
-        },
-        "UnlockingKeysString": {
-            "message": "ÅPNET"
-        },
-        "WarningKeysLockedString": {
-            "message": "!LÅST!"
-        },
-        "WarningThermalRunaway": {
-            "message": "Termisk\nrømling"
-        },
-        "WarningTipShorted": {
-            "message": "!Tip Shorted!"
-        },
-        "SettingsCalibrationWarning": {
-            "message": "Before rebooting, make sure tip & handle are at room temperature!"
-        },
-        "CJCCalibrating": {
-            "message": "calibrating\n"
-        },
-        "SettingsResetWarning": {
-            "message": "Er du sikker på at du vil tilbakestille til standardinnstillinger?"
-        },
-        "UVLOWarningString": {
-            "message": "Lavspenn"
-        },
-        "UndervoltageString": {
-            "message": "Underspenning\n"
-        },
-        "InputVoltageString": {
-            "message": "Innspenn.: \n"
-        },
-        "SleepingSimpleString": {
-            "message": "Zzzz"
-        },
-        "SleepingAdvancedString": {
-            "message": "Dvale...\n"
-        },
-        "SleepingTipAdvancedString": {
-            "message": "Spiss: \n"
-        },
-        "OffString": {
-            "message": "Av"
-        },
-        "ProfilePreheatString": {
-            "message": "Preheat\n"
-        },
-        "ProfileCooldownString": {
-            "message": "Cooldown\n"
-        },
-        "DeviceFailedValidationWarning": {
-            "message": "Enheten din er sannsynligvis en forfalskning!"
-        },
-        "TooHotToStartProfileWarning": {
-            "message": "Too hot to\nstart profile"
-        }
+  "languageCode": "NB",
+  "languageLocalName": "Norsk bokmål",
+  "tempUnitFahrenheit": false,
+  "messagesWarn": {
+    "CalibrationDone": {
+      "message": "Calibration\ndone!"
     },
-    "characters": {
-        "SettingRightChar": "H",
-        "SettingLeftChar": "V",
-        "SettingAutoChar": "A",
-        "SettingOffChar": "O",
-        "SettingSlowChar": "S",
-        "SettingMediumChar": "M",
-        "SettingFastChar": "F",
-        "SettingStartNoneChar": "I",
-        "SettingStartSolderingChar": "L",
-        "SettingStartSleepChar": "D",
-        "SettingStartSleepOffChar": "R",
-        "SettingLockDisableChar": "D",
-        "SettingLockBoostChar": "B",
-        "SettingLockFullChar": "F"
+    "ResetOKMessage": {
+      "message": "Tilbakestilling OK"
     },
-    "menuGroups": {
-        "PowerMenu": {
-            "displayText": "Effekt-\ninnst.",
-            "description": ""
-        },
-        "SolderingMenu": {
-            "displayText": "Lodde-\ninnst.",
-            "description": ""
-        },
-        "PowerSavingMenu": {
-            "displayText": "Dvale-\ninnst.",
-            "description": ""
-        },
-        "UIMenu": {
-            "displayText": "Bruker-\ngrensesn.",
-            "description": ""
-        },
-        "AdvancedMenu": {
-            "displayText": "Avanserte\nvalg",
-            "description": ""
-        }
+    "SettingsResetMessage": {
+      "message": "Noen innstillinger\nble endret!"
     },
-    "menuOptions": {
-        "DCInCutoff": {
-            "displayText": "Kilde\n",
-            "description": "Strømforsyning. Sett nedre spenning for automatisk nedstenging. (DC 10V) (S 3.3V per celle)"
-        },
-        "MinVolCell": {
-            "displayText": "Minimum\nspenning",
-            "description": "Minimum tillatt spenning per celle (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
-        },
-        "QCMaxVoltage": {
-            "displayText": "QC-\nspenning",
-            "description": "Maks QC-spenning bolten skal forhandle om"
-        },
-        "PDNegTimeout": {
-            "displayText": "PD-\ntidsavb.",
-            "description": "PD-forhandlingstidsavbrudd i steg på 100 ms for kompatibilitet med noen QC-ladere"
-        },
-        "PDVpdo": {
-            "displayText": "PD\nVPDO",
-            "description": "Enables PPS & EPR modes"
-        },
-        "BoostTemperature": {
-            "displayText": "KTmp\n",
-            "description": "Temperatur i \"kraft-modus\""
-        },
-        "AutoStart": {
-            "displayText": "AStart\n",
-            "description": "Start automatisk med lodding når strøm kobles til. (I=Inaktiv | L=Lodding | D=Dvale | R=Dvale romtemperatur)"
-        },
-        "TempChangeShortStep": {
-            "displayText": "Temp-endring\nkort",
-            "description": "Hvor mye temperaturen skal endres ved kort trykk på knapp"
-        },
-        "TempChangeLongStep": {
-            "displayText": "Temp-endring\nlang",
-            "description": "Hvor mye temperaturen skal endres ved langt trykk på knapp"
-        },
-        "LockingMode": {
-            "displayText": "Tillat å låse\nknapper",
-            "description": "Mens du lodder, hold nede begge knapper for å bytte mellom låsemodus (D=deaktiver | B=kun boost | F=full lås)"
-        },
-        "ProfilePhases": {
-            "displayText": "Profile\nPhases",
-            "description": "Number of phases in profile mode"
-        },
-        "ProfilePreheatTemp": {
-            "displayText": "Preheat\nTemp",
-            "description": "Preheat to this temperature at the start of profile mode"
-        },
-        "ProfilePreheatSpeed": {
-            "displayText": "Preheat\nSpeed",
-            "description": "Preheat at this rate (degrees per second)"
-        },
-        "ProfilePhase1Temp": {
-            "displayText": "Phase 1\nTemp",
-            "description": "Target temperature for the end of this phase"
-        },
-        "ProfilePhase1Duration": {
-            "displayText": "Phase 1\nDuration",
-            "description": "Target duration of this phase (seconds)"
-        },
-        "ProfilePhase2Temp": {
-            "displayText": "Phase 2\nTemp",
-            "description": ""
-        },
-        "ProfilePhase2Duration": {
-            "displayText": "Phase 2\nDuration",
-            "description": ""
-        },
-        "ProfilePhase3Temp": {
-            "displayText": "Phase 3\nTemp",
-            "description": ""
-        },
-        "ProfilePhase3Duration": {
-            "displayText": "Phase 3\nDuration",
-            "description": ""
-        },
-        "ProfilePhase4Temp": {
-            "displayText": "Phase 4\nTemp",
-            "description": ""
-        },
-        "ProfilePhase4Duration": {
-            "displayText": "Phase 4\nDuration",
-            "description": ""
-        },
-        "ProfilePhase5Temp": {
-            "displayText": "Phase 5\nTemp",
-            "description": ""
-        },
-        "ProfilePhase5Duration": {
-            "displayText": "Phase 5\nDuration",
-            "description": ""
-        },
-        "ProfileCooldownSpeed": {
-            "displayText": "Cooldown\nSpeed",
-            "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
-        },
-        "MotionSensitivity": {
-            "displayText": "BSensr\n",
-            "description": "Bevegelsesfølsomhet (0=Inaktiv | 1=Minst følsom | ... | 9=Mest følsom)"
-        },
-        "SleepTemperature": {
-            "displayText": "DTmp\n",
-            "description": "Dvaletemperatur (C)"
-        },
-        "SleepTimeout": {
-            "displayText": "DTid\n",
-            "description": "Tid før dvale (Minutter | Sekunder)"
-        },
-        "ShutdownTimeout": {
-            "displayText": "AvTid\n",
-            "description": "Tid før automatisk nedstenging (Minutter)"
-        },
-        "HallEffSensitivity": {
-            "displayText": "Hall-sensor\nfølsomhet",
-            "description": "Sensitiviteten til Hall-effekt-sensoren for å detektere inaktivitet (0=Inaktiv | 1=Minst følsom | ... | 9=Mest følsom)"
-        },
-        "TemperatureUnit": {
-            "displayText": "TmpEnh\n",
-            "description": "Temperaturskala (C=Celsius | F=Fahrenheit)"
-        },
-        "DisplayRotation": {
-            "displayText": "SkRetn\n",
-            "description": "Skjermretning (H=Høyrehendt | V=Venstrehendt | A=Automatisk)"
-        },
-        "CooldownBlink": {
-            "displayText": "KjBlnk\n",
-            "description": "Blink temperaturen på skjermen mens spissen fortsatt er varm."
-        },
-        "ScrollingSpeed": {
-            "displayText": "RullHa\n",
-            "description": "Hastigheten på rulletekst"
-        },
-        "ReverseButtonTempChange": {
-            "displayText": "Bytt\n+ - kn.",
-            "description": "Bytt om på knappene for å stille temperatur"
-        },
-        "AnimSpeed": {
-            "displayText": "Anim.\nhastighet",
-            "description": "Hastigheten til animasjonene i menyen (O=off | S=slow | M=medium | F=fast)"
-        },
-        "AnimLoop": {
-            "displayText": "Anim.\nloop",
-            "description": "Loop ikon-animasjoner i hovedmenyen"
-        },
-        "Brightness": {
-            "displayText": "Skjerm-\nlysstyrke",
-            "description": "Juster lysstyrken til OLED-skjermen"
-        },
-        "ColourInversion": {
-            "displayText": "Inverter\nskjerm",
-            "description": "Inverter fargene på OLED-skjermen"
-        },
-        "LOGOTime": {
-            "displayText": "Oppstartlogo\nvarighet",
-            "description": "Setter varigheten til oppstartlogoen (s=sekunder)"
-        },
-        "AdvancedIdle": {
-            "displayText": "AvDvSk\n",
-            "description": "Vis detaljert informasjon med liten skrift på dvaleskjermen."
-        },
-        "AdvancedSoldering": {
-            "displayText": "AvLdSk\n",
-            "description": "Vis detaljert informasjon ved lodding"
-        },
-        "BluetoothLE": {
-            "displayText": "Bluetooth\n",
-            "description": "Enables BLE"
-        },
-        "PowerLimit": {
-            "displayText": "Effekt-\ngrense",
-            "description": "Maks effekt jernet kan bruke (W=watt)"
-        },
-        "CalibrateCJC": {
-            "displayText": "TempKal?\n",
-            "description": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
-        },
-        "VoltageCalibration": {
-            "displayText": "KalSpIn?\n",
-            "description": "Kalibrer spenning. Knappene justerer. Langt trykk for å gå ut"
-        },
-        "PowerPulsePower": {
-            "displayText": "Effekt-\npuls",
-            "description": "Hvor høy effekt pulsen for å holde laderen våken skal ha (watt)"
-        },
-        "PowerPulseWait": {
-            "displayText": "Effektpuls\nforsink.",
-            "description": "Forsinkelse før effektpulsen utløses (x 2.5s)"
-        },
-        "PowerPulseDuration": {
-            "displayText": "Effektpuls\nvarighet",
-            "description": "Hvor lenge holde-våken-pulsen varer (x 250ms)"
-        },
-        "SettingsReset": {
-            "displayText": "TilbStl?\n",
-            "description": "Tilbakestill alle innstillinger"
-        },
-        "LanguageSwitch": {
-            "displayText": "Språk:\n NB    Norsk bm",
-            "description": ""
-        }
+    "NoAccelerometerMessage": {
+      "message": "Ingen akselerometer\nfunnet!"
+    },
+    "NoPowerDeliveryMessage": {
+      "message": "Ingen USB-PD IC\nfunnet!"
+    },
+    "LockingKeysString": {
+      "message": "LÅST"
+    },
+    "UnlockingKeysString": {
+      "message": "ÅPNET"
+    },
+    "WarningKeysLockedString": {
+      "message": "!LÅST!"
+    },
+    "WarningThermalRunaway": {
+      "message": "Termisk\nrømling"
+    },
+    "WarningTipShorted": {
+      "message": "!Tip Shorted!"
+    },
+    "SettingsCalibrationWarning": {
+      "message": "Before rebooting, make sure tip & handle are at room temperature!"
+    },
+    "CJCCalibrating": {
+      "message": "calibrating\n"
+    },
+    "SettingsResetWarning": {
+      "message": "Er du sikker på at du vil tilbakestille til standardinnstillinger?"
+    },
+    "UVLOWarningString": {
+      "message": "Lavspenn"
+    },
+    "UndervoltageString": {
+      "message": "Underspenning\n"
+    },
+    "InputVoltageString": {
+      "message": "Innspenn.: \n"
+    },
+    "SleepingAdvancedString": {
+      "message": "Dvale...\n"
+    },
+    "SleepingTipAdvancedString": {
+      "message": "Spiss: \n"
+    },
+    "ProfilePreheatString": {
+      "message": "Preheat\n"
+    },
+    "ProfileCooldownString": {
+      "message": "Cooldown\n"
+    },
+    "DeviceFailedValidationWarning": {
+      "message": "Enheten din er sannsynligvis en forfalskning!"
+    },
+    "TooHotToStartProfileWarning": {
+      "message": "Too hot to\nstart profile"
     }
+  },
+  "characters": {
+    "SettingRightChar": "H",
+    "SettingLeftChar": "V",
+    "SettingAutoChar": "A",
+    "SettingSlowChar": "S",
+    "SettingMediumChar": "M",
+    "SettingFastChar": "F",
+    "SettingStartSolderingChar": "L",
+    "SettingStartSleepChar": "D",
+    "SettingStartSleepOffChar": "R",
+    "SettingLockBoostChar": "B",
+    "SettingLockFullChar": "F"
+  },
+  "menuGroups": {
+    "PowerMenu": {
+      "displayText": "Effekt-\ninnst.",
+      "description": ""
+    },
+    "SolderingMenu": {
+      "displayText": "Lodde-\ninnst.",
+      "description": ""
+    },
+    "PowerSavingMenu": {
+      "displayText": "Dvale-\ninnst.",
+      "description": ""
+    },
+    "UIMenu": {
+      "displayText": "Bruker-\ngrensesn.",
+      "description": ""
+    },
+    "AdvancedMenu": {
+      "displayText": "Avanserte\nvalg",
+      "description": ""
+    }
+  },
+  "menuValues": {
+    "USBPDModeDefault": {
+      "displayText": "Default\nMode"
+    },
+    "USBPDModeNoDynamic": {
+      "displayText": "No\nDynamic"
+    },
+    "USBPDModeSafe": {
+      "displayText": "Safe\nMode"
+    },
+    "TipTypeAuto": {
+      "displayText": "Auto\nSense"
+    },
+    "TipTypeT12Long": {
+      "displayText": "TS100\nLong"
+    },
+    "TipTypeT12Short": {
+      "displayText": "Pine\nShort"
+    },
+    "TipTypeT12PTS": {
+      "displayText": "PTS\n200"
+    },
+    "TipTypeTS80": {
+      "displayText": "TS80\n"
+    },
+    "TipTypeJBCC210": {
+      "displayText": "JBC\nC210"
+    }
+  },
+  "menuOptions": {
+    "DCInCutoff": {
+      "displayText": "Kilde\n",
+      "description": "Strømforsyning. Sett nedre spenning for automatisk nedstenging. (DC 10V) (S 3.3V per celle)"
+    },
+    "MinVolCell": {
+      "displayText": "Minimum\nspenning",
+      "description": "Minimum tillatt spenning per celle (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+    },
+    "QCMaxVoltage": {
+      "displayText": "QC-\nspenning",
+      "description": "Maks QC-spenning bolten skal forhandle om"
+    },
+    "PDNegTimeout": {
+      "displayText": "PD-\ntidsavb.",
+      "description": "PD-forhandlingstidsavbrudd i steg på 100 ms for kompatibilitet med noen QC-ladere"
+    },
+    "USBPDMode": {
+      "displayText": "PD\nMode",
+      "description": "No Dynamic disables EPR & PPS, Safe mode does not use padding resistance"
+    },
+    "BoostTemperature": {
+      "displayText": "KTmp\n",
+      "description": "Temperatur i \"kraft-modus\""
+    },
+    "AutoStart": {
+      "displayText": "AStart\n",
+      "description": "Start automatisk med lodding når strøm kobles til. (L=Lodding | D=Dvale | R=Dvale romtemperatur)"
+    },
+    "TempChangeShortStep": {
+      "displayText": "Temp-endring\nkort",
+      "description": "Hvor mye temperaturen skal endres ved kort trykk på knapp"
+    },
+    "TempChangeLongStep": {
+      "displayText": "Temp-endring\nlang",
+      "description": "Hvor mye temperaturen skal endres ved langt trykk på knapp"
+    },
+    "LockingMode": {
+      "displayText": "Tillat å låse\nknapper",
+      "description": "Mens du lodder, hold nede begge knapper for å bytte mellom låsemodus (B=kun boost | F=full lås)"
+    },
+    "ProfilePhases": {
+      "displayText": "Profile\nPhases",
+      "description": "Number of phases in profile mode"
+    },
+    "ProfilePreheatTemp": {
+      "displayText": "Preheat\nTemp",
+      "description": "Preheat to this temperature at the start of profile mode"
+    },
+    "ProfilePreheatSpeed": {
+      "displayText": "Preheat\nSpeed",
+      "description": "Preheat at this rate (degrees per second)"
+    },
+    "ProfilePhase1Temp": {
+      "displayText": "Phase 1\nTemp",
+      "description": "Target temperature for the end of this phase"
+    },
+    "ProfilePhase1Duration": {
+      "displayText": "Phase 1\nDuration",
+      "description": "Target duration of this phase (seconds)"
+    },
+    "ProfilePhase2Temp": {
+      "displayText": "Phase 2\nTemp",
+      "description": ""
+    },
+    "ProfilePhase2Duration": {
+      "displayText": "Phase 2\nDuration",
+      "description": ""
+    },
+    "ProfilePhase3Temp": {
+      "displayText": "Phase 3\nTemp",
+      "description": ""
+    },
+    "ProfilePhase3Duration": {
+      "displayText": "Phase 3\nDuration",
+      "description": ""
+    },
+    "ProfilePhase4Temp": {
+      "displayText": "Phase 4\nTemp",
+      "description": ""
+    },
+    "ProfilePhase4Duration": {
+      "displayText": "Phase 4\nDuration",
+      "description": ""
+    },
+    "ProfilePhase5Temp": {
+      "displayText": "Phase 5\nTemp",
+      "description": ""
+    },
+    "ProfilePhase5Duration": {
+      "displayText": "Phase 5\nDuration",
+      "description": ""
+    },
+    "ProfileCooldownSpeed": {
+      "displayText": "Cooldown\nSpeed",
+      "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
+    },
+    "MotionSensitivity": {
+      "displayText": "BSensr\n",
+      "description": "Bevegelsesfølsomhet (1=Minst følsom | ... | 9=Mest følsom)"
+    },
+    "SleepTemperature": {
+      "displayText": "DTmp\n",
+      "description": "Dvaletemperatur (C)"
+    },
+    "SleepTimeout": {
+      "displayText": "DTid\n",
+      "description": "Tid før dvale (Minutter | Sekunder)"
+    },
+    "ShutdownTimeout": {
+      "displayText": "AvTid\n",
+      "description": "Tid før automatisk nedstenging (Minutter)"
+    },
+    "HallEffSensitivity": {
+      "displayText": "Hall-sensor\nfølsomhet",
+      "description": "Sensitiviteten til Hall-effekt-sensoren for å detektere inaktivitet (1=Minst følsom | ... | 9=Mest følsom)"
+    },
+    "HallEffSleepTimeout": {
+      "displayText": "HallSensor\nSleepTime",
+      "description": "Intervall før \"dvalemodus\" starter når halleffekten er over terskelen"
+    },
+    "TemperatureUnit": {
+      "displayText": "TmpEnh\n",
+      "description": "Temperaturskala (C=Celsius | F=Fahrenheit)"
+    },
+    "DisplayRotation": {
+      "displayText": "SkRetn\n",
+      "description": "Skjermretning (H=Høyrehendt | V=Venstrehendt | A=Automatisk)"
+    },
+    "CooldownBlink": {
+      "displayText": "KjBlnk\n",
+      "description": "Blink temperaturen på skjermen mens spissen fortsatt er varm."
+    },
+    "ScrollingSpeed": {
+      "displayText": "RullHa\n",
+      "description": "Hastigheten på rulletekst"
+    },
+    "ReverseButtonTempChange": {
+      "displayText": "Bytt\n+ - kn.",
+      "description": "Bytt om på knappene for å stille temperatur"
+    },
+    "ReverseButtonSettings": {
+      "displayText": "Swap\nA B keys",
+      "description": "Reverse assignment of buttons for Settings menu"
+    },
+    "AnimSpeed": {
+      "displayText": "Anim.\nhastighet",
+      "description": "Hastigheten til animasjonene i menyen (S=slow | M=medium | F=fast)"
+    },
+    "AnimLoop": {
+      "displayText": "Anim.\nloop",
+      "description": "Loop ikon-animasjoner i hovedmenyen"
+    },
+    "Brightness": {
+      "displayText": "Skjerm-\nlysstyrke",
+      "description": "Juster lysstyrken til OLED-skjermen"
+    },
+    "ColourInversion": {
+      "displayText": "Inverter\nskjerm",
+      "description": "Inverter fargene på OLED-skjermen"
+    },
+    "LOGOTime": {
+      "displayText": "Oppstartlogo\nvarighet",
+      "description": "Setter varigheten til oppstartlogoen (s=sekunder)"
+    },
+    "AdvancedIdle": {
+      "displayText": "AvDvSk\n",
+      "description": "Vis detaljert informasjon med liten skrift på dvaleskjermen."
+    },
+    "AdvancedSoldering": {
+      "displayText": "AvLdSk\n",
+      "description": "Vis detaljert informasjon ved lodding"
+    },
+    "BluetoothLE": {
+      "displayText": "Bluetooth\n",
+      "description": "Enables BLE"
+    },
+    "PowerLimit": {
+      "displayText": "Effekt-\ngrense",
+      "description": "Maks effekt jernet kan bruke (W=watt)"
+    },
+    "CalibrateCJC": {
+      "displayText": "TempKal?\n",
+      "description": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
+    },
+    "VoltageCalibration": {
+      "displayText": "KalSpIn?\n",
+      "description": "Kalibrer spenning. Knappene justerer. Langt trykk for å gå ut"
+    },
+    "PowerPulsePower": {
+      "displayText": "Effekt-\npuls",
+      "description": "Hvor høy effekt pulsen for å holde laderen våken skal ha (watt)"
+    },
+    "PowerPulseWait": {
+      "displayText": "Effektpuls\nforsink.",
+      "description": "Forsinkelse før effektpulsen utløses (x 2.5s)"
+    },
+    "PowerPulseDuration": {
+      "displayText": "Effektpuls\nvarighet",
+      "description": "Hvor lenge holde-våken-pulsen varer (x 250ms)"
+    },
+    "SettingsReset": {
+      "displayText": "TilbStl?\n",
+      "description": "Tilbakestill alle innstillinger"
+    },
+    "LanguageSwitch": {
+      "displayText": "Språk:\n NB    Norsk bm",
+      "description": ""
+    },
+    "SolderingTipType": {
+      "displayText": "Soldering\nTip Type",
+      "description": "Select the tip type fitted"
+    }
+  }
 }

@@ -1,6 +1,5 @@
 #ifndef CONFIGURATION_H_
 #define CONFIGURATION_H_
-#include "Settings.h"
 #include <stdint.h>
 /**
  * Configuration.h
@@ -57,6 +56,7 @@
  *
  */
 #define ORIENTATION_MODE           2 // 0: Right 1:Left 2:Automatic - Default Automatic
+#define MAX_ORIENTATION_MODE       2 // Up to auto
 #define REVERSE_BUTTON_TEMP_CHANGE 0 // 0:Default 1:Reverse - Reverse the plus and minus button assigment for temperature change
 
 /**
@@ -86,7 +86,7 @@
 #define POWER_PULSE_DEFAULT 0
 #else
 #define POWER_PULSE_DEFAULT 5
-#endif /* Pinecil */
+#endif                                 /* Pinecil */
 #define POWER_PULSE_WAIT_DEFAULT     4 // Default rate of the power pulse: 4*2500 = 10000 ms = 10 s
 #define POWER_PULSE_DURATION_DEFAULT 1 // Default duration of the power pulse: 1*250 = 250 ms
 
@@ -104,7 +104,7 @@
 #define DETAILED_IDLE      0 // 0: Disable 1: Enable - Default 0
 
 #define THERMAL_RUNAWAY_TIME_SEC 20
-#define THERMAL_RUNAWAY_TEMP_C   20
+#define THERMAL_RUNAWAY_TEMP_C   3
 
 #define CUT_OUT_SETTING          0  // default to no cut-off voltage
 #define RECOM_VOL_CELL           33 // Minimum voltage per cell (Recommended 3.3V (33))
@@ -145,12 +145,16 @@
 #define MIN_BOOST_TEMP_C       250                       // The min settable temp for boost mode °C
 #define MIN_BOOST_TEMP_F       480                       // The min settable temp for boost mode °F
 
-#define POW_PD     1
-#define POW_PD_EXT 0
-#define POW_QC     1
-#define POW_DC     1
-#define POW_QC_20V 1
-#define ENABLE_QC2 1
+#define OLED_96x16         1
+#define POW_PD             1
+#define USB_PD_EPR_WATTAGE 0 /*No EPR (Yet?) */
+#define POW_PD_EXT         0
+#define POW_QC             1
+#define POW_DC             1
+#define POW_QC_20V         1
+#define ENABLE_QC2         1
+#define MAG_SLEEP_SUPPORT  1
+#define TIPTYPE_T12        1 // Can manually pick a T12 tip
 #define TEMP_TMP36
 #define ACCEL_BMA
 #define ACCEL_SC7

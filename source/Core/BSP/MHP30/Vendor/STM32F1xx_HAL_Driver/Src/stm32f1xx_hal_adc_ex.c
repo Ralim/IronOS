@@ -941,8 +941,8 @@ HAL_StatusTypeDef HAL_ADCEx_InjectedConfigChannel(ADC_HandleTypeDef *hadc, ADC_I
 
                  ADC_JSQR_JL | ADC_JSQR_RK_JL(ADC_JSQR_JSQ1, sConfigInjected->InjectedRank, sConfigInjected->InjectedNbrOfConversion),
 
-                 ADC_JSQR_JL_SHIFT(sConfigInjected->InjectedNbrOfConversion)
-                     | ADC_JSQR_RK_JL(sConfigInjected->InjectedChannel, sConfigInjected->InjectedRank, sConfigInjected->InjectedNbrOfConversion));
+                 ADC_JSQR_JL_SHIFT(sConfigInjected->InjectedNbrOfConversion) |
+                     ADC_JSQR_RK_JL(sConfigInjected->InjectedChannel, sConfigInjected->InjectedRank, sConfigInjected->InjectedNbrOfConversion));
     } else {
       /* Clear the old SQx bits for the selected rank */
       MODIFY_REG(hadc->Instance->JSQR,

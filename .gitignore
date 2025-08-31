@@ -215,3 +215,4 @@ Logo GUI/TS100 Logo Editor/TS100 Logo Editor/bin/
 
 # Tests/linters/sanitizers
 source/check-style.log
+.ash_history

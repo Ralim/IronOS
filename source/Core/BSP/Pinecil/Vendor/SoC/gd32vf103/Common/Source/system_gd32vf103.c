@@ -110,7 +110,8 @@ static void system_clock_108m_hxtal(void) {
 
   /* if fail */
   if (0U == (RCU_CTL & RCU_CTL_HXTALSTB)) {
-    while (1) {}
+    while (1) {
+    }
   }
 
   /* HXTAL is stable */
@@ -133,12 +134,14 @@ static void system_clock_108m_hxtal(void) {
     /* enable PLL1 */
     RCU_CTL |= RCU_CTL_PLL1EN;
     /* wait till PLL1 is ready */
-    while (0U == (RCU_CTL & RCU_CTL_PLL1STB)) {}
+    while (0U == (RCU_CTL & RCU_CTL_PLL1STB)) {
+    }
 
     /* enable PLL1 */
     RCU_CTL |= RCU_CTL_PLL2EN;
     /* wait till PLL1 is ready */
-    while (0U == (RCU_CTL & RCU_CTL_PLL2STB)) {}
+    while (0U == (RCU_CTL & RCU_CTL_PLL2STB)) {
+    }
   } else if (HXTAL_VALUE == 8000000) {
     RCU_CFG1 &= ~(RCU_CFG1_PREDV0SEL | RCU_CFG1_PREDV1 | RCU_CFG1_PLL1MF | RCU_CFG1_PREDV0);
     RCU_CFG1 |= (RCU_PREDV0SRC_HXTAL | RCU_PREDV0_DIV2 | RCU_PREDV1_DIV2 | RCU_PLL1_MUL20 | RCU_PLL2_MUL20);
@@ -146,25 +149,29 @@ static void system_clock_108m_hxtal(void) {
     /* enable PLL1 */
     RCU_CTL |= RCU_CTL_PLL1EN;
     /* wait till PLL1 is ready */
-    while (0U == (RCU_CTL & RCU_CTL_PLL1STB)) {}
+    while (0U == (RCU_CTL & RCU_CTL_PLL1STB)) {
+    }
 
     /* enable PLL2 */
     RCU_CTL |= RCU_CTL_PLL2EN;
     /* wait till PLL1 is ready */
-    while (0U == (RCU_CTL & RCU_CTL_PLL2STB)) {}
+    while (0U == (RCU_CTL & RCU_CTL_PLL2STB)) {
+    }
   }
   /* enable PLL */
   RCU_CTL |= RCU_CTL_PLLEN;
 
   /* wait until PLL is stable */
-  while (0U == (RCU_CTL & RCU_CTL_PLLSTB)) {}
+  while (0U == (RCU_CTL & RCU_CTL_PLLSTB)) {
+  }
 
   /* select PLL as system clock */
   RCU_CFG0 &= ~RCU_CFG0_SCS;
   RCU_CFG0 |= RCU_CKSYSSRC_PLL;
 
   /* wait until PLL is selected as system clock */
-  while (0U == (RCU_CFG0 & RCU_SCSS_PLL)) {}
+  while (0U == (RCU_CFG0 & RCU_SCSS_PLL)) {
+  }
 }
 
 /*!
@@ -343,8 +350,8 @@ static void system_default_exception_handler(unsigned long mcause, unsigned long
   printf("MCAUSE: 0x%lx\r\n", mcause);
   printf("MEPC  : 0x%lx\r\n", __RV_CSR_READ(CSR_MEPC));
   printf("MTVAL : 0x%lx\r\n", __RV_CSR_READ(CSR_MBADADDR));
-  while (1)
-    ;
+  while (1) {
+  }
 }
 
 /**
@@ -512,8 +519,7 @@ void _premain_init(void) {
  * by __libc_fini_array function, so we defined a new function
  * to do initialization
  */
-void _postmain_fini(int status) { /* TODO: Add your own finishing code here, called after main */
-}
+void _postmain_fini(int status) { /* TODO: Add your own finishing code here, called after main */ }
 
 /**
  * \brief _init function called in __libc_init_array()
@@ -524,8 +530,7 @@ void _postmain_fini(int status) { /* TODO: Add your own finishing code here, cal
  * \note
  * Please use \ref _premain_init function now
  */
-void _init(void) { /* Don't put any code here, please use _premain_init now */
-}
+void _init(void) { /* Don't put any code here, please use _premain_init now */ }
 
 /**
  * \brief _fini function called in __libc_fini_array()
@@ -536,7 +541,6 @@ void _init(void) { /* Don't put any code here, please use _premain_init now */
  * \note
  * Please use \ref _postmain_fini function now
  */
-void _fini(void) { /* Don't put any code here, please use _postmain_fini now */
-}
+void _fini(void) { /* Don't put any code here, please use _postmain_fini now */ }
 
 /** @} */ /* End of Doxygen Group NMSIS_Core_SystemAndClock */

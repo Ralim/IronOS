@@ -7,11 +7,18 @@
  *      Houses the system settings and allows saving / restoring from flash
  */
 
-#ifndef SETTINGS_H_
-#define SETTINGS_H_
+#include "configuration.h"
+
+#ifndef CORE_SETTINGS_H_
+#define CORE_SETTINGS_H_
 #include <stdbool.h>
 #include <stdint.h>
-#define SETTINGSVERSION (0x2A) // This number is frozen, do not edit
+#ifdef MODEL_Pinecilv2
+// Required settings reset for PR #1916
+#define SETTINGSVERSION (0x55AB) // This number is frozen, do not edit
+#else
+#define SETTINGSVERSION (0x55AA) // This number is frozen, do not edit
+#endif
 
 enum SettingsOptions {
   SolderingTemp                  = 0,  // current set point for the iron
@@ -52,7 +59,7 @@ enum SettingsOptions {
   LOGOTime                       = 35, // Duration the logo will be displayed for
   CalibrateCJC                   = 36, // Toggle calibrate CJC at next boot
   BluetoothLE                    = 37, // Toggle BLE if present
-  PDVpdo                         = 38, // Toggle PPS & EPR
+  USBPDMode                      = 38, // Toggle PPS & EPR
   ProfilePhases                  = 39, // Number of profile mode phases
   ProfilePreheatTemp             = 40, // Temperature to preheat to before the first phase
   ProfilePreheatSpeed            = 41, // Maximum allowed preheat speed in degrees per second
@@ -67,8 +74,11 @@ enum SettingsOptions {
   ProfilePhase5Temp              = 50, // Temperature to target for the end of phase 5
   ProfilePhase5Duration          = 51, // Target duration for phase 5
   ProfileCooldownSpeed           = 52, // Maximum allowed cooldown speed in degrees per second
+  HallEffectSleepTime            = 53, // Seconds (/5) timeout to sleep when hall effect over threshold
+  SolderingTipType               = 54, // Selecting the type of soldering tip fitted
+  ReverseButtonSettings          = 55, // Change the A and B button assigment in Settings menu
   //
-  SettingsOptionsLength = 53, //
+  SettingsOptionsLength = 56, // End marker
 };
 
 typedef enum {
@@ -92,6 +102,58 @@ typedef enum {
   AUTO  = 2, // Automatic screen orientation based on accel.data if presented
 } orientationMode_t;
 
+typedef enum {
+  SKIP     = 0, // Skip boot logo
+  ONETIME  = 5, // Show boot logo once (if animated) and stall until a button toggled
+  INFINITY = 6, // Show boot logo on repeat (if animated) until a button toggled
+} logoMode_t;
+
+typedef enum {
+  DEFAULT    = 1, // PPS + EPR + more power request through increasing resistance by 0.5 Ohm to compensate power loss over cable/PCB/etc.
+  SAFE       = 2, // PPS + EPR, without requesting more power
+  NO_DYNAMIC = 0, // PPS + EPR disabled, fixed PDO only
+} usbpdMode_t;
+
+typedef enum {
+  DISABLED = 0, // Locking buttons is disabled
+  BOOST    = 1, // Locking buttons for Boost mode only
+  FULL     = 2, // Locking buttons for Boost mode AND for Soldering mode
+} lockingMode_t;
+
+/* Selection of the soldering tip
+ * Some devices allow multiple types of tips to be fitted, this allows selecting them or overriding the logic
+ * The first type will be the default (gets value of 0)
+ */
+#ifdef TIP_TYPE_SUPPORT
+typedef enum {
+#ifdef AUTO_TIP_SELECTION
+  TIP_TYPE_AUTO, // If the hardware supports automatic detection
+#endif
+
+#ifdef TIPTYPE_T12
+  T12_8_OHM,   // TS100 style tips or Hakko T12 tips with adaptors
+  T12_6_2_OHM, // Short Tips manufactured by Pine64
+  T12_4_OHM,   // Longer tip but low resistance for PTS200
+#endif
+  // #ifdef TIPTYPE_TS80
+  //   TS80_4_5_OHM, // TS80(P) default tips
+  // // We do not know of other tuning tips (?yet?)
+  // #endif
+  // #ifdef TIPTYPE_JBC
+  //   JBC_210_2_5_OHM, // Small JBC tips as used in the S60/S60P
+  // #endif
+  TIP_TYPE_MAX, // Max value marker
+} tipType_t;
+#else
+typedef enum {
+  TIP_TYPE_AUTO = 0, // value for the default case
+  TIP_TYPE_MAX  = 0, // marker for settings when not supported
+} tipType_t;
+#endif /* TIP_TYPE_SUPPORT */
+
+// returns the resistance matching the selected tip type or 0 for auto and when not supported
+uint8_t getUserSelectedTipResistance();
+
 // Settings wide operations
 void saveSettings();
 bool loadSettings();
@@ -101,13 +163,16 @@ void resetSettings();
 
 uint16_t getSettingValue(const enum SettingsOptions option);
 // Returns true if setting is now on the last value (next iteration will wrap)
-bool nextSettingValue(const enum SettingsOptions option);
-bool prevSettingValue(const enum SettingsOptions option);
-
+void nextSettingValue(const enum SettingsOptions option);
+void prevSettingValue(const enum SettingsOptions option);
+bool isLastSettingValue(const enum SettingsOptions option);
+// For setting values to settings
 void setSettingValue(const enum SettingsOptions option, const uint16_t newValue);
 
-// Special access
-uint8_t  lookupVoltageLevel();
-uint16_t lookupHallEffectThreshold();
-
-#endif /* SETTINGS_H_ */
+// Special access helpers, to reduce logic duplication
+uint8_t     lookupVoltageLevel();
+uint16_t    lookupHallEffectThreshold();
+#ifdef TIP_TYPE_SUPPORT
+const char *lookupTipName(); // Get the name string for the current soldering tip
+#endif /* TIP_TYPE_SUPPORT */
+#endif                       /* SETTINGS_H_ */
