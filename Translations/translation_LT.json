@@ -4,7 +4,7 @@
   "tempUnitFahrenheit": false,
   "messagesWarn": {
     "CalibrationDone": {
-      "message": "Calibration\ndone!"
+      "message": "Kalibravimas\natliktas!"
     },
     "ResetOKMessage": {
       "message": "Atstatyta"
@@ -37,7 +37,7 @@
       "message": "Before rebooting, make sure tip & handle are at room temperature!"
     },
     "CJCCalibrating": {
-      "message": "calibrating\n"
+      "message": "Kalibruojama\n"
     },
     "SettingsResetWarning": {
       "message": "Ar norite atstatyti nustatymus į numatytas reikšmes?"
@@ -276,8 +276,8 @@
       "description": "Sukeisti + - temperatūros keitimo mygtukus vietomis"
     },
     "ReverseButtonSettings": {
-      "displayText": "Swap\nA B keys",
-      "description": "Reverse assignment of buttons for Settings menu"
+      "displayText": "Sukeisti A B\nmygtukus?",
+      "description": "Sukeisti nustatymų meniu mygtukus vietomis"
     },
     "AnimSpeed": {
       "displayText": "Animacijų\ngreitis",
@@ -296,8 +296,8 @@
       "description": "Invertuoja OLED ekrano spalvas"
     },
     "LOGOTime": {
-      "displayText": "Boot logo\nduration",
-      "description": "Set boot logo duration (s=seconds)"
+      "displayText": "Įkrovos logotipo\ntrukmė",
+      "description": "Nustatykite įkrovos logotipo trukmę (s=sekundės)"
     },
     "AdvancedIdle": {
       "displayText": "Detalus lau-\nkimo ekranas",

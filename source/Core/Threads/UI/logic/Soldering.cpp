@@ -33,6 +33,7 @@ OperatingMode handleSolderingButtons(const ButtonState buttons, guiContext *cxt)
     switch (buttons) {
     case BUTTON_NONE:
       cxt->scratch_state.state1 = 3;
+      cxt->scratch_state.state2 = 0;
       break;
     case BUTTON_F_LONG:
       if (getSettingValue(SettingsOptions::BoostTemp) && (getSettingValue(SettingsOptions::LockingMode) == lockingMode_t::BOOST)) {

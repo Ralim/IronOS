@@ -37,7 +37,7 @@ jobs:
       - name: Install dependencies (python)
         run: python3 -m pip install --break-system-packages bdflib
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           submodules: true
 
@@ -84,7 +84,7 @@ jobs:
       - name: Install dependencies (python)
         run: python3 -m pip install --break-system-packages bdflib
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           submodules: true
 
@@ -122,7 +122,7 @@ jobs:
 
     steps:
       - name: Download all prebuilts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           path: source/Hexfile/
           merge-multiple: true
@@ -144,7 +144,7 @@ jobs:
       - name: Install dependencies (apk)
         run: apk add --no-cache python3 py3-pip make git bash findutils gcc musl-dev
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           submodules: true
 
@@ -166,12 +166,21 @@ jobs:
       - name: Install dependencies (apk)
         run: apk add --no-cache make git diffutils findutils clang-extra-tools bash
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           submodules: true
 
       - name: Check format style with clang-format
         run: make  clean  check-style
+
+  check-settings-docs:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - name: Run the menu docs generator
+        run: python Translations/gen_menu_docs.py
+      - name: Check that Documentation/Settings.md didn't change
+        run: git diff --exit-code
 
   check_python:
     runs-on: ubuntu-24.04
@@ -182,7 +191,7 @@ jobs:
       - name: Install dependencies (apk)
         run: apk add --no-cache python3 py3-pip make git black
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           submodules: true
 
@@ -199,7 +208,7 @@ jobs:
     name: check_shell
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: shellcheck
         uses: reviewdog/action-shellcheck@v1
         with:
@@ -217,7 +226,7 @@ jobs:
       - name: Install dependencies (apk)
         run: apk add --no-cache git bash grep
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           submodules: true
           fetch-tags: true
