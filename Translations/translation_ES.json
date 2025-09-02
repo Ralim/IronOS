@@ -13,10 +13,10 @@
       "message": "¡Ajustes\nReiniciados!"
     },
     "NoAccelerometerMessage": {
-      "message": "¡Sin acelerómetro\nDetectado!"
+      "message": "¡Acelerómetro no\ nDetectado!"
     },
     "NoPowerDeliveryMessage": {
-      "message": "¡Sin USB-PD IC\nDetectado!"
+      "message": "¡USB-PD no \nDetectado!"
     },
     "LockingKeysString": {
       "message": "BLOQUEADO"
@@ -64,7 +64,7 @@
       "message": "Enfriado\n"
     },
     "DeviceFailedValidationWarning": {
-      "message": "¡Es probable es que su dispositivo sea falso!"
+      "message": "¡Es probable que su dispositivo sea falso!"
     },
     "TooHotToStartProfileWarning": {
       "message": "Muy caliente para \nempezar perfil"
@@ -257,7 +257,7 @@
     },
     "TemperatureUnit": {
       "displayText": "Unidad de\ntemperatura",
-      "description": "Unidad de temperatura (C=entígrados | F=Fahrenheit)"
+      "description": "Unidad de temperatura (C=Centígrados | F=Fahrenheit)"
     },
     "DisplayRotation": {
       "displayText": "Orientación\nde pantalla",
@@ -328,7 +328,7 @@
       "description": "Intensidad de la potencia del pulso para mantener encendido (W=Vatio)"
     },
     "PowerPulseWait": {
-      "displayText": "Tiempor entre\n pulso de energia",
+      "displayText": "Tiempo entre\n pulso de energia",
       "description": "Tiempo de espera del pulso para mantener encendido (x 2,5s)"
     },
     "PowerPulseDuration": {
