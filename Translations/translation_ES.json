@@ -13,7 +13,7 @@
       "message": "¡Ajustes\nReiniciados!"
     },
     "NoAccelerometerMessage": {
-      "message": "¡Acelerómetro no\ nDetectado!"
+      "message": "¡Acelerómetro no \nDetectado!"
     },
     "NoPowerDeliveryMessage": {
       "message": "¡USB-PD no \nDetectado!"
