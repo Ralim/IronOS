@@ -276,8 +276,8 @@
       "description": "Інвертувати кнопки зміни температури."
     },
     "ReverseButtonSettings": {
-      "displayText": "Swap\nA B keys",
-      "description": "Reverse assignment of buttons for Settings menu"
+      "displayText": "Поміняти\nклавіші A і B",
+      "description": "Зворотне призначення кнопок для меню Налаштування"
     },
     "AnimSpeed": {
       "displayText": "Швидкість\nанімації",
