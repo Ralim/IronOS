@@ -252,7 +252,7 @@
       "description": "Узровень адчувальнасці датчыка хола ў рэжыме сну (1=Мін. | ... | 9=Макс.)"
     },
     "HallEffSleepTimeout": {
-      "displayText": "HallSensor\nSleepTime",
+      "displayText": "Час сну\nдатчыка Холла",
       "description": "Інтэрвал перад пачаткам \"рэжыму сну\", калі эфект Хола перавышае парог"
     },
     "TemperatureUnit": {
@@ -276,8 +276,8 @@
       "description": "Інвертаваць кнопкі вымярэння тэмпературы"
     },
     "ReverseButtonSettings": {
-      "displayText": "Swap\nA B keys",
-      "description": "Reverse assignment of buttons for Settings menu"
+      "displayText": "Памяняць\nклавішы A і B",
+      "description": "Адваротнае прызначэнне кнопак для меню Налады"
     },
     "AnimSpeed": {
       "displayText": "Хуткасць\nанімацыі",
@@ -344,8 +344,8 @@
       "description": ""
     },
     "SolderingTipType": {
-      "displayText": "Soldering\nTip Type",
-      "description": "Select the tip type fitted"
+      "displayText": "Тып\nжала паяльніка",
+      "description": "Абярыце ўсталяваны тып жала"
     }
   }
 }
