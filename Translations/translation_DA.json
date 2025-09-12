@@ -4,10 +4,10 @@
   "tempUnitFahrenheit": false,
   "messagesWarn": {
     "CalibrationDone": {
-      "message": "Calibration\ndone!"
+      "message": "Kalibrering\nFærdig!"
     },
     "ResetOKMessage": {
-      "message": "Reset OK"
+      "message": "Nulstil OK"
     },
     "SettingsResetMessage": {
       "message": "Visse indstillinger\nEr blevet ændret!"
@@ -28,16 +28,16 @@
       "message": "!LÅST!"
     },
     "WarningThermalRunaway": {
-      "message": "Thermal\nRunaway"
+      "message": "Termisk\nRunaway"
     },
     "WarningTipShorted": {
-      "message": "!Tip Shorted!"
+      "message": "!Tip Kortsluttet!"
     },
     "SettingsCalibrationWarning": {
-      "message": "Before rebooting, make sure tip & handle are at room temperature!"
+      "message": "Før genstart, skal du sørge for, at tip & håndtag er ved stuetemperatur!"
     },
     "CJCCalibrating": {
-      "message": "calibrating\n"
+      "message": "kalibrering\n"
     },
     "SettingsResetWarning": {
       "message": "Er du sikker du vil resette indstillingerne til standard?"
@@ -58,16 +58,16 @@
       "message": "Tip: \n"
     },
     "ProfilePreheatString": {
-      "message": "Preheat\n"
+      "message": "Forvarmning\n"
     },
     "ProfileCooldownString": {
-      "message": "Cooldown\n"
+      "message": "Nedkøling\n"
     },
     "DeviceFailedValidationWarning": {
       "message": "Din enhed er højst sandsyneligt en Kopivare!"
     },
     "TooHotToStartProfileWarning": {
-      "message": "Too hot to\nstart profile"
+      "message": "For varm til\nat starte profil"
     }
   },
   "characters": {
@@ -107,22 +107,22 @@
   },
   "menuValues": {
     "USBPDModeDefault": {
-      "displayText": "Default\nMode"
+      "displayText": "Standard\nMode"
     },
     "USBPDModeNoDynamic": {
-      "displayText": "No\nDynamic"
+      "displayText": "Ingen\nDynamic"
     },
     "USBPDModeSafe": {
-      "displayText": "Safe\nMode"
+      "displayText": "Sikker\nMode"
     },
     "TipTypeAuto": {
-      "displayText": "Auto\nSense"
+      "displayText": "Auto\nOpdag"
     },
     "TipTypeT12Long": {
-      "displayText": "TS100\nLong"
+      "displayText": "TS100\nLang"
     },
     "TipTypeT12Short": {
-      "displayText": "Pine\nShort"
+      "displayText": "Pine\nKort"
     },
     "TipTypeT12PTS": {
       "displayText": "PTS\n200"
@@ -153,7 +153,7 @@
     },
     "USBPDMode": {
       "displayText": "PD\nMode",
-      "description": "No Dynamic disables EPR & PPS, Safe mode does not use padding resistance"
+      "description": "Ingen dynamisk deaktiverer EPR & PPS, sikker tilstand bruger ikke pad modstand"
     },
     "BoostTemperature": {
       "displayText": "Boost\ntemp",
@@ -176,60 +176,60 @@
       "description": "Hold begge knapper nede under lodning for at låse dem (B=kun boost-tilstand | F=fuld låsning)"
     },
     "ProfilePhases": {
-      "displayText": "Profile\nPhases",
-      "description": "Number of phases in profile mode"
+      "displayText": "Profil\nFaser",
+      "description": "Antal faser i profiltilstand"
     },
     "ProfilePreheatTemp": {
-      "displayText": "Preheat\nTemp",
-      "description": "Preheat to this temperature at the start of profile mode"
+      "displayText": "Forvarmnings\nTemp",
+      "description": "Forvarm til denne temperatur ved starten af profiltilstand"
     },
     "ProfilePreheatSpeed": {
-      "displayText": "Preheat\nSpeed",
-      "description": "Preheat at this rate (degrees per second)"
+      "displayText": "Forvarmnings\nHastighed",
+      "description": "Forvarm med denne hastighed (grader pr. sekund)"
     },
     "ProfilePhase1Temp": {
-      "displayText": "Phase 1\nTemp",
-      "description": "Target temperature for the end of this phase"
+      "displayText": "Fase 1\nTemp",
+      "description": "Måltemperatur for slutningen af denne fase"
     },
     "ProfilePhase1Duration": {
-      "displayText": "Phase 1\nDuration",
-      "description": "Target duration of this phase (seconds)"
+      "displayText": "Fase 1\nVarighed",
+      "description": "Målvarigheden af denne fase (sekunder)"
     },
     "ProfilePhase2Temp": {
-      "displayText": "Phase 2\nTemp",
+      "displayText": "Fase 2\nTemp",
       "description": ""
     },
     "ProfilePhase2Duration": {
-      "displayText": "Phase 2\nDuration",
+      "displayText": "Fase 2\nVarighed",
       "description": ""
     },
     "ProfilePhase3Temp": {
-      "displayText": "Phase 3\nTemp",
+      "displayText": "Fase 3\nTemp",
       "description": ""
     },
     "ProfilePhase3Duration": {
-      "displayText": "Phase 3\nDuration",
+      "displayText": "Fase 3\nVarighed",
       "description": ""
     },
     "ProfilePhase4Temp": {
-      "displayText": "Phase 4\nTemp",
+      "displayText": "Fase 4\nTemp",
       "description": ""
     },
     "ProfilePhase4Duration": {
-      "displayText": "Phase 4\nDuration",
+      "displayText": "Fase 4\nVarighed",
       "description": ""
     },
     "ProfilePhase5Temp": {
-      "displayText": "Phase 5\nTemp",
+      "displayText": "Fase 5\nTemp",
       "description": ""
     },
     "ProfilePhase5Duration": {
-      "displayText": "Phase 5\nDuration",
+      "displayText": "Fase 5\nVarighed",
       "description": ""
     },
     "ProfileCooldownSpeed": {
-      "displayText": "Cooldown\nSpeed",
-      "description": "Cooldown at this rate at the end of profile mode (degrees per second)"
+      "displayText": "Nedkølings\nHastighed",
+      "description": "Nedkøl med denne hastighed i slutningen af profiltilstand (grader pr. sekund)"
     },
     "MotionSensitivity": {
       "displayText": "Bevægelses\nfølsomhed",
@@ -248,12 +248,12 @@
       "description": "sluknings Timeout (Minutter)"
     },
     "HallEffSensitivity": {
-      "displayText": "Hall sensor\nfølsomhed",
+      "displayText": "Hall føler\nfølsomhed",
       "description": "følsomhed overfor magneten (1=Mindst følsom | ... | 9=Mest følsom)"
     },
     "HallEffSleepTimeout": {
-      "displayText": "HallSensor\nSleepTime",
-      "description": "Intervallet før starten af \"dvaletilstand\", når Hall-effekten overskrider tærsklen"
+      "displayText": "Hall føler\nSovetid",
+      "description": "Intervallet før starten af \"dvaletilstand\", når Hall føleren overskrider tærsklen"
     },
     "TemperatureUnit": {
       "displayText": "Temperatur\nEnhed",
@@ -276,8 +276,8 @@
       "description": "Skift tildeling af knapper til temperaturjustering"
     },
     "ReverseButtonSettings": {
-      "displayText": "Swap\nA B keys",
-      "description": "Reverse assignment of buttons for Settings menu"
+      "displayText": "Skift\nA B keys",
+      "description": "Skift tildeling af knapper til indstillingsmenuen"
     },
     "AnimSpeed": {
       "displayText": "Anim.\nHastighed",
@@ -309,7 +309,7 @@
     },
     "BluetoothLE": {
       "displayText": "Bluetooth\n",
-      "description": "Enables BLE"
+      "description": "Aktivere BLE"
     },
     "PowerLimit": {
       "displayText": "Strøm\nbegrænsning",
@@ -317,7 +317,7 @@
     },
     "CalibrateCJC": {
       "displayText": "kalibrere CJK\nunder næste opstart",
-      "description": "At next boot tip Cold Junction Compensation will be calibrated (not required if Delta T is < 5°C)"
+      "description": "Ved næste opstart vil tip Cold Junction Kompensation blive kalibreret (ikke påkrævet, hvis Delta T er < 5°C))"
     },
     "VoltageCalibration": {
       "displayText": "Kalibrere\ninput spændingen?",
@@ -344,8 +344,8 @@
       "description": ""
     },
     "SolderingTipType": {
-      "displayText": "Soldering\nTip Type",
-      "description": "Select the tip type fitted"
+      "displayText": "Lodde\nTip Typen",
+      "description": "Vælg den type tip der er monteret"
     }
   }
 }
