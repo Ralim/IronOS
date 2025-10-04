@@ -32,7 +32,7 @@ jobs:
 
     steps:
       - name: Install dependencies (apk)
-        run: apk add --no-cache gcc-riscv-none-elf g++-riscv-none-elf gcc-arm-none-eabi g++-arm-none-eabi newlib-riscv-none-elf newlib-arm-none-eabi findutils python3 py3-pip make git bash
+        run: apk add --no-cache gcc-riscv-none-elf g++-riscv-none-elf gcc-arm-none-eabi g++-arm-none-eabi newlib-riscv-none-elf newlib-arm-none-eabi findutils python3 py3-pip make git bash cmake
 
       - name: Install dependencies (python)
         run: python3 -m pip install --break-system-packages bdflib
@@ -48,7 +48,7 @@ jobs:
         run: echo "GITHUB_CI_PR_SHA=${{github.event.pull_request.head.sha}}" >> "${GITHUB_ENV}"
 
       - name: Build ${{ matrix.model }}
-        run: cd source && ./build.sh -m ${{ matrix.model }}
+        run: cd source && ./build.sh -m ${{ matrix.model }} -v
 
       - name: Copy license files
         run: cp LICENSE scripts/LICENSE_RELEASE.md  source/Hexfile/
@@ -155,7 +155,12 @@ jobs:
         run: ./Translations/make_translation_test.py
 
       - name: Run BriefLZ tests
-        run: make  -C source/  Objects/host/brieflz/libbrieflz.so && ./Translations/brieflz_test.py
+        run: |
+          cd source
+          mkdir -p Objects/host/brieflz
+          gcc -fPIC -shared -DBLZ_DLL -DBLZ_DLL_EXPORTS -O Core/brieflz/brieflz.c Core/brieflz/depack.c -o Objects/host/brieflz/libbrieflz.so
+          cd ..
+          ./Translations/brieflz_test.py
 
   check_c-cpp:
     runs-on: ubuntu-24.04
