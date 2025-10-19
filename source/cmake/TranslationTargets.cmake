@@ -41,6 +41,7 @@ add_custom_command(
         "${CMAKE_SOURCE_DIR}"
         "${DEVICE_BSP_DIR}"
         ${GLOBAL_DEFINES}
+        ${DEV_CFLAGS}
         "--"
         ${CPU_FLAGS}
     COMMENT "Generating macros.txt"
