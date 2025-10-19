@@ -59,7 +59,7 @@ __RAM_SIZE = 0x00006800;
  * </h>
  */
 __STACK_SIZE = 0x00000800;
-__HEAP_SIZE  = 0x00000800;
+__HEAP_SIZE  = 0x00000400;
 
 /**************************** end of configuration section ********************/
 
