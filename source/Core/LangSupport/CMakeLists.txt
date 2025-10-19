@@ -50,6 +50,12 @@ set_target_properties(ironos_langsupport PROPERTIES POSITION_INDEPENDENT_CODE OF
 # Create specific targets for single and multi-language support
 # These will be individual object files needed by different firmware variants
 
+# Convert IRONOS_INCLUDE_DIRS to -I flags
+set(INCLUDE_FLAGS "")
+foreach(INCLUDE_DIR ${IRONOS_INCLUDE_DIRS})
+    list(APPEND INCLUDE_FLAGS "-I${INCLUDE_DIR}")
+endforeach()
+
 # Generate lang_single.o target
 add_custom_command(
     OUTPUT "${OUTPUT_DIR}/Core/LangSupport/lang_single.o"
@@ -59,9 +65,7 @@ add_custom_command(
         ${OPTIMIZATION_FLAGS}
         ${GLOBAL_DEFINES}
         ${DEV_CXXFLAGS}
-        -I"${CMAKE_SOURCE_DIR}/Core/Inc"
-        -I"${CMAKE_SOURCE_DIR}/Core/BSP"
-        -I"${DEVICE_BSP_DIR}"
+        ${INCLUDE_FLAGS}
         ${WARNING_FLAGS_COMMON}
         -std=c++17
         -fno-rtti
@@ -92,9 +96,7 @@ add_custom_command(
         ${OPTIMIZATION_FLAGS}
         ${GLOBAL_DEFINES}
         ${DEV_CXXFLAGS}
-        -I"${CMAKE_SOURCE_DIR}/Core/Inc"
-        -I"${CMAKE_SOURCE_DIR}/Core/BSP"
-        -I"${DEVICE_BSP_DIR}"
+        ${INCLUDE_FLAGS}
         ${WARNING_FLAGS_COMMON}
         -std=c++17
         -fno-rtti

@@ -556,6 +556,7 @@ function(create_multi_language_target GROUP_CODE GROUP_NAME LANGUAGES)
 
     add_dependencies(${COMPRESSED_TARGET_NAME}
         generate_translation_brieflz_multi_${GROUP_CODE}
+        compile_translation_brieflz_multi_${GROUP_CODE}
         generate_lang_multi
     )
 

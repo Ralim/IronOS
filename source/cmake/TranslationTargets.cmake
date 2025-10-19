@@ -26,6 +26,12 @@ add_custom_target(build_host_brieflz
     DEPENDS "${HOST_OUTPUT_DIR}/brieflz/libbrieflz.so"
 )
 
+# Convert IRONOS_INCLUDE_DIRS to -I flags for translation compilation commands
+set(TRANSLATION_INCLUDE_FLAGS "")
+foreach(INCLUDE_DIR ${IRONOS_INCLUDE_DIRS})
+    list(APPEND TRANSLATION_INCLUDE_FLAGS "-I${INCLUDE_DIR}")
+endforeach()
+
 # Generate macros.txt file using shell script
 add_custom_command(
     OUTPUT "${OUTPUT_DIR}/Core/Gen/macros.txt"
@@ -81,9 +87,7 @@ function(create_translation_target LANGUAGE)
             ${CPU_FLAGS}
             ${GLOBAL_DEFINES}
             ${DEV_CXXFLAGS}
-            -I"${CMAKE_SOURCE_DIR}/Core/Inc"
-            -I"${CMAKE_SOURCE_DIR}/Core/BSP"
-            -I"${CMAKE_SOURCE_DIR}/${DEVICE_BSP_DIR}"
+            ${TRANSLATION_INCLUDE_FLAGS}
             ${WARNING_FLAGS_COMMON}
             -std=c++17
             -fno-rtti
@@ -132,9 +136,7 @@ function(create_translation_target LANGUAGE)
             ${OPTIMIZATION_FLAGS}
             ${GLOBAL_DEFINES}
             ${DEV_CXXFLAGS}
-            -I"${CMAKE_SOURCE_DIR}/Core/Inc"
-            -I"${CMAKE_SOURCE_DIR}/Core/BSP"
-            -I"${CMAKE_SOURCE_DIR}/${DEVICE_BSP_DIR}"
+            ${TRANSLATION_INCLUDE_FLAGS}
             ${WARNING_FLAGS_COMMON}
             -std=c++17
             -fno-rtti
@@ -192,9 +194,7 @@ function(create_translation_target LANGUAGE)
             ${OPTIMIZATION_FLAGS}
             ${GLOBAL_DEFINES}
             ${DEV_CXXFLAGS}
-            -I"${CMAKE_SOURCE_DIR}/Core/Inc"
-            -I"${CMAKE_SOURCE_DIR}/Core/BSP"
-            -I"${CMAKE_SOURCE_DIR}/${DEVICE_BSP_DIR}"
+            ${TRANSLATION_INCLUDE_FLAGS}
             ${WARNING_FLAGS_COMMON}
             -std=c++17
             -fno-rtti
@@ -245,9 +245,7 @@ function(create_translation_target LANGUAGE)
             ${OPTIMIZATION_FLAGS}
             ${GLOBAL_DEFINES}
             ${DEV_CXXFLAGS}
-            -I"${CMAKE_SOURCE_DIR}/Core/Inc"
-            -I"${CMAKE_SOURCE_DIR}/Core/BSP"
-            -I"${CMAKE_SOURCE_DIR}/${DEVICE_BSP_DIR}"
+            ${TRANSLATION_INCLUDE_FLAGS}
             ${WARNING_FLAGS_COMMON}
             -std=c++17
             -fno-rtti
@@ -267,8 +265,8 @@ endfunction()
 
 # Function to create multi-language translation targets
 function(create_multi_translation_target GROUP_CODE GROUP_NAME LANGUAGES)
-    # Convert language list to space-separated string for command line
-    string(REPLACE ";" " " LANGUAGES_STR "${LANGUAGES}")
+    # Keep languages as separate arguments for command line
+    set(LANGUAGES_STR ${LANGUAGES})
 
     set(MULTI_CPP "${OUTPUT_DIR}/Core/Gen/Translation_multi.${GROUP_CODE}.cpp")
     set(MULTI_PICKLE "${OUTPUT_DIR}/Core/Gen/translation.files/multi.${GROUP_CODE}.pickle")
@@ -310,9 +308,7 @@ function(create_multi_translation_target GROUP_CODE GROUP_NAME LANGUAGES)
             ${CPU_FLAGS}
             ${GLOBAL_DEFINES}
             ${DEV_CXXFLAGS}
-            -I"${CMAKE_SOURCE_DIR}/Core/Inc"
-            -I"${CMAKE_SOURCE_DIR}/Core/BSP"
-            -I"${CMAKE_SOURCE_DIR}/${DEVICE_BSP_DIR}"
+            ${TRANSLATION_INCLUDE_FLAGS}
             ${WARNING_FLAGS_COMMON}
             -std=c++17
             -fno-rtti
@@ -382,6 +378,16 @@ function(create_multi_translation_target GROUP_CODE GROUP_NAME LANGUAGES)
         build_host_brieflz
     )
 
+    # Target for the compiled brieflz multi-language object file
+    add_custom_target(compile_translation_brieflz_multi_${GROUP_CODE}
+        DEPENDS "${OUTPUT_DIR}/Core/Gen/Translation_brieflz_multi.${GROUP_CODE}.o"
+    )
+    add_dependencies(compile_translation_brieflz_multi_${GROUP_CODE}
+        generate_translation_brieflz_multi_${GROUP_CODE}
+    )
+
+
+
     # Compile compressed multi-language translation
     add_custom_command(
         OUTPUT "${OUTPUT_DIR}/Core/Gen/Translation_brieflz_multi.${GROUP_CODE}.o"
@@ -390,9 +396,7 @@ function(create_multi_translation_target GROUP_CODE GROUP_NAME LANGUAGES)
             ${OPTIMIZATION_FLAGS}
             ${GLOBAL_DEFINES}
             ${DEV_CXXFLAGS}
-            -I"${CMAKE_SOURCE_DIR}/Core/Inc"
-            -I"${CMAKE_SOURCE_DIR}/Core/BSP"
-            -I"${CMAKE_SOURCE_DIR}/${DEVICE_BSP_DIR}"
+            ${TRANSLATION_INCLUDE_FLAGS}
             ${WARNING_FLAGS_COMMON}
             -std=c++17
             -fno-rtti
