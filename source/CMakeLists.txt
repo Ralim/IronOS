@@ -114,6 +114,13 @@ endif()
 set(IRONOS_INCLUDE_DIRS "")
 
 # Common optimization flags
+# Override CMake's default Release optimization flags to match make build
+# CMake automatically adds -O3 -DNDEBUG for Release builds, but we want to control this exactly
+# Make build doesn't use NDEBUG, so we remove it here
+set(CMAKE_C_FLAGS_RELEASE "")
+set(CMAKE_CXX_FLAGS_RELEASE "")
+set(CMAKE_ASM_FLAGS_RELEASE "")
+
 set(OPTIMIZATION_FLAGS
     -Os
     -fno-jump-tables
