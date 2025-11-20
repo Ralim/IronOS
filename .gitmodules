@@ -1,3 +1,0 @@
-[submodule "source/Core/Drivers/usb-pd"]
-	path = source/Core/Drivers/usb-pd
-	url = https://github.com/Ralim/usb-pd.git
