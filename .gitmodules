@@ -1,0 +1,6 @@
+[submodule "source/Middlewares/etl"]
+	path = source/Middlewares/etl
+	url = https://github.com/ETLCPP/etl.git
+[submodule "source/Middlewares/pdsink"]
+	path = source/Middlewares/pdsink
+	url = https://github.com/pdsink/pdsink.git

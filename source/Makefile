@@ -64,18 +64,13 @@ THREADS_DIR=./Core/Threads
 SOURCE_CORE_DIR=./Core/Src
 BRIEFLZ_DIR=./Core/brieflz
 DRIVERS_DIR=./Core/Drivers
-PD_DRIVER_DIR=./Core/Drivers/usb-pd
-# Exclude USB-PD tests
-PD_DRIVER_TESTS_DIR=./Core/Drivers/usb-pd/tests
-
-
 # Excludes for clang-format
 
-ALL_INCLUDES_EXCEPT:=-path $(PD_DRIVER_DIR) -o -not -name "configuration.h"
-ALL_SOURCE_EXCEPT:=-path $(PD_DRIVER_DIR)
+ALL_INCLUDES_EXCEPT:=-not -name "configuration.h"
+ALL_SOURCE_EXCEPT:=
 # Find-all's used for formatting; have to exclude external modules
-ALL_INCLUDES=$(shell find  ./Core -type d \( $(ALL_INCLUDES_EXCEPT) \) -prune -false -o \( -type f \( -name '*.h' -o -name '*.hpp' \) \) )
-ALL_SOURCE=$(shell find    ./Core -type d \( $(ALL_SOURCE_EXCEPT)   \) -prune -false -o \( -type f \( -name '*.c' -o -name '*.cpp' \) \) )
+ALL_INCLUDES=$(shell find  ./Core -type f \( -name '*.h' -o -name '*.hpp' \) \( $(ALL_INCLUDES_EXCEPT) \) )
+ALL_SOURCE=$(shell find    ./Core -type f \( -name '*.c' -o -name '*.cpp' \) )
 
 # Device dependent settings
 ifeq ($(model),$(filter $(model),$(ALL_MINIWARE_MODELS)))
@@ -145,7 +140,7 @@ flash_size=62k
 ifeq ($(model), S60P)
 bootldr_size=0x5000
 DEVICE_DFU_ADDRESS=0x08005000
-else 
+else
 # S60 or T55
 bootldr_size=0x4400
 DEVICE_DFU_ADDRESS=0x08004400
@@ -298,7 +293,10 @@ DEVICE_BSP_INCLUDE_DIRS:= ${shell find ${DEVICE_BSP_DIR} -type d -print}
 THREADS_INCLUDE_DIRS:= ${shell find ${THREADS_DIR} -type d -print}
 DRIVERS_INCLUDE_DIRS:= ${shell find ${DRIVERS_DIR} -type d -print}
 BRIEFLZ_INCLUDE_DIRS:= ${shell find ${BRIEFLZ_DIR} -type d -print}
-MIDDLEWARES_INCLUDE_DIRS:= ${shell find ${MIDDLEWARES_DIR} -type d -print}
+MIDDLEWARES_INCLUDE_DIRS:= ${MIDDLEWARES_DIR}/pdsink/include \
+                          ${MIDDLEWARES_DIR}/pdsink/src \
+                          ${MIDDLEWARES_DIR}/etl/include \
+                          ${shell find ${MIDDLEWARES_DIR}/Third_Party -type d -print}
 
 
 INCLUDES=-I$(APP_INC_DIR)                              \
@@ -316,15 +314,16 @@ SOURCE:=$(shell find ${THREADS_DIR}            -type f -name '*.c') \
         $(shell find ${SOURCE_CORE_DIR}        -type f -name '*.c') \
         $(shell find ${DRIVERS_DIR}            -type f -name '*.c') \
         $(shell find ${DEVICE_BSP_DIR}         -type f -name '*.c') \
-        $(shell find ${MIDDLEWARES_DIR}        -type f -name '*.c') \
+        $(shell find ${MIDDLEWARES_DIR}/pdsink/src -type f -name '*.c') \
+        $(shell find ${MIDDLEWARES_DIR}/Third_Party -type f -name '*.c') \
         $(BRIEFLZ_DIR)/depack.c
 
-# We exclude the USB-PD stack tests $(PD_DRIVER_TESTS_DIR)
 SOURCE_CPP:=$(shell find ${THREADS_DIR}      -type f -name '*.cpp') \
             $(shell find ${SOURCE_CORE_DIR}  -type f -name '*.cpp') \
-            $(shell find ${DRIVERS_DIR}      -type f -name '*.cpp' -not -path "${PD_DRIVER_TESTS_DIR}/*" ) \
+            $(shell find ${DRIVERS_DIR}      -type f -name '*.cpp') \
             $(shell find ${DEVICE_BSP_DIR}   -type f -name '*.cpp') \
-            $(shell find ${MIDDLEWARES_DIR}  -type f -name '*.cpp')
+            $(shell find ${MIDDLEWARES_DIR}/pdsink/src -type f -name '*.cpp') \
+            $(shell find ${MIDDLEWARES_DIR}/Third_Party -type f -name '*.cpp')
 
 
 S_SRCS:=$(shell find $(DEVICE_BSP_DIR) -type f -name '*.S')
@@ -355,7 +354,7 @@ OPTIM=-Os                             \
       -fsingle-precision-constant
 
 # Global defines ---------------------------------------------------------------
-GLOBAL_DEFINES+=$(DEV_GLOBAL_DEFS) -D USE_RTOS_SYSTICK -D MODEL_$(model) -D VECT_TAB_OFFSET=$(bootldr_size)U -fshort-wchar
+GLOBAL_DEFINES+=$(DEV_GLOBAL_DEFS) -D USE_RTOS_SYSTICK -D MODEL_$(model) -D VECT_TAB_OFFSET=$(bootldr_size)U -fshort-wchar -D PD_USE_CONFIG_FILE
 
 ifdef swd_enable
 GLOBAL_DEFINES+=-DSWD_ENABLE

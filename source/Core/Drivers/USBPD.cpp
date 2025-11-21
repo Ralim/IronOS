@@ -4,25 +4,31 @@
 #include "BSP_PD.h"
 #include "FreeRTOS.h"
 #include "Settings.h"
-#include "fusb302b.h"
-#include "main.hpp"
-#include "pd.h"
-#include "policy_engine.h"
 
 #ifndef USB_PD_VMAX
 #error Max PD Voltage must be defined
 #endif
 
-void ms_delay(uint32_t delayms) {
-  // Convert ms -> ticks
-  TickType_t ticks = delayms / portTICK_PERIOD_MS;
+class Driver : public pd::fusb302::Fusb302Rtos {
+public:
+  Driver(pd::Port &port, pd::fusb302::Fusb302RtosHalEsp32 &hal) : Fusb302Rtos(port, hal) {
+    // Example of default settings override. You can do the same
+    // for HAL class to reassign IO pins and so on.
+    task_stack_size_bytes = 1024 * 6;
+    task_priority         = 7;
+  }
+};
 
-  vTaskDelay(ticks ? ticks : 1); /* Minimum delay = 1 tick */
-}
-uint32_t get_ms_timestamp() {
-  // Convert ticks -> ms
-  return xTaskGetTickCount() * portTICK_PERIOD_MS;
-}
+pd::Port                         port;
+pd::fusb302::Fusb302RtosHalEsp32 fusb302_hal;
+Driver                           driver(port, fusb302_hal);
+
+pd::Task task(port, driver);
+AppDPM   dpm(port);
+pd::PRL  prl(port, driver);
+pd::PE   pe(port, dpm, prl, driver);
+pd::TC   tc(port, driver);
+
 bool         pdbs_dpm_evaluate_capability(const pd_msg *capabilities, pd_msg *request);
 void         pdbs_dpm_get_sink_capability(pd_msg *cap, const bool isPD3);
 bool         EPREvaluateCapabilityFunc(const epr_pd_msg *capabilities, pd_msg *request);
@@ -37,8 +43,10 @@ uint16_t     requested_voltage_mv             = 0;
 
 // Start processing
 bool USBPowerDelivery::start() {
-  if (fusbPresent() && fusb.fusb_setup()) {
+  if (fusbPresent()) {
     setupFUSBIRQ();
+    // Activate PD stack
+    task.start(tc, dpm, pe, prl, driver);
     return true;
   }
   return false;
