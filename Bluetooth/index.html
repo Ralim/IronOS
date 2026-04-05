@@ -82,6 +82,8 @@
               <ul class="current">
                   <li class="toctree-l1 current"><a class="reference internal current" href="#">Bluetooth (Pinecil V2)</a>
     <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#ble-modes">BLE Modes</a>
+    </li>
     <li class="toctree-l2"><a class="reference internal" href="#using-the-ble-interface">Using the BLE Interface</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#services">Services</a>
@@ -172,6 +174,13 @@
 <p>The Pinecilv2 has hardware support for Bluetooth Low Energy (BLE). This protocol allows reading and writing of parameters to the Pinecil during runtime.</p>
 <p>The BLE interface advertises three services, these provide access to live telemetry as well as the ability to read/write settings.
 These are outlined in more detail below.</p>
+<h2 id="ble-modes">BLE Modes</h2>
+<p>The BLE setting in the Advanced menu supports three modes:</p>
+<ul>
+<li><strong>Off (0):</strong> BLE is completely disabled. No advertising, no connections.</li>
+<li><strong>On (1):</strong> Full BLE access. All characteristics and settings can be read and written.</li>
+<li><strong>Read-only (2):</strong> BLE advertises and accepts connections. All characteristics can be read (live data, settings, bulk data). However, all write operations are rejected with a <code>WRITE_NOT_PERMITTED</code> error. This prevents remote users from changing settings, temperature, or triggering save/reset, while still allowing monitoring tools (e.g., fume extractors) to read temperature data. The BLE mode can only be changed from the physical device menu.</li>
+</ul>
 <p>Pinecil devices advertise themselves on BLE as <code>Pinecil-XXXXXXX</code>.
 They also include the UUID <code>9eae1000-9d0d-48c5-AA55-33e27f9bc533</code> in the advertisement packet to allow for filtering.</p>
 <p>Unless otherwise noted, all data is sent and received as Little-Endian.</p>
