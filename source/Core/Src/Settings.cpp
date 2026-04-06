@@ -92,7 +92,7 @@ static const SettingConstants settingsConstants[(int)SettingsOptions::SettingsOp
     {        MIN_BRIGHTNESS,                                                        MAX_BRIGHTNESS,   BRIGHTNESS_STEP,           DEFAULT_BRIGHTNESS}, // OLEDBrightness
     {                     0,                                                                     6,                 1,                            1}, // LOGOTime
     {                     0,                                                                     1,                 1,                            0}, // CalibrateCJC
-    {                     0,                                                                     1,                 1,                            0}, // BluetoothLE
+    {                     0,                                                                     2,                 1,                            0}, // BluetoothLE
     {                     0,                                                                     2,                 1,                            0}, // USBPDMode
     {                     1,                                                                     5,                 1,                            4}, // ProfilePhases
     {            MIN_TEMP_C,                                                            MAX_TEMP_F,                 5,                           90}, // ProfilePreheatTemp
@@ -114,6 +114,32 @@ static const SettingConstants settingsConstants[(int)SettingsOptions::SettingsOp
 };
 static_assert((sizeof(settingsConstants) / sizeof(SettingConstants)) == ((int)SettingsOptions::SettingsOptionsLength));
 
+#ifdef BLE_ENABLED
+static int16_t bleValueOnEntry = -1;
+
+void setBluetoothLE(void) {
+  if (bleValueOnEntry < 0) {
+    bleValueOnEntry = getSettingValue(SettingsOptions::BluetoothLE);
+  }
+  nextSettingValue(SettingsOptions::BluetoothLE);
+}
+
+static void checkBLERebootNeeded(void) {
+  if (bleValueOnEntry < 0)
+    return;
+  uint16_t current = getSettingValue(SettingsOptions::BluetoothLE);
+  bool     wasOff  = (bleValueOnEntry == 0);
+  bool     isOff   = (current == 0);
+  bleValueOnEntry  = -1;
+  if (wasOff != isOff) {
+    while (getButtonA() || getButtonB()) {
+      // Wait for buttons to be released so the bootloader isn't entered
+    }
+    reboot();
+  }
+}
+#endif
+
 void saveSettings() {
 #ifdef CANT_DIRECT_READ_SETTINGS
   // For these devices flash is not 1:1 mapped, so need to read into staging buffer
@@ -129,6 +155,9 @@ void saveSettings() {
   }
 
 #endif /* CANT_DIRECT_READ_SETTINGS */
+#ifdef BLE_ENABLED
+  checkBLERebootNeeded();
+#endif
 }
 
 bool loadSettings() {

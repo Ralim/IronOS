@@ -37,7 +37,7 @@ jobs:
       - name: Install dependencies (python)
         run: python3 -m pip install --break-system-packages bdflib
 
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           submodules: true
 
@@ -57,7 +57,7 @@ jobs:
         run: ./source/metadata.py ${{ matrix.model }}.json
 
       - name: Archive ${{ matrix.model }} artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: ${{ matrix.model }}
           path: |
@@ -84,7 +84,7 @@ jobs:
       - name: Install dependencies (python)
         run: python3 -m pip install --break-system-packages bdflib
 
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           submodules: true
 
@@ -95,7 +95,7 @@ jobs:
         run: echo "GITHUB_CI_PR_SHA=${{github.event.pull_request.head.sha}}" >> "${GITHUB_ENV}"
 
       - name: Build ${{ matrix.model }}
-        run: make -C source/ -j$(nproc) model="${{ matrix.model }}" firmware-multi_compressed_European firmware-multi_compressed_Belorussian+Bulgarian+Russian+Serbian+Ukrainian firmware-multi_Chinese+Japanese
+        run: make -C source/ -j$(nproc) model="${{ matrix.model }}" firmware-multi_compressed_European firmware-multi_compressed_Belarusian+Bulgarian+Russian+Serbian+Ukrainian firmware-multi_Chinese+Japanese
 
       - name: Copy license files
         run: cp LICENSE scripts/LICENSE_RELEASE.md  source/Hexfile/
@@ -104,7 +104,7 @@ jobs:
         run: ./source/metadata.py ${{ matrix.model }}_multi-lang.json
 
       - name: Archive ${{ matrix.model }} artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: ${{ matrix.model }}_multi-lang
           path: |
@@ -122,14 +122,14 @@ jobs:
 
     steps:
       - name: Download all prebuilts
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v6
         with:
           path: source/Hexfile/
           merge-multiple: true
       - run: ls -R source/Hexfile
 
       - name: Upload JSONs in bulk as metadata
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: metadata
           path: source/Hexfile/*.json
@@ -144,7 +144,7 @@ jobs:
       - name: Install dependencies (apk)
         run: apk add --no-cache python3 py3-pip make git bash findutils gcc musl-dev
 
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           submodules: true
 
@@ -166,7 +166,7 @@ jobs:
       - name: Install dependencies (apk)
         run: apk add --no-cache make git diffutils findutils clang-extra-tools bash
 
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           submodules: true
 
@@ -176,7 +176,7 @@ jobs:
   check-settings-docs:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Run the menu docs generator
         run: python Translations/gen_menu_docs.py
       - name: Check that Documentation/Settings.md didn't change
@@ -191,7 +191,7 @@ jobs:
       - name: Install dependencies (apk)
         run: apk add --no-cache python3 py3-pip make git black
 
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           submodules: true
 
@@ -208,7 +208,7 @@ jobs:
     name: check_shell
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: shellcheck
         uses: reviewdog/action-shellcheck@v1
         with:
@@ -226,7 +226,7 @@ jobs:
       - name: Install dependencies (apk)
         run: apk add --no-cache git bash grep
 
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           submodules: true
           fetch-tags: true

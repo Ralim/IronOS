@@ -175,4 +175,7 @@ uint16_t    lookupHallEffectThreshold();
 #ifdef TIP_TYPE_SUPPORT
 const char *lookupTipName(); // Get the name string for the current soldering tip
 #endif /* TIP_TYPE_SUPPORT */
+#ifdef BLE_ENABLED
+void setBluetoothLE(void);
+#endif /* BLE_ENABLED */
 #endif                       /* SETTINGS_H_ */
