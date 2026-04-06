@@ -165,6 +165,18 @@
       "len": 1,
       "default": "F",
       "description": "Shown when the locking mode is set to lock all buttons."
+    },
+    {
+      "id": "SettingBLEOnChar",
+      "len": 1,
+      "default": "+",
+      "description": "Shown when BLE is set to full read/write mode."
+    },
+    {
+      "id": "SettingBLEReadOnlyChar",
+      "len": 1,
+      "default": "R",
+      "description": "Shown when BLE is set to read-only mode (writes blocked)."
     }
   ],
   "menuGroups": [
@@ -526,7 +538,7 @@
       "maxLen": 7,
       "maxLen2": 15,
       "include": ["BLE_ENABLED"],
-      "description": "Should BLE be enabled at boot time."
+      "description": "BLE mode: Off, full read/write access (+), or read-only mode (R) which blocks all writes over BLE."
     },
     {
       "id": "PowerLimit",

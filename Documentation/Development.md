@@ -110,7 +110,7 @@ make -j$(nproc) model=Pinecil firmware-multi_European
 To build a Cyrillic compressed multi-language firmware for the Pinecil with as many simultaneous jobs as there are logical processors on macOS:
 
 ```
-make -j$(sysctl -n hw.logicalcpu) model=Pinecil firmware-multi_compressed_Belorussian+Bulgarian+Russian+Serbian+Ukrainian
+make -j$(sysctl -n hw.logicalcpu) model=Pinecil firmware-multi_compressed_Belarusian+Bulgarian+Russian+Serbian+Ukrainian
 ```
 
 To build a custom multi-language firmware including English and Simplified Chinese for the TS80:

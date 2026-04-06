@@ -5,6 +5,14 @@ The Pinecilv2 has hardware support for Bluetooth Low Energy (BLE). This protocol
 The BLE interface advertises three services, these provide access to live telemetry as well as the ability to read/write settings.
 These are outlined in more detail below.
 
+## BLE Modes
+
+The BLE setting in the Advanced menu supports three modes:
+
+- **Off (0):** BLE is completely disabled. No advertising, no connections.
+- **On (1):** Full BLE access. All characteristics and settings can be read and written.
+- **Read-only (2):** BLE advertises and accepts connections. All characteristics can be read (live data, settings, bulk data). However, all write operations are rejected with a `WRITE_NOT_PERMITTED` error. This prevents remote users from changing settings, temperature, or triggering save/reset, while still allowing monitoring tools (e.g., fume extractors) to read temperature data. The BLE mode can only be changed from the physical device menu.
+
 Pinecil devices advertise themselves on BLE as `Pinecil-XXXXXXX`.
 They also include the UUID `9eae1000-9d0d-48c5-AA55-33e27f9bc533` in the advertisement packet to allow for filtering.
 

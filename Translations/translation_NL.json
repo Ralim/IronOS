@@ -81,7 +81,9 @@
     "SettingStartSleepChar": "S",
     "SettingStartSleepOffChar": "Z",
     "SettingLockBoostChar": "B",
-    "SettingLockFullChar": "V"
+    "SettingLockFullChar": "V",
+    "SettingBLEOnChar": "+",
+    "SettingBLEReadOnlyChar": "R"
   },
   "menuGroups": {
     "PowerMenu": {

@@ -1,5 +1,31 @@
 # Version Changes
 
+## v2.23
+
+
+### High level changes
+
+- Miniware I2C changed to bit-bang for improved compatibility with newer devices with STM32 clone IC's
+- Looping Boot Logo option (loops until button press)
+- More fixes for GD32 clones with Miniware devices
+- Bluetooth BLE is off by default (security)
+- Large internal code refactoring to make the screen drawing more flexible for larger OLEDs
+- Further improvements to drawing on larger screen resolutions
+- 4 Ohm tip support on Pinecil 1/2 + TS10x (Note this is at your own risk, not all hardware is designed for this)
+- Fixes for PPS mode on some USB-PD supplies
+- Rework of thermal runaway detection
+- Fixes to the ID numbers used for operating modes over BLE
+- Rework of the I2C on PinecilV2 to remove issues with temperature regulation and screen glitching
+- Default for USB-PD negotiation changed to use "safe" profile, to be conservative in selecting voltages.
+- Fixes for USB-PD to implement device capabilites. This should fix unit reboot issues with some laptops
+- Looots of translation & documentation updates ❤️
+- Fixes for RTOS issues / updated FreeRTOS version
+- Multiple fixes for _MHP30_ to help with clone STM32's
+- Share missing settings over _BLE_ for _Pinecil V2_
+- Add code for `ws2812b` LED mod for _Pinecil V2_ (Must be hand compiled).
+- Add option to swap A/B buttons in Settings menu
+- Disable _"double slide"_ animation between home and soldering screens if detailed view is set for both modes.
+
 
 ## v2.22
 
@@ -150,8 +176,8 @@ For a small number of V2 Pinecil devices there appears to be an interference iss
 - USB-PD improvements (version one and two)
 - More configuration options for power pulse
 - All font / character encoding has been very reworked
-- More translation updates than one can count 
-- More languages 😱 
+- More translation updates than one can count
+- More languages 😱
 
 ### MHP30 support
 

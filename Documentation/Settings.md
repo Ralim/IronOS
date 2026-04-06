@@ -383,11 +383,11 @@ Display detailed info in a smaller font on soldering screen
 
 ### Setting: Bluetooth 
 
-Should BLE be enabled at boot time.
+BLE mode: Off, full read/write access (+), or read-only mode (R) which blocks all writes over BLE.
 
 On device help text:
 
-Enables BLE
+Enables BLE (+=full access | R=read-only)
 
 ### Setting: Power limit
 

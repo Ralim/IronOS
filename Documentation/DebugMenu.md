@@ -3,7 +3,7 @@
 In this firmware there is extra debugging information in a hidden sub-menu.
 This menu is meant to be simple, so it has no fancy GUI animations.
 
-- Access it by pressing the rear button (`-/B`) on the iron while it is on the home screen.
+- Access it by pressing and holding the rear button (`-/B`) on the iron while it is on the home screen.
 - Use the front button (`+/A`) to scroll through the menu.
 - To exit, use the rear button (`-/B`) again.
 
@@ -153,5 +153,6 @@ The mod method is shown in the [February 2022 PINE64 community updates](https://
 
 | Pinecil V2 model released Aug. 2, 2022 is an overhaul of the PCB with all relevant components capable of 28V. V2 requires no mods to support the use of 24V DC Barrel jack charger. |
 :--------
+
 
 
