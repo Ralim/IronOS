@@ -29,7 +29,6 @@ bool sanitiseSettings();
 // char (*__kaboom)[sizeof(systemSettingsType)] = 1; // Uncomment to print size at compile time
 volatile systemSettingsType systemSettings;
 
-
 #ifdef BLE_ENABLED
 static int16_t bleValueOnEntry = -1;
 
