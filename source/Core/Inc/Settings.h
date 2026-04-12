@@ -13,6 +13,7 @@
 #define CORE_SETTINGS_H_
 #include <stdbool.h>
 #include <stdint.h>
+#ifdef __cplusplus
 #ifdef MODEL_Pinecilv2
 // Required settings reset for PR #1916
 #define SETTINGSVERSION (0x55AB) // This number is frozen, do not edit
@@ -89,7 +90,6 @@ typedef struct {
   const uint16_t defaultValue; // Default vaue after reset
 } SettingConstants;
 extern const SettingConstants settingsConstants[(int)SettingsOptions::SettingsOptionsLength];
-
 /*
  * This struct must be a multiple of 2 bytes as it is saved / restored from
  * flash in uint16_t chunks
@@ -200,4 +200,6 @@ const char *lookupTipName(); // Get the name string for the current soldering ti
 #ifdef BLE_ENABLED
 void setBluetoothLE(void);
 #endif /* BLE_ENABLED */
+#endif // c++ guard
+
 #endif                       /* SETTINGS_H_ */
