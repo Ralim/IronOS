@@ -346,8 +346,8 @@
       "description": ""
     },
     "SolderingTipType": {
-      "displayText": "Soldering\nTip Type",
-      "description": "Select the tip type fitted"
+      "displayText": "Lehimlash\nuchi turi",
+      "description": "O'rnatilgan uchi turini tanlang"
     }
   }
 }
