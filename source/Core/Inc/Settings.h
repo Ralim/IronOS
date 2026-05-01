@@ -78,8 +78,9 @@ enum SettingsOptions {
   HallEffectSleepTime            = 53, // Seconds (/5) timeout to sleep when hall effect over threshold
   SolderingTipType               = 54, // Selecting the type of soldering tip fitted
   ReverseButtonSettings          = 55, // Change the A and B button assigment in Settings menu
+  FreefallDetection              = 56, // Power off if freefall or rapid drop is detected
   //
-  SettingsOptionsLength = 56, // End marker
+  SettingsOptionsLength = 57, // End marker
 };
 
 // For every setting we need to store the min/max/increment values

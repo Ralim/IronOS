@@ -108,6 +108,7 @@ enum class SettingsItemIndex : uint8_t {
   SettingsReset,
   LanguageSwitch,
   SolderingTipType,
+  FreefallDetection,
   NUM_ITEMS,
 };
 
@@ -136,6 +137,7 @@ struct TranslationIndexTable {
   uint16_t SleepingTipAdvancedString;
   uint16_t DeviceFailedValidationWarning;
   uint16_t TooHotToStartProfileWarning;
+  uint16_t WarningFreefallDetected;
 
   uint16_t SettingRightChar;
   uint16_t SettingLeftChar;

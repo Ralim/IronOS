@@ -38,6 +38,11 @@ OperatingMode gui_SolderingSleepingMode(const ButtonState buttons, guiContext *c
     return cxt->previousMode;
   }
 
+  if (freefallDetected) {
+    freefallDetected      = false;
+    currentTempTargetDegC = 0;
+    return OperatingMode::FreefallWarning;
+  }
   if (shouldShutdown()) {
     // shutdown
     currentTempTargetDegC = 0;
