@@ -1,0 +1,24 @@
+# draw_cjc_sampling — identical between 96x16 and 128x32.
+
+[[function]]
+name         = "ui_draw_cjc_sampling"
+args         = ["const uint8_t num_dots"]
+default_font = "small"
+
+[[function.body]]
+cursor = [0, 0]
+
+[[function.body]]
+i18n = "CJCCalibrating"
+
+[[function.body]]
+cursor = [0, 8]
+
+[[function.body]]
+symbol = "SmallSymbolDot"
+
+[[function.body]]
+for = "uint8_t x = 0; x < num_dots; x++"
+
+[[function.body.do]]
+symbol = "SmallSymbolDot"

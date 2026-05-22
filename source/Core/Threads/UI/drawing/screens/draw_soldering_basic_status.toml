@@ -1,0 +1,41 @@
+# draw_soldering_basic_status — uses `mirror_on_rotation`.
+# Identical between resolutions: no absolute coordinates here.
+
+[file]
+includes = ["power.hpp", "ui_drawing.hpp"]
+
+[[function]]
+name         = "ui_draw_soldering_basic_status"
+args         = ["bool boostModeOn"]
+default_font = "large"
+
+[[function.body]]
+cursor = [0, 0]
+
+# Group with mirror_on_rotation: declared in right-handed pixel order,
+# the generator emits the reversed order in the left-handed branch.
+[[function.body]]
+mirror_on_rotation = true
+
+[[function.body.elements]]
+call = "ui_draw_power_source_icon"
+
+[[function.body.elements]]
+symbol = "LargeSymbolSpace"
+
+[[function.body.elements]]
+call = "ui_draw_tip_temperature"
+args = ["true", "FontStyle::LARGE"]
+
+[[function.body.elements]]
+cond = true
+[[function.body.elements.branches]]
+when = "boostModeOn"
+[[function.body.elements.branches.do]]
+glyph = 2
+[[function.body.elements.branches]]
+[[function.body.elements.branches.do]]
+symbol = "LargeSymbolSpace"
+
+[[function.body.elements]]
+heat = "X10WattsToPWM(x10WattHistory.average())"

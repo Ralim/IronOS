@@ -1,0 +1,112 @@
+# draw_homescreen_detailed — two display modes (disconnected-tip vs
+# normal). All position differences between the resolutions live in
+# the `[anchors.*]` and `[image_sizes.*]` tables.
+
+[file]
+declarations = [
+  "extern uint8_t buttonAF[sizeof(buttonA)];",
+  "extern uint8_t buttonBF[sizeof(buttonB)];",
+  "extern uint8_t disconnectedTipF[sizeof(disconnectedTip)];",
+]
+
+# ───── per-resolution positions / sizes ─────
+
+[anchors.96x16]
+disc_xy   = { lh = [ 0, 0], rh = [54, 0] }
+volt_cur  = { lh = [42, 0], rh = [-1, 0] }
+volt_unit = { lh = [91, 8], rh = [48, 8] }
+set_temp  = { lh = [73, 0], rh = [ 6, 0] }
+volt_pos  = { lh = [67, 8], rh = [ 0, 8] }
+
+[anchors.128x32]
+disc_xy   = { lh = [ 0, 0], rh = [54, 0] }
+volt_cur  = { lh = [56, 0], rh = [-1, 0] }
+volt_unit = { lh = [91, 8], rh = [48, 8] }
+set_temp  = { lh = [73, 0], rh = [ 6, 0] }
+volt_pos  = { lh = [67, 8], rh = [ 0, 8] }
+
+[image_sizes.96x16]
+disc_tip = [42, 16]
+
+[image_sizes.128x32]
+disc_tip = [56, 32]
+
+# ───── ui_draw_homescreen_detailed ─────
+
+[[function]]
+name = "ui_draw_homescreen_detailed"
+args = ["TemperatureType_t tipTemp"]
+
+[[function.body]]
+cond = true
+
+[[function.body.branches]]
+when = "isTipDisconnected()"
+
+[[function.body.branches.do]]
+image = "disconnectedTip"
+flip  = "auto"
+at    = "disc_xy"
+size  = "disc_tip"
+
+[[function.body.branches.do]]
+cursor = "volt_cur"
+
+[[function.body.branches.do]]
+local = "uint32_t Vlt = getInputVoltageX10(getSettingValue(SettingsOptions::VoltageDiv), 0)"
+
+[[function.body.branches.do]]
+number = "Vlt / 10"
+places = 2
+font   = "large"
+
+[[function.body.branches.do]]
+symbol = "LargeSymbolDot"
+font   = "large"
+
+[[function.body.branches.do]]
+number = "Vlt % 10"
+places = 1
+font   = "large"
+
+[[function.body.branches.do]]
+cursor = "volt_unit"
+
+[[function.body.branches.do]]
+symbol = "SmallSymbolVolts"
+font   = "small"
+
+# else — tip connected
+[[function.body.branches]]
+
+# Blink temp if setting enabled and temp > 55° (1000 tick/sec, OFF 300ms ON 700ms)
+[[function.body.branches.do]]
+cond = true
+[[function.body.branches.do.branches]]
+when = "!(getSettingValue(SettingsOptions::CoolingTempBlink) && (tipTemp > 55) && (xTaskGetTickCount() % 1000 < 300))"
+[[function.body.branches.do.branches.do]]
+call = "ui_draw_tip_temperature"
+args = ["true", "FontStyle::LARGE"]
+
+# top right — draw set temp
+[[function.body.branches.do]]
+cursor = "set_temp"
+
+[[function.body.branches.do]]
+number = "getSettingValue(SettingsOptions::SolderingTemp)"
+places = 3
+font   = "small"
+
+[[function.body.branches.do]]
+deg_symbol = "small"
+
+# bottom right — draw voltage then symbol (v)
+[[function.body.branches.do]]
+cursor = "volt_pos"
+
+[[function.body.branches.do]]
+call = "printVoltage"
+
+[[function.body.branches.do]]
+symbol = "SmallSymbolVolts"
+font   = "small"

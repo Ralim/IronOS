@@ -1,0 +1,20 @@
+# print_voltage — identical between 96x16 and 128x32.
+
+[[function]]
+name         = "printVoltage"
+args         = ["void"]
+default_font = "small"
+
+[[function.body]]
+local = "uint32_t volt = getInputVoltageX10(getSettingValue(SettingsOptions::VoltageDiv), 0)"
+
+[[function.body]]
+number = "volt / 10"
+places = 2
+
+[[function.body]]
+symbol = "SmallSymbolDot"
+
+[[function.body]]
+number = "volt % 10"
+places = 1

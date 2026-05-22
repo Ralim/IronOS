@@ -1,0 +1,24 @@
+# show_warning — identical between 96x16 and 128x32.
+
+[file]
+includes = ["Buttons.hpp", "OperatingModeUtilities.h", "OperatingModes.h"]
+
+[[function]]
+signature = "bool warnUser(const char *warning, const ButtonState buttons)"
+
+[[function.body]]
+clear_screen = true
+
+[[function.body]]
+expr = "OLED::printWholeScreen(warning)"
+
+# Also timeout after 5 seconds
+[[function.body]]
+cond = true
+[[function.body.branches]]
+when = "(xTaskGetTickCount() - lastButtonTime) > TICKS_SECOND * 5"
+[[function.body.branches.do]]
+return = "true"
+
+[[function.body]]
+return = "buttons != BUTTON_NONE"

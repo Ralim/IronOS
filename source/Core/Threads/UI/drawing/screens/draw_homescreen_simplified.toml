@@ -1,0 +1,163 @@
+# draw_homescreen_simplified — three top-row icons (buttonA, buttonB,
+# power) plus a temperature-overlay region. Pixel coordinates differ
+# between resolutions; the layout is otherwise identical.
+
+[file]
+declarations = [
+  "extern uint8_t buttonAF[sizeof(buttonA)];",
+  "extern uint8_t buttonBF[sizeof(buttonB)];",
+  "extern uint8_t disconnectedTipF[sizeof(disconnectedTip)];",
+]
+
+# ───── per-resolution positions / sizes ─────
+
+[anchors.96x16]
+btn_a        = { lh = [ 0, 0], rh = [54, 0] }
+btn_b        = { lh = [42, 0], rh = [12, 0] }
+power_xy     = { lh = [84, 0], rh = [ 0, 0] }
+overlay_fill = { lh = [ 0, 0], rh = [55, 0] }
+overlay_cur  = { lh = [ 0, 0], rh = [56, 0] }
+disc_xy      = { lh = [ 0, 0], rh = [54, 0] }
+
+[anchors.128x32]
+btn_a        = { lh = [  0, 0], rh = [68, 0] }
+btn_b        = { lh = [ 58, 0], rh = [12, 0] }
+power_xy     = { lh = [116, 0], rh = [ 0, 0] }
+overlay_fill = { lh = [  0, 0], rh = [68, 0] }
+overlay_cur  = { lh = [  0, 0], rh = [56, 0] }
+disc_xy      = { lh = [  0, 0], rh = [54, 0] }
+
+[image_sizes.96x16]
+button         = [42, 16]
+overlay_button = [41, 16]
+disc_tip       = [42, 16]
+
+[image_sizes.128x32]
+button         = [56, 32]
+overlay_button = [56, 32]
+disc_tip       = [56, 32]
+
+# ───── ui_draw_homescreen_simplified ─────
+
+[[function]]
+name = "ui_draw_homescreen_simplified"
+args = ["TemperatureType_t tipTemp"]
+
+[[function.body]]
+local = "bool tempOnDisplay = false"
+
+[[function.body]]
+local = "bool tipDisconnectedDisplay = false"
+
+# Top row: rotation-aware. Inside each branch, lh/rh anchors and
+# `flip = "auto"` images automatically pick the right variant.
+[[function.body]]
+cond = true
+[[function.body.branches]]
+when = "OLED::getRotation()"
+[[function.body.branches.do]]
+image = "buttonA"
+flip  = "auto"
+at    = "btn_a"
+size  = "button"
+[[function.body.branches.do]]
+image = "buttonB"
+flip  = "auto"
+at    = "btn_b"
+size  = "button"
+[[function.body.branches.do]]
+cursor = "power_xy"
+[[function.body.branches.do]]
+call = "ui_draw_power_source_icon"
+[[function.body.branches]]
+[[function.body.branches.do]]
+# Needs to be flipped so button ends up on right side of screen
+image = "buttonA"
+flip  = "auto"
+at    = "btn_a"
+size  = "button"
+[[function.body.branches.do]]
+image = "buttonB"
+flip  = "auto"
+at    = "btn_b"
+size  = "button"
+[[function.body.branches.do]]
+cursor = "power_xy"
+[[function.body.branches.do]]
+call = "ui_draw_power_source_icon"
+
+[[function.body]]
+target = "tipDisconnectedDisplay"
+value  = "false"
+
+[[function.body]]
+cond = true
+[[function.body.branches]]
+when = "tipTemp > 55"
+[[function.body.branches.do]]
+target = "tempOnDisplay"
+value  = "true"
+[[function.body.branches]]
+when = "tipTemp < 45"
+[[function.body.branches.do]]
+target = "tempOnDisplay"
+value  = "false"
+
+[[function.body]]
+cond = true
+[[function.body.branches]]
+when = "isTipDisconnected()"
+[[function.body.branches.do]]
+target = "tempOnDisplay"
+value  = "false"
+[[function.body.branches.do]]
+target = "tipDisconnectedDisplay"
+value  = "true"
+
+# draw temp over the start soldering button — Location changes on screen rotation
+[[function.body]]
+cond = true
+[[function.body.branches]]
+when = "tempOnDisplay || tipDisconnectedDisplay"
+
+[[function.body.branches.do]]
+cond = true
+[[function.body.branches.do.branches]]
+when = "OLED::getRotation()"
+# in right handed mode we want to draw over the first part —
+# clear the area for the temp
+[[function.body.branches.do.branches.do]]
+fill  = "overlay_fill"
+size  = "overlay_button"
+value = 0
+[[function.body.branches.do.branches.do]]
+cursor = "overlay_cur"
+[[function.body.branches.do.branches]]
+# else — clear the area
+[[function.body.branches.do.branches.do]]
+fill  = "overlay_fill"
+size  = "overlay_button"
+value = 0
+[[function.body.branches.do.branches.do]]
+cursor = "overlay_cur"
+
+# If we have a tip connected draw the temp, if not we leave it blank
+[[function.body.branches.do]]
+cond = true
+[[function.body.branches.do.branches]]
+when = "!tipDisconnectedDisplay"
+[[function.body.branches.do.branches.do]]
+# draw in the temp (subject to the cooling-blink setting)
+cond = true
+[[function.body.branches.do.branches.do.branches]]
+when = "!(getSettingValue(SettingsOptions::CoolingTempBlink) && (xTaskGetTickCount() % 1000 < 300))"
+[[function.body.branches.do.branches.do.branches.do]]
+call = "ui_draw_tip_temperature"
+args = ["false", "FontStyle::LARGE"]
+[[function.body.branches.do.branches]]
+# else — Draw in missing tip symbol
+[[function.body.branches.do.branches.do]]
+image = "disconnectedTip"
+flip  = "auto"
+at    = "disc_xy"
+size  = "disc_tip"

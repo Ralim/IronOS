@@ -1,0 +1,34 @@
+# printSleepCountdown — identical between resolutions.
+# Function is only emitted when NO_SLEEP_MODE is NOT defined.
+
+[file]
+includes     = ["Buttons.hpp", "OperatingModeUtilities.h"]
+declarations = ["extern TickType_t lastMovementTime;"]
+
+[[function]]
+features     = ["!NO_SLEEP_MODE"]
+signature    = "void printCountdownUntilSleep(int sleepThres)"
+default_font = "small"
+
+# Print seconds or minutes (if > 99 seconds) until sleep mode is triggered.
+[[function.body]]
+local = "TickType_t lastEventTime = lastButtonTime < lastMovementTime ? lastMovementTime : lastButtonTime"
+
+[[function.body]]
+local = "TickType_t downCount = sleepThres - xTaskGetTickCount() + lastEventTime"
+
+[[function.body]]
+cond = true
+[[function.body.branches]]
+when = "downCount > (99 * TICKS_SECOND)"
+[[function.body.branches.do]]
+number = "downCount / 60000 + 1"
+places = 2
+[[function.body.branches.do]]
+symbol = "SmallSymbolMinutes"
+[[function.body.branches]]
+[[function.body.branches.do]]
+number = "downCount / 1000 + 1"
+places = 2
+[[function.body.branches.do]]
+symbol = "SmallSymbolSeconds"

@@ -1,0 +1,209 @@
+# draw_debug_menu — 17-case switch driven by a runtime item index.
+# Header lines + the per-case body for each item.
+
+[file]
+includes = [
+  "OperatingModes.h",
+  "TipThermoModel.h",
+  "main.hpp",
+  "ui_drawing.hpp",
+]
+
+declarations = [
+  "extern osThreadId GUITaskHandle;",
+  "extern osThreadId MOVTaskHandle;",
+  "extern osThreadId PIDTaskHandle;",
+]
+
+[[function]]
+signature    = "void ui_draw_debug_menu(const uint8_t item_number)"
+default_font = "small"
+
+# ───── header ─────
+
+# Position the cursor at the 0,0 (top left)
+[[function.body]]
+cursor = [0, 0]
+
+# Print version number
+[[function.body]]
+symbol = "SmallSymbolVersionNumber"
+
+# second line
+[[function.body]]
+cursor = [0, 8]
+
+[[function.body]]
+text = "DebugMenu[item_number]"
+
+# ───── switch table ─────
+
+[[function.body]]
+switch = "item_number"
+
+[[function.body.cases]]
+value   = "0"
+comment = "Build Date"
+
+[[function.body.cases]]
+value   = "1"
+comment = "Device ID"
+brace   = true
+[[function.body.cases.do]]
+local = "uint64_t id = getDeviceID()"
+
+# If the device has a validation code we take over both lines of the screen
+[[function.body.cases.do]]
+features = ["DEVICE_HAS_VALIDATION_CODE"]
+[[function.body.cases.do.elements]]
+# Ensure the buffer starts clean
+clear_screen = true
+[[function.body.cases.do.elements]]
+# Position the cursor at the 0,0 (top left)
+cursor = [0, 0]
+[[function.body.cases.do.elements]]
+text = "DebugMenu[item_number]"
+[[function.body.cases.do.elements]]
+hex    = "getDeviceValidation()"
+digits = 8
+[[function.body.cases.do.elements]]
+# second line
+cursor = [0, 8]
+
+[[function.body.cases.do]]
+hex    = "(uint32_t)(id >> 32)"
+digits = 8
+[[function.body.cases.do]]
+hex    = "(uint32_t)(id & 0xFFFFFFFF)"
+digits = 8
+
+[[function.body.cases]]
+value   = "2"
+comment = "ACC Type"
+[[function.body.cases.do]]
+text = "AccelTypeNames[(int)DetectedAccelerometerVersion]"
+
+[[function.body.cases]]
+value   = "3"
+comment = "Power Negotiation Status"
+[[function.body.cases.do]]
+text = "PowerSourceNames[getPowerSourceNumber()]"
+
+[[function.body.cases]]
+value   = "4"
+comment = "Input Voltage"
+[[function.body.cases.do]]
+call = "printVoltage"
+
+[[function.body.cases]]
+value   = "5"
+comment = "Temp in °C"
+[[function.body.cases.do]]
+number = "TipThermoModel::getTipInC()"
+places = 6
+
+[[function.body.cases]]
+value   = "6"
+comment = "Handle Temp in °C"
+[[function.body.cases.do]]
+number = "getHandleTemperature(0) / 10"
+places = 6
+[[function.body.cases.do]]
+symbol = "SmallSymbolDot"
+[[function.body.cases.do]]
+number = "getHandleTemperature(0) % 10"
+places = 1
+
+[[function.body.cases]]
+value   = "7"
+comment = "Max Temp Limit in °C"
+[[function.body.cases.do]]
+number = "TipThermoModel::getTipMaxInC()"
+places = 6
+
+[[function.body.cases]]
+value   = "8"
+comment = "System Uptime"
+[[function.body.cases.do]]
+number = "xTaskGetTickCount() / TICKS_100MS"
+places = 8
+
+[[function.body.cases]]
+value   = "9"
+comment = "Movement Timestamp"
+[[function.body.cases.do]]
+number = "lastMovementTime / TICKS_100MS"
+places = 8
+
+[[function.body.cases]]
+value   = "10"
+comment = "Tip Resistance in Ω"
+[[function.body.cases.do]]
+# large to pad over so that we cover ID left overs
+number = "getTipResistanceX10() / 10"
+places = 6
+[[function.body.cases.do]]
+symbol = "SmallSymbolDot"
+[[function.body.cases.do]]
+number = "getTipResistanceX10() % 10"
+places = 1
+
+[[function.body.cases]]
+value   = "11"
+comment = "Raw Tip in µV"
+[[function.body.cases.do]]
+number = "TipThermoModel::convertTipRawADCTouV(getTipRawTemp(0), true)"
+places = 8
+
+[[function.body.cases]]
+value   = "12"
+comment = "Tip Cold Junction Compensation Offset in µV"
+[[function.body.cases.do]]
+number = "getSettingValue(SettingsOptions::CalibrationOffset)"
+places = 8
+
+[[function.body.cases]]
+value   = "13"
+comment = "High Water Mark for GUI"
+[[function.body.cases.do]]
+number = "uxTaskGetStackHighWaterMark(GUITaskHandle)"
+places = 8
+
+[[function.body.cases]]
+value   = "14"
+comment = "High Water Mark for Movement Task"
+[[function.body.cases.do]]
+number = "uxTaskGetStackHighWaterMark(MOVTaskHandle)"
+places = 8
+
+[[function.body.cases]]
+value   = "15"
+comment = "High Water Mark for PID Task"
+[[function.body.cases.do]]
+number = "uxTaskGetStackHighWaterMark(PIDTaskHandle)"
+places = 8
+[[function.body.cases.do]]
+# NOTE: original C++ has a duplicate `break;` here (unreachable after
+# the auto-emitted one); preserved verbatim.
+expr = "break"
+
+[[function.body.cases]]
+value    = "16"
+comment  = "Raw Hall Effect Value"
+features = ["HALL_SENSOR"]
+brace    = true
+[[function.body.cases.do]]
+local = "int16_t hallEffectStrength = getRawHallEffect()"
+[[function.body.cases.do]]
+cond = true
+[[function.body.cases.do.branches]]
+when = "hallEffectStrength < 0"
+[[function.body.cases.do.branches.do]]
+target = "hallEffectStrength"
+value  = "-hallEffectStrength"
+[[function.body.cases.do]]
+number = "hallEffectStrength"
+places = 6
+
+[[function.body.cases]]
+default = true

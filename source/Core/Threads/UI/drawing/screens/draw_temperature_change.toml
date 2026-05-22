@@ -1,0 +1,51 @@
+# draw_temperature_change — identical between 96x16 and 128x32
+# (modulo a per-resolution start cursor).
+
+[[function]]
+name         = "ui_draw_temperature_change"
+args         = ["void"]
+default_font = "large"
+
+[[function.body]]
+cursor = [0, 0]
+only   = ["96x16"]
+
+[[function.body]]
+cursor = [8, 8]
+only   = ["128x32"]
+
+# Left-hand glyph: minus, or plus when the buttons are reversed; the
+# rotation flips the two glyphs.
+[[function.body]]
+cond = true
+[[function.body.branches]]
+when = "OLED::getRotation()"
+[[function.body.branches.do]]
+symbol = "getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled) ? LargeSymbolPlus : LargeSymbolMinus"
+[[function.body.branches]]
+[[function.body.branches.do]]
+symbol = "getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled) ? LargeSymbolMinus : LargeSymbolPlus"
+
+[[function.body]]
+symbol = "LargeSymbolSpace"
+
+[[function.body]]
+number = "getSettingValue(SettingsOptions::SolderingTemp)"
+places = 3
+
+[[function.body]]
+deg_symbol = "extras"
+
+[[function.body]]
+symbol = "LargeSymbolSpace"
+
+# Right-hand glyph: opposite of the left.
+[[function.body]]
+cond = true
+[[function.body.branches]]
+when = "OLED::getRotation()"
+[[function.body.branches.do]]
+symbol = "getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled) ? LargeSymbolMinus : LargeSymbolPlus"
+[[function.body.branches]]
+[[function.body.branches.do]]
+symbol = "getSettingValue(SettingsOptions::ReverseButtonTempChangeEnabled) ? LargeSymbolPlus : LargeSymbolMinus"
