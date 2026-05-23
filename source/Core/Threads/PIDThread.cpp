@@ -130,7 +130,7 @@ template <class T, T Kp, T Ki, T Kd, T integral_limit_scale> struct PID {
     // Thus we multiply this out by the interval time to ~= dv/dt
     // Then the shift by 1000 is ms -> Seconds
 
-    integration_running_sum += (target_delta * interval_ms * Ki) / 1000;
+    integration_running_sum += (target_delta * (T)interval_ms * Ki) / 1000;
 
     // We constrain integration_running_sum to limit windup
     // This is not overly required for most use cases but can prevent large overshoot in constrained implementations
