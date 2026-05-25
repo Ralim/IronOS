@@ -319,6 +319,21 @@ SOURCE:=$(shell find ${THREADS_DIR}            -type f -name '*.c') \
         $(shell find ${MIDDLEWARES_DIR}        -type f -name '*.c') \
         $(BRIEFLZ_DIR)/depack.c
 
+# UI screen drawing code is generated from TOML descriptors at build
+# time. The generator is fast (~0.1s) and idempotent; it writes one
+# .cpp per screen per resolution into generated/mono_<W>x<H>/, which
+# the SOURCE_CPP find immediately below picks up automatically.
+#
+# See Core/Threads/UI/drawing/LAYOUT_DESIGN.md for the schema, and
+# Core/Threads/UI/drawing/screens/*.toml for the inputs.
+DRAWING_DIR:=$(THREADS_DIR)/UI/drawing
+DRAWING_GEN:=$(shell $(HOST_PYTHON) $(DRAWING_DIR)/tools/render_screens.py \
+                    --screens $(DRAWING_DIR)/screens \
+                    --output  $(DRAWING_DIR)/generated 2>&1)
+ifneq ($(DRAWING_GEN),$(filter Generated%file(s)%, $(DRAWING_GEN)))
+$(info $(DRAWING_GEN))
+endif
+
 # We exclude the USB-PD stack tests $(PD_DRIVER_TESTS_DIR)
 SOURCE_CPP:=$(shell find ${THREADS_DIR}      -type f -name '*.cpp') \
             $(shell find ${SOURCE_CORE_DIR}  -type f -name '*.cpp') \
@@ -691,6 +706,7 @@ $(foreach group_code,$(LANGUAGE_GROUPS),$(eval $(call multi_lang_rule,$(group_co
 
 clean:
 	rm -Rf Core/Gen
+	rm -Rf Core/Threads/UI/drawing/generated
 	rm -Rf $(OUTPUT_DIR_BASE)
 	rm -Rf $(HEXFILE_DIR)/*
 	rm -Rf ../Translations/__pycache__
