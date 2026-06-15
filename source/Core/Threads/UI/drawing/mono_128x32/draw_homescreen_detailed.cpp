@@ -33,16 +33,19 @@ void ui_draw_homescreen_detailed(TemperatureType_t tipTemp) {
     // centred; two SMALL (8x16) status rows (set-temp, voltage) flush to the
     // other edge. Sides flip with rotation.
     const bool    rot       = OLED::getRotation();
-    const uint8_t statusW   = 5 * 8;  // "NNN°C" / "NN.NV" are 5 cells in the 8x16 small font
-    const uint8_t tempW     = 4 * 12; // 3 digits + degree, fixed width in the 12x24 large font
-    const uint8_t tempZone  = 80;     // temperature lives right-aligned within the first 80px
+    const uint8_t statusW   = 5 * 8;             // "NNN°C" / "NN.NV" are 5 cells in the 8x16 small font
+    const uint8_t tempW     = (3 * 12) + (2 * 8); // 3 large digits + small "°C" = 52px
+    const uint8_t tempZone  = 80;               // temperature lives right-aligned within the first 80px
     const int16_t tempX     = rot ? (OLED_WIDTH - tempZone) : (tempZone - tempW);
     const int16_t statusX   = rot ? 0 : (OLED_WIDTH - statusW);
 
     if (!(getSettingValue(SettingsOptions::CoolingTempBlink) && (tipTemp > 55) && (xTaskGetTickCount() % 1000 < 300))) {
       // Blink temp if setting enable and temp < 55° (OFF 300ms / ON 700ms)
-      OLED::setCursor(tempX, 4); // vertically centred (4px above/below the 24px glyph)
-      ui_draw_tip_temperature(true, FontStyle::LARGE);
+      OLED::setCursor(tempX, 4); // 24px number, vertically centred (4px above/below)
+      ui_draw_tip_temperature(false, FontStyle::LARGE);
+      // Degree + unit in the small font, bottom-aligned with the 24px number (like the TS100)
+      OLED::setCursor(OLED::getCursorX(), 12);
+      OLED::printSymbolDeg(FontStyle::SMALL);
     }
 
     // Set temperature (top row)
