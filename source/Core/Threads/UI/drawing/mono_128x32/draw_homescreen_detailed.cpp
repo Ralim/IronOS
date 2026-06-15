@@ -35,7 +35,7 @@ void ui_draw_homescreen_detailed(TemperatureType_t tipTemp) {
     const bool    rot       = OLED::getRotation();
     const uint8_t statusW   = 5 * 8;             // "NNN°C" / "NN.NV" are 5 cells in the 8x16 small font
     const uint8_t tempW     = (3 * 12) + (2 * 8); // 3 large digits + small "°C" = 52px
-    const uint8_t tempZone  = 80;               // temperature lives right-aligned within the first 80px
+    const uint8_t tempZone  = 68;               // temperature right-aligned within this zone (left of the status block)
     const int16_t tempX     = rot ? (OLED_WIDTH - tempZone) : (tempZone - tempW);
     const int16_t statusX   = rot ? 0 : (OLED_WIDTH - statusW);
 
