@@ -39,9 +39,8 @@ void ui_draw_soldering_basic_status(bool boostModeOn) {
     OLED::setCursor(OLED::getCursorX(), 8);
     ui_draw_tip_temperature(true, FontStyle::LARGE);
     OLED::setCursor(OLED::getCursorX(), 0);
-    // Space out gap between battery <-> temp
-    OLED::print(LargeSymbolSpace, FontStyle::LARGE);
-
+    // Power source icon near the right edge (matches the simplified idle screen)
+    OLED::setCursor(116, 0);
     ui_draw_power_source_icon();
   }
 }
