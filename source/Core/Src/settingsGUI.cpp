@@ -810,7 +810,13 @@ static void setTempF(void) {
 #endif /* PROFILE_SUPPORT */
 }
 
-static void displayTempF(void) { OLED::printSymbolDeg(FontStyle::LARGE); }
+static void displayTempF(void) {
+#ifdef OLED_128x32
+  // "°C"/"°F" is two 12px large glyphs; right-align it so it stays on screen, centred
+  OLED::setCursor(OLED_WIDTH - (2 * 12) - 2, 4);
+#endif
+  OLED::printSymbolDeg(FontStyle::LARGE);
+}
 
 #ifndef NO_DISPLAY_ROTATE
 
