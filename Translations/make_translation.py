@@ -200,6 +200,12 @@ def get_power_source_list() -> List[str]:
     ]
 
 
+# On 128x32 panels the scrolling menu descriptions are drawn with the small
+# (Terminus 8x16) font instead of the large one, so they must be ranked and
+# encoded against the small font. Set from the build macros in main().
+DESCRIPTIONS_USE_SMALL_FONT = False
+
+
 def test_is_small_font(msg: str) -> bool:
     return "\n" in msg and msg[0] != "\n"
 
@@ -252,7 +258,10 @@ def get_letter_counts(defs: dict, lang: dict, build_version: str) -> Dict:
     for mod in defs["menuOptions"]:
         eid = mod["id"]
         msg = obj[eid]["description"]
-        big_font_messages.append(msg)
+        if DESCRIPTIONS_USE_SMALL_FONT:
+            small_font_messages.append(msg)
+        else:
+            big_font_messages.append(msg)
 
     obj = lang["menuValues"]
     for mod in defs["menuValues"]:
@@ -276,7 +285,10 @@ def get_letter_counts(defs: dict, lang: dict, build_version: str) -> Dict:
     for mod in defs["menuGroups"]:
         eid = mod["id"]
         msg = obj[eid]["description"]
-        big_font_messages.append(msg)
+        if DESCRIPTIONS_USE_SMALL_FONT:
+            small_font_messages.append(msg)
+        else:
+            big_font_messages.append(msg)
 
     constants = get_constants()
     for x in constants:
@@ -1186,10 +1198,13 @@ def get_translation_strings_and_indices_text(
         translated_string_lookups[translation_id] = record
 
     def encode_string_and_add(
-        message: str, translation_id: str, force_large_text: bool = False
+        message: str,
+        translation_id: str,
+        force_large_text: bool = False,
+        force_small_text: bool = False,
     ):
         encoded_data: bytes
-        if force_large_text is False and test_is_small_font(message):
+        if force_small_text or (force_large_text is False and test_is_small_font(message)):
             encoded_data = convert_string_bytes(
                 small_font_symbol_conversion_table, message
             )
@@ -1205,7 +1220,10 @@ def get_translation_strings_and_indices_text(
         lang_data = lang["menuOptions"][record["id"]]
         # Add to translations the menu text and the description
         encode_string_and_add(
-            lang_data["description"], "menuOptions" + record["id"] + "description", True
+            lang_data["description"],
+            "menuOptions" + record["id"] + "description",
+            force_large_text=not DESCRIPTIONS_USE_SMALL_FONT,
+            force_small_text=DESCRIPTIONS_USE_SMALL_FONT,
         )
         encode_string_and_add(
             lang_data["displayText"], "menuOptions" + record["id"] + "displayText"
@@ -1221,7 +1239,10 @@ def get_translation_strings_and_indices_text(
         lang_data = lang["menuGroups"][record["id"]]
         # Add to translations the menu text and the description
         encode_string_and_add(
-            lang_data["description"], "menuGroups" + record["id"] + "description", True
+            lang_data["description"],
+            "menuGroups" + record["id"] + "description",
+            force_large_text=not DESCRIPTIONS_USE_SMALL_FONT,
+            force_small_text=DESCRIPTIONS_USE_SMALL_FONT,
         )
         encode_string_and_add(
             lang_data["displayText"], "menuGroups" + record["id"] + "displayText"
@@ -1512,6 +1533,9 @@ def main() -> None:
         if args.macros
         else frozenset()
     )
+
+    global DESCRIPTIONS_USE_SMALL_FONT
+    DESCRIPTIONS_USE_SMALL_FONT = "OLED_128x32" in macros
 
     language_data: LanguageData
     if args.input_pickled:
