@@ -34,7 +34,13 @@ static uint16_t str_display_len(const char *const str) {
  *
  * @param message The null-terminated message string.
  */
-uint16_t messageWidth(const char *message) { return FONT_12_WIDTH * str_display_len(message); }
+uint16_t messageWidth(const char *message) {
+#ifdef OLED_128x32
+  return 8 * str_display_len(message); // descriptions use the 8x16 small font on 128x32
+#else
+  return FONT_12_WIDTH * str_display_len(message);
+#endif
+}
 
 void drawScrollingText(const char *message, TickType_t currentTickOffset) {
   OLED::clearScreen();
@@ -56,6 +62,12 @@ void drawScrollingText(const char *message, TickType_t currentTickOffset) {
   }
 
   //^ Rolling offset based on time
+#ifdef OLED_128x32
+  // Use the 8x16 small font, vertically centred, so the description isn't oversized
+  OLED::setCursor((OLED_WIDTH - messageOffset), 8);
+  OLED::print(message, FontStyle::SMALL);
+#else
   OLED::setCursor((OLED_WIDTH - messageOffset), 0);
   OLED::print(message, FontStyle::LARGE);
+#endif
 }
