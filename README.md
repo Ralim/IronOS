@@ -5,6 +5,8 @@
 
 # IronOS - Open Source Flexible Firmware for Soldering Hardware
 
+> **Note about this fork:** While I fully agree with the refactoring work Ralim is doing on the upstream branch, I did not want to wait any longer, so I created this fork to temporarily sort out the TS101 large-display issues until his fix is finished. My changes would probably just break his ongoing work or make merging more difficult, so I'll raise a pull request only as a courtesy, without any expectation of it being accepted or merged. I have tested this only for my own use cases — right-handed, English, on a TS101 — and cannot guarantee the same build will work for other orientations, languages, or devices.
+
 _This repository was formerly known as TS100, it's the same great code. Just with more supported devices._
 
 Originally conceived as an alternative firmware for the _TS100_, this firmware has evolved into a complex soldering hardware control firmware.
