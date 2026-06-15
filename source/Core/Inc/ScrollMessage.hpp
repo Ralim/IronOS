@@ -21,4 +21,7 @@
  */
 void drawScrollingText(const char *message, TickType_t currentTickOffset);
 
+// Pixel width a message occupies in the menu font (panel-dependent).
+uint16_t messageWidth(const char *message);
+
 #endif /* SCROLL_MESSAGE_HPP_ */
