@@ -36,10 +36,10 @@ void ui_draw_homescreen_simplified(TemperatureType_t tipTemp) {
     if (OLED::getRotation()) {
       // in right handed mode we want to draw over the first part
       OLED::fillArea(68, 0, 56, 32, 0); // clear the area for the temp
-      OLED::setCursor(56, 8);           // y=8: bottom-align the 24px temp on the 32px panel
+      OLED::setCursor(68, 4);           // y=4 centres the 24px temp; x=68 over the cleared area
     } else {
       OLED::fillArea(0, 0, 56, 32, 0); // clear the area
-      OLED::setCursor(0, 8);           // y=8: bottom-align the 24px temp on the 32px panel
+      OLED::setCursor(12, 4);          // y=4 centres the 24px temp; x=12 nudges it one digit right
     }
     // If we have a tip connected draw the temp, if not we leave it blank
     if (!tipDisconnectedDisplay) {
