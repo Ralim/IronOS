@@ -554,6 +554,11 @@ static void displayUSBPDMode(void) {
    *  NO_DYNAMIC, 0 = PPS + EPR disabled, fixed PDO only
    */
 
+#ifdef OLED_128x32
+  // Values wrap to two lines (e.g. "Default\nMode"); give them the right part of
+  // the panel and let the newline fill both 16px rows instead of overflowing.
+  OLED::setCursor(OLED_WIDTH - 64, 0);
+#endif
   switch (getSettingValue(SettingsOptions::USBPDMode)) {
   case usbpdMode_t::DEFAULT:
     OLED::print(translatedString(Tr->USBPDModeDefault), FontStyle::SMALL, 255, OLED::getCursorX());
