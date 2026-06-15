@@ -769,7 +769,10 @@ static void displayHallEffectSleepTime(void) {
 
 #ifdef TIP_TYPE_SUPPORT
 static void displaySolderingTipType(void) {
-  // TODO wrapping X value
+#ifdef OLED_128x32
+  // Right-align the variable-width tip name so it stays on screen, centred for the 16px font
+  OLED::setCursor(OLED_WIDTH - messageWidth(lookupTipName()) - 2, 8);
+#endif
   OLED::print(lookupTipName(), FontStyle::SMALL, 255, OLED::getCursorX());
 }
 // If there is no detection, and no options, max is 0
