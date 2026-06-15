@@ -11,7 +11,7 @@ extern osThreadId PIDTaskHandle;
 void ui_draw_debug_menu(const uint8_t item_number) {
   OLED::setCursor(0, 0);                                   // Position the cursor at the 0,0 (top left)
   OLED::print(SmallSymbolVersionNumber, FontStyle::SMALL); // Print version number
-  OLED::setCursor(0, 8);                                   // second line
+  OLED::setCursor(0, 16);                                   // second line
   OLED::print(DebugMenu[item_number], FontStyle::SMALL);
   switch (item_number) {
   case 0: // Build Date
@@ -25,7 +25,7 @@ void ui_draw_debug_menu(const uint8_t item_number) {
     OLED::setCursor(0, 0); // Position the cursor at the 0,0 (top left)
     OLED::print(DebugMenu[item_number], FontStyle::SMALL);
     OLED::drawHex(getDeviceValidation(), FontStyle::SMALL, 8);
-    OLED::setCursor(0, 8); // second line
+    OLED::setCursor(0, 16); // second line
 #endif
     OLED::drawHex((uint32_t)(id >> 32), FontStyle::SMALL, 8);
     OLED::drawHex((uint32_t)(id & 0xFFFFFFFF), FontStyle::SMALL, 8);

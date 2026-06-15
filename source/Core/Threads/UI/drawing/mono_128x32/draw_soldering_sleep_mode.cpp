@@ -6,7 +6,7 @@ void ui_draw_soldering_detailed_sleep(TemperatureType_t tipTemp) {
   OLED::clearScreen();
   OLED::setCursor(0, 0);
   OLED::print(translatedString(Tr->SleepingAdvancedString), FontStyle::SMALL);
-  OLED::setCursor(0, 8);
+  OLED::setCursor(0, 16);
   OLED::print(translatedString(Tr->SleepingTipAdvancedString), FontStyle::SMALL);
   OLED::printNumber(tipTemp, 3, FontStyle::SMALL);
   if (getSettingValue(SettingsOptions::TemperatureInF)) {
