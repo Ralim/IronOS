@@ -10,8 +10,10 @@ void ui_draw_soldering_basic_status(bool boostModeOn) {
     ui_draw_power_source_icon();
     // Space out gap between battery <-> temp
     OLED::print(LargeSymbolSpace, FontStyle::LARGE);
-    // Draw current tip temp
+    // Draw current tip temp (y=8 to bottom-align the 24px number; restore after)
+    OLED::setCursor(OLED::getCursorX(), 8);
     ui_draw_tip_temperature(true, FontStyle::LARGE);
+    OLED::setCursor(OLED::getCursorX(), 0);
 
     // We draw boost arrow if boosting,
     // or else gap temp <-> heat indicator
@@ -33,8 +35,10 @@ void ui_draw_soldering_basic_status(bool boostModeOn) {
     } else {
       OLED::print(LargeSymbolSpace, FontStyle::LARGE);
     }
-    // Draw current tip temp
+    // Draw current tip temp (y=8 to bottom-align the 24px number; restore after)
+    OLED::setCursor(OLED::getCursorX(), 8);
     ui_draw_tip_temperature(true, FontStyle::LARGE);
+    OLED::setCursor(OLED::getCursorX(), 0);
     // Space out gap between battery <-> temp
     OLED::print(LargeSymbolSpace, FontStyle::LARGE);
 
