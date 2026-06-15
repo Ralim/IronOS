@@ -773,12 +773,47 @@ static void displayHallEffectSleepTime(void) {
 #endif /* HALL_SENSOR */
 
 #ifdef TIP_TYPE_SUPPORT
+#ifdef OLED_128x32
+// Width in pixels of the widest line of a (possibly two-line) tip name. Tip names
+// embed a newline (0x01), e.g. "Auto\nSense"; the small font is 8px per glyph.
+static uint16_t tipNameBlockWidth(const char *name) {
+  const uint8_t *p   = reinterpret_cast<const uint8_t *>(name);
+  uint16_t       cur = 0, widest = 0;
+  while (p[0]) {
+    if (p[0] == 0x01) { // newline marker
+      if (cur > widest) {
+        widest = cur;
+      }
+      cur = 0;
+      p++;
+    } else if (p[0] <= 0xF0) {
+      cur++;
+      p++;
+    } else {
+      if (!p[1]) {
+        break;
+      }
+      cur++;
+      p += 2;
+    }
+  }
+  if (cur > widest) {
+    widest = cur;
+  }
+  return widest * 8;
+}
+#endif
 static void displaySolderingTipType(void) {
 #ifdef OLED_128x32
-  // Right-align the variable-width tip name so it stays on screen, centred for the 16px font
-  OLED::setCursor(OLED_WIDTH - messageWidth(lookupTipName()) - 2, 8);
-#endif
+  // Tip names embed a newline; drawChar only wraps at y==0, so anchor a
+  // right-aligned, two-line block at the top of the panel.
+  const char *name = lookupTipName();
+  OLED::setCursor(OLED_WIDTH - tipNameBlockWidth(name) - 2, 0);
+  OLED::print(name, FontStyle::SMALL, 255, OLED::getCursorX());
+#else
+  // TODO wrapping X value
   OLED::print(lookupTipName(), FontStyle::SMALL, 255, OLED::getCursorX());
+#endif
 }
 // If there is no detection, and no options, max is 0
 static bool showSolderingTipType(void) { return tipType_t::TIP_TYPE_MAX != 0; }
