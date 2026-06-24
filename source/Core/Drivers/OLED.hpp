@@ -24,7 +24,12 @@ extern "C" {
 }
 #endif
 
-#if defined(OLED_I2CBB2)
+#if defined(OLED_GC9D01)
+// Alientek T90: GC9-family color LCD over hardware SPI. The GC9Display shim presents the same
+// static surface as the I2C backends and expands the mono framebuffer to RGB565 (see BSP).
+#include "GC9Display.hpp"
+#define I2C_CLASS GC9Display
+#elif defined(OLED_I2CBB2)
 #include "I2CBB2.hpp"
 #define I2C_CLASS I2CBB2
 #elif defined(OLED_I2CBB1)

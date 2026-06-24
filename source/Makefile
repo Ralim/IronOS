@@ -7,7 +7,8 @@ ALL_PINECIL_MODELS=Pinecil
 ALL_PINECIL_V2_MODELS=Pinecilv2
 ALL_MHP30_MODELS=MHP30
 ALL_SEQURE_MODELS=S60 S60P T55
-ALL_MODELS=$(ALL_MINIWARE_MODELS) $(ALL_PINECIL_MODELS) $(ALL_MHP30_MODELS) $(ALL_PINECIL_V2_MODELS) $(ALL_SEQURE_MODELS)
+ALL_ALIENTEK_MODELS=T90
+ALL_MODELS=$(ALL_MINIWARE_MODELS) $(ALL_PINECIL_MODELS) $(ALL_MHP30_MODELS) $(ALL_PINECIL_V2_MODELS) $(ALL_SEQURE_MODELS) $(ALL_ALIENTEK_MODELS)
 
 ifneq ($(model),$(filter $(model),$(ALL_MODELS)))
 $(error Invalid model '$(model)', valid options are: $(ALL_MODELS))
@@ -152,6 +153,37 @@ DEVICE_DFU_ADDRESS=0x08004400
 endif
 DEVICE_DFU_VID_PID=0x1209:0xDB42
 endif # ALL_SEQURE_MODELS
+
+ifeq ($(model),$(filter $(model),$(ALL_ALIENTEK_MODELS)))
+$(info Building for Alientek T90 )
+
+DEVICE_BSP_DIR=./Core/BSP/Alientek-T90
+S_SRCS:=$(shell find $(DEVICE_BSP_DIR) -type f -name '*.S')
+LDSCRIPT=./Core/BSP/Alientek-T90/CMSIS/device/n32l40x_flash.ld
+DEV_GLOBAL_DEFS=-D N32L40X              \
+                -D USE_STDPERIPH_DRIVER \
+                -D SYSCLK_SRC=3         \
+                -D SYSCLK_FREQ=64000000 \
+                -D USE_RTOS_SYSTICK     \
+                -D GCC_ARMCM4           \
+                -D ARM_MATH_CM4         \
+                -finline-limit=9999999
+
+DEV_LDFLAGS=-Wl,--wrap=printf  -Wl,--no-wchar-size-warning
+DEV_AFLAGS=
+DEV_CFLAGS=-D VECT_TAB_OFFSET=$(bootldr_size)U
+DEV_CXXFLAGS=
+# Cortex-M4 but soft-float ABI so the MCU-agnostic ARM_CM3 FreeRTOS port (reused from
+# Sequre) is correct and no FPU context-switch handling is needed (matches TS100/Sequre).
+CPUFLAGS=-mcpu=cortex-m4      \
+         -mthumb              \
+         -mfloat-abi=soft
+
+flash_size=106k
+bootldr_size=0x5000
+DEVICE_DFU_ADDRESS=0x08005000
+DEVICE_DFU_VID_PID=0x1209:0xDB42
+endif # ALL_ALIENTEK_MODELS
 
 ifeq ($(model),$(filter $(model),$(ALL_MHP30_MODELS)))
 $(info Building for MHP30 )
@@ -379,7 +411,7 @@ COMPILER=gcc
 ifeq ($(model),$(filter $(model),$(ALL_MINIWARE_MODELS) $(ALL_MHP30_MODELS)))
 COMPILER_PREFIX=arm-none-eabi
 endif
-ifeq ($(model),$(filter $(model),$(ALL_SEQURE_MODELS) ))
+ifeq ($(model),$(filter $(model),$(ALL_SEQURE_MODELS) $(ALL_ALIENTEK_MODELS) ))
 COMPILER_PREFIX=arm-none-eabi
 endif
 ifeq ($(model),$(filter $(model),$(ALL_PINECIL_MODELS) $(ALL_PINECIL_V2_MODELS)))
@@ -497,6 +529,14 @@ firmware-%: $(HEXFILE_DIR)/$(model)_%.hex $(HEXFILE_DIR)/$(model)_%.bin $(HEXFIL
 
 %.dfu: %.bin Makefile
 	$(HOST_PYTHON) dfuse-pack.py -b $(DEVICE_DFU_ADDRESS)@0:$< -D $(DEVICE_DFU_VID_PID) $@
+
+# Alientek .atk packaging (T90): wrap the raw .bin with the 32-byte ATK header for the
+# Alientek USB bootloader (VID 0x413D/PID 0x2107). Host-only step (needs uvx + the
+# atk-fw-util checkout); intentionally NOT part of firmware-% so the in-container build
+# (which lacks uvx) is unaffected. Override ATK_PACK_DIR to the atk-fw-util path.
+ATK_PACK_DIR ?= ../../atk-fw-util
+%.atk: %.bin Makefile
+	uvx --from $(ATK_PACK_DIR) atk-fw-util pack-atk $< $@
 
 $(HEXFILE_DIR)/$(model)_%.elf: \
 		$(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP)    \
