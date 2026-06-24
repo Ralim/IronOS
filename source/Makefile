@@ -537,13 +537,13 @@ endif
 %.dfu: %.bin Makefile
 	$(HOST_PYTHON) dfuse-pack.py -b $(DEVICE_DFU_ADDRESS)@0:$< -D $(DEVICE_DFU_VID_PID) $@
 
-# Alientek .atk packaging (T90): wrap the raw .bin with the 32-byte ATK header for the Alientek
-# USB bootloader (VID 0x413D/PID 0x2107). Uses the in-tree pure-python packer (stdlib only) so it
-# runs in the CI build container with no external tooling. The header device name can be overridden
-# via ATK_NAME if a real T90 update uses a different identifier (verify before flashing).
-ATK_NAME ?= ATK-PTT90
+# Alientek .atk packaging (T90): wrap the raw .bin into the T90 USB-bootloader image (13-byte
+# header + payload XOR 0xFF) with the in-tree pure-python packer (stdlib only), so the release
+# build produces a flashable image in CI. Format verified by byte-exact round-trip against real
+# factory + community .atk samples. Build date is metadata only (ATK_DATE, YYYY-MM-DD).
+ATK_DATE ?= 2000-01-01
 %.atk: %.bin Makefile
-	$(HOST_PYTHON) atk-pack.py --name $(ATK_NAME) $< $@
+	$(HOST_PYTHON) atk-pack.py --date $(ATK_DATE) $< $@
 
 $(HEXFILE_DIR)/$(model)_%.elf: \
 		$(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP)    \

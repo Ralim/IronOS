@@ -31,7 +31,7 @@
 ENTRY(Reset_Handler)
 
 /* Highest address of the user mode stack */
-_estack = 0x20008000;    /* end of RAM */
+_estack = 0x20006000;    /* end of RAM (T90 N32L403 = 24K SRAM; confirmed by factory/msdmem SP=0x20006000) */
 
 /* Generate a link error if heap and stack don't fit into RAM */
 _Min_Heap_Size = 0x200;      /* required amount of heap  */
@@ -41,7 +41,7 @@ _Min_Stack_Size = 0x800; /* required amount of stack */
 MEMORY
 {
 FLASH (rx)      : ORIGIN = 0x08005000, LENGTH = 104K /* 128K die - 20K(0x5000) bootloader - 2K settings - 2K logo (T90 app base) */
-RAM (xrw)      : ORIGIN = 0x20000000, LENGTH = 32K
+RAM (xrw)      : ORIGIN = 0x20000000, LENGTH = 24K /* T90 N32L403 SRAM (confirmed via factory/msdmem SP=0x20006000) */
 }
 
 /* Define output sections */

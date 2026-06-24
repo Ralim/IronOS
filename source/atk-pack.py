@@ -1,58 +1,54 @@
 #!/usr/bin/env python3
-# Pack a raw firmware .bin into an Alientek ".atk" image for the T90 USB bootloader.
+# Pack a raw firmware .bin into an Alientek T90 ".atk" image for its USB bootloader.
 #
-# The .atk format is a 32-byte little-endian header followed by the raw application image:
-#   name[16] data_len(B) encrypt_pos(B) app_addr(H) app_ver(H) crc(H) fw_size(I) year(H) month(B) day(B)
-# The Alientek bootloader optionally XOR-obfuscates the payload, keyed off the byte at
-# `encrypt_pos`. Setting encrypt_pos = 0xFF (> the per-chunk size) disables that step, so the
-# payload is sent/stored verbatim (see the dozed-dev/atk-fw-util reverse-engineering). We ship the
-# payload plain, so no checksum is required (crc = 0).
+# Format reverse-engineered + byte-for-byte round-trip verified against two real T90 .atk samples
+# (the official factory t90.atk and PanKleszcz's t90_msdmem.atk):
+#
+#   header (13 bytes):
+#     [0:6]  magic            = 08 02 0A 01 A0 20
+#     [6:10] payload size      = uint32 little-endian (length of the app image)
+#     [10]   year - 2000       = uint8   (build date, metadata only)
+#     [11]   month             = uint8
+#     [12]   day               = uint8
+#   payload: the raw application image with every byte XOR 0xFF (the only "encryption").
+#
+# There is no payload checksum or signature in the header; the bootloader accepts any correctly
+# formatted image (the per-USB-packet CRC of the transfer protocol is separate). The application is
+# linked at 0x08005000 (the 20 KB bootloader lives below it).
 #
 # Stdlib only (mirrors dfuse-pack.py), so it runs in the CI build container with plain python3.
-#
-# NOTE (must verify on hardware before flashing): the `name` and `app_addr` header fields are taken
-# from the reverse-engineered T80/T90 update format. Confirm them against an official ATK-T90 update
-# file (decrypt its header) before relying on this image to flash; the universal artifacts are the
-# .hex/.bin. Override the name with --name if a real T90 .atk uses a different identifier.
 
 import argparse
 import struct
 import sys
 
-HEADER_FORMAT = "<16s B B H H H I H B B"
-HEADER_SIZE = 32
-CHUNK_SIZE = 58  # per-packet payload size the updater streams; also stored as data_len
-ENCRYPT_DISABLED = 0xFF  # > CHUNK_SIZE -> bootloader skips the XOR step (plain payload)
+MAGIC = bytes([0x08, 0x02, 0x0A, 0x01, 0xA0, 0x20])
 
 
-def pack(raw: bytes, name: str) -> bytes:
-    name_bytes = name.encode("ascii")[:16]
-    header = struct.pack(
-        HEADER_FORMAT,
-        name_bytes,        # name[16], null-padded by struct
-        CHUNK_SIZE,        # data_len
-        ENCRYPT_DISABLED,  # encrypt_pos (0xFF -> no XOR)
-        1,                 # app_addr (loader-relative index; bootloader places the app)
-        1,                 # app_ver
-        0,                 # crc (payload is plain, no checksum)
-        len(raw),          # fw_size
-        0, 0, 0,           # year, month, day (zeroed for reproducible builds)
-    )
-    return header + raw
+def pack(raw: bytes, year: int, month: int, day: int) -> bytes:
+    header = MAGIC + struct.pack("<I", len(raw)) + bytes([(year - 2000) & 0xFF, month & 0xFF, day & 0xFF])
+    payload = bytes(b ^ 0xFF for b in raw)
+    return header + payload
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description="Pack a raw .bin into an Alientek .atk image")
-    ap.add_argument("input", help="raw firmware .bin")
+    ap = argparse.ArgumentParser(description="Pack a raw .bin into an Alientek T90 .atk image")
+    ap.add_argument("input", help="raw firmware .bin (linked at 0x08005000)")
     ap.add_argument("output", help="output .atk path")
-    ap.add_argument("--name", default="ATK-PTT90", help="16-char device name stamped in the header")
+    ap.add_argument("--date", default="2000-01-01", help="build date YYYY-MM-DD stamped in the header (metadata only)")
     args = ap.parse_args()
+
+    try:
+        year, month, day = (int(x) for x in args.date.split("-"))
+    except ValueError:
+        print("--date must be YYYY-MM-DD", file=sys.stderr)
+        return 2
 
     with open(args.input, "rb") as f:
         raw = f.read()
     with open(args.output, "wb") as f:
-        f.write(pack(raw, args.name))
-    print(f"wrote {args.output}: {HEADER_SIZE}-byte header + {len(raw)} bytes payload")
+        f.write(pack(raw, year, month, day))
+    print(f"wrote {args.output}: 13-byte header + {len(raw)} bytes payload (XOR 0xFF)")
     return 0
 
 

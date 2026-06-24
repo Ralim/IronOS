@@ -49,8 +49,8 @@
 
 bool GC9Display::initialised = false;
 
-// RGB565 GRAM mirror, 40*160 = 6400 words = 12.8 KB (file-static).
-static uint16_t panel[GC9_PANEL_W * GC9_PANEL_H];
+// No full-frame RGB565 buffer: 40*160*2 = 12.8 KB would not fit the 24 KB SRAM alongside the RTOS
+// heap. Pixels are computed from the 1bpp framebuffer and streamed to the panel on the fly.
 
 // ---------------------------------------------------------------------------
 // Low-level SPI1 helpers (polled, blocking; Mode 3, half-duplex TX-only)
@@ -270,12 +270,9 @@ static void gc9_init_hw(void) {
   SPI_Enable(SPI1, ENABLE);
 }
 
-// Clear the whole panel mirror to background and push it out.
-static void gc9_clear(void) {
-  for (int i = 0; i < GC9_PANEL_W * GC9_PANEL_H; i++) {
-    panel[i] = COLOR_BG;
-  }
-  // Window 0..39 x 0..159, then RAMWR + the full RGB565 stream.
+// Open a full-panel pixel write: window 0..39 x 0..159, RAMWR, then assert CS and switch to 16-bit
+// pixel framing. Pixels are streamed by the caller (no full-frame buffer).
+static void gc9_begin_frame(void) {
   gc9_cmd(GC9_CMD_CASET);
   gc9_data16(0);
   gc9_data16(GC9_PANEL_W - 1);
@@ -283,17 +280,25 @@ static void gc9_clear(void) {
   gc9_data16(0);
   gc9_data16(GC9_PANEL_H - 1);
   gc9_cmd(GC9_CMD_RAMWR);
-
-  // Stream 6400 RGB565 words at 16-bit DFF.
   GPIO_SetBits(LCD_DC_GPIO_Port, LCD_DC_Pin); // data
   GPIO_ResetBits(LCD_CS_GPIO_Port, LCD_CS_Pin);
   gc9_set_datalen(SPI_DATA_SIZE_16BITS);
-  for (int i = 0; i < GC9_PANEL_W * GC9_PANEL_H; i++) {
-    gc9_spi_word(panel[i]);
-  }
+}
+
+// Close a pixel write: drain the bus, restore 8-bit framing, deselect.
+static void gc9_end_frame(void) {
   gc9_wait_idle();
   gc9_set_datalen(SPI_DATA_SIZE_8BITS);
   GPIO_SetBits(LCD_CS_GPIO_Port, LCD_CS_Pin);
+}
+
+// Fill the whole panel with the background colour (streamed, no buffer).
+static void gc9_clear(void) {
+  gc9_begin_frame();
+  for (int i = 0; i < GC9_PANEL_W * GC9_PANEL_H; i++) {
+    gc9_spi_word(COLOR_BG);
+  }
+  gc9_end_frame();
 }
 
 // ---------------------------------------------------------------------------
@@ -340,46 +345,29 @@ void GC9Display::Transmit(uint16_t DevAddress, uint8_t *pData, uint16_t Size) {
     return;
   }
 
-  // Full frame: expand the 1bpp page buffer into the centered RGB565 region.
-  // panel[] keeps background everywhere outside the 128x32 UI; only the UI
-  // window is rewritten each frame (margins were set to COLOR_BG at init).
-  const uint8_t *pix = pData + FRAMEBUFFER_START; // 512 bytes, [17..528]
-  for (int y = 0; y < OLED_HEIGHT; y++) {         // UI rows 0..31
-    const int            page  = y >> 3;          // 0..3
-    const int            bit   = y & 7;           // 0..7
-    const uint8_t *const strip = pix + page * OLED_WIDTH;
-    const int            ly    = y + GC9_Y_OFF;   // landscape y (centered)
-    const int            col   = ly;              // panel column 0..39
-    for (int x = 0; x < OLED_WIDTH; x++) {        // UI cols 0..127
-      const int     lx  = x + GC9_X_OFF;          // landscape x (centered)
-      const uint8_t on  = (strip[x] >> bit) & 1;
-      const int     row = (GC9_PANEL_H - 1) - lx; // panel row 0..159 (flipped)
-      // defensive bound: with the 128x32-in-160x40 centering these are always in range, but guard
-      // the write so a future resolution/offset change can never corrupt memory past panel[].
-      if (row >= 0 && row < GC9_PANEL_H && col >= 0 && col < GC9_PANEL_W) {
-        panel[GC9_PANEL_W * row + col] = on ? COLOR_FG : COLOR_BG;
+  // Full frame: stream the centered, transposed 128x32 mono UI into the 40x160 RGB565 panel,
+  // computing each pixel on the fly (no 12.8 KB frame buffer -> fits the 24 KB SRAM). Panel scan
+  // order after RAMWR is row-major with the column incrementing fastest (col 0..39, then row
+  // 0..159). The centering transpose maps UI (x,y) -> panel (col = y + Y_OFF, row = 159 - (x +
+  // X_OFF)); inverting it per panel (row,col) recovers UI (x,y), and anything outside the 128x32
+  // UI window is background.
+  const uint8_t *pix = pData + FRAMEBUFFER_START; // 512 bytes of 1bpp, [17..528]
+  gc9_begin_frame();
+  for (int row = 0; row < GC9_PANEL_H; row++) {
+    const int x = (GC9_PANEL_H - 1 - row) - GC9_X_OFF; // UI column (may be out of range)
+    for (int col = 0; col < GC9_PANEL_W; col++) {
+      const int y     = col - GC9_Y_OFF;               // UI row (may be out of range)
+      uint16_t  color = COLOR_BG;
+      if (x >= 0 && x < OLED_WIDTH && y >= 0 && y < OLED_HEIGHT) {
+        const uint8_t *strip = pix + (y >> 3) * OLED_WIDTH;
+        if ((strip[x] >> (y & 7)) & 1) {
+          color = COLOR_FG;
+        }
       }
+      gc9_spi_word(color);
     }
   }
-
-  // Window the full panel and stream all 6400 RGB565 words.
-  gc9_cmd(GC9_CMD_CASET);
-  gc9_data16(0);
-  gc9_data16(GC9_PANEL_W - 1);
-  gc9_cmd(GC9_CMD_RASET);
-  gc9_data16(0);
-  gc9_data16(GC9_PANEL_H - 1);
-  gc9_cmd(GC9_CMD_RAMWR);
-
-  GPIO_SetBits(LCD_DC_GPIO_Port, LCD_DC_Pin); // data
-  GPIO_ResetBits(LCD_CS_GPIO_Port, LCD_CS_Pin);
-  gc9_set_datalen(SPI_DATA_SIZE_16BITS);
-  for (int i = 0; i < GC9_PANEL_W * GC9_PANEL_H; i++) {
-    gc9_spi_word(panel[i]);
-  }
-  gc9_wait_idle();
-  gc9_set_datalen(SPI_DATA_SIZE_8BITS);
-  GPIO_SetBits(LCD_CS_GPIO_Port, LCD_CS_Pin);
+  gc9_end_frame();
 }
 
 // ---------------------------------------------------------------------------
