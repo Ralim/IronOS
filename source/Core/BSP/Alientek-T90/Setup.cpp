@@ -191,14 +191,19 @@ static void MX_GPIO_Init(void) {
   io.GPIO_Pull      = GPIO_No_Pull;
   GPIO_InitPeripheral(GPIOA, &io);
 
-  // Display SPI1: SCK (PB3) + MOSI (PB5) as alternate function.
+  // Display SPI1 alternate function. N32L40x uses PER-PIN AF numbers: SCK (PB3) = AF1, MOSI (PB5)
+  // = AF0 (confirmed from the T90 stock-firmware register writes and the N32L43 AF table; a uniform
+  // AF5 here would leave SCK/MOSI unrouted -> blank panel).
   GPIO_InitStruct(&io);
-  io.Pin            = LCD_SCK_Pin | LCD_MOSI_Pin;
   io.GPIO_Mode      = GPIO_Mode_AF_PP;
-  io.GPIO_Alternate = GPIO_AF5_SPI1;
   io.GPIO_Slew_Rate = GPIO_Slew_Rate_High;
   io.GPIO_Current   = GPIO_DC_8mA;
   io.GPIO_Pull      = GPIO_No_Pull;
+  io.Pin            = LCD_SCK_Pin;
+  io.GPIO_Alternate = GPIO_AF1_SPI1;
+  GPIO_InitPeripheral(GPIOB, &io);
+  io.Pin            = LCD_MOSI_Pin;
+  io.GPIO_Alternate = GPIO_AF0_SPI1;
   GPIO_InitPeripheral(GPIOB, &io);
 
   // Display CS (PA10) + backlight (PA6) as push-pull GPIO outputs, idle high.
@@ -243,6 +248,10 @@ static void MX_GPIO_Init(void) {
 static void MX_ADC_Init(void) {
   // ADC conversion clock from HCLK; DIV8 -> 8 MHz at 64 MHz HCLK.
   ADC_ConfigClk(ADC_CTRL3_CKMOD_AHB, RCC_ADCHCLK_DIV8);
+  // N32 ADC also needs the 1 MHz calibration/bandgap clock and the internal reference enabled, or
+  // calibration + conversions (which feed the heater PID) are untrustworthy.
+  RCC_ConfigAdc1mClk(RCC_ADC1MCLK_SRC_HSI, RCC_ADC1MCLK_DIV16);
+  ADC_EnableTempSensorVrefint(ENABLE);
 
   ADC_InitType a;
   ADC_InitStruct(&a);

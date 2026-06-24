@@ -127,6 +127,9 @@ static void gc9_cmd_data(uint8_t cmd, const uint8_t *data, uint8_t n) {
 // ---------------------------------------------------------------------------
 
 static void gc9_run_init_sequence(void) {
+  // Power-on settle before the software unlock (the T90 stock firmware waits ~200 ms here before
+  // 0xFE/0xEF; without it the unlock can land before the panel's internal regulators are ready).
+  delay_ms(120);
   // Inner register enable (GC9-family software unlock).
   gc9_cmd(0xFE);
   gc9_cmd(0xEF);
@@ -237,15 +240,18 @@ static void gc9_init_hw(void) {
   io.GPIO_Current  = GPIO_DC_8mA;
   GPIO_InitPeripheral(LCD_DC_GPIO_Port, &io); // PD0
 
-  // SCK = PB3, MOSI = PB5: SPI1 alternate function.
+  // SCK = PB3 (AF1), MOSI = PB5 (AF0): per-pin SPI1 AF on the N32L40x (uniform AF5 -> blank panel).
   GPIO_InitStruct(&io);
-  io.Pin            = LCD_SCK_Pin | LCD_MOSI_Pin;
   io.GPIO_Mode      = GPIO_Mode_AF_PP;
-  io.GPIO_Alternate = GPIO_AF5_SPI1;
   io.GPIO_Slew_Rate = GPIO_Slew_Rate_High;
   io.GPIO_Pull      = GPIO_No_Pull;
   io.GPIO_Current   = GPIO_DC_8mA;
-  GPIO_InitPeripheral(LCD_SCK_GPIO_Port, &io); // PB3, PB5 (same port)
+  io.Pin            = LCD_SCK_Pin;
+  io.GPIO_Alternate = GPIO_AF1_SPI1;
+  GPIO_InitPeripheral(LCD_SCK_GPIO_Port, &io); // PB3
+  io.Pin            = LCD_MOSI_Pin;
+  io.GPIO_Alternate = GPIO_AF0_SPI1;
+  GPIO_InitPeripheral(LCD_MOSI_GPIO_Port, &io); // PB5
 
   // Idle levels: CS high (deselected), DC high (data), BL high (backlight off).
   GPIO_SetBits(LCD_CS_GPIO_Port, LCD_CS_Pin);

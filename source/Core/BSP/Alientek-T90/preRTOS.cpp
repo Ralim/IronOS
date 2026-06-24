@@ -19,6 +19,8 @@ void preRToSInit() {
 #ifdef VECT_TAB_OFFSET
   SCB->VTOR = FLASH_BASE | VECT_TAB_OFFSET;
 #endif
+  // the Alientek bootloader may hand off with interrupts masked; unmask before we set up peripherals.
+  __enable_irq();
 
   Setup_HAL(); // clocks, GPIO, ADC, TIM, IWDG, SPI, NVIC
   BSPInit();   // apply the production heater PWM period
