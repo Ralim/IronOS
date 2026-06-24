@@ -27,6 +27,7 @@ jobs:
             "S60P",
             "T55",
             "TS101",
+            "T90",
           ]
       fail-fast: true
 
@@ -64,6 +65,7 @@ jobs:
             source/Hexfile/${{ matrix.model }}_*.hex
             source/Hexfile/${{ matrix.model }}_*.dfu
             source/Hexfile/${{ matrix.model }}_*.bin
+            source/Hexfile/${{ matrix.model }}_*.atk
             source/Hexfile/${{ matrix.model }}.json
             source/Hexfile/LICENSE
             source/Hexfile/LICENSE_RELEASE.md

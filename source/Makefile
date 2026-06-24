@@ -517,8 +517,13 @@ OUT_OBJS_S=$(addprefix $(OUTPUT_DIR)/,$(OBJS_S))
 
 default: firmware-EN
 
+ifeq ($(model),$(filter $(model),$(ALL_ALIENTEK_MODELS)))
+firmware-%: $(HEXFILE_DIR)/$(model)_%.hex $(HEXFILE_DIR)/$(model)_%.bin $(HEXFILE_DIR)/$(model)_%.dfu $(HEXFILE_DIR)/$(model)_%.atk
+	@true
+else
 firmware-%: $(HEXFILE_DIR)/$(model)_%.hex $(HEXFILE_DIR)/$(model)_%.bin $(HEXFILE_DIR)/$(model)_%.dfu
 	@true
+endif
 
 # Targets for binary files
 
@@ -532,13 +537,13 @@ firmware-%: $(HEXFILE_DIR)/$(model)_%.hex $(HEXFILE_DIR)/$(model)_%.bin $(HEXFIL
 %.dfu: %.bin Makefile
 	$(HOST_PYTHON) dfuse-pack.py -b $(DEVICE_DFU_ADDRESS)@0:$< -D $(DEVICE_DFU_VID_PID) $@
 
-# Alientek .atk packaging (T90): wrap the raw .bin with the 32-byte ATK header for the
-# Alientek USB bootloader (VID 0x413D/PID 0x2107). Host-only step (needs uvx + the
-# atk-fw-util checkout); intentionally NOT part of firmware-% so the in-container build
-# (which lacks uvx) is unaffected. Override ATK_PACK_DIR to the atk-fw-util path.
-ATK_PACK_DIR ?= ../../atk-fw-util
+# Alientek .atk packaging (T90): wrap the raw .bin with the 32-byte ATK header for the Alientek
+# USB bootloader (VID 0x413D/PID 0x2107). Uses the in-tree pure-python packer (stdlib only) so it
+# runs in the CI build container with no external tooling. The header device name can be overridden
+# via ATK_NAME if a real T90 update uses a different identifier (verify before flashing).
+ATK_NAME ?= ATK-PTT90
 %.atk: %.bin Makefile
-	uvx --from $(ATK_PACK_DIR) atk-fw-util pack-atk $< $@
+	$(HOST_PYTHON) atk-pack.py --name $(ATK_NAME) $< $@
 
 $(HEXFILE_DIR)/$(model)_%.elf: \
 		$(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP)    \

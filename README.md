@@ -32,6 +32,7 @@ _This firmware does **NOT** support the USB port while running for changing sett
 |   Sequre S60   | ❌  | ❌  | ✔️  | ❌  | ❌  |    ❌     |          ✔️          | Full OLED resolution not yet supported. |
 |  Sequre S60P   | ❌  | ❌  | ✔️  | ❌  | ❌  |    ❌     |          ✔️          | Full OLED resolution not yet supported. |
 |   Sequre T55   | ❌  | ❌  | ✔️  | ❌  | ❌  |    N/A    |          ✔️          | Full OLED resolution not yet supported. |
+|  Alientek T90  | ❌  | ✔️  | ✔️  | ❌  | ❌  |    ❌     |     🧪 \*\*\*\*\*\*  | Experimental community port. T245 tips; GC9 color LCD shown as a cropped 128x32 mono view. |
 | Miniware TS80P | ❌  | ✔️  | ✔️  | ❌  | ❌  |    N/A    |          ✔️          |                                         |
 | Miniware TS100 | ✔️  | ❌  | ❌  | ❌  | ❌  |    ❌     |        ❌\*\*        |                                         |
 | Miniware TS80  | ❌  | ✔️  | ❌  | ❌  | ❌  |    N/A    |       ❌\*\*\*       |                                         |
@@ -52,6 +53,8 @@ The _TS101_ & _S60(P)_ irons and _MHP30_ & _T55_ plates feature a higher resolut
 _PD Mode_ option in _Power settings_ submenu to _Safe_ or _Default_.
 
 \*\*\*\*\* Some users confirm that there is a version of newer _TS101_ revision with another OLED screen model, which is not supported yet at all by _IronOS_ unfortunately. See [this bug report](https://github.com/Ralim/IronOS/issues/2063) for more information.
+
+\*\*\*\*\*\* _Alientek T90_ is an **experimental community port** (Nations _N32L40x_ MCU, _GC9_-family color LCD, _T245_ tips, _CH224Q_ USB-PD sink). The firmware builds cleanly and the BSP is complete, but it has **not yet been validated on real hardware** — the analog calibration constants are placeholders and the display is driven as a cropped _128x32_ mono region of the color panel. Flashing uses Alientek's `.atk` USB bootloader path; **always back up the factory firmware first** so you can recover. Use at your own risk.
 
 ## Getting Started
 
@@ -87,6 +90,7 @@ The links in the table below allow to download available builds directly:
 | Sequre   S60          | [S60.zip](https://github.com/Ralim/IronOS/releases/download/v2.23/S60.zip)                                   | [S60.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/S60.zip)                                   |
 | Sequre   S60P         | Not Released                                                                                                 | [S60P.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/S60P.zip)                                 |
 | Sequre   T55          | Not Released                                                                                                 | [T55.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/T55.zip)                                   |
+| Alientek T90 \*\*\*\*\*\* | Not Released                                                                                             | [T90.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/T90.zip)                                   |
 
 ## Key Features
 
