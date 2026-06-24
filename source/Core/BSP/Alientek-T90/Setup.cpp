@@ -24,6 +24,11 @@
 
 #define ADC_FILTER_LEN 4
 
+// Bounded spins on ADC hardware flags so a wedged ADC can never hang the PID thread (it would
+// otherwise stop feeding the safety timer -> heater off -> watchdog reset, but a bounded loop is
+// cleaner). ~100k iterations is far longer than any real conversion at the 8 MHz ADC clock.
+#define ADC_POLL_TIMEOUT 100000U
+
 // Heater PWM carrier (TIM2 on APB1, timer clock 32 MHz at 64 MHz SYSCLK).
 // Prescaler 0, ARR 1066 -> 32 MHz / 1067 ~= 30 kHz. CCR range 0..1066.
 #define HEATER_TIM_PRESCALER 0
@@ -68,7 +73,8 @@ static uint16_t readRegularChannel(uint8_t channel) {
   ADC_ConfigRegularChannel(ADC, channel, 1, ADC_SAMP_TIME_71CYCLES5);
   ADC_ClearFlag(ADC, ADC_FLAG_ENDC);
   ADC_EnableSoftwareStartConv(ADC, ENABLE);
-  while (ADC_GetFlagStatus(ADC, ADC_FLAG_ENDC) == RESET) {}
+  uint32_t to = ADC_POLL_TIMEOUT;
+  while (ADC_GetFlagStatus(ADC, ADC_FLAG_ENDC) == RESET && --to) {}
   ADC_ClearFlag(ADC, ADC_FLAG_ENDC);
   return ADC_GetDat(ADC);
 }
@@ -137,8 +143,9 @@ static void Clock_Config_NVIC(void) {
   NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);
 
   NVIC_InitType n;
-  // ADC injected-EOC -> notify PID. Priority >= configMAX_SYSCALL (=5) so the
-  // FromISR notify call is legal.
+  // ADC injected-EOC -> notify PID. On Cortex-M, lower number = higher urgency; a FromISR API is
+  // only legal from an ISR whose preemption priority is numerically >= configLIBRARY_MAX_SYSCALL_
+  // INTERRUPT_PRIORITY (=5). 6/7 sit in the safe lower-urgency zone -- do NOT set these below 6.
   n.NVIC_IRQChannel                   = ADC_IRQn;
   n.NVIC_IRQChannelPreemptionPriority = 6;
   n.NVIC_IRQChannelSubPriority        = 0;
@@ -265,9 +272,11 @@ static void MX_ADC_Init(void) {
 
   // Power up the ADC and wait until it is ready, then calibrate.
   ADC_Enable(ADC, ENABLE);
-  while (ADC_GetFlagStatusNew(ADC, ADC_FLAG_RDY) == RESET) {}
+  uint32_t to = ADC_POLL_TIMEOUT;
+  while (ADC_GetFlagStatusNew(ADC, ADC_FLAG_RDY) == RESET && --to) {}
   ADC_StartCalibration(ADC);
-  while (ADC_GetCalibrationStatus(ADC) != RESET) {}
+  to = ADC_POLL_TIMEOUT;
+  while (ADC_GetCalibrationStatus(ADC) != RESET && --to) {}
 }
 
 // --- TIM2: heater PWM carrier on CH1 (PA0) ---

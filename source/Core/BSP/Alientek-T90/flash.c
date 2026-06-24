@@ -19,7 +19,7 @@ void flash_save_buffer(const uint8_t *buffer, const uint16_t length) {
   }
   resetWatchdog();
   FLASH_Unlock();
-  FLASH_ClearFlag(FLASH_FLAG_PGERR | FLASH_FLAG_WRPERR | FLASH_FLAG_EOP);
+  FLASH_ClearFlag(FLASH_STS_CLRFLAG); // N32 all-error-flags constant (incl. PVERR/EVERR), not the F1 subset
   resetWatchdog();
   // Erase the single reserved 2 KB page.
   FLASH_EraseOnePage((uint32_t)SETTINGS_START_PAGE);

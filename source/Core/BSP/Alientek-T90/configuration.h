@@ -54,7 +54,7 @@
  * Locking Mode
  * When in soldering mode a long press on both keys toggle the lock of the buttons
  * Possible values are:
- *  0 - Desactivated
+ *  0 - Deactivated
  *  1 - Lock except boost
  *  2 - Full lock
  */
@@ -66,7 +66,7 @@
  */
 #define ORIENTATION_MODE           0 // 0: Right 1:Left (2:Automatic N/A)
 #define MAX_ORIENTATION_MODE       1 // Disable auto mode
-#define REVERSE_BUTTON_TEMP_CHANGE 0 // 0:Default 1:Reverse - Reverse the plus and minus button assigment for temperature change
+#define REVERSE_BUTTON_TEMP_CHANGE 0 // 0:Default 1:Reverse - Reverse the plus and minus button assignment for temperature change
 
 /**
  * Temp change settings
