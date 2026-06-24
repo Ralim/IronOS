@@ -31,6 +31,17 @@ void ADC_IRQHandler(void) {
   if (ADC_GetIntStatus(ADC, ADC_INT_JENDC) != RESET) {
     // STS is write-complement-to-clear; this clears the injected end-of-conversion flag.
     ADC_ClearIntPendingBit(ADC, ADC_INT_JENDC);
+    // the tip was sampled with the heater blanked (TIM4 update forced it off, below). now the
+    // quiet-tip sample is captured, restore the heater duty until the next schedule tick. this is
+    // the measure-with-heater-off interleave (note: the off window here is only the injected
+    // conversion time ~20us; the analog-front-end settling holdoff still needs scope tuning on
+    // real hardware, see the review notes).
+    if (PWMSafetyTimer == 0) {
+      TIM_SetCmp1(TIM2, 0);
+    } else {
+      uint32_t ccr = ((uint32_t)pendingPWM * (uint32_t)TIM2->AR) / powerPWM;
+      TIM_SetCmp1(TIM2, (uint16_t)ccr);
+    }
     if (pidTaskNotification) {
       BaseType_t xHigherPriorityTaskWoken = pdFALSE;
       vTaskNotifyGiveFromISR(pidTaskNotification, &xHigherPriorityTaskWoken);
@@ -40,10 +51,10 @@ void ADC_IRQHandler(void) {
 }
 
 /*
- * Heater-schedule timer update. Runs the safety countdown and applies the heater duty.
- * pendingPWM is a 0..powerPWM level; the TIM2 carrier ARR (set in Setup.cpp, currently 1066)
- * is larger, so scale the level onto the live ARR count. Reading TIM2->AR keeps this correct
- * no matter what carrier period Setup.cpp programs.
+ * Heater-schedule timer update. Runs the safety countdown and BLANKS the heater so the tip
+ * sample triggered by this same update (TIM4 TRGO -> ADC injected group) lands on a quiet tip.
+ * The heater duty is re-applied in ADC_IRQHandler once the conversion completes. (TIM2 OC preload
+ * is disabled in Setup.cpp so this CCR=0 takes effect immediately, not at the next carrier wrap.)
  */
 void TIM4_IRQHandler(void) {
   if (TIM_GetIntStatus(TIM4, TIM_INT_UPDATE) != RESET) {
@@ -52,12 +63,9 @@ void TIM4_IRQHandler(void) {
     if (PWMSafetyTimer) {
       PWMSafetyTimer--;
     }
-    if (PWMSafetyTimer == 0) {
-      TIM_SetCmp1(TIM2, 0);
-    } else {
-      uint32_t ccr = ((uint32_t)pendingPWM * (uint32_t)TIM2->AR) / powerPWM;
-      TIM_SetCmp1(TIM2, (uint16_t)ccr);
-    }
+    // Blank the heater for the upcoming injected sample (and keep it off if the safety timer
+    // expired, i.e. the PID stopped scheduling).
+    TIM_SetCmp1(TIM2, 0);
   }
 }
 } // extern "C"

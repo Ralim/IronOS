@@ -40,7 +40,7 @@ _Min_Stack_Size = 0x800; /* required amount of stack */
 /* Specify the memory areas */
 MEMORY
 {
-FLASH (rx)      : ORIGIN = 0x08005000, LENGTH = 106K /* 128K die - 20K(0x5000) bootloader - 2K settings/logo (T90 app base) */
+FLASH (rx)      : ORIGIN = 0x08005000, LENGTH = 104K /* 128K die - 20K(0x5000) bootloader - 2K settings - 2K logo (T90 app base) */
 RAM (xrw)      : ORIGIN = 0x20000000, LENGTH = 32K
 }
 

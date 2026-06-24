@@ -162,20 +162,23 @@
 #define CH224_SOFT_I2C // Software (bit-bang) I2C for the CH224Q PD chip on PB6/PB7
 #define FILTER_DISPLAYED_TIP_TEMP 4 // Filtering for GUI display
 
-// T245 cartridges cap lower than the Core default; pin a fixed max so getCustomTipMaxInC() reports it.
-#define CUSTOM_MAX_TEMP_C
+// T245 cartridges cap lower than the Core default. Cap the user-selectable setpoint via MAX_TEMP_C/F
+// but do NOT define CUSTOM_MAX_TEMP_C: that would also cap TipThermoModel::getTipMaxInC(), which
+// isTipDisconnected() uses (max-5) to detect a railed/floating thermocouple. With a 400C cap that
+// detection would false-trigger at a 400C setpoint and report "no tip". Let getTipMaxInC() stay at
+// the ADC-rail ceiling so disconnect detection works; the 400C setpoint cap is enforced separately.
 #define MAX_TEMP_C 400 // Max soldering temp selectable degC (T245) // TODO calibrate on hardware
 #define MAX_TEMP_F 750 // Max soldering temp selectable degF (T245) // TODO calibrate on hardware
 
 #define MODEL_HAS_DCDC // No DC/DC but very fast PWM that gets us roughly the same place
 #endif                 /* T90 */
 
-// Flash layout: app FLASH is 0x08005000..0x0801F800 (106K); the last 2K sector
-// (0x0801F800..0x08020000) is reserved for settings + boot logo. flash_save_buffer erases the
-// single 2K page at SETTINGS_START_PAGE; the small settings struct sits at the page base and the
-// logo lives in the upper 1K of the same reserved sector.
-#define SETTINGS_START_PAGE (0x08000000 + (126 * 1024)) // 0x0801F800, reserved 2K page base
-#define FLASH_LOGOADDR      (0x08000000 + (127 * 1024)) // 0x0801FC00, upper 1K of the reserved sector
+// Flash layout: app FLASH is 0x08005000..0x0801F000 (104K). The top two 2K sectors are reserved as
+// SEPARATE pages so erasing settings never wipes the logo (N32 erases a whole 2K page at a time):
+//   settings page: 0x0801F000..0x0801F800 (2K)  -- flash_save_buffer erases only this page
+//   logo page:     0x0801F800..0x08020000 (2K)
+#define SETTINGS_START_PAGE (0x08000000 + (124 * 1024)) // 0x0801F000, dedicated 2K settings page
+#define FLASH_LOGOADDR      (0x08000000 + (126 * 1024)) // 0x0801F800, dedicated 2K logo page
 
 // Defaults
 

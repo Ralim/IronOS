@@ -160,6 +160,8 @@ $(info Building for Alientek T90 )
 DEVICE_BSP_DIR=./Core/BSP/Alientek-T90
 S_SRCS:=$(shell find $(DEVICE_BSP_DIR) -type f -name '*.S')
 LDSCRIPT=./Core/BSP/Alientek-T90/CMSIS/device/n32l40x_flash.ld
+# SYSCLK_SRC=3 selects SYSCLK_USE_HSI_PLL in the vendor system_n32l40x.c (HSI16/2 x8 = 64 MHz),
+# so the build does not depend on an external crystal being fitted.
 DEV_GLOBAL_DEFS=-D N32L40X              \
                 -D USE_STDPERIPH_DRIVER \
                 -D SYSCLK_SRC=3         \
@@ -179,7 +181,7 @@ CPUFLAGS=-mcpu=cortex-m4      \
          -mthumb              \
          -mfloat-abi=soft
 
-flash_size=106k
+flash_size=104k
 bootldr_size=0x5000
 DEVICE_DFU_ADDRESS=0x08005000
 DEVICE_DFU_VID_PID=0x1209:0xDB42

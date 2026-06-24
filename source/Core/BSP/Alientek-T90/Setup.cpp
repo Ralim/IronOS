@@ -77,8 +77,12 @@ uint16_t getADCHandleTemp(uint8_t sample) {
 #ifdef TMP36_ADC_CHANNEL
   static history<uint16_t, ADC_FILTER_LEN> filter = {{0}, 0, 0};
   if (sample) {
-    // Cold-junction NTC on PA3, one polled conversion per call, averaged.
-    filter.update(readRegularChannel(TMP36_ADC_CHANNEL));
+    // Cold-junction NTC on PA3, one polled conversion per call, averaged. Scale the raw 12-bit
+    // reading to the 0..32768 convention with the same <<3 as Vin, because NTCHandleLookup in
+    // BSP.cpp holds 15-bit-range thresholds (without this the lookup never matches -> stuck 45C).
+    uint16_t latestADC = readRegularChannel(TMP36_ADC_CHANNEL);
+    latestADC <<= 3;
+    filter.update(latestADC);
   }
   return filter.average();
 #else
@@ -284,7 +288,11 @@ static void MX_TIM2_Init(void) {
   oc.Pulse       = 0; // start fully off
   oc.OcPolarity  = TIM_OC_POLARITY_HIGH;
   TIM_InitOc1(TIM2, &oc);
-  TIM_ConfigOc1Preload(TIM2, TIM_OC_PRE_LOAD_ENABLE);
+  // OC preload DISABLED so the heater-blanking CCR=0 written in the TIM4 update ISR (and the duty
+  // re-applied in the ADC ISR) take effect immediately, not at the next carrier wrap. The worst
+  // case is a single missed carrier pulse per schedule tick when the duty is re-applied mid-period
+  // (~one 33us period out of an ~18ms schedule), which is negligible.
+  TIM_ConfigOc1Preload(TIM2, TIM_OC_PRE_LOAD_DISABLE);
   TIM_ConfigArPreload(TIM2, ENABLE);
 
   TIM_Enable(TIM2, ENABLE);

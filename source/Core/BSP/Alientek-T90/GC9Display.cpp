@@ -56,11 +56,18 @@ static uint16_t panel[GC9_PANEL_W * GC9_PANEL_H];
 // Low-level SPI1 helpers (polled, blocking; Mode 3, half-duplex TX-only)
 // ---------------------------------------------------------------------------
 
+// Bounded spin so a wedged SPI peripheral can never permanently block the GUI thread (a hang here
+// would otherwise stall every display refresh until the watchdog resets). ~100k iterations is far
+// longer than any real byte time at PCLK/2 yet bounded.
+#define GC9_SPI_TIMEOUT 100000U
+
 // Wait until the TX register is empty and the bus is idle, then change DFF.
 // DFF must only be toggled while SPI is not busy (silicon requirement).
 static inline void gc9_wait_idle(void) {
-  while (SPI_I2S_GetStatus(SPI1, SPI_I2S_TE_FLAG) == RESET) {}
-  while (SPI_I2S_GetStatus(SPI1, SPI_I2S_BUSY_FLAG) != RESET) {}
+  uint32_t to = GC9_SPI_TIMEOUT;
+  while (SPI_I2S_GetStatus(SPI1, SPI_I2S_TE_FLAG) == RESET && --to) {}
+  to = GC9_SPI_TIMEOUT;
+  while (SPI_I2S_GetStatus(SPI1, SPI_I2S_BUSY_FLAG) != RESET && --to) {}
 }
 
 static inline void gc9_set_datalen(uint16_t len) {
@@ -70,13 +77,15 @@ static inline void gc9_set_datalen(uint16_t len) {
 
 // Push one byte (assumes 8-bit DFF). Caller frames CS/DC.
 static inline void gc9_spi_byte(uint8_t b) {
-  while (SPI_I2S_GetStatus(SPI1, SPI_I2S_TE_FLAG) == RESET) {}
+  uint32_t to = GC9_SPI_TIMEOUT;
+  while (SPI_I2S_GetStatus(SPI1, SPI_I2S_TE_FLAG) == RESET && --to) {}
   SPI_I2S_TransmitData(SPI1, b);
 }
 
 // Push one 16-bit word (assumes 16-bit DFF). Caller frames CS.
 static inline void gc9_spi_word(uint16_t w) {
-  while (SPI_I2S_GetStatus(SPI1, SPI_I2S_TE_FLAG) == RESET) {}
+  uint32_t to = GC9_SPI_TIMEOUT;
+  while (SPI_I2S_GetStatus(SPI1, SPI_I2S_TE_FLAG) == RESET && --to) {}
   SPI_I2S_TransmitData(SPI1, w);
 }
 
@@ -345,7 +354,11 @@ void GC9Display::Transmit(uint16_t DevAddress, uint8_t *pData, uint16_t Size) {
       const int     lx  = x + GC9_X_OFF;          // landscape x (centered)
       const uint8_t on  = (strip[x] >> bit) & 1;
       const int     row = (GC9_PANEL_H - 1) - lx; // panel row 0..159 (flipped)
-      panel[GC9_PANEL_W * row + col] = on ? COLOR_FG : COLOR_BG;
+      // defensive bound: with the 128x32-in-160x40 centering these are always in range, but guard
+      // the write so a future resolution/offset change can never corrupt memory past panel[].
+      if (row >= 0 && row < GC9_PANEL_H && col >= 0 && col < GC9_PANEL_W) {
+        panel[GC9_PANEL_W * row + col] = on ? COLOR_FG : COLOR_BG;
+      }
     }
   }
 

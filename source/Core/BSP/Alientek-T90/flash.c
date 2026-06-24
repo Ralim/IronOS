@@ -12,6 +12,11 @@
 #include "string.h"
 
 void flash_save_buffer(const uint8_t *buffer, const uint16_t length) {
+  // The settings struct must fit the single reserved 2 KB page; refuse anything larger so a
+  // bad length can never erase/program past the settings page into the logo page or the app.
+  if (length > 2048) {
+    return;
+  }
   resetWatchdog();
   FLASH_Unlock();
   FLASH_ClearFlag(FLASH_FLAG_PGERR | FLASH_FLAG_WRPERR | FLASH_FLAG_EOP);

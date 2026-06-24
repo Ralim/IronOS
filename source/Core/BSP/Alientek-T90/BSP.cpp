@@ -75,6 +75,9 @@ uint16_t getInputVoltageX10(uint16_t divisor, uint8_t sample) {
   // ADC full-scale 32767 == 3.3V at the divider input. The 10:1 divider maps that to the DC rail.
   // Multiply by 4 for extra calibration headroom (ideal divisor ~= 467), then divide by the
   // runtime-adjustable divisor (the user VoltageDiv setting).
+  if (divisor == 0) {
+    divisor = VOLTAGE_DIV; // guard against a corrupted/zero VoltageDiv setting (no div-by-zero fault)
+  }
   uint32_t res = getADCVin(sample);
   res *= 4;
   res /= divisor;
@@ -128,8 +131,11 @@ void setTipPWM(const uint8_t pulse, const bool shouldUseFastModePWM) {
   (void)shouldUseFastModePWM; // fast mode is always used; slow-PWM is selected in preStartChecks
   // Arm the safety timeout: the TIM4 update ISR decrements this and forces the heater off if the
   // PID task stops scheduling often enough.
+  // write the duty before re-arming the safety enable, with a barrier between, so the TIM4 update
+  // ISR can never observe the timer armed against a stale (previous-cycle) duty value.
+  pendingPWM = pulse;
+  __DMB();
   PWMSafetyTimer = 20;
-  pendingPWM     = pulse;
 }
 
 void unstick_I2C() {
@@ -200,9 +206,10 @@ uint8_t preStartChecks() {
   uint16_t thresholdResistancex10 = ((voltage * 1000) / currentx100) + 5;
 
   if (getTipResistanceX10() <= thresholdResistancex10) {
-    // Limited by tip resistance (not the supply current limit): slow the heater carrier to kill
-    // audible whine by raising the heater-schedule prescaler.
-    TIM_ConfigPrescaler(TIM4, 50, TIM_PSC_RELOAD_MODE_IMMEDIATE);
+    // Limited by tip resistance (not the supply current limit): slow the heater PWM carrier to
+    // kill audible whine. The carrier is TIM2 (TIM4 is the ADC/safety schedule timer and must NOT
+    // be represcaled here, or the safety countdown + sample cadence would speed up ~40x).
+    TIM_ConfigPrescaler(TIM2, 50, TIM_PSC_RELOAD_MODE_IMMEDIATE);
   }
 #endif
   return 1; // done

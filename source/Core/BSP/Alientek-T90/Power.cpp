@@ -156,8 +156,9 @@ static bool ch224q_read_reg(uint8_t reg, uint8_t *out) {
 
 // Highest voltage index we will request (clamped to USB_PD_VMAX).
 static uint8_t requested_index = 0;
-// Last voltage we believe is negotiated, in volts.
-static uint8_t negotiated_voltage = 5;
+// Last voltage we believe is negotiated, in volts. Starts at 0 (= "not yet negotiated") so
+// preStartChecks() holds the heater off until power_check() confirms a live contract.
+static uint8_t negotiated_voltage = 0;
 
 static uint8_t voltage_to_index(uint8_t volts) {
   uint8_t best = 0;
@@ -176,7 +177,9 @@ void ch224q_init(void) {
   SOFT_SDA_HIGH();
   requested_index = voltage_to_index(USB_PD_VMAX);
   ch224q_write_reg(CH224Q_REG_VSEL, requested_index);
-  negotiated_voltage = ch224q_voltage_table[requested_index];
+  // do NOT assume the request succeeded here: leave negotiated_voltage at 0 until power_check()
+  // confirms a live contract via the status register. otherwise preStartChecks() would skip its
+  // PD-settle wait and start heating while the rail is still at the 5V default.
 #endif
 }
 
@@ -193,15 +196,19 @@ void power_check() {
   // Re-assert the desired PDO if the negotiated voltage looks wrong (contract dropped).
   uint8_t status = 0;
   if (ch224q_read_reg(CH224Q_REG_STATUS, &status)) {
-    // A zeroed status register indicates no live contract; re-request our voltage.
     if (status == 0) {
+      // no live contract: re-request and report the conservative 5V USB default.
       ch224q_write_reg(CH224Q_REG_VSEL, requested_index);
+      negotiated_voltage = 5;
+    } else {
+      // a non-zero status means the source accepted a PDO; trust the requested voltage.
+      negotiated_voltage = ch224q_voltage_table[requested_index];
     }
   } else {
-    // Bus error: re-assert blindly.
+    // bus error: re-assert blindly and stay on the conservative 5V assumption.
     ch224q_write_reg(CH224Q_REG_VSEL, requested_index);
+    negotiated_voltage = 5;
   }
-  negotiated_voltage = ch224q_voltage_table[requested_index];
 #endif
 #endif
 }
