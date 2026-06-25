@@ -132,8 +132,9 @@ uint16_t getTipRawTemp(uint8_t refresh) {
 // SYSCLK_SRC/SYSCLK_FREQ defines and relocated VTOR (VECT_TAB_OFFSET=0x5000).
 // Here we only enable the peripheral clocks and program the NVIC.
 static void Clock_Config_NVIC(void) {
-  // GPIO ports + AFIO live on APB2.
-  RCC_EnableAPB2PeriphClk(RCC_APB2_PERIPH_GPIOA | RCC_APB2_PERIPH_GPIOB | RCC_APB2_PERIPH_GPIOD | RCC_APB2_PERIPH_AFIO | RCC_APB2_PERIPH_TIM1 | RCC_APB2_PERIPH_SPI1, ENABLE);
+  // GPIO ports + TIM1 + SPI1 live on APB2. (AFIO is not needed: no EXTI/remap is used, and SPI/TIM
+  // alternate functions are selected per-pin via GPIO_InitPeripheral's AFL/AFH writes.)
+  RCC_EnableAPB2PeriphClk(RCC_APB2_PERIPH_GPIOA | RCC_APB2_PERIPH_GPIOB | RCC_APB2_PERIPH_GPIOD | RCC_APB2_PERIPH_TIM1 | RCC_APB2_PERIPH_SPI1, ENABLE);
   // Heater carrier (TIM2) and the ADC-schedule timer (TIM4) live on APB1.
   RCC_EnableAPB1PeriphClk(RCC_APB1_PERIPH_TIM2 | RCC_APB1_PERIPH_TIM4, ENABLE);
   // ADC and DMA live on AHB.

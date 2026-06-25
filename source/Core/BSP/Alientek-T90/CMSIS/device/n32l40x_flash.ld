@@ -31,7 +31,7 @@
 ENTRY(Reset_Handler)
 
 /* Highest address of the user mode stack */
-_estack = 0x20006000;    /* end of RAM (T90 N32L403 = 24K SRAM; confirmed by factory/msdmem SP=0x20006000) */
+_estack = 0x20005000;    /* top of stack. factory firmware uses SP=0x20004CE8 (~20K); SP=0x20006000 (24K) faults on this part. keep stack within proven-real SRAM. */
 
 /* Generate a link error if heap and stack don't fit into RAM */
 _Min_Heap_Size = 0x200;      /* required amount of heap  */
@@ -41,7 +41,7 @@ _Min_Stack_Size = 0x800; /* required amount of stack */
 MEMORY
 {
 FLASH (rx)      : ORIGIN = 0x08005000, LENGTH = 104K /* 128K die - 20K(0x5000) bootloader - 2K settings - 2K logo (T90 app base) */
-RAM (xrw)      : ORIGIN = 0x20000000, LENGTH = 24K /* T90 N32L403 SRAM (confirmed via factory/msdmem SP=0x20006000) */
+RAM (xrw)      : ORIGIN = 0x20000000, LENGTH = 20K /* T90 N32L403 SRAM ~20K (factory SP=0x20004CE8; SDK 32K default is family-generic) */
 }
 
 /* Define output sections */
@@ -53,6 +53,19 @@ SECTIONS
     . = ALIGN(4);
     KEEP(*(.isr_vector)) /* Startup code */
     . = ALIGN(4);
+  } >FLASH
+
+  /* --- T90 HID-bootloader app-validity gate (reverse-engineered) ---
+     The Alientek T90 update-mode bootloader refuses to jump to the application
+     unless the 8 bytes at app offset 0x800 (absolute 0x08005800) match the exact
+     pattern present in the factory firmware: 00 00 00 00 00 FF FF FF. It is the
+     only thing the bootloader validates before booting; without it the iron stays
+     stuck in update mode. Reserve that fixed location with the required bytes;
+     all IronOS code/rodata is placed after it. */
+  .boot_sig (ORIGIN(FLASH) + 0x800) :
+  {
+    BYTE(0x00) BYTE(0x00) BYTE(0x00) BYTE(0x00)
+    BYTE(0x00) BYTE(0xFF) BYTE(0xFF) BYTE(0xFF)
   } >FLASH
 
   /* The program code and other data goes into FLASH */

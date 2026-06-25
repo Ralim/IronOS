@@ -218,8 +218,9 @@ static void gc9_run_init_sequence(void) {
 // ---------------------------------------------------------------------------
 
 static void gc9_init_hw(void) {
-  // Clocks: GPIOA/GPIOB/GPIOD + SPI1 all live on APB2.
-  RCC_EnableAPB2PeriphClk(RCC_APB2_PERIPH_GPIOA | RCC_APB2_PERIPH_GPIOB | RCC_APB2_PERIPH_GPIOD | RCC_APB2_PERIPH_SPI1 | RCC_APB2_PERIPH_AFIO, ENABLE);
+  // Clocks: GPIOA/GPIOB/GPIOD + SPI1 all live on APB2. (AFIO is not needed for SPI AF on the
+  // N32L40x: GPIO_InitPeripheral writes the per-pin AFL/AFH registers directly.)
+  RCC_EnableAPB2PeriphClk(RCC_APB2_PERIPH_GPIOA | RCC_APB2_PERIPH_GPIOB | RCC_APB2_PERIPH_GPIOD | RCC_APB2_PERIPH_SPI1, ENABLE);
 
   GPIO_InitType io;
   GPIO_InitStruct(&io);

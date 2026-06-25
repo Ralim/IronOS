@@ -165,8 +165,12 @@ void unstick_I2C() {
 #endif
 }
 
-uint8_t getButtonA() { return GPIO_ReadInputDataBit(KEY_A_GPIO_Port, KEY_A_Pin) == Bit_RESET ? 1 : 0; }
-uint8_t getButtonB() { return GPIO_ReadInputDataBit(KEY_B_GPIO_Port, KEY_B_Pin) == Bit_RESET ? 1 : 0; }
+// The T90 panel is mounted rotated 180 deg from the reference orientation (handle pointing up, which
+// is the comfortable right-hand grip), so the two physical keys sit opposite the firmware's A/B
+// convention. Map logical button A (front, the "+"/increase key) to the physically-upper key on PB4
+// and logical button B (back, the "-"/decrease key) to PA15, so +/- match their on-screen meaning.
+uint8_t getButtonA() { return GPIO_ReadInputDataBit(KEY_B_GPIO_Port, KEY_B_Pin) == Bit_RESET ? 1 : 0; }
+uint8_t getButtonB() { return GPIO_ReadInputDataBit(KEY_A_GPIO_Port, KEY_A_Pin) == Bit_RESET ? 1 : 0; }
 
 void BSPInit(void) {
   switchToFastPWM();
