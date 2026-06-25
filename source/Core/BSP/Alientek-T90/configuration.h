@@ -158,8 +158,12 @@
 // No HAS_POWER_DEBUG_MENU: the CH224Q exposes no PDO/source introspection (only a negotiated
 // voltage + status byte), so there is no showPDDebug() implementation for POW_PD_EXT==3.
 #define TEMP_NTC       // Cold-junction is an NTC on PA3
-#define NO_ACCEL       // No accelerometer/movement sensor on the T90 (PA13/PA14 are a model strap)
 #define CH224_SOFT_I2C // Software (bit-bang) I2C for the CH224Q PD chip on PB6/PB7
+// QST QMA6100P accelerometer shares the soft-I2C bus (PB6/PB7) with the CH224Q.
+// I2CBB2 is the soft-I2C class; the accelerometer framework talks to it via ACCEL_I2CBB2.
+#define ACCEL_QMA      // Enable the QMA6100P accelerometer driver
+#define ACCEL_I2CBB2   // Accelerometer lives on the I2CBB2 soft-I2C bus
+#define I2C_SOFT_BUS_2 // Compile the I2CBB2 soft-I2C class
 #define FILTER_DISPLAYED_TIP_TEMP 4 // Filtering for GUI display
 
 // T245 cartridges cap lower than the Core default. Cap the user-selectable setpoint via MAX_TEMP_C/F

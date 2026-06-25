@@ -15,7 +15,9 @@
 #include "Pins.h"
 #include "configuration.h"
 #include "n32l40x.h"
-#ifdef CH224_SOFT_I2C
+// The CH224Q PD chip (CH224_SOFT_I2C) and the QMA6100P accelerometer (I2C_SOFT_BUS_2 via I2CBB2)
+// share this single soft-I2C bus on PB6/PB7, so expose the macros for either consumer.
+#if defined(CH224_SOFT_I2C) || defined(I2C_SOFT_BUS_2)
 
 #define SOFT_SCL2_HIGH() GPIO_SetBits(SCL2_GPIO_Port, SCL2_Pin)
 #define SOFT_SCL2_LOW()  GPIO_ResetBits(SCL2_GPIO_Port, SCL2_Pin)
