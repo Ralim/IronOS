@@ -180,13 +180,25 @@ void OLED::drawChar(const uint16_t charCode, const FontStyle fontStyle, const ui
     index       = 0;
     switch (fontStyle) {
     case FontStyle::SMALL:
+      // 128x32 panels use the larger Terminus 8x16 small font.
+#ifdef OLED_128x32
+      fontHeight = 16;
+      fontWidth  = 8;
+#else
       fontHeight = 8;
       fontWidth  = 6;
+#endif
       break;
     case FontStyle::LARGE:
     default:
+      // 128x32 panels use the larger Terminus 12x24 large font.
+#ifdef OLED_128x32
+      fontHeight = 24;
+      fontWidth  = 12;
+#else
       fontHeight = 16;
       fontWidth  = 12;
+#endif
       break;
     }
     if (charCode == '\x01' && cursor_y == 0) { // 0x01 is used as new line char
@@ -201,7 +213,33 @@ void OLED::drawChar(const uint16_t charCode, const FontStyle fontStyle, const ui
     break;
   }
   const uint8_t *charPointer = currentFont + ((fontWidth * (fontHeight / 8)) * index);
-  drawArea(cursor_x, cursor_y, fontWidth, fontHeight, charPointer);
+  const uint8_t  shift       = cursor_y & 7;
+  if (shift == 0) {
+    drawArea(cursor_x, cursor_y, fontWidth, fontHeight, charPointer);
+  } else {
+    // y is not strip-aligned: shift each column across strips so a glyph can be
+    // vertically centred (e.g. a 24px large readout at y=4 on a 32px panel).
+    const uint8_t srcStrips = fontHeight / 8;
+    const int16_t baseStrip = cursor_y / 8;
+    for (uint8_t col = 0; col < fontWidth; col++) {
+      const int16_t x = cursor_x + col;
+      if (x < 0 || x >= OLED_WIDTH) {
+        continue;
+      }
+      uint32_t bits = 0;
+      for (uint8_t s = 0; s < srcStrips; s++) {
+        bits |= (uint32_t)charPointer[(s * fontWidth) + col] << (8 * s);
+      }
+      bits <<= shift;
+      for (uint8_t s = 0; s <= srcStrips; s++) {
+        const int16_t destStrip = baseStrip + s;
+        if (destStrip < 0 || destStrip >= (OLED_HEIGHT / 8)) {
+          continue;
+        }
+        stripPointers[destStrip][x] = (bits >> (8 * s)) & 0xFF;
+      }
+    }
+  }
   cursor_x += fontWidth;
 }
 
