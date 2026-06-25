@@ -111,7 +111,7 @@ def write_start(f: TextIO):
     )
     f.write("\n")
     f.write('#include "Translation.h"\n')
-    # configuration.h defines OLED_128x32, which selects the larger font tables
+    # configuration.h defines MODEL_TS101, which selects the larger Terminus font tables
     f.write('#include "configuration.h"\n')
 
 
@@ -200,7 +200,7 @@ def get_power_source_list() -> List[str]:
     ]
 
 
-# On 128x32 panels the scrolling menu descriptions are drawn with the small
+# On the TS101 the scrolling menu descriptions are drawn with the small
 # (Terminus 8x16) font instead of the large one, so they must be ranked and
 # encoded against the small font. Set from the build macros in main().
 DESCRIPTIONS_USE_SMALL_FONT = False
@@ -855,10 +855,10 @@ def render_font_block(data: LanguageData, f: TextIO, compress_font: bool = False
     )
 
     if not compress_font:
-        # On 128x32 the SMALL/LARGE fonts are the larger Terminus 8x16/12x24;
-        # on smaller panels they are the original hand-drawn 6x8/12x16. Same
+        # On the TS101 the SMALL/LARGE fonts are the larger Terminus 8x16/12x24;
+        # on every other model they are the original hand-drawn 6x8/12x16. Same
         # array names so FontSectionInfo is unchanged.
-        f.write("#ifdef OLED_128x32\n")
+        f.write("#ifdef MODEL_TS101\n")
         f.write(
             make_terminus_table_cpp("USER_FONT_12", "12x24", data.large_text_symbols)
         )
@@ -875,7 +875,7 @@ def render_font_block(data: LanguageData, f: TextIO, compress_font: bool = False
                 large_font_symbol_conversion_table,
             )
         )
-        f.write("#endif /* OLED_128x32 */\n")
+        f.write("#endif /* MODEL_TS101 */\n")
         f.write(
             "const FontSection FontSectionInfo = {\n"
             "    .font12_start_ptr = USER_FONT_12,\n"
@@ -891,9 +891,9 @@ def render_font_block(data: LanguageData, f: TextIO, compress_font: bool = False
         def emit_compressed(name: str, data_bytes: bytes) -> None:
             write_bytes_as_c_array(f, name, brieflz.compress(data_bytes))
 
-        # 128x32 uses Terminus 8x16/12x24; smaller panels use the hand-drawn fonts.
+        # TS101 uses Terminus 8x16/12x24; every other model uses the hand-drawn fonts.
         # Same array/buffer names so FontSectionInfo is unchanged (sizes via sizeof).
-        f.write("#ifdef OLED_128x32\n")
+        f.write("#ifdef MODEL_TS101\n")
         t12 = terminus_block_bytes("12x24", data.large_text_symbols)
         t06 = terminus_block_bytes("8x16", data.small_text_symbols)
         emit_compressed("font_12x16_brieflz", t12)
@@ -911,7 +911,7 @@ def render_font_block(data: LanguageData, f: TextIO, compress_font: bool = False
         emit_compressed("font_06x08_brieflz", bytes(h06))
         f.write(f"static uint8_t font12_out_buffer[{len(h12)}];\n")
         f.write(f"static uint8_t font06_out_buffer[{len(h06)}];\n")
-        f.write("#endif /* OLED_128x32 */\n")
+        f.write("#endif /* MODEL_TS101 */\n")
 
         f.write(
             "const FontSection FontSectionInfo = {\n"
@@ -1033,7 +1033,7 @@ def write_languages(
     ]
 
     f.write('#include "Translation_multi.h"\n')
-    # configuration.h defines OLED_128x32, which selects the larger font tables
+    # configuration.h defines MODEL_TS101, which selects the larger Terminus font tables
     f.write('#include "configuration.h"')
 
     f.write(f"\n// ---- {lang_names} ----\n\n")
@@ -1553,7 +1553,10 @@ def main() -> None:
     )
 
     global DESCRIPTIONS_USE_SMALL_FONT
-    DESCRIPTIONS_USE_SMALL_FONT = "OLED_128x32" in macros
+    # The Terminus fonts (and the small-font menu descriptions that go with them)
+    # are TS101-only: every other model keeps the compact hand-drawn fonts. See
+    # render_font_block() for the matching #ifdef on the generated tables.
+    DESCRIPTIONS_USE_SMALL_FONT = "MODEL_TS101" in macros
 
     language_data: LanguageData
     if args.input_pickled:
