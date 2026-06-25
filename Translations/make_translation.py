@@ -425,8 +425,18 @@ def get_cjk_glyph(sym: str) -> Optional[bytes]:
 # --- Terminus fonts: become SMALL (8x16) and LARGE (12x24) on 128x32 panels ---
 # (path, cell width, cell height, font ascent)
 TERMINUS_FONTS = {
-    "8x16": ("terminus/ter-u16n.bdf", 8, 16, 12),   # regular weight for the small/status font
-    "12x24": ("terminus/ter-u24b.bdf", 12, 24, 19), # bold weight for the large/readout font
+    "8x16": (
+        "terminus/ter-u16n.bdf",
+        8,
+        16,
+        12,
+    ),  # regular weight for the small/status font
+    "12x24": (
+        "terminus/ter-u24b.bdf",
+        12,
+        24,
+        19,
+    ),  # bold weight for the large/readout font
 }
 _terminus_cache: Dict[str, Font] = {}
 
@@ -476,7 +486,9 @@ def get_terminus_bytes(sym: str, size: str) -> bytes:
 def make_terminus_table_cpp(name: str, size: str, sym_list: List[str]) -> str:
     out = f"const uint8_t {name}[] = {{\n"
     for i, sym in enumerate(sym_list):
-        out += f"{bytes_to_c_hex(get_terminus_bytes(sym, size))}//0x{i + 2:X} -> {sym}\n"
+        out += (
+            f"{bytes_to_c_hex(get_terminus_bytes(sym, size))}//0x{i + 2:X} -> {sym}\n"
+        )
     out += f"}}; // {name}\n"
     return out
 
@@ -847,8 +859,12 @@ def render_font_block(data: LanguageData, f: TextIO, compress_font: bool = False
         # on smaller panels they are the original hand-drawn 6x8/12x16. Same
         # array names so FontSectionInfo is unchanged.
         f.write("#ifdef OLED_128x32\n")
-        f.write(make_terminus_table_cpp("USER_FONT_12", "12x24", data.large_text_symbols))
-        f.write(make_terminus_table_cpp("USER_FONT_6x8", "8x16", data.small_text_symbols))
+        f.write(
+            make_terminus_table_cpp("USER_FONT_12", "12x24", data.large_text_symbols)
+        )
+        f.write(
+            make_terminus_table_cpp("USER_FONT_6x8", "8x16", data.small_text_symbols)
+        )
         f.write("#else\n")
         f.write(
             make_font_table_cpp(
@@ -1204,7 +1220,9 @@ def get_translation_strings_and_indices_text(
         force_small_text: bool = False,
     ):
         encoded_data: bytes
-        if force_small_text or (force_large_text is False and test_is_small_font(message)):
+        if force_small_text or (
+            force_large_text is False and test_is_small_font(message)
+        ):
             encoded_data = convert_string_bytes(
                 small_font_symbol_conversion_table, message
             )
