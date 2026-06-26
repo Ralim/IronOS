@@ -200,7 +200,7 @@ def get_power_source_list() -> List[str]:
     ]
 
 
-# On the TS101 the scrolling menu descriptions are drawn with the small
+# On 128x32 panels the scrolling menu descriptions are drawn with the small
 # (Terminus 8x16) font instead of the large one, so they must be ranked and
 # encoded against the small font. Set from the build macros in main().
 DESCRIPTIONS_USE_SMALL_FONT = False
@@ -208,6 +208,64 @@ DESCRIPTIONS_USE_SMALL_FONT = False
 
 def test_is_small_font(msg: str) -> bool:
     return "\n" in msg and msg[0] != "\n"
+
+
+@functools.lru_cache(maxsize=None)
+def small_font_chars() -> frozenset:
+    """The set of characters that have a glyph in the small (6x8) font.
+
+    The small font only covers ASCII/Latin-Extended/Cyrillic/Greek; CJK glyphs
+    are rendered into the large (12x16) font exclusively. Used to decide whether
+    a message can be drawn in the small font at all.
+    """
+    chars: set = set()
+    for font in font_tables.ALL_PRE_RENDERED_FONTS:
+        _, font06 = font_tables.get_font_maps_for_name(font)
+        chars.update(font06.keys())
+    return frozenset(chars)
+
+
+@functools.lru_cache(maxsize=None)
+def large_font_chars() -> frozenset:
+    """The set of characters that have a glyph in the pre-rendered large font.
+
+    Covers ASCII/Latin-Extended/Cyrillic/Greek. Any other glyph in a language
+    can only come from the WenQuanYi CJK font, so a large-font symbol outside
+    this set is what marks a language as CJK (see language_uses_cjk).
+    """
+    chars: set = set()
+    for font in font_tables.ALL_PRE_RENDERED_FONTS:
+        font12, _ = font_tables.get_font_maps_for_name(font)
+        chars.update(font12.keys())
+    return frozenset(chars)
+
+
+def language_uses_cjk(large_text_symbols: List[str]) -> bool:
+    """Whether a language needs CJK glyphs (i.e. the WenQuanYi font).
+
+    True if any large-font symbol is not covered by the pre-rendered fonts;
+    such glyphs come only from the CJK font. Note get_cjk_glyph can't be used
+    here as that font also contains ASCII glyphs.
+    """
+    prerendered = large_font_chars()
+    return any(sym not in prerendered for sym in large_text_symbols)
+
+
+def description_uses_small_font(msg: str) -> bool:
+    """Whether a menu description should be encoded/ranked in the small font.
+
+    Only when the small-font descriptions feature is enabled (128x32 panels)
+    AND every glyph in the message exists in the small font. CJK languages have
+    descriptions whose glyphs only exist in the large (12x16) font, so those
+    must stay in the large font or font generation fails. Both the symbol-set
+    ranking and the string encoding must use this same decision per message.
+    """
+    if not DESCRIPTIONS_USE_SMALL_FONT:
+        return False
+    stripped = (
+        msg.replace("\\n", "").replace("\\r", "").replace("\n", "").replace("\r", "")
+    )
+    return all(c in small_font_chars() for c in stripped)
 
 
 def get_letter_counts(defs: dict, lang: dict, build_version: str) -> Dict:
@@ -258,7 +316,7 @@ def get_letter_counts(defs: dict, lang: dict, build_version: str) -> Dict:
     for mod in defs["menuOptions"]:
         eid = mod["id"]
         msg = obj[eid]["description"]
-        if DESCRIPTIONS_USE_SMALL_FONT:
+        if description_uses_small_font(msg):
             small_font_messages.append(msg)
         else:
             big_font_messages.append(msg)
@@ -285,7 +343,7 @@ def get_letter_counts(defs: dict, lang: dict, build_version: str) -> Dict:
     for mod in defs["menuGroups"]:
         eid = mod["id"]
         msg = obj[eid]["description"]
-        if DESCRIPTIONS_USE_SMALL_FONT:
+        if description_uses_small_font(msg):
             small_font_messages.append(msg)
         else:
             big_font_messages.append(msg)
@@ -844,6 +902,24 @@ def prepare_languages(
     )
 
 
+def terminus_gate_expr(data: LanguageData) -> str:
+    """The #if expression that selects the Terminus fonts for this language.
+
+    Terminus is larger than the hand-drawn fonts, so it only fits where there is
+    enough flash:
+      * CJK languages need the large WenQuanYi glyphs on top, which only fit
+        alongside Terminus on the TS101 (66 KB ROM); every other 128x32 model
+        falls back to the hand-drawn fonts.
+      * Non-CJK languages get Terminus on the roomier 128x32 panels, but NOT on
+        the S60P (42 KB ROM vs 45 KB on S60/T55): there the larger alphabets
+        (Greek, Cyrillic) overflow ROM, and the margins are too thin to gate per
+        language reliably, so the S60P keeps the hand-drawn fonts throughout.
+    """
+    if language_uses_cjk(data.large_text_symbols):
+        return "defined(MODEL_TS101)"
+    return "defined(OLED_128x32) && !defined(MODEL_S60P)"
+
+
 def render_font_block(data: LanguageData, f: TextIO, compress_font: bool = False):
     font_map = data.font_map
 
@@ -854,11 +930,14 @@ def render_font_block(data: LanguageData, f: TextIO, compress_font: bool = False
         data.large_text_symbols
     )
 
+    gate = terminus_gate_expr(data)
+
     if not compress_font:
-        # On the TS101 the SMALL/LARGE fonts are the larger Terminus 8x16/12x24;
-        # on every other model they are the original hand-drawn 6x8/12x16. Same
-        # array names so FontSectionInfo is unchanged.
-        f.write("#ifdef MODEL_TS101\n")
+        # On 128x32 panels the SMALL/LARGE fonts are the larger Terminus
+        # 8x16/12x24; on every other model (and CJK languages on flash-
+        # constrained 128x32 models) they are the original hand-drawn 6x8/12x16.
+        # Same array names so FontSectionInfo is unchanged.
+        f.write(f"#if {gate}\n")
         f.write(
             make_terminus_table_cpp("USER_FONT_12", "12x24", data.large_text_symbols)
         )
@@ -875,7 +954,7 @@ def render_font_block(data: LanguageData, f: TextIO, compress_font: bool = False
                 large_font_symbol_conversion_table,
             )
         )
-        f.write("#endif /* MODEL_TS101 */\n")
+        f.write(f"#endif /* {gate} */\n")
         f.write(
             "const FontSection FontSectionInfo = {\n"
             "    .font12_start_ptr = USER_FONT_12,\n"
@@ -891,9 +970,10 @@ def render_font_block(data: LanguageData, f: TextIO, compress_font: bool = False
         def emit_compressed(name: str, data_bytes: bytes) -> None:
             write_bytes_as_c_array(f, name, brieflz.compress(data_bytes))
 
-        # TS101 uses Terminus 8x16/12x24; every other model uses the hand-drawn fonts.
+        # 128x32 panels use Terminus 8x16/12x24; every other model (and CJK
+        # languages on flash-constrained 128x32 models) use the hand-drawn fonts.
         # Same array/buffer names so FontSectionInfo is unchanged (sizes via sizeof).
-        f.write("#ifdef MODEL_TS101\n")
+        f.write(f"#if {gate}\n")
         t12 = terminus_block_bytes("12x24", data.large_text_symbols)
         t06 = terminus_block_bytes("8x16", data.small_text_symbols)
         emit_compressed("font_12x16_brieflz", t12)
@@ -911,7 +991,7 @@ def render_font_block(data: LanguageData, f: TextIO, compress_font: bool = False
         emit_compressed("font_06x08_brieflz", bytes(h06))
         f.write(f"static uint8_t font12_out_buffer[{len(h12)}];\n")
         f.write(f"static uint8_t font06_out_buffer[{len(h06)}];\n")
-        f.write("#endif /* MODEL_TS101 */\n")
+        f.write(f"#endif /* {gate} */\n")
 
         f.write(
             "const FontSection FontSectionInfo = {\n"
@@ -1237,11 +1317,12 @@ def get_translation_strings_and_indices_text(
     for index, record in enumerate(defs["menuOptions"]):
         lang_data = lang["menuOptions"][record["id"]]
         # Add to translations the menu text and the description
+        use_small = description_uses_small_font(lang_data["description"])
         encode_string_and_add(
             lang_data["description"],
             "menuOptions" + record["id"] + "description",
-            force_large_text=not DESCRIPTIONS_USE_SMALL_FONT,
-            force_small_text=DESCRIPTIONS_USE_SMALL_FONT,
+            force_large_text=not use_small,
+            force_small_text=use_small,
         )
         encode_string_and_add(
             lang_data["displayText"], "menuOptions" + record["id"] + "displayText"
@@ -1256,11 +1337,12 @@ def get_translation_strings_and_indices_text(
     for index, record in enumerate(defs["menuGroups"]):
         lang_data = lang["menuGroups"][record["id"]]
         # Add to translations the menu text and the description
+        use_small = description_uses_small_font(lang_data["description"])
         encode_string_and_add(
             lang_data["description"],
             "menuGroups" + record["id"] + "description",
-            force_large_text=not DESCRIPTIONS_USE_SMALL_FONT,
-            force_small_text=DESCRIPTIONS_USE_SMALL_FONT,
+            force_large_text=not use_small,
+            force_small_text=use_small,
         )
         encode_string_and_add(
             lang_data["displayText"], "menuGroups" + record["id"] + "displayText"
@@ -1553,10 +1635,13 @@ def main() -> None:
     )
 
     global DESCRIPTIONS_USE_SMALL_FONT
-    # The Terminus fonts (and the small-font menu descriptions that go with them)
-    # are TS101-only: every other model keeps the compact hand-drawn fonts. See
-    # render_font_block() for the matching #ifdef on the generated tables.
-    DESCRIPTIONS_USE_SMALL_FONT = "MODEL_TS101" in macros
+    # The Terminus fonts and the small-font menu descriptions that go with them
+    # are enabled on every 128x32 panel; non-128x32 models keep the compact
+    # hand-drawn fonts and large descriptions. CJK descriptions always fall back
+    # to the large font (see description_uses_small_font), and CJK glyphs on the
+    # flash-constrained 128x32 models (S60/S60P/T55) fall back to the hand-drawn
+    # fonts entirely (see the per-language gate in render_font_block).
+    DESCRIPTIONS_USE_SMALL_FONT = "OLED_128x32" in macros
 
     language_data: LanguageData
     if args.input_pickled:
