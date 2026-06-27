@@ -21,25 +21,36 @@
 #define KEY_B_Pin       GPIO_PIN_4
 #define KEY_B_GPIO_Port GPIOB
 
-// --- Tip thermocouple (external op-amp -> PA4, ADC ch5, injected group / PID input) ---
-#define TIP_TEMP_Pin         GPIO_PIN_4
+// ADC channel<->pin convention on the N32L40x (from n32l40x_adc.h): channel N reads PA(N-1),
+// i.e. ADC_CH_2_PA1=ch2->PA1, ADC_CH_3_PA2=ch3->PA2, ADC_CH_4_PA3=ch4->PA3, ADC_CH_5_PA4=ch5->PA4,
+// ADC_CH_6_PA5=ch6->PA5. The stock firmware's RE'd channel table (dword_801651C) uses physical
+// channels Vin=ch2, NTC=ch3, TIP=ch4, current=ch5, spare=ch6 with the analog pins PA1..PA5. The
+// earlier pinmap mis-applied a ch_n=PA_n convention and shifted every analog signal up by one pad,
+// so "Vin" actually sampled the NTC node, "TIP" sampled the current shunt (bogus temperature ->
+// full-power runaway), and the real Vin pin (PA1) was never even configured. Corrected below.
+
+// --- Tip thermocouple (external op-amp -> PA3, ADC ch4, injected group / PID input) ---
+#define TIP_TEMP_Pin         GPIO_PIN_3
 #define TIP_TEMP_GPIO_Port   GPIOA
-#define TIP_TEMP_ADC_CHANNEL ADC_CH_5_PA4
+#define TIP_TEMP_ADC_CHANNEL ADC_CH_4_PA3
 
-// --- Cold-junction NTC (PA3, ADC ch4). Reuses the TMP36/cold-junction vocabulary. ---
-#define TMP36_INPUT_Pin       GPIO_PIN_3
+// --- Cold-junction NTC (PA2, ADC ch3). Reuses the TMP36/cold-junction vocabulary. ---
+#define TMP36_INPUT_Pin       GPIO_PIN_2
 #define TMP36_INPUT_GPIO_Port GPIOA
-#define TMP36_ADC_CHANNEL     ADC_CH_4_PA3
+#define TMP36_ADC_CHANNEL     ADC_CH_3_PA2
 
-// --- Input supply voltage (PA2, ADC ch3, via ~10:1 divider) ---
-#define VIN_Pin         GPIO_PIN_2
+// --- Input supply voltage (PA1, ADC ch2, via ~10:1 divider) ---
+#define VIN_Pin         GPIO_PIN_1
 #define VIN_GPIO_Port   GPIOA
-#define VIN_ADC_CHANNEL ADC_CH_3_PA2
+#define VIN_ADC_CHANNEL ADC_CH_2_PA1
 
-// --- Tip / output current sense (PA5, ADC ch6, via shunt). No Sequre equivalent. ---
-#define CURRENT_Pin         GPIO_PIN_5
+// --- Output current sense (PA4, ADC ch5 = factory current node). RESERVED: configured as analog by
+// MX_GPIO_Init for completeness but not sampled by IronOS (tip-presence uses the idle-temperature test
+// in BSP.cpp, not this node). ch6/PA5 reads a constant 0 (dead/spare). Kept here to document the
+// front-end and as the hook for a future live current/power readout. ---
+#define CURRENT_Pin         GPIO_PIN_4
 #define CURRENT_GPIO_Port   GPIOA
-#define CURRENT_ADC_CHANNEL ADC_CH_6_PA5
+#define CURRENT_ADC_CHANNEL ADC_CH_5_PA4
 
 // --- Heater drive: PA0 = TIM2_CH1, direct AF to the MOSFET gate ---
 #define PWM_Out_Pin       GPIO_PIN_0

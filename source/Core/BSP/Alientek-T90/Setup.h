@@ -15,7 +15,7 @@ extern "C" {
 #include "n32l40x.h"
 #include <stdint.h>
 
-// Bring up clocks, GPIO, ADC (injected tip group + regular Vin/NTC/current),
+// Bring up clocks, GPIO, ADC (injected tip group + regular Vin/NTC),
 // TIM2 heater PWM carrier, TIM4 ADC-schedule timer, NVIC and the watchdog.
 void Setup_HAL(void);
 

@@ -14,20 +14,30 @@
  *   - The ADC injected-EOC IRQ (ADC_IRQHandler, IRQ.cpp) notifies the PID task.
  */
 #include "BSP.h"
+#include "FreeRTOS.h"
 #include "Pins.h"
 #include "Setup.h"
 #include "configuration.h"
 #include "history.hpp"
 #include "n32l40x.h"
+#include "semphr.h"
+#include "task.h"
 #include <stdint.h>
 #include <string.h>
 
 #define ADC_FILTER_LEN 4
 
-// Bounded spins on ADC hardware flags so a wedged ADC can never hang the PID thread (it would
-// otherwise stop feeding the safety timer -> heater off -> watchdog reset, but a bounded loop is
-// cleaner). ~100k iterations is far longer than any real conversion at the 8 MHz ADC clock.
-#define ADC_POLL_TIMEOUT 100000U
+// The single ADC's regular group is reconfigured + software-started on demand by readRegularChannel,
+// which is called from BOTH the PID thread (Vin ch2) and the GUI thread (NTC ch3). Without
+// serialisation those reads race: one thread re-points the regular rank while another is mid-conversion,
+// so a caller gets a different channel's value. This mutex makes each select+convert+read atomic.
+static StaticSemaphore_t adcRegularMutexBuffer;        // FreeRTOS here is static-allocation only
+static SemaphoreHandle_t adcRegularMutex = NULL;
+
+// Bounded spins on ADC hardware flags so a wedged ADC can never hang the PID thread. A real 71.5-cycle
+// conversion at the 8 MHz ADC clock finishes in a few hundred iterations; keep the bound small so the
+// regular-read mutex (held across the poll) can never stall the PID safety path for long.
+#define ADC_POLL_TIMEOUT 5000U
 
 // Heater PWM carrier (TIM2 on APB1, timer clock 32 MHz at 64 MHz SYSCLK).
 // Prescaler 0, ARR 1066 -> 32 MHz / 1067 ~= 30 kHz. CCR range 0..1066.
@@ -39,7 +49,12 @@
 // Prescaler 2000 -> 16 kHz tick; ARR = totalPWM -> ~56 Hz schedule / ADC rate.
 #define SCHEDULE_TIM_PRESCALER 1999
 static const uint16_t tempMeasureTicks = 15;
-static const uint16_t holdoffTicks     = 15;
+// Settling holdoff (TIM4 ticks, 62.5us each) between the heater blanking (TIM4 UPDATE) and the
+// injected tip sample (OC2REF->TRGO at this count). The high-impedance thermocouple op-amp needs
+// ~ms to recover after the heater switches off; sampling at the heater-off instant reads the
+// transient far too low, so the PID never converges and drives full power. ~3ms. TODO scope-tune
+// for power vs accuracy (larger = more settling but lower max heater duty).
+static const uint16_t holdoffTicks     = 48;
 
 // Globals consumed by the Core (declared extern in BSP.h).
 const uint16_t powerPWM = 255;
@@ -54,6 +69,11 @@ static void MX_TIM4_Init(void); // ADC schedule + safety IRQ
 static void MX_IWDG_Init(void);
 
 void Setup_HAL(void) {
+  // Created before the scheduler starts (single-threaded here), so readRegularChannel can serialise
+  // the cross-thread ADC access once tasks are running.
+  if (adcRegularMutex == NULL) {
+    adcRegularMutex = xSemaphoreCreateMutexStatic(&adcRegularMutexBuffer);
+  }
   Clock_Config_NVIC();
   MX_GPIO_Init();
   MX_ADC_Init();
@@ -69,21 +89,42 @@ void Setup_HAL(void) {
 // instead: program a length-1 regular sequence on the requested pad, software
 // start, poll end-of-conversion, return the result.
 static uint16_t readRegularChannel(uint8_t channel) {
-  ADC_ConfigInjectedSequencerLength(ADC, 4); // keep injected group intact
+  // Serialise against the other thread once the scheduler is running (mutex yields rather than
+  // disabling interrupts, so the heater schedule/safety IRQs keep firing during the ~us conversion).
+  const bool lock = (adcRegularMutex != NULL) && (xTaskGetSchedulerState() == taskSCHEDULER_RUNNING);
+  if (lock) {
+    xSemaphoreTake(adcRegularMutex, portMAX_DELAY);
+  }
+  // Only the regular sequence is reprogrammed here. The injected tip group (length + channels) is set
+  // once in MX_ADC_Init and lives in separate registers, so it stays intact without re-asserting it.
+  // Do NOT re-write the injected length on every read: that JSEQ write can abort an in-flight
+  // TIM4-triggered tip conversion (the PID-critical sample).
   ADC_ConfigRegularChannel(ADC, channel, 1, ADC_SAMP_TIME_71CYCLES5);
-  ADC_ClearFlag(ADC, ADC_FLAG_ENDC);
-  ADC_EnableSoftwareStartConv(ADC, ENABLE);
-  uint32_t to = ADC_POLL_TIMEOUT;
-  while (ADC_GetFlagStatus(ADC, ADC_FLAG_ENDC) == RESET && --to) {}
-  ADC_ClearFlag(ADC, ADC_FLAG_ENDC);
-  return ADC_GetDat(ADC);
+  // Convert twice and keep the second pass: the regular rank is re-pointed to a different pad every
+  // call, so the first conversion's sample-and-hold still carries charge from the previously selected
+  // channel (cross-channel bleed). Discarding it gives Vin/NTC a steady reading.
+  uint16_t result = 0;
+  for (uint8_t pass = 0; pass < 2; pass++) {
+    ADC_ClearFlag(ADC, ADC_FLAG_ENDC);
+    ADC_EnableSoftwareStartConv(ADC, ENABLE);
+    uint32_t to = ADC_POLL_TIMEOUT;
+    while (ADC_GetFlagStatus(ADC, ADC_FLAG_ENDC) == RESET && --to) {}
+    result = ADC_GetDat(ADC);
+  }
+  if (lock) {
+    xSemaphoreGive(adcRegularMutex);
+  }
+  return result;
 }
 
+// Averaged cold-junction NTC reading. Currently unused: getHandleTemperature() returns a fixed 38 degC
+// (the factory tip LUT is absolute, see BSP.cpp). Retained as the hardware NTC reader the live
+// cold-junction TODO will use once a reference thermometer is available; the linker GC-strips it meanwhile.
 uint16_t getADCHandleTemp(uint8_t sample) {
 #ifdef TMP36_ADC_CHANNEL
   static history<uint16_t, ADC_FILTER_LEN> filter = {{0}, 0, 0};
   if (sample) {
-    // Cold-junction NTC on PA3, one polled conversion per call, averaged. Scale the raw 12-bit
+    // Cold-junction NTC on PA2, one polled conversion per call, averaged. Scale the raw 12-bit
     // reading to the 0..32768 convention with the same <<3 as Vin, because NTCHandleLookup in
     // BSP.cpp holds 15-bit-range thresholds (without this the lookup never matches -> stuck 45C).
     uint16_t latestADC = readRegularChannel(TMP36_ADC_CHANNEL);
@@ -166,8 +207,9 @@ static void MX_GPIO_Init(void) {
   GPIO_InitType io;
   GPIO_InitStruct(&io);
 
-  // Analog inputs: tip (PA4), NTC (PA3), Vin (PA2), current (PA5).
-  io.Pin         = TIP_TEMP_Pin | TMP36_INPUT_Pin | VIN_Pin | CURRENT_Pin;
+  // Analog inputs: the stock firmware drives PA1..PA5 as the ADC front-end (Vin=PA1, NTC=PA2,
+  // tip=PA3, current=PA4, tip-detect=PA5). Configure all five as analog so every channel is valid.
+  io.Pin         = GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5;
   io.GPIO_Mode   = GPIO_Mode_Analog;
   io.GPIO_Pull   = GPIO_No_Pull;
   GPIO_InitPeripheral(GPIOA, &io);
@@ -264,10 +306,10 @@ static void MX_ADC_Init(void) {
   ADC_Init(ADC, &a);
 
   // Default regular rank (Vin); readRegularChannel() re-points this per call to
-  // Vin (PA2), NTC (PA3) or current (PA5).
+  // Vin (ch2/PA1) or NTC (ch3/PA2).
   ADC_ConfigRegularChannel(ADC, VIN_ADC_CHANNEL, 1, ADC_SAMP_TIME_71CYCLES5);
 
-  // Injected group: 4 ranks all on the tip channel (PA4) = a 4x oversample,
+  // Injected group: 4 ranks all on the tip channel (ch4/PA3) = a 4x oversample,
   // triggered by TIM4 TRGO so the sample lands in the heater-off window.
   ADC_ConfigInjectedSequencerLength(ADC, 4);
   ADC_ConfigInjectedChannel(ADC, TIP_TEMP_ADC_CHANNEL, 1, ADC_SAMP_TIME_28CYCLES5);
@@ -328,8 +370,22 @@ static void MX_TIM4_Init(void) {
   tb.RepetCnt  = 0;
   TIM_InitTimeBase(TIM4, &tb);
 
-  // Emit TRGO on each update so the ADC injected group fires once per schedule.
-  TIM_SelectOutputTrig(TIM4, TIM_TRGO_SRC_UPDATE);
+  // Phase the injected tip sample a settling holdoff AFTER the heater is blanked. The heater is
+  // blanked on the UPDATE event (counter wrap) in TIM4_IRQHandler; OC2 in PWM mode 2 raises OC2REF
+  // when the counter reaches CCR2 = holdoffTicks, and OC2REF drives TRGO -> the injected tip
+  // conversion. So the tip is sampled ~holdoffTicks*62.5us after the heater stops, once the
+  // high-impedance thermocouple front-end has settled (sampling at the heater-off instant reads the
+  // transient far too low -> PID never converges -> full-power runaway). The UPDATE interrupt still
+  // fires at the wrap and blanks the heater; only the TRGO source moves from UPDATE to OC2REF.
+  OCInitType oc;
+  TIM_InitOcStruct(&oc);
+  oc.OcMode      = TIM_OCMODE_PWM2;         // OC2REF rises when CNT reaches CCR2
+  oc.OutputState = TIM_OUTPUT_STATE_ENABLE; // generate OC2REF internally (TIM4_CH2 is not pin-routed)
+  oc.Pulse       = holdoffTicks;            // sample holdoffTicks after the wrap
+  oc.OcPolarity  = TIM_OC_POLARITY_HIGH;
+  TIM_InitOc2(TIM4, &oc);
+  TIM_ConfigOc2Preload(TIM4, TIM_OC_PRE_LOAD_DISABLE);
+  TIM_SelectOutputTrig(TIM4, TIM_TRGO_SRC_OC2REF);
   TIM_SelectMasterSlaveMode(TIM4, TIM_MASTER_SLAVE_MODE_DISABLE);
 
   // Update interrupt runs the PWM-safety decrement + heater duty write.
