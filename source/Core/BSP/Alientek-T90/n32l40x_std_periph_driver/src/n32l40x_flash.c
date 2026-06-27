@@ -146,22 +146,21 @@
  *     @arg FLASH_LATENCY_2 FLASH Two Latency cycles
  *     @arg FLASH_LATENCY_3 FLASH Three Latency cycles
  */
-void FLASH_SetLatency(uint32_t FLASH_Latency)
-{
-    uint32_t tmpregister = 0;
+void FLASH_SetLatency(uint32_t FLASH_Latency) {
+  uint32_t tmpregister = 0;
 
-    /* Check the parameters */
-    assert_param(IS_FLASH_LATENCY(FLASH_Latency));
+  /* Check the parameters */
+  assert_param(IS_FLASH_LATENCY(FLASH_Latency));
 
-    /* Read the ACR register */
-    tmpregister = FLASH->AC;
+  /* Read the ACR register */
+  tmpregister = FLASH->AC;
 
-    /* Sets the Latency value */
-    tmpregister &= AC_LATENCY_MSK;
-    tmpregister |= FLASH_Latency;
+  /* Sets the Latency value */
+  tmpregister &= AC_LATENCY_MSK;
+  tmpregister |= FLASH_Latency;
 
-    /* Write the ACR register */
-    FLASH->AC = tmpregister;
+  /* Write the ACR register */
+  FLASH->AC = tmpregister;
 }
 
 /**
@@ -172,24 +171,22 @@ void FLASH_SetLatency(uint32_t FLASH_Latency)
  *     @arg FLASH_PrefetchBuf_EN FLASH Prefetch Buffer Enable
  *     @arg FLASH_PrefetchBuf_DIS FLASH Prefetch Buffer Disable
  */
-void FLASH_PrefetchBufSet(uint32_t FLASH_PrefetchBuf)
-{
-    /* Check the parameters */
-    assert_param(IS_FLASH_PREFETCHBUF_STATE(FLASH_PrefetchBuf));
+void FLASH_PrefetchBufSet(uint32_t FLASH_PrefetchBuf) {
+  /* Check the parameters */
+  assert_param(IS_FLASH_PREFETCHBUF_STATE(FLASH_PrefetchBuf));
 
-    /* Enable or disable the Prefetch Buffer */
-    FLASH->AC &= AC_PRFTBE_MSK;
-    FLASH->AC |= FLASH_PrefetchBuf;
+  /* Enable or disable the Prefetch Buffer */
+  FLASH->AC &= AC_PRFTBE_MSK;
+  FLASH->AC |= FLASH_PrefetchBuf;
 }
 
 /**
  * @brief  ICache Reset.
  * @note   This function can be used for n32l40x devices.
  */
-void FLASH_iCacheRST(void)
-{
-    /* ICache Reset */
-    FLASH->AC |= FLASH_AC_ICAHRST;
+void FLASH_iCacheRST(void) {
+  /* ICache Reset */
+  FLASH->AC |= FLASH_AC_ICAHRST;
 }
 
 /**
@@ -200,14 +197,13 @@ void FLASH_iCacheRST(void)
  *     @arg FLASH_iCache_EN  FLASH iCache Enable
  *     @arg FLASH_iCache_DIS FLASH iCache Disable
  */
-void FLASH_iCacheCmd(uint32_t FLASH_iCache)
-{
-    /* Check the parameters */
-    assert_param(IS_FLASH_ICACHE_STATE(FLASH_iCache));
+void FLASH_iCacheCmd(uint32_t FLASH_iCache) {
+  /* Check the parameters */
+  assert_param(IS_FLASH_ICACHE_STATE(FLASH_iCache));
 
-    /* Enable or disable the iCache */
-    FLASH->AC &= AC_ICAHEN_MSK;
-    FLASH->AC |= FLASH_iCache;
+  /* Enable or disable the iCache */
+  FLASH->AC &= AC_ICAHEN_MSK;
+  FLASH->AC |= FLASH_iCache;
 }
 
 /**
@@ -218,14 +214,13 @@ void FLASH_iCacheCmd(uint32_t FLASH_iCache)
  *     @arg FLASH_LVM_EN  FLASH Low Voltage Mode Enable
  *     @arg FLASH_LVM_DIS FLASH Low Voltage Mode Disable
  */
-void FLASH_LowVoltageModeCmd(uint32_t FLASH_LVM)
-{
-    /* Check the parameters */
-    assert_param(IS_FLASH_LVM(FLASH_LVM));
+void FLASH_LowVoltageModeCmd(uint32_t FLASH_LVM) {
+  /* Check the parameters */
+  assert_param(IS_FLASH_LVM(FLASH_LVM));
 
-    /* Enable or disable LVM */
-    FLASH->AC &= AC_LVMEN_MSK;
-    FLASH->AC |= FLASH_LVM;
+  /* Enable or disable LVM */
+  FLASH->AC &= AC_LVMEN_MSK;
+  FLASH->AC |= FLASH_LVM;
 }
 
 /**
@@ -233,20 +228,16 @@ void FLASH_LowVoltageModeCmd(uint32_t FLASH_LVM)
  * @note   This function can be used for n32l40x devices.
  * @return Low Voltage Mode Status (SET or RESET).
  */
-FlagStatus FLASH_GetLowVoltageModeSTS(void)
-{
-    FlagStatus bitstatus = RESET;
+FlagStatus FLASH_GetLowVoltageModeSTS(void) {
+  FlagStatus bitstatus = RESET;
 
-    if ((FLASH->AC & AC_LVMF_MSK) != (uint32_t)RESET)
-    {
-        bitstatus = SET;
-    }
-    else
-    {
-        bitstatus = RESET;
-    }
-    /* Return the new state of FLASH Low Voltage Mode Status (SET or RESET) */
-    return bitstatus;
+  if ((FLASH->AC & AC_LVMF_MSK) != (uint32_t)RESET) {
+    bitstatus = SET;
+  } else {
+    bitstatus = RESET;
+  }
+  /* Return the new state of FLASH Low Voltage Mode Status (SET or RESET) */
+  return bitstatus;
 }
 
 /**
@@ -257,14 +248,13 @@ FlagStatus FLASH_GetLowVoltageModeSTS(void)
  *     @arg FLASH_SLM_EN  FLASH iCache Enable
  *     @arg FLASH_SLM_DIS FLASH iCache Disable
  */
-void FLASH_FLASHSleepModeCmd(uint32_t FLASH_SLM)
-{
-    /* Check the parameters */
-    assert_param(IS_FLASH_SLM(FLASH_SLM));
+void FLASH_FLASHSleepModeCmd(uint32_t FLASH_SLM) {
+  /* Check the parameters */
+  assert_param(IS_FLASH_SLM(FLASH_SLM));
 
-    /* Enable or disable SLM */
-    FLASH->AC &= AC_SLMEN_MSK;
-    FLASH->AC |= FLASH_SLM;
+  /* Enable or disable SLM */
+  FLASH->AC &= AC_SLMEN_MSK;
+  FLASH->AC |= FLASH_SLM;
 }
 
 /**
@@ -272,20 +262,16 @@ void FLASH_FLASHSleepModeCmd(uint32_t FLASH_SLM)
  * @note   This function can be used for n32l40x devices.
  * @return FLASH Sleep Mode Status (SET or RESET).
  */
-FlagStatus FLASH_GetFLASHSleepModeSTS(void)
-{
-    FlagStatus bitstatus = RESET;
+FlagStatus FLASH_GetFLASHSleepModeSTS(void) {
+  FlagStatus bitstatus = RESET;
 
-    if ((FLASH->AC & AC_SLMF_MSK) != (uint32_t)RESET)
-    {
-        bitstatus = SET;
-    }
-    else
-    {
-        bitstatus = RESET;
-    }
-    /* Return the new state of FLASH Sleep Mode Status (SET or RESET) */
-    return bitstatus;
+  if ((FLASH->AC & AC_SLMF_MSK) != (uint32_t)RESET) {
+    bitstatus = SET;
+  } else {
+    bitstatus = RESET;
+  }
+  /* Return the new state of FLASH Sleep Mode Status (SET or RESET) */
+  return bitstatus;
 }
 
 /**
@@ -293,14 +279,13 @@ FlagStatus FLASH_GetFLASHSleepModeSTS(void)
  * @note   This function can be used for n32l40x devices.
  * @param FLASH_smpsel FLASH_SMPSEL_SMP1 or FLASH_SMPSEL_SMP2
  */
-void FLASH_SetSMPSELStatus(uint32_t FLASH_smpsel)
-{
-    /* Check the parameters */
-    assert_param(IS_FLASH_SMPSEL_STATE(FLASH_smpsel));
+void FLASH_SetSMPSELStatus(uint32_t FLASH_smpsel) {
+  /* Check the parameters */
+  assert_param(IS_FLASH_SMPSEL_STATE(FLASH_smpsel));
 
-    /* SMP1 or SMP2 */
-    FLASH->CTRL &= CTRL_Reset_SMPSEL;
-    FLASH->CTRL |= FLASH_smpsel;
+  /* SMP1 or SMP2 */
+  FLASH->CTRL &= CTRL_Reset_SMPSEL;
+  FLASH->CTRL |= FLASH_smpsel;
 }
 
 /**
@@ -310,31 +295,27 @@ void FLASH_SetSMPSELStatus(uint32_t FLASH_smpsel)
  *         - For n32l40x devices this function enable HSI.
  * @return FLASH_HSICLOCK (FLASH_HSICLOCK_ENABLE or FLASH_HSICLOCK_DISABLE).
  */
-FLASH_HSICLOCK FLASH_ClockInit(void)
-{
-    bool HSIStatus = 0;
-    __IO uint32_t StartUpCounter = 0;
-    FLASH_HSICLOCK hsiclock_status = FLASH_HSICLOCK_ENABLE;
-  
-    if((RCC->CTRL & RCC_CTRL_HSIRDF) == RESET)
-    {
-        /* Enable HSI */
-        RCC->CTRL |= ((uint32_t)RCC_CTRL_HSIEN);
+FLASH_HSICLOCK FLASH_ClockInit(void) {
+  bool           HSIStatus       = 0;
+  __IO uint32_t  StartUpCounter  = 0;
+  FLASH_HSICLOCK hsiclock_status = FLASH_HSICLOCK_ENABLE;
 
-        /* Wait till HSI is ready and if Time out is reached exit */
-        do
-        {
-            HSIStatus = RCC->CTRL & RCC_CTRL_HSIRDF;
-            StartUpCounter++;
-        } while ((HSIStatus == 0) && (StartUpCounter != HSI_STARTUP_TIMEOUT));
+  if ((RCC->CTRL & RCC_CTRL_HSIRDF) == RESET) {
+    /* Enable HSI */
+    RCC->CTRL |= ((uint32_t)RCC_CTRL_HSIEN);
 
-        HSIStatus = ((RCC->CTRL & RCC_CTRL_HSIRDF) != RESET);
-        if (!HSIStatus)
-        {
-            hsiclock_status = FLASH_HSICLOCK_DISABLE;
-        }
+    /* Wait till HSI is ready and if Time out is reached exit */
+    do {
+      HSIStatus = RCC->CTRL & RCC_CTRL_HSIRDF;
+      StartUpCounter++;
+    } while ((HSIStatus == 0) && (StartUpCounter != HSI_STARTUP_TIMEOUT));
+
+    HSIStatus = ((RCC->CTRL & RCC_CTRL_HSIRDF) != RESET);
+    if (!HSIStatus) {
+      hsiclock_status = FLASH_HSICLOCK_DISABLE;
     }
-    return hsiclock_status;
+  }
+  return hsiclock_status;
 }
 
 /**
@@ -343,11 +324,10 @@ FLASH_HSICLOCK FLASH_ClockInit(void)
  *         - For n32l40x devices this function unlocks Bank.
  *           to FLASH_Unlock function..
  */
-void FLASH_Unlock(void)
-{
-    /* Unlocks the FLASH Program Erase Controller */
-    FLASH->KEYR = FLASH_KEY1;
-    FLASH->KEYR = FLASH_KEY2;
+void FLASH_Unlock(void) {
+  /* Unlocks the FLASH Program Erase Controller */
+  FLASH->KEYR = FLASH_KEY1;
+  FLASH->KEYR = FLASH_KEY2;
 }
 
 /**
@@ -356,10 +336,9 @@ void FLASH_Unlock(void)
  *         - For n32l40x devices this function Locks Bank.
  *           to FLASH_Lock function.
  */
-void FLASH_Lock(void)
-{
-    /* Set the Lock Bit to lock the FLASH Program Erase Controller */
-    FLASH->CTRL |= CTRL_Set_LOCK;
+void FLASH_Lock(void) {
+  /* Set the Lock Bit to lock the FLASH Program Erase Controller */
+  FLASH->CTRL |= CTRL_Set_LOCK;
 }
 
 /**
@@ -370,33 +349,31 @@ void FLASH_Lock(void)
  *         FLASH_ERR_PG, FLASH_ERR_PV, FLASH_ERR_WRP, FLASH_COMPL,
  *         FLASH_ERR_EV or FLASH_TIMEOUT.
  */
-FLASH_STS FLASH_EraseOnePage(uint32_t Page_Address)
-{
-    FLASH_STS status = FLASH_COMPL;
-    /* Check the parameters */
-    assert_param(IS_FLASH_ADDRESS(Page_Address));
+FLASH_STS FLASH_EraseOnePage(uint32_t Page_Address) {
+  FLASH_STS status = FLASH_COMPL;
+  /* Check the parameters */
+  assert_param(IS_FLASH_ADDRESS(Page_Address));
 
-    /* Clears the FLASH's pending flags */
-    FLASH_ClearFlag(FLASH_STS_CLRFLAG);
+  /* Clears the FLASH's pending flags */
+  FLASH_ClearFlag(FLASH_STS_CLRFLAG);
+  /* Wait for last operation to be completed */
+  status = FLASH_WaitForLastOpt(EraseTimeout);
+
+  if (status == FLASH_COMPL) {
+    /* if the previous operation is completed, proceed to erase the page */
+    FLASH->CTRL |= CTRL_Set_PER;
+    FLASH->ADD = Page_Address;
+    FLASH->CTRL |= CTRL_Set_START;
+
     /* Wait for last operation to be completed */
     status = FLASH_WaitForLastOpt(EraseTimeout);
 
-    if (status == FLASH_COMPL)
-    {
-        /* if the previous operation is completed, proceed to erase the page */
-        FLASH->CTRL |= CTRL_Set_PER;
-        FLASH->ADD = Page_Address;
-        FLASH->CTRL |= CTRL_Set_START;
+    /* Disable the PER Bit */
+    FLASH->CTRL &= CTRL_Reset_PER;
+  }
 
-        /* Wait for last operation to be completed */
-        status = FLASH_WaitForLastOpt(EraseTimeout);
-
-        /* Disable the PER Bit */
-        FLASH->CTRL &= CTRL_Reset_PER;
-    }
-
-    /* Return the Erase Status */
-    return status;
+  /* Return the Erase Status */
+  return status;
 }
 
 /**
@@ -406,29 +383,27 @@ FLASH_STS FLASH_EraseOnePage(uint32_t Page_Address)
  *         FLASH_ERR_PG, FLASH_ERR_PV, FLASH_ERR_WRP, FLASH_COMPL,
  *         FLASH_ERR_EV or FLASH_TIMEOUT.
  */
-FLASH_STS FLASH_MassErase(void)
-{
-    FLASH_STS status = FLASH_COMPL;
+FLASH_STS FLASH_MassErase(void) {
+  FLASH_STS status = FLASH_COMPL;
 
-    /* Clears the FLASH's pending flags */
-    FLASH_ClearFlag(FLASH_STS_CLRFLAG);
+  /* Clears the FLASH's pending flags */
+  FLASH_ClearFlag(FLASH_STS_CLRFLAG);
+  /* Wait for last operation to be completed */
+  status = FLASH_WaitForLastOpt(EraseTimeout);
+  if (status == FLASH_COMPL) {
+    /* if the previous operation is completed, proceed to erase all pages */
+    FLASH->CTRL |= CTRL_Set_MER;
+    FLASH->CTRL |= CTRL_Set_START;
+
     /* Wait for last operation to be completed */
     status = FLASH_WaitForLastOpt(EraseTimeout);
-    if (status == FLASH_COMPL)
-    {
-        /* if the previous operation is completed, proceed to erase all pages */
-        FLASH->CTRL |= CTRL_Set_MER;
-        FLASH->CTRL |= CTRL_Set_START;
 
-        /* Wait for last operation to be completed */
-        status = FLASH_WaitForLastOpt(EraseTimeout);
+    /* Disable the MER Bit */
+    FLASH->CTRL &= CTRL_Reset_MER;
+  }
 
-        /* Disable the MER Bit */
-        FLASH->CTRL &= CTRL_Reset_MER;
-    }
-
-    /* Return the Erase Status */
-    return status;
+  /* Return the Erase Status */
+  return status;
 }
 
 /**
@@ -439,83 +414,73 @@ FLASH_STS FLASH_MassErase(void)
  *         FLASH_ERR_PG, FLASH_ERR_PV, FLASH_ERR_WRP, FLASH_COMPL,
  *         FLASH_ERR_EV, FLASH_ERR_RDP2 or FLASH_TIMEOUT.
  */
-FLASH_STS FLASH_EraseOB(void)
-{
-    uint32_t rdptmp = L1_RDP_Key;
+FLASH_STS FLASH_EraseOB(void) {
+  uint32_t rdptmp = L1_RDP_Key;
 
-    FLASH_STS status = FLASH_COMPL;
+  FLASH_STS status = FLASH_COMPL;
 
-    /* Get the actual read protection L2 Option Byte value */
-    if (FLASH_GetReadOutProtectionL2STS() != RESET)
-    {
-        status = FLASH_ERR_RDP2;
-        return status;
-    }
+  /* Get the actual read protection L2 Option Byte value */
+  if (FLASH_GetReadOutProtectionL2STS() != RESET) {
+    status = FLASH_ERR_RDP2;
+    return status;
+  }
 
-    /* Get the actual read protection Option Byte value */
-    if (FLASH_GetReadOutProtectionSTS() != RESET)
-    {
-        rdptmp = FLASH_USER_USER;
-    }
+  /* Get the actual read protection Option Byte value */
+  if (FLASH_GetReadOutProtectionSTS() != RESET) {
+    rdptmp = FLASH_USER_USER;
+  }
 
-    /* Clears the FLASH's pending flags */
-    FLASH_ClearFlag(FLASH_STS_CLRFLAG);
+  /* Clears the FLASH's pending flags */
+  FLASH_ClearFlag(FLASH_STS_CLRFLAG);
+  /* Wait for last operation to be completed */
+  status = FLASH_WaitForLastOpt(EraseTimeout);
+
+  if (status == FLASH_COMPL) {
+    /* Authorize the small information block programming */
+    FLASH->OPTKEY = FLASH_KEY1;
+    FLASH->OPTKEY = FLASH_KEY2;
+
+    /* if the previous operation is completed, proceed to erase the option bytes */
+    FLASH->CTRL |= CTRL_Set_OPTER;
+    FLASH->CTRL |= CTRL_Set_START;
     /* Wait for last operation to be completed */
     status = FLASH_WaitForLastOpt(EraseTimeout);
 
-    if (status == FLASH_COMPL)
-    {
-        /* Authorize the small information block programming */
-        FLASH->OPTKEY = FLASH_KEY1;
-        FLASH->OPTKEY = FLASH_KEY2;
+    if (status == FLASH_COMPL) {
+      /* Clears the FLASH's pending flags */
+      FLASH_ClearFlag(FLASH_STS_CLRFLAG);
 
-        /* if the previous operation is completed, proceed to erase the option bytes */
-        FLASH->CTRL |= CTRL_Set_OPTER;
-        FLASH->CTRL |= CTRL_Set_START;
-        /* Wait for last operation to be completed */
-        status = FLASH_WaitForLastOpt(EraseTimeout);
+      /* if the erase operation is completed, disable the OPTER Bit */
+      FLASH->CTRL &= CTRL_Reset_OPTER;
 
-        if (status == FLASH_COMPL)
-        {
-            /* Clears the FLASH's pending flags */
-            FLASH_ClearFlag(FLASH_STS_CLRFLAG);
+      /* Enable the Option Bytes Programming operation */
+      FLASH->CTRL |= CTRL_Set_OPTPG;
+      /* Restore the last read protection Option Byte value */
+      OBT->USER_RDP = (uint32_t)rdptmp;
+      /* Wait for last operation to be completed */
+      status = FLASH_WaitForLastOpt(ProgramTimeout);
 
-            /* if the erase operation is completed, disable the OPTER Bit */
-            FLASH->CTRL &= CTRL_Reset_OPTER;
-
-            /* Enable the Option Bytes Programming operation */
-            FLASH->CTRL |= CTRL_Set_OPTPG;
-            /* Restore the last read protection Option Byte value */
-            OBT->USER_RDP = (uint32_t)rdptmp;
-            /* Wait for last operation to be completed */
-            status = FLASH_WaitForLastOpt(ProgramTimeout);
-
-            if (status != FLASH_TIMEOUT)
-            {
-                /* if the program operation is completed, disable the OPTPG Bit */
-                FLASH->CTRL &= CTRL_Reset_OPTPG;
-            }
-        }
-        else
-        {
-            if (status != FLASH_TIMEOUT)
-            {
-                /* Disable the OPTER Bit */
-                FLASH->CTRL &= CTRL_Reset_OPTER;
-            }
-        }
+      if (status != FLASH_TIMEOUT) {
+        /* if the program operation is completed, disable the OPTPG Bit */
+        FLASH->CTRL &= CTRL_Reset_OPTPG;
+      }
+    } else {
+      if (status != FLASH_TIMEOUT) {
+        /* Disable the OPTER Bit */
+        FLASH->CTRL &= CTRL_Reset_OPTER;
+      }
     }
-    /* Return the erase status */
-    return status;
+  }
+  /* Return the erase status */
+  return status;
 }
 
-
 /**
- * @brief  Programs the FLASH User Option Byte: 
+ * @brief  Programs the FLASH User Option Byte:
  *         RDP1 / IWDG_SW / RST_STOP2 / RST_STDBY / OB_Data0 / OB_Data1
  *         WRP_Pages / RDP2 / nBOOT0 / nBOOT1 / nSWBOOT0 / BOR_LEV[2:0].
  * @note   This function can be used for n32l40x devices.
- * @param  OB_RDP1 
+ * @param  OB_RDP1
  *   This parameter can be one of the following values:
  *     @arg OB_RDP1_ENABLE
  *     @arg OB_RDP1_DISABLE
@@ -531,180 +496,166 @@ FLASH_STS FLASH_EraseOB(void)
  *   This parameter can be one of the following values:
  *     @arg OB_STDBY_NORST No reset generated when entering in STANDBY
  *     @arg OB_STDBY_RST Reset generated when entering in STANDBY
- * @param  OB_Data0 
+ * @param  OB_Data0
  *   This parameter can be one of the following values:
  *     @arg 0x00 ~ 0xFF
- * @param  OB_Data1 
+ * @param  OB_Data1
  *   This parameter can be one of the following values:
  *     @arg 0x00 ~ 0xFF
  * @param WRP_Pages specifies the address of the pages to be write protected.
  *   This parameter can be:
  *     @arg For @b n32l40x_devices: value between FLASH_WRP_Pages0to1 and
  *       FLASH_WRP_Pages62to63 or FLASH_WRP_AllPages or (~FLASH_WRP_AllPages)
- * @param  OB_RDP2 
+ * @param  OB_RDP2
  *   This parameter can be one of the following values:
  *     @arg OB_RDP2_ENABLE
  *     @arg OB_RDP2_DISABLE
- * @param  OB2_nBOOT0 
+ * @param  OB2_nBOOT0
  *   This parameter can be one of the following values:
  *     @arg OB2_NBOOT0_SET Set nBOOT0
  *     @arg OB2_NBOOT0_CLR Clear nBOOT0
- * @param OB2_nBOOT1 
+ * @param OB2_nBOOT1
  *   This parameter can be one of the following values:
  *     @arg OB2_NBOOT1_SET Set nBOOT1
  *     @arg OB2_NBOOT1_CLR Clear nBOOT1
- * @param OB2_nSWBOOT0 
+ * @param OB2_nSWBOOT0
  *   This parameter can be one of the following values:
  *     @arg OB2_NSWBOOT0_SET Set nSWBOOT0
  *     @arg OB2_NSWBOOT0_CLR Clear nSWBOOT0
-* @param OB2_BOR_LEV[2:0] 
+ * @param OB2_BOR_LEV[2:0]
  *   This parameter can be one of the following values:
- *     @arg OB2_BOR_LEV0 
- *     @arg OB2_BOR_LEV1 
- *     @arg OB2_BOR_LEV2 
- *     @arg OB2_BOR_LEV3 
- *     @arg OB2_BOR_LEV4 
- *     @arg OB2_BOR_LEV5 
- *     @arg OB2_BOR_LEV6 
- *     @arg OB2_BOR_LEV7 
+ *     @arg OB2_BOR_LEV0
+ *     @arg OB2_BOR_LEV1
+ *     @arg OB2_BOR_LEV2
+ *     @arg OB2_BOR_LEV3
+ *     @arg OB2_BOR_LEV4
+ *     @arg OB2_BOR_LEV5
+ *     @arg OB2_BOR_LEV6
+ *     @arg OB2_BOR_LEV7
  * @return FLASH Status: The returned value can be: FLASH_BUSY, FLASH_ERR_RDKEY,
  *         FLASH_ERR_PG, FLASH_ERR_PV, FLASH_ERR_WRP, FLASH_COMPL,
  *         FLASH_ERR_EV, FLASH_ERR_RDP2 or FLASH_TIMEOUT.
  */
-FLASH_STS FLASH_ConfigALLOptionByte(uint8_t OB_RDP1,    uint8_t OB_IWDG,    uint8_t OB_STOP2, 
-                                    uint8_t OB_STDBY,   uint8_t OB_Data0,   uint8_t OB_Data1,
-                                    uint32_t WRP_Pages, uint8_t OB_RDP2,    uint8_t OB2_nBOOT0,
-                                    uint8_t OB2_nBOOT1, uint8_t OB2_nSWBOOT0, uint8_t OB2_BOR_LEV)
-{
-    uint32_t rdpuser_tmp, data0data1_tmp, wrp0wrp1_tmp, wrp2wrp3_tmp, rdp2user2_tmp;
+FLASH_STS FLASH_ConfigALLOptionByte(uint8_t OB_RDP1, uint8_t OB_IWDG, uint8_t OB_STOP2, uint8_t OB_STDBY, uint8_t OB_Data0, uint8_t OB_Data1, uint32_t WRP_Pages, uint8_t OB_RDP2, uint8_t OB2_nBOOT0,
+                                    uint8_t OB2_nBOOT1, uint8_t OB2_nSWBOOT0, uint8_t OB2_BOR_LEV) {
+  uint32_t rdpuser_tmp, data0data1_tmp, wrp0wrp1_tmp, wrp2wrp3_tmp, rdp2user2_tmp;
 
-    FLASH_STS status = FLASH_COMPL;
+  FLASH_STS status = FLASH_COMPL;
 
-    /* Check the parameters */
-    assert_param(IS_OB_RDP1_SOURCE(OB_RDP1));
-    assert_param(IS_OB_IWDG_SOURCE(OB_IWDG));
-    assert_param(IS_OB_STOP2_SOURCE(OB_STOP2));
-    assert_param(IS_OB_STDBY_SOURCE(OB_STDBY));
-    assert_param(IS_FLASH_WRP_PAGE(WRP_Pages));
-    assert_param(IS_OB_RDP2_SOURCE(OB_RDP2));
-    assert_param(IS_OB2_NBOOT0_SOURCE(OB2_nBOOT0));
-    assert_param(IS_OB2_NBOOT1_SOURCE(OB2_nBOOT1));
-    assert_param(IS_OB2_NSWBOOT0_SOURCE(OB2_nSWBOOT0));
-    assert_param(IS_OB2_BOR_LEV_SOURCE(OB2_BOR_LEV));
+  /* Check the parameters */
+  assert_param(IS_OB_RDP1_SOURCE(OB_RDP1));
+  assert_param(IS_OB_IWDG_SOURCE(OB_IWDG));
+  assert_param(IS_OB_STOP2_SOURCE(OB_STOP2));
+  assert_param(IS_OB_STDBY_SOURCE(OB_STDBY));
+  assert_param(IS_FLASH_WRP_PAGE(WRP_Pages));
+  assert_param(IS_OB_RDP2_SOURCE(OB_RDP2));
+  assert_param(IS_OB2_NBOOT0_SOURCE(OB2_nBOOT0));
+  assert_param(IS_OB2_NBOOT1_SOURCE(OB2_nBOOT1));
+  assert_param(IS_OB2_NSWBOOT0_SOURCE(OB2_nSWBOOT0));
+  assert_param(IS_OB2_BOR_LEV_SOURCE(OB2_BOR_LEV));
 
-    /* Get the actual read protection L2 Option Byte value */
-    if (FLASH_GetReadOutProtectionL2STS() != RESET)
-    {
-        status = FLASH_ERR_RDP2;
-        return status;
-    }
-    
-    WRP_Pages      = (uint32_t)(~WRP_Pages);
-    rdpuser_tmp    = (((uint32_t)OB_RDP1) | (((uint32_t)(OB_IWDG | OB_STOP2 | OB_STDBY)) << 16));
-    data0data1_tmp = (((uint32_t)OB_Data0) | (((uint32_t)OB_Data1) << 16));
-    wrp0wrp1_tmp   = ((WRP_Pages & FLASH_WRP0_WRP0) | ((WRP_Pages << 8) & FLASH_WRP1_WRP1));
-    wrp2wrp3_tmp   = (((WRP_Pages >> 16) & FLASH_WRP2_WRP2) | ((WRP_Pages >> 8) & FLASH_WRP3_WRP3));
-    rdp2user2_tmp  = (((uint32_t)OB_RDP2) | (((uint32_t)(OB2_nBOOT0 | OB2_nBOOT1 | OB2_nSWBOOT0 | OB2_BOR_LEV)) << 16));
+  /* Get the actual read protection L2 Option Byte value */
+  if (FLASH_GetReadOutProtectionL2STS() != RESET) {
+    status = FLASH_ERR_RDP2;
+    return status;
+  }
 
-    /* Authorize the small information block programming */
-    FLASH->OPTKEY = FLASH_KEY1;
-    FLASH->OPTKEY = FLASH_KEY2;
+  WRP_Pages      = (uint32_t)(~WRP_Pages);
+  rdpuser_tmp    = (((uint32_t)OB_RDP1) | (((uint32_t)(OB_IWDG | OB_STOP2 | OB_STDBY)) << 16));
+  data0data1_tmp = (((uint32_t)OB_Data0) | (((uint32_t)OB_Data1) << 16));
+  wrp0wrp1_tmp   = ((WRP_Pages & FLASH_WRP0_WRP0) | ((WRP_Pages << 8) & FLASH_WRP1_WRP1));
+  wrp2wrp3_tmp   = (((WRP_Pages >> 16) & FLASH_WRP2_WRP2) | ((WRP_Pages >> 8) & FLASH_WRP3_WRP3));
+  rdp2user2_tmp  = (((uint32_t)OB_RDP2) | (((uint32_t)(OB2_nBOOT0 | OB2_nBOOT1 | OB2_nSWBOOT0 | OB2_BOR_LEV)) << 16));
 
-    /* Clears the FLASH's pending flags */
-    FLASH_ClearFlag(FLASH_STS_CLRFLAG);
+  /* Authorize the small information block programming */
+  FLASH->OPTKEY = FLASH_KEY1;
+  FLASH->OPTKEY = FLASH_KEY2;
+
+  /* Clears the FLASH's pending flags */
+  FLASH_ClearFlag(FLASH_STS_CLRFLAG);
+  /* Wait for last operation to be completed */
+  status = FLASH_WaitForLastOpt(EraseTimeout);
+  if (status == FLASH_COMPL) {
+    /* if the previous operation is completed, proceed to erase the option bytes */
+    FLASH->CTRL |= CTRL_Set_OPTER;
+    FLASH->CTRL |= CTRL_Set_START;
     /* Wait for last operation to be completed */
     status = FLASH_WaitForLastOpt(EraseTimeout);
-    if (status == FLASH_COMPL)
-    {
-        /* if the previous operation is completed, proceed to erase the option bytes */
-        FLASH->CTRL |= CTRL_Set_OPTER;
-        FLASH->CTRL |= CTRL_Set_START;
-        /* Wait for last operation to be completed */
-        status = FLASH_WaitForLastOpt(EraseTimeout);
 
-        if (status == FLASH_COMPL)
-        {
+    if (status == FLASH_COMPL) {
+      /* Clears the FLASH's pending flags */
+      FLASH_ClearFlag(FLASH_STS_CLRFLAG);
+
+      /* if the erase operation is completed, disable the OPTER Bit */
+      FLASH->CTRL &= CTRL_Reset_OPTER;
+
+      /* Enable the Option Bytes Programming operation */
+      FLASH->CTRL |= CTRL_Set_OPTPG;
+
+      /* Program USER_RDP Option Byte value */
+      OBT->USER_RDP = (uint32_t)rdpuser_tmp;
+
+      /* Wait for last operation to be completed */
+      status = FLASH_WaitForLastOpt(ProgramTimeout);
+
+      if (status == FLASH_COMPL) {
+        /* Clears the FLASH's pending flags */
+        FLASH_ClearFlag(FLASH_STS_CLRFLAG);
+
+        /* Program Data1_Data0 Option Byte value */
+        OBT->Data1_Data0 = (uint32_t)data0data1_tmp;
+
+        /* Wait for last operation to be completed */
+        status = FLASH_WaitForLastOpt(ProgramTimeout);
+
+        if (status == FLASH_COMPL) {
+          /* Clears the FLASH's pending flags */
+          FLASH_ClearFlag(FLASH_STS_CLRFLAG);
+
+          /* Program WRP1_WRP0 Option Byte value */
+          OBT->WRP1_WRP0 = (uint32_t)wrp0wrp1_tmp;
+
+          /* Wait for last operation to be completed */
+          status = FLASH_WaitForLastOpt(ProgramTimeout);
+
+          if (status == FLASH_COMPL) {
             /* Clears the FLASH's pending flags */
             FLASH_ClearFlag(FLASH_STS_CLRFLAG);
 
-            /* if the erase operation is completed, disable the OPTER Bit */
-            FLASH->CTRL &= CTRL_Reset_OPTER;
-
-            /* Enable the Option Bytes Programming operation */
-            FLASH->CTRL |= CTRL_Set_OPTPG;
-
-            /* Program USER_RDP Option Byte value */
-            OBT->USER_RDP = (uint32_t)rdpuser_tmp;
+            /* Program WRP3_WRP2 Option Byte value */
+            OBT->WRP3_WRP2 = (uint32_t)wrp2wrp3_tmp;
 
             /* Wait for last operation to be completed */
             status = FLASH_WaitForLastOpt(ProgramTimeout);
 
-            if (status == FLASH_COMPL)
-            {
-                /* Clears the FLASH's pending flags */
-                FLASH_ClearFlag(FLASH_STS_CLRFLAG);
+            if (status == FLASH_COMPL) {
+              /* Clears the FLASH's pending flags */
+              FLASH_ClearFlag(FLASH_STS_CLRFLAG);
 
-                /* Program Data1_Data0 Option Byte value */
-                OBT->Data1_Data0 = (uint32_t)data0data1_tmp;
+              /* Program USER2_RDP2 Option Byte value */
+              OBT->USER2_RDP2 = (uint32_t)rdp2user2_tmp;
 
-                /* Wait for last operation to be completed */
-                status = FLASH_WaitForLastOpt(ProgramTimeout);
-
-                if (status == FLASH_COMPL)
-                {
-                    /* Clears the FLASH's pending flags */
-                    FLASH_ClearFlag(FLASH_STS_CLRFLAG);
-
-                    /* Program WRP1_WRP0 Option Byte value */
-                    OBT->WRP1_WRP0 = (uint32_t)wrp0wrp1_tmp;
-
-                    /* Wait for last operation to be completed */
-                    status = FLASH_WaitForLastOpt(ProgramTimeout);
-
-                    if (status == FLASH_COMPL)
-                    {
-                        /* Clears the FLASH's pending flags */
-                        FLASH_ClearFlag(FLASH_STS_CLRFLAG);
-
-                        /* Program WRP3_WRP2 Option Byte value */
-                        OBT->WRP3_WRP2 = (uint32_t)wrp2wrp3_tmp;
-
-                        /* Wait for last operation to be completed */
-                        status = FLASH_WaitForLastOpt(ProgramTimeout);
-
-                        if (status == FLASH_COMPL)
-                        {
-                            /* Clears the FLASH's pending flags */
-                            FLASH_ClearFlag(FLASH_STS_CLRFLAG);
-
-                            /* Program USER2_RDP2 Option Byte value */
-                            OBT->USER2_RDP2 = (uint32_t)rdp2user2_tmp;
-
-                            /* Wait for last operation to be completed */
-                            status = FLASH_WaitForLastOpt(ProgramTimeout);
-                        }
-                    }
-                }
+              /* Wait for last operation to be completed */
+              status = FLASH_WaitForLastOpt(ProgramTimeout);
             }
-
-            if (status != FLASH_TIMEOUT)
-            {
-                /* if the program operation is completed, disable the OPTPG Bit */
-                FLASH->CTRL &= CTRL_Reset_OPTPG;
-            }
+          }
         }
-        else
-        {
-            if (status != FLASH_TIMEOUT)
-            {
-                /* Disable the OPTER Bit */
-                FLASH->CTRL &= CTRL_Reset_OPTER;
-            }
-        }
+      }
+
+      if (status != FLASH_TIMEOUT) {
+        /* if the program operation is completed, disable the OPTPG Bit */
+        FLASH->CTRL &= CTRL_Reset_OPTPG;
+      }
+    } else {
+      if (status != FLASH_TIMEOUT) {
+        /* Disable the OPTER Bit */
+        FLASH->CTRL &= CTRL_Reset_OPTER;
+      }
     }
+  }
 
-    /* Return the Option Byte program Status */
-    return status;
+  /* Return the Option Byte program Status */
+  return status;
 }
 
 /**
@@ -716,40 +667,37 @@ FLASH_STS FLASH_ConfigALLOptionByte(uint8_t OB_RDP1,    uint8_t OB_IWDG,    uint
  *         FLASH_ERR_PG, FLASH_ERR_PV, FLASH_ERR_WRP, FLASH_COMPL,
  *         FLASH_ERR_EV, FLASH_ERR_ADD or FLASH_TIMEOUT.
  */
-FLASH_STS FLASH_ProgramWord(uint32_t Address, uint32_t Data)
-{
-    FLASH_STS status  = FLASH_COMPL;
+FLASH_STS FLASH_ProgramWord(uint32_t Address, uint32_t Data) {
+  FLASH_STS status = FLASH_COMPL;
 
-    /* Check the parameters */
-    assert_param(IS_FLASH_ADDRESS(Address));
+  /* Check the parameters */
+  assert_param(IS_FLASH_ADDRESS(Address));
 
-    if((Address & (uint32_t)0x3) != 0)
-    {
-        /* The programming address is not a multiple of 4 */
-        status = FLASH_ERR_ADD;
-        return status;
-    }
+  if ((Address & (uint32_t)0x3) != 0) {
+    /* The programming address is not a multiple of 4 */
+    status = FLASH_ERR_ADD;
+    return status;
+  }
 
-    /* Clears the FLASH's pending flags */
-    FLASH_ClearFlag(FLASH_STS_CLRFLAG);
+  /* Clears the FLASH's pending flags */
+  FLASH_ClearFlag(FLASH_STS_CLRFLAG);
+  /* Wait for last operation to be completed */
+  status = FLASH_WaitForLastOpt(ProgramTimeout);
+
+  if (status == FLASH_COMPL) {
+    /* if the previous operation is completed, proceed to program the new word */
+    FLASH->CTRL |= CTRL_Set_PG;
+
+    *(__IO uint32_t *)Address = (uint32_t)Data;
     /* Wait for last operation to be completed */
     status = FLASH_WaitForLastOpt(ProgramTimeout);
 
-    if (status == FLASH_COMPL)
-    {
-        /* if the previous operation is completed, proceed to program the new word */
-        FLASH->CTRL |= CTRL_Set_PG;
+    /* Disable the PG Bit */
+    FLASH->CTRL &= CTRL_Reset_PG;
+  }
 
-        *(__IO uint32_t*)Address = (uint32_t)Data;
-        /* Wait for last operation to be completed */
-        status = FLASH_WaitForLastOpt(ProgramTimeout);
-
-        /* Disable the PG Bit */
-        FLASH->CTRL &= CTRL_Reset_PG;
-    }
-
-    /* Return the Program Status */
-    return status;
+  /* Return the Program Status */
+  return status;
 }
 
 /**
@@ -762,43 +710,39 @@ FLASH_STS FLASH_ProgramWord(uint32_t Address, uint32_t Data)
  *         FLASH_ERR_PG, FLASH_ERR_PV, FLASH_ERR_WRP, FLASH_COMPL,
  *         FLASH_ERR_EV, FLASH_ERR_RDP2 or FLASH_TIMEOUT.
  */
-FLASH_STS FLASH_ProgramOBData(uint32_t Address, uint32_t Data)
-{
-    FLASH_STS status = FLASH_COMPL;
-    /* Check the parameters */
-    assert_param(IS_OB_DATA_ADDRESS(Address));
+FLASH_STS FLASH_ProgramOBData(uint32_t Address, uint32_t Data) {
+  FLASH_STS status = FLASH_COMPL;
+  /* Check the parameters */
+  assert_param(IS_OB_DATA_ADDRESS(Address));
 
-    /* Get the actual read protection L2 Option Byte value */
-    if (FLASH_GetReadOutProtectionL2STS() != RESET)
-    {
-        status = FLASH_ERR_RDP2;
-        return status;
-    }
+  /* Get the actual read protection L2 Option Byte value */
+  if (FLASH_GetReadOutProtectionL2STS() != RESET) {
+    status = FLASH_ERR_RDP2;
+    return status;
+  }
 
-    /* Clears the FLASH's pending flags */
-    FLASH_ClearFlag(FLASH_STS_CLRFLAG);
+  /* Clears the FLASH's pending flags */
+  FLASH_ClearFlag(FLASH_STS_CLRFLAG);
+  /* Wait for last operation to be completed */
+  status = FLASH_WaitForLastOpt(ProgramTimeout);
+
+  if (status == FLASH_COMPL) {
+    /* Authorize the small information block programming */
+    FLASH->OPTKEY = FLASH_KEY1;
+    FLASH->OPTKEY = FLASH_KEY2;
+    /* Enables the Option Bytes Programming operation */
+    FLASH->CTRL |= CTRL_Set_OPTPG;
+    *(__IO uint32_t *)Address = (uint32_t)Data;
+
     /* Wait for last operation to be completed */
     status = FLASH_WaitForLastOpt(ProgramTimeout);
-
-    if (status == FLASH_COMPL)
-    {
-        /* Authorize the small information block programming */
-        FLASH->OPTKEY = FLASH_KEY1;
-        FLASH->OPTKEY = FLASH_KEY2;
-        /* Enables the Option Bytes Programming operation */
-        FLASH->CTRL |= CTRL_Set_OPTPG;
-        *(__IO uint32_t*)Address = (uint32_t)Data;
-
-        /* Wait for last operation to be completed */
-        status = FLASH_WaitForLastOpt(ProgramTimeout);
-        if (status != FLASH_TIMEOUT)
-        {
-            /* if the program operation is completed, disable the OPTPG Bit */
-            FLASH->CTRL &= CTRL_Reset_OPTPG;
-        }
+    if (status != FLASH_TIMEOUT) {
+      /* if the program operation is completed, disable the OPTPG Bit */
+      FLASH->CTRL &= CTRL_Reset_OPTPG;
     }
-    /* Return the Option Byte Data Program Status */
-    return status;
+  }
+  /* Return the Option Byte Data Program Status */
+  return status;
 }
 
 /**
@@ -813,64 +757,58 @@ FLASH_STS FLASH_ProgramOBData(uint32_t Address, uint32_t Data)
  *         FLASH_ERR_PG, FLASH_ERR_PV, FLASH_ERR_WRP, FLASH_COMPL,
  *         FLASH_ERR_EV, FLASH_ERR_RDP2 or FLASH_TIMEOUT.
  */
-FLASH_STS FLASH_EnWriteProtection(uint32_t FLASH_Pages)
-{
-    uint16_t WRP0_Data = 0xFFFF, WRP1_Data = 0xFFFF, WRP2_Data = 0xFFFF, WRP3_Data = 0xFFFF;
+FLASH_STS FLASH_EnWriteProtection(uint32_t FLASH_Pages) {
+  uint16_t WRP0_Data = 0xFFFF, WRP1_Data = 0xFFFF, WRP2_Data = 0xFFFF, WRP3_Data = 0xFFFF;
 
-    FLASH_STS status = FLASH_COMPL;
+  FLASH_STS status = FLASH_COMPL;
 
-    /* Check the parameters */
-    assert_param(IS_FLASH_WRP_PAGE(FLASH_Pages));
+  /* Check the parameters */
+  assert_param(IS_FLASH_WRP_PAGE(FLASH_Pages));
 
-    /* Get the actual read protection L2 Option Byte value */
-    if (FLASH_GetReadOutProtectionL2STS() != RESET)
-    {
-        status = FLASH_ERR_RDP2;
-        return status;
-    }
-
-    FLASH_Pages = (uint32_t)(~FLASH_Pages);
-    WRP0_Data   = (uint16_t)(FLASH_Pages & WRP0_MSK);
-    WRP1_Data   = (uint16_t)((FLASH_Pages & WRP1_MSK) >> 8);
-    WRP2_Data   = (uint16_t)((FLASH_Pages & WRP2_MSK) >> 16);
-    WRP3_Data   = (uint16_t)((FLASH_Pages & WRP3_MSK) >> 24);
-
-    /* Clears the FLASH's pending flags */
-    FLASH_ClearFlag(FLASH_STS_CLRFLAG);
-    /* Wait for last operation to be completed */
-    status = FLASH_WaitForLastOpt(ProgramTimeout);
-
-    if (status == FLASH_COMPL)
-    {
-        /* Authorizes the small information block programming */
-        FLASH->OPTKEY = FLASH_KEY1;
-        FLASH->OPTKEY = FLASH_KEY2;
-        FLASH->CTRL |= CTRL_Set_OPTPG;
-
-        if ((WRP0_Data != 0xFF) || (WRP1_Data != 0xFF))
-        {
-            OBT->WRP1_WRP0 = (((uint32_t)WRP0_Data) | (((uint32_t)WRP1_Data) << 16));
-
-            /* Wait for last operation to be completed */
-            status = FLASH_WaitForLastOpt(ProgramTimeout);
-        }
-
-        if (((WRP2_Data != 0xFF) || (WRP3_Data != 0xFF)) && (status == FLASH_COMPL))
-        {
-            OBT->WRP3_WRP2 = (((uint32_t)WRP2_Data) | (((uint32_t)WRP3_Data) << 16));
-
-            /* Wait for last operation to be completed */
-            status = FLASH_WaitForLastOpt(ProgramTimeout);
-        }
-
-        if (status != FLASH_TIMEOUT)
-        {
-            /* if the program operation is completed, disable the OPTPG Bit */
-            FLASH->CTRL &= CTRL_Reset_OPTPG;
-        }
-    }
-    /* Return the write protection operation Status */
+  /* Get the actual read protection L2 Option Byte value */
+  if (FLASH_GetReadOutProtectionL2STS() != RESET) {
+    status = FLASH_ERR_RDP2;
     return status;
+  }
+
+  FLASH_Pages = (uint32_t)(~FLASH_Pages);
+  WRP0_Data   = (uint16_t)(FLASH_Pages & WRP0_MSK);
+  WRP1_Data   = (uint16_t)((FLASH_Pages & WRP1_MSK) >> 8);
+  WRP2_Data   = (uint16_t)((FLASH_Pages & WRP2_MSK) >> 16);
+  WRP3_Data   = (uint16_t)((FLASH_Pages & WRP3_MSK) >> 24);
+
+  /* Clears the FLASH's pending flags */
+  FLASH_ClearFlag(FLASH_STS_CLRFLAG);
+  /* Wait for last operation to be completed */
+  status = FLASH_WaitForLastOpt(ProgramTimeout);
+
+  if (status == FLASH_COMPL) {
+    /* Authorizes the small information block programming */
+    FLASH->OPTKEY = FLASH_KEY1;
+    FLASH->OPTKEY = FLASH_KEY2;
+    FLASH->CTRL |= CTRL_Set_OPTPG;
+
+    if ((WRP0_Data != 0xFF) || (WRP1_Data != 0xFF)) {
+      OBT->WRP1_WRP0 = (((uint32_t)WRP0_Data) | (((uint32_t)WRP1_Data) << 16));
+
+      /* Wait for last operation to be completed */
+      status = FLASH_WaitForLastOpt(ProgramTimeout);
+    }
+
+    if (((WRP2_Data != 0xFF) || (WRP3_Data != 0xFF)) && (status == FLASH_COMPL)) {
+      OBT->WRP3_WRP2 = (((uint32_t)WRP2_Data) | (((uint32_t)WRP3_Data) << 16));
+
+      /* Wait for last operation to be completed */
+      status = FLASH_WaitForLastOpt(ProgramTimeout);
+    }
+
+    if (status != FLASH_TIMEOUT) {
+      /* if the program operation is completed, disable the OPTPG Bit */
+      FLASH->CTRL &= CTRL_Reset_OPTPG;
+    }
+  }
+  /* Return the write protection operation Status */
+  return status;
 }
 
 /**
@@ -884,73 +822,62 @@ FLASH_STS FLASH_EnWriteProtection(uint32_t FLASH_Pages)
  *         FLASH_ERR_PG, FLASH_ERR_PV, FLASH_ERR_WRP, FLASH_COMPL,
  *         FLASH_ERR_EV, FLASH_ERR_RDP2 or FLASH_TIMEOUT.
  */
-FLASH_STS FLASH_ReadOutProtectionL1(FunctionalState Cmd)
-{
-    uint32_t usertmp;
-    FLASH_STS status = FLASH_COMPL;
+FLASH_STS FLASH_ReadOutProtectionL1(FunctionalState Cmd) {
+  uint32_t  usertmp;
+  FLASH_STS status = FLASH_COMPL;
 
-    usertmp = ((OBR_USER_MSK & FLASH->OB) << 0x0E);
-    /* Check the parameters */
-    assert_param(IS_FUNCTIONAL_STATE(Cmd));
+  usertmp = ((OBR_USER_MSK & FLASH->OB) << 0x0E);
+  /* Check the parameters */
+  assert_param(IS_FUNCTIONAL_STATE(Cmd));
 
-    /* Get the actual read protection L2 Option Byte value */
-    if (FLASH_GetReadOutProtectionL2STS() != RESET)
-    {
-        status = FLASH_ERR_RDP2;
-        return status;
-    }
+  /* Get the actual read protection L2 Option Byte value */
+  if (FLASH_GetReadOutProtectionL2STS() != RESET) {
+    status = FLASH_ERR_RDP2;
+    return status;
+  }
 
-    /* Clears the FLASH's pending flags */
-    FLASH_ClearFlag(FLASH_STS_CLRFLAG);
+  /* Clears the FLASH's pending flags */
+  FLASH_ClearFlag(FLASH_STS_CLRFLAG);
+  /* Wait for last operation to be completed */
+  status = FLASH_WaitForLastOpt(EraseTimeout);
+
+  if (status == FLASH_COMPL) {
+    /* Authorizes the small information block programming */
+    FLASH->OPTKEY = FLASH_KEY1;
+    FLASH->OPTKEY = FLASH_KEY2;
+    FLASH->CTRL |= CTRL_Set_OPTER;
+    FLASH->CTRL |= CTRL_Set_START;
     /* Wait for last operation to be completed */
     status = FLASH_WaitForLastOpt(EraseTimeout);
+    if (status == FLASH_COMPL) {
+      /* Clears the FLASH's pending flags */
+      FLASH_ClearFlag(FLASH_STS_CLRFLAG);
 
-    if (status == FLASH_COMPL)
-    {
-        /* Authorizes the small information block programming */
-        FLASH->OPTKEY = FLASH_KEY1;
-        FLASH->OPTKEY = FLASH_KEY2;
-        FLASH->CTRL |= CTRL_Set_OPTER;
-        FLASH->CTRL |= CTRL_Set_START;
-        /* Wait for last operation to be completed */
-        status = FLASH_WaitForLastOpt(EraseTimeout);
-        if (status == FLASH_COMPL)
-        {
-            /* Clears the FLASH's pending flags */
-            FLASH_ClearFlag(FLASH_STS_CLRFLAG);
+      /* if the erase operation is completed, disable the OPTER Bit */
+      FLASH->CTRL &= CTRL_Reset_OPTER;
+      /* Enable the Option Bytes Programming operation */
+      FLASH->CTRL |= CTRL_Set_OPTPG;
+      if (Cmd != DISABLE) {
+        OBT->USER_RDP = (FLASH_USER_USER & usertmp);
+      } else {
+        OBT->USER_RDP = ((L1_RDP_Key & FLASH_RDP_RDP1) | usertmp);
+      }
+      /* Wait for last operation to be completed */
+      status = FLASH_WaitForLastOpt(EraseTimeout);
 
-            /* if the erase operation is completed, disable the OPTER Bit */
-            FLASH->CTRL &= CTRL_Reset_OPTER;
-            /* Enable the Option Bytes Programming operation */
-            FLASH->CTRL |= CTRL_Set_OPTPG;
-            if (Cmd != DISABLE)
-            {
-                OBT->USER_RDP = (FLASH_USER_USER & usertmp);
-            }
-            else
-            {
-                OBT->USER_RDP = ((L1_RDP_Key & FLASH_RDP_RDP1) | usertmp);
-            }
-            /* Wait for last operation to be completed */
-            status = FLASH_WaitForLastOpt(EraseTimeout);
-
-            if (status != FLASH_TIMEOUT)
-            {
-                /* if the program operation is completed, disable the OPTPG Bit */
-                FLASH->CTRL &= CTRL_Reset_OPTPG;
-            }
-        }
-        else
-        {
-            if (status != FLASH_TIMEOUT)
-            {
-                /* Disable the OPTER Bit */
-                FLASH->CTRL &= CTRL_Reset_OPTER;
-            }
-        }
+      if (status != FLASH_TIMEOUT) {
+        /* if the program operation is completed, disable the OPTPG Bit */
+        FLASH->CTRL &= CTRL_Reset_OPTPG;
+      }
+    } else {
+      if (status != FLASH_TIMEOUT) {
+        /* Disable the OPTER Bit */
+        FLASH->CTRL &= CTRL_Reset_OPTER;
+      }
     }
-    /* Return the protection operation Status */
-    return status;
+  }
+  /* Return the protection operation Status */
+  return status;
 }
 
 /**
@@ -962,82 +889,72 @@ FLASH_STS FLASH_ReadOutProtectionL1(FunctionalState Cmd)
  *         FLASH_ERR_PG, FLASH_ERR_PV, FLASH_ERR_WRP, FLASH_COMPL,
  *         FLASH_ERR_EV, FLASH_ERR_RDP2 or FLASH_TIMEOUT.
  */
-FLASH_STS FLASH_ReadOutProtectionL2_ENABLE(void)
-{
-    uint32_t usertmp;
-    FLASH_STS status = FLASH_COMPL;
+FLASH_STS FLASH_ReadOutProtectionL2_ENABLE(void) {
+  uint32_t  usertmp;
+  FLASH_STS status = FLASH_COMPL;
 
-    usertmp = ((OBR_USER_MSK & FLASH->OB) << 0x0E);
-  
-    /* Get the actual read protection L1 Option Byte value */
-    if (FLASH_GetReadOutProtectionSTS() == RESET)
-    {
-        usertmp |= (L1_RDP_Key & FLASH_RDP_RDP1);
-    }
-    /* Get the actual read protection L2 Option Byte value */
-    if (FLASH_GetReadOutProtectionL2STS() != RESET)
-    {
-        status = FLASH_ERR_RDP2;
-        return status;
-    }
+  usertmp = ((OBR_USER_MSK & FLASH->OB) << 0x0E);
 
-    /* Clears the FLASH's pending flags */
-    FLASH_ClearFlag(FLASH_STS_CLRFLAG);
+  /* Get the actual read protection L1 Option Byte value */
+  if (FLASH_GetReadOutProtectionSTS() == RESET) {
+    usertmp |= (L1_RDP_Key & FLASH_RDP_RDP1);
+  }
+  /* Get the actual read protection L2 Option Byte value */
+  if (FLASH_GetReadOutProtectionL2STS() != RESET) {
+    status = FLASH_ERR_RDP2;
+    return status;
+  }
+
+  /* Clears the FLASH's pending flags */
+  FLASH_ClearFlag(FLASH_STS_CLRFLAG);
+  /* Wait for last operation to be completed */
+  status = FLASH_WaitForLastOpt(EraseTimeout);
+
+  if (status == FLASH_COMPL) {
+    /* Authorizes the small information block programming */
+    FLASH->OPTKEY = FLASH_KEY1;
+    FLASH->OPTKEY = FLASH_KEY2;
+    FLASH->CTRL |= CTRL_Set_OPTER;
+    FLASH->CTRL |= CTRL_Set_START;
     /* Wait for last operation to be completed */
     status = FLASH_WaitForLastOpt(EraseTimeout);
+    if (status == FLASH_COMPL) {
+      /* Clears the FLASH's pending flags */
+      FLASH_ClearFlag(FLASH_STS_CLRFLAG);
 
-    if (status == FLASH_COMPL)
-    {
-        /* Authorizes the small information block programming */
-        FLASH->OPTKEY = FLASH_KEY1;
-        FLASH->OPTKEY = FLASH_KEY2;
-        FLASH->CTRL |= CTRL_Set_OPTER;
-        FLASH->CTRL |= CTRL_Set_START;
+      /* if the erase operation is completed, disable the OPTER Bit */
+      FLASH->CTRL &= CTRL_Reset_OPTER;
+      /* Enable the Option Bytes Programming operation */
+      FLASH->CTRL |= CTRL_Set_OPTPG;
+
+      OBT->USER_RDP = usertmp;
+      /* Wait for last operation to be completed */
+      status = FLASH_WaitForLastOpt(EraseTimeout);
+
+      if (status == FLASH_COMPL) {
+        /* Clears the FLASH's pending flags */
+        FLASH_ClearFlag(FLASH_STS_CLRFLAG);
+
+        /* Enables the read out protection L2 */
+        OBT->USER2_RDP2 = L2_RDP_Key;
+
         /* Wait for last operation to be completed */
         status = FLASH_WaitForLastOpt(EraseTimeout);
-        if (status == FLASH_COMPL)
-        {
-            /* Clears the FLASH's pending flags */
-            FLASH_ClearFlag(FLASH_STS_CLRFLAG);
+      }
 
-            /* if the erase operation is completed, disable the OPTER Bit */
-            FLASH->CTRL &= CTRL_Reset_OPTER;
-            /* Enable the Option Bytes Programming operation */
-            FLASH->CTRL |= CTRL_Set_OPTPG;
-
-            OBT->USER_RDP = usertmp;
-            /* Wait for last operation to be completed */
-            status = FLASH_WaitForLastOpt(EraseTimeout);
-
-            if (status == FLASH_COMPL)
-            {
-                /* Clears the FLASH's pending flags */
-                FLASH_ClearFlag(FLASH_STS_CLRFLAG);
-
-                /* Enables the read out protection L2 */
-                OBT->USER2_RDP2 = L2_RDP_Key;
-
-                /* Wait for last operation to be completed */
-                status = FLASH_WaitForLastOpt(EraseTimeout);
-            }
-
-            if (status != FLASH_TIMEOUT)
-            {
-                /* if the program operation is completed, disable the OPTPG Bit */
-                FLASH->CTRL &= CTRL_Reset_OPTPG;
-            }
-        }
-        else
-        {
-            if (status != FLASH_TIMEOUT)
-            {
-                /* Disable the OPTER Bit */
-                FLASH->CTRL &= CTRL_Reset_OPTER;
-            }
-        }
+      if (status != FLASH_TIMEOUT) {
+        /* if the program operation is completed, disable the OPTPG Bit */
+        FLASH->CTRL &= CTRL_Reset_OPTPG;
+      }
+    } else {
+      if (status != FLASH_TIMEOUT) {
+        /* Disable the OPTER Bit */
+        FLASH->CTRL &= CTRL_Reset_OPTER;
+      }
     }
-    /* Return the protection operation Status */
-    return status;
+  }
+  /* Return the protection operation Status */
+  return status;
 }
 
 /**
@@ -1059,205 +976,182 @@ FLASH_STS FLASH_ReadOutProtectionL2_ENABLE(void)
  *         FLASH_ERR_PG, FLASH_ERR_PV, FLASH_ERR_WRP, FLASH_COMPL,
  *         FLASH_ERR_EV, FLASH_ERR_RDP2 or FLASH_TIMEOUT.
  */
-FLASH_STS FLASH_ConfigUserOB(uint8_t OB_IWDG, uint8_t OB_STOP2, uint8_t OB_STDBY)
-{
-    uint32_t rdpuser_tmp = RDP_USER_Key;
+FLASH_STS FLASH_ConfigUserOB(uint8_t OB_IWDG, uint8_t OB_STOP2, uint8_t OB_STDBY) {
+  uint32_t rdpuser_tmp = RDP_USER_Key;
 
-    FLASH_STS status = FLASH_COMPL;
+  FLASH_STS status = FLASH_COMPL;
 
-    /* Check the parameters */
-    assert_param(IS_OB_IWDG_SOURCE(OB_IWDG));
-    assert_param(IS_OB_STOP2_SOURCE(OB_STOP2));
-    assert_param(IS_OB_STDBY_SOURCE(OB_STDBY));
-  
-    /* Get the actual read protection L2 Option Byte value */
-    if (FLASH_GetReadOutProtectionL2STS() != RESET)
-    {
-        status = FLASH_ERR_RDP2;
-        return status;
-    }
+  /* Check the parameters */
+  assert_param(IS_OB_IWDG_SOURCE(OB_IWDG));
+  assert_param(IS_OB_STOP2_SOURCE(OB_STOP2));
+  assert_param(IS_OB_STDBY_SOURCE(OB_STDBY));
 
-    /* Get the actual read protection Option Byte value */
-    if (FLASH_GetReadOutProtectionSTS() != RESET)
-    {
-        rdpuser_tmp = 0xFFF00000;
-    }
+  /* Get the actual read protection L2 Option Byte value */
+  if (FLASH_GetReadOutProtectionL2STS() != RESET) {
+    status = FLASH_ERR_RDP2;
+    return status;
+  }
 
-    /* Authorize the small information block programming */
-    FLASH->OPTKEY = FLASH_KEY1;
-    FLASH->OPTKEY = FLASH_KEY2;
+  /* Get the actual read protection Option Byte value */
+  if (FLASH_GetReadOutProtectionSTS() != RESET) {
+    rdpuser_tmp = 0xFFF00000;
+  }
 
-    /* Clears the FLASH's pending flags */
-    FLASH_ClearFlag(FLASH_STS_CLRFLAG);
+  /* Authorize the small information block programming */
+  FLASH->OPTKEY = FLASH_KEY1;
+  FLASH->OPTKEY = FLASH_KEY2;
+
+  /* Clears the FLASH's pending flags */
+  FLASH_ClearFlag(FLASH_STS_CLRFLAG);
+  /* Wait for last operation to be completed */
+  status = FLASH_WaitForLastOpt(EraseTimeout);
+
+  if (status == FLASH_COMPL) {
+    /* if the previous operation is completed, proceed to erase the option bytes */
+    FLASH->CTRL |= CTRL_Set_OPTER;
+    FLASH->CTRL |= CTRL_Set_START;
     /* Wait for last operation to be completed */
     status = FLASH_WaitForLastOpt(EraseTimeout);
 
-    if (status == FLASH_COMPL)
-    {
-        /* if the previous operation is completed, proceed to erase the option bytes */
-        FLASH->CTRL |= CTRL_Set_OPTER;
-        FLASH->CTRL |= CTRL_Set_START;
-        /* Wait for last operation to be completed */
-        status = FLASH_WaitForLastOpt(EraseTimeout);
+    if (status == FLASH_COMPL) {
+      /* Clears the FLASH's pending flags */
+      FLASH_ClearFlag(FLASH_STS_CLRFLAG);
 
-        if (status == FLASH_COMPL)
-        {
-            /* Clears the FLASH's pending flags */
-            FLASH_ClearFlag(FLASH_STS_CLRFLAG);
+      /* if the erase operation is completed, disable the OPTER Bit */
+      FLASH->CTRL &= CTRL_Reset_OPTER;
 
-            /* if the erase operation is completed, disable the OPTER Bit */
-            FLASH->CTRL &= CTRL_Reset_OPTER;
+      /* Enable the Option Bytes Programming operation */
+      FLASH->CTRL |= CTRL_Set_OPTPG;
+      /* Restore the last read protection Option Byte value */
+      OBT->USER_RDP = (uint32_t)rdpuser_tmp | (((uint32_t)(OB_IWDG | OB_STOP2 | OB_STDBY)) << 16);
+      /* Wait for last operation to be completed */
+      status = FLASH_WaitForLastOpt(ProgramTimeout);
 
-            /* Enable the Option Bytes Programming operation */
-            FLASH->CTRL |= CTRL_Set_OPTPG;
-            /* Restore the last read protection Option Byte value */
-            OBT->USER_RDP =
-                (uint32_t)rdpuser_tmp
-                | (((uint32_t)(OB_IWDG | OB_STOP2 | OB_STDBY )) << 16);
-            /* Wait for last operation to be completed */
-            status = FLASH_WaitForLastOpt(ProgramTimeout);
-
-            if (status != FLASH_TIMEOUT)
-            {
-                /* if the program operation is completed, disable the OPTPG Bit */
-                FLASH->CTRL &= CTRL_Reset_OPTPG;
-            }
-        }
-        else
-        {
-            if (status != FLASH_TIMEOUT)
-            {
-                /* Disable the OPTER Bit */
-                FLASH->CTRL &= CTRL_Reset_OPTER;
-            }
-        }
+      if (status != FLASH_TIMEOUT) {
+        /* if the program operation is completed, disable the OPTPG Bit */
+        FLASH->CTRL &= CTRL_Reset_OPTPG;
+      }
+    } else {
+      if (status != FLASH_TIMEOUT) {
+        /* Disable the OPTER Bit */
+        FLASH->CTRL &= CTRL_Reset_OPTER;
+      }
     }
+  }
 
-    /* Return the Option Byte program Status */
-    return status;
+  /* Return the Option Byte program Status */
+  return status;
 }
 
 /**
  * @brief  Programs the FLASH User Option Byte: nBOOT0 / nBOOT1 / nSWBOOT0 / BOR_LEV[2:0].
  * @note   This function can be used for n32l40x devices.
- * @param OB2_nBOOT0 
+ * @param OB2_nBOOT0
  *   This parameter can be one of the following values:
  *     @arg OB2_NBOOT0_SET Set nBOOT0
  *     @arg OB2_NBOOT0_CLR Clear nBOOT0
- * @param OB2_nBOOT1 
+ * @param OB2_nBOOT1
  *   This parameter can be one of the following values:
  *     @arg OB2_NBOOT1_SET Set nBOOT1
  *     @arg OB2_NBOOT1_CLR Clear nBOOT1
- * @param OB2_nSWBOOT0 
+ * @param OB2_nSWBOOT0
  *   This parameter can be one of the following values:
  *     @arg OB2_NSWBOOT0_SET Set nSWBOOT0
  *     @arg OB2_NSWBOOT0_CLR Clear nSWBOOT0
-* @param OB2_BOR_LEV[2:0] 
+ * @param OB2_BOR_LEV[2:0]
  *   This parameter can be one of the following values:
- *     @arg OB2_BOR_LEV0 
- *     @arg OB2_BOR_LEV1 
- *     @arg OB2_BOR_LEV2 
- *     @arg OB2_BOR_LEV3 
- *     @arg OB2_BOR_LEV4 
- *     @arg OB2_BOR_LEV5 
- *     @arg OB2_BOR_LEV6 
- *     @arg OB2_BOR_LEV7 
+ *     @arg OB2_BOR_LEV0
+ *     @arg OB2_BOR_LEV1
+ *     @arg OB2_BOR_LEV2
+ *     @arg OB2_BOR_LEV3
+ *     @arg OB2_BOR_LEV4
+ *     @arg OB2_BOR_LEV5
+ *     @arg OB2_BOR_LEV6
+ *     @arg OB2_BOR_LEV7
  * @return FLASH Status: The returned value can be: FLASH_BUSY, FLASH_ERR_RDKEY,
  *         FLASH_ERR_PG, FLASH_ERR_PV, FLASH_ERR_WRP, FLASH_COMPL,
  *         FLASH_ERR_EV, FLASH_ERR_RDP2 or FLASH_TIMEOUT.
  */
-FLASH_STS FLASH_ConfigUserOB2(uint8_t OB2_nBOOT0, uint8_t OB2_nBOOT1,
-                              uint8_t OB2_nSWBOOT0, uint8_t OB2_BOR_LEV)
-{
-    uint32_t rdpuser_tmp = (RDP_USER_Key | FLASH_USER_USER);
-    uint32_t rdp2user2_tmp = 0xFF00FFFF;
+FLASH_STS FLASH_ConfigUserOB2(uint8_t OB2_nBOOT0, uint8_t OB2_nBOOT1, uint8_t OB2_nSWBOOT0, uint8_t OB2_BOR_LEV) {
+  uint32_t rdpuser_tmp   = (RDP_USER_Key | FLASH_USER_USER);
+  uint32_t rdp2user2_tmp = 0xFF00FFFF;
 
-    FLASH_STS status = FLASH_COMPL;
+  FLASH_STS status = FLASH_COMPL;
 
-    /* Check the parameters */
-    assert_param(IS_OB2_NBOOT0_SOURCE(OB2_nBOOT0));
-    assert_param(IS_OB2_NBOOT1_SOURCE(OB2_nBOOT1));
-    assert_param(IS_OB2_NSWBOOT0_SOURCE(OB2_nSWBOOT0));
-    assert_param(IS_OB2_BOR_LEV_SOURCE(OB2_BOR_LEV));
-  
-    /* Get the actual read protection L2 Option Byte value */
-    if (FLASH_GetReadOutProtectionL2STS() != RESET)
-    {
-        status = FLASH_ERR_RDP2;
-        return status;
-    }
+  /* Check the parameters */
+  assert_param(IS_OB2_NBOOT0_SOURCE(OB2_nBOOT0));
+  assert_param(IS_OB2_NBOOT1_SOURCE(OB2_nBOOT1));
+  assert_param(IS_OB2_NSWBOOT0_SOURCE(OB2_nSWBOOT0));
+  assert_param(IS_OB2_BOR_LEV_SOURCE(OB2_BOR_LEV));
 
-    /* Get the actual read protection Option Byte value */
-    if (FLASH_GetReadOutProtectionSTS() != RESET)
-    {
-        rdpuser_tmp = 0xFFFF0000;
-    }
+  /* Get the actual read protection L2 Option Byte value */
+  if (FLASH_GetReadOutProtectionL2STS() != RESET) {
+    status = FLASH_ERR_RDP2;
+    return status;
+  }
 
-    /* Authorize the small information block programming */
-    FLASH->OPTKEY = FLASH_KEY1;
-    FLASH->OPTKEY = FLASH_KEY2;
+  /* Get the actual read protection Option Byte value */
+  if (FLASH_GetReadOutProtectionSTS() != RESET) {
+    rdpuser_tmp = 0xFFFF0000;
+  }
 
-    /* Clears the FLASH's pending flags */
-    FLASH_ClearFlag(FLASH_STS_CLRFLAG);
+  /* Authorize the small information block programming */
+  FLASH->OPTKEY = FLASH_KEY1;
+  FLASH->OPTKEY = FLASH_KEY2;
+
+  /* Clears the FLASH's pending flags */
+  FLASH_ClearFlag(FLASH_STS_CLRFLAG);
+  /* Wait for last operation to be completed */
+  status = FLASH_WaitForLastOpt(EraseTimeout);
+
+  if (status == FLASH_COMPL) {
+    /* if the previous operation is completed, proceed to erase the option bytes */
+    FLASH->CTRL |= CTRL_Set_OPTER;
+    FLASH->CTRL |= CTRL_Set_START;
     /* Wait for last operation to be completed */
     status = FLASH_WaitForLastOpt(EraseTimeout);
 
-    if (status == FLASH_COMPL)
-    {
-        /* if the previous operation is completed, proceed to erase the option bytes */
-        FLASH->CTRL |= CTRL_Set_OPTER;
-        FLASH->CTRL |= CTRL_Set_START;
+    if (status == FLASH_COMPL) {
+      /* Clears the FLASH's pending flags */
+      FLASH_ClearFlag(FLASH_STS_CLRFLAG);
+
+      /* if the erase operation is completed, disable the OPTER Bit */
+      FLASH->CTRL &= CTRL_Reset_OPTER;
+
+      /* Enable the Option Bytes Programming operation */
+      FLASH->CTRL |= CTRL_Set_OPTPG;
+
+      /* Restore the last RDP1 Option Byte value */
+      OBT->USER_RDP = (uint32_t)rdpuser_tmp;
+
+      /* Wait for last operation to be completed */
+      status = FLASH_WaitForLastOpt(ProgramTimeout);
+
+      if (status == FLASH_COMPL) {
+        /* Clears the FLASH's pending flags */
+        FLASH_ClearFlag(FLASH_STS_CLRFLAG);
+
+        /* Restore the last RDP2 Option Byte value */
+        OBT->USER2_RDP2 = (uint32_t)rdp2user2_tmp | (((uint32_t)(OB2_nBOOT0) | (uint32_t)(OB2_nBOOT1) | (uint32_t)(OB2_nSWBOOT0) | (uint32_t)(OB2_BOR_LEV)) << 16);
+
         /* Wait for last operation to be completed */
-        status = FLASH_WaitForLastOpt(EraseTimeout);
+        status = FLASH_WaitForLastOpt(ProgramTimeout);
+      }
 
-        if (status == FLASH_COMPL)
-        {
-            /* Clears the FLASH's pending flags */
-            FLASH_ClearFlag(FLASH_STS_CLRFLAG);
-
-            /* if the erase operation is completed, disable the OPTER Bit */
-            FLASH->CTRL &= CTRL_Reset_OPTER;
-
-            /* Enable the Option Bytes Programming operation */
-            FLASH->CTRL |= CTRL_Set_OPTPG;
-
-            /* Restore the last RDP1 Option Byte value */
-            OBT->USER_RDP = (uint32_t)rdpuser_tmp;
-
-            /* Wait for last operation to be completed */
-            status = FLASH_WaitForLastOpt(ProgramTimeout);
-
-            if (status == FLASH_COMPL)
-            {
-                /* Clears the FLASH's pending flags */
-                FLASH_ClearFlag(FLASH_STS_CLRFLAG);
-
-                /* Restore the last RDP2 Option Byte value */
-                OBT->USER2_RDP2 = (uint32_t)rdp2user2_tmp | (((uint32_t)(OB2_nBOOT0)   | (uint32_t)(OB2_nBOOT1)  \
-                                                         | (uint32_t)(OB2_nSWBOOT0) | (uint32_t)(OB2_BOR_LEV)) << 16);
-
-                /* Wait for last operation to be completed */
-                status = FLASH_WaitForLastOpt(ProgramTimeout);
-            }
-
-            if (status != FLASH_TIMEOUT)
-            {
-                /* if the program operation is completed, disable the OPTPG Bit */
-                FLASH->CTRL &= CTRL_Reset_OPTPG;
-            }
-        }
-        else
-        {
-            if (status != FLASH_TIMEOUT)
-            {
-                /* Disable the OPTER Bit */
-                FLASH->CTRL &= CTRL_Reset_OPTER;
-            }
-        }
+      if (status != FLASH_TIMEOUT) {
+        /* if the program operation is completed, disable the OPTPG Bit */
+        FLASH->CTRL &= CTRL_Reset_OPTPG;
+      }
+    } else {
+      if (status != FLASH_TIMEOUT) {
+        /* Disable the OPTER Bit */
+        FLASH->CTRL &= CTRL_Reset_OPTER;
+      }
     }
+  }
 
-    /* Return the Option Byte program Status */
-    return status;
+  /* Return the Option Byte program Status */
+  return status;
 }
 
 /**
@@ -1266,10 +1160,9 @@ FLASH_STS FLASH_ConfigUserOB2(uint8_t OB2_nBOOT0, uint8_t OB2_nBOOT1,
  * @return The FLASH User Option Bytes values:IWDG_SW(Bit0), RST_STOP(Bit1)
  *         and RST_STDBY(Bit2).
  */
-uint32_t FLASH_GetUserOB(void)
-{
-    /* Return the User Option Byte */
-    return (uint32_t)(FLASH->OB >> 2);
+uint32_t FLASH_GetUserOB(void) {
+  /* Return the User Option Byte */
+  return (uint32_t)(FLASH->OB >> 2);
 }
 
 /**
@@ -1277,10 +1170,9 @@ uint32_t FLASH_GetUserOB(void)
  * @note   This function can be used for n32l40x devices.
  * @return The FLASH Write Protection  Option Bytes Register value
  */
-uint32_t FLASH_GetWriteProtectionOB(void)
-{
-    /* Return the Flash write protection Register value */
-    return (uint32_t)(FLASH->WRP);
+uint32_t FLASH_GetWriteProtectionOB(void) {
+  /* Return the Flash write protection Register value */
+  return (uint32_t)(FLASH->WRP);
 }
 
 /**
@@ -1288,18 +1180,14 @@ uint32_t FLASH_GetWriteProtectionOB(void)
  * @note   This function can be used for n32l40x devices.
  * @return FLASH ReadOut Protection Status(SET or RESET)
  */
-FlagStatus FLASH_GetReadOutProtectionSTS(void)
-{
-    FlagStatus readoutstatus = RESET;
-    if ((FLASH->OB & RDPRTL1_MSK) != (uint32_t)RESET)
-    {
-        readoutstatus = SET;
-    }
-    else
-    {
-        readoutstatus = RESET;
-    }
-    return readoutstatus;
+FlagStatus FLASH_GetReadOutProtectionSTS(void) {
+  FlagStatus readoutstatus = RESET;
+  if ((FLASH->OB & RDPRTL1_MSK) != (uint32_t)RESET) {
+    readoutstatus = SET;
+  } else {
+    readoutstatus = RESET;
+  }
+  return readoutstatus;
 }
 
 /**
@@ -1307,18 +1195,14 @@ FlagStatus FLASH_GetReadOutProtectionSTS(void)
  * @note   This function can be used for n32l40x devices.
  * @return FLASH ReadOut Protection L2 Status(SET or RESET)
  */
-FlagStatus FLASH_GetReadOutProtectionL2STS(void)
-{
-    FlagStatus readoutstatus = RESET;
-    if ((FLASH->OB & RDPRTL2_MSK) != (uint32_t)RESET)
-    {
-        readoutstatus = SET;
-    }
-    else
-    {
-        readoutstatus = RESET;
-    }
-    return readoutstatus;
+FlagStatus FLASH_GetReadOutProtectionL2STS(void) {
+  FlagStatus readoutstatus = RESET;
+  if ((FLASH->OB & RDPRTL2_MSK) != (uint32_t)RESET) {
+    readoutstatus = SET;
+  } else {
+    readoutstatus = RESET;
+  }
+  return readoutstatus;
 }
 
 /**
@@ -1326,20 +1210,16 @@ FlagStatus FLASH_GetReadOutProtectionL2STS(void)
  * @note   This function can be used for n32l40x devices.
  * @return FLASH Prefetch Buffer Status (SET or RESET).
  */
-FlagStatus FLASH_GetPrefetchBufSTS(void)
-{
-    FlagStatus bitstatus = RESET;
+FlagStatus FLASH_GetPrefetchBufSTS(void) {
+  FlagStatus bitstatus = RESET;
 
-    if ((FLASH->AC & AC_PRFTBS_MSK) != (uint32_t)RESET)
-    {
-        bitstatus = SET;
-    }
-    else
-    {
-        bitstatus = RESET;
-    }
-    /* Return the new state of FLASH Prefetch Buffer Status (SET or RESET) */
-    return bitstatus;
+  if ((FLASH->AC & AC_PRFTBS_MSK) != (uint32_t)RESET) {
+    bitstatus = SET;
+  } else {
+    bitstatus = RESET;
+  }
+  /* Return the new state of FLASH Prefetch Buffer Status (SET or RESET) */
+  return bitstatus;
 }
 
 /**
@@ -1347,20 +1227,16 @@ FlagStatus FLASH_GetPrefetchBufSTS(void)
  * @note   This function can be used for n32l40x devices.
  * @return FLASH SMPSEL (FLASH_SMP1 or FLASH_SMP2).
  */
-FLASH_SMPSEL FLASH_GetSMPSELStatus(void)
-{
-    FLASH_SMPSEL bitstatus = FLASH_SMP1;
+FLASH_SMPSEL FLASH_GetSMPSELStatus(void) {
+  FLASH_SMPSEL bitstatus = FLASH_SMP1;
 
-    if ((FLASH->CTRL & CTRL_Reset_SMPSEL) != (uint32_t)FLASH_SMP1)
-    {
-        bitstatus = FLASH_SMP2;
-    }
-    else
-    {
-        bitstatus = FLASH_SMP1;
-    }
-    /* Return the new state of FLASH SMPSEL (FLASH_SMP1 or FLASH_SMP2) */
-    return bitstatus;
+  if ((FLASH->CTRL & CTRL_Reset_SMPSEL) != (uint32_t)FLASH_SMP1) {
+    bitstatus = FLASH_SMP2;
+  } else {
+    bitstatus = FLASH_SMP1;
+  }
+  /* Return the new state of FLASH SMPSEL (FLASH_SMP1 or FLASH_SMP2) */
+  return bitstatus;
 }
 
 /**
@@ -1374,22 +1250,18 @@ FLASH_SMPSEL FLASH_GetSMPSELStatus(void)
  * @param Cmd new state of the specified Flash interrupts.
  *   This parameter can be: ENABLE or DISABLE.
  */
-void FLASH_INTConfig(uint32_t FLASH_INT, FunctionalState Cmd)
-{
-    /* Check the parameters */
-    assert_param(IS_FLASH_INT(FLASH_INT));
-    assert_param(IS_FUNCTIONAL_STATE(Cmd));
+void FLASH_INTConfig(uint32_t FLASH_INT, FunctionalState Cmd) {
+  /* Check the parameters */
+  assert_param(IS_FLASH_INT(FLASH_INT));
+  assert_param(IS_FUNCTIONAL_STATE(Cmd));
 
-    if (Cmd != DISABLE)
-    {
-        /* Enable the interrupt sources */
-        FLASH->CTRL |= FLASH_INT;
-    }
-    else
-    {
-        /* Disable the interrupt sources */
-        FLASH->CTRL &= ~(uint32_t)FLASH_INT;
-    }
+  if (Cmd != DISABLE) {
+    /* Enable the interrupt sources */
+    FLASH->CTRL |= FLASH_INT;
+  } else {
+    /* Disable the interrupt sources */
+    FLASH->CTRL &= ~(uint32_t)FLASH_INT;
+  }
 }
 
 /**
@@ -1406,37 +1278,27 @@ void FLASH_INTConfig(uint32_t FLASH_INT, FunctionalState Cmd)
  *     @arg FLASH_FLAG_OBERR FLASH Option Byte error flag
  * @return The new state of FLASH_FLAG (SET or RESET).
  */
-FlagStatus FLASH_GetFlagSTS(uint32_t FLASH_FLAG)
-{
-    FlagStatus bitstatus = RESET;
+FlagStatus FLASH_GetFlagSTS(uint32_t FLASH_FLAG) {
+  FlagStatus bitstatus = RESET;
 
-    /* Check the parameters */
-    assert_param(IS_FLASH_GET_FLAG(FLASH_FLAG));
-    if (FLASH_FLAG == FLASH_FLAG_OBERR)
-    {
-        if ((FLASH->OB & FLASH_FLAG_OBERR) != (uint32_t)RESET)
-        {
-            bitstatus = SET;
-        }
-        else
-        {
-            bitstatus = RESET;
-        }
+  /* Check the parameters */
+  assert_param(IS_FLASH_GET_FLAG(FLASH_FLAG));
+  if (FLASH_FLAG == FLASH_FLAG_OBERR) {
+    if ((FLASH->OB & FLASH_FLAG_OBERR) != (uint32_t)RESET) {
+      bitstatus = SET;
+    } else {
+      bitstatus = RESET;
     }
-    else
-    {
-        if ((FLASH->STS & FLASH_FLAG) != (uint32_t)RESET)
-        {
-            bitstatus = SET;
-        }
-        else
-        {
-            bitstatus = RESET;
-        }
+  } else {
+    if ((FLASH->STS & FLASH_FLAG) != (uint32_t)RESET) {
+      bitstatus = SET;
+    } else {
+      bitstatus = RESET;
     }
+  }
 
-    /* Return the new state of FLASH_FLAG (SET or RESET) */
-    return bitstatus;
+  /* Return the new state of FLASH_FLAG (SET or RESET) */
+  return bitstatus;
 }
 
 /**
@@ -1450,13 +1312,12 @@ FlagStatus FLASH_GetFlagSTS(uint32_t FLASH_FLAG)
  *     @arg FLASH_FLAG_EOP FLASH End of Operation flag
  *     @arg FLASH_FLAG_EVERR FLASH Erase Verify ERROR flag
  */
-void FLASH_ClearFlag(uint32_t FLASH_FLAG)
-{
-    /* Check the parameters */
-    assert_param(IS_FLASH_CLEAR_FLAG(FLASH_FLAG));
+void FLASH_ClearFlag(uint32_t FLASH_FLAG) {
+  /* Check the parameters */
+  assert_param(IS_FLASH_CLEAR_FLAG(FLASH_FLAG));
 
-    /* Clear the flags */
-    FLASH->STS |= FLASH_FLAG;
+  /* Clear the flags */
+  FLASH->STS |= FLASH_FLAG;
 }
 
 /**
@@ -1467,49 +1328,33 @@ void FLASH_ClearFlag(uint32_t FLASH_FLAG)
  *         FLASH_ERR_PG, FLASH_ERR_PV, FLASH_ERR_WRP, FLASH_COMPL,
  *         FLASH_ERR_EV or FLASH_TIMEOUT.
  */
-FLASH_STS FLASH_GetSTS(void)
-{
-    FLASH_STS flashstatus = FLASH_COMPL;
+FLASH_STS FLASH_GetSTS(void) {
+  FLASH_STS flashstatus = FLASH_COMPL;
 
-    if ((FLASH->STS & FLASH_FLAG_BUSY) == FLASH_FLAG_BUSY)
-    {
-        flashstatus = FLASH_BUSY;
-    }
-    else
-    {
-        if ((FLASH->STS & FLASH_FLAG_PGERR) != 0)
-        {
-            flashstatus = FLASH_ERR_PG;
+  if ((FLASH->STS & FLASH_FLAG_BUSY) == FLASH_FLAG_BUSY) {
+    flashstatus = FLASH_BUSY;
+  } else {
+    if ((FLASH->STS & FLASH_FLAG_PGERR) != 0) {
+      flashstatus = FLASH_ERR_PG;
+    } else {
+      if ((FLASH->STS & FLASH_FLAG_PVERR) != 0) {
+        flashstatus = FLASH_ERR_PV;
+      } else {
+        if ((FLASH->STS & FLASH_FLAG_WRPERR) != 0) {
+          flashstatus = FLASH_ERR_WRP;
+        } else {
+          if ((FLASH->STS & FLASH_FLAG_EVERR) != 0) {
+            flashstatus = FLASH_ERR_EV;
+          } else {
+            flashstatus = FLASH_COMPL;
+          }
         }
-        else
-        {
-            if ((FLASH->STS & FLASH_FLAG_PVERR) != 0)
-            {
-                flashstatus = FLASH_ERR_PV;
-            }
-            else
-            {
-                if ((FLASH->STS & FLASH_FLAG_WRPERR) != 0)
-                {
-                    flashstatus = FLASH_ERR_WRP;
-                }
-                else
-                {
-                    if ((FLASH->STS & FLASH_FLAG_EVERR) != 0)
-                    {
-                        flashstatus = FLASH_ERR_EV;
-                    }
-                    else
-                    {
-                        flashstatus = FLASH_COMPL;
-                    }
-                }
-            }
-        }
+      }
     }
+  }
 
-    /* Return the Flash Status */
-    return flashstatus;
+  /* Return the Flash Status */
+  return flashstatus;
 }
 
 /**
@@ -1521,24 +1366,21 @@ FLASH_STS FLASH_GetSTS(void)
  *         FLASH_ERR_PG, FLASH_ERR_PV, FLASH_ERR_WRP, FLASH_COMPL,
  *         FLASH_ERR_EV or FLASH_TIMEOUT.
  */
-FLASH_STS FLASH_WaitForLastOpt(uint32_t Timeout)
-{
-    FLASH_STS status = FLASH_COMPL;
+FLASH_STS FLASH_WaitForLastOpt(uint32_t Timeout) {
+  FLASH_STS status = FLASH_COMPL;
 
-    /* Check for the Flash Status */
+  /* Check for the Flash Status */
+  status = FLASH_GetSTS();
+  /* Wait for a Flash operation to complete or a TIMEOUT to occur */
+  while ((status == FLASH_BUSY) && (Timeout != 0x00)) {
     status = FLASH_GetSTS();
-    /* Wait for a Flash operation to complete or a TIMEOUT to occur */
-    while ((status == FLASH_BUSY) && (Timeout != 0x00))
-    {
-        status = FLASH_GetSTS();
-        Timeout--;
-    }
-    if (Timeout == 0x00)
-    {
-        status = FLASH_TIMEOUT;
-    }
-    /* Return the operation status */
-    return status;
+    Timeout--;
+  }
+  if (Timeout == 0x00) {
+    status = FLASH_TIMEOUT;
+  }
+  /* Return the operation status */
+  return status;
 }
 
 /**

@@ -100,11 +100,10 @@
  *     @arg IWDG_WRITE_ENABLE Enable write access to IWDG_PR and IWDG_RLR registers
  *     @arg IWDG_WRITE_DISABLE Disable write access to IWDG_PR and IWDG_RLR registers
  */
-void IWDG_WriteConfig(uint16_t IWDG_WriteAccess)
-{
-    /* Check the parameters */
-    assert_param(IS_IWDG_WRITE(IWDG_WriteAccess));
-    IWDG->KEY = IWDG_WriteAccess;
+void IWDG_WriteConfig(uint16_t IWDG_WriteAccess) {
+  /* Check the parameters */
+  assert_param(IS_IWDG_WRITE(IWDG_WriteAccess));
+  IWDG->KEY = IWDG_WriteAccess;
 }
 
 /**
@@ -119,11 +118,10 @@ void IWDG_WriteConfig(uint16_t IWDG_WriteAccess)
  *     @arg IWDG_PRESCALER_DIV128 IWDG prescaler set to 128
  *     @arg IWDG_PRESCALER_DIV256 IWDG prescaler set to 256
  */
-void IWDG_SetPrescalerDiv(uint8_t IWDG_Prescaler)
-{
-    /* Check the parameters */
-    assert_param(IS_IWDG_PRESCALER_DIV(IWDG_Prescaler));
-    IWDG->PREDIV = IWDG_Prescaler;
+void IWDG_SetPrescalerDiv(uint8_t IWDG_Prescaler) {
+  /* Check the parameters */
+  assert_param(IS_IWDG_PRESCALER_DIV(IWDG_Prescaler));
+  IWDG->PREDIV = IWDG_Prescaler;
 }
 
 /**
@@ -131,29 +129,22 @@ void IWDG_SetPrescalerDiv(uint8_t IWDG_Prescaler)
  * @param Reload specifies the IWDG Reload value.
  *   This parameter must be a number between 0 and 0x0FFF.
  */
-void IWDG_CntReload(uint16_t Reload)
-{
-    /* Check the parameters */
-    assert_param(IS_IWDG_RELOAD(Reload));
-    IWDG->RELV = Reload;
+void IWDG_CntReload(uint16_t Reload) {
+  /* Check the parameters */
+  assert_param(IS_IWDG_RELOAD(Reload));
+  IWDG->RELV = Reload;
 }
 
 /**
  * @brief  Reloads IWDG counter with value defined in the reload register
  *   (write access to IWDG_PR and IWDG_RLR registers disabled).
  */
-void IWDG_ReloadKey(void)
-{
-    IWDG->KEY = KEY_ReloadKey;
-}
+void IWDG_ReloadKey(void) { IWDG->KEY = KEY_ReloadKey; }
 
 /**
  * @brief  Enables IWDG (write access to IWDG_PR and IWDG_RLR registers disabled).
  */
-void IWDG_Enable(void)
-{
-    IWDG->KEY = KEY_EnableKey;
-}
+void IWDG_Enable(void) { IWDG->KEY = KEY_EnableKey; }
 
 /**
  * @brief  Checks whether the specified IWDG flag is set or not.
@@ -163,21 +154,17 @@ void IWDG_Enable(void)
  *     @arg IWDG_CRVU_FLAG Reload Value Update on going
  * @return The new state of IWDG_FLAG (SET or RESET).
  */
-FlagStatus IWDG_GetStatus(uint16_t IWDG_FLAG)
-{
-    FlagStatus bitstatus = RESET;
-    /* Check the parameters */
-    assert_param(IS_IWDG_FLAG(IWDG_FLAG));
-    if ((IWDG->STS & IWDG_FLAG) != (uint32_t)RESET)
-    {
-        bitstatus = SET;
-    }
-    else
-    {
-        bitstatus = RESET;
-    }
-    /* Return the flag status */
-    return bitstatus;
+FlagStatus IWDG_GetStatus(uint16_t IWDG_FLAG) {
+  FlagStatus bitstatus = RESET;
+  /* Check the parameters */
+  assert_param(IS_IWDG_FLAG(IWDG_FLAG));
+  if ((IWDG->STS & IWDG_FLAG) != (uint32_t)RESET) {
+    bitstatus = SET;
+  } else {
+    bitstatus = RESET;
+  }
+  /* Return the flag status */
+  return bitstatus;
 }
 
 /**

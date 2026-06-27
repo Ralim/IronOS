@@ -9,10 +9,10 @@
  *  drops. Mirrors the role of Sequre's HUB238/FS2711 external-PD path.
  */
 
+#include "Power.h"
 #include "BSP.h"
 #include "BSP_Power.h"
 #include "Pins.h"
-#include "Power.h"
 #include "Settings.h"
 #include "configuration.h"
 #include "n32l40x.h"

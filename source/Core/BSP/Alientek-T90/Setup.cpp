@@ -13,10 +13,10 @@
  *     update IRQ runs the PWM-safety + heater-duty write.
  *   - The ADC injected-EOC IRQ (ADC_IRQHandler, IRQ.cpp) notifies the PID task.
  */
+#include "Setup.h"
 #include "BSP.h"
 #include "FreeRTOS.h"
 #include "Pins.h"
-#include "Setup.h"
 #include "configuration.h"
 #include "history.hpp"
 #include "n32l40x.h"
@@ -31,7 +31,7 @@
 // which is called from BOTH the PID thread (Vin ch2) and the GUI thread (NTC ch3). Without
 // serialisation those reads race: one thread re-points the regular rank while another is mid-conversion,
 // so a caller gets a different channel's value. This mutex makes each select+convert+read atomic.
-static StaticSemaphore_t adcRegularMutexBuffer;        // FreeRTOS here is static-allocation only
+static StaticSemaphore_t adcRegularMutexBuffer; // FreeRTOS here is static-allocation only
 static SemaphoreHandle_t adcRegularMutex = NULL;
 
 // Bounded spins on ADC hardware flags so a wedged ADC can never hang the PID thread. A real 71.5-cycle
@@ -54,7 +54,7 @@ static const uint16_t tempMeasureTicks = 15;
 // ~ms to recover after the heater switches off; sampling at the heater-off instant reads the
 // transient far too low, so the PID never converges and drives full power. ~3ms. TODO scope-tune
 // for power vs accuracy (larger = more settling but lower max heater duty).
-static const uint16_t holdoffTicks     = 48;
+static const uint16_t holdoffTicks = 48;
 
 // Globals consumed by the Core (declared extern in BSP.h).
 const uint16_t powerPWM = 255;
@@ -108,7 +108,8 @@ static uint16_t readRegularChannel(uint8_t channel) {
     ADC_ClearFlag(ADC, ADC_FLAG_ENDC);
     ADC_EnableSoftwareStartConv(ADC, ENABLE);
     uint32_t to = ADC_POLL_TIMEOUT;
-    while (ADC_GetFlagStatus(ADC, ADC_FLAG_ENDC) == RESET && --to) {}
+    while (ADC_GetFlagStatus(ADC, ADC_FLAG_ENDC) == RESET && --to) {
+    }
     result = ADC_GetDat(ADC);
   }
   if (lock) {
@@ -209,9 +210,9 @@ static void MX_GPIO_Init(void) {
 
   // Analog inputs: the stock firmware drives PA1..PA5 as the ADC front-end (Vin=PA1, NTC=PA2,
   // tip=PA3, current=PA4, tip-detect=PA5). Configure all five as analog so every channel is valid.
-  io.Pin         = GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5;
-  io.GPIO_Mode   = GPIO_Mode_Analog;
-  io.GPIO_Pull   = GPIO_No_Pull;
+  io.Pin       = GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5;
+  io.GPIO_Mode = GPIO_Mode_Analog;
+  io.GPIO_Pull = GPIO_No_Pull;
   GPIO_InitPeripheral(GPIOA, &io);
 
   // Heater drive PA0 = TIM2_CH1 alternate function (sharp edges).
@@ -298,11 +299,11 @@ static void MX_ADC_Init(void) {
 
   ADC_InitType a;
   ADC_InitStruct(&a);
-  a.MultiChEn      = DISABLE;                // one regular channel at a time (see readRegularChannel)
+  a.MultiChEn      = DISABLE;               // one regular channel at a time (see readRegularChannel)
   a.ContinueConvEn = DISABLE;               // one regular shot per software start
   a.ExtTrigSelect  = ADC_EXT_TRIGCONV_NONE; // regular group is software-started
   a.DatAlign       = ADC_DAT_ALIGN_R;
-  a.ChsNumber      = 1;                      // single regular rank, swapped on demand
+  a.ChsNumber      = 1; // single regular rank, swapped on demand
   ADC_Init(ADC, &a);
 
   // Default regular rank (Vin); readRegularChannel() re-points this per call to
@@ -325,10 +326,12 @@ static void MX_ADC_Init(void) {
   // Power up the ADC and wait until it is ready, then calibrate.
   ADC_Enable(ADC, ENABLE);
   uint32_t to = ADC_POLL_TIMEOUT;
-  while (ADC_GetFlagStatusNew(ADC, ADC_FLAG_RDY) == RESET && --to) {}
+  while (ADC_GetFlagStatusNew(ADC, ADC_FLAG_RDY) == RESET && --to) {
+  }
   ADC_StartCalibration(ADC);
   to = ADC_POLL_TIMEOUT;
-  while (ADC_GetCalibrationStatus(ADC) != RESET && --to) {}
+  while (ADC_GetCalibrationStatus(ADC) != RESET && --to) {
+  }
 }
 
 // --- TIM2: heater PWM carrier on CH1 (PA0) ---

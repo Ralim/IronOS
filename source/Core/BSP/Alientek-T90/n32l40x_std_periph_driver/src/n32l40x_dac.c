@@ -103,12 +103,11 @@
 /**
  * @brief  Deinitializes the DAC peripheral registers to their default reset values.
  */
-void DAC_DeInit(void)
-{
-    /* Enable DAC reset state */
-    RCC_EnableAPB1PeriphReset(RCC_APB1_PERIPH_DAC, ENABLE);
-    /* Release DAC from reset state */
-    RCC_EnableAPB1PeriphReset(RCC_APB1_PERIPH_DAC, DISABLE);
+void DAC_DeInit(void) {
+  /* Enable DAC reset state */
+  RCC_EnableAPB1PeriphReset(RCC_APB1_PERIPH_DAC, ENABLE);
+  /* Release DAC from reset state */
+  RCC_EnableAPB1PeriphReset(RCC_APB1_PERIPH_DAC, DISABLE);
 }
 
 /**
@@ -121,31 +120,29 @@ void DAC_DeInit(void)
  * @param DAC_InitStruct pointer to a DAC_InitType structure that
  *        contains the configuration information for the specified DAC channel.
  */
-void DAC_Init(DAC_InitType* DAC_InitStruct)
-{
-    uint32_t tmpreg1 = 0, tmpreg2 = 0;
-    /* Check the DAC parameters */
-    assert_param(IS_DAC_TRIGGER(DAC_InitStruct->Trigger));
-    assert_param(IS_DAC_GENERATE_WAVE(DAC_InitStruct->WaveGen));
-    assert_param(IS_DAC_LFSR_UNMASK_TRIANGLE_AMPLITUDE(DAC_InitStruct->LfsrUnMaskTriAmp));
-    assert_param(IS_DAC_OUTPUT_BUFFER_STATE(DAC_InitStruct->BufferOutput));
-    /*---------------------------- DAC CTRL Configuration --------------------------*/
-    /* Get the DAC CTRL value */
-    tmpreg1 = DAC->CTRL;
-    /* Clear BOFFx, TENx, TSELx, WAVEx and MAMPx bits */
-    tmpreg1 &= ~(CTRL_CLEAR_MASK );
-    /* Configure for the selected DAC channel: buffer output, trigger, wave generation,
-       mask/amplitude for wave generation */
-    /* Set TSELx and TENx bits according to Trigger value */
-    /* Set WAVEx bits according to WaveGen value */
-    /* Set MAMPx bits according to LfsrUnMaskTriAmp value */
-    /* Set BOFFx bit according to BufferOutput value */
-    tmpreg2 = (DAC_InitStruct->Trigger | DAC_InitStruct->WaveGen | DAC_InitStruct->LfsrUnMaskTriAmp
-               | DAC_InitStruct->BufferOutput);
-    /* Calculate CTRL register value depending on DAC_Channel */
-    tmpreg1 |= tmpreg2 ;
-    /* Write to DAC CTRL */
-    DAC->CTRL = tmpreg1;
+void DAC_Init(DAC_InitType *DAC_InitStruct) {
+  uint32_t tmpreg1 = 0, tmpreg2 = 0;
+  /* Check the DAC parameters */
+  assert_param(IS_DAC_TRIGGER(DAC_InitStruct->Trigger));
+  assert_param(IS_DAC_GENERATE_WAVE(DAC_InitStruct->WaveGen));
+  assert_param(IS_DAC_LFSR_UNMASK_TRIANGLE_AMPLITUDE(DAC_InitStruct->LfsrUnMaskTriAmp));
+  assert_param(IS_DAC_OUTPUT_BUFFER_STATE(DAC_InitStruct->BufferOutput));
+  /*---------------------------- DAC CTRL Configuration --------------------------*/
+  /* Get the DAC CTRL value */
+  tmpreg1 = DAC->CTRL;
+  /* Clear BOFFx, TENx, TSELx, WAVEx and MAMPx bits */
+  tmpreg1 &= ~(CTRL_CLEAR_MASK);
+  /* Configure for the selected DAC channel: buffer output, trigger, wave generation,
+     mask/amplitude for wave generation */
+  /* Set TSELx and TENx bits according to Trigger value */
+  /* Set WAVEx bits according to WaveGen value */
+  /* Set MAMPx bits according to LfsrUnMaskTriAmp value */
+  /* Set BOFFx bit according to BufferOutput value */
+  tmpreg2 = (DAC_InitStruct->Trigger | DAC_InitStruct->WaveGen | DAC_InitStruct->LfsrUnMaskTriAmp | DAC_InitStruct->BufferOutput);
+  /* Calculate CTRL register value depending on DAC_Channel */
+  tmpreg1 |= tmpreg2;
+  /* Write to DAC CTRL */
+  DAC->CTRL = tmpreg1;
 }
 
 /**
@@ -153,17 +150,16 @@ void DAC_Init(DAC_InitType* DAC_InitStruct)
  * @param DAC_InitStruct pointer to a DAC_InitType structure which will
  *         be initialized.
  */
-void DAC_ClearStruct(DAC_InitType* DAC_InitStruct)
-{
-    /*--------------- Reset DAC init structure parameters values -----------------*/
-    /* Initialize the Trigger member */
-    DAC_InitStruct->Trigger = DAC_TRG_NONE;
-    /* Initialize the WaveGen member */
-    DAC_InitStruct->WaveGen = DAC_WAVEGEN_NONE;
-    /* Initialize the LfsrUnMaskTriAmp member */
-    DAC_InitStruct->LfsrUnMaskTriAmp = DAC_UNMASK_LFSRBIT0;
-    /* Initialize the BufferOutput member */
-    DAC_InitStruct->BufferOutput = DAC_BUFFOUTPUT_ENABLE;
+void DAC_ClearStruct(DAC_InitType *DAC_InitStruct) {
+  /*--------------- Reset DAC init structure parameters values -----------------*/
+  /* Initialize the Trigger member */
+  DAC_InitStruct->Trigger = DAC_TRG_NONE;
+  /* Initialize the WaveGen member */
+  DAC_InitStruct->WaveGen = DAC_WAVEGEN_NONE;
+  /* Initialize the LfsrUnMaskTriAmp member */
+  DAC_InitStruct->LfsrUnMaskTriAmp = DAC_UNMASK_LFSRBIT0;
+  /* Initialize the BufferOutput member */
+  DAC_InitStruct->BufferOutput = DAC_BUFFOUTPUT_ENABLE;
 }
 
 /**
@@ -175,20 +171,16 @@ void DAC_ClearStruct(DAC_InitType* DAC_InitStruct)
  * @param Cmd new state of the DAC channel.
  *   This parameter can be: ENABLE or DISABLE.
  */
-void DAC_Enable(FunctionalState Cmd)
-{
-    /* Check the parameters */
-    assert_param(IS_FUNCTIONAL_STATE(Cmd));
-    if (Cmd != DISABLE)
-    {
-        /* Enable the selected DAC channel */
-        DAC->CTRL |= DAC_CTRL_CHEN ;
-    }
-    else
-    {
-        /* Disable the selected DAC channel */
-        DAC->CTRL &= ~DAC_CTRL_CHEN ;
-    }
+void DAC_Enable(FunctionalState Cmd) {
+  /* Check the parameters */
+  assert_param(IS_FUNCTIONAL_STATE(Cmd));
+  if (Cmd != DISABLE) {
+    /* Enable the selected DAC channel */
+    DAC->CTRL |= DAC_CTRL_CHEN;
+  } else {
+    /* Disable the selected DAC channel */
+    DAC->CTRL &= ~DAC_CTRL_CHEN;
+  }
 }
 
 /**
@@ -200,20 +192,16 @@ void DAC_Enable(FunctionalState Cmd)
  * @param Cmd new state of the selected DAC channel DMA request.
  *   This parameter can be: ENABLE or DISABLE.
  */
-void DAC_DmaEnable(FunctionalState Cmd)
-{
-    /* Check the parameters */
-    assert_param(IS_FUNCTIONAL_STATE(Cmd));
-    if (Cmd != DISABLE)
-    {
-        /* Enable the selected DAC channel DMA request */
-        DAC->CTRL |= DAC_CTRL_DMAEN;
-    }
-    else
-    {
-        /* Disable the selected DAC channel DMA request */
-        DAC->CTRL &= ~DAC_CTRL_DMAEN;
-    }
+void DAC_DmaEnable(FunctionalState Cmd) {
+  /* Check the parameters */
+  assert_param(IS_FUNCTIONAL_STATE(Cmd));
+  if (Cmd != DISABLE) {
+    /* Enable the selected DAC channel DMA request */
+    DAC->CTRL |= DAC_CTRL_DMAEN;
+  } else {
+    /* Disable the selected DAC channel DMA request */
+    DAC->CTRL &= ~DAC_CTRL_DMAEN;
+  }
 }
 
 /**
@@ -225,20 +213,16 @@ void DAC_DmaEnable(FunctionalState Cmd)
  * @param Cmd new state of the selected DAC channel software trigger.
  *   This parameter can be: ENABLE or DISABLE.
  */
-void DAC_SoftTrgEnable(FunctionalState Cmd)
-{
-    /* Check the parameters */
-    assert_param(IS_FUNCTIONAL_STATE(Cmd));
-    if (Cmd != DISABLE)
-    {
-        /* Enable software trigger for the selected DAC channel */
-        DAC->SOTTR |= DAC_SOTTR_TREN ;
-    }
-    else
-    {
-        /* Disable software trigger for the selected DAC channel */
-        DAC->SOTTR &= ~(DAC_SOTTR_TREN);
-    }
+void DAC_SoftTrgEnable(FunctionalState Cmd) {
+  /* Check the parameters */
+  assert_param(IS_FUNCTIONAL_STATE(Cmd));
+  if (Cmd != DISABLE) {
+    /* Enable software trigger for the selected DAC channel */
+    DAC->SOTTR |= DAC_SOTTR_TREN;
+  } else {
+    /* Disable software trigger for the selected DAC channel */
+    DAC->SOTTR &= ~(DAC_SOTTR_TREN);
+  }
 }
 
 /**
@@ -247,20 +231,16 @@ void DAC_SoftTrgEnable(FunctionalState Cmd)
  * @param Cmd new state of the DAC channels software triggers.
  *   This parameter can be: ENABLE or DISABLE.
  */
-void DAC_SoftwareTrgEnable(FunctionalState Cmd)
-{
-    /* Check the parameters */
-    assert_param(IS_FUNCTIONAL_STATE(Cmd));
-    if (Cmd != DISABLE)
-    {
-        /* Enable software trigger for both DAC channels */
-        DAC->SOTTR |= DUAL_SWTRIG_SET;
-    }
-    else
-    {
-        /* Disable software trigger for both DAC channels */
-        DAC->SOTTR &= DUAL_SWTRIG_RESET;
-    }
+void DAC_SoftwareTrgEnable(FunctionalState Cmd) {
+  /* Check the parameters */
+  assert_param(IS_FUNCTIONAL_STATE(Cmd));
+  if (Cmd != DISABLE) {
+    /* Enable software trigger for both DAC channels */
+    DAC->SOTTR |= DUAL_SWTRIG_SET;
+  } else {
+    /* Disable software trigger for both DAC channels */
+    DAC->SOTTR &= DUAL_SWTRIG_RESET;
+  }
 }
 
 /**
@@ -276,25 +256,21 @@ void DAC_SoftwareTrgEnable(FunctionalState Cmd)
  * @param Cmd new state of the selected DAC channel wave generation.
  *   This parameter can be: ENABLE or DISABLE.
  */
-void DAC_WaveGenerationEnable(uint32_t DAC_Wave, FunctionalState Cmd)
-{
-	  __IO uint32_t tmp = 0;
-    /* Check the parameters */
-    assert_param(IS_DAC_WAVE(DAC_Wave));
-    assert_param(IS_FUNCTIONAL_STATE(Cmd));
-	  tmp=DAC->CTRL;
-	  tmp&=~(3<<6);
-    if (Cmd != DISABLE)
-    {
-        /* Enable the selected wave generation for the selected DAC channel */
-        tmp |= DAC_Wave;
-    }
-    else
-    {
-        /* Disable the selected wave generation for the selected DAC channel */
-        tmp&=~(3<<6);
-    }
-		DAC->CTRL =tmp;
+void DAC_WaveGenerationEnable(uint32_t DAC_Wave, FunctionalState Cmd) {
+  __IO uint32_t tmp = 0;
+  /* Check the parameters */
+  assert_param(IS_DAC_WAVE(DAC_Wave));
+  assert_param(IS_FUNCTIONAL_STATE(Cmd));
+  tmp = DAC->CTRL;
+  tmp &= ~(3 << 6);
+  if (Cmd != DISABLE) {
+    /* Enable the selected wave generation for the selected DAC channel */
+    tmp |= DAC_Wave;
+  } else {
+    /* Disable the selected wave generation for the selected DAC channel */
+    tmp &= ~(3 << 6);
+  }
+  DAC->CTRL = tmp;
 }
 
 /**
@@ -306,24 +282,19 @@ void DAC_WaveGenerationEnable(uint32_t DAC_Wave, FunctionalState Cmd)
  *     @arg DAC_ALIGN_R_12BIT 12bit right data alignment selected
  * @param Data Data to be loaded in the selected data holding register.
  */
-void DAC_SetChData(uint32_t DAC_Align, uint16_t Data)
-{
-    __IO uint32_t tmp = 0;
+void DAC_SetChData(uint32_t DAC_Align, uint16_t Data) {
+  __IO uint32_t tmp = 0;
 
-    /* Check the parameters */
-    assert_param(IS_DAC_ALIGN(DAC_Align));
-    assert_param(IS_DAC_DATA(Data));
+  /* Check the parameters */
+  assert_param(IS_DAC_ALIGN(DAC_Align));
+  assert_param(IS_DAC_DATA(Data));
 
-    tmp = (uint32_t)DAC_BASE;
-    tmp += DR12CH_OFFSET + DAC_Align;
+  tmp = (uint32_t)DAC_BASE;
+  tmp += DR12CH_OFFSET + DAC_Align;
 
-    /* Set the DAC channel1 selected data holding register */
-    *(__IO uint32_t*)tmp = Data;
+  /* Set the DAC channel1 selected data holding register */
+  *(__IO uint32_t *)tmp = Data;
 }
-
-
-
-
 
 /**
  * @brief  Returns the last data output value of the selected DAC channel.
@@ -333,15 +304,14 @@ void DAC_SetChData(uint32_t DAC_Align, uint16_t Data)
  *     @arg DAC_CHANNEL_2 DAC Channel2 selected
  * @return The selected DAC channel data output value.
  */
-uint16_t DAC_GetOutputDataVal(void)
-{
-    __IO uint32_t tmp = 0;
+uint16_t DAC_GetOutputDataVal(void) {
+  __IO uint32_t tmp = 0;
 
-    tmp = (uint32_t)DAC_BASE;
-    tmp += DATO_OFFSET;
+  tmp = (uint32_t)DAC_BASE;
+  tmp += DATO_OFFSET;
 
-    /* Returns the DAC channel data output register value */
-    return (uint16_t)(*(__IO uint32_t*)tmp);
+  /* Returns the DAC channel data output register value */
+  return (uint16_t)(*(__IO uint32_t *)tmp);
 }
 
 /**

@@ -28,8 +28,8 @@ uint16_t lerp565(uint16_t a, uint16_t b, int num, int den) {
   }
   const int ar = (a >> 11) & 0x1F, ag = (a >> 5) & 0x3F, ab = a & 0x1F;
   const int br = (b >> 11) & 0x1F, bg = (b >> 5) & 0x3F, bb = b & 0x1F;
-  const int r = ar + (br - ar) * num / den;
-  const int g = ag + (bg - ag) * num / den;
+  const int r  = ar + (br - ar) * num / den;
+  const int g  = ag + (bg - ag) * num / den;
   const int bl = ab + (bb - ab) * num / den;
   return (uint16_t)((r << 11) | (g << 5) | bl);
 }
@@ -40,12 +40,12 @@ struct HeatStop {
   uint16_t c;
 };
 constexpr HeatStop kHeat[] = {
-    {40, rgb565(170, 210, 255)},  // icy blue-white (cold / idle-cool)
-    {130, rgb565(0, 255, 255)},   // cyan
-    {210, rgb565(40, 230, 60)},   // green
-    {290, rgb565(255, 225, 0)},   // yellow
-    {350, rgb565(255, 140, 0)},   // orange
-    {430, rgb565(255, 30, 20)},   // red (near tip max)
+    { 40, rgb565(170, 210, 255)}, // icy blue-white (cold / idle-cool)
+    {130,   rgb565(0, 255, 255)}, // cyan
+    {210,  rgb565(40, 230,  60)}, // green
+    {290, rgb565(255, 225,   0)}, // yellow
+    {350, rgb565(255, 140,   0)}, // orange
+    {430, rgb565(255,  30,  20)}, // red (near tip max)
 };
 constexpr int kHeatStops = (int)(sizeof(kHeat) / sizeof(kHeat[0]));
 

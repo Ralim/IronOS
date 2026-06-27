@@ -83,7 +83,7 @@ static void buzzerInit(void) {
   oc.OcMode       = TIM_OCMODE_PWM1;
   oc.OutputState  = TIM_OUTPUT_STATE_DISABLE; // CH1 main output unused
   oc.OutputNState = TIM_OUTPUT_NSTATE_ENABLE; // CH1N drives the buzzer on PA7
-  oc.Pulse        = 185;                       // ~50% duty for volume
+  oc.Pulse        = 185;                      // ~50% duty for volume
   oc.OcPolarity   = TIM_OC_POLARITY_HIGH;
   oc.OcNPolarity  = TIM_OCN_POLARITY_HIGH;
   oc.OcIdleState  = TIM_OC_IDLE_STATE_RESET;
@@ -222,7 +222,7 @@ uint8_t preStartChecksDone() { return 1; }
 uint16_t getTipThermalMass() { return TIP_THERMAL_MASS; }
 uint16_t getTipInertia() { return TIP_THERMAL_INERTIA; }
 
-bool getHallSensorFitted() { return false; }
+bool    getHallSensorFitted() { return false; }
 int16_t getRawHallEffect() { return 0; }
 
 void setBuzzer(bool on) {

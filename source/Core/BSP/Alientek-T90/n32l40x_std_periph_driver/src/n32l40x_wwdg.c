@@ -109,10 +109,9 @@
 /**
  * @brief  Deinitializes the WWDG peripheral registers to their default reset values.
  */
-void WWDG_DeInit(void)
-{
-    RCC_EnableAPB1PeriphReset(RCC_APB1_PERIPH_WWDG, ENABLE);
-    RCC_EnableAPB1PeriphReset(RCC_APB1_PERIPH_WWDG, DISABLE);
+void WWDG_DeInit(void) {
+  RCC_EnableAPB1PeriphReset(RCC_APB1_PERIPH_WWDG, ENABLE);
+  RCC_EnableAPB1PeriphReset(RCC_APB1_PERIPH_WWDG, DISABLE);
 }
 
 /**
@@ -124,17 +123,16 @@ void WWDG_DeInit(void)
  *     @arg WWDG_PRESCALER_DIV4 WWDG counter clock = (PCLK1/4096)/4
  *     @arg WWDG_PRESCALER_DIV8 WWDG counter clock = (PCLK1/4096)/8
  */
-void WWDG_SetPrescalerDiv(uint32_t WWDG_Prescaler)
-{
-    uint32_t tmpregister = 0;
-    /* Check the parameters */
-    assert_param(IS_WWDG_PRESCALER_DIV(WWDG_Prescaler));
-    /* Clear WDGTB[1:0] bits */
-    tmpregister = WWDG->CFG & CFG_TIMERB_MASK;
-    /* Set WDGTB[1:0] bits according to WWDG_Prescaler value */
-    tmpregister |= WWDG_Prescaler;
-    /* Store the new value */
-    WWDG->CFG = tmpregister;
+void WWDG_SetPrescalerDiv(uint32_t WWDG_Prescaler) {
+  uint32_t tmpregister = 0;
+  /* Check the parameters */
+  assert_param(IS_WWDG_PRESCALER_DIV(WWDG_Prescaler));
+  /* Clear WDGTB[1:0] bits */
+  tmpregister = WWDG->CFG & CFG_TIMERB_MASK;
+  /* Set WDGTB[1:0] bits according to WWDG_Prescaler value */
+  tmpregister |= WWDG_Prescaler;
+  /* Store the new value */
+  WWDG->CFG = tmpregister;
 }
 
 /**
@@ -142,43 +140,38 @@ void WWDG_SetPrescalerDiv(uint32_t WWDG_Prescaler)
  * @param WindowValue specifies the window value to be compared to the downcounter.
  *   This parameter value must be lower than 0x80.
  */
-void WWDG_SetWValue(uint8_t WindowValue)
-{
-    __IO uint32_t tmpregister = 0;
+void WWDG_SetWValue(uint8_t WindowValue) {
+  __IO uint32_t tmpregister = 0;
 
-    /* Check the parameters */
-    assert_param(IS_WWDG_WVALUE(WindowValue));
-    /* Clear W[6:0] bits */
+  /* Check the parameters */
+  assert_param(IS_WWDG_WVALUE(WindowValue));
+  /* Clear W[6:0] bits */
 
-    tmpregister = WWDG->CFG & CFG_W_MASK;
+  tmpregister = WWDG->CFG & CFG_W_MASK;
 
-    /* Set W[6:0] bits according to WindowValue value */
-    tmpregister |= WindowValue & (uint32_t)BIT_MASK;
+  /* Set W[6:0] bits according to WindowValue value */
+  tmpregister |= WindowValue & (uint32_t)BIT_MASK;
 
-    /* Store the new value */
-    WWDG->CFG = tmpregister;
+  /* Store the new value */
+  WWDG->CFG = tmpregister;
 }
 
 /**
  * @brief  Enables the WWDG Early Wakeup interrupt(EWI).
  */
-void WWDG_EnableInt(void)
-{
-    *(__IO uint32_t*)CFG_EWINT_BB = (uint32_t)ENABLE;
-}
+void WWDG_EnableInt(void) { *(__IO uint32_t *)CFG_EWINT_BB = (uint32_t)ENABLE; }
 
 /**
  * @brief  Sets the WWDG counter value.
  * @param Counter specifies the watchdog counter value.
  *   This parameter must be a number between 0x40 and 0x7F.
  */
-void WWDG_SetCnt(uint8_t Counter)
-{
-    /* Check the parameters */
-    assert_param(IS_WWDG_CNT(Counter));
-    /* Write to T[6:0] bits to configure the counter value, no need to do
-       a read-modify-write; writing a 0 to WDGA bit does nothing */
-    WWDG->CTRL = Counter & BIT_MASK;
+void WWDG_SetCnt(uint8_t Counter) {
+  /* Check the parameters */
+  assert_param(IS_WWDG_CNT(Counter));
+  /* Write to T[6:0] bits to configure the counter value, no need to do
+     a read-modify-write; writing a 0 to WDGA bit does nothing */
+  WWDG->CTRL = Counter & BIT_MASK;
 }
 
 /**
@@ -186,29 +179,22 @@ void WWDG_SetCnt(uint8_t Counter)
  * @param Counter specifies the watchdog counter value.
  *   This parameter must be a number between 0x40 and 0x7F.
  */
-void WWDG_Enable(uint8_t Counter)
-{
-    /* Check the parameters */
-    assert_param(IS_WWDG_CNT(Counter));
-    WWDG->CTRL = CTRL_ACTB_SET | Counter;
+void WWDG_Enable(uint8_t Counter) {
+  /* Check the parameters */
+  assert_param(IS_WWDG_CNT(Counter));
+  WWDG->CTRL = CTRL_ACTB_SET | Counter;
 }
 
 /**
  * @brief  Checks whether the Early Wakeup interrupt flag is set or not.
  * @return The new state of the Early Wakeup interrupt flag (SET or RESET)
  */
-FlagStatus WWDG_GetEWINTF(void)
-{
-    return (FlagStatus)(WWDG->STS);
-}
+FlagStatus WWDG_GetEWINTF(void) { return (FlagStatus)(WWDG->STS); }
 
 /**
  * @brief  Clears Early Wakeup interrupt flag.
  */
-void WWDG_ClrEWINTF(void)
-{
-    WWDG->STS = (uint32_t)RESET;
-}
+void WWDG_ClrEWINTF(void) { WWDG->STS = (uint32_t)RESET; }
 
 /**
  * @}

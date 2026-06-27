@@ -88,30 +88,24 @@
  * @{
  */
 
+void GetUCID(uint8_t *UCIDbuf) {
+  uint8_t   num       = 0;
+  uint32_t *ucid_addr = (void *)0;
+  uint32_t  temp      = 0;
 
-void GetUCID(uint8_t *UCIDbuf)
-{
-	uint8_t num = 0;
-	uint32_t* ucid_addr = (void*)0;
-    uint32_t temp = 0;
+  if (0xFFFFFFFF == *(uint32_t *)(0x1FFFF260)) {
+    ucid_addr = (uint32_t *)UCID_BASE;
+  } else {
+    ucid_addr = (uint32_t *)(0x1FFFF260);
+  }
 
-    if (0xFFFFFFFF == *(uint32_t*)(0x1FFFF260))
-    {
-        ucid_addr = (uint32_t*)UCID_BASE;
-    }
-    else
-    {
-        ucid_addr = (uint32_t*)(0x1FFFF260);
-    }
-    
-	for (num = 0; num < UCID_LENGTH;)
-    {
-        temp = *(__IO uint32_t*)(ucid_addr++); 
-        UCIDbuf[num++] = (temp & 0xFF);
-        UCIDbuf[num++] = (temp & 0xFF00) >> 8;
-        UCIDbuf[num++] = (temp & 0xFF0000) >> 16;
-        UCIDbuf[num++] = (temp & 0xFF000000) >> 24;
-    }
+  for (num = 0; num < UCID_LENGTH;) {
+    temp           = *(__IO uint32_t *)(ucid_addr++);
+    UCIDbuf[num++] = (temp & 0xFF);
+    UCIDbuf[num++] = (temp & 0xFF00) >> 8;
+    UCIDbuf[num++] = (temp & 0xFF0000) >> 16;
+    UCIDbuf[num++] = (temp & 0xFF000000) >> 24;
+  }
 }
 
 /**
@@ -119,29 +113,24 @@ void GetUCID(uint8_t *UCIDbuf)
  * @return UID
  */
 
-void GetUID(uint8_t *UIDbuf)
-{
-	uint8_t num = 0;
-	uint32_t* uid_addr = (void*)0;
-    uint32_t temp = 0;
-    
-    if (0xFFFFFFFF == *(uint32_t*)(0x1FFFF270))
-    {
-        uid_addr = (uint32_t*)UID_BASE;
-    }
-    else
-    {
-        uid_addr = (uint32_t*)(0x1FFFF270);
-    }
-        
-    for (num = 0; num < UID_LENGTH;)
-    {
-        temp = *(__IO uint32_t*)(uid_addr++);
-        UIDbuf[num++] = (temp & 0xFF);
-        UIDbuf[num++] = (temp & 0xFF00) >> 8;
-        UIDbuf[num++] = (temp & 0xFF0000) >> 16;
-        UIDbuf[num++] = (temp & 0xFF000000) >> 24;
-    }
+void GetUID(uint8_t *UIDbuf) {
+  uint8_t   num      = 0;
+  uint32_t *uid_addr = (void *)0;
+  uint32_t  temp     = 0;
+
+  if (0xFFFFFFFF == *(uint32_t *)(0x1FFFF270)) {
+    uid_addr = (uint32_t *)UID_BASE;
+  } else {
+    uid_addr = (uint32_t *)(0x1FFFF270);
+  }
+
+  for (num = 0; num < UID_LENGTH;) {
+    temp          = *(__IO uint32_t *)(uid_addr++);
+    UIDbuf[num++] = (temp & 0xFF);
+    UIDbuf[num++] = (temp & 0xFF00) >> 8;
+    UIDbuf[num++] = (temp & 0xFF0000) >> 16;
+    UIDbuf[num++] = (temp & 0xFF000000) >> 24;
+  }
 }
 
 /**
@@ -149,40 +138,34 @@ void GetUID(uint8_t *UIDbuf)
  * @return DBGMCU_ID
  */
 
-void GetDBGMCU_ID(uint8_t *DBGMCU_IDbuf)
-{
-    uint8_t num = 0;
-    uint32_t* dbgid_addr = (void*)0;
-	uint32_t temp = 0;
-    
-    dbgid_addr = (uint32_t*)DBGMCU_ID_BASE;
-    for (num = 0; num < DBGMCU_ID_LENGTH;)
-    {
-        temp = *(__IO uint32_t*)(dbgid_addr++); 
-        DBGMCU_IDbuf[num++] = (temp & 0xFF);
-        DBGMCU_IDbuf[num++] = (temp & 0xFF00) >> 8;
-        DBGMCU_IDbuf[num++] = (temp & 0xFF0000) >> 16;
-        DBGMCU_IDbuf[num++] = (temp & 0xFF000000) >> 24;
-    }
+void GetDBGMCU_ID(uint8_t *DBGMCU_IDbuf) {
+  uint8_t   num        = 0;
+  uint32_t *dbgid_addr = (void *)0;
+  uint32_t  temp       = 0;
+
+  dbgid_addr = (uint32_t *)DBGMCU_ID_BASE;
+  for (num = 0; num < DBGMCU_ID_LENGTH;) {
+    temp                = *(__IO uint32_t *)(dbgid_addr++);
+    DBGMCU_IDbuf[num++] = (temp & 0xFF);
+    DBGMCU_IDbuf[num++] = (temp & 0xFF00) >> 8;
+    DBGMCU_IDbuf[num++] = (temp & 0xFF0000) >> 16;
+    DBGMCU_IDbuf[num++] = (temp & 0xFF000000) >> 24;
+  }
 }
 
 /**
  * @brief  Returns the device revision number.
  * @return Device revision identifier
  */
-uint32_t DBG_GetRevNum(void)
-{
-    return (DBG->ID & 0x00FF);
-}
+uint32_t DBG_GetRevNum(void) { return (DBG->ID & 0x00FF); }
 
 /**
  * @brief  Returns the device identifier.
  * @return Device identifier
  */
-uint32_t DBG_GetDevNum(void)
-{
-    uint32_t id = DBG->ID;
-    return ((id & 0x00F00000) >> 20) | ((id & 0xFF00) >> 4);
+uint32_t DBG_GetDevNum(void) {
+  uint32_t id = DBG->ID;
+  return ((id & 0x00F00000) >> 20) | ((id & 0xFF00) >> 4);
 }
 
 /**
@@ -211,20 +194,16 @@ uint32_t DBG_GetDevNum(void)
  * @param Cmd new state of the specified peripheral in Debug mode.
  *   This parameter can be: ENABLE or DISABLE.
  */
-void DBG_ConfigPeriph(uint32_t DBG_Periph, FunctionalState Cmd)
-{
-    /* Check the parameters */
-    assert_param(IS_DBGMCU_PERIPH(DBG_Periph));
-    assert_param(IS_FUNCTIONAL_STATE(Cmd));
+void DBG_ConfigPeriph(uint32_t DBG_Periph, FunctionalState Cmd) {
+  /* Check the parameters */
+  assert_param(IS_DBGMCU_PERIPH(DBG_Periph));
+  assert_param(IS_FUNCTIONAL_STATE(Cmd));
 
-    if (Cmd != DISABLE)
-    {
-        DBG->CTRL |= DBG_Periph;
-    }
-    else
-    {
-        DBG->CTRL &= ~DBG_Periph;
-    }
+  if (Cmd != DISABLE) {
+    DBG->CTRL |= DBG_Periph;
+  } else {
+    DBG->CTRL &= ~DBG_Periph;
+  }
 }
 
 /**
@@ -232,20 +211,14 @@ void DBG_ConfigPeriph(uint32_t DBG_Periph, FunctionalState Cmd)
  *
  * @return FLASH size in bytes.
  */
-uint32_t DBG_GetFlashSize(void)
-{
-    return (DBG->ID & 0x000F0000);
-}
+uint32_t DBG_GetFlashSize(void) { return (DBG->ID & 0x000F0000); }
 
 /**
  * @brief Get SRAM size of this chip.
  *
  * @return SRAM size in bytes.
  */
-uint32_t DBG_GetSramSize(void)
-{
-    return (((DBG->ID & 0xF0000000) >> 28) + 1) << 14;
-}
+uint32_t DBG_GetSramSize(void) { return (((DBG->ID & 0xF0000000) >> 28) + 1) << 14; }
 
 /**
  * @}

@@ -35,8 +35,8 @@ static const ACCEL_I2C_CLASS::I2C_REG i2c_registers[] = {
     {     QMA6100P_REG_AFE_ANA,    QMA6100P_AFE_ANA_VAL,  0}, // analog front end (vendor)
     {    QMA6100P_REG_TST1_ANA,   QMA6100P_TST1_ANA_SET,  0}, // analog tuning set (vendor)
     {    QMA6100P_REG_TST1_ANA,   QMA6100P_TST1_ANA_CLR,  0}, // analog tuning clear (vendor)
-    {QMA6100P_REG_RANGE_FILTER,        QMA6100P_RANGE_8G,  0}, // +/-8g full scale
-    {  QMA6100P_REG_BAND_WIDTH,      QMA6100P_BW_DEFAULT,  0}, // default ODR / bandwidth
+    {QMA6100P_REG_RANGE_FILTER,       QMA6100P_RANGE_8G,  0}, // +/-8g full scale
+    {  QMA6100P_REG_BAND_WIDTH,     QMA6100P_BW_DEFAULT,  0}, // default ODR / bandwidth
 };
 
 bool QMA6100P::initalize() { return ACCEL_I2C_CLASS::writeRegistersBulk(QMA6100P_ADDRESS, i2c_registers, sizeof(i2c_registers) / sizeof(i2c_registers[0])); }

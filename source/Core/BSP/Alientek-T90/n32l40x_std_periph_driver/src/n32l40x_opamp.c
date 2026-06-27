@@ -94,99 +94,85 @@
 /**
  * @brief  Deinitializes the OPAMP peripheral registers to their default reset values.
  */
-void OPAMP_DeInit(void)
-{
-    RCC_EnableAPB1PeriphReset(RCC_APB1_PERIPH_OPAMP, ENABLE);
-    RCC_EnableAPB1PeriphReset(RCC_APB1_PERIPH_OPAMP, DISABLE);
+void OPAMP_DeInit(void) {
+  RCC_EnableAPB1PeriphReset(RCC_APB1_PERIPH_OPAMP, ENABLE);
+  RCC_EnableAPB1PeriphReset(RCC_APB1_PERIPH_OPAMP, DISABLE);
 }
-void OPAMP_StructInit(OPAMP_InitType* OPAMP_InitStruct)
-{
-    OPAMP_InitStruct->Opa2SrcSel        = OPAMP2_CS_TIMSRCSEL_TIM1CC6;
-    OPAMP_InitStruct->Gain              = OPAMP_CS_PGA_GAIN_2;
-    OPAMP_InitStruct->HighVolRangeEn    = ENABLE;
-    OPAMP_InitStruct->TimeAutoMuxEn     = DISABLE;
-    OPAMP_InitStruct->Mod               = OPAMP_CS_PGA_EN;
+void OPAMP_StructInit(OPAMP_InitType *OPAMP_InitStruct) {
+  OPAMP_InitStruct->Opa2SrcSel     = OPAMP2_CS_TIMSRCSEL_TIM1CC6;
+  OPAMP_InitStruct->Gain           = OPAMP_CS_PGA_GAIN_2;
+  OPAMP_InitStruct->HighVolRangeEn = ENABLE;
+  OPAMP_InitStruct->TimeAutoMuxEn  = DISABLE;
+  OPAMP_InitStruct->Mod            = OPAMP_CS_PGA_EN;
 }
-void OPAMP_Init(OPAMPX OPAMPx, OPAMP_InitType* OPAMP_InitStruct)
-{
-    __IO uint32_t* pCs = &OPAMP->CS1 + OPAMPx;
-    __IO uint32_t tmp  = *pCs;
-    if(OPAMPx == OPAMP2)
-        SetBitMsk(tmp, OPAMP_InitStruct->Opa2SrcSel, OPAMP_CS_OPAMP2_TIMSRCSEL);
-    SetBitMsk(tmp, OPAMP_InitStruct->Gain, OPAMP_CS_PGA_GAIN_MASK);
-		if(OPAMP_InitStruct->HighVolRangeEn==ENABLE)
-			SetBitMsk(tmp, OPAMP_CS_RANGE_MASK, OPAMP_CS_RANGE_MASK);
-		else
-			ClrBit(tmp,OPAMP_CS_RANGE_MASK);
-		if(OPAMP_InitStruct->TimeAutoMuxEn==ENABLE)
-			SetBitMsk(tmp,OPAMP_CS_TCMEN_MASK, OPAMP_CS_TCMEN_MASK);
-		else
-			ClrBit(tmp,OPAMP_CS_TCMEN_MASK);
-    SetBitMsk(tmp, OPAMP_InitStruct->Mod, OPAMP_CS_MOD_MASK);
-    *pCs = tmp;
+void OPAMP_Init(OPAMPX OPAMPx, OPAMP_InitType *OPAMP_InitStruct) {
+  __IO uint32_t *pCs = &OPAMP->CS1 + OPAMPx;
+  __IO uint32_t  tmp = *pCs;
+  if (OPAMPx == OPAMP2)
+    SetBitMsk(tmp, OPAMP_InitStruct->Opa2SrcSel, OPAMP_CS_OPAMP2_TIMSRCSEL);
+  SetBitMsk(tmp, OPAMP_InitStruct->Gain, OPAMP_CS_PGA_GAIN_MASK);
+  if (OPAMP_InitStruct->HighVolRangeEn == ENABLE)
+    SetBitMsk(tmp, OPAMP_CS_RANGE_MASK, OPAMP_CS_RANGE_MASK);
+  else
+    ClrBit(tmp, OPAMP_CS_RANGE_MASK);
+  if (OPAMP_InitStruct->TimeAutoMuxEn == ENABLE)
+    SetBitMsk(tmp, OPAMP_CS_TCMEN_MASK, OPAMP_CS_TCMEN_MASK);
+  else
+    ClrBit(tmp, OPAMP_CS_TCMEN_MASK);
+  SetBitMsk(tmp, OPAMP_InitStruct->Mod, OPAMP_CS_MOD_MASK);
+  *pCs = tmp;
 }
-void OPAMP_Enable(OPAMPX OPAMPx, FunctionalState en)
-{
-    __IO uint32_t* pCs = &OPAMP->CS1 + OPAMPx;
-    if (en)
-        SetBit(*pCs, OPAMP_CS_EN_MASK);
-    else
-        ClrBit(*pCs, OPAMP_CS_EN_MASK);
+void OPAMP_Enable(OPAMPX OPAMPx, FunctionalState en) {
+  __IO uint32_t *pCs = &OPAMP->CS1 + OPAMPx;
+  if (en)
+    SetBit(*pCs, OPAMP_CS_EN_MASK);
+  else
+    ClrBit(*pCs, OPAMP_CS_EN_MASK);
 }
 
-void OPAMP_SetPgaGain(OPAMPX OPAMPx, OPAMP_CS_PGA_GAIN Gain)
-{
-    __IO uint32_t* pCs = &OPAMP->CS1 + OPAMPx;
-    __IO uint32_t tmp  = *pCs;
-    SetBitMsk(tmp, Gain, OPAMP_CS_PGA_GAIN_MASK);
-    *pCs = tmp;
+void OPAMP_SetPgaGain(OPAMPX OPAMPx, OPAMP_CS_PGA_GAIN Gain) {
+  __IO uint32_t *pCs = &OPAMP->CS1 + OPAMPx;
+  __IO uint32_t  tmp = *pCs;
+  SetBitMsk(tmp, Gain, OPAMP_CS_PGA_GAIN_MASK);
+  *pCs = tmp;
 }
-void OPAMP_SetVpSecondSel(OPAMPX OPAMPx, OPAMP_CS_VPSSEL VpSSel)
-{
-    __IO uint32_t* pCs = &OPAMP->CS1 + OPAMPx;
-    __IO uint32_t tmp  = *pCs;
-    SetBitMsk(tmp, VpSSel, OPAMP_CS_VPSEL_SECOND_MASK);
-    *pCs = tmp;
+void OPAMP_SetVpSecondSel(OPAMPX OPAMPx, OPAMP_CS_VPSSEL VpSSel) {
+  __IO uint32_t *pCs = &OPAMP->CS1 + OPAMPx;
+  __IO uint32_t  tmp = *pCs;
+  SetBitMsk(tmp, VpSSel, OPAMP_CS_VPSEL_SECOND_MASK);
+  *pCs = tmp;
 }
-void OPAMP_SetVmSecondSel(OPAMPX OPAMPx, OPAMP_CS_VMSSEL VmSSel)
-{
-    __IO uint32_t* pCs = &OPAMP->CS1 + OPAMPx;
-    __IO uint32_t tmp  = *pCs;
-    SetBitMsk(tmp, VmSSel, OPAMP_CS_VMSEL_SECOND_MASK);
-    *pCs = tmp;
+void OPAMP_SetVmSecondSel(OPAMPX OPAMPx, OPAMP_CS_VMSSEL VmSSel) {
+  __IO uint32_t *pCs = &OPAMP->CS1 + OPAMPx;
+  __IO uint32_t  tmp = *pCs;
+  SetBitMsk(tmp, VmSSel, OPAMP_CS_VMSEL_SECOND_MASK);
+  *pCs = tmp;
 }
-void OPAMP_SetVpSel(OPAMPX OPAMPx, OPAMP_CS_VPSEL VpSel)
-{
-    __IO uint32_t* pCs = &OPAMP->CS1 + OPAMPx;
-    __IO uint32_t tmp  = *pCs;
-    SetBitMsk(tmp, VpSel, OPAMP_CS_VPSEL_MASK);
-    *pCs = tmp;
+void OPAMP_SetVpSel(OPAMPX OPAMPx, OPAMP_CS_VPSEL VpSel) {
+  __IO uint32_t *pCs = &OPAMP->CS1 + OPAMPx;
+  __IO uint32_t  tmp = *pCs;
+  SetBitMsk(tmp, VpSel, OPAMP_CS_VPSEL_MASK);
+  *pCs = tmp;
 }
-void OPAMP_SetVmSel(OPAMPX OPAMPx, OPAMP_CS_VMSEL VmSel)
-{
-    __IO uint32_t* pCs = &OPAMP->CS1 + OPAMPx;
-    __IO uint32_t tmp  = *pCs;
-    SetBitMsk(tmp, VmSel, OPAMP_CS_VMSEL_MASK);
-    *pCs = tmp;
+void OPAMP_SetVmSel(OPAMPX OPAMPx, OPAMP_CS_VMSEL VmSel) {
+  __IO uint32_t *pCs = &OPAMP->CS1 + OPAMPx;
+  __IO uint32_t  tmp = *pCs;
+  SetBitMsk(tmp, VmSel, OPAMP_CS_VMSEL_MASK);
+  *pCs = tmp;
 }
-bool OPAMP_IsCalOutHigh(OPAMPX OPAMPx)
-{
-    __IO uint32_t* pCs = &OPAMP->CS1 + OPAMPx;
-    return (GetBit(*pCs, OPAMP_CS_CALOUT_MASK)) ? true : false;
+bool OPAMP_IsCalOutHigh(OPAMPX OPAMPx) {
+  __IO uint32_t *pCs = &OPAMP->CS1 + OPAMPx;
+  return (GetBit(*pCs, OPAMP_CS_CALOUT_MASK)) ? true : false;
 }
-void OPAMP_CalibrationEnable(OPAMPX OPAMPx, FunctionalState en)
-{
-    __IO uint32_t* pCs = &OPAMP->CS1 + OPAMPx;
-    if (en)
-        SetBit(*pCs, OPAMP_CS_CALON_MASK);
-    else
-        ClrBit(*pCs, OPAMP_CS_CALON_MASK);
+void OPAMP_CalibrationEnable(OPAMPX OPAMPx, FunctionalState en) {
+  __IO uint32_t *pCs = &OPAMP->CS1 + OPAMPx;
+  if (en)
+    SetBit(*pCs, OPAMP_CS_CALON_MASK);
+  else
+    ClrBit(*pCs, OPAMP_CS_CALON_MASK);
 }
 // Lock see @OPAMP_LOCK
-void OPAMP_SetLock(uint32_t Lock)
-{
-    OPAMP->LOCK = Lock;
-}
+void OPAMP_SetLock(uint32_t Lock) { OPAMP->LOCK = Lock; }
 /**
  * @}
  */

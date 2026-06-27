@@ -8,8 +8,8 @@
  *  ADC_IRQHandler / TIM4_IRQHandler are the functional ISRs defined in IRQ.cpp.
  *  Defining any of those here would create duplicate symbols at link time.
  */
-#include "n32l40x.h"
 #include "n32l40x_it.h"
+#include "n32l40x.h"
 #include "n32l40x_tim.h"
 
 /******************************************************************************/

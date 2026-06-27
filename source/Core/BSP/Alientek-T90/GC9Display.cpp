@@ -14,12 +14,12 @@
 
 #ifdef OLED_GC9D01
 
-#include "BSP.h"  // delay_ms
+#include "BSP.h"          // delay_ms
 #include "ColorTheme.hpp" // T90Theme: live-state -> per-frame color scheme
-#include "ColorUI.hpp" // Stage 2 native color hero screens (soldering)
-#include "FreeRTOS.h" // display mutex: serialise full-frame Transmit across the GUI and MOV tasks
-#include "OLED.hpp" // FRAMEBUFFER_START, OLED_WIDTH, OLED_HEIGHT
-#include "Pins.h" // LCD_* pin macros + n32l40x.h (pulls in the std-periph drivers)
+#include "ColorUI.hpp"    // Stage 2 native color hero screens (soldering)
+#include "FreeRTOS.h"     // display mutex: serialise full-frame Transmit across the GUI and MOV tasks
+#include "OLED.hpp"       // FRAMEBUFFER_START, OLED_WIDTH, OLED_HEIGHT
+#include "Pins.h"         // LCD_* pin macros + n32l40x.h (pulls in the std-periph drivers)
 #include "semphr.h"
 #include "task.h" // xTaskGetSchedulerState
 
@@ -34,11 +34,11 @@
 #define GC9_STATE_SIZE (FRAMEBUFFER_START - 1)
 
 // GC9 command opcodes used by the shim.
-#define GC9_CMD_INVOFF 0x20
-#define GC9_CMD_INVON  0x21
-#define GC9_CMD_CASET  0x2A
-#define GC9_CMD_RASET  0x2B
-#define GC9_CMD_RAMWR  0x2C
+#define GC9_CMD_INVOFF  0x20
+#define GC9_CMD_INVON   0x21
+#define GC9_CMD_CASET   0x2A
+#define GC9_CMD_RASET   0x2B
+#define GC9_CMD_RAMWR   0x2C
 #define GC9_CMD_DISPOFF 0x28
 #define GC9_CMD_DISPON  0x29
 #define GC9_CMD_SLPOUT  0x11
@@ -77,9 +77,11 @@ static SemaphoreHandle_t displayMutex = NULL;
 // DFF must only be toggled while SPI is not busy (silicon requirement).
 static inline void gc9_wait_idle(void) {
   uint32_t to = GC9_SPI_TIMEOUT;
-  while (SPI_I2S_GetStatus(SPI1, SPI_I2S_TE_FLAG) == RESET && --to) {}
+  while (SPI_I2S_GetStatus(SPI1, SPI_I2S_TE_FLAG) == RESET && --to) {
+  }
   to = GC9_SPI_TIMEOUT;
-  while (SPI_I2S_GetStatus(SPI1, SPI_I2S_BUSY_FLAG) != RESET && --to) {}
+  while (SPI_I2S_GetStatus(SPI1, SPI_I2S_BUSY_FLAG) != RESET && --to) {
+  }
 }
 
 static inline void gc9_set_datalen(uint16_t len) {
@@ -90,14 +92,16 @@ static inline void gc9_set_datalen(uint16_t len) {
 // Push one byte (assumes 8-bit DFF). Caller frames CS/DC.
 static inline void gc9_spi_byte(uint8_t b) {
   uint32_t to = GC9_SPI_TIMEOUT;
-  while (SPI_I2S_GetStatus(SPI1, SPI_I2S_TE_FLAG) == RESET && --to) {}
+  while (SPI_I2S_GetStatus(SPI1, SPI_I2S_TE_FLAG) == RESET && --to) {
+  }
   SPI_I2S_TransmitData(SPI1, b);
 }
 
 // Push one 16-bit word (assumes 16-bit DFF). Caller frames CS.
 static inline void gc9_spi_word(uint16_t w) {
   uint32_t to = GC9_SPI_TIMEOUT;
-  while (SPI_I2S_GetStatus(SPI1, SPI_I2S_TE_FLAG) == RESET && --to) {}
+  while (SPI_I2S_GetStatus(SPI1, SPI_I2S_TE_FLAG) == RESET && --to) {
+  }
   SPI_I2S_TransmitData(SPI1, w);
 }
 
@@ -159,21 +163,60 @@ static void gc9_run_init_sequence(void) {
   }
 
   // Vendor charge-pump / timing.
-  { static const uint8_t d[] = {0x11};       gc9_cmd_data(0xEC, d, sizeof(d)); }
-  { static const uint8_t d[] = {0x7A};       gc9_cmd_data(0x7E, d, sizeof(d)); }
-  { static const uint8_t d[] = {0x02, 0x0E, 0x00, 0x00, 0x28, 0x00, 0x00}; gc9_cmd_data(0x74, d, sizeof(d)); }
-  { static const uint8_t d[] = {0x3E};       gc9_cmd_data(0x98, d, sizeof(d)); }
-  { static const uint8_t d[] = {0x3E};       gc9_cmd_data(0x99, d, sizeof(d)); }
-  { static const uint8_t d[] = {0x0E, 0x0E}; gc9_cmd_data(0xB5, d, sizeof(d)); }
+  {
+    static const uint8_t d[] = {0x11};
+    gc9_cmd_data(0xEC, d, sizeof(d));
+  }
+  {
+    static const uint8_t d[] = {0x7A};
+    gc9_cmd_data(0x7E, d, sizeof(d));
+  }
+  {
+    static const uint8_t d[] = {0x02, 0x0E, 0x00, 0x00, 0x28, 0x00, 0x00};
+    gc9_cmd_data(0x74, d, sizeof(d));
+  }
+  {
+    static const uint8_t d[] = {0x3E};
+    gc9_cmd_data(0x98, d, sizeof(d));
+  }
+  {
+    static const uint8_t d[] = {0x3E};
+    gc9_cmd_data(0x99, d, sizeof(d));
+  }
+  {
+    static const uint8_t d[] = {0x0E, 0x0E};
+    gc9_cmd_data(0xB5, d, sizeof(d));
+  }
 
   // Gate / source timing.
-  { static const uint8_t d[] = {0x38, 0x09, 0x6D, 0x67};             gc9_cmd_data(0x60, d, sizeof(d)); }
-  { static const uint8_t d[] = {0x38, 0xAD, 0x6D, 0x67, 0x05};       gc9_cmd_data(0x63, d, sizeof(d)); }
-  { static const uint8_t d[] = {0x38, 0x0B, 0x70, 0xAB, 0x6D, 0x67}; gc9_cmd_data(0x64, d, sizeof(d)); }
-  { static const uint8_t d[] = {0x38, 0x0F, 0x70, 0xAF, 0x6D, 0x67}; gc9_cmd_data(0x66, d, sizeof(d)); }
-  { static const uint8_t d[] = {0x00, 0x00};                          gc9_cmd_data(0x6A, d, sizeof(d)); }
-  { static const uint8_t d[] = {0x3B, 0x08, 0x04, 0x00, 0x04, 0x64, 0x67}; gc9_cmd_data(0x68, d, sizeof(d)); }
-  { static const uint8_t d[] = {0x22, 0x02, 0x22, 0x02, 0x22, 0x22, 0x50}; gc9_cmd_data(0x6C, d, sizeof(d)); }
+  {
+    static const uint8_t d[] = {0x38, 0x09, 0x6D, 0x67};
+    gc9_cmd_data(0x60, d, sizeof(d));
+  }
+  {
+    static const uint8_t d[] = {0x38, 0xAD, 0x6D, 0x67, 0x05};
+    gc9_cmd_data(0x63, d, sizeof(d));
+  }
+  {
+    static const uint8_t d[] = {0x38, 0x0B, 0x70, 0xAB, 0x6D, 0x67};
+    gc9_cmd_data(0x64, d, sizeof(d));
+  }
+  {
+    static const uint8_t d[] = {0x38, 0x0F, 0x70, 0xAF, 0x6D, 0x67};
+    gc9_cmd_data(0x66, d, sizeof(d));
+  }
+  {
+    static const uint8_t d[] = {0x00, 0x00};
+    gc9_cmd_data(0x6A, d, sizeof(d));
+  }
+  {
+    static const uint8_t d[] = {0x3B, 0x08, 0x04, 0x00, 0x04, 0x64, 0x67};
+    gc9_cmd_data(0x68, d, sizeof(d));
+  }
+  {
+    static const uint8_t d[] = {0x22, 0x02, 0x22, 0x02, 0x22, 0x22, 0x50};
+    gc9_cmd_data(0x6C, d, sizeof(d));
+  }
 
   // Gamma / gate LUT (32 bytes).
   {
@@ -183,40 +226,130 @@ static void gc9_run_init_sequence(void) {
   }
 
   // Power / VREG.
-  { static const uint8_t d[] = {0x1B}; gc9_cmd_data(0xA9, d, sizeof(d)); }
-  { static const uint8_t d[] = {0x6B}; gc9_cmd_data(0xA8, d, sizeof(d)); }
-  { static const uint8_t d[] = {0x6D}; gc9_cmd_data(0xA8, d, sizeof(d)); } // re-write
-  { static const uint8_t d[] = {0x40}; gc9_cmd_data(0xA7, d, sizeof(d)); }
-  { static const uint8_t d[] = {0x47}; gc9_cmd_data(0xAD, d, sizeof(d)); }
-  { static const uint8_t d[] = {0x73}; gc9_cmd_data(0xAF, d, sizeof(d)); }
-  { static const uint8_t d[] = {0x73}; gc9_cmd_data(0xAF, d, sizeof(d)); } // re-write
-  { static const uint8_t d[] = {0x44}; gc9_cmd_data(0xAC, d, sizeof(d)); }
-  { static const uint8_t d[] = {0x6C}; gc9_cmd_data(0xA3, d, sizeof(d)); }
-  { static const uint8_t d[] = {0x00}; gc9_cmd_data(0xCB, d, sizeof(d)); }
-  { static const uint8_t d[] = {0x22}; gc9_cmd_data(0xCD, d, sizeof(d)); }
-  { static const uint8_t d[] = {0x10}; gc9_cmd_data(0xC2, d, sizeof(d)); }
-  { static const uint8_t d[] = {0x00}; gc9_cmd_data(0xC5, d, sizeof(d)); }
-  { static const uint8_t d[] = {0x0E}; gc9_cmd_data(0xC6, d, sizeof(d)); }
-  { static const uint8_t d[] = {0x1F}; gc9_cmd_data(0xC7, d, sizeof(d)); }
-  { static const uint8_t d[] = {0x0E}; gc9_cmd_data(0xC8, d, sizeof(d)); }
-  { static const uint8_t d[] = {0x00}; gc9_cmd_data(0xBF, d, sizeof(d)); }
-  { static const uint8_t d[] = {0x20}; gc9_cmd_data(0xF9, d, sizeof(d)); }
-  { static const uint8_t d[] = {0x3B}; gc9_cmd_data(0x9B, d, sizeof(d)); }
-  { static const uint8_t d[] = {0x33, 0x7F, 0x00}; gc9_cmd_data(0x93, d, sizeof(d)); }
-  { static const uint8_t d[] = {0x0E, 0x0F, 0x03, 0x0E, 0x0F, 0x03}; gc9_cmd_data(0x70, d, sizeof(d)); }
-  { static const uint8_t d[] = {0x0E, 0x16, 0x03}; gc9_cmd_data(0x71, d, sizeof(d)); }
-  { static const uint8_t d[] = {0x0E, 0x09}; gc9_cmd_data(0x91, d, sizeof(d)); }
-  { static const uint8_t d[] = {0x2C}; gc9_cmd_data(0xC3, d, sizeof(d)); }
-  { static const uint8_t d[] = {0x1A}; gc9_cmd_data(0xC4, d, sizeof(d)); }
+  {
+    static const uint8_t d[] = {0x1B};
+    gc9_cmd_data(0xA9, d, sizeof(d));
+  }
+  {
+    static const uint8_t d[] = {0x6B};
+    gc9_cmd_data(0xA8, d, sizeof(d));
+  }
+  {
+    static const uint8_t d[] = {0x6D};
+    gc9_cmd_data(0xA8, d, sizeof(d));
+  } // re-write
+  {
+    static const uint8_t d[] = {0x40};
+    gc9_cmd_data(0xA7, d, sizeof(d));
+  }
+  {
+    static const uint8_t d[] = {0x47};
+    gc9_cmd_data(0xAD, d, sizeof(d));
+  }
+  {
+    static const uint8_t d[] = {0x73};
+    gc9_cmd_data(0xAF, d, sizeof(d));
+  }
+  {
+    static const uint8_t d[] = {0x73};
+    gc9_cmd_data(0xAF, d, sizeof(d));
+  } // re-write
+  {
+    static const uint8_t d[] = {0x44};
+    gc9_cmd_data(0xAC, d, sizeof(d));
+  }
+  {
+    static const uint8_t d[] = {0x6C};
+    gc9_cmd_data(0xA3, d, sizeof(d));
+  }
+  {
+    static const uint8_t d[] = {0x00};
+    gc9_cmd_data(0xCB, d, sizeof(d));
+  }
+  {
+    static const uint8_t d[] = {0x22};
+    gc9_cmd_data(0xCD, d, sizeof(d));
+  }
+  {
+    static const uint8_t d[] = {0x10};
+    gc9_cmd_data(0xC2, d, sizeof(d));
+  }
+  {
+    static const uint8_t d[] = {0x00};
+    gc9_cmd_data(0xC5, d, sizeof(d));
+  }
+  {
+    static const uint8_t d[] = {0x0E};
+    gc9_cmd_data(0xC6, d, sizeof(d));
+  }
+  {
+    static const uint8_t d[] = {0x1F};
+    gc9_cmd_data(0xC7, d, sizeof(d));
+  }
+  {
+    static const uint8_t d[] = {0x0E};
+    gc9_cmd_data(0xC8, d, sizeof(d));
+  }
+  {
+    static const uint8_t d[] = {0x00};
+    gc9_cmd_data(0xBF, d, sizeof(d));
+  }
+  {
+    static const uint8_t d[] = {0x20};
+    gc9_cmd_data(0xF9, d, sizeof(d));
+  }
+  {
+    static const uint8_t d[] = {0x3B};
+    gc9_cmd_data(0x9B, d, sizeof(d));
+  }
+  {
+    static const uint8_t d[] = {0x33, 0x7F, 0x00};
+    gc9_cmd_data(0x93, d, sizeof(d));
+  }
+  {
+    static const uint8_t d[] = {0x0E, 0x0F, 0x03, 0x0E, 0x0F, 0x03};
+    gc9_cmd_data(0x70, d, sizeof(d));
+  }
+  {
+    static const uint8_t d[] = {0x0E, 0x16, 0x03};
+    gc9_cmd_data(0x71, d, sizeof(d));
+  }
+  {
+    static const uint8_t d[] = {0x0E, 0x09};
+    gc9_cmd_data(0x91, d, sizeof(d));
+  }
+  {
+    static const uint8_t d[] = {0x2C};
+    gc9_cmd_data(0xC3, d, sizeof(d));
+  }
+  {
+    static const uint8_t d[] = {0x1A};
+    gc9_cmd_data(0xC4, d, sizeof(d));
+  }
 
   // Split gamma.
-  { static const uint8_t d[] = {0x51, 0x13, 0x0C, 0x06, 0x00, 0x2F}; gc9_cmd_data(0xF0, d, sizeof(d)); }
-  { static const uint8_t d[] = {0x51, 0x13, 0x0C, 0x06, 0x00, 0x33}; gc9_cmd_data(0xF2, d, sizeof(d)); }
-  { static const uint8_t d[] = {0x3C, 0x94, 0x4F, 0x33, 0x34, 0xCF}; gc9_cmd_data(0xF1, d, sizeof(d)); }
-  { static const uint8_t d[] = {0x4D, 0x94, 0x4F, 0x33, 0x34, 0xCF}; gc9_cmd_data(0xF3, d, sizeof(d)); }
+  {
+    static const uint8_t d[] = {0x51, 0x13, 0x0C, 0x06, 0x00, 0x2F};
+    gc9_cmd_data(0xF0, d, sizeof(d));
+  }
+  {
+    static const uint8_t d[] = {0x51, 0x13, 0x0C, 0x06, 0x00, 0x33};
+    gc9_cmd_data(0xF2, d, sizeof(d));
+  }
+  {
+    static const uint8_t d[] = {0x3C, 0x94, 0x4F, 0x33, 0x34, 0xCF};
+    gc9_cmd_data(0xF1, d, sizeof(d));
+  }
+  {
+    static const uint8_t d[] = {0x4D, 0x94, 0x4F, 0x33, 0x34, 0xCF};
+    gc9_cmd_data(0xF3, d, sizeof(d));
+  }
 
   // Orientation default; rotation is done in software (the transpose).
-  { static const uint8_t d[] = {0x00}; gc9_cmd_data(GC9_CMD_MADCTL, d, sizeof(d)); }
+  {
+    static const uint8_t d[] = {0x00};
+    gc9_cmd_data(GC9_CMD_MADCTL, d, sizeof(d));
+  }
 
   // Sleep out + mandatory 200 ms wait, display on, start memory write.
   gc9_cmd(GC9_CMD_SLPOUT);
@@ -238,19 +371,19 @@ static void gc9_init_hw(void) {
   GPIO_InitStruct(&io);
 
   // CS = PA10, BL = PA6, DC = PD0: plain push-pull GPIO outputs.
-  io.Pin           = LCD_CS_Pin | LCD_BL_Pin;
-  io.GPIO_Mode     = GPIO_Mode_Out_PP;
+  io.Pin            = LCD_CS_Pin | LCD_BL_Pin;
+  io.GPIO_Mode      = GPIO_Mode_Out_PP;
   io.GPIO_Slew_Rate = GPIO_Slew_Rate_High;
-  io.GPIO_Pull     = GPIO_No_Pull;
-  io.GPIO_Current  = GPIO_DC_8mA;
+  io.GPIO_Pull      = GPIO_No_Pull;
+  io.GPIO_Current   = GPIO_DC_8mA;
   GPIO_InitPeripheral(LCD_CS_GPIO_Port, &io); // PA10, PA6 (same port)
 
   GPIO_InitStruct(&io);
-  io.Pin           = LCD_DC_Pin;
-  io.GPIO_Mode     = GPIO_Mode_Out_PP;
+  io.Pin            = LCD_DC_Pin;
+  io.GPIO_Mode      = GPIO_Mode_Out_PP;
   io.GPIO_Slew_Rate = GPIO_Slew_Rate_High;
-  io.GPIO_Pull     = GPIO_No_Pull;
-  io.GPIO_Current  = GPIO_DC_8mA;
+  io.GPIO_Pull      = GPIO_No_Pull;
+  io.GPIO_Current   = GPIO_DC_8mA;
   GPIO_InitPeripheral(LCD_DC_GPIO_Port, &io); // PD0
 
   // SCK = PB3 (AF1), MOSI = PB5 (AF0): per-pin SPI1 AF on the N32L40x (uniform AF5 -> blank panel).
@@ -278,14 +411,14 @@ static void gc9_init_hw(void) {
   s.DataDirection = SPI_DIR_SINGLELINE_TX;
   s.SpiMode       = SPI_MODE_MASTER;
   s.DataLen       = SPI_DATA_SIZE_8BITS;
-  s.CLKPOL        = SPI_CLKPOL_HIGH;       // CPOL=1
+  s.CLKPOL        = SPI_CLKPOL_HIGH;        // CPOL=1
   s.CLKPHA        = SPI_CLKPHA_SECOND_EDGE; // CPHA=1 -> Mode 3
   s.NSS           = SPI_NSS_SOFT;
-  s.BaudRatePres  = SPI_BR_PRESCALER_2;    // fPCLK/2
+  s.BaudRatePres  = SPI_BR_PRESCALER_2; // fPCLK/2
   s.FirstBit      = SPI_FB_MSB;
-  s.CRCPoly       = 7;                       // unused, must be >= 1
+  s.CRCPoly       = 7; // unused, must be >= 1
   SPI_Init(SPI1, &s);
-  SPI_SetNssLevel(SPI1, SPI_NSS_HIGH);      // SSI high, avoid MODF
+  SPI_SetNssLevel(SPI1, SPI_NSS_HIGH); // SSI high, avoid MODF
   SPI_Enable(SPI1, ENABLE);
 }
 
@@ -397,7 +530,7 @@ void GC9Display::Transmit(uint16_t DevAddress, uint8_t *pData, uint16_t Size) {
   // plus a thin power bar along the bottom landscape edge. The mono UI layout is unchanged; only
   // the FG/BG words and the otherwise-empty bottom margin are colorized.
   const FrameTheme th     = T90Theme::computeFrame();
-  const int        barY0  = GC9_PANEL_W - GC9_HEATBAR_H;                                  // first band column
+  const int        barY0  = GC9_PANEL_W - GC9_HEATBAR_H; // first band column
   const int        barLen = th.heatBar ? (int)((uint32_t)(GC9_PANEL_H - 1) * th.heatPct / 100u) : 0;
 
   // Honour the IronOS left/right-hand orientation (OLED::setRotation updates it from the OrientationMode

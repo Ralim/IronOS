@@ -65,7 +65,6 @@
 #define DMA_CH7_INT_MASK ((uint32_t)(DMA_INTSTS_GLBF7 | DMA_INTSTS_TXCF7 | DMA_INTSTS_HTXF7 | DMA_INTSTS_ERRF7))
 #define DMA_CH8_INT_MASK ((uint32_t)(DMA_INTSTS_GLBF8 | DMA_INTSTS_TXCF8 | DMA_INTSTS_HTXF8 | DMA_INTSTS_ERRF8))
 
-
 /* DMA CHCFGx registers Masks, MEM2MEM, PL, MSIZE, PSIZE, MINC, PINC, CIRC and DIR bits */
 #define CCR_CLEAR_Mask ((uint32_t)0xFFFF800F)
 
@@ -107,66 +106,50 @@
  * @param DMAyChx where y can be 1 or 2 to select the DMA and
  *   x can be 1 to 8 for DMA1 and 1 to 8 for DMA2 to select the DMA Channel.
  */
-void DMA_DeInit(DMA_ChannelType* DMAChx)
-{
-    /* Check the parameters */
-    assert_param(IS_DMA_ALL_PERIPH(DMAChx));
+void DMA_DeInit(DMA_ChannelType *DMAChx) {
+  /* Check the parameters */
+  assert_param(IS_DMA_ALL_PERIPH(DMAChx));
 
-    /* Disable the selected DMAy Channelx */
-    DMAChx->CHCFG &= (uint16_t)(~DMA_CHCFG1_CHEN);
+  /* Disable the selected DMAy Channelx */
+  DMAChx->CHCFG &= (uint16_t)(~DMA_CHCFG1_CHEN);
 
-    /* Reset DMAy Channelx control register */
-    DMAChx->CHCFG = 0;
+  /* Reset DMAy Channelx control register */
+  DMAChx->CHCFG = 0;
 
-    /* Reset DMAy Channelx remaining bytes register */
-    DMAChx->TXNUM = 0;
+  /* Reset DMAy Channelx remaining bytes register */
+  DMAChx->TXNUM = 0;
 
-    /* Reset DMAy Channelx peripheral address register */
-    DMAChx->PADDR = 0;
+  /* Reset DMAy Channelx peripheral address register */
+  DMAChx->PADDR = 0;
 
-    /* Reset DMAy Channelx memory address register */
-    DMAChx->MADDR = 0;
+  /* Reset DMAy Channelx memory address register */
+  DMAChx->MADDR = 0;
 
-    if (DMAChx == DMA_CH1)
-    {
-        /* Reset interrupt pending bits for DMA1 Channel1 */
-        DMA->INTCLR |= DMA_CH1_INT_MASK;
-    }
-    else if (DMAChx == DMA_CH2)
-    {
-        /* Reset interrupt pending bits for DMA1 Channel2 */
-        DMA->INTCLR |= DMA_CH2_INT_MASK;
-    }
-    else if (DMAChx == DMA_CH3)
-    {
-        /* Reset interrupt pending bits for DMA1 Channel3 */
-        DMA->INTCLR |= DMA_CH3_INT_MASK;
-    }
-    else if (DMAChx == DMA_CH4)
-    {
-        /* Reset interrupt pending bits for DMA1 Channel4 */
-        DMA->INTCLR |= DMA_CH4_INT_MASK;
-    }
-    else if (DMAChx == DMA_CH5)
-    {
-        /* Reset interrupt pending bits for DMA1 Channel5 */
-        DMA->INTCLR |= DMA_CH5_INT_MASK;
-    }
-    else if (DMAChx == DMA_CH6)
-    {
-        /* Reset interrupt pending bits for DMA1 Channel6 */
-        DMA->INTCLR |= DMA_CH6_INT_MASK;
-    }
-    else if (DMAChx == DMA_CH7)
-    {
-        /* Reset interrupt pending bits for DMA1 Channel7 */
-        DMA->INTCLR |= DMA_CH7_INT_MASK;
-    }
-    else if (DMAChx == DMA_CH8)
-    {
-        /* Reset interrupt pending bits for DMA1 Channel8 */
-        DMA->INTCLR |= DMA_CH8_INT_MASK;
-    }
+  if (DMAChx == DMA_CH1) {
+    /* Reset interrupt pending bits for DMA1 Channel1 */
+    DMA->INTCLR |= DMA_CH1_INT_MASK;
+  } else if (DMAChx == DMA_CH2) {
+    /* Reset interrupt pending bits for DMA1 Channel2 */
+    DMA->INTCLR |= DMA_CH2_INT_MASK;
+  } else if (DMAChx == DMA_CH3) {
+    /* Reset interrupt pending bits for DMA1 Channel3 */
+    DMA->INTCLR |= DMA_CH3_INT_MASK;
+  } else if (DMAChx == DMA_CH4) {
+    /* Reset interrupt pending bits for DMA1 Channel4 */
+    DMA->INTCLR |= DMA_CH4_INT_MASK;
+  } else if (DMAChx == DMA_CH5) {
+    /* Reset interrupt pending bits for DMA1 Channel5 */
+    DMA->INTCLR |= DMA_CH5_INT_MASK;
+  } else if (DMAChx == DMA_CH6) {
+    /* Reset interrupt pending bits for DMA1 Channel6 */
+    DMA->INTCLR |= DMA_CH6_INT_MASK;
+  } else if (DMAChx == DMA_CH7) {
+    /* Reset interrupt pending bits for DMA1 Channel7 */
+    DMA->INTCLR |= DMA_CH7_INT_MASK;
+  } else if (DMAChx == DMA_CH8) {
+    /* Reset interrupt pending bits for DMA1 Channel8 */
+    DMA->INTCLR |= DMA_CH8_INT_MASK;
+  }
 }
 
 /**
@@ -176,54 +159,52 @@ void DMA_DeInit(DMA_ChannelType* DMAChx)
  * @param DMA_InitParam pointer to a DMA_InitType structure that
  *         contains the configuration information for the specified DMA Channel.
  */
-void DMA_Init(DMA_ChannelType* DMAChx, DMA_InitType* DMA_InitParam)
-{
-    uint32_t tmpregister = 0;
+void DMA_Init(DMA_ChannelType *DMAChx, DMA_InitType *DMA_InitParam) {
+  uint32_t tmpregister = 0;
 
-    /* Check the parameters */
-    assert_param(IS_DMA_ALL_PERIPH(DMAChx));
-    assert_param(IS_DMA_DIR(DMA_InitParam->Direction));
-    assert_param(IS_DMA_BUF_SIZE(DMA_InitParam->BufSize));
-    assert_param(IS_DMA_PERIPH_INC_STATE(DMA_InitParam->PeriphInc));
-    assert_param(IS_DMA_MEM_INC_STATE(DMA_InitParam->DMA_MemoryInc));
-    assert_param(IS_DMA_PERIPH_DATA_SIZE(DMA_InitParam->PeriphDataSize));
-    assert_param(IS_DMA_MEMORY_DATA_SIZE(DMA_InitParam->MemDataSize));
-    assert_param(IS_DMA_MODE(DMA_InitParam->CircularMode));
-    assert_param(IS_DMA_PRIORITY(DMA_InitParam->Priority));
-    assert_param(IS_DMA_M2M_STATE(DMA_InitParam->Mem2Mem));
+  /* Check the parameters */
+  assert_param(IS_DMA_ALL_PERIPH(DMAChx));
+  assert_param(IS_DMA_DIR(DMA_InitParam->Direction));
+  assert_param(IS_DMA_BUF_SIZE(DMA_InitParam->BufSize));
+  assert_param(IS_DMA_PERIPH_INC_STATE(DMA_InitParam->PeriphInc));
+  assert_param(IS_DMA_MEM_INC_STATE(DMA_InitParam->DMA_MemoryInc));
+  assert_param(IS_DMA_PERIPH_DATA_SIZE(DMA_InitParam->PeriphDataSize));
+  assert_param(IS_DMA_MEMORY_DATA_SIZE(DMA_InitParam->MemDataSize));
+  assert_param(IS_DMA_MODE(DMA_InitParam->CircularMode));
+  assert_param(IS_DMA_PRIORITY(DMA_InitParam->Priority));
+  assert_param(IS_DMA_M2M_STATE(DMA_InitParam->Mem2Mem));
 
-    /*--------------------------- DMAy Channelx CHCFG Configuration -----------------*/
-    /* Get the DMAyChx CHCFG value */
-    tmpregister = DMAChx->CHCFG;
-    /* Clear MEM2MEM, PL, MSIZE, PSIZE, MINC, PINC, CIRC and DIR bits */
-    tmpregister &= CCR_CLEAR_Mask;
-    /* Configure DMAy Channelx: data transfer, data size, priority level and mode */
-    /* Set DIR bit according to Direction value */
-    /* Set CIRC bit according to CircularMode value */
-    /* Set PINC bit according to PeriphInc value */
-    /* Set MINC bit according to DMA_MemoryInc value */
-    /* Set PSIZE bits according to PeriphDataSize value */
-    /* Set MSIZE bits according to MemDataSize value */
-    /* Set PL bits according to Priority value */
-    /* Set the MEM2MEM bit according to Mem2Mem value */
-    tmpregister |= DMA_InitParam->Direction | DMA_InitParam->CircularMode | DMA_InitParam->PeriphInc
-                   | DMA_InitParam->DMA_MemoryInc | DMA_InitParam->PeriphDataSize | DMA_InitParam->MemDataSize
-                   | DMA_InitParam->Priority | DMA_InitParam->Mem2Mem;
+  /*--------------------------- DMAy Channelx CHCFG Configuration -----------------*/
+  /* Get the DMAyChx CHCFG value */
+  tmpregister = DMAChx->CHCFG;
+  /* Clear MEM2MEM, PL, MSIZE, PSIZE, MINC, PINC, CIRC and DIR bits */
+  tmpregister &= CCR_CLEAR_Mask;
+  /* Configure DMAy Channelx: data transfer, data size, priority level and mode */
+  /* Set DIR bit according to Direction value */
+  /* Set CIRC bit according to CircularMode value */
+  /* Set PINC bit according to PeriphInc value */
+  /* Set MINC bit according to DMA_MemoryInc value */
+  /* Set PSIZE bits according to PeriphDataSize value */
+  /* Set MSIZE bits according to MemDataSize value */
+  /* Set PL bits according to Priority value */
+  /* Set the MEM2MEM bit according to Mem2Mem value */
+  tmpregister |= DMA_InitParam->Direction | DMA_InitParam->CircularMode | DMA_InitParam->PeriphInc | DMA_InitParam->DMA_MemoryInc | DMA_InitParam->PeriphDataSize | DMA_InitParam->MemDataSize |
+                 DMA_InitParam->Priority | DMA_InitParam->Mem2Mem;
 
-    /* Write to DMAy Channelx CHCFG */
-    DMAChx->CHCFG = tmpregister;
+  /* Write to DMAy Channelx CHCFG */
+  DMAChx->CHCFG = tmpregister;
 
-    /*--------------------------- DMAy Channelx TXNUM Configuration ---------------*/
-    /* Write to DMAy Channelx TXNUM */
-    DMAChx->TXNUM = DMA_InitParam->BufSize;
+  /*--------------------------- DMAy Channelx TXNUM Configuration ---------------*/
+  /* Write to DMAy Channelx TXNUM */
+  DMAChx->TXNUM = DMA_InitParam->BufSize;
 
-    /*--------------------------- DMAy Channelx PADDR Configuration ----------------*/
-    /* Write to DMAy Channelx PADDR */
-    DMAChx->PADDR = DMA_InitParam->PeriphAddr;
+  /*--------------------------- DMAy Channelx PADDR Configuration ----------------*/
+  /* Write to DMAy Channelx PADDR */
+  DMAChx->PADDR = DMA_InitParam->PeriphAddr;
 
-    /*--------------------------- DMAy Channelx MADDR Configuration ----------------*/
-    /* Write to DMAy Channelx MADDR */
-    DMAChx->MADDR = DMA_InitParam->MemAddr;
+  /*--------------------------- DMAy Channelx MADDR Configuration ----------------*/
+  /* Write to DMAy Channelx MADDR */
+  DMAChx->MADDR = DMA_InitParam->MemAddr;
 }
 
 /**
@@ -231,31 +212,30 @@ void DMA_Init(DMA_ChannelType* DMAChx, DMA_InitType* DMA_InitParam)
  * @param DMA_InitParam pointer to a DMA_InitType structure which will
  *         be initialized.
  */
-void DMA_StructInit(DMA_InitType* DMA_InitParam)
-{
-    /*-------------- Reset DMA init structure parameters values ------------------*/
-    /* Initialize the PeriphAddr member */
-    DMA_InitParam->PeriphAddr = 0;
-    /* Initialize the MemAddr member */
-    DMA_InitParam->MemAddr = 0;
-    /* Initialize the Direction member */
-    DMA_InitParam->Direction = DMA_DIR_PERIPH_SRC;
-    /* Initialize the BufSize member */
-    DMA_InitParam->BufSize = 0;
-    /* Initialize the PeriphInc member */
-    DMA_InitParam->PeriphInc = DMA_PERIPH_INC_DISABLE;
-    /* Initialize the DMA_MemoryInc member */
-    DMA_InitParam->DMA_MemoryInc = DMA_MEM_INC_DISABLE;
-    /* Initialize the PeriphDataSize member */
-    DMA_InitParam->PeriphDataSize = DMA_PERIPH_DATA_SIZE_BYTE;
-    /* Initialize the MemDataSize member */
-    DMA_InitParam->MemDataSize = DMA_MemoryDataSize_Byte;
-    /* Initialize the CircularMode member */
-    DMA_InitParam->CircularMode = DMA_MODE_NORMAL;
-    /* Initialize the Priority member */
-    DMA_InitParam->Priority = DMA_PRIORITY_LOW;
-    /* Initialize the Mem2Mem member */
-    DMA_InitParam->Mem2Mem = DMA_M2M_DISABLE;
+void DMA_StructInit(DMA_InitType *DMA_InitParam) {
+  /*-------------- Reset DMA init structure parameters values ------------------*/
+  /* Initialize the PeriphAddr member */
+  DMA_InitParam->PeriphAddr = 0;
+  /* Initialize the MemAddr member */
+  DMA_InitParam->MemAddr = 0;
+  /* Initialize the Direction member */
+  DMA_InitParam->Direction = DMA_DIR_PERIPH_SRC;
+  /* Initialize the BufSize member */
+  DMA_InitParam->BufSize = 0;
+  /* Initialize the PeriphInc member */
+  DMA_InitParam->PeriphInc = DMA_PERIPH_INC_DISABLE;
+  /* Initialize the DMA_MemoryInc member */
+  DMA_InitParam->DMA_MemoryInc = DMA_MEM_INC_DISABLE;
+  /* Initialize the PeriphDataSize member */
+  DMA_InitParam->PeriphDataSize = DMA_PERIPH_DATA_SIZE_BYTE;
+  /* Initialize the MemDataSize member */
+  DMA_InitParam->MemDataSize = DMA_MemoryDataSize_Byte;
+  /* Initialize the CircularMode member */
+  DMA_InitParam->CircularMode = DMA_MODE_NORMAL;
+  /* Initialize the Priority member */
+  DMA_InitParam->Priority = DMA_PRIORITY_LOW;
+  /* Initialize the Mem2Mem member */
+  DMA_InitParam->Mem2Mem = DMA_M2M_DISABLE;
 }
 
 /**
@@ -264,22 +244,18 @@ void DMA_StructInit(DMA_InitType* DMA_InitParam)
  * @param Cmd new state of the DMA Channelx.
  *   This parameter can be: ENABLE or DISABLE.
  */
-void DMA_EnableChannel(DMA_ChannelType* DMAChx, FunctionalState Cmd)
-{
-    /* Check the parameters */
-    assert_param(IS_DMA_ALL_PERIPH(DMAChx));
-    assert_param(IS_FUNCTIONAL_STATE(Cmd));
+void DMA_EnableChannel(DMA_ChannelType *DMAChx, FunctionalState Cmd) {
+  /* Check the parameters */
+  assert_param(IS_DMA_ALL_PERIPH(DMAChx));
+  assert_param(IS_FUNCTIONAL_STATE(Cmd));
 
-    if (Cmd != DISABLE)
-    {
-        /* Enable the selected DMAy Channelx */
-        DMAChx->CHCFG |= DMA_CHCFG1_CHEN;
-    }
-    else
-    {
-        /* Disable the selected DMAy Channelx */
-        DMAChx->CHCFG &= (uint16_t)(~DMA_CHCFG1_CHEN);
-    }
+  if (Cmd != DISABLE) {
+    /* Enable the selected DMAy Channelx */
+    DMAChx->CHCFG |= DMA_CHCFG1_CHEN;
+  } else {
+    /* Disable the selected DMAy Channelx */
+    DMAChx->CHCFG &= (uint16_t)(~DMA_CHCFG1_CHEN);
+  }
 }
 
 /**
@@ -294,22 +270,18 @@ void DMA_EnableChannel(DMA_ChannelType* DMAChx, FunctionalState Cmd)
  * @param Cmd new state of the specified DMA interrupts.
  *   This parameter can be: ENABLE or DISABLE.
  */
-void DMA_ConfigInt(DMA_ChannelType* DMAChx, uint32_t DMAInt, FunctionalState Cmd)
-{
-    /* Check the parameters */
-    assert_param(IS_DMA_ALL_PERIPH(DMAChx));
-    assert_param(IS_DMA_CONFIG_INT(DMAInt));
-    assert_param(IS_FUNCTIONAL_STATE(Cmd));
-    if (Cmd != DISABLE)
-    {
-        /* Enable the selected DMA interrupts */
-        DMAChx->CHCFG |= DMAInt;
-    }
-    else
-    {
-        /* Disable the selected DMA interrupts */
-        DMAChx->CHCFG &= ~DMAInt;
-    }
+void DMA_ConfigInt(DMA_ChannelType *DMAChx, uint32_t DMAInt, FunctionalState Cmd) {
+  /* Check the parameters */
+  assert_param(IS_DMA_ALL_PERIPH(DMAChx));
+  assert_param(IS_DMA_CONFIG_INT(DMAInt));
+  assert_param(IS_FUNCTIONAL_STATE(Cmd));
+  if (Cmd != DISABLE) {
+    /* Enable the selected DMA interrupts */
+    DMAChx->CHCFG |= DMAInt;
+  } else {
+    /* Disable the selected DMA interrupts */
+    DMAChx->CHCFG &= ~DMAInt;
+  }
 }
 
 /**
@@ -319,14 +291,13 @@ void DMA_ConfigInt(DMA_ChannelType* DMAChx, uint32_t DMAInt, FunctionalState Cmd
  *         transfer.
  * @note   This function can only be used when the DMAyChx is disabled.
  */
-void DMA_SetCurrDataCounter(DMA_ChannelType* DMAChx, uint16_t DataNumber)
-{
-    /* Check the parameters */
-    assert_param(IS_DMA_ALL_PERIPH(DMAChx));
+void DMA_SetCurrDataCounter(DMA_ChannelType *DMAChx, uint16_t DataNumber) {
+  /* Check the parameters */
+  assert_param(IS_DMA_ALL_PERIPH(DMAChx));
 
-    /*--------------------------- DMAy Channelx TXNUM Configuration ---------------*/
-    /* Write to DMA Channelx TXNUM */
-    DMAChx->TXNUM = DataNumber;
+  /*--------------------------- DMAy Channelx TXNUM Configuration ---------------*/
+  /* Write to DMA Channelx TXNUM */
+  DMAChx->TXNUM = DataNumber;
 }
 
 /**
@@ -336,12 +307,11 @@ void DMA_SetCurrDataCounter(DMA_ChannelType* DMAChx, uint16_t DataNumber)
  * @return The number of remaining data units in the current DMA Channelx
  *         transfer.
  */
-uint16_t DMA_GetCurrDataCounter(DMA_ChannelType* DMAChx)
-{
-    /* Check the parameters */
-    assert_param(IS_DMA_ALL_PERIPH(DMAChx));
-    /* Return the number of remaining data units for DMAy Channelx */
-    return ((uint16_t)(DMAChx->TXNUM));
+uint16_t DMA_GetCurrDataCounter(DMA_ChannelType *DMAChx) {
+  /* Check the parameters */
+  assert_param(IS_DMA_ALL_PERIPH(DMAChx));
+  /* Return the number of remaining data units for DMAy Channelx */
+  return ((uint16_t)(DMAChx->TXNUM));
 }
 
 /**
@@ -385,32 +355,28 @@ uint16_t DMA_GetCurrDataCounter(DMA_ChannelType* DMAChx)
  *     @arg DMA .
  * @return The new state of DMAFlag (SET or RESET).
  */
-FlagStatus DMA_GetFlagStatus(uint32_t DMAFlag, DMA_Module* DMAy)
-{
-    FlagStatus bitstatus = RESET;
-    uint32_t tmpregister = 0;
+FlagStatus DMA_GetFlagStatus(uint32_t DMAFlag, DMA_Module *DMAy) {
+  FlagStatus bitstatus   = RESET;
+  uint32_t   tmpregister = 0;
 
-    /* Check the parameters */
-    assert_param(IS_DMA_GET_FLAG(DMAFlag));
+  /* Check the parameters */
+  assert_param(IS_DMA_GET_FLAG(DMAFlag));
 
-    /* Calculate the used DMAy */
-    /* Get DMAy INTSTS register value */
-    tmpregister = DMAy->INTSTS;
+  /* Calculate the used DMAy */
+  /* Get DMAy INTSTS register value */
+  tmpregister = DMAy->INTSTS;
 
-    /* Check the status of the specified DMAy flag */
-    if ((tmpregister & DMAFlag) != (uint32_t)RESET)
-    {
-        /* DMAyFlag is set */
-        bitstatus = SET;
-    }
-    else
-    {
-        /* DMAyFlag is reset */
-        bitstatus = RESET;
-    }
+  /* Check the status of the specified DMAy flag */
+  if ((tmpregister & DMAFlag) != (uint32_t)RESET) {
+    /* DMAyFlag is set */
+    bitstatus = SET;
+  } else {
+    /* DMAyFlag is reset */
+    bitstatus = RESET;
+  }
 
-    /* Return the DMAyFlag status */
-    return bitstatus;
+  /* Return the DMAyFlag status */
+  return bitstatus;
 }
 
 /**
@@ -453,14 +419,13 @@ FlagStatus DMA_GetFlagStatus(uint32_t DMAFlag, DMA_Module* DMAy)
  *   This parameter can be one of the following values:
  *     @arg DMA .
  */
-void DMA_ClearFlag(uint32_t DMAFlag, DMA_Module* DMAy)
-{
-    /* Check the parameters */
-    assert_param(IS_DMA_CLEAR_FLAG(DMAFlag));
+void DMA_ClearFlag(uint32_t DMAFlag, DMA_Module *DMAy) {
+  /* Check the parameters */
+  assert_param(IS_DMA_CLEAR_FLAG(DMAFlag));
 
-    /* Calculate the used DMAy */
-    /* Clear the selected DMAy flags */
-    DMAy->INTCLR = DMAFlag;
+  /* Calculate the used DMAy */
+  /* Clear the selected DMAy flags */
+  DMAy->INTCLR = DMAFlag;
 }
 
 /**
@@ -504,31 +469,27 @@ void DMA_ClearFlag(uint32_t DMAFlag, DMA_Module* DMAy)
  *     @arg DMA .
  * @return The new state of DMA_IT (SET or RESET).
  */
-INTStatus DMA_GetIntStatus(uint32_t DMA_IT, DMA_Module* DMAy)
-{
-    INTStatus bitstatus  = RESET;
-    uint32_t tmpregister = 0;
+INTStatus DMA_GetIntStatus(uint32_t DMA_IT, DMA_Module *DMAy) {
+  INTStatus bitstatus   = RESET;
+  uint32_t  tmpregister = 0;
 
-    /* Check the parameters */
-    assert_param(IS_DMA_GET_IT(DMA_IT));
+  /* Check the parameters */
+  assert_param(IS_DMA_GET_IT(DMA_IT));
 
-    /* Calculate the used DMA */
-    /* Get DMAy INTSTS register value */
-    tmpregister = DMAy->INTSTS;
+  /* Calculate the used DMA */
+  /* Get DMAy INTSTS register value */
+  tmpregister = DMAy->INTSTS;
 
-    /* Check the status of the specified DMAy interrupt */
-    if ((tmpregister & DMA_IT) != (uint32_t)RESET)
-    {
-        /* DMAy_IT is set */
-        bitstatus = SET;
-    }
-    else
-    {
-        /* DMAy_IT is reset */
-        bitstatus = RESET;
-    }
-    /* Return the DMAInt status */
-    return bitstatus;
+  /* Check the status of the specified DMAy interrupt */
+  if ((tmpregister & DMA_IT) != (uint32_t)RESET) {
+    /* DMAy_IT is set */
+    bitstatus = SET;
+  } else {
+    /* DMAy_IT is reset */
+    bitstatus = RESET;
+  }
+  /* Return the DMAInt status */
+  return bitstatus;
 }
 
 /**
@@ -571,14 +532,13 @@ INTStatus DMA_GetIntStatus(uint32_t DMA_IT, DMA_Module* DMAy)
  *   This parameter can be one of the following values:
  *     @arg DMA .
  */
-void DMA_ClrIntPendingBit(uint32_t DMA_IT, DMA_Module* DMAy)
-{
-    /* Check the parameters */
-    assert_param(IS_DMA_CLR_INT(DMA_IT));
+void DMA_ClrIntPendingBit(uint32_t DMA_IT, DMA_Module *DMAy) {
+  /* Check the parameters */
+  assert_param(IS_DMA_CLR_INT(DMA_IT));
 
-    /* Calculate the used DMA */
-    /* Clear the selected DMA interrupt pending bits */
-    DMAy->INTCLR = DMA_IT;
+  /* Calculate the used DMA */
+  /* Clear the selected DMA interrupt pending bits */
+  DMAy->INTCLR = DMA_IT;
 }
 
 /**
@@ -626,28 +586,28 @@ void DMA_ClrIntPendingBit(uint32_t DMA_IT, DMA_Module* DMAy)
  *     @arg DMA_REMAP_TIM3_TRIG      DMA Request For TIM3_TRIG.
  *     @arg DMA_REMAP_TIM4_CH1       DMA Request For TIM4_CH1.
  *     @arg DMA_REMAP_TIM4_CH2       DMA Request For TIM4_CH2.
- *     @arg DMA_REMAP_TIM4_CH3       DMA Request For TIM4_CH3.  
- *     @arg DMA_REMAP_TIM4_UP        DMA Request For TIM4_UP.  
- *     @arg DMA_REMAP_TIM5_CH1       DMA Request For TIM5_CH1. 
+ *     @arg DMA_REMAP_TIM4_CH3       DMA Request For TIM4_CH3.
+ *     @arg DMA_REMAP_TIM4_UP        DMA Request For TIM4_UP.
+ *     @arg DMA_REMAP_TIM5_CH1       DMA Request For TIM5_CH1.
  *     @arg DMA_REMAP_TIM5_CH2       DMA Request For TIM5_CH2.
- *     @arg DMA_REMAP_TIM5_CH3       DMA Request For TIM5_CH3. 
- *     @arg DMA_REMAP_TIM5_CH4       DMA Request For TIM5_CH4.  
- *     @arg DMA_REMAP_TIM5_UP        DMA Request For TIM5_UP.  
- *     @arg DMA_REMAP_TIM5_TRIG      DMA Request For TIM5_TRIG. 
- *     @arg DMA_REMAP_TIM6_UP        DMA Request For TIM6_UP. 
- *     @arg DMA_REMAP_TIM7_UP        DMA Request For TIM7_UP. 
- *     @arg DMA_REMAP_TIM8_CH1       DMA Request For TIM8_CH1. 
- *     @arg DMA_REMAP_TIM8_CH2       DMA Request For TIM8_CH2. 
- *     @arg DMA_REMAP_TIM8_CH3       DMA Request For TIM8_CH3. 
- *     @arg DMA_REMAP_TIM8_CH4       DMA Request For TIM8_CH4. 
- *     @arg DMA_REMAP_TIM8_COM       DMA Request For TIM8_COM. 
- *     @arg DMA_REMAP_TIM8_UP        DMA Request For TIM8_UP. 
- *     @arg DMA_REMAP_TIM8_TRIG      DMA Request For TIM8_TRIG. 
- *     @arg DMA_REMAP_TIM9_CH1       DMA Request For TIM9_CH1. 
- *     @arg DMA_REMAP_TIM9_TRIG      DMA Request For TIM9_TRIG. 
- *     @arg DMA_REMAP_TIM9_CH3       DMA Request For TIM9_CH3.  
- *     @arg DMA_REMAP_TIM9_CH4       DMA Request For TIM9_CH4. 
- *     @arg DMA_REMAP_TIM9_UP   		DMA Request For TIM9_UP. 			
+ *     @arg DMA_REMAP_TIM5_CH3       DMA Request For TIM5_CH3.
+ *     @arg DMA_REMAP_TIM5_CH4       DMA Request For TIM5_CH4.
+ *     @arg DMA_REMAP_TIM5_UP        DMA Request For TIM5_UP.
+ *     @arg DMA_REMAP_TIM5_TRIG      DMA Request For TIM5_TRIG.
+ *     @arg DMA_REMAP_TIM6_UP        DMA Request For TIM6_UP.
+ *     @arg DMA_REMAP_TIM7_UP        DMA Request For TIM7_UP.
+ *     @arg DMA_REMAP_TIM8_CH1       DMA Request For TIM8_CH1.
+ *     @arg DMA_REMAP_TIM8_CH2       DMA Request For TIM8_CH2.
+ *     @arg DMA_REMAP_TIM8_CH3       DMA Request For TIM8_CH3.
+ *     @arg DMA_REMAP_TIM8_CH4       DMA Request For TIM8_CH4.
+ *     @arg DMA_REMAP_TIM8_COM       DMA Request For TIM8_COM.
+ *     @arg DMA_REMAP_TIM8_UP        DMA Request For TIM8_UP.
+ *     @arg DMA_REMAP_TIM8_TRIG      DMA Request For TIM8_TRIG.
+ *     @arg DMA_REMAP_TIM9_CH1       DMA Request For TIM9_CH1.
+ *     @arg DMA_REMAP_TIM9_TRIG      DMA Request For TIM9_TRIG.
+ *     @arg DMA_REMAP_TIM9_CH3       DMA Request For TIM9_CH3.
+ *     @arg DMA_REMAP_TIM9_CH4       DMA Request For TIM9_CH4.
+ *     @arg DMA_REMAP_TIM9_UP   		DMA Request For TIM9_UP.
  * @param DMAy DMA
  *   This parameter can be one of the following values:
  *     @arg DMA .
@@ -655,22 +615,18 @@ void DMA_ClrIntPendingBit(uint32_t DMA_IT, DMA_Module* DMAy)
  * @param Cmd new state of the DMA Channelx.
  *   This parameter can be: ENABLE or DISABLE.
  */
-void DMA_RequestRemap(uint32_t DMA_REMAP, DMA_Module* DMAy, DMA_ChannelType* DMAChx, FunctionalState Cmd)
-{
-    /* Check the parameters */
-    assert_param(IS_DMA_REMAP(DMA_REMAP));
+void DMA_RequestRemap(uint32_t DMA_REMAP, DMA_Module *DMAy, DMA_ChannelType *DMAChx, FunctionalState Cmd) {
+  /* Check the parameters */
+  assert_param(IS_DMA_REMAP(DMA_REMAP));
 
-    if (Cmd != DISABLE)
-    {
-        /* Calculate the used DMAy */
-        /* Set the selected DMAy remap request */
-        DMAChx->CHSEL = DMA_REMAP;
-    }
-    else
-    {
-        /* Clear DMAy remap */
-        DMAChx->CHSEL = 0;
-    }
+  if (Cmd != DISABLE) {
+    /* Calculate the used DMAy */
+    /* Set the selected DMAy remap request */
+    DMAChx->CHSEL = DMA_REMAP;
+  } else {
+    /* Clear DMAy remap */
+    DMAChx->CHSEL = 0;
+  }
 }
 
 /**
