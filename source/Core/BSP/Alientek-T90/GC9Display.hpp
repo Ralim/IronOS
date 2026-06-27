@@ -41,6 +41,12 @@ public:
   // Workhorse: dispatch on Size (full frame / display-state / ignore). REAL.
   static void Transmit(uint16_t DevAddress, uint8_t *pData, uint16_t Size);
 
+  // Stage 2 native color path (ColorUI): open a full-panel RGB565 pixel stream, push words in panel
+  // scan order (row 0..159 outer, col 0..39 inner), then close it.
+  static void colorBegin();
+  static void colorPush(uint16_t color);
+  static void colorEnd();
+
   // Map the SSD1306 inverse cmd to GC9 INVON/INVOFF; otherwise succeed. REAL (optional).
   static bool I2C_RegisterWrite(uint8_t address, uint8_t reg, uint8_t data);
 

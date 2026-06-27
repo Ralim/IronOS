@@ -40,6 +40,10 @@ ButtonState   buttonsAtDeviceBoot;                                      // We re
 OperatingMode currentOperatingMode = OperatingMode::InitialisationDone; // Current mode we are rendering
 guiContext    context;                                                  // Context passed to functions to aid in state during render passes
 
+// C accessor so BSP code (e.g. the T90 native color UI) can read the active mode without depending
+// on the deep UI OperatingMode enum header.
+extern "C" uint8_t getCurrentOperatingMode(void) { return (uint8_t)currentOperatingMode; }
+
 OperatingMode handle_post_init_state();
 OperatingMode guiHandleDraw(void) {
   OLED::clearScreen(); // Clear ready for render pass

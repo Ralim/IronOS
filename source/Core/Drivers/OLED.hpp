@@ -110,13 +110,26 @@ public:
 
   // Set the rotation for the screen
   static void setRotation(bool leftHanded);
-  // Get the current rotation of the LCD
-  static bool getRotation() {
+  // The real left/right-hand rotation state. Used by displays that rotate the whole framebuffer in
+  // the BSP (e.g. the T90 GC9 shim) and by rotation-aware button reads, which must always see the
+  // true orientation regardless of FRAMEBUFFER_ROTATION below.
+  static bool getRawRotation() {
 #ifdef OLED_FLIP
     return !inLeftHandedMode;
 #else
     return inLeftHandedMode;
 #endif /* OLED_FLIP */
+  }
+  // Get the current rotation of the LCD, as the UI layout code should see it. When the BSP rotates the
+  // entire framebuffer itself (FRAMEBUFFER_ROTATION), the UI must draw a SINGLE, un-rotated layout and
+  // let the shim flip it - otherwise the per-screen getRotation() branches (mirrored icons, swapped
+  // positions) double-apply on top of the framebuffer rotation and the icons scatter.
+  static bool getRotation() {
+#ifdef FRAMEBUFFER_ROTATION
+    return false;
+#else
+    return getRawRotation();
+#endif
   }
   static void    setBrightness(uint8_t contrast);
   static void    setInverseDisplay(bool inverted);

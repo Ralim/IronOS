@@ -15,8 +15,13 @@
 #ifdef OLED_GC9D01
 
 #include "BSP.h"  // delay_ms
+#include "ColorTheme.hpp" // T90Theme: live-state -> per-frame color scheme
+#include "ColorUI.hpp" // Stage 2 native color hero screens (soldering)
+#include "FreeRTOS.h" // display mutex: serialise full-frame Transmit across the GUI and MOV tasks
 #include "OLED.hpp" // FRAMEBUFFER_START, OLED_WIDTH, OLED_HEIGHT
 #include "Pins.h" // LCD_* pin macros + n32l40x.h (pulls in the std-periph drivers)
+#include "semphr.h"
+#include "task.h" // xTaskGetSchedulerState
 
 // ---------------------------------------------------------------------------
 // Constants
@@ -48,6 +53,13 @@
 #define SSD1306_NORMAL  0xA6
 
 bool GC9Display::initialised = false;
+
+// Serialises the full-frame render path. OLED::setRotation() issues a full-frame Transmit from the
+// MOV task (higher priority than the GUI task) and can preempt the GUI mid-frame, interleaving the
+// SPI stream and rebuilding ColorUI's file-static render state under a reader. Static allocation (the
+// kernel is configured static-only); created in init() before the scheduler starts.
+static StaticSemaphore_t displayMutexBuffer;
+static SemaphoreHandle_t displayMutex = NULL;
 
 // No full-frame RGB565 buffer: 40*160*2 = 12.8 KB would not fit the 24 KB SRAM alongside the RTOS
 // heap. Pixels are computed from the 1bpp framebuffer and streamed to the panel on the fly.
@@ -316,6 +328,9 @@ void GC9Display::init() {
   if (initialised) {
     return;
   }
+  if (displayMutex == NULL) {
+    displayMutex = xSemaphoreCreateMutexStatic(&displayMutexBuffer);
+  }
   gc9_init_hw();
   gc9_run_init_sequence();
   gc9_clear();
@@ -358,24 +373,72 @@ void GC9Display::Transmit(uint16_t DevAddress, uint8_t *pData, uint16_t Size) {
   // 0..159). The centering transpose maps UI (x,y) -> panel (col = y + Y_OFF, row = 159 - (x +
   // X_OFF)); inverting it per panel (row,col) recovers UI (x,y), and anything outside the 128x32
   // UI window is background.
+  // Serialise the whole full-frame render against itself: OLED::setRotation() issues a full-frame
+  // Transmit from the higher-priority MOV task and can preempt the GUI task mid-frame. Lock only once
+  // tasks are running (the first frame is drawn single-threaded during init, before the mutex exists).
+  const bool lock = (displayMutex != NULL) && (xTaskGetSchedulerState() == taskSCHEDULER_RUNNING);
+  if (lock) {
+    xSemaphoreTake(displayMutex, portMAX_DELAY);
+  }
+
+  // Stage 2: native color hero screen for modes that have one (soldering). It reads live state and
+  // streams RGB565 straight to the panel, ignoring the mono buffer. Other modes fall through to the
+  // Stage-1 tinted mono blit below.
+  if (ColorUI::renderActiveScreen()) {
+    if (lock) {
+      xSemaphoreGive(displayMutex);
+    }
+    return;
+  }
+
   const uint8_t *pix = pData + FRAMEBUFFER_START; // 512 bytes of 1bpp, [17..528]
+
+  // Per-frame color scheme from live iron state: heat-mapped foreground (cold blue -> hot red)
+  // plus a thin power bar along the bottom landscape edge. The mono UI layout is unchanged; only
+  // the FG/BG words and the otherwise-empty bottom margin are colorized.
+  const FrameTheme th     = T90Theme::computeFrame();
+  const int        barY0  = GC9_PANEL_W - GC9_HEATBAR_H;                                  // first band column
+  const int        barLen = th.heatBar ? (int)((uint32_t)(GC9_PANEL_H - 1) * th.heatPct / 100u) : 0;
+
+  // Honour the IronOS left/right-hand orientation (OLED::setRotation updates it from the OrientationMode
+  // setting / the accelerometer). This shim rotates the WHOLE framebuffer, so it reads getRawRotation()
+  // (the true state) - the UI itself draws a single un-rotated layout (getRotation() returns false under
+  // FRAMEBUFFER_ROTATION). right-hand (false) keeps the original transpose; left-hand is the 180 rotation.
+  const bool leftHanded = OLED::getRawRotation();
   gc9_begin_frame();
   for (int row = 0; row < GC9_PANEL_H; row++) {
-    const int x = (GC9_PANEL_H - 1 - row) - GC9_X_OFF; // UI column (may be out of range)
+    const int landscapeX = leftHanded ? (GC9_PANEL_H - 1 - row) : row; // 0..159 across the landscape width
+    const int x          = landscapeX - GC9_X_OFF;                     // UI column (may be out of range)
     for (int col = 0; col < GC9_PANEL_W; col++) {
-      const int y     = col - GC9_Y_OFF;               // UI row (may be out of range)
-      uint16_t  color = COLOR_BG;
+      const int landscapeY = leftHanded ? col : (GC9_PANEL_W - 1 - col);
+      const int y          = landscapeY - GC9_Y_OFF; // UI row (may be out of range)
+      uint16_t  color      = th.bg;
       if (x >= 0 && x < OLED_WIDTH && y >= 0 && y < OLED_HEIGHT) {
         const uint8_t *strip = pix + (y >> 3) * OLED_WIDTH;
         if ((strip[x] >> (y & 7)) & 1) {
-          color = COLOR_FG;
+          color = th.fg;
         }
+      } else if (th.heatBar && landscapeY >= barY0) {
+        // Bottom power bar: lit gradient up to the fill point, faint track beyond.
+        color = (landscapeX <= barLen) ? T90Theme::heatBarColorAt((uint8_t)((uint32_t)landscapeX * 255u / (GC9_PANEL_H - 1))) : th.barTrack;
       }
       gc9_spi_word(color);
     }
   }
   gc9_end_frame();
+  if (lock) {
+    xSemaphoreGive(displayMutex);
+  }
 }
+
+// ---------------------------------------------------------------------------
+// Native color path primitives (used by ColorUI) - thin public wrappers over the file-static SPI
+// helpers so a native RGB565 renderer in another translation unit can stream a full panel frame.
+// ---------------------------------------------------------------------------
+
+void GC9Display::colorBegin() { gc9_begin_frame(); }
+void GC9Display::colorPush(uint16_t color) { gc9_spi_word(color); }
+void GC9Display::colorEnd() { gc9_end_frame(); }
 
 // ---------------------------------------------------------------------------
 // Bulk register write - SSD1306 init stream is meaningless; succeed.

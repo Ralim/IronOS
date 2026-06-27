@@ -13,6 +13,9 @@ extern "C" {
 
 void vApplicationStackOverflowHook(TaskHandle_t xTask, char *pcTaskName);
 
+// Active GUI operating mode as an integer (for BSP code that cannot include the UI enum header).
+uint8_t getCurrentOperatingMode(void);
+
 // Threads
 void                startGUITask(void const *argument);
 void                startPIDTask(void const *argument);
