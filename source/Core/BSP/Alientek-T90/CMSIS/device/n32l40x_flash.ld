@@ -40,7 +40,7 @@ _Min_Stack_Size = 0x800; /* required amount of stack */
 /* Specify the memory areas */
 MEMORY
 {
-FLASH (rx)      : ORIGIN = 0x08005000, LENGTH = 104K /* 128K die - 20K(0x5000) bootloader - 2K settings - 2K logo (T90 app base) */
+FLASH (rx)      : ORIGIN = 0x08005000, LENGTH = 76K /* app region 0x08005000..0x08018000. settings+logo pages live at 0x08018000/0x08018800 (inside bootloader-treated-as-app flash, which retains; the top ~0x0801F000 region is bootloader-owned and does NOT survive power-cycle). The ~28K above is left to the bootloader. */
 RAM (xrw)      : ORIGIN = 0x20000000, LENGTH = 20K /* T90 N32L403 SRAM ~20K (factory SP=0x20004CE8; SDK 32K default is family-generic) */
 }
 

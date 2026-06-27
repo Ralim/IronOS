@@ -3,7 +3,7 @@
  *
  *  Settings persistence for the Alientek T90 (Nations N32L40x).
  *  N32 main flash is WORD-only programmable (no halfword program for app flash)
- *  and erases in 2 KB pages; settings live in the reserved last 2 KB sector.
+ *  and erases in 2 KB pages; settings live in the reserved last-but-one 2 KB page.
  */
 
 #include "BSP.h"
@@ -21,16 +21,25 @@ void flash_save_buffer(const uint8_t *buffer, const uint16_t length) {
   FLASH_Unlock();
   FLASH_ClearFlag(FLASH_STS_CLRFLAG); // N32 all-error-flags constant (incl. PVERR/EVERR), not the F1 subset
   resetWatchdog();
-  // Erase the single reserved 2 KB page.
-  FLASH_EraseOnePage((uint32_t)SETTINGS_START_PAGE);
+  // Erase the single reserved 2 KB page. Act on the status: if the page is write-protected or the
+  // erase otherwise fails, bail (and re-lock) instead of programming into an un-erased page.
+  FLASH_STS status = FLASH_EraseOnePage((uint32_t)SETTINGS_START_PAGE);
+  if (status != FLASH_COMPL) {
+    FLASH_Lock();
+    return;
+  }
 
-  // Program word-by-word; pad the tail up to a 4-byte boundary.
+  // Program word-by-word; pad the tail up to a 4-byte boundary. Stop on the first failure.
   const uint16_t words = (length + 3) / 4;
   for (uint16_t i = 0; i < words; i++) {
     resetWatchdog();
     uint32_t word = 0;
     memcpy(&word, buffer + (i * 4), (length - (i * 4)) >= 4 ? 4 : (length - (i * 4)));
-    FLASH_ProgramWord((uint32_t)SETTINGS_START_PAGE + (i * 4), word);
+    status = FLASH_ProgramWord((uint32_t)SETTINGS_START_PAGE + (i * 4), word);
+    if (status != FLASH_COMPL) {
+      FLASH_Lock();
+      return;
+    }
   }
   FLASH_Lock();
 }
