@@ -46,9 +46,12 @@ bool fontBit(const uint8_t *font, uint8_t index, uint8_t w, uint8_t h, int gx, i
   return (g[(gy >> 3) * w + gx] >> (gy & 7)) & 1;
 }
 
-// Small-font glyph indices for the non-digit chars we draw (from the Translation.EN.cpp char map;
-// digit value N maps to glyph index N in both fonts).
-enum : uint8_t { SM_DOT = 45, SM_V = 42, SM_W = 46 };
+// Font-table index of a single-char IronOS small-symbol constant (e.g. SmallSymbolVolts). The encoded
+// byte is the conversion-table index = font-table position + 2 (slots 0/1 are null/newline), so subtract
+// 2. Derived at runtime so these stay correct when the small-font symbol ordering changes (e.g. when menu
+// descriptions are added to the small font); hardcoding the indices silently breaks on any font reshuffle.
+// Digit glyphs need no such lookup: 0-9 are locked to the first font slots, so their value is their index.
+uint8_t smGlyph(const char *smallSymbol) { return (uint8_t)smallSymbol[0] - 2; }
 
 // A placed glyph: a font table + index, top-left landscape position, integer pixel scale, color.
 struct Placement {
@@ -155,15 +158,15 @@ void renderSoldering() {
   const uint16_t amber = rgb565(255, 170, 40);
   {
     int xx = putSmallNumber(vX10 / 10, rx, 3, teal);
-    putSmallChar(SM_DOT, xx, 3, teal);
+    putSmallChar(smGlyph(SmallSymbolDot), xx, 3, teal);
     xx = putSmallNumber(vX10 % 10, xx + 6, 3, teal);
-    putSmallChar(SM_V, xx, 3, teal);
+    putSmallChar(smGlyph(SmallSymbolVolts), xx, 3, teal);
   }
   {
     int xx = putSmallNumber(wX10 / 10, rx, 15, white);
-    putSmallChar(SM_DOT, xx, 15, white);
+    putSmallChar(smGlyph(SmallSymbolDot), xx, 15, white);
     xx = putSmallNumber(wX10 % 10, xx + 6, 15, white);
-    putSmallChar(SM_W, xx, 15, white);
+    putSmallChar(smGlyph(SmallSymbolWatts), xx, 15, white);
   }
   putSmallNumber((int)setShow, rx, 27, amber);
 
