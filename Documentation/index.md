@@ -38,6 +38,7 @@ For notes on installation for your device, please refer to the flashing guide fo
 - [Pinecil V2](https://ralim.github.io/IronOS/Flashing/Pinecil%20V2/)
 - [TS80 / TS80P](https://ralim.github.io/IronOS/Flashing/TS80%28P%29/)
 - [TS100](https://ralim.github.io/IronOS/Flashing/TS100)
+- [Alientek T90](https://ralim.github.io/IronOS/Flashing/Alientek%20T90/)
 
 But the _generic_ [TL;DR](https://www.merriam-webster.com/dictionary/TL%3BDR) is to:
 
