@@ -186,16 +186,21 @@
 #define MODEL_HAS_DCDC // No DC/DC but very fast PWM that gets us roughly the same place
 #endif                 /* T90 */
 
-// Flash layout. The very top of the 128K die (~0x0801C954..0x08020000) is owned by the Alientek
-// HID bootloader / factory metadata: writes there read back in-session but are WIPED on the next
-// power-up, so settings never persisted at the old 0x0801F000 page. Instead place the settings +
-// logo pages just ABOVE the IronOS app, inside the region the bootloader treats as application
-// flash (proven to retain across power cycles - the factory firmware's own code lives there). The
-// linker FLASH region is shortened to 0x08005000..0x08018000 so app code can never reach them.
-//   settings page: 0x08018000..0x08018800 (2K)  -- flash_save_buffer erases only this page
-//   logo page:     0x08018800..0x08019000 (2K)
-#define SETTINGS_START_PAGE (0x08000000 + (96 * 1024)) // 0x08018000, dedicated 2K settings page
-#define FLASH_LOGOADDR      (0x08000000 + (98 * 1024)) // 0x08018800, dedicated 2K logo page
+// Flash layout. Two regions of the 128K die are touched by the Alientek HID bootloader on every
+// power-up and must be avoided for runtime persistence (both verified on hardware by writing a
+// sentinel and reading it back after a power cycle):
+//   - the very top (~0x0801C954..0x08020000): bootloader / factory metadata, wiped on power-up.
+//   - the single page at 0x08018000 (the first page just past the linker FLASH region): the
+//     bootloader uses it as its application-info page and zeroes it on power-up. A settings struct
+//     written there reads back fine in-session but comes up mostly 0x00 after a power cycle, which
+//     made loadSettings reset to defaults every boot.
+// Pages from 0x08018800 up to the metadata region were all verified to retain across power cycles.
+// Place the settings + logo pages there, clear of both danger zones. The linker FLASH region is
+// 0x08005000..0x08018000 so app code can never reach them.
+//   settings page: 0x0801B000..0x0801B800 (2K)  -- flash_save_buffer erases only this page
+//   logo page:     0x0801B800..0x0801C000 (2K)
+#define SETTINGS_START_PAGE (0x08000000 + (108 * 1024)) // 0x0801B000, dedicated 2K settings page
+#define FLASH_LOGOADDR      (0x08000000 + (110 * 1024)) // 0x0801B800, dedicated 2K logo page
 
 // Defaults
 

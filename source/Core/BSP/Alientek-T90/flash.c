@@ -42,6 +42,11 @@ void flash_save_buffer(const uint8_t *buffer, const uint16_t length) {
     }
   }
   FLASH_Lock();
+  // The N32L40x serves flash reads through an iCache enabled at SystemInit (FLASH->AC ICAHEN).
+  // After self-modifying this page the cache can hold stale lines, so a read of the freshly written
+  // settings (the saveSettings verify memcmp, or loadSettings on the next boot) may return pre-erase
+  // data. Reset the iCache so every subsequent read reflects the programmed cells.
+  FLASH_iCacheRST();
 }
 
 void flash_read_buffer(uint8_t *buffer, const uint16_t length) { memcpy(buffer, (uint8_t *)SETTINGS_START_PAGE, length); }

@@ -216,6 +216,44 @@ static void SystemInit_ExtMemCtl(void);
  * @note   This function should be used only after reset.
  */
 void SystemInit(void) {
+  // The Alientek update-mode bootloader hands the app a clean machine on a direct post-flash boot, but
+  // a NORMAL power-up leaves activity running (SysTick + its interrupt, leftover NVIC IRQs, possibly a
+  // DMA channel) that writes into low SRAM. This app's settingsConstants[] table lives in .data (it has
+  // one runtime-initialised bound, so it cannot be a pure-flash .rodata constant), so that stray
+  // activity zeroes part of it right after the Reset_Handler .data copy. That makes QCIdealVoltage's
+  // min/max read 0, so sanitiseSettings() finds it out of range and resets it on every power-on (but
+  // never on the first post-flash boot, where the bootloader has not run its normal power-up path) ->
+  // the "Certain settings changed" warning every boot. Silence every leftover source FIRST, then
+  // re-copy .data from its flash image so the app starts from a clean table. This runs before the C++
+  // constructors and main, so the one dynamic bound is still initialised afterwards.
+  SysTick->CTRL = 0;                      // stop the leftover SysTick so its handler cannot fire
+  SCB->ICSR     = SCB_ICSR_PENDSTCLR_Msk; // clear any pending SysTick
+  for (int i = 0; i < 8; i++) {
+    NVIC->ICER[i] = 0xFFFFFFFFUL; // disable all IRQs
+    NVIC->ICPR[i] = 0xFFFFFFFFUL; // clear all pending IRQs
+  }
+  RCC->AHBPCLKEN |= RCC_AHBPCLKEN_DMAEN; // ensure the DMA clock is on so the channel registers are writable
+  for (int ch = 0; ch < 8; ch++) {
+    DMA->DMA_Channel[ch].CHCFG = 0; // disable + clear each DMA channel (CHEN and all config bits)
+  }
+  DMA->INTCLR = 0xFFFFFFFFUL; // clear any pending DMA flags
+  __DSB();
+  __ISB();
+  {
+    // Re-initialise .data (copy from its flash image) and .bss (re-zero) now that the leftover
+    // sources are silenced, in case they wrote into either before this point. The linker symbols are
+    // taken as arrays so the pointer arithmetic and the end comparison are well defined.
+    extern uint32_t _sidata[], _sdata[], _edata[], _sbss[], _ebss[];
+    uint32_t       *src = _sidata;
+    uint32_t       *dst = _sdata;
+    while ((uintptr_t)dst < (uintptr_t)_edata) {
+      *dst++ = *src++;
+    }
+    for (dst = _sbss; (uintptr_t)dst < (uintptr_t)_ebss; dst++) {
+      *dst = 0;
+    }
+  }
+
   /* FPU settings
    * ------------------------------------------------------------*/
 #if (__FPU_PRESENT == 1) && (__FPU_USED == 1)
