@@ -47,6 +47,10 @@ public:
   static void colorPush(uint16_t color);
   static void colorEnd();
 
+  // Stream the compiled-in colour boot splash (160x40 RGB565) straight to the panel, honouring the
+  // current left/right-hand orientation. Used by the T90 showBootLogo() in place of the mono logo path.
+  static void showColorBootLogo();
+
   // Map the SSD1306 inverse cmd to GC9 INVON/INVOFF; otherwise succeed. REAL (optional).
   static bool I2C_RegisterWrite(uint8_t address, uint8_t reg, uint8_t data);
 

@@ -85,8 +85,8 @@ OperatingMode guiHandleDraw(void) {
     newMode = OperatingMode::InitialisationDone;
 #endif
   case OperatingMode::StartupLogo:
-    showBootLogo();
-
+    // The boot logo is shown earlier (handle_post_init_state), ahead of the startup warnings; this
+    // state now only applies the auto-start mode once the logo and any warnings are done.
     if (getSettingValue(SettingsOptions::AutoStartMode) == autoStartMode_t::SLEEP) {
       lastMovementTime = lastButtonTime = 0; // We mask the values so that sleep goes until user moves again or presses a button
       newMode                           = OperatingMode::Sleeping;
@@ -212,6 +212,9 @@ OperatingMode handle_post_init_state() {
     return OperatingMode::CJCCalibration;
   }
 
+  // Show the boot logo before the startup warnings, so the splash is the first thing on screen rather
+  // than appearing after a warning (e.g. the one-shot "settings were reset" notice).
+  showBootLogo();
   return OperatingMode::StartupWarnings;
 }
 

@@ -6,6 +6,8 @@
 
 #include "BSP.h"
 #include "BootLogo.h"
+#include "Buttons.hpp"
+#include "GC9Display.hpp"
 #include "IRQ.h"
 #include "Pins.h"
 #include "Power.h"
@@ -233,7 +235,24 @@ void setBuzzer(bool on) {
 
 void log_system_state(int32_t PWMWattsx10) { (void)PWMWattsx10; } // no debug UART wired
 
-void showBootLogo(void) { BootLogo::handleShowingLogo((uint8_t *)FLASH_LOGOADDR); }
+void showBootLogo(void) {
+#ifdef OLED_GC9D01
+  // The T90 has a colour panel: show a native RGB565 splash (BootLogoData.cpp) instead of the mono
+  // BootLogo flow - the 2K logo flash page cannot hold a 160x40 colour frame, so the logo is compiled
+  // in. Honour the same LOGOTime setting (skip / N seconds / until a button) as the core boot logo.
+  if (getSettingValue(SettingsOptions::LOGOTime) == logoMode_t::SKIP) {
+    return;
+  }
+  GC9Display::showColorBootLogo();
+  if (getSettingValue(SettingsOptions::LOGOTime) >= logoMode_t::ONETIME) {
+    waitForButtonPress();
+  } else {
+    waitForButtonPressOrTimeout(TICKS_SECOND * getSettingValue(SettingsOptions::LOGOTime));
+  }
+#else
+  BootLogo::handleShowingLogo((uint8_t *)FLASH_LOGOADDR);
+#endif
+}
 
 #ifdef CUSTOM_MAX_TEMP_C
 TemperatureType_t getCustomTipMaxInC() { return MAX_TEMP_C; }

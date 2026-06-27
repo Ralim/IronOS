@@ -573,6 +573,31 @@ void GC9Display::colorBegin() { gc9_begin_frame(); }
 void GC9Display::colorPush(uint16_t color) { gc9_spi_word(color); }
 void GC9Display::colorEnd() { gc9_end_frame(); }
 
+// Colour boot splash (data in BootLogoData.cpp): a full-panel 160x40 RGB565 image streamed straight to
+// the glass, honouring the left/right-hand orientation the same way as the mono blit. Serialised by the
+// display mutex so a concurrent MOV-task refresh cannot interleave on the SPI bus.
+extern const uint16_t t90BootLogoRGB565[];
+
+void GC9Display::showColorBootLogo() {
+  const bool lock = (displayMutex != NULL) && (xTaskGetSchedulerState() == taskSCHEDULER_RUNNING);
+  if (lock) {
+    xSemaphoreTake(displayMutex, portMAX_DELAY);
+  }
+  const bool leftHanded = OLED::getRawRotation();
+  gc9_begin_frame();
+  for (int row = 0; row < GC9_PANEL_H; row++) {
+    const int lx = leftHanded ? (GC9_PANEL_H - 1 - row) : row;
+    for (int col = 0; col < GC9_PANEL_W; col++) {
+      const int ly = leftHanded ? col : (GC9_PANEL_W - 1 - col);
+      gc9_spi_word(t90BootLogoRGB565[ly * GC9_PANEL_H + lx]);
+    }
+  }
+  gc9_end_frame();
+  if (lock) {
+    xSemaphoreGive(displayMutex);
+  }
+}
+
 // ---------------------------------------------------------------------------
 // Bulk register write - SSD1306 init stream is meaningless; succeed.
 // ---------------------------------------------------------------------------
