@@ -28,9 +28,79 @@ static void printShortDescription(SettingsItemIndex settingsItemIndex, uint16_t 
   OLED::setCursor(cursorCharPosition * FONT_12_WIDTH - 2, 0);
 }
 
+#ifdef MENU_DESCRIPTION_SMALL_FONT
+// Lay the (build-time word-wrapped) help text across the free bottom half of the settings screen in the
+// small font, keeping the setting name + value + scrollbar visible. The encoded help string carries a
+// 0x01 newline between wrapped lines; split on it ourselves (OLED's own newline only breaks from the top
+// line, and 0x01 can also be the trailing byte of a 0xF1..0xFF two-byte glyph, which we step over).
+// Two lines fit under the value; longer help pages vertically on a slow timer so nothing scrolls sideways.
+static void drawSettingDescriptionBottom(const char *desc, TickType_t now) {
+  const uint8_t *lineStart[8];
+  uint8_t        lineLen[8]; // bytes per line
+  uint8_t        nLines = 0;
+  const uint8_t *p      = reinterpret_cast<const uint8_t *>(desc);
+  const uint8_t *s      = p;
+  while (*p && nLines < 8) {
+    if (*p > 0xF0) {
+      p += (p[1] != 0) ? 2 : 1; // two-byte glyph; its value byte is not a newline
+    } else if (*p == 0x01) {
+      lineStart[nLines] = s;
+      lineLen[nLines]   = (uint8_t)(p - s);
+      nLines++;
+      s = ++p;
+    } else {
+      p++;
+    }
+  }
+  if (nLines < 8) {
+    lineStart[nLines] = s;
+    lineLen[nLines]   = (uint8_t)(p - s);
+    nLines++;
+  }
+
+  const uint8_t visibleLines = 2; // free rows under the name/value block (y=16, y=24)
+  uint8_t       firstLine    = 0;
+  if (nLines > visibleLines) {
+    const uint8_t pages = (nLines + visibleLines - 1) / visibleLines;
+    firstLine           = (uint8_t)(((now / (TICKS_SECOND * 2)) % pages) * visibleLines);
+  }
+  for (uint8_t i = 0; i < visibleLines; i++) {
+    const uint8_t li = firstLine + i;
+    if (li >= nLines) {
+      break;
+    }
+    char    buf[48];
+    uint8_t n = lineLen[li];
+    if (n > sizeof(buf) - 1) {
+      n = sizeof(buf) - 1;
+    }
+    for (uint8_t k = 0; k < n; k++) {
+      buf[k] = (char)lineStart[li][k];
+    }
+    buf[n] = '\0';
+    OLED::setCursor(0, 16 + i * 8);
+    OLED::print(buf, FontStyle::SMALL);
+  }
+}
+#endif
+
 // Render a menu, based on the position given
 // This will either draw the menu item, or the help text depending on how long its been since button press
 void render_menu(const menuitem *item, guiContext *cxt) {
+#ifdef MENU_DESCRIPTION_SMALL_FONT
+  // Compact layout: name + value on top, help text in the free bottom half (small font). No full-screen
+  // takeover, so the name/value/scrollbar stay visible and the buttons keep their normal actions (the
+  // upstream behaviour hides the whole screen behind scrolling help after a few seconds of inactivity).
+  (void)cxt;
+  if (item->shortDescriptionSize > 0) {
+    printShortDescription(item->shortDescriptionIndex, item->shortDescriptionSize);
+  }
+  item->draw();
+  if (item->description != 0) {
+    drawSettingDescriptionBottom(translatedString(Tr->SettingsDescriptions[item->description - 1]), xTaskGetTickCount());
+  }
+  return;
+#endif
   // If recent interaction or not help text draw the entry
   if ((xTaskGetTickCount() - lastButtonTime < HELP_TEXT_TIMEOUT_TICKS) || item->description == 0) {
 
