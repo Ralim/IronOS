@@ -77,11 +77,23 @@ than from a datasheet or schematic:
   demand from two threads; reads are serialised with a **static** FreeRTOS mutex
   (`configSUPPORT_DYNAMIC_ALLOCATION = 0`), with a discard-first settling pass and a TIM4 `OC2REF`
   holdoff so the injected tip sample lands after the heater blanks.
-- **Settings persistence (`flash.c`, linker)** — the top of the 128K die is owned by the HID
-  bootloader and is wiped on power-cycle, so settings never survived there. They were relocated to a
-  dedicated page at `0x08018000` (logo at `0x08018800`) inside the retained application-flash region,
-  and the linker `FLASH` window shortened to `0x08005000..0x08018000` (76K) so app code cannot reach
-  them. Programming is word-only with erase/program error handling.
+- **Settings persistence (`flash.c`, `system_n32l40x.c`, linker)** — settings live in a dedicated 2K
+  page at `0x0801B000` (logo at `0x0801B800`), inside the application-flash region but clear of both
+  the page at `0x08018000` (which the bootloader treats as its app-info page and zeroes on power-up)
+  and the bootloader metadata at the top of the 128K die; the page is verified on hardware to retain
+  all 120 bytes across power-off. The linker `FLASH` window is shortened to `0x08005000..0x08018000`
+  (76K) so app code cannot reach the settings/logo pages. Programming is word-only with erase/program
+  error handling and an iCache reset after each write.
+- **Bootloader SRAM corruption (`system_n32l40x.c`)** — on a *normal* power-up (but not a direct
+  post-flash boot) the HID bootloader hands control off with SysTick + its interrupt, leftover NVIC
+  IRQs and a DMA channel still running; they write into low SRAM and zero part of `settingsConstants[]`
+  right after the Reset_Handler `.data` copy. That table lives in `.data` (RAM) rather than `.rodata`
+  because one bound is runtime-initialised (`TemperatureInF.max` via `HasFahrenheit`), so the stray
+  writes corrupt a setting's min/max — `sanitiseSettings()` then resets that setting every boot and
+  the "settings changed" warning appears on every power-on. `SystemInit()` silences those sources
+  (stop SysTick, disable all NVIC IRQs and DMA channels) and re-initialises `.data`/`.bss` from flash
+  before the C++ constructors run, so the app always starts from a clean image. The first-boot vs
+  later-boot difference is the tell: a direct post-flash boot skips the bootloader's power-up path.
 - **Colour display (`GC9Display.cpp`, `ColorUI.*`, `ColorTheme.*`)** — IronOS renders a 1bpp mono
   framebuffer; the GC9 shim expands it to RGB565 on the fly (no 12.8K full-frame buffer fits the 20K
   SRAM), heat-maps the foreground and draws a live power bar. A native RGB565 "hero" soldering screen
