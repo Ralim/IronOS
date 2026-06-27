@@ -26,49 +26,21 @@ void resetWatchdog() {
   IWDG_ReloadKey();
 }
 
-// Lookup table for the cold-junction NTC. We do not have exact specs; it looks to be roughly a
-// 10K B=4000 NTC, reused from the Sequre S60 front-end. Stored as ADCReading, Temp in degC.
-// TODO calibrate on hardware (recalibrate to the T90 NTC on PA3).
-static const uint16_t NTCHandleLookup[] = {
-    // ADC Reading , Temp in C
-    23931, 0,  //
-    23210, 2,  //
-    22466, 4,  //
-    21703, 6,  //
-    20924, 8,  //
-    20135, 10, //
-    19338, 12, //
-    18538, 14, //
-    17738, 16, //
-    16943, 18, //
-    16156, 20, //
-    15381, 22, //
-    14621, 24, //
-    13878, 26, //
-    13155, 28, //
-    12455, 30, //
-    11778, 32, //
-    11126, 34, //
-    10501, 36, //
-    9902,  38, //
-    9330,  40, //
-    8786,  42, //
-    8269,  44, //
-};
-
+// Cold-junction reference for the tip thermocouple, returned in deci-degC.
+//
+// The tip uV->degC curve in ThermoModel.cpp was reversed from the stock-firmware LUT, which is an
+// ABSOLUTE temperature curve (factory `tip = lut_interp(opamp_input)`, disassembled at 0x800ce18): the
+// factory does NOT add a live handle/cold-junction term at soldering temperatures - the breakpoints are
+// absolute, anchored at a ~38 degC cold junction (the upper segment extrapolates to 38 degC at zero
+// input). Our IronOS LUT stores those same breakpoints minus 38 (delta model), and getTipInC() then adds
+// getHandleTemperature(). So returning a fixed 38 degC here makes `tip = (factory_abs - 38) + 38 =
+// factory_abs`, i.e. it reproduces the factory reading exactly. The on-board NTC (PA2) runs through an
+// uncharacterised divider, so a live reading just injects tens-of-degrees of error (the cause of the
+// observed overheating); the small residual room-temp offset is trimmed by the on-device tip calibration.
+// TODO: reverse the factory NTC curve to restore a live cold junction once a reference thermometer exists.
 uint16_t getHandleTemperature(uint8_t sample) {
-#ifdef TMP36_ADC_CHANNEL
-  int32_t result = getADCHandleTemp(sample);
-  // No interpolation: return the first table temperature whose ADC threshold we exceed.
-  for (uint32_t i = 0; i < (sizeof(NTCHandleLookup) / (2 * sizeof(uint16_t))); i++) {
-    if (result > NTCHandleLookup[(i * 2) + 0]) {
-      return NTCHandleLookup[(i * 2) + 1] * 10;
-    }
-  }
-  return 45 * 10;
-#else
-  return 0; // Not implemented
-#endif
+  (void)sample;
+  return 38 * 10;
 }
 
 uint16_t getInputVoltageX10(uint16_t divisor, uint8_t sample) {
@@ -189,12 +161,17 @@ void delay_ms(uint16_t count) {
   }
 }
 
-bool isTipDisconnected() {
-  // A disconnected thermocouple floats the external-amp input and rails the ADC, reading above max.
-  uint16_t tipDisconnectedThres = TipThermoModel::getTipMaxInC() - 5;
-  uint32_t tipTemp              = TipThermoModel::getTipInC();
-  return tipTemp > tipDisconnectedThres;
-}
+// --- Tip presence -------------------------------------------------------------------------------
+// The T90's open thermocouple does NOT rail to the ADC ceiling like a classic Miniware tip (so the
+// inherited rail-high test is useless), and the current-sense node is an unreliable floating input.
+// Detect a missing tip the way it actually presents: while the iron is IDLE (no setpoint) a fitted
+// tip sits near ambient, whereas an empty handle reads the external op-amp's open-circuit output
+// (~360 degC, steady). So an idle reading that high == no tip. During soldering the reading is
+// legitimately high, so we report present and let the standard thermal-runaway net cover a tip pulled
+// mid-solder. HomeScreen gates entering soldering on this, so the iron never heats an empty handle.
+#define TIP_DISCONNECT_IDLE_TEMP_C 300 // an idle tip reading above this == open-circuit (no tip)
+
+bool isTipDisconnected() { return currentTempTargetDegC == 0 && TipThermoModel::getTipInC() > TIP_DISCONNECT_IDLE_TEMP_C; }
 
 void setStatusLED(const enum StatusLED state) { (void)state; } // no status LED on the T90
 

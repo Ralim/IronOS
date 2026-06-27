@@ -64,8 +64,8 @@
  * OLED Orientation
  *
  */
-#define ORIENTATION_MODE           0 // 0: Right 1:Left (2:Automatic N/A)
-#define MAX_ORIENTATION_MODE       1 // Disable auto mode
+#define ORIENTATION_MODE           2 // 0: Right 1:Left 2:Automatic (default: auto-rotate via accel)
+#define MAX_ORIENTATION_MODE       2 // Right/Left/Auto (QMA6100P accelerometer is fitted)
 #define REVERSE_BUTTON_TEMP_CHANGE 0 // 0:Default 1:Reverse - Reverse the plus and minus button assignment for temperature change
 
 /**
@@ -126,16 +126,18 @@
 #ifdef MODEL_T90
 // Alientek T90: Nations N32L40x (Cortex-M4F), T245 cartridge, GC9-family color SPI LCD,
 // CH224Q USB-PD sink over software I2C. Mirrors the Sequre S60 std-periph structure but
-// retargets every value to the T90 front-end. Analog constants below are placeholders that
-// compile and must be re-fitted on hardware (see "TODO calibrate on hardware").
+// retargets every value to the T90 front-end. The tip/Vin scale constants below are reverse-
+// engineered from the stock firmware (VOLTAGE_DIV, OP_AMP_GAIN_STAGE and the uV->degC LUT in
+// ThermoModel.cpp); the thermal-model constants are first-cut and want a final fit against a
+// reference thermometer on hardware (see "TODO calibrate on hardware").
 
-#define VOLTAGE_DIV        467 // Default divider scaler // TODO calibrate on hardware (Vin ~10:1 divider)
-#define CALIBRATION_OFFSET 200 // Default adc offset in uV // TODO calibrate on hardware (per-unit thermocouple zero)
+#define VOLTAGE_DIV        370 // Vin divider scaler (factory uses an ~11:1 divider; RE'd from stock firmware)
+#define CALIBRATION_OFFSET 200 // Default tip zero offset in uV; trimmed per-unit by the on-device calibration
 #define PID_POWER_LIMIT    70  // Sets the max pwm power limit
 #define POWER_LIMIT        0   // 0 watts default limit
 #define MAX_POWER_LIMIT    70
 #define POWER_LIMIT_STEPS  5
-#define OP_AMP_GAIN_STAGE  536 // External tip amp gain // TODO calibrate on hardware (dominant temperature scale)
+#define OP_AMP_GAIN_STAGE  250 // External tip amp gain (~250, the value the T245 uV->degC LUT in ThermoModel.cpp and the factory RE both assume). 536 was a stale placeholder: dividing by 536 instead of 250 halved the computed tip uV, so a hot tip read ~half temperature and the PID drove full power forever.
 #define TEMP_uV_LOOKUP_T245    // Selects the T245 uV->degC curve in ThermoModel.cpp
 #define USB_PD_VMAX              20 // Maximum voltage for PD to negotiate (CH224Q supports up to 28V)
 #define THERMAL_RUNAWAY_TIME_SEC 20
@@ -152,12 +154,17 @@
 // OLED_128x32 sizes the mono framebuffer the shim expands to RGB565. Do NOT define OLED_I2CBB*/OLED_96x16.
 #define OLED_128x32
 #define OLED_GC9D01
+// The GC9 shim rotates the WHOLE framebuffer in software (GC9Display::Transmit reads getRawRotation()).
+// So the UI must draw a single, un-rotated layout: getRotation() returns false to the UI under this
+// flag, otherwise the per-screen getRotation() branches (mirrored icons, swapped positions) would
+// double-apply on top of the framebuffer rotation and the home-screen icons scatter.
+#define FRAMEBUFFER_ROTATION
 
 #define POW_PD_EXT         3 /*External PD via CH224Q (not HUB238=1 / FS2711=2); power_check() drives it*/
 #define USB_PD_EPR_WATTAGE 0 /*No EPR*/
 // No HAS_POWER_DEBUG_MENU: the CH224Q exposes no PDO/source introspection (only a negotiated
 // voltage + status byte), so there is no showPDDebug() implementation for POW_PD_EXT==3.
-#define TEMP_NTC       // Cold-junction is an NTC on PA3
+#define TEMP_NTC       // Cold-junction is an NTC on PA2 (ADC ch3)
 #define CH224_SOFT_I2C // Software (bit-bang) I2C for the CH224Q PD chip on PB6/PB7
 // QST QMA6100P accelerometer shares the soft-I2C bus (PB6/PB7) with the CH224Q.
 // I2CBB2 is the soft-I2C class; the accelerometer framework talks to it via ACCEL_I2CBB2.
@@ -165,24 +172,30 @@
 #define ACCEL_I2CBB2   // Accelerometer lives on the I2CBB2 soft-I2C bus
 #define I2C_SOFT_BUS_2 // Compile the I2CBB2 soft-I2C class
 #define FILTER_DISPLAYED_TIP_TEMP 4 // Filtering for GUI display
+// Scroll menu help text in the small font: the wide/short GC9 panel turns the default large font into
+// an unreadable smear for long descriptions.
+#define MENU_DESCRIPTION_SMALL_FONT
 
 // T245 cartridges cap lower than the Core default. Cap the user-selectable setpoint via MAX_TEMP_C/F
-// but do NOT define CUSTOM_MAX_TEMP_C: that would also cap TipThermoModel::getTipMaxInC(), which
-// isTipDisconnected() uses (max-5) to detect a railed/floating thermocouple. With a 400C cap that
-// detection would false-trigger at a 400C setpoint and report "no tip". Let getTipMaxInC() stay at
-// the ADC-rail ceiling so disconnect detection works; the 400C setpoint cap is enforced separately.
+// but do NOT define CUSTOM_MAX_TEMP_C: that would also cap TipThermoModel::getTipMaxInC(), which the
+// PID setpoint clamp and the thermal-runaway raw-ADC check rely on staying at the ADC-rail ceiling.
+// (Tip-disconnect no longer depends on getTipMaxInC: it uses the idle-temperature test in BSP.cpp.)
 #define MAX_TEMP_C 400 // Max soldering temp selectable degC (T245) // TODO calibrate on hardware
 #define MAX_TEMP_F 750 // Max soldering temp selectable degF (T245) // TODO calibrate on hardware
 
 #define MODEL_HAS_DCDC // No DC/DC but very fast PWM that gets us roughly the same place
 #endif                 /* T90 */
 
-// Flash layout: app FLASH is 0x08005000..0x0801F000 (104K). The top two 2K sectors are reserved as
-// SEPARATE pages so erasing settings never wipes the logo (N32 erases a whole 2K page at a time):
-//   settings page: 0x0801F000..0x0801F800 (2K)  -- flash_save_buffer erases only this page
-//   logo page:     0x0801F800..0x08020000 (2K)
-#define SETTINGS_START_PAGE (0x08000000 + (124 * 1024)) // 0x0801F000, dedicated 2K settings page
-#define FLASH_LOGOADDR      (0x08000000 + (126 * 1024)) // 0x0801F800, dedicated 2K logo page
+// Flash layout. The very top of the 128K die (~0x0801C954..0x08020000) is owned by the Alientek
+// HID bootloader / factory metadata: writes there read back in-session but are WIPED on the next
+// power-up, so settings never persisted at the old 0x0801F000 page. Instead place the settings +
+// logo pages just ABOVE the IronOS app, inside the region the bootloader treats as application
+// flash (proven to retain across power cycles - the factory firmware's own code lives there). The
+// linker FLASH region is shortened to 0x08005000..0x08018000 so app code can never reach them.
+//   settings page: 0x08018000..0x08018800 (2K)  -- flash_save_buffer erases only this page
+//   logo page:     0x08018800..0x08019000 (2K)
+#define SETTINGS_START_PAGE (0x08000000 + (96 * 1024)) // 0x08018000, dedicated 2K settings page
+#define FLASH_LOGOADDR      (0x08000000 + (98 * 1024)) // 0x08018800, dedicated 2K logo page
 
 // Defaults
 
