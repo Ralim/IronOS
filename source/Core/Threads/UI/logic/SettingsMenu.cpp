@@ -69,15 +69,23 @@ static void drawSettingDescriptionBottom(const char *desc, TickType_t now) {
     if (li >= nLines) {
       break;
     }
-    char    buf[48];
-    uint8_t n = lineLen[li];
-    if (n > sizeof(buf) - 1) {
-      n = sizeof(buf) - 1;
+    // Copy this line into a NUL-terminated buffer (the encoded segments are not NUL-terminated). Copy a
+    // whole glyph at a time so a 0xF1..0xFF two-byte glyph is never split and buf can never overflow.
+    char           buf[48];
+    uint8_t        bn   = 0;
+    const uint8_t *q    = lineStart[li];
+    const uint8_t *qend = q + lineLen[li];
+    while (q < qend) {
+      const uint8_t glyphBytes = (*q > 0xF0 && (q + 1) < qend) ? 2 : 1;
+      if (bn + glyphBytes > sizeof(buf) - 1) {
+        break;
+      }
+      for (uint8_t k = 0; k < glyphBytes; k++) {
+        buf[bn++] = (char)q[k];
+      }
+      q += glyphBytes;
     }
-    for (uint8_t k = 0; k < n; k++) {
-      buf[k] = (char)lineStart[li][k];
-    }
-    buf[n] = '\0';
+    buf[bn] = '\0';
     OLED::setCursor(0, 16 + i * 8);
     OLED::print(buf, FontStyle::SMALL);
   }

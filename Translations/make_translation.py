@@ -1081,7 +1081,9 @@ def wrap_text_for_small_font(text: str, width: int = 21) -> str:
     Used for menu descriptions on wide/short small-font panels (MENU_DESCRIPTION_SMALL_FONT): the
     firmware lays the wrapped lines out across the free area under the setting value instead of
     scrolling a single line sideways. `\\n` always encodes to byte 0x01, so the firmware can split the
-    encoded string back into lines. Width 21 == 128 px / 6 px small-font cell.
+    encoded string back into lines. Width 21 == 128 px / 6 px small-font cell. `len()` counts code
+    points, i.e. display glyphs (each glyph is one encoded entity regardless of its 1/2 byte length),
+    which is the correct measure of on-screen line width.
     """
     out_lines: List[str] = []
     current = ""
