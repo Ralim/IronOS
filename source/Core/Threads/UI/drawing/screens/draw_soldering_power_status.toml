@@ -1,0 +1,108 @@
+# draw_soldering_power_status — identical between resolutions.
+
+[file]
+includes = ["power.hpp", "ui_drawing.hpp", "<OperatingModes.h>"]
+
+[anchors.96x16]
+temp_cur  = { lh = [-1, 0], rh = [50, 0] }
+boost_cur = { lh = [50, 0], rh = [34, 0] }
+sleep_cur = { lh = [47, 0], rh = [32, 0] }
+psrc_cur  = { lh = [47, 8], rh = [32, 8] }
+watt_cur  = { lh = [67, 0], rh = [ 0, 0] }
+volt_cur  = { lh = [67, 8], rh = [ 0, 8] }
+
+[anchors.128x32]
+temp_cur  = { lh = [-1, 0], rh = [50, 0] }
+boost_cur = { lh = [50, 0], rh = [34, 0] }
+sleep_cur = { lh = [47, 0], rh = [32, 0] }
+psrc_cur  = { lh = [47, 8], rh = [32, 8] }
+watt_cur  = { lh = [67, 0], rh = [ 0, 0] }
+volt_cur  = { lh = [67, 8], rh = [ 0, 8] }
+
+[[function]]
+name = "ui_draw_soldering_power_status"
+args = ["bool boost_mode_on"]
+
+[[function.body]]
+cursor = "temp_cur"
+
+[[function.body]]
+call = "ui_draw_tip_temperature"
+args = ["true", "FontStyle::LARGE"]
+
+[[function.body]]
+cond = true
+
+# Boost mode is on
+[[function.body.branches]]
+when = "boost_mode_on"
+[[function.body.branches.do]]
+cursor = "boost_cur"
+[[function.body.branches.do]]
+symbol = "LargeSymbolPlus"
+font   = "large"
+
+[[function.body.branches]]
+[[function.body.branches.do]]
+cond     = true
+features = ["!NO_SLEEP_MODE"]
+[[function.body.branches.do.branches]]
+when = "getSettingValue(SettingsOptions::Sensitivity) && getSettingValue(SettingsOptions::SleepTime)"
+[[function.body.branches.do.branches.do]]
+cursor = "sleep_cur"
+[[function.body.branches.do.branches.do]]
+call = "printCountdownUntilSleep"
+args = ["getSleepTimeout()"]
+
+[[function.body.branches.do]]
+cursor = "psrc_cur"
+[[function.body.branches.do]]
+text   = "PowerSourceNames[getPowerSourceNumber()]"
+font   = "small"
+length = 2
+
+# Print wattage
+[[function.body]]
+cursor = "watt_cur"
+
+[[function.body]]
+block = true
+[[function.body.do]]
+local = "uint32_t x10Watt = x10WattHistory.average()"
+[[function.body.do]]
+cond = true
+[[function.body.do.branches]]
+when = "x10Watt > 999"
+# If we exceed 99.9W we drop the decimal place to keep it all fitting
+[[function.body.do.branches.do]]
+symbol = "SmallSymbolSpace"
+font   = "small"
+[[function.body.do.branches.do]]
+number = "x10WattHistory.average() / 10"
+places = 3
+font   = "small"
+[[function.body.do.branches]]
+[[function.body.do.branches.do]]
+number = "x10WattHistory.average() / 10"
+places = 2
+font   = "small"
+[[function.body.do.branches.do]]
+symbol = "SmallSymbolDot"
+font   = "small"
+[[function.body.do.branches.do]]
+number = "x10WattHistory.average() % 10"
+places = 1
+font   = "small"
+[[function.body.do]]
+symbol = "SmallSymbolWatts"
+font   = "small"
+
+[[function.body]]
+cursor = "volt_cur"
+
+[[function.body]]
+call = "printVoltage"
+
+[[function.body]]
+symbol = "SmallSymbolVolts"
+font   = "small"

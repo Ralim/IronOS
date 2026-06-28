@@ -1,0 +1,75 @@
+# draw_soldering_sleep_mode — two functions, identical between resolutions.
+
+# ───── ui_draw_soldering_detailed_sleep ─────
+
+[[function]]
+name         = "ui_draw_soldering_detailed_sleep"
+args         = ["TemperatureType_t tipTemp"]
+default_font = "small"
+
+[[function.body]]
+clear_screen = true
+
+[[function.body]]
+cursor = [0, 0]
+
+[[function.body]]
+i18n = "SleepingAdvancedString"
+
+[[function.body]]
+cursor = [0, 8]
+
+[[function.body]]
+i18n = "SleepingTipAdvancedString"
+
+[[function.body]]
+number = "tipTemp"
+places = 3
+
+[[function.body]]
+cond = true
+[[function.body.branches]]
+when = "getSettingValue(SettingsOptions::TemperatureInF)"
+[[function.body.branches.do]]
+symbol = "SmallSymbolDegF"
+[[function.body.branches]]
+[[function.body.branches.do]]
+symbol = "SmallSymbolDegC"
+
+[[function.body]]
+symbol = "SmallSymbolSpace"
+
+[[function.body]]
+call = "printVoltage"
+
+[[function.body]]
+symbol = "SmallSymbolVolts"
+
+[[function.body]]
+refresh = true
+
+# ───── ui_draw_soldering_basic_sleep ─────
+
+[[function]]
+name         = "ui_draw_soldering_basic_sleep"
+args         = ["TemperatureType_t tipTemp"]
+default_font = "large"
+
+[[function.body]]
+clear_screen = true
+
+[[function.body]]
+cursor = [0, 0]
+
+[[function.body]]
+symbol = "LargeSymbolSleep"
+
+[[function.body]]
+number = "tipTemp"
+places = 3
+
+[[function.body]]
+deg_symbol = "extras"
+
+[[function.body]]
+refresh = true

@@ -1,0 +1,110 @@
+# draw_usb_pd_debug — two functions, identical between resolutions.
+
+# ───── ui_draw_usb_pd_debug_state ─────
+
+[[function]]
+signature    = "void ui_draw_usb_pd_debug_state(const uint16_t vbus_sense_state, const uint8_t stateNumber)"
+default_font = "small"
+
+[[function.body]]
+cursor = [0, 0]
+
+[[function.body]]
+symbol = "SmallSymbolPDDebug"
+
+[[function.body]]
+cursor = [0, 8]
+
+[[function.body]]
+symbol = "SmallSymbolState"
+
+[[function.body]]
+symbol = "SmallSymbolSpace"
+
+[[function.body]]
+number        = "stateNumber"
+places        = 2
+leading_zeros = true
+
+[[function.body]]
+symbol = "SmallSymbolSpace"
+
+[[function.body]]
+cond = true
+[[function.body.branches]]
+when = "vbus_sense_state == 2"
+[[function.body.branches.do]]
+symbol = "SmallSymbolNoVBus"
+[[function.body.branches]]
+when = "vbus_sense_state == 1"
+[[function.body.branches.do]]
+symbol = "SmallSymbolVBus"
+
+# ───── ui_draw_usb_pd_debug_pdo ─────
+
+[[function]]
+signature    = "void ui_draw_usb_pd_debug_pdo(const uint8_t entry_num, const uint16_t min_voltage, const uint16_t max_voltage, const uint16_t current_a_x100, const uint16_t wattage)"
+default_font = "small"
+
+[[function.body]]
+cursor = [0, 0]
+
+[[function.body]]
+symbol = "SmallSymbolPDDebug"
+
+[[function.body]]
+cursor = [0, 8]
+
+[[function.body]]
+number        = "entry_num"
+places        = 2
+leading_zeros = true
+
+[[function.body]]
+symbol = "SmallSymbolSpace"
+
+[[function.body]]
+cond = true
+[[function.body.branches]]
+when = "min_voltage > 0"
+[[function.body.branches.do]]
+number        = "min_voltage"
+places        = 2
+leading_zeros = true
+[[function.body.branches.do]]
+symbol = "SmallSymbolMinus"
+
+[[function.body]]
+number        = "max_voltage"
+places        = 2
+leading_zeros = true
+
+[[function.body]]
+symbol = "SmallSymbolVolts"
+
+[[function.body]]
+symbol = "SmallSymbolSpace"
+
+[[function.body]]
+cond = true
+[[function.body.branches]]
+when = "wattage"
+[[function.body.branches.do]]
+number        = "wattage"
+places        = 3
+leading_zeros = true
+[[function.body.branches.do]]
+symbol = "SmallSymbolWatts"
+[[function.body.branches]]
+[[function.body.branches.do]]
+number        = "current_a_x100 / 100"
+places        = 2
+leading_zeros = true
+[[function.body.branches.do]]
+symbol = "SmallSymbolDot"
+[[function.body.branches.do]]
+number        = "current_a_x100 % 100"
+places        = 2
+leading_zeros = false
+[[function.body.branches.do]]
+symbol = "SmallSymbolAmps"

@@ -1,0 +1,95 @@
+# draw_profile_advanced — only the y-coordinate of the time progress
+# line differs (8 vs 16). Otherwise identical.
+
+[anchors.96x16]
+temp_xy  = { lh = [ 0, 0], rh = [48, 0] }
+phase_xy = { lh = [55, 0], rh = [36, 0] }
+time_xy  = { lh = [ 0, 8], rh = [42, 8] }
+
+[anchors.128x32]
+temp_xy  = { lh = [ 0,  0], rh = [48,  0] }
+phase_xy = { lh = [55,  0], rh = [36,  0] }
+time_xy  = { lh = [ 0, 16], rh = [42, 16] }
+
+[[function]]
+signature    = "void ui_draw_soldering_profile_advanced(TemperatureType_t tipTemp, TemperatureType_t profileCurrentTargetTemp, uint32_t phaseElapsedSeconds, uint32_t phase, const uint32_t phaseTimeGoal)"
+default_font = "small"
+
+# print temperature
+[[function.body]]
+cursor = "temp_xy"
+
+[[function.body]]
+number = "tipTemp"
+places = 3
+
+[[function.body]]
+symbol = "SmallSymbolSlash"
+
+[[function.body]]
+number = "profileCurrentTargetTemp"
+places = 3
+
+[[function.body]]
+cond = true
+[[function.body.branches]]
+when = "getSettingValue(SettingsOptions::TemperatureInF)"
+[[function.body.branches.do]]
+symbol = "SmallSymbolDegF"
+[[function.body.branches]]
+[[function.body.branches.do]]
+symbol = "SmallSymbolDegC"
+
+# print phase
+[[function.body]]
+cond = true
+[[function.body.branches]]
+when = "phase > 0 && phase <= getSettingValue(SettingsOptions::ProfilePhases)"
+[[function.body.branches.do]]
+cursor = "phase_xy"
+[[function.body.branches.do]]
+number = "phase"
+places = 1
+
+# print time progress / preheat / cooldown
+[[function.body]]
+cursor = "time_xy"
+
+[[function.body]]
+cond = true
+[[function.body.branches]]
+when = "phase == 0"
+[[function.body.branches.do]]
+i18n = "ProfilePreheatString"
+[[function.body.branches]]
+when = "phase > getSettingValue(SettingsOptions::ProfilePhases)"
+[[function.body.branches.do]]
+i18n = "ProfileCooldownString"
+[[function.body.branches]]
+[[function.body.branches.do]]
+number = "phaseElapsedSeconds / 60"
+places = 1
+[[function.body.branches.do]]
+symbol = "SmallSymbolColon"
+[[function.body.branches.do]]
+number        = "phaseElapsedSeconds % 60"
+places        = 2
+leading_zeros = false
+
+[[function.body.branches.do]]
+symbol = "SmallSymbolSlash"
+
+# blink if we can't keep up with the time goal
+[[function.body.branches.do]]
+cond = true
+[[function.body.branches.do.branches]]
+when = "phaseElapsedSeconds < phaseTimeGoal + 2 || (xTaskGetTickCount() / TICKS_SECOND) % 2 == 0"
+[[function.body.branches.do.branches.do]]
+number = "phaseTimeGoal / 60"
+places = 1
+[[function.body.branches.do.branches.do]]
+symbol = "SmallSymbolColon"
+[[function.body.branches.do.branches.do]]
+number        = "phaseTimeGoal % 60"
+places        = 2
+leading_zeros = false

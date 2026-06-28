@@ -1,0 +1,43 @@
+# draw_warning_undervoltage — identical between 96x16 and 128x32.
+
+[[function]]
+name = "ui_draw_warning_undervoltage"
+args = ["void"]
+
+[[function.body]]
+clear_screen = true
+
+[[function.body]]
+cursor = [0, 0]
+
+[[function.body]]
+cond = true
+[[function.body.branches]]
+when = "getSettingValue(SettingsOptions::DetailedSoldering)"
+[[function.body.branches.do]]
+i18n = "UndervoltageString"
+font = "small"
+[[function.body.branches.do]]
+cursor = [0, 8]
+[[function.body.branches.do]]
+i18n = "InputVoltageString"
+font = "small"
+[[function.body.branches.do]]
+call = "printVoltage"
+[[function.body.branches.do]]
+symbol = "SmallSymbolVolts"
+font   = "small"
+[[function.body.branches]]
+# else
+[[function.body.branches.do]]
+i18n = "UVLOWarningString"
+font = "large"
+
+[[function.body]]
+refresh = true
+
+[[function.body]]
+expr = "GUIDelay()"
+
+[[function.body]]
+expr = "waitForButtonPress()"

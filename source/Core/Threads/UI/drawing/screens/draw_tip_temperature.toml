@@ -1,0 +1,29 @@
+# draw_tip_temperature — identical between 96x16 and 128x32.
+
+[file]
+includes = [
+  "OperatingModeUtilities.h",
+  "OperatingModes.h",
+  "SolderingCommon.h",
+  "TipThermoModel.h",
+]
+
+[[function]]
+signature = "void ui_draw_tip_temperature(bool symbol, const FontStyle font)"
+
+# Draw tip temp handling unit conversion & tolerance near setpoint
+[[function.body]]
+local = "TemperatureType_t Temp = getTipTemp()"
+
+[[function.body]]
+number = "Temp"
+places = 3
+font   = "font"
+
+[[function.body]]
+cond = true
+[[function.body.branches]]
+when = "symbol"
+# For big font, can draw nice symbols, otherwise fall back to chars
+[[function.body.branches.do]]
+deg_symbol = "font == FontStyle::LARGE ? FontStyle::EXTRAS : font"
