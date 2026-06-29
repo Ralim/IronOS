@@ -141,11 +141,12 @@ CPUFLAGS=-mcpu=cortex-m3  \
          -mthumb          \
          -mfloat-abi=soft
 
-flash_size=62k
 ifeq ($(model), S60P)
 bootldr_size=0x5000
 DEVICE_DFU_ADDRESS=0x08005000
+flash_size=126k
 else
+flash_size=62k
 # S60 or T55
 bootldr_size=0x4400
 DEVICE_DFU_ADDRESS=0x08004400

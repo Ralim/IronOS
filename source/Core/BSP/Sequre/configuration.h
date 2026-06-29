@@ -239,9 +239,13 @@
 #define MODEL_HAS_DCDC // We dont have DC/DC but have reallly fast PWM that gets us roughly the same place
 #endif                 /* T55 */
 
+#ifdef MODEL_S60P
+#define FLASH_LOGOADDR      (0x08000000 + (126 * 1024))
+#define SETTINGS_START_PAGE (0x08000000 + (127 * 1024))
+#else
 #define FLASH_LOGOADDR      (0x08000000 + (62 * 1024))
 #define SETTINGS_START_PAGE (0x08000000 + (63 * 1024))
-
+#endif /* Logo offset for S60P */
 // Defaults
 
 #ifndef MIN_CALIBRATION_OFFSET
