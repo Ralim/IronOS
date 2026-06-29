@@ -14,6 +14,7 @@
 #include "MSA301.h"
 #include "Pins.h"
 #include "QC3.h"
+#include "QMA6100P.hpp"
 #include "SC7A20.hpp"
 #include "Settings.h"
 #include "TipThermoModel.h"
@@ -78,6 +79,15 @@ void detectAccelerometerVersion() {
     }
   }
 #endif
+#ifdef ACCEL_QMA
+  if (QMA6100P::detect()) {
+    // Setup the QMA6100P Accelerometer
+    if (QMA6100P::initalize()) {
+      DetectedAccelerometerVersion = AccelType::QMA;
+      return;
+    }
+  }
+#endif
 #ifdef GPIO_VIBRATION
   if (true) {
     DetectedAccelerometerVersion = AccelType::GPIO;
@@ -119,6 +129,12 @@ inline void readAccelerometer(int16_t &tx, int16_t &ty, int16_t &tz, Orientation
       if (DetectedAccelerometerVersion == AccelType::SC7) {
     SC7A20::getAxisReadings(tx, ty, tz);
     rotation = SC7A20::getOrientation();
+  } else
+#endif
+#ifdef ACCEL_QMA
+      if (DetectedAccelerometerVersion == AccelType::QMA) {
+    QMA6100P::getAxisReadings(tx, ty, tz);
+    rotation = QMA6100P::getOrientation();
   } else
 #endif
 #ifdef GPIO_VIBRATION

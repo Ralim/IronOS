@@ -32,6 +32,7 @@ _This firmware does **NOT** support the USB port while running for changing sett
 |   Sequre S60   | ❌  | ❌  | ✔️  | ❌  | ❌  |    ❌     |          ✔️          | Full OLED resolution not yet supported. |
 |  Sequre S60P   | ❌  | ❌  | ✔️  | ❌  | ❌  |    ❌     |          ✔️          | Full OLED resolution not yet supported. |
 |   Sequre T55   | ❌  | ❌  | ✔️  | ❌  | ❌  |    N/A    |          ✔️          | Full OLED resolution not yet supported. |
+|  Alientek T90  | ❌  | ✔️  | ✔️  | ❌  | ❌  |    ❌     |     🧪 \*\*\*\*\*\*  | Experimental community port. T245 tips; native color soldering screen + accelerometer auto-rotate. |
 | Miniware TS80P | ❌  | ✔️  | ✔️  | ❌  | ❌  |    N/A    |          ✔️          |                                         |
 | Miniware TS100 | ✔️  | ❌  | ❌  | ❌  | ❌  |    ❌     |        ❌\*\*        |                                         |
 | Miniware TS80  | ❌  | ✔️  | ❌  | ❌  | ❌  |    N/A    |       ❌\*\*\*       |                                         |
@@ -53,6 +54,8 @@ _PD Mode_ option in _Power settings_ submenu to _Safe_ or _Default_.
 
 \*\*\*\*\* Some users confirm that there is a version of newer _TS101_ revision with another OLED screen model, which is not supported yet at all by _IronOS_ unfortunately. See [this bug report](https://github.com/Ralim/IronOS/issues/2063) for more information.
 
+\*\*\*\*\*\* _Alientek T90_ is an **experimental community port** (Nations _N32L40x_ MCU, _GC9_-family color LCD, _T245_ tips, _CH224Q_ USB-PD sink, _QMA6100P_ accelerometer). It has been brought up and **validated on real hardware**: it boots, reads tip temperature, drives the heater, persists settings, auto-rotates and renders a native color soldering screen. The tip/Vin calibration is **reverse-engineered from the stock firmware** and tracks the factory closely, but a final fit against a reference thermometer is still pending, so treat absolute readings as approximate. Flashing uses Alientek's `.atk` USB bootloader path (see the flashing guide); **always back up the factory firmware first** so you can recover. Use at your own risk.
+
 ## Getting Started
 
 To get started with _IronOS firmware_, please jump to [Getting Started Guide](https://ralim.github.io/IronOS/GettingStarted/).
@@ -66,6 +69,7 @@ For notes on installation for your device, please refer to the flashing guide fo
 - [Pinecil V2](https://ralim.github.io/IronOS/Flashing/Pinecil%20V2/)
 - [TS80 / TS80P](https://ralim.github.io/IronOS/Flashing/TS80%28P%29/)
 - [TS100](https://ralim.github.io/IronOS/Flashing/TS100)
+- [Alientek T90](https://ralim.github.io/IronOS/Flashing/Alientek%20T90/)
 
 ## Builds
 
@@ -87,6 +91,7 @@ The links in the table below allow to download available builds directly:
 | Sequre   S60          | [S60.zip](https://github.com/Ralim/IronOS/releases/download/v2.23/S60.zip)                                   | [S60.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/S60.zip)                                   |
 | Sequre   S60P         | Not Released                                                                                                 | [S60P.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/S60P.zip)                                 |
 | Sequre   T55          | Not Released                                                                                                 | [T55.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/T55.zip)                                   |
+| Alientek T90 \*\*\*\*\*\* | Not Released                                                                                             | [T90.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/T90.zip)                                   |
 
 ## Key Features
 

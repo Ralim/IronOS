@@ -11,7 +11,10 @@
 SemaphoreHandle_t I2CBB2::I2CSemaphore = NULL;
 StaticSemaphore_t I2CBB2::xSemaphoreBuffer;
 void              I2CBB2::init() {
-  // Set GPIO's to output open drain
+#ifndef N32L40X
+  // Set GPIO's to output open drain (STM32 HAL path). On the N32L40x (Alientek T90) the
+  // SCL2/SDA2 pins are already configured as open-drain GPIO in Setup.cpp using the std-periph
+  // driver, and the STM32 HAL GPIO API is not available, so skip this block there.
   GPIO_InitTypeDef GPIO_InitStruct;
   __HAL_RCC_GPIOA_CLK_ENABLE();
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_MEDIUM;
@@ -24,6 +27,7 @@ void              I2CBB2::init() {
   GPIO_InitStruct.Mode  = GPIO_MODE_OUTPUT_OD;
   GPIO_InitStruct.Pull  = GPIO_PULLUP;
   HAL_GPIO_Init(SCL2_GPIO_Port, &GPIO_InitStruct);
+#endif
   SOFT_SDA2_HIGH();
   SOFT_SCL2_HIGH();
   // To ensure bus is unlocked; we toggle the Clock a bunch of times to make things error out

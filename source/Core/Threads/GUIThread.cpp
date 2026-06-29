@@ -40,6 +40,10 @@ ButtonState   buttonsAtDeviceBoot;                                      // We re
 OperatingMode currentOperatingMode = OperatingMode::InitialisationDone; // Current mode we are rendering
 guiContext    context;                                                  // Context passed to functions to aid in state during render passes
 
+// C accessor so BSP code (e.g. the T90 native color UI) can read the active mode without depending
+// on the deep UI OperatingMode enum header.
+extern "C" uint8_t getCurrentOperatingMode(void) { return (uint8_t)currentOperatingMode; }
+
 OperatingMode handle_post_init_state();
 OperatingMode guiHandleDraw(void) {
   OLED::clearScreen(); // Clear ready for render pass
@@ -81,8 +85,8 @@ OperatingMode guiHandleDraw(void) {
     newMode = OperatingMode::InitialisationDone;
 #endif
   case OperatingMode::StartupLogo:
-    showBootLogo();
-
+    // The boot logo is shown earlier (handle_post_init_state), ahead of the startup warnings; this
+    // state now only applies the auto-start mode once the logo and any warnings are done.
     if (getSettingValue(SettingsOptions::AutoStartMode) == autoStartMode_t::SLEEP) {
       lastMovementTime = lastButtonTime = 0; // We mask the values so that sleep goes until user moves again or presses a button
       newMode                           = OperatingMode::Sleeping;
@@ -208,6 +212,9 @@ OperatingMode handle_post_init_state() {
     return OperatingMode::CJCCalibration;
   }
 
+  // Show the boot logo before the startup warnings, so the splash is the first thing on screen rather
+  // than appearing after a warning (e.g. the one-shot "settings were reset" notice).
+  showBootLogo();
   return OperatingMode::StartupWarnings;
 }
 

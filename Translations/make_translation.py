@@ -186,6 +186,7 @@ def get_accel_names_list() -> List[str]:
         "SC7A20",
         "GPIO",
         "LIS2 CLONE",
+        "QMA",
     ]
 
 
@@ -202,7 +203,29 @@ def test_is_small_font(msg: str) -> bool:
     return "\n" in msg and msg[0] != "\n"
 
 
-def get_letter_counts(defs: dict, lang: dict, build_version: str) -> Dict:
+_SMALL_FONT_CHARSET = None
+
+
+def small_font_renderable(text: str) -> bool:
+    """True if every character of `text` has a small-font (6x8) glyph.
+
+    CJK characters are large-font only (rendered via get_cjk_glyph; there is no small glyph), so a menu
+    description containing them must stay in the large font even when MENU_DESCRIPTION_SMALL_FONT is set
+    - otherwise the small-font build fails with a missing-glyph KeyError for CJK languages.
+    """
+    global _SMALL_FONT_CHARSET
+    if _SMALL_FONT_CHARSET is None:
+        charset = set()
+        for font in font_tables.ALL_PRE_RENDERED_FONTS:
+            _, font06 = font_tables.get_font_maps_for_name(font)
+            charset.update(font06.keys())
+        _SMALL_FONT_CHARSET = charset
+    return all(c in _SMALL_FONT_CHARSET for c in text)
+
+
+def get_letter_counts(
+    defs: dict, lang: dict, build_version: str, descriptions_small_font: bool = False
+) -> Dict:
     """From the source definitions, language file and build version; calculates the ranked symbol list
 
     Args:
@@ -251,6 +274,12 @@ def get_letter_counts(defs: dict, lang: dict, build_version: str) -> Dict:
         eid = mod["id"]
         msg = obj[eid]["description"]
         big_font_messages.append(msg)
+        # On wide/short panels the menu descriptions scroll in the small font
+        # (MENU_DESCRIPTION_SMALL_FONT); generate small glyphs for them too, otherwise
+        # the small font lacks most description letters and the help text renders as garbage. Skip CJK
+        # descriptions (no small glyph): they stay large, as before.
+        if descriptions_small_font and small_font_renderable(msg):
+            small_font_messages.append(msg)
 
     obj = lang["menuValues"]
     for mod in defs["menuValues"]:
@@ -275,6 +304,8 @@ def get_letter_counts(defs: dict, lang: dict, build_version: str) -> Dict:
         eid = mod["id"]
         msg = obj[eid]["description"]
         big_font_messages.append(msg)
+        if descriptions_small_font and small_font_renderable(msg):
+            small_font_messages.append(msg)
 
     constants = get_constants()
     for x in constants:
@@ -692,13 +723,18 @@ class LanguageData:
     small_text_symbols: List[str]
     large_text_symbols: List[str]
     font_map: FontMapsPerFont
+    descriptions_small_font: bool = False
 
 
-def prepare_language(lang: dict, defs: dict, build_version: str) -> LanguageData:
+def prepare_language(
+    lang: dict, defs: dict, build_version: str, descriptions_small_font: bool = False
+) -> LanguageData:
     language_code: str = lang["languageCode"]
     logging.info(f"Preparing language data for {language_code}")
     # Iterate over all of the text to build up the symbols & counts
-    letter_count_data = get_letter_counts(defs, lang, build_version)
+    letter_count_data = get_letter_counts(
+        defs, lang, build_version, descriptions_small_font
+    )
     small_font_symbols = convert_letter_counts_to_ranked_symbols_with_forced(
         letter_count_data["smallFontCounts"]
     )
@@ -717,11 +753,15 @@ def prepare_language(lang: dict, defs: dict, build_version: str) -> LanguageData
         small_font_symbols,
         large_font_symbols,
         font_data,
+        descriptions_small_font,
     )
 
 
 def prepare_languages(
-    langs: List[dict], defs: dict, build_version: str
+    langs: List[dict],
+    defs: dict,
+    build_version: str,
+    descriptions_small_font: bool = False,
 ) -> LanguageData:
     language_codes: List[str] = [lang["languageCode"] for lang in langs]
     logging.info(f"Preparing language data for {language_codes}")
@@ -729,7 +769,9 @@ def prepare_languages(
     # Build the full font maps
     total_symbol_counts: Dict[str, Dict[str, int]] = {}
     for lang in langs:
-        letter_count_data = get_letter_counts(defs, lang, build_version)
+        letter_count_data = get_letter_counts(
+            defs, lang, build_version, descriptions_small_font
+        )
         total_symbol_counts = merge_letter_count_info(
             total_symbol_counts, letter_count_data
         )
@@ -749,6 +791,7 @@ def prepare_languages(
         small_font_symbols,
         large_font_symbols,
         font_data,
+        descriptions_small_font,
     )
 
 
@@ -864,6 +907,7 @@ def write_language(
             defs,
             small_font_symbol_conversion_table,
             large_font_symbol_conversion_table,
+            descriptions_small_font=data.descriptions_small_font,
         )
         f.write(translation_strings_and_indices_text)
         f.write(
@@ -949,6 +993,7 @@ def write_languages(
                     defs,
                     small_font_symbol_conversion_table,
                     large_font_symbol_conversion_table,
+                    descriptions_small_font=data.descriptions_small_font,
                     suffix=f"_{lang_code}",
                 )
             )
@@ -1060,11 +1105,37 @@ class TranslationItem:
     str_index: int
 
 
+def wrap_text_for_small_font(text: str, width: int = 21) -> str:
+    """Greedily word-wrap help text to `width` display chars per line, joining lines with a newline.
+
+    Used for menu descriptions on wide/short small-font panels (MENU_DESCRIPTION_SMALL_FONT): the
+    firmware lays the wrapped lines out across the free area under the setting value instead of
+    scrolling a single line sideways. `\\n` always encodes to byte 0x01, so the firmware can split the
+    encoded string back into lines. Width 21 == 128 px / 6 px small-font cell. `len()` counts code
+    points, i.e. display glyphs (each glyph is one encoded entity regardless of its 1/2 byte length),
+    which is the correct measure of on-screen line width.
+    """
+    out_lines: List[str] = []
+    current = ""
+    for word in text.split(" "):
+        if current == "":
+            current = word
+        elif len(current) + 1 + len(word) <= width:
+            current += " " + word
+        else:
+            out_lines.append(current)
+            current = word
+    if current:
+        out_lines.append(current)
+    return "\n".join(out_lines)
+
+
 def get_translation_strings_and_indices_text(
     lang: dict,
     defs: dict,
     small_font_symbol_conversion_table: Dict[str, bytes],
     large_font_symbol_conversion_table: Dict[str, bytes],
+    descriptions_small_font: bool = False,
     suffix: str = "",
 ) -> str:
     # For all strings; we want to convert them to their byte encoded form (using font index lookups)
@@ -1102,10 +1173,17 @@ def get_translation_strings_and_indices_text(
         translated_string_lookups[translation_id] = record
 
     def encode_string_and_add(
-        message: str, translation_id: str, force_large_text: bool = False
+        message: str,
+        translation_id: str,
+        force_large_text: bool = False,
+        force_small_text: bool = False,
     ):
+        if force_small_text:
+            message = wrap_text_for_small_font(message)
         encoded_data: bytes
-        if force_large_text is False and test_is_small_font(message):
+        if force_small_text or (
+            force_large_text is False and test_is_small_font(message)
+        ):
             encoded_data = convert_string_bytes(
                 small_font_symbol_conversion_table, message
             )
@@ -1120,8 +1198,14 @@ def get_translation_strings_and_indices_text(
     for index, record in enumerate(defs["menuOptions"]):
         lang_data = lang["menuOptions"][record["id"]]
         # Add to translations the menu text and the description
+        desc_small = descriptions_small_font and small_font_renderable(
+            lang_data["description"]
+        )
         encode_string_and_add(
-            lang_data["description"], "menuOptions" + record["id"] + "description", True
+            lang_data["description"],
+            "menuOptions" + record["id"] + "description",
+            force_large_text=not desc_small,
+            force_small_text=desc_small,
         )
         encode_string_and_add(
             lang_data["displayText"], "menuOptions" + record["id"] + "displayText"
@@ -1136,8 +1220,14 @@ def get_translation_strings_and_indices_text(
     for index, record in enumerate(defs["menuGroups"]):
         lang_data = lang["menuGroups"][record["id"]]
         # Add to translations the menu text and the description
+        desc_small = descriptions_small_font and small_font_renderable(
+            lang_data["description"]
+        )
         encode_string_and_add(
-            lang_data["description"], "menuGroups" + record["id"] + "description", True
+            lang_data["description"],
+            "menuGroups" + record["id"] + "description",
+            force_large_text=not desc_small,
+            force_small_text=desc_small,
         )
         encode_string_and_add(
             lang_data["displayText"], "menuGroups" + record["id"] + "displayText"
@@ -1452,17 +1542,22 @@ def main() -> None:
         logging.info(f"Making {args.languageCodes} from {json_dir}")
 
         defs_ = load_json(os.path.join(json_dir, "translations_definitions.json"))
+        descriptions_small_font = "MENU_DESCRIPTION_SMALL_FONT" in macros
         if len(args.languageCodes) == 1:
             lang_ = filter_translation(
                 read_translation(json_dir, args.languageCodes[0]), defs_, macros
             )
-            language_data = prepare_language(lang_, defs_, build_version)
+            language_data = prepare_language(
+                lang_, defs_, build_version, descriptions_small_font
+            )
         else:
             langs_ = [
                 filter_translation(read_translation(json_dir, lang_code), defs_, macros)
                 for lang_code in args.languageCodes
             ]
-            language_data = prepare_languages(langs_, defs_, build_version)
+            language_data = prepare_languages(
+                langs_, defs_, build_version, descriptions_small_font
+            )
 
     out_ = args.output
     write_start(out_)

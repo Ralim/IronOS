@@ -3,6 +3,16 @@
 #include "Settings.h"
 #include "configuration.h"
 
+// Most panels scroll help text in the large font. On a wide/short panel (e.g. the T90) the large
+// font makes long descriptions an unreadable smear; MENU_DESCRIPTION_SMALL_FONT renders them small.
+#ifdef MENU_DESCRIPTION_SMALL_FONT
+#define SCROLL_FONT_WIDTH 6
+#define SCROLL_FONT_STYLE FontStyle::SMALL
+#else
+#define SCROLL_FONT_WIDTH FONT_12_WIDTH
+#define SCROLL_FONT_STYLE FontStyle::LARGE
+#endif
+
 /**
  * Counts the number of chars in the string excluding the null terminator.
  * This is a custom version of `strlen` which takes into account our custom
@@ -29,12 +39,13 @@ static uint16_t str_display_len(const char *const str) {
 }
 
 /**
- * Calculate the width in pixels of the message string, in the large
- * font and taking into account multi-byte chars.
+ * Calculate the width in pixels of the message string, in the scrolling-text
+ * font (large, or small under MENU_DESCRIPTION_SMALL_FONT) and taking into
+ * account multi-byte chars.
  *
  * @param message The null-terminated message string.
  */
-uint16_t messageWidth(const char *message) { return FONT_12_WIDTH * str_display_len(message); }
+uint16_t messageWidth(const char *message) { return SCROLL_FONT_WIDTH * str_display_len(message); }
 
 void drawScrollingText(const char *message, TickType_t currentTickOffset) {
   OLED::clearScreen();
@@ -57,5 +68,5 @@ void drawScrollingText(const char *message, TickType_t currentTickOffset) {
 
   //^ Rolling offset based on time
   OLED::setCursor((OLED_WIDTH - messageOffset), 0);
-  OLED::print(message, FontStyle::LARGE);
+  OLED::print(message, SCROLL_FONT_STYLE);
 }
