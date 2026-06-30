@@ -43,10 +43,16 @@ void ui_draw_debug_menu(const uint8_t item_number) {
     OLED::printNumber(TipThermoModel::getTipInC(), 6, FontStyle::SMALL);
     break;
   case 6: // Handle Temp in °C
-    OLED::printNumber(getHandleTemperature(0) / 10, 6, FontStyle::SMALL);
+  {
+    int32_t handleTemp = getHandleTemperature(0);
+    if (handleTemp < 0) {
+      OLED::print(SmallSymbolMinus, FontStyle::SMALL);
+      handleTemp = -handleTemp;
+    }
+    OLED::printNumber(handleTemp / 10, 6, FontStyle::SMALL);
     OLED::print(SmallSymbolDot, FontStyle::SMALL);
-    OLED::printNumber(getHandleTemperature(0) % 10, 1, FontStyle::SMALL);
-    break;
+    OLED::printNumber(handleTemp % 10, 1, FontStyle::SMALL);
+  } break;
   case 7: // Max Temp Limit in °C
     OLED::printNumber(TipThermoModel::getTipMaxInC(), 6, FontStyle::SMALL);
     break;
