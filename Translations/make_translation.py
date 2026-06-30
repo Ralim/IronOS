@@ -111,7 +111,7 @@ def write_start(f: TextIO):
     )
     f.write("\n")
     f.write('#include "Translation.h"\n')
-    # configuration.h defines MODEL_TS101, which selects the larger Terminus font tables
+    # configuration.h defines OLED_128x32, which selects the larger font tables
     f.write('#include "configuration.h"\n')
 
 
@@ -223,32 +223,6 @@ def small_font_chars() -> frozenset:
         _, font06 = font_tables.get_font_maps_for_name(font)
         chars.update(font06.keys())
     return frozenset(chars)
-
-
-@functools.lru_cache(maxsize=None)
-def large_font_chars() -> frozenset:
-    """The set of characters that have a glyph in the pre-rendered large font.
-
-    Covers ASCII/Latin-Extended/Cyrillic/Greek. Any other glyph in a language
-    can only come from the WenQuanYi CJK font, so a large-font symbol outside
-    this set is what marks a language as CJK (see language_uses_cjk).
-    """
-    chars: set = set()
-    for font in font_tables.ALL_PRE_RENDERED_FONTS:
-        font12, _ = font_tables.get_font_maps_for_name(font)
-        chars.update(font12.keys())
-    return frozenset(chars)
-
-
-def language_uses_cjk(large_text_symbols: List[str]) -> bool:
-    """Whether a language needs CJK glyphs (i.e. the WenQuanYi font).
-
-    True if any large-font symbol is not covered by the pre-rendered fonts;
-    such glyphs come only from the CJK font. Note get_cjk_glyph can't be used
-    here as that font also contains ASCII glyphs.
-    """
-    prerendered = large_font_chars()
-    return any(sym not in prerendered for sym in large_text_symbols)
 
 
 def description_uses_small_font(msg: str) -> bool:
@@ -902,24 +876,6 @@ def prepare_languages(
     )
 
 
-def terminus_gate_expr(data: LanguageData) -> str:
-    """The #if expression that selects the Terminus fonts for this language.
-
-    Terminus is larger than the hand-drawn fonts, so it only fits where there is
-    enough flash:
-      * CJK languages need the large WenQuanYi glyphs on top, which only fit
-        alongside Terminus on the TS101 (66 KB ROM); every other 128x32 model
-        falls back to the hand-drawn fonts.
-      * Non-CJK languages get Terminus on the roomier 128x32 panels, but NOT on
-        the S60P (42 KB ROM vs 45 KB on S60/T55): there the larger alphabets
-        (Greek, Cyrillic) overflow ROM, and the margins are too thin to gate per
-        language reliably, so the S60P keeps the hand-drawn fonts throughout.
-    """
-    if language_uses_cjk(data.large_text_symbols):
-        return "defined(MODEL_TS101)"
-    return "defined(OLED_128x32) && !defined(MODEL_S60P)"
-
-
 def render_font_block(data: LanguageData, f: TextIO, compress_font: bool = False):
     font_map = data.font_map
 
@@ -930,14 +886,11 @@ def render_font_block(data: LanguageData, f: TextIO, compress_font: bool = False
         data.large_text_symbols
     )
 
-    gate = terminus_gate_expr(data)
-
     if not compress_font:
         # On 128x32 panels the SMALL/LARGE fonts are the larger Terminus
-        # 8x16/12x24; on every other model (and CJK languages on flash-
-        # constrained 128x32 models) they are the original hand-drawn 6x8/12x16.
-        # Same array names so FontSectionInfo is unchanged.
-        f.write(f"#if {gate}\n")
+        # 8x16/12x24; on every other model they are the original hand-drawn
+        # 6x8/12x16. Same array names so FontSectionInfo is unchanged.
+        f.write("#ifdef OLED_128x32\n")
         f.write(
             make_terminus_table_cpp("USER_FONT_12", "12x24", data.large_text_symbols)
         )
@@ -954,7 +907,7 @@ def render_font_block(data: LanguageData, f: TextIO, compress_font: bool = False
                 large_font_symbol_conversion_table,
             )
         )
-        f.write(f"#endif /* {gate} */\n")
+        f.write("#endif /* OLED_128x32 */\n")
         f.write(
             "const FontSection FontSectionInfo = {\n"
             "    .font12_start_ptr = USER_FONT_12,\n"
@@ -970,10 +923,10 @@ def render_font_block(data: LanguageData, f: TextIO, compress_font: bool = False
         def emit_compressed(name: str, data_bytes: bytes) -> None:
             write_bytes_as_c_array(f, name, brieflz.compress(data_bytes))
 
-        # 128x32 panels use Terminus 8x16/12x24; every other model (and CJK
-        # languages on flash-constrained 128x32 models) use the hand-drawn fonts.
-        # Same array/buffer names so FontSectionInfo is unchanged (sizes via sizeof).
-        f.write(f"#if {gate}\n")
+        # 128x32 panels use Terminus 8x16/12x24; every other model uses the
+        # hand-drawn fonts. Same array/buffer names so FontSectionInfo is
+        # unchanged (sizes via sizeof).
+        f.write("#ifdef OLED_128x32\n")
         t12 = terminus_block_bytes("12x24", data.large_text_symbols)
         t06 = terminus_block_bytes("8x16", data.small_text_symbols)
         emit_compressed("font_12x16_brieflz", t12)
@@ -991,7 +944,7 @@ def render_font_block(data: LanguageData, f: TextIO, compress_font: bool = False
         emit_compressed("font_06x08_brieflz", bytes(h06))
         f.write(f"static uint8_t font12_out_buffer[{len(h12)}];\n")
         f.write(f"static uint8_t font06_out_buffer[{len(h06)}];\n")
-        f.write(f"#endif /* {gate} */\n")
+        f.write("#endif /* OLED_128x32 */\n")
 
         f.write(
             "const FontSection FontSectionInfo = {\n"
@@ -1113,7 +1066,7 @@ def write_languages(
     ]
 
     f.write('#include "Translation_multi.h"\n')
-    # configuration.h defines MODEL_TS101, which selects the larger Terminus font tables
+    # configuration.h defines OLED_128x32, which selects the larger font tables
     f.write('#include "configuration.h"')
 
     f.write(f"\n// ---- {lang_names} ----\n\n")
@@ -1638,9 +1591,8 @@ def main() -> None:
     # The Terminus fonts and the small-font menu descriptions that go with them
     # are enabled on every 128x32 panel; non-128x32 models keep the compact
     # hand-drawn fonts and large descriptions. CJK descriptions always fall back
-    # to the large font (see description_uses_small_font), and CJK glyphs on the
-    # flash-constrained 128x32 models (S60/S60P/T55) fall back to the hand-drawn
-    # fonts entirely (see the per-language gate in render_font_block).
+    # to the large font (see description_uses_small_font), since the small font
+    # has no CJK glyphs.
     DESCRIPTIONS_USE_SMALL_FONT = "OLED_128x32" in macros
 
     language_data: LanguageData
