@@ -21,7 +21,7 @@ uint16_t totalPWM; // Total length of the cycle's ticks
 
 void resetWatchdog() { fwdgt_counter_reload(); }
 
-uint16_t getHandleTemperature(uint8_t sample) {
+int16_t getHandleTemperature(uint8_t sample) {
 #ifdef TEMP_TMP36
   // We return the current handle temperature in X10 C
   // TMP36 in handle, 0.5V offset and then 10mV per deg C (0.75V @ 25C for

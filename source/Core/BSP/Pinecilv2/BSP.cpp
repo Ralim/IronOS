@@ -84,7 +84,7 @@ static const int32_t NTCHandleLookup[] = {
 
 };
 #endif
-uint16_t getHandleTemperature(uint8_t sample) {
+int16_t getHandleTemperature(uint8_t sample) {
   int32_t result = getADCHandleTemp(sample);
   // Tip is wired up with an NTC thermistor
   // 10K NTC balanced with a 10K pulldown
