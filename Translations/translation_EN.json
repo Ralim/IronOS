@@ -162,7 +162,7 @@
       "description": "Tip temperature used in \"boost mode\""
     },
     "AutoStart": {
-      "displayText": "Start-up\nbehavior",
+      "displayText": "Start-up\nbehaviour",
       "description": "S=heat to soldering temp | Z=standby at sleep temp until moved | R=standby without heating until moved"
     },
     "TempChangeShortStep": {

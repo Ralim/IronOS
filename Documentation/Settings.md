@@ -85,7 +85,7 @@ On device help text:
 
 Tip temperature used in "boost mode"
 
-### Setting: Start-up behavior
+### Setting: Start-up behaviour
 
 When the device powers up, should it enter into a special mode. These settings set it to either start into soldering mode, sleeping mode or auto mode (Enters into soldering mode on the first movement).
 
