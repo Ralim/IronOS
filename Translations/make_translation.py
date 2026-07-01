@@ -329,6 +329,14 @@ def get_letter_counts(defs: dict, lang: dict, build_version: str) -> Dict:
         else:
             big_font_messages.append(x[1])
 
+    # The degree symbol is only emitted on 128x32 panels (resolved by the
+    # real per-model configuration.h at firmware compile time, see
+    # get_translation_common_text), but every generated translation file is
+    # reused across model builds, so its glyph must always be ranked into
+    # both font tables regardless of which macros this generation run saw.
+    small_font_messages.append("°")
+    big_font_messages.append("°")
+
     small_font_messages.extend(get_debug_menu())
     small_font_messages.extend(get_accel_names_list())
     small_font_messages.extend(get_power_source_list())
@@ -1151,6 +1159,17 @@ def write_languages(
     f.write(sanity_checks_text)
 
 
+# 128x32 panels have room to show the degree symbol in front of the
+# temperature unit; other panels keep the bare unit letter. Resolved by
+# #ifdef OLED_128x32 against the real per-model configuration.h at firmware
+# compile time (like the Terminus font tables), NOT at translation-generation
+# time: a single generated translation file is reused across model rebuilds,
+# so baking the choice in from this run's build macros would go stale.
+DEGREE_PREFIXED_CONSTANTS = frozenset(
+    {"LargeSymbolDegC", "SmallSymbolDegC", "LargeSymbolDegF", "SmallSymbolDegF"}
+)
+
+
 def get_translation_common_text(
     small_symbol_conversion_table: Dict[str, bytes],
     large_symbol_conversion_table: Dict[str, bytes],
@@ -1161,12 +1180,20 @@ def get_translation_common_text(
     constants = get_constants()
     for x in constants:
         if x[0].startswith("Small"):
-            translation_common_text += f'const char* {x[0]} = "{convert_string(small_symbol_conversion_table, x[1])}";//{x[1]} \n'
+            table = small_symbol_conversion_table
         elif x[0].startswith("Large"):
-            str = x[1]
-            translation_common_text += f'const char* {x[0]} = "{convert_string(large_symbol_conversion_table, str)}";//{x[1]} \n'
+            table = large_symbol_conversion_table
         else:
             raise ValueError(f"Constant {x} is not size encoded")
+
+        if x[0] in DEGREE_PREFIXED_CONSTANTS:
+            translation_common_text += "#ifdef OLED_128x32\n"
+            translation_common_text += f'const char* {x[0]} = "{convert_string(table, "°" + x[1])}";//°{x[1]} \n'
+            translation_common_text += "#else\n"
+            translation_common_text += f'const char* {x[0]} = "{convert_string(table, x[1])}";//{x[1]} \n'
+            translation_common_text += "#endif /* OLED_128x32 */\n"
+        else:
+            translation_common_text += f'const char* {x[0]} = "{convert_string(table, x[1])}";//{x[1]} \n'
     translation_common_text += "\n"
 
     # Debug Menu
