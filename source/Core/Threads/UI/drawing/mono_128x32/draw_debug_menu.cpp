@@ -11,7 +11,7 @@ extern osThreadId PIDTaskHandle;
 void ui_draw_debug_menu(const uint8_t item_number) {
   OLED::setCursor(0, 0);                                   // Position the cursor at the 0,0 (top left)
   OLED::print(SmallSymbolVersionNumber, FontStyle::SMALL); // Print version number
-  OLED::setCursor(0, 16);                                   // second line
+  OLED::setCursor(0, 16);                                  // second line
   OLED::print(DebugMenu[item_number], FontStyle::SMALL);
   switch (item_number) {
   case 0: // Build Date

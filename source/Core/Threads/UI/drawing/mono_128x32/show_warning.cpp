@@ -32,7 +32,7 @@ bool warnUser(const char *warning, const ButtonState buttons) {
       p += 2;
     }
   }
-  widest = (chars > widest) ? chars : widest;
+  widest    = (chars > widest) ? chars : widest;
   int16_t x = (OLED_WIDTH - static_cast<int16_t>(widest * charWidth)) / 2;
   int16_t y = (OLED_HEIGHT - static_cast<int16_t>(lines * lineHeight)) / 2;
   if (x < 0) {
