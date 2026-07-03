@@ -1190,10 +1190,14 @@ def get_translation_common_text(
             translation_common_text += "#ifdef OLED_128x32\n"
             translation_common_text += f'const char* {x[0]} = "{convert_string(table, "°" + x[1])}";//°{x[1]} \n'
             translation_common_text += "#else\n"
-            translation_common_text += f'const char* {x[0]} = "{convert_string(table, x[1])}";//{x[1]} \n'
+            translation_common_text += (
+                f'const char* {x[0]} = "{convert_string(table, x[1])}";//{x[1]} \n'
+            )
             translation_common_text += "#endif /* OLED_128x32 */\n"
         else:
-            translation_common_text += f'const char* {x[0]} = "{convert_string(table, x[1])}";//{x[1]} \n'
+            translation_common_text += (
+                f'const char* {x[0]} = "{convert_string(table, x[1])}";//{x[1]} \n'
+            )
     translation_common_text += "\n"
 
     # Debug Menu
