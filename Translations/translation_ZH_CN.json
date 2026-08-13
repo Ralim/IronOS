@@ -10,7 +10,7 @@
       "message": "已重置！"
     },
     "SettingsResetMessage": {
-      "message": "设定已被重置！"
+      "message": "\n设定已被重置！"
     },
     "NoAccelerometerMessage": {
       "message": "未检测到加速度计"

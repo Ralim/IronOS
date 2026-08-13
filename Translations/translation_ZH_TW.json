@@ -10,7 +10,7 @@
       "message": "已重設！"
     },
     "SettingsResetMessage": {
-      "message": "設定已被重設！"
+      "message": "\n設定已被重設！"
     },
     "NoAccelerometerMessage": {
       "message": "未能偵測加速度計"
@@ -49,25 +49,25 @@
       "message": "欠壓"
     },
     "InputVoltageString": {
-      "message": "輸入電壓：\n"
+      "message": "\n輸入電壓："
     },
     "SleepingAdvancedString": {
-      "message": "待機中...\n"
+      "message": "\n待機中..."
     },
     "SleepingTipAdvancedString": {
-      "message": "烙鐵頭：\n"
+      "message": "\n烙鐵頭："
     },
     "ProfilePreheatString": {
-      "message": "預熱中\n"
+      "message": "\n預熱中"
     },
     "ProfileCooldownString": {
-      "message": "冷卻中\n"
+      "message": "\n冷卻中"
     },
     "DeviceFailedValidationWarning": {
       "message": "這支電烙鐵很有可能是冒牌貨！"
     },
     "TooHotToStartProfileWarning": {
-      "message": "溫度過高，無法\n開始設定檔"
+      "message": "\n溫度過高"
     }
   },
   "characters": {
