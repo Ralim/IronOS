@@ -112,7 +112,7 @@
       "displayText": "默认模式"
     },
     "USBPDModeNoDynamic": {
-      "displayText": "No\nDynamic"
+      "displayText": "\n无动态"
     },
     "USBPDModeSafe": {
       "displayText": "安全模式"
@@ -278,8 +278,8 @@
       "description": "调校温度时更换加减键的方向"
     },
     "ReverseButtonSettings": {
-      "displayText": "Swap\nA B keys",
-      "description": "Reverse assignment of buttons for Settings menu"
+      "displayText": "\n调换 A B键",
+      "description": "调换设定菜单中按键的功能"
     },
     "AnimSpeed": {
       "displayText": "动画速度",
