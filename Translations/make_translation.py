@@ -35,7 +35,7 @@ def cjk_font() -> Font:
 
 # Loading a single JSON file
 def load_json(filename: str) -> dict:
-    with open(filename) as f:
+    with open(filename, encoding="utf-8") as f:
         return json.loads(f.read())
 
 
@@ -1545,7 +1545,7 @@ def get_version_suffix(ver) -> str:
 
 
 def read_version() -> str:
-    with open(HERE.parent / "source" / "version.h") as version_file:
+    with open(HERE.parent / "source" / "version.h", encoding="utf-8") as version_file:
         for line in version_file:
             if re.findall(r"^.*(?<=(#define)).*(?<=(BUILD_VERSION))", line):
                 matches = re.findall(r"\"(.+?)\"", line)
@@ -1593,7 +1593,11 @@ def parse_args() -> argparse.Namespace:
         dest="macros",
     )
     parser.add_argument(
-        "--output", "-o", help="Target file", type=argparse.FileType("w"), required=True
+        "--output",
+        "-o",
+        help="Target file",
+        type=argparse.FileType("w", encoding="utf-8"),
+        required=True,
     )
     parser.add_argument(
         "languageCodes",
