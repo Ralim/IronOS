@@ -42,10 +42,14 @@ I2C_CLASS::I2C_REG OLED_Setup_Array[] = {
     {0x80,  OLED_HEIGHT - 1, 0}, /* Multiplex ratio adjusts how far down the matrix it scans */
     {0x80,             0xC0, 0}, /* Set COM Scan direction */
     {0x80,             0xD3, 0}, /* Set vertical Display offset */
+#ifdef OLED_SEGMENT_MAP_REVERSED
+    {0x80,             0x30, 0}, /* Offset (128x32 panel needs a non-zero offset; see setRotation) */
+#else
     {0x80,             0x00, 0}, /* 0 Offset */
+#endif
     {0x80,             0x40, 0}, /* Set Display start line to 0 */
 #ifdef OLED_SEGMENT_MAP_REVERSED
-    {0x80,             0xA1, 0}, /* Set Segment remap to normal */
+    {0x80,             0xA0, 0}, /* Set Segment remap to normal */
 #else
     {0x80, 0xA0, 0}, /* Set Segment remap to normal */
 #endif
@@ -537,10 +541,18 @@ void OLED::setRotation(bool leftHanded) {
     return;
   }
 #ifdef OLED_SEGMENT_MAP_REVERSED
-  if (!leftHanded) {
+  // Segment-remap, COM-scan-direction and vertical Display-Offset (0xD3) as a matched
+  // triplet, taken from the official Miniware TS101 firmware disassembly: on the 128x32
+  // panel, changing orientation without also re-sending the Display-Offset leaves the
+  // image shifted by half the screen height.
+  if (leftHanded) {
     OLED_Setup_Array[9].val = 0xA1;
+    OLED_Setup_Array[5].val = 0xC8;
+    OLED_Setup_Array[7].val = 0x10;
   } else {
     OLED_Setup_Array[9].val = 0xA0;
+    OLED_Setup_Array[5].val = 0xC0;
+    OLED_Setup_Array[7].val = 0x30;
   }
 #else
   if (leftHanded) {
@@ -548,13 +560,13 @@ void OLED::setRotation(bool leftHanded) {
   } else {
     OLED_Setup_Array[9].val = 0xA0;
   }
-#endif /* OLED_SEGMENT_MAP_REVERSED */
   // send command struct again with changes
   if (leftHanded) {
     OLED_Setup_Array[5].val = 0xC8; // c1?
   } else {
     OLED_Setup_Array[5].val = 0xC0;
   }
+#endif /* OLED_SEGMENT_MAP_REVERSED */
   I2C_CLASS::writeRegistersBulk(DEVICEADDR_OLED, OLED_Setup_Array, sizeof(OLED_Setup_Array) / sizeof(OLED_Setup_Array[0]));
   osDelay(TICKS_10MS);
   inLeftHandedMode = leftHanded;
