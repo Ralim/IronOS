@@ -169,6 +169,16 @@ void startMOVTask(void const *argument __unused) {
   for (;;) {
     int32_t threshold = 1500 + (9 * 200);
     threshold -= getSettingValue(SettingsOptions::Sensitivity) * 200; // 200 is the step size
+#ifdef ACCEL_LIS
+    if (DetectedAccelerometerVersion == AccelType::LIS_CLONE) {
+      // The LIS2 clone chip fitted to some TS101 units reports a smaller raw delta than
+      // genuine LIS2DH12 for the same physical shake, so the shared threshold formula above
+      // needs a firm shake to register movement even at max sensitivity (issue #2132).
+      // Confirmed on hardware: dividing by 6 gives comparable real-world sensitivity to the
+      // formula's intended feel on genuine silicon, across the full Sensitivity range.
+      threshold /= 6;
+    }
+#endif
     readAccelerometer(tx, ty, tz, rotation);
     if (getSettingValue(SettingsOptions::OrientationMode) == 2) {
       if (rotation != ORIENTATION_FLAT) {
