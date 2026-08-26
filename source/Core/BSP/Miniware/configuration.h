@@ -226,6 +226,15 @@
 #define HAS_POWER_DEBUG_MENU
 #define DEBUG_POWER_MENU_BUTTON_B
 
+// This panel does not reliably refresh over the shared bulk 0x80-continuation I2C
+// transaction (I2C_CLASS::Transmit/writeRegistersBulk): it only ever refreshes the
+// top-left portion of the panel. Send each command/data chunk as its own I2C
+// transaction instead (see OLED.cpp).
+#define OLED_I2C_PER_BYTE_TRANSFERS 1
+// This panel needs a non-zero, orientation-dependent SSD1306 vertical Display
+// Offset (0xD3); without it the image renders shifted by half the screen height.
+#define OLED_DISPLAY_OFFSET_QUIRK 1
+
 #endif /* TS101 */
 
 #if defined(MODEL_TS80) + defined(MODEL_TS80P) > 0

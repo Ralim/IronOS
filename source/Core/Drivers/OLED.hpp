@@ -84,8 +84,8 @@ public:
   static void initialize(); // Startup the I2C coms (brings screen out of reset etc)
   static bool isInitDone();
   // Draw the buffer out to the LCD if any content has changed.
-#ifdef MODEL_TS101
-  // TS101's panel needs the per-byte command path (see OLED.cpp); the shared
+#ifdef OLED_I2C_PER_BYTE_TRANSFERS
+  // This panel needs the per-byte command path (see OLED.cpp); the shared
   // bulk Transmit() below leaves it stuck on a partial-screen refresh.
   static void refresh();
 #else
@@ -100,7 +100,7 @@ public:
   }
 #endif
 
-#ifdef MODEL_TS101
+#ifdef OLED_I2C_PER_BYTE_TRANSFERS
   static void setDisplayState(DisplayState state);
 #else
   static void setDisplayState(DisplayState state) {
