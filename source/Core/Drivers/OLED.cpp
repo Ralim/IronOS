@@ -51,7 +51,7 @@ I2C_CLASS::I2C_REG OLED_Setup_Array[] = {
 #if defined(OLED_SEGMENT_MAP_REVERSED) && !defined(OLED_DISPLAY_OFFSET_QUIRK)
     {0x80,             0xA1, 0}, /* Set Segment remap (reversed) */
 #else
-    {0x80,             0xA0, 0}, /* Set Segment remap to normal */
+    {0x80, 0xA0, 0}, /* Set Segment remap to normal */
 #endif
     {0x80,             0x8D, 0}, /* Charge Pump */
     {0x80,             0x14, 0}, /* Charge Pump settings */
