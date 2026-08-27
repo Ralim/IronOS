@@ -84,35 +84,10 @@ public:
   static void initialize(); // Startup the I2C coms (brings screen out of reset etc)
   static bool isInitDone();
   // Draw the buffer out to the LCD if any content has changed.
-#ifdef OLED_I2C_PER_BYTE_TRANSFERS
-  // This panel needs the per-byte command path (see OLED.cpp); the shared
-  // bulk Transmit() below leaves it stuck on a partial-screen refresh.
+  // (see OLED.cpp: OLED_I2C_PER_BYTE_TRANSFERS selects between the per-byte
+  // command path some panels need and the shared bulk Transmit() path)
   static void refresh();
-#else
-  static void refresh() {
-
-    if (checkDisplayBufferChecksum()) {
-      const int len = FRAMEBUFFER_START + (OLED_WIDTH * (OLED_HEIGHT / 8));
-      I2C_CLASS::Transmit(DEVICEADDR_OLED, screenBuffer, len);
-      // DMA tx time is ~ 20mS Ensure after calling this you delay for at least 25ms
-      // or we need to goto double buffering
-    }
-  }
-#endif
-
-#ifdef OLED_I2C_PER_BYTE_TRANSFERS
   static void setDisplayState(DisplayState state);
-#else
-  static void setDisplayState(DisplayState state) {
-    if (state != displayState) {
-      displayState    = state;
-      screenBuffer[1] = (state == ON) ? OLED_ON : OLED_OFF;
-      // Dump the screen state change out _now_
-      I2C_CLASS::Transmit(DEVICEADDR_OLED, screenBuffer, FRAMEBUFFER_START - 1);
-      osDelay(TICKS_10MS);
-    }
-  }
-#endif
 
   // Set the rotation for the screen
   static void setRotation(bool leftHanded);

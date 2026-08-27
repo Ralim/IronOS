@@ -45,13 +45,13 @@ I2C_CLASS::I2C_REG OLED_Setup_Array[] = {
 #ifdef OLED_DISPLAY_OFFSET_QUIRK
     {0x80,             0x30, 0}, /* Offset (this panel needs a non-zero offset; see setRotation) */
 #else
-    {0x80,             0x00, 0}, /* 0 Offset */
+    {0x80, 0x00, 0}, /* 0 Offset */
 #endif
     {0x80,             0x40, 0}, /* Set Display start line to 0 */
 #if defined(OLED_SEGMENT_MAP_REVERSED) && !defined(OLED_DISPLAY_OFFSET_QUIRK)
     {0x80,             0xA1, 0}, /* Set Segment remap to normal */
 #elif defined(OLED_DISPLAY_OFFSET_QUIRK)
-    {0x80,             0xA0, 0}, /* Set Segment remap to normal */
+    {0x80, 0xA0, 0}, /* Set Segment remap to normal */
 #else
     {0x80, 0xA0, 0}, /* Set Segment remap to normal */
 #endif
@@ -134,9 +134,9 @@ static void i2c_send_command_byte(uint8_t cmd) { I2C_CLASS::I2C_RegisterWrite(DE
 static void i2c_send_bulk(const uint8_t *buf, int len) { I2C_CLASS::Mem_Write(DEVICEADDR_OLED, 0x40, buf, len); }
 
 static void oled_bulk_write(uint32_t posx, uint32_t posy, int sizex, int sizey, const uint8_t *buf) {
-  uint32_t page      = (posy & 7) == 0 ? (posy >> 3) : (posy >> 3) + 1;
-  uint32_t pageEnd    = (posy + sizey) & 0xff;
-  pageEnd             = ((posy + sizey) & 7) == 0 ? (pageEnd >> 3) : (pageEnd >> 3) + 1;
+  uint32_t page    = (posy & 7) == 0 ? (posy >> 3) : (posy >> 3) + 1;
+  uint32_t pageEnd = (posy + sizey) & 0xff;
+  pageEnd          = ((posy + sizey) & 7) == 0 ? (pageEnd >> 3) : (pageEnd >> 3) + 1;
   for (; page < pageEnd; page = (page + 1) & 0xff) {
     i2c_send_command_byte(page + 0xb0);
     i2c_send_command_byte((posx >> 4) | 0x10);
@@ -157,6 +157,25 @@ void OLED::setDisplayState(DisplayState state) {
   if (state != displayState) {
     displayState = state;
     i2c_send_command_byte(state == ON ? OLED_ON : OLED_OFF);
+    osDelay(TICKS_10MS);
+  }
+}
+#else
+void OLED::refresh() {
+  if (checkDisplayBufferChecksum()) {
+    const int len = FRAMEBUFFER_START + (OLED_WIDTH * (OLED_HEIGHT / 8));
+    I2C_CLASS::Transmit(DEVICEADDR_OLED, screenBuffer, len);
+    // DMA tx time is ~ 20mS Ensure after calling this you delay for at least 25ms
+    // or we need to goto double buffering
+  }
+}
+
+void OLED::setDisplayState(DisplayState state) {
+  if (state != displayState) {
+    displayState    = state;
+    screenBuffer[1] = (state == ON) ? OLED_ON : OLED_OFF;
+    // Dump the screen state change out _now_
+    I2C_CLASS::Transmit(DEVICEADDR_OLED, screenBuffer, FRAMEBUFFER_START - 1);
     osDelay(TICKS_10MS);
   }
 }
@@ -347,7 +366,7 @@ void OLED::maskScrollIndicatorOnOLED() {
   static const uint8_t zeroColumn[OLED_HEIGHT / 8] = {0}; // Clears the full column height (all pages)
   oled_bulk_write(rightmostColumn, 0, 1, OLED_HEIGHT, zeroColumn);
 #else
-  uint8_t maskCommands[]  = {
+  uint8_t maskCommands[] = {
       // Set column address:
       //  A[6:0] - Column start address = rightmost column
       //  B[6:0] - Column end address = rightmost column
@@ -632,12 +651,13 @@ void OLED::setRotation(bool leftHanded) {
   }
 #endif /* OLED_DISPLAY_OFFSET_QUIRK */
 #ifdef OLED_I2C_PER_BYTE_TRANSFERS
-  // Sent as individual command-byte writes; the bulk 0x80-continuation path below
-  // is what leaves this panel stuck on a partial refresh.
-  i2c_send_command_byte(OLED_Setup_Array[9].val);
+  // Sent as individual command-byte writes, in the same order they appear in
+  // OLED_Setup_Array; the bulk 0x80-continuation path below is what leaves
+  // this panel stuck on a partial refresh.
   i2c_send_command_byte(OLED_Setup_Array[5].val);
   i2c_send_command_byte(OLED_Setup_Array[6].val); // 0xD3, Set Display Offset
   i2c_send_command_byte(OLED_Setup_Array[7].val);
+  i2c_send_command_byte(OLED_Setup_Array[9].val);
 #else
   I2C_CLASS::writeRegistersBulk(DEVICEADDR_OLED, OLED_Setup_Array, sizeof(OLED_Setup_Array) / sizeof(OLED_Setup_Array[0]));
 #endif /* OLED_I2C_PER_BYTE_TRANSFERS */
