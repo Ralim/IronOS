@@ -545,6 +545,11 @@ $(OUT_OBJS): $(OUTPUT_DIR)/%.o: %.c Makefile
 	@test -d $(@D) || mkdir -p $(@D)
 	@$(CC) -c $(CFLAGS) $< -o $@
 
+
+# Special rule for policy_engine.cpp - use O1 optimization
+$(OUTPUT_DIR)/Core/Drivers/usb-pd/src/policy_engine.o: Core/Drivers/usb-pd/src/policy_engine.cpp Makefile
+	@test -d $(@D) || mkdir -p $(@D)
+	@$(CPP) -c -O1 $(filter-out -Os -O3 -O2,$(CXXFLAGS)) $< -o $@
 $(OUTPUT_DIR)/%.o: %.cpp Makefile
 	@test -d $(@D) || mkdir -p $(@D)
 	@$(CPP) -c $(CXXFLAGS) $< -o $@
