@@ -45,6 +45,7 @@ bool USBPowerDelivery::start() {
 }
 void    USBPowerDelivery::IRQOccured() { pe.IRQOccured(); }
 bool    USBPowerDelivery::negotiationHasWorked() { return pe.pdHasNegotiated(); }
+void    USBPowerDelivery::renegotiate() { pe.renegotiate(); }
 uint8_t USBPowerDelivery::getStateNumber() { return pe.currentStateCode(true); }
 void    USBPowerDelivery::step() {
   while (pe.thread()) {
@@ -132,11 +133,16 @@ bool parseCapabilitiesArray(const uint8_t numCaps, uint8_t *bestIndex, uint16_t 
   // Walk the given capabilities array; and select the best option
   // Given assumption of fixed tip resistance; this can be simplified to highest voltage selection
   *bestIndex   = 0xFF; // Mark unselected
-  *bestVoltage = 5000; // Default 5V
+  *bestVoltage = 0;    // Default 0V
 
   // Fudge of 0.5 ohms to round up a little to account for us always having off periods in PWM
-  uint8_t     tipResistance = getTipResistanceX10();
-  usbpdMode_t pd_mode       = (usbpdMode_t)getSettingValue(SettingsOptions::USBPDMode);
+  uint8_t     tipResistance   = getTipResistanceX10();
+  bool        isFirstPassSafe = (tipResistance == 0);
+  usbpdMode_t pd_mode         = (usbpdMode_t)getSettingValue(SettingsOptions::USBPDMode);
+  // In the first pass safe, we just want basic profiles
+  if (isFirstPassSafe) {
+    pd_mode = usbpdMode_t::NO_DYNAMIC;
+  }
   if (pd_mode == usbpdMode_t::DEFAULT) {
     tipResistance += 5;
   }
@@ -170,6 +176,13 @@ bool parseCapabilitiesArray(const uint8_t numCaps, uint8_t *bestIndex, uint16_t 
                 *bestIsAVS   = false;
               }
             }
+          }
+          if (isFirstPassSafe && voltage_mv <= 9000 && (voltage_mv > *bestVoltage)) {
+            *bestIndex   = i;
+            *bestVoltage = voltage_mv;
+            *bestCurrent = current_a_x100;
+            *bestIsPPS   = false;
+            *bestIsAVS   = false;
           }
         }
       }
