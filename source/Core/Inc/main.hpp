@@ -22,6 +22,7 @@ extern TaskHandle_t pidTaskNotification;
 extern int32_t      powerSupplyWattageLimit;
 extern uint8_t      accelInit;
 extern TickType_t   lastMovementTime;
+extern volatile bool freefallDetected;
 #ifdef __cplusplus
 }
 // Accelerometer type

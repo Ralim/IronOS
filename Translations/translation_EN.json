@@ -68,6 +68,9 @@
     },
     "TooHotToStartProfileWarning": {
       "message": "Too hot to\nstart profile"
+    },
+    "WarningFreefallDetected": {
+      "message": "Freefall\nDetected"
     }
   },
   "characters": {
@@ -348,6 +351,10 @@
     "SolderingTipType": {
       "displayText": "Soldering\nTip Type",
       "description": "Select the tip type fitted"
+    },
+    "FreefallDetection": {
+      "displayText": "Freefall\ndetect",
+      "description": "Power off if freefall or rapid drop is detected (requires accelerometer)"
     }
   }
 }

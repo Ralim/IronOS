@@ -153,6 +153,13 @@ OperatingMode gui_solderingMode(const ButtonState buttons, guiContext *cxt) {
     cxt->transitionMode = detailedView ? TransitionAnimation::None : TransitionAnimation::Right;
     return OperatingMode::HomeScreen;
   }
+  // Emergency freefall shutdown: always active regardless of sleep mode
+  if (freefallDetected) {
+    freefallDetected      = false;
+    currentTempTargetDegC = 0;
+    setBuzzer(false);
+    return OperatingMode::FreefallWarning;
+  }
 #ifdef NO_SLEEP_MODE
 
   if (shouldShutdown()) {

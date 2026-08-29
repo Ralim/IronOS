@@ -138,6 +138,9 @@ OperatingMode guiHandleDraw(void) {
     /*TODO*/
     newMode = OperatingMode::HomeScreen;
     break;
+  case OperatingMode::FreefallWarning:
+    newMode = gui_freefallWarning(buttons, &context);
+    break;
   };
   return newMode;
 }

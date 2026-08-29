@@ -26,8 +26,12 @@
 #include "task.h"
 
 #define MOVFilter 8
-uint8_t    accelInit        = 0;
-TickType_t lastMovementTime = 0;
+uint8_t      accelInit        = 0;
+TickType_t   lastMovementTime = 0;
+volatile bool freefallDetected = false;
+static int32_t slowGravRefX    = 0;
+static int32_t slowGravRefY    = 0;
+static int32_t slowGravRefZ    = 0;
 // Order matters for probe order, some Acceleromters do NOT like bad reads; and we have a bunch of overlap of addresses
 void detectAccelerometerVersion() {
 #ifdef ACCEL_MMA
@@ -162,7 +166,8 @@ void startMOVTask(void const *argument __unused) {
   uint8_t     currentPointer   = 0;
   int16_t     tx = 0, ty = 0, tz = 0;
   int32_t     avgx, avgy, avgz;
-  Orientation rotation = ORIENTATION_FLAT;
+  Orientation rotation        = ORIENTATION_FLAT;
+  uint8_t     freefallCounter = 0;
 #ifdef ACCEL_EXITS_ON_MOVEMENT
   uint16_t tripCounter = 0;
 #endif
@@ -194,7 +199,10 @@ void startMOVTask(void const *argument __unused) {
         datay[i] = (int32_t)ty;
         dataz[i] = (int32_t)tz;
       }
-      accelInit = 1;
+      accelInit    = 1;
+      slowGravRefX = tx;
+      slowGravRefY = ty;
+      slowGravRefZ = tz;
     }
     currentPointer = (currentPointer + 1) % MOVFilter;
     avgx = avgy = avgz = 0;
@@ -207,6 +215,41 @@ void startMOVTask(void const *argument __unused) {
     avgx /= MOVFilter;
     avgy /= MOVFilter;
     avgz /= MOVFilter;
+
+    // Update the slow gravity reference (IIR, ~3.2 second time constant)
+    // This is resistant to short falls and provides a stable 1g baseline for detection
+    slowGravRefX = (slowGravRefX * 31 + avgx) / 32;
+    slowGravRefY = (slowGravRefY * 31 + avgy) / 32;
+    slowGravRefZ = (slowGravRefZ * 31 + avgz) / 32;
+
+    // Freefall and sustained downward motion detection (only when enabled in settings)
+    if (getSettingValue(SettingsOptions::FreefallDetection)) {
+      // Divide by 4 before squaring to prevent int32 overflow (max 32767/4=8191, 8191^2*3 ~201M)
+      int32_t gx        = slowGravRefX / 4;
+      int32_t gy        = slowGravRefY / 4;
+      int32_t gz        = slowGravRefZ / 4;
+      int32_t refMagSq  = gx * gx + gy * gy + gz * gz;
+      int32_t cx        = (int32_t)tx / 4;
+      int32_t cy        = (int32_t)ty / 4;
+      int32_t cz        = (int32_t)tz / 4;
+      int32_t curMagSq  = cx * cx + cy * cy + cz * cz;
+
+      if (refMagSq > 0) {
+        if (curMagSq < refMagSq / 100) {
+          // Magnitude < 10% of gravity: genuine freefall
+          // Require 5 consecutive samples (~500ms) to reject brief bumps and normal motion
+          freefallCounter++;
+          if (freefallCounter >= 5) {
+            freefallDetected = true;
+          }
+        } else {
+          freefallCounter = 0;
+        }
+      }
+    } else {
+      freefallCounter  = 0;
+      freefallDetected = false;
+    }
 
     // Sum the deltas
     int32_t error = (abs(avgx - tx) + abs(avgy - ty) + abs(avgz - tz));

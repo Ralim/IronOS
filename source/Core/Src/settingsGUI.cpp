@@ -107,6 +107,7 @@ static void displayPowerPulseWait(void);
 static bool showPowerPulseOptions(void);
 static void displayPowerPulseDuration(void);
 static void displayBrightnessLevel(void);
+static void displayFreefallDetection(void);
 static void displayInvertColor(void);
 static void displayLogoTime(void);
 
@@ -444,6 +445,8 @@ const menuitem advancedMenu[] = {
   {SETTINGS_DESC(SettingsItemIndex::PowerPulseWait), nullptr, displayPowerPulseWait, showPowerPulseOptions, SettingsOptions::KeepAwakePulseWait, SettingsItemIndex::PowerPulseWait, 7},
   /* Power Pulse Duration adjustment */
   {SETTINGS_DESC(SettingsItemIndex::PowerPulseDuration), nullptr, displayPowerPulseDuration, showPowerPulseOptions, SettingsOptions::KeepAwakePulseDuration, SettingsItemIndex::PowerPulseDuration, 7},
+  /* Freefall Detection */
+  {SETTINGS_DESC(SettingsItemIndex::FreefallDetection), nullptr, displayFreefallDetection, nullptr, SettingsOptions::FreefallDetection, SettingsItemIndex::FreefallDetection, 7},
   /* Resets settings */
   {SETTINGS_DESC(SettingsItemIndex::SettingsReset), setResetSettings, noOpDisplay, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::SettingsReset, 7},
   /* vvvv end of menu marker. DO NOT REMOVE vvvv */
@@ -960,6 +963,8 @@ static void displayLogoTime(void) {
 static void displayAdvancedIDLEScreens(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::DetailedIDLE)); }
 
 static void displayAdvancedSolderingScreens(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::DetailedSoldering)); }
+
+static void displayFreefallDetection(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::FreefallDetection)); }
 
 #ifdef BLE_ENABLED
 static void displayBluetoothLE(void) {
