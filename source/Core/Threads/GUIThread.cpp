@@ -83,8 +83,8 @@ OperatingMode guiHandleDraw(void) {
   case OperatingMode::StartupLogo:
     showBootLogo();
 #ifdef BUZZER_STARTUP_CHIRP
-    // Short start-up chirp (the stock firmware plays a melody). Done here rather than in postRToSInit(): that runs
-    // right before the USB-PD negotiation starts, and delaying it there makes strict sources hard-reset VBUS.
+    // Short start-up chirp. Done here rather than in postRToSInit(): that runs right before the USB-PD
+    // negotiation starts, and delaying it there makes strict sources hard-reset VBUS.
     setBuzzer(true);
     osDelay(TICKS_100MS);
     setBuzzer(false);
