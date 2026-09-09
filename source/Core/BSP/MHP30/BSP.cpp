@@ -4,6 +4,7 @@
 #include "BootLogo.h"
 #include "I2C_Wrapper.hpp"
 #include "Pins.h"
+#include "Settings.h"
 #include "Setup.h"
 #include "TipThermoModel.h"
 #include "Utils.hpp"
@@ -377,6 +378,9 @@ uint8_t preStartChecks() {
   return tipMeasurementOccuring ? 0 : 1;
 }
 void setBuzzer(bool on) {
+  if (on && !getSettingValue(SettingsOptions::BuzzerEnabled)) {
+    on = false; // Muted by the user
+  }
   if (on) {
     htim3.Instance->CCR2 = 128;
     htim3.Instance->PSC  = 100; // drop down into audible range
