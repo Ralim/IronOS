@@ -214,6 +214,7 @@
 #define USB_PD_I2CBB2        1
 #define USB_PD_VMAX          28 // Device supposedly can do 28V; looks like vmax is 33 ish
 #define OLED_128x32          1
+#define OLED_128x32_DENSE_UI 1 // Data dense detailed screens; fits in every language here
 #define OLED_FLIP            1
 #define HAS_SPLIT_POWER_PATH 1
 #define TEMP_NTC             1
