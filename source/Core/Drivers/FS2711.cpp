@@ -83,10 +83,8 @@ void FS2711::start() {
   memset(&state, 0, sizeof(fs2711_state_t));
   state.req_pdo_num = 0xFF;
 
-  // Follow the stock firmware's bring-up (recovered from its disassembly): a full system reset and a
-  // mode-set / port-reset cycle, i.e. a clean re-attach. The previous "disable protocol, wait, enable"
-  // tore down the contract the chip had already auto-negotiated, which strict sources (Apple adapters
-  // among others) answer with a hard reset - VBUS drops and the iron brownouts in a loop.
+  // S99: bring-up sequence taken from the S99 stock firmware's disassembly - a system reset, then a
+  // mode-set / port-reset cycle so the FS2711 re-attaches to the source cleanly before PD is enabled.
   i2c_write(FS2711_REG_SYSTEM_RESET, FS2711_ENABLE);
   osDelay(100);
   i2c_write(FS2711_REG_MODE_SET, 2);
