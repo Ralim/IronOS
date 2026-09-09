@@ -479,4 +479,3 @@ Enable the buzzer: short beep when the set temperature is reached and at the end
 On device help text:
 
 Beep when the set temperature is reached and at the end of a profile
-

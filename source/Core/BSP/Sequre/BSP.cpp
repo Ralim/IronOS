@@ -133,8 +133,8 @@ static const uint8_t  tipChopPrescalerCount = sizeof(tipChopPrescalers) / sizeof
 static uint8_t tipChopThermalStep(void) {
   static uint8_t step    = 0;
   const int16_t  handleC = getHandleTemperature(0) / 10;
-  const int16_t upper = TIP_PWM_SLOWDOWN_2_C;
-  const int16_t lower = upper - (TIP_PWM_SLOWDOWN_2_C - TIP_PWM_SLOWDOWN_1_C);
+  const int16_t  upper   = TIP_PWM_SLOWDOWN_2_C;
+  const int16_t  lower   = upper - (TIP_PWM_SLOWDOWN_2_C - TIP_PWM_SLOWDOWN_1_C);
   if (step == 0 && handleC >= lower) {
     step = 1;
   } else if (step == 1 && handleC >= upper) {
