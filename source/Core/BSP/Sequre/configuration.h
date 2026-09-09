@@ -295,8 +295,6 @@
 #define HANDLE_DERATE_MIN_PERCENT 20
 #define TIP_PWM_SLOWDOWN_1_C      35 // Handle temperature at which the output PWM drops one step (less switching loss)
 #define TIP_PWM_SLOWDOWN_2_C      45 // ... and a second step; 5 C of hysteresis on the way back up
-#define TIP_PWM_SLOWDOWN_MAX_C    55 // Highest value the user may set; the derate (55 C) and the die cut-out still apply
-#define TIP_PWM_SLOWDOWN_SETTING  1  // Expose the threshold in the power menu
 
 #define OLED_128x32
 #define GPIO_VIBRATION

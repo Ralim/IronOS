@@ -610,13 +610,6 @@
       "maxLen2": 13,
       "include": ["BUZZER_SETTING"],
       "description": "Enable the buzzer: short beep when the set temperature is reached and at the end of a profile."
-    },
-    {
-      "id": "TipPWMSlowdownTemp",
-      "maxLen": 6,
-      "maxLen2": 13,
-      "include": ["TIP_PWM_SLOWDOWN_SETTING"],
-      "description": "Handle temperature at which the output PWM is slowed down to keep the MOSFET cooler. Lower values run cooler but stretch the current pulses, which weak supplies may dislike."
     }
   ]
 }

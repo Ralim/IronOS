@@ -358,10 +358,6 @@
     "BuzzerEnabled": {
       "displayText": "Buzzer",
       "description": "Beep when the set temperature is reached and at the end of a profile"
-    },
-    "TipPWMSlowdownTemp": {
-      "displayText": "PWM\nslow at",
-      "description": "Handle temperature at which the output PWM slows down to keep the MOSFET cooler"
     }
   }
 }

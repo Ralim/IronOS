@@ -52,9 +52,6 @@ static void displayPowerLimit(void);
 #ifdef BUZZER_SETTING
 static void displayBuzzerEnabled(void);
 #endif /* BUZZER_SETTING */
-#ifdef TIP_PWM_SLOWDOWN_SETTING
-static void displayTipPWMSlowdownTemp(void);
-#endif /* TIP_PWM_SLOWDOWN_SETTING */
 
 #ifdef BLE_ENABLED
 static void displayBluetoothLE(void);
@@ -465,10 +462,6 @@ const menuitem advancedMenu[] = {
 #endif /* BLE_ENABLED */
   /* Power limit */
   {SETTINGS_DESC(SettingsItemIndex::PowerLimit), nullptr, displayPowerLimit, nullptr, SettingsOptions::PowerLimit, SettingsItemIndex::PowerLimit, 4},
-#ifdef TIP_PWM_SLOWDOWN_SETTING
-  /* Handle temperature at which the output PWM slows down */
-  {SETTINGS_DESC(SettingsItemIndex::TipPWMSlowdownTemp), nullptr, displayTipPWMSlowdownTemp, nullptr, SettingsOptions::TipPWMSlowdownTemp, SettingsItemIndex::TipPWMSlowdownTemp, 6},
-#endif /* TIP_PWM_SLOWDOWN_SETTING */
   /* Calibrate Cold Junktion Compensation at next boot */
   {SETTINGS_DESC(SettingsItemIndex::CalibrateCJC), setCalibrate, displayCalibrate, nullptr, SettingsOptions::CalibrateCJC, SettingsItemIndex::CalibrateCJC, 7},
   /* Voltage input cal */
@@ -942,13 +935,6 @@ static void displayDisplayRotation(void) {
 static void displayCoolingBlinkEnabled(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::CoolingTempBlink)); }
 
 static void displayBuzzerEnabled(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::BuzzerEnabled)); }
-
-#ifdef TIP_PWM_SLOWDOWN_SETTING
-static void displayTipPWMSlowdownTemp(void) {
-  OLED::printNumber(getSettingValue(SettingsOptions::TipPWMSlowdownTemp), 2, VALUE_FONT);
-  OLED::print(VALUE_SYMBOL(DegC), VALUE_FONT);
-}
-#endif /* TIP_PWM_SLOWDOWN_SETTING */
 
 static void displayScrollSpeed(void) { printValue(translatedString((getSettingValue(SettingsOptions::DescriptionScrollSpeed)) ? Tr->SettingFastChar : Tr->SettingSlowChar)); }
 

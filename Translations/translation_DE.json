@@ -358,10 +358,6 @@
     "BuzzerEnabled": {
       "displayText": "Summer",
       "description": "Piepton, wenn die Solltemperatur erreicht ist und am Ende eines Profils"
-    },
-    "TipPWMSlowdownTemp": {
-      "displayText": "Kuehl-\nschwelle",
-      "description": "Griff-Temperatur, ab der die Ausgangs-PWM langsamer schaltet, damit der MOSFET kuehler bleibt"
     }
   }
 }

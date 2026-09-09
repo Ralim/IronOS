@@ -480,10 +480,3 @@ On device help text:
 
 Beep when the set temperature is reached and at the end of a profile
 
-### Setting: PWM slow at
-
-Handle temperature at which the output PWM is slowed down to keep the MOSFET cooler. Lower values run cooler but stretch the current pulses, which weak supplies may dislike.
-
-On device help text:
-
-Handle temperature at which the output PWM slows down to keep the MOSFET cooler
