@@ -159,7 +159,7 @@ settings:
     max: 0xFFFF
     min: 0
     name: UILanguage
-  - default: 20
+  - default: USB_PD_TIMEOUT
     increment: 1
     max: 50
     min: 0
@@ -279,3 +279,8 @@ settings:
     max: 1
     min: 0
     name: ReverseButtonSettings
+  - default: 1
+    increment: 1
+    max: 1
+    min: 0
+    name: BuzzerEnabled

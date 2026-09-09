@@ -19,6 +19,10 @@ typedef struct {
 
 class FS2711 {
 public:
+#ifdef FS2711_CHECK_BOTH_I2C_BUSES
+  static uint8_t detect_i2c_bus_num();
+#endif
+
   static bool probe();
 
   static void start();

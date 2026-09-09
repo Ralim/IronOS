@@ -64,6 +64,13 @@ int8_t getPowerSourceNumber(void) {
       }
     }
 #endif
+#if POW_PD_EXT == 2
+    // The FS2711 runs the negotiation itself; if it has selected a PDO we are powered over PD. There is no
+    // VBUS sense line on this hardware, so report plain PD rather than claiming the sense modification.
+    if (FS2711::has_run_selection()) {
+      poweredbyPD = true;
+    }
+#endif
     if (poweredbyPD) {
       if (pdHasVBUSConnected) {
         sourceNumber = 2;

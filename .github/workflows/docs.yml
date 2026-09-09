@@ -9,6 +9,10 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+# gh-deploy pushes the gh-pages branch, which needs a writable GITHUB_TOKEN (forks default to read-only)
+permissions:
+  contents: write
+
 # Allow one concurrent deployment
 concurrency:
   group: "pages"

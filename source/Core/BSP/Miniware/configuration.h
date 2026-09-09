@@ -132,6 +132,7 @@
 #define ADC_VDD_MV      3300       // ADC max reading millivolts
 
 #define POW_PD_EXT 0
+#define USB_PD_TIMEOUT    20  // Default Timeout for USB-PD Protocol negotiation in x100ms
 
 // Deriving the Voltage div:
 // Vin_max = (3.3*(r1+r2))/(r2)
@@ -213,6 +214,7 @@
 #define USB_PD_I2CBB2        1
 #define USB_PD_VMAX          28 // Device supposedly can do 28V; looks like vmax is 33 ish
 #define OLED_128x32          1
+#define OLED_128x32_DENSE_UI 1 // Data dense detailed screens; fits in every language here
 #define OLED_FLIP            1
 #define HAS_SPLIT_POWER_PATH 1
 #define TEMP_NTC             1

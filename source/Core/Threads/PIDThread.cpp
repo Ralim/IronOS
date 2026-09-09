@@ -32,7 +32,7 @@ uint8_t                    heaterThermalRunawayCounter = 0;
 static int32_t getPIDResultX10Watts(TemperatureType_t set_point, TemperatureType_t current_value);
 static void    detectThermalRunaway(const TemperatureType_t currentTipTempInC, const uint32_t x10WattsOut);
 static void    setOutputx10WattsViaFilters(int32_t x10Watts);
-static int32_t getX10WattageLimits();
+int32_t        getX10WattageLimits();
 
 /* StartPIDTask function */
 void startPIDTask(void const *argument __unused) {
@@ -71,6 +71,11 @@ void startPIDTask(void const *argument __unused) {
 #endif
 #endif
 
+#ifdef MCU_TEMP_CUTOFF_C
+  // Reference the die temperature sensor to the handle NTC now that the ADC has samples (cold boot: same temperature)
+  calibrateMCUTemperature(getHandleTemperature(0) / 10);
+#endif
+
   int32_t    x10WattsOut             = 0;
   TickType_t lastThermalRunawayDecay = xTaskGetTickCount();
 
@@ -82,6 +87,22 @@ void startPIDTask(void const *argument __unused) {
       TemperatureType_t currentTipTempInC = TipThermoModel::getTipInC(true);
 
       PIDTempTarget = currentTempTargetDegC;
+#ifdef POW_DC
+      // Never drive the tip below the DC minimum input voltage (9 V, or the battery cell cut-off). The soldering
+      // mode exits on undervoltage as well, but only after its 2 s ADC settling delay; a 5 V USB host port would
+      // already have been overloaded and dropped VBUS by then.
+      if (PIDTempTarget > 0 && getIsPoweredByDCIN() && getInputVoltageX10(getSettingValue(SettingsOptions::VoltageDiv), 0) < lookupVoltageLevel()) {
+        PIDTempTarget = 0;
+      }
+#endif
+#ifdef MCU_TEMP_CUTOFF_C
+      // Last line of defence for the output stage: if the MCU die gets this hot, stop heating and raise the
+      // thermal runaway warning (the handle NTC derate should have kicked in long before this)
+      if (getMCUTemperatureC() > MCU_TEMP_CUTOFF_C) {
+        PIDTempTarget               = 0;
+        heaterThermalRunawayCounter = 255;
+      }
+#endif
       if (PIDTempTarget > 0) {
         // Cap the max set point to 450C
         if (PIDTempTarget > 450) {
@@ -300,6 +321,26 @@ int32_t getX10WattageLimits() {
   if (powerSupplyWattageLimit && limit > powerSupplyWattageLimit * 10) {
     limit = powerSupplyWattageLimit * 10;
   }
+#ifdef ENFORCE_HARDWARE_MAX_WATTAGE
+  // Never exceed what the output stage is rated for, even on DC input where there is no supply limit
+  if (limit > HARDWARE_MAX_WATTAGE_X10) {
+    limit = HARDWARE_MAX_WATTAGE_X10;
+  }
+#endif
+#ifdef HANDLE_DERATE_START_C
+  // Derate the output when the handle is getting hot; the MOSFET shares the handle with the NTC.
+  // Linear ramp from 100% at HANDLE_DERATE_START_C down to HANDLE_DERATE_MIN_PERCENT at HANDLE_DERATE_END_C.
+  {
+    const int32_t handleC = getHandleTemperature(0) / 10;
+    if (handleC > HANDLE_DERATE_START_C) {
+      int32_t percent = 100 - (((handleC - HANDLE_DERATE_START_C) * (100 - HANDLE_DERATE_MIN_PERCENT)) / (HANDLE_DERATE_END_C - HANDLE_DERATE_START_C));
+      if (percent < HANDLE_DERATE_MIN_PERCENT) {
+        percent = HANDLE_DERATE_MIN_PERCENT;
+      }
+      limit = (limit * percent) / 100;
+    }
+  }
+#endif
   return limit;
 }
 

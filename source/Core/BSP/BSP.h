@@ -5,6 +5,7 @@
 #include "Defines.h"
 #include "Types.h"
 #include "configuration.h"
+
 #include <stdbool.h>
 #include <stdint.h>
 
@@ -37,6 +38,20 @@ void BSPInit(void);
 void resetWatchdog();
 // Accepts a output level of 0.. to use to control the tip output PWM
 void setTipPWM(const uint8_t pulse, const bool shouldUseFastModePWM);
+#ifdef TIP_CURRENT_LIMIT_CHOP
+// Fraction (x256) of the output on-time that the fast chop leaves the tip powered, so that the average
+// tip current stays within the supply limit. 256 == no chopping. Recomputes & latches the value used by the ISR.
+uint16_t getTipChopDutyX256();
+// Chop frequency in Hz x10 (for display)
+uint32_t getTipChopFrequencyHzX10();
+// Last latched chop duty (x256) without recomputing it; 256 == not chopping (for display)
+uint16_t getTipChopDutyX256Latched();
+#endif
+#ifdef MCU_TEMP_CUTOFF_C
+// MCU die temperature in C (internal sensor), referenced to the handle temperature at boot
+int16_t getMCUTemperatureC(void);
+void    calibrateMCUTemperature(int16_t handleTemperatureC);
+#endif
 // Returns the Handle temp in C, X10
 int16_t getHandleTemperature(uint8_t sample);
 // Returns the Tip temperature ADC reading in raw units

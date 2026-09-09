@@ -70,8 +70,14 @@ void drawScrollingText(const char *message, TickType_t currentTickOffset) {
 #ifdef OLED_128x32
   // make_translation.py encodes descriptions against the small font on 128x32,
   // so draw them with the small font, vertically centred on the 32px panel.
-  OLED::setCursor((OLED_WIDTH - messageOffset), 8);
-  OLED::print(message, FontStyle::SMALL);
+  // Messages it could not fit in the small font (CJK) carry the 0x01 large font marker.
+  if (message[0] == '\x01') {
+    OLED::setCursor((OLED_WIDTH - messageOffset), 4);
+    OLED::print(message + 1, FontStyle::LARGE);
+  } else {
+    OLED::setCursor((OLED_WIDTH - messageOffset), 8);
+    OLED::print(message, FontStyle::SMALL);
+  }
 #else
   OLED::setCursor((OLED_WIDTH - messageOffset), 0);
   OLED::print(message, FontStyle::LARGE);

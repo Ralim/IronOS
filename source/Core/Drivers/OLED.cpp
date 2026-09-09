@@ -175,10 +175,19 @@ void OLED::drawChar(const uint16_t charCode, const FontStyle fontStyle, const ui
     break;
   case FontStyle::SMALL:
   case FontStyle::LARGE:
+  case FontStyle::TINY:
   default:
     currentFont = nullptr;
     index       = 0;
     switch (fontStyle) {
+    case FontStyle::TINY:
+#ifdef OLED_128x32_DENSE_UI
+      fontHeight = 8;
+      fontWidth  = 6;
+      break;
+#endif
+      // Otherwise TINY is just the small font
+      /* fallthrough */
     case FontStyle::SMALL:
       // 128x32 panels use the larger Terminus 8x16 small font.
 #ifdef OLED_128x32
@@ -208,8 +217,14 @@ void OLED::drawChar(const uint16_t charCode, const FontStyle fontStyle, const ui
       return;
     }
 
-    currentFont = fontStyle == FontStyle::SMALL ? FontSectionInfo.font06_start_ptr : FontSectionInfo.font12_start_ptr;
-    index       = charCode - 2;
+    if (fontStyle == FontStyle::LARGE) {
+      currentFont = FontSectionInfo.font12_start_ptr;
+    } else if (fontStyle == FontStyle::TINY) {
+      currentFont = FontSectionInfo.font06_compact_start_ptr;
+    } else {
+      currentFont = FontSectionInfo.font06_start_ptr;
+    }
+    index = charCode - 2;
     break;
   }
   const uint8_t *charPointer = currentFont + ((fontWidth * (fontHeight / 8)) * index);

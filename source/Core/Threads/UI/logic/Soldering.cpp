@@ -124,7 +124,7 @@ OperatingMode gui_solderingMode(const ButtonState buttons, guiContext *cxt) {
   // Update status
   int error = currentTempTargetDegC - TipThermoModel::getTipInC();
   if (error >= -10 && error <= 10) {
-    // converged
+    // converged; beep once per soldering session, the first time the set point is reached
     if (!cxt->scratch_state.state5) {
       setBuzzer(true);
       cxt->scratch_state.state3 = xTaskGetTickCount() + TICKS_SECOND / 3;
@@ -133,7 +133,6 @@ OperatingMode gui_solderingMode(const ButtonState buttons, guiContext *cxt) {
     setStatusLED(LED_HOT);
   } else {
     setStatusLED(LED_HEATING);
-    cxt->scratch_state.state5 = false;
   }
   if (cxt->scratch_state.state3 != 0 && xTaskGetTickCount() >= cxt->scratch_state.state3) {
     setBuzzer(false);

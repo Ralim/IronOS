@@ -471,3 +471,11 @@ For manually selecting the type of tip fitted
 On device help text:
 
 Select the tip type fitted
+
+### Setting: Buzzer
+
+Enable the buzzer: short beep when the set temperature is reached and at the end of a profile.
+
+On device help text:
+
+Beep when the set temperature is reached and at the end of a profile

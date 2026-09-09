@@ -166,7 +166,9 @@ class Settings:
             print(f"Error loading settings from file: {e}")
             return False, 0
 
-    def save_to_binary(self, file_path: str, base_address:int, versionMarker:int) -> bool:
+    def save_to_binary(
+        self, file_path: str, base_address: int, versionMarker: int
+    ) -> bool:
         """Save settings to a binary or hex file
 
         Args:

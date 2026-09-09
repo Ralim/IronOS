@@ -10,7 +10,12 @@ OperatingMode showDebugMenu(const ButtonState buttons, guiContext *cxt) {
     return OperatingMode::HomeScreen;
   } else if (buttons == BUTTON_F_SHORT) {
     cxt->scratch_state.state1++;
-#ifdef HALL_SENSOR
+    // Keep these compile time constants: a variable modulo pulls in the division helper
+#if defined(MCU_TEMP_CUTOFF_C) && defined(HALL_SENSOR)
+    cxt->scratch_state.state1 = cxt->scratch_state.state1 % 18;
+#elif defined(MCU_TEMP_CUTOFF_C)
+    cxt->scratch_state.state1 = cxt->scratch_state.state1 % 17;
+#elif defined(HALL_SENSOR)
     cxt->scratch_state.state1 = cxt->scratch_state.state1 % 17;
 #else
     cxt->scratch_state.state1 = cxt->scratch_state.state1 % 16;

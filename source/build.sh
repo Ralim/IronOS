@@ -6,7 +6,10 @@ TRANSLATION_DIR="../Translations"
 # AVAILABLE_LANGUAGES will be calculating according to json files in $TRANSLATION_DIR
 AVAILABLE_LANGUAGES=()
 BUILD_LANGUAGES=()
-AVAILABLE_MODELS=("TS100" "TS80" "TS80P" "Pinecil" "MHP30" "Pinecilv2" "S60" "S60P" "T55" "TS101")
+# 62K models: the dense 128x32 layout is built for every language except the CJK ones (see Makefile DENSE_UI)
+DENSE_UI_SPLIT_MODELS=(S60 T55)
+DENSE_UI_EXCLUDED_LANGUAGES=(JA_JP YUE_HK ZH_CN ZH_TW)
+AVAILABLE_MODELS=("TS100" "TS80" "TS80P" "Pinecil" "MHP30" "Pinecilv2" "S60" "S60P" "T55" "S99" "TS101")
 BUILD_MODELS=()
 OPTIONS=()
 
@@ -184,6 +187,30 @@ if [ ${#BUILD_LANGUAGES[@]} -gt 0 ] && [ ${#BUILD_MODELS[@]} -gt 0 ]; then
     checkLastCommand
 
     for model in "${BUILD_MODELS[@]}"; do
+        if isInArray "$model" "${DENSE_UI_SPLIT_MODELS[@]}"; then
+            # The dense 128x32 layout fits every language on these models except the CJK ones (their fonts
+            # push the image ~1K over the 45K limit), so those are built with the default layout instead.
+            DENSE_LANGUAGES=()
+            PLAIN_LANGUAGES=()
+            for lang in "${BUILD_LANGUAGES[@]}"; do
+                if isInArray "$lang" "${DENSE_UI_EXCLUDED_LANGUAGES[@]}"; then
+                    PLAIN_LANGUAGES+=("$lang")
+                else
+                    DENSE_LANGUAGES+=("$lang")
+                fi
+            done
+            if [ ${#DENSE_LANGUAGES[@]} -gt 0 ]; then
+                echo "Building firmware for $model (dense 128x32 layout) in ${DENSE_LANGUAGES[*]}"
+                make -j"$(nproc)" model="$model" DENSE_UI=1 "${DENSE_LANGUAGES[@]/#/firmware-}" "${OPTIONS[@]}" >/dev/null
+                checkLastCommand
+            fi
+            if [ ${#PLAIN_LANGUAGES[@]} -gt 0 ]; then
+                echo "Building firmware for $model (default layout, flash limited) in ${PLAIN_LANGUAGES[*]}"
+                make -j"$(nproc)" model="$model" "${PLAIN_LANGUAGES[@]/#/firmware-}" "${OPTIONS[@]}" >/dev/null
+                checkLastCommand
+            fi
+            continue
+        fi
         echo "Building firmware for $model in ${BUILD_LANGUAGES[*]}"
         make -j"$(nproc)" model="$model" "${BUILD_LANGUAGES[@]/#/firmware-}" "${OPTIONS[@]}" >/dev/null
         checkLastCommand

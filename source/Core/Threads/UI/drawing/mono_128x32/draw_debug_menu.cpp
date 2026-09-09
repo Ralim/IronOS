@@ -94,6 +94,18 @@ void ui_draw_debug_menu(const uint8_t item_number) {
   } break;
 #endif
 
+#ifdef MCU_TEMP_CUTOFF_C
+  case 17: // MCU die temperature in C (referenced to the handle NTC at boot)
+  {
+    int16_t dieTemp = getMCUTemperatureC();
+    if (dieTemp < 0) {
+      OLED::print(SmallSymbolMinus, FontStyle::SMALL);
+      dieTemp = -dieTemp;
+    }
+    OLED::printNumber(dieTemp, 6, FontStyle::SMALL);
+  } break;
+#endif
+
   default:
     break;
   }

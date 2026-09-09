@@ -71,6 +71,12 @@ MODEL_CONFIG: Dict[str, ModelConfig] = {
         flash_ranges=((0x08000000, 0x08100000),),
         ram_ranges=((0x20000000, 0x20005000),),
     ),
+    "S99": ModelConfig(
+        flash_total=59 * 1024,
+        ram_total=20 * 1024,
+        flash_ranges=((0x08000000, 0x08100000),),
+        ram_ranges=((0x20000000, 0x20005000),),
+    ),
     "S60P": ModelConfig(
         flash_total=78336,
         ram_total=20 * 1024,

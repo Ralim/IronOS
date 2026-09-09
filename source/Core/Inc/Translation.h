@@ -20,6 +20,12 @@ extern const char *LargeSymbolMinus;
 extern const char *SmallSymbolSpace;
 extern const char *LargeSymbolSpace;
 extern const char *SmallSymbolAmps;
+extern const char *SmallSymbolOhm;
+extern const char *SmallSymbolLessThan;
+extern const char *SmallSymbolKiloHertz;
+extern const char *SmallSymbolMax;
+extern const char *SmallSymbolPercent;
+extern const char *SmallSymbolDegreeSign; // bare degree sign for the compact status rows
 extern const char *LargeSymbolAmps;
 extern const char *SmallSymbolDot;
 extern const char *LargeSymbolDot;
@@ -108,6 +114,7 @@ enum class SettingsItemIndex : uint8_t {
   SettingsReset,
   LanguageSwitch,
   SolderingTipType,
+  BuzzerEnabled,
   NUM_ITEMS,
 };
 
@@ -159,6 +166,8 @@ struct TranslationIndexTable {
   uint16_t TipTypeT12PTS;
   uint16_t TipTypeTS80;
   uint16_t TipTypeJBCC210;
+  uint16_t TipTypeC245Stock;
+  uint16_t TipTypeC245JBC;
 
   uint16_t SettingsDescriptions[static_cast<uint32_t>(SettingsItemIndex::NUM_ITEMS)];
   uint16_t SettingsShortNames[static_cast<uint32_t>(SettingsItemIndex::NUM_ITEMS)];
@@ -185,6 +194,7 @@ struct FontSection {
   uint16_t       font06_decompressed_size;
   const uint8_t *font12_compressed_source; // Pointer to compressed data or null
   const uint8_t *font06_compressed_source; // Pointer to compressed data or null
+  const uint8_t *font06_compact_start_ptr; // 6x8 font for FontStyle::TINY (same table as font06 on 96x16 panels)
 };
 
 extern const FontSection FontSectionInfo;

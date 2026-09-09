@@ -134,6 +134,12 @@
     },
     "TipTypeJBCC210": {
       "displayText": "JBC\nC210"
+    },
+    "TipTypeC245Stock": {
+      "displayText": "Stock\n5.5Ω"
+    },
+    "TipTypeC245JBC": {
+      "displayText": "JBC\n2.5Ω"
     }
   },
   "menuOptions": {
@@ -253,8 +259,8 @@
       "displayText": "Hall Eff\nSensibilidad",
       "description": "Sensibilidad del sensor de efecto Hall en la detección de reposo (1=menos sensible | ... | 9=más sensible)"
     },
-    "HallEffSleepTimeout": {                                           
-      "displayText": "Tiempo reposo\nSensor Hall", 
+    "HallEffSleepTimeout": {
+      "displayText": "Tiempo reposo\nSensor Hall",
       "description": "Intervalo antes de que \"modo resposo\" empiece cuando sensorhall supera límite"
     },
     "TemperatureUnit": {
@@ -348,6 +354,10 @@
     "SolderingTipType": {
       "displayText": "Tipo de\nTpunta",
       "description": "Selecciona la punta montada"
+    },
+    "BuzzerEnabled": {
+      "displayText": "Buzzer",
+      "description": "Beep when the set temperature is reached and at the end of a profile"
     }
   }
 }

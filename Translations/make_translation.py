@@ -141,8 +141,16 @@ def get_constants() -> List[Tuple[str, str]]:
         ("LargeSymbolVolts", "V"),
         ("SmallSymbolVolts", "V"),
         ("SmallSymbolAmps", "A"),
+        ("SmallSymbolOhm", "Ω"),
+        ("SmallSymbolLessThan", "<"),
+        ("SmallSymbolKiloHertz", "kHz"),
+        ("SmallSymbolMax", "Max"),
+        ("SmallSymbolPercent", "%"),
+        ("SmallSymbolDegreeSign", "°"),
         ("LargeSymbolDC", "DC"),
+        ("SmallSymbolDC", "DC"),
         ("LargeSymbolCellCount", "S"),
+        ("SmallSymbolCellCount", "S"),
         ("SmallSymbolVersionNumber", read_version()),
         ("SmallSymbolPDDebug", "PD Debug"),
         ("SmallSymbolState", "State"),
@@ -152,7 +160,7 @@ def get_constants() -> List[Tuple[str, str]]:
     ]
 
 
-def get_debug_menu() -> List[str]:
+def get_debug_menu(macros: frozenset = frozenset()) -> List[str]:
     return [
         time.strftime(
             "%Y%m%d %H%M%S",
@@ -174,7 +182,7 @@ def get_debug_menu() -> List[str]:
         "HW M   ",
         "HW P   ",
         "Hall   ",
-    ]
+    ] + (["MCU C  "] if "MCU_TEMP_CUTOFF_C" in macros else [])
 
 
 def get_accel_names_list() -> List[str]:
@@ -204,6 +212,8 @@ def get_power_source_list() -> List[str]:
 # (Terminus 8x16) font instead of the large one, so they must be ranked and
 # encoded against the small font. Set from the build macros in main().
 DESCRIPTIONS_USE_SMALL_FONT = False
+# Build macros of the model being generated for; set in main()
+BUILD_MACROS: frozenset = frozenset()
 
 
 def test_is_small_font(msg: str) -> bool:
@@ -242,6 +252,15 @@ def description_uses_small_font(msg: str) -> bool:
     return all(c in small_font_chars() for c in stripped)
 
 
+def value_uses_small_font(msg: str) -> bool:
+    """Menu values and single characters: on 128x32 panels the settings menu prints
+    them in the 8x16 small font (see VALUE_FONT in settingsGUI.cpp) whenever every
+    glyph exists there; otherwise (96x16 panels, CJK) the usual small/large rule."""
+    if DESCRIPTIONS_USE_SMALL_FONT and description_uses_small_font(msg):
+        return True
+    return test_is_small_font(msg)
+
+
 def get_letter_counts(defs: dict, lang: dict, build_version: str) -> Dict:
     """From the source definitions, language file and build version; calculates the ranked symbol list
 
@@ -272,7 +291,7 @@ def get_letter_counts(defs: dict, lang: dict, build_version: str) -> Dict:
     for mod in defs["characters"]:
         eid = mod["id"]
         msg = obj[eid]
-        if test_is_small_font(msg):
+        if value_uses_small_font(msg):
             small_font_messages.append(msg)
         else:
             big_font_messages.append(msg)
@@ -299,7 +318,7 @@ def get_letter_counts(defs: dict, lang: dict, build_version: str) -> Dict:
     for mod in defs["menuValues"]:
         eid = mod["id"]
         msg = obj[eid]["displayText"]
-        if test_is_small_font(msg):
+        if value_uses_small_font(msg):
             small_font_messages.append(msg)
         else:
             big_font_messages.append(msg)
@@ -337,7 +356,7 @@ def get_letter_counts(defs: dict, lang: dict, build_version: str) -> Dict:
     small_font_messages.append("°")
     big_font_messages.append("°")
 
-    small_font_messages.extend(get_debug_menu())
+    small_font_messages.extend(get_debug_menu(BUILD_MACROS))
     small_font_messages.extend(get_accel_names_list())
     small_font_messages.extend(get_power_source_list())
 
@@ -365,7 +384,7 @@ def get_letter_counts(defs: dict, lang: dict, build_version: str) -> Dict:
 
 
 def convert_letter_counts_to_ranked_symbols_with_forced(
-    symbol_dict: Dict[str, int]
+    symbol_dict: Dict[str, int],
 ) -> List[str]:
     # Add in forced symbols first
     ranked_symbols = []
@@ -723,6 +742,34 @@ def get_forced_first_symbols() -> List[str]:
     return forced_first_symbols
 
 
+def get_tiny_font_symbols() -> List[str]:
+    """Characters the firmware prints in FontStyle::TINY (the compact 6x8 font kept next to
+    the Terminus fonts on 128x32 panels): the small-font constants and the power source
+    names. They are ranked directly after the forced symbols so the compact table only has
+    to cover this short prefix of the small font."""
+    forced = set(get_forced_first_symbols())
+    out: List[str] = []
+    texts = [text for name, text in get_constants() if name.startswith("SmallSymbol")]
+    texts.extend(get_power_source_list())
+    for text in texts:
+        for c in text:
+            if c not in forced and c != "\n" and c not in out:
+                out.append(c)
+    return out
+
+
+def rank_small_font_symbols(symbol_dict: Dict[str, int]) -> List[str]:
+    ranked = convert_letter_counts_to_ranked_symbols_with_forced(symbol_dict)
+    forced = get_forced_first_symbols()
+    tiny = [c for c in get_tiny_font_symbols() if c in ranked]
+    rest = [c for c in ranked if c not in forced and c not in tiny]
+    return forced + tiny + rest
+
+
+def tiny_font_symbol_count() -> int:
+    return len(get_forced_first_symbols()) + len(get_tiny_font_symbols())
+
+
 def build_symbol_conversion_map(sym_list: List[str]) -> Dict[str, bytes]:
     forced_first_symbols = get_forced_first_symbols()
     if sym_list[: len(forced_first_symbols)] != forced_first_symbols:
@@ -767,6 +814,23 @@ def make_font_table_named_cpp(
         output_table += f"{bytes_to_c_hex(font_map[sym])}//0x{i + 2:X} -> {sym}\n"
     if name:
         output_table += f"}}; // {name}\n"
+    return output_table
+
+
+def make_font_table_06_compact_cpp(
+    sym_list: List[str], font_map: FontMapsPerFont
+) -> str:
+    """The hand drawn 6x8 font, kept alongside the Terminus fonts on 128x32 panels for
+    dense status screens (FontStyle::TINY). Only the leading symbols the firmware prints
+    in TINY are emitted (see rank_small_font_symbols); a symbol without a 6x8 glyph gets a
+    blank cell so the table stays indexable."""
+    output_table = "const uint8_t USER_FONT_6x8_COMPACT[] = {\n"
+    for i, sym in enumerate(sym_list[: tiny_font_symbol_count()]):
+        font_bytes = font_map.font06_maps.get(sym)
+        if not font_bytes:
+            font_bytes = bytes(6)
+        output_table += f"{bytes_to_c_hex(font_bytes)}//0x{i + 2:X} -> {sym}\n"
+    output_table += "};\n"
     return output_table
 
 
@@ -831,9 +895,7 @@ def prepare_language(lang: dict, defs: dict, build_version: str) -> LanguageData
     logging.info(f"Preparing language data for {language_code}")
     # Iterate over all of the text to build up the symbols & counts
     letter_count_data = get_letter_counts(defs, lang, build_version)
-    small_font_symbols = convert_letter_counts_to_ranked_symbols_with_forced(
-        letter_count_data["smallFontCounts"]
-    )
+    small_font_symbols = rank_small_font_symbols(letter_count_data["smallFontCounts"])
     large_font_symbols = convert_letter_counts_to_ranked_symbols_with_forced(
         letter_count_data["bigFontCounts"]
     )
@@ -866,9 +928,7 @@ def prepare_languages(
             total_symbol_counts, letter_count_data
         )
 
-    small_font_symbols = convert_letter_counts_to_ranked_symbols_with_forced(
-        total_symbol_counts["smallFontCounts"]
-    )
+    small_font_symbols = rank_small_font_symbols(total_symbol_counts["smallFontCounts"])
     large_font_symbols = convert_letter_counts_to_ranked_symbols_with_forced(
         total_symbol_counts["bigFontCounts"]
     )
@@ -905,6 +965,11 @@ def render_font_block(data: LanguageData, f: TextIO, compress_font: bool = False
         f.write(
             make_terminus_table_cpp("USER_FONT_6x8", "8x16", data.small_text_symbols)
         )
+        f.write("#ifdef OLED_128x32_DENSE_UI\n")
+        f.write(make_font_table_06_compact_cpp(data.small_text_symbols, font_map))
+        f.write("#else\n")
+        f.write("#define USER_FONT_6x8_COMPACT USER_FONT_6x8\n")
+        f.write("#endif /* OLED_128x32_DENSE_UI */\n")
         f.write("#else\n")
         f.write(
             make_font_table_cpp(
@@ -915,6 +980,7 @@ def render_font_block(data: LanguageData, f: TextIO, compress_font: bool = False
                 large_font_symbol_conversion_table,
             )
         )
+        f.write("#define USER_FONT_6x8_COMPACT USER_FONT_6x8\n")
         f.write("#endif /* OLED_128x32 */\n")
         f.write(
             "const FontSection FontSectionInfo = {\n"
@@ -924,6 +990,7 @@ def render_font_block(data: LanguageData, f: TextIO, compress_font: bool = False
             "    .font06_decompressed_size = 0,\n"
             "    .font12_compressed_source = 0,\n"
             "    .font06_compressed_source = 0,\n"
+            "    .font06_compact_start_ptr = USER_FONT_6x8_COMPACT,\n"
             "};\n"
         )
     else:
@@ -941,6 +1008,11 @@ def render_font_block(data: LanguageData, f: TextIO, compress_font: bool = False
         emit_compressed("font_06x08_brieflz", t06)
         f.write(f"static uint8_t font12_out_buffer[{len(t12)}];\n")
         f.write(f"static uint8_t font06_out_buffer[{len(t06)}];\n")
+        f.write("#ifdef OLED_128x32_DENSE_UI\n")
+        f.write(make_font_table_06_compact_cpp(data.small_text_symbols, font_map))
+        f.write("#else\n")
+        f.write("#define USER_FONT_6x8_COMPACT font06_out_buffer\n")
+        f.write("#endif /* OLED_128x32_DENSE_UI */\n")
         f.write("#else\n")
         h12 = bytearray()
         for sym in data.large_text_symbols:
@@ -952,6 +1024,7 @@ def render_font_block(data: LanguageData, f: TextIO, compress_font: bool = False
         emit_compressed("font_06x08_brieflz", bytes(h06))
         f.write(f"static uint8_t font12_out_buffer[{len(h12)}];\n")
         f.write(f"static uint8_t font06_out_buffer[{len(h06)}];\n")
+        f.write("#define USER_FONT_6x8_COMPACT font06_out_buffer\n")
         f.write("#endif /* OLED_128x32 */\n")
 
         f.write(
@@ -962,6 +1035,7 @@ def render_font_block(data: LanguageData, f: TextIO, compress_font: bool = False
             "    .font06_decompressed_size = sizeof(font06_out_buffer),\n"
             "    .font12_compressed_source = font_12x16_brieflz,\n"
             "    .font06_compressed_source = font_06x08_brieflz,\n"
+            "    .font06_compact_start_ptr = USER_FONT_6x8_COMPACT,\n"
             "};\n"
         )
 
@@ -1203,7 +1277,7 @@ def get_translation_common_text(
     # Debug Menu
     translation_common_text += "const char* DebugMenu[] = {\n"
 
-    for c in get_debug_menu():
+    for c in get_debug_menu(BUILD_MACROS):
         translation_common_text += (
             f'\t "{convert_string(small_symbol_conversion_table, c)}",//"{c}" \n'
         )
@@ -1314,8 +1388,12 @@ def get_translation_strings_and_indices_text(
     for index, record in enumerate(defs["menuValues"]):
         lang_data = lang["menuValues"][record["id"]]
         # Add to translations the menu text and the description
+        use_small = value_uses_small_font(lang_data["displayText"])
         encode_string_and_add(
-            lang_data["displayText"], "menuValues" + record["id"] + "displayText"
+            lang_data["displayText"],
+            "menuValues" + record["id"] + "displayText",
+            force_large_text=not use_small,
+            force_small_text=use_small,
         )
 
     for index, record in enumerate(defs["menuGroups"]):
@@ -1342,7 +1420,11 @@ def get_translation_strings_and_indices_text(
     for index, record in enumerate(defs["characters"]):
         lang_data = lang["characters"][record["id"]]
         # Add to translations the menu text and the description
-        encode_string_and_add(lang_data, "characters" + record["id"] + "Message", True)
+        encode_string_and_add(
+            lang_data,
+            "characters" + record["id"] + "Message",
+            force_small_text=value_uses_small_font(lang_data),
+        )
 
     # ----- Write the string table:
     offset = 0
@@ -1629,6 +1711,8 @@ def main() -> None:
     # to the large font (see description_uses_small_font), since the small font
     # has no CJK glyphs.
     DESCRIPTIONS_USE_SMALL_FONT = "OLED_128x32" in macros
+    global BUILD_MACROS
+    BUILD_MACROS = macros
 
     language_data: LanguageData
     if args.input_pickled:

@@ -134,6 +134,12 @@
     },
     "TipTypeJBCC210": {
       "displayText": "JBC\nC210"
+    },
+    "TipTypeC245Stock": {
+      "displayText": "Stock\n5.5Ω"
+    },
+    "TipTypeC245JBC": {
+      "displayText": "JBC\n2.5Ω"
     }
   },
   "menuOptions": {
@@ -143,7 +149,7 @@
     },
     "MinVolCell": {
       "displayText": "Minimal\nkuchlanish",
-      "description": "Batareya yacheyka uchun minimal ruxsat etilgan kuchlanish (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"   
+      "description": "Batareya yacheyka uchun minimal ruxsat etilgan kuchlanish (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
     },
     "QCMaxVoltage": {
       "displayText": "QC\nvoltage",
@@ -348,6 +354,10 @@
     "SolderingTipType": {
       "displayText": "Soldering\nTip Type",
       "description": "Select the tip type fitted"
+    },
+    "BuzzerEnabled": {
+      "displayText": "Buzzer",
+      "description": "Beep when the set temperature is reached and at the end of a profile"
     }
   }
 }

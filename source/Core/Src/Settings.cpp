@@ -270,6 +270,14 @@ const char *lookupTipName() {
     return translatedString(Tr->TipTypeJBCC210);
     break;
 #endif
+#ifdef TIPTYPE_C245
+  case tipType_t::C245_5_5_OHM:
+    return translatedString(Tr->TipTypeC245Stock);
+    break;
+  case tipType_t::C245_2_5_OHM:
+    return translatedString(Tr->TipTypeC245JBC);
+    break;
+#endif
 #ifdef AUTO_TIP_SELECTION
   case tipType_t::TIP_TYPE_AUTO:
 #endif
@@ -309,6 +317,14 @@ uint8_t getUserSelectedTipResistance() {
 #endif
 #ifdef TIPTYPE_JBC
   case tipType_t::JBC_210_2_5_OHM:
+    return 25;
+    break;
+#endif
+#ifdef TIPTYPE_C245
+  case tipType_t::C245_5_5_OHM:
+    return 55;
+    break;
+  case tipType_t::C245_2_5_OHM:
     return 25;
     break;
 #endif
