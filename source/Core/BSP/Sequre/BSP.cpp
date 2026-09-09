@@ -133,12 +133,8 @@ static const uint8_t  tipChopPrescalerCount = sizeof(tipChopPrescalers) / sizeof
 static uint8_t tipChopThermalStep(void) {
   static uint8_t step    = 0;
   const int16_t  handleC = getHandleTemperature(0) / 10;
-#ifdef TIP_PWM_SLOWDOWN_SETTING
   // User adjustable between 25 C and TIP_PWM_SLOWDOWN_MAX_C; the power derate and the die cut-out are unaffected
   const int16_t upper = getSettingValue(SettingsOptions::TipPWMSlowdownTemp);
-#else
-  const int16_t upper = TIP_PWM_SLOWDOWN_2_C;
-#endif
   const int16_t lower = upper - (TIP_PWM_SLOWDOWN_2_C - TIP_PWM_SLOWDOWN_1_C);
   if (step == 0 && handleC >= lower) {
     step = 1;

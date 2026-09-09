@@ -18,15 +18,12 @@ from .settings_util import resolve_expression
 class SettingsEntry:
     """Represents a single settings entry definition"""
 
-    def __init__(self, min_value, max_value, increment, default, name, ifdef=None):
+    def __init__(self, min_value, max_value, increment, default, name):
         self.min = min_value
         self.max = max_value
         self.increment = increment
         self.default = default
         self.name = name
-        # Optional macro: the entry only exists on models that define it (keeps the table off
-        # devices that do not have the feature and are tight on flash)
-        self.ifdef = ifdef
 
     def __str__(self):
         return f"{self.name}: {self.default} (min: {self.min}, max: {self.max}, increment: {self.increment})"
@@ -56,7 +53,6 @@ class Settings:
                 setting["increment"],
                 setting["default"],
                 setting["name"],
-                setting.get("ifdef"),
             )
             self.entries.append(entry)
 

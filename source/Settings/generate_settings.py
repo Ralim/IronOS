@@ -76,11 +76,7 @@ def convert_settings_to_cpp(settings) -> str:
     if hasattr(settings, "entries"):
         # New format: Settings object with entries attribute
         for entry in settings.entries:
-            if getattr(entry, "ifdef", None):
-                cpp_code += f"#ifdef {entry.ifdef}\r\n"
             cpp_code += f"    {{ {entry.min:>22}, {entry.max:>70}, {entry.increment:>18}, {entry.default:>29}}}, // {entry.name}\r\n"
-            if getattr(entry, "ifdef", None):
-                cpp_code += "#endif\r\n"
     else:
         # Original format: Dictionary with 'settings' key
         for setting in settings.settings:

@@ -79,14 +79,9 @@ enum SettingsOptions {
   SolderingTipType               = 54, // Selecting the type of soldering tip fitted
   ReverseButtonSettings          = 55, // Change the A and B button assigment in Settings menu
   BuzzerEnabled                  = 56, // Buzzer on/off (devices with a buzzer)
-#ifdef TIP_PWM_SLOWDOWN_SETTING
-  TipPWMSlowdownTemp = 57, // Handle temperature at which the output PWM is slowed down
+  TipPWMSlowdownTemp             = 57, // Handle temperature at which the output PWM is slowed down
   //
   SettingsOptionsLength = 58, // End marker
-#else
-  //
-  SettingsOptionsLength = 57, // End marker
-#endif
 };
 
 // For every setting we need to store the min/max/increment values

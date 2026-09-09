@@ -285,7 +285,6 @@ settings:
     min: 0
     name: BuzzerEnabled
   - default: TIP_PWM_SLOWDOWN_2_C
-    ifdef: TIP_PWM_SLOWDOWN_SETTING
     increment: 5
     max: TIP_PWM_SLOWDOWN_MAX_C
     min: 25
