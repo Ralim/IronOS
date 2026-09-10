@@ -1,0 +1,351 @@
+{
+  "languageCode": "LB",
+  "languageLocalName": "Lëtzebuergesch",
+  "tempUnitFahrenheit": false,
+  "messagesWarn": {
+    "CalibrationDone": {
+      "message": "Kalibratioun\nfäerdeg!"
+    },
+    "ResetOKMessage": {
+      "message": "Reset OK"
+    },
+    "SettingsResetMessage": {
+      "message": "Astellungen\nzréckgesat!"
+    },
+    "NoAccelerometerMessage": {
+      "message": "Keen Beschleunegungssensor\nfonnt!"
+    },
+    "NoPowerDeliveryMessage": {
+      "message": "Keen USB-PD IC\nfonnt!"
+    },
+    "LockingKeysString": {
+      "message": "GESPAART"
+    },
+    "UnlockingKeysString": {
+      "message": "ENTSPAART"
+    },
+    "WarningKeysLockedString": {
+      "message": "!GESPAART!"
+    },
+    "WarningThermalRunaway": {
+      "message": "Thermal\nRunaway"
+    },
+    "WarningTipShorted": {
+      "message": "!Spëtzt\nKuerzschloss!"
+    },
+    "SettingsCalibrationWarning": {
+      "message": "Virum Neistart, w.e.gl. sécherstellen, datt Spëtzt & Gerät Raumtemperatur hunn!"
+    },
+    "CJCCalibrating": {
+      "message": "am Kalibréieren\n"
+    },
+    "SettingsResetWarning": {
+      "message": "Sécher, datt all Astellungen zréckgesat solle ginn?"
+    },
+    "UVLOWarningString": {
+      "message": "Nee..."
+    },
+    "UndervoltageString": {
+      "message": "Ënnerspannung\n"
+    },
+    "InputVoltageString": {
+      "message": "Input V: \n"
+    },
+    "SleepingAdvancedString": {
+      "message": "Am Schlofmodus...\n"
+    },
+    "SleepingTipAdvancedString": {
+      "message": "Spëtzt: \n"
+    },
+    "ProfilePreheatString": {
+      "message": "Virhëtzen\n"
+    },
+    "ProfileCooldownString": {
+      "message": "Ofkillen\n"
+    },
+    "DeviceFailedValidationWarning": {
+      "message": "Däin Apparat ass méiglecherweis eng Fälschung!"
+    },
+    "TooHotToStartProfileWarning": {
+      "message": "Ze waarm fir\nProfil ze starten"
+    }
+  },
+  "characters": {
+    "SettingRightChar": "R",
+    "SettingLeftChar": "L",
+    "SettingAutoChar": "A",
+    "SettingSlowChar": "L",
+    "SettingMediumChar": "M",
+    "SettingFastChar": "S",
+    "SettingStartSolderingChar": "L",
+    "SettingStartSleepChar": "S",
+    "SettingStartSleepOffChar": "K",
+    "SettingLockBoostChar": "B",
+    "SettingLockFullChar": "V"
+  },
+  "menuGroups": {
+    "PowerMenu": {
+      "displayText": "Energie-\nastellungen",
+      "description": ""
+    },
+    "SolderingMenu": {
+      "displayText": "Léit-\nastellungen",
+      "description": ""
+    },
+    "PowerSavingMenu": {
+      "displayText": "Schlof-\nmodus",
+      "description": ""
+    },
+    "UIMenu": {
+      "displayText": "Benotzer-\ninterface",
+      "description": ""
+    },
+    "AdvancedMenu": {
+      "displayText": "Erweidert\nAstellungen",
+      "description": ""
+    }
+  },
+  "menuValues": {
+    "USBPDModeDefault": {
+      "displayText": "Standard\nModus"
+    },
+    "USBPDModeNoDynamic": {
+      "displayText": "Keen\nDynamic"
+    },
+    "USBPDModeSafe": {
+      "displayText": "Safe\nMode"
+    },
+    "TipTypeAuto": {
+      "displayText": "Auto\nSense"
+    },
+    "TipTypeT12Long": {
+      "displayText": "TS100\nLang"
+    },
+    "TipTypeT12Short": {
+      "displayText": "Pine\nKuerz"
+    },
+    "TipTypeT12PTS": {
+      "displayText": "PTS\n200"
+    },
+    "TipTypeTS80": {
+      "displayText": "TS80\n"
+    },
+    "TipTypeJBCC210": {
+      "displayText": "JBC\nC210"
+    }
+  },
+  "menuOptions": {
+    "DCInCutoff": {
+      "displayText": "Stroum-\nquell",
+      "description": "Ofschaltspannung astellen fir Déiftenentluedung vun der Batterie ze verhënneren (DC=10V) (S=3.3V pro Zell, desaktivéiert PWR Limit)"
+    },
+    "MinVolCell": {
+      "displayText": "Minimal\nSpannung",
+      "description": "Minimal erlaabte Spannung pro Batteriezell (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+    },
+    "QCMaxVoltage": {
+      "displayText": "QC\nSpannung",
+      "description": "Maximal QC Spannung déi den Eisen soll negociéieren"
+    },
+    "PDNegTimeout": {
+      "displayText": "PD\nTimeout",
+      "description": "PD Negociatioun Timeout an 100ms Schrëtt fir Kompatibilitéit mat e puer QC Ladegeräter"
+    },
+    "USBPDMode": {
+      "displayText": "PD\nModus",
+      "description": "No Dynamic desaktivéiert EPR & PPS, Sécher Modus benotzt kee Padding Resistenz"
+    },
+    "BoostTemperature": {
+      "displayText": "Boost\nTemp",
+      "description": "Spëtzttemperatur am \"Boost Modus\""
+    },
+    "AutoStart": {
+      "displayText": "Start-\nVerhalen",
+      "description": "S=Hëtzen op Léittemperatur | Z=Standby op Schloftemperatur bis bewegt | R=Standby ouni Hëtzen bis bewegt"
+    },
+    "TempChangeShortStep": {
+      "displayText": "Temp Ännerung\nkuerz",
+      "description": "Temperatur-Ännerungs-Inkrement bei kuerzem Knappdrock"
+    },
+    "TempChangeLongStep": {
+      "displayText": "Temp Ännerung\nlang",
+      "description": "Temperatur-Ännerungs-Inkrement bei laangem Knappdrock"
+    },
+    "LockingMode": {
+      "displayText": "Späre vun\nKnäpp erlaben",
+      "description": "Beim Léiten, haal béid Knäpp gedréckt fir se ze spären (B=nëmmen Boost Modus | F=voll Spär)"
+    },
+    "ProfilePhases": {
+      "displayText": "Profil\nPhasen",
+      "description": "Unzuel vun Phasen am Profil Modus"
+    },
+    "ProfilePreheatTemp": {
+      "displayText": "Virhëtz\nTemp",
+      "description": "Op dës Temperatur virhëtzen um Ufank vum Profil Modus"
+    },
+    "ProfilePreheatSpeed": {
+      "displayText": "Virhëtz\nGeschwindegkeet",
+      "description": "Mat dëser Vitesse virhëtzen (Grad pro Sekonn)"
+    },
+    "ProfilePhase1Temp": {
+      "displayText": "Phase 1\nTemp",
+      "description": "Ziltemperatur um Enn vun dëser Phase"
+    },
+    "ProfilePhase1Duration": {
+      "displayText": "Phase 1\nDauer",
+      "description": "Zildauer vun dëser Phase (Sekonnen)"
+    },
+    "ProfilePhase2Temp": {
+      "displayText": "Phase 2\nTemp",
+      "description": ""
+    },
+    "ProfilePhase2Duration": {
+      "displayText": "Phase 2\nDauer",
+      "description": ""
+    },
+    "ProfilePhase3Temp": {
+      "displayText": "Phase 3\nTemp",
+      "description": ""
+    },
+    "ProfilePhase3Duration": {
+      "displayText": "Phase 3\nDauer",
+      "description": ""
+    },
+    "ProfilePhase4Temp": {
+      "displayText": "Phase 4\nTemp",
+      "description": ""
+    },
+    "ProfilePhase4Duration": {
+      "displayText": "Phase 4\nDauer",
+      "description": ""
+    },
+    "ProfilePhase5Temp": {
+      "displayText": "Phase 5\nTemp",
+      "description": ""
+    },
+    "ProfilePhase5Duration": {
+      "displayText": "Phase 5\nDauer",
+      "description": ""
+    },
+    "ProfileCooldownSpeed": {
+      "displayText": "Ofkill\nGeschwindegkeet",
+      "description": "Mat dëser Vitesse ofkillen um Enn vum Profil Modus (Grad pro Sekonn)"
+    },
+    "MotionSensitivity": {
+      "displayText": "Bewegungs-\nempfindlechkeet",
+      "description": "1=manner empfindlech | ... | 9=méi empfindlech"
+    },
+    "SleepTemperature": {
+      "displayText": "Schlof\nTemp",
+      "description": "Spëtzttemperatur am \"Schlof Modus\""
+    },
+    "SleepTimeout": {
+      "displayText": "Schlof\nTimeout",
+      "description": "Zäit ier de \"Schlof Modus\" startt (s=Sekonnen | m=Minutten)"
+    },
+    "ShutdownTimeout": {
+      "displayText": "Ausschalt\nTimeout",
+      "description": "Zäit ier den Eisen ausgeschalt gëtt (m=Minutten)"
+    },
+    "HallEffSensitivity": {
+      "displayText": "Hall Sensor\nEmpfindlechkeet",
+      "description": "Empfindlechkeet vis-à-vis vu Magnéiten (1=manner empfindlech | ... | 9=méi empfindlech)"
+    },
+    "HallEffSleepTimeout": {
+      "displayText": "HallSensor\nSchlofzäit",
+      "description": "Zäit ier de \"Schlof Modus\" startt wann de Hall Effékt iwwer dem Schwellenwäert ass"
+    },
+    "TemperatureUnit": {
+      "displayText": "Temperatur-\nEenheet",
+      "description": "C=°Celsius | F=°Fahrenheit"
+    },
+    "DisplayRotation": {
+      "displayText": "Displayaus-\nriichtung",
+      "description": "R=Rietshenner | L=Lénkshenner | A=Automatesch"
+    },
+    "CooldownBlink": {
+      "displayText": "Ofkill\nBlinken",
+      "description": "Temperaturliesen blinkt am Idle wärend d'Spëtzt waarm ass"
+    },
+    "ScrollingSpeed": {
+      "displayText": "Scroll-\nGeschwindegkeet",
+      "description": "Scrollgeschwindegkeet vum Infotext (S=lues | F=séier)"
+    },
+    "ReverseButtonTempChange": {
+      "displayText": "+ - Knäpp\nëmdréinen",
+      "description": "Knäpp fir Temperatur Upassung ëmdréinen"
+    },
+    "ReverseButtonSettings": {
+      "displayText": "A B Knäpp\nemdréinen",
+      "description": "Knäpp fir den Astellungsmenu ëmdréinen"
+    },
+    "AnimSpeed": {
+      "displayText": "Anim.\nGeschw.",
+      "description": "Tempo vun Icon Animatiounen am Menu (S=lues | M=mëttel | F=séier)"
+    },
+    "AnimLoop": {
+      "displayText": "Anim.\nLoop",
+      "description": "Icon Animatiounen am Haaptmenu widderhuelen"
+    },
+    "Brightness": {
+      "displayText": "Bildschirm\nHellegkeet",
+      "description": "OLED Hellegkeet upassen"
+    },
+    "ColourInversion": {
+      "displayText": "Bildschirm\ninvertéieren",
+      "description": "OLED Faarwen ëmdréinen"
+    },
+    "LOGOTime": {
+      "displayText": "Boot Logo\nDauer",
+      "description": "Boot Logo Dauer astellen (s=Sekonnen)"
+    },
+    "AdvancedIdle": {
+      "displayText": "Detailléiert\nIdle Bildschirm",
+      "description": "Detailléiert Info an enger méi klenger Schrëft um Idle Bildschirm weisen"
+    },
+    "AdvancedSoldering": {
+      "displayText": "Detailléiert\nLéit Bildschirm",
+      "description": "Detailléiert Info an enger méi klenger Schrëft um Léit Bildschirm weisen"
+    },
+    "BluetoothLE": {
+      "displayText": "Bluetooth\n",
+      "description": "Aktivéiert BLE"
+    },
+    "PowerLimit": {
+      "displayText": "Stroum\nLimit",
+      "description": "Duerchschnëttlech maximal Stroum deen den Eisen ka benotzen (W=Watt)"
+    },
+    "CalibrateCJC": {
+      "displayText": "CJC kalibréieren\nbäi nächstem Start",
+      "description": "Kaltstellekompensatioun bei nächstem Start kalibréieren (net néideg wa Delta T < 5°C)"
+    },
+    "VoltageCalibration": {
+      "displayText": "Kalibréieren\nInputspannung",
+      "description": "VIN Kalibratioun starten (laang drécken fir erauszegoen)"
+    },
+    "PowerPulsePower": {
+      "displayText": "Stroum\nPuls",
+      "description": "Intensitéit vum Keep-Awake-Puls (W=Watt)"
+    },
+    "PowerPulseWait": {
+      "displayText": "Stroumpuls\nVerzögerung",
+      "description": "Verzögerung ier de Keep-Awake-Puls ausgeléist gëtt (x 2.5s)"
+    },
+    "PowerPulseDuration": {
+      "displayText": "Stroumpuls\nDauer",
+      "description": "Keep-Awake-Puls Dauer (x 250ms)"
+    },
+    "SettingsReset": {
+      "displayText": "Zrécksetzen op\nStandardastellungen",
+      "description": "All Astellungen op Standard zrécksetzen"
+    },
+    "LanguageSwitch": {
+      "displayText": "Sprooch:\n LB     Lëtzebuergesch",
+      "description": ""
+    },
+    "SolderingTipType": {
+      "displayText": "Léit-\nSpëtzt Typ",
+      "description": "Wielt den Typ vun der montéierter Spëtzt"
+    }
+  }
+}
