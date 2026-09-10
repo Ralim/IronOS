@@ -42,10 +42,14 @@ I2C_CLASS::I2C_REG OLED_Setup_Array[] = {
     {0x80,  OLED_HEIGHT - 1, 0}, /* Multiplex ratio adjusts how far down the matrix it scans */
     {0x80,             0xC0, 0}, /* Set COM Scan direction */
     {0x80,             0xD3, 0}, /* Set vertical Display offset */
-    {0x80,             0x00, 0}, /* 0 Offset */
+#ifdef OLED_DISPLAY_OFFSET_QUIRK
+    {0x80,             0x30, 0}, /* Offset (this panel needs a non-zero offset; see setRotation) */
+#else
+    {0x80, 0x00, 0}, /* 0 Offset */
+#endif
     {0x80,             0x40, 0}, /* Set Display start line to 0 */
-#ifdef OLED_SEGMENT_MAP_REVERSED
-    {0x80,             0xA1, 0}, /* Set Segment remap to normal */
+#if defined(OLED_SEGMENT_MAP_REVERSED) && !defined(OLED_DISPLAY_OFFSET_QUIRK)
+    {0x80,             0xA1, 0}, /* Set Segment remap (reversed) */
 #else
     {0x80, 0xA0, 0}, /* Set Segment remap to normal */
 #endif
@@ -116,6 +120,65 @@ static uint16_t easeInOutTiming(uint16_t t) { return t * t * (300 - 2 * t) / 100
  */
 static uint16_t lerp(uint16_t a, uint16_t b, uint16_t t) { return a + t * (b - a) / 100; }
 
+#ifdef OLED_I2C_PER_BYTE_TRANSFERS
+// This panel does not tolerate the bulk 0x80-continuation transmission used by
+// everything else on this bus (REFRESH_COMMANDS / I2C_CLASS::Transmit): it only
+// ever refreshes the top-left portion of the panel and the display offset never takes.
+// This alternate path sends each command as its own single-byte I2C transaction, matching
+// the addressing sequence used by the official Miniware TS101 firmware (reverse engineered
+// from TS101AppV220.hex, official firmware routine around 0x0800db54).
+static void i2c_send_command_byte(uint8_t cmd) { I2C_CLASS::I2C_RegisterWrite(DEVICEADDR_OLED, 0x00, cmd); }
+
+static void i2c_send_bulk(const uint8_t *buf, int len) { I2C_CLASS::Mem_Write(DEVICEADDR_OLED, 0x40, buf, len); }
+
+static void oled_bulk_write(uint32_t posx, uint32_t posy, int sizex, int sizey, const uint8_t *buf) {
+  uint32_t page    = (posy & 7) == 0 ? (posy >> 3) : (posy >> 3) + 1;
+  uint32_t pageEnd = (posy + sizey) & 0xff;
+  pageEnd          = ((posy + sizey) & 7) == 0 ? (pageEnd >> 3) : (pageEnd >> 3) + 1;
+  for (; page < pageEnd; page = (page + 1) & 0xff) {
+    i2c_send_command_byte(page + 0xb0);
+    i2c_send_command_byte((posx >> 4) | 0x10);
+    i2c_send_command_byte(posx & 0xf);
+    i2c_send_bulk(buf, sizex);
+    buf += sizex;
+  }
+}
+
+void OLED::refresh() {
+  if (checkDisplayBufferChecksum()) {
+    oled_bulk_write(0, 0, OLED_WIDTH, OLED_HEIGHT, screenBuffer + FRAMEBUFFER_START);
+    // I2C is soft i2c, do not have to wait here
+  }
+}
+
+void OLED::setDisplayState(DisplayState state) {
+  if (state != displayState) {
+    displayState = state;
+    i2c_send_command_byte(state == ON ? OLED_ON : OLED_OFF);
+    osDelay(TICKS_10MS);
+  }
+}
+#else
+void OLED::refresh() {
+  if (checkDisplayBufferChecksum()) {
+    const int len = FRAMEBUFFER_START + (OLED_WIDTH * (OLED_HEIGHT / 8));
+    I2C_CLASS::Transmit(DEVICEADDR_OLED, screenBuffer, len);
+    // DMA tx time is ~ 20mS Ensure after calling this you delay for at least 25ms
+    // or we need to goto double buffering
+  }
+}
+
+void OLED::setDisplayState(DisplayState state) {
+  if (state != displayState) {
+    displayState    = state;
+    screenBuffer[1] = (state == ON) ? OLED_ON : OLED_OFF;
+    // Dump the screen state change out _now_
+    I2C_CLASS::Transmit(DEVICEADDR_OLED, screenBuffer, FRAMEBUFFER_START - 1);
+    osDelay(TICKS_10MS);
+  }
+}
+#endif /* OLED_I2C_PER_BYTE_TRANSFERS */
+
 void OLED::initialize() {
   cursor_x = cursor_y = 0;
   inLeftHandedMode    = false;
@@ -132,17 +195,26 @@ void OLED::initialize() {
 
 #endif /* OLED_128x32 */
   displayOffset = 0;
+#ifndef OLED_I2C_PER_BYTE_TRANSFERS
   memcpy(&screenBuffer[0], &REFRESH_COMMANDS[0], sizeof(REFRESH_COMMANDS));
   memcpy(&secondFrameBuffer[0], &REFRESH_COMMANDS[0], sizeof(REFRESH_COMMANDS));
+#endif /* OLED_I2C_PER_BYTE_TRANSFERS */
 
   // Set the display to be ON once the settings block is sent and send the
   // initialisation data to the OLED.
 
+#ifdef OLED_I2C_PER_BYTE_TRANSFERS
+  // Sent as individual command-byte writes; see i2c_send_command_byte above.
+  for (uint8_t i = 0; i < sizeof(OLED_Setup_Array) / sizeof(OLED_Setup_Array[0]); i++) {
+    i2c_send_command_byte(OLED_Setup_Array[i].val);
+  }
+#else
   for (int tries = 0; tries < 10; tries++) {
     if (I2C_CLASS::writeRegistersBulk(DEVICEADDR_OLED, OLED_Setup_Array, sizeof(OLED_Setup_Array) / sizeof(OLED_Setup_Array[0]))) {
       tries = 11;
     }
   }
+#endif /* OLED_I2C_PER_BYTE_TRANSFERS */
   setDisplayState(DisplayState::ON);
   initDone = true;
 }
@@ -288,7 +360,11 @@ void OLED::maskScrollIndicatorOnOLED() {
   // The right-most column depends on the screen rotation, so just take
   // it from the screen buffer which is updated by `OLED::setRotation`.
   uint8_t rightmostColumn = screenBuffer[7];
-  uint8_t maskCommands[]  = {
+#ifdef OLED_I2C_PER_BYTE_TRANSFERS
+  static const uint8_t zeroColumn[OLED_HEIGHT / 8] = {0}; // Clears the full column height (all pages)
+  oled_bulk_write(rightmostColumn, 0, 1, OLED_HEIGHT, zeroColumn);
+#else
+  uint8_t maskCommands[] = {
       // Set column address:
       //  A[6:0] - Column start address = rightmost column
       //  B[6:0] - Column end address = rightmost column
@@ -310,6 +386,7 @@ void OLED::maskScrollIndicatorOnOLED() {
       0x00,
   };
   I2C_CLASS::Transmit(DEVICEADDR_OLED, maskCommands, sizeof(maskCommands));
+#endif /* OLED_I2C_PER_BYTE_TRANSFERS */
 }
 
 /**
@@ -536,6 +613,21 @@ void OLED::setRotation(bool leftHanded) {
   if (inLeftHandedMode == leftHanded) {
     return;
   }
+#ifdef OLED_DISPLAY_OFFSET_QUIRK
+  // Segment-remap, COM-scan-direction and vertical Display-Offset (0xD3) as a matched
+  // triplet, taken from the official Miniware TS101 firmware disassembly: on this
+  // panel, changing orientation without also re-sending the Display-Offset leaves the
+  // image shifted by half the screen height.
+  if (leftHanded) {
+    OLED_Setup_Array[9].val = 0xA1;
+    OLED_Setup_Array[5].val = 0xC8;
+    OLED_Setup_Array[7].val = 0x10;
+  } else {
+    OLED_Setup_Array[9].val = 0xA0;
+    OLED_Setup_Array[5].val = 0xC0;
+    OLED_Setup_Array[7].val = 0x30;
+  }
+#else
 #ifdef OLED_SEGMENT_MAP_REVERSED
   if (!leftHanded) {
     OLED_Setup_Array[9].val = 0xA1;
@@ -555,7 +647,18 @@ void OLED::setRotation(bool leftHanded) {
   } else {
     OLED_Setup_Array[5].val = 0xC0;
   }
+#endif /* OLED_DISPLAY_OFFSET_QUIRK */
+#ifdef OLED_I2C_PER_BYTE_TRANSFERS
+  // Sent as individual command-byte writes, in the same order they appear in
+  // OLED_Setup_Array; the bulk 0x80-continuation path below is what leaves
+  // this panel stuck on a partial refresh.
+  i2c_send_command_byte(OLED_Setup_Array[5].val);
+  i2c_send_command_byte(OLED_Setup_Array[6].val); // 0xD3, Set Display Offset
+  i2c_send_command_byte(OLED_Setup_Array[7].val);
+  i2c_send_command_byte(OLED_Setup_Array[9].val);
+#else
   I2C_CLASS::writeRegistersBulk(DEVICEADDR_OLED, OLED_Setup_Array, sizeof(OLED_Setup_Array) / sizeof(OLED_Setup_Array[0]));
+#endif /* OLED_I2C_PER_BYTE_TRANSFERS */
   osDelay(TICKS_10MS);
   inLeftHandedMode = leftHanded;
 
@@ -564,8 +667,12 @@ void OLED::setRotation(bool leftHanded) {
   screenBuffer[7] = inLeftHandedMode ? OLED_GRAM_END_FLIP : OLED_GRAM_END;     // End address of the ram segment we are writing to (96 wide)
   screenBuffer[9] = inLeftHandedMode ? 0xC8 : 0xC0;
   // Force a screen refresh
+#ifdef OLED_I2C_PER_BYTE_TRANSFERS
+  oled_bulk_write(0, 0, OLED_WIDTH, OLED_HEIGHT, screenBuffer + FRAMEBUFFER_START);
+#else
   const int len = FRAMEBUFFER_START + (OLED_WIDTH * (OLED_HEIGHT / 8));
   I2C_CLASS::Transmit(DEVICEADDR_OLED, screenBuffer, len);
+#endif /* OLED_I2C_PER_BYTE_TRANSFERS */
   osDelay(TICKS_10MS);
   checkDisplayBufferChecksum();
 }
@@ -573,7 +680,12 @@ void OLED::setRotation(bool leftHanded) {
 void OLED::setBrightness(uint8_t contrast) {
   if (OLED_Setup_Array[15].val != contrast) {
     OLED_Setup_Array[15].val = contrast;
+#ifdef OLED_I2C_PER_BYTE_TRANSFERS
+    i2c_send_command_byte(OLED_Setup_Array[14].val); // 0x81, contrast-control command
+    i2c_send_command_byte(contrast);
+#else
     I2C_CLASS::writeRegistersBulk(DEVICEADDR_OLED, &OLED_Setup_Array[14], 2);
+#endif /* OLED_I2C_PER_BYTE_TRANSFERS */
   }
 }
 
@@ -581,7 +693,11 @@ void OLED::setInverseDisplay(bool inverse) {
   uint8_t normalInverseCmd = inverse ? 0xA7 : 0xA6;
   if (OLED_Setup_Array[21].val != normalInverseCmd) {
     OLED_Setup_Array[21].val = normalInverseCmd;
+#ifdef OLED_I2C_PER_BYTE_TRANSFERS
+    i2c_send_command_byte(normalInverseCmd);
+#else
     I2C_CLASS::I2C_RegisterWrite(DEVICEADDR_OLED, 0x80, normalInverseCmd);
+#endif /* OLED_I2C_PER_BYTE_TRANSFERS */
   }
 }
 
