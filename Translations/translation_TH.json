@@ -1,0 +1,351 @@
+{
+  "languageCode": "TH",
+  "languageLocalName": "ภาษาไทย",
+  "tempUnitFahrenheit": false,
+  "messagesWarn": {
+    "CalibrationDone": {
+      "message": "แคลิเบรท\nสำเร็จ!"
+    },
+    "ResetOKMessage": {
+      "message": "รีเซ็ตสำเร็จ"
+    },
+    "SettingsResetMessage": {
+      "message": "การตั้งค่าบางอย่าง\nได้ถูกเปลี่ยนแปลง"
+    },
+    "NoAccelerometerMessage": {
+      "message": "ไม่พบเซ็นเซอร์วัดความเร่ง"
+    },
+    "NoPowerDeliveryMessage": {
+      "message": "ไม่พบ\nUSB-PD IC!"
+    },
+    "LockingKeysString": {
+      "message": "ล็อก"
+    },
+    "UnlockingKeysString": {
+      "message": "ปลดล็อก"
+    },
+    "WarningKeysLockedString": {
+      "message": "!ล็อก!"
+    },
+    "WarningThermalRunaway": {
+      "message": "อุณหภูมิสูง\nเกินการควบคุม"
+    },
+    "WarningTipShorted": {
+      "message": "!ปลายหัวแร้งลัดวงจร!"
+    },
+    "SettingsCalibrationWarning": {
+      "message": "ก่อนรีบูต ตรวจสอบว่าปลายหัวแร้งและด้ามจับอยู่ในอุณหภูมิห้อง"
+    },
+    "CJCCalibrating": {
+      "message": "กำลังแคลิเบรท\n"
+    },
+    "SettingsResetWarning": {
+      "message": "แน่ใจหรือไม่ว่าต้องการรีเซ็ตเป็นค่าเริ่มต้น?"
+    },
+    "UVLOWarningString": {
+      "message": "ไฟ DC ต่ำ"
+    },
+    "UndervoltageString": {
+      "message": "แรงดันไฟฟ้าต่ำ\n"
+    },
+    "InputVoltageString": {
+      "message": "แรงดันขาเข้า: \n"
+    },
+    "SleepingAdvancedString": {
+      "message": "พักการทำงาน...\n"
+    },
+    "SleepingTipAdvancedString": {
+      "message": "ปลายหัวแร้ง: \n"
+    },
+    "ProfilePreheatString": {
+      "message": "อุ่นเครื่อง\n"
+    },
+    "ProfileCooldownString": {
+      "message": "คูลดาวน์\n"
+    },
+    "DeviceFailedValidationWarning": {
+      "message": "อุปกรณ์ของคุณมีแนวโน้มที่จะเป็นของปลอม"
+    },
+    "TooHotToStartProfileWarning": {
+      "message": "อุณหภูมิสูงเกิน\nที่จะเริ่มโปรไฟล์"
+    }
+  },
+  "characters": {
+    "SettingRightChar": "R",
+    "SettingLeftChar": "L",
+    "SettingAutoChar": "A",
+    "SettingSlowChar": "S",
+    "SettingMediumChar": "M",
+    "SettingFastChar": "F",
+    "SettingStartSolderingChar": "S",
+    "SettingStartSleepChar": "Z",
+    "SettingStartSleepOffChar": "R",
+    "SettingLockBoostChar": "B",
+    "SettingLockFullChar": "F"
+  },
+  "menuGroups": {
+    "PowerMenu": {
+      "displayText": "การตั้งค่าพลังงาน\n",
+      "description": ""
+    },
+    "SolderingMenu": {
+      "displayText": "การตั้งค่าการบัดกรี\n",
+      "description": ""
+    },
+    "PowerSavingMenu": {
+      "displayText": "โหมดพักการทำงาน\n",
+      "description": ""
+    },
+    "UIMenu": {
+      "displayText": "หน้าตา UI\n",
+      "description": ""
+    },
+    "AdvancedMenu": {
+      "displayText": "การตั้งค่าขั้นสูง\n",
+      "description": ""
+    }
+  },
+  "menuValues": {
+    "USBPDModeDefault": {
+      "displayText": "โหมดเริ่มต้น\n"
+    },
+    "USBPDModeNoDynamic": {
+      "displayText": "ไม่มี Dynamic\n"
+    },
+    "USBPDModeSafe": {
+      "displayText": "Safe โหมด\n"
+    },
+    "TipTypeAuto": {
+      "displayText": "เลือกปลายหัวแร้ง\nอัตโนมัติ"
+    },
+    "TipTypeT12Long": {
+      "displayText": "TS100\nยาว"
+    },
+    "TipTypeT12Short": {
+      "displayText": "Pine\nสั้น"
+    },
+    "TipTypeT12PTS": {
+      "displayText": "PTS\n200"
+    },
+    "TipTypeTS80": {
+      "displayText": "TS80\n"
+    },
+    "TipTypeJBCC210": {
+      "displayText": "JBC\nC210"
+    }
+  },
+  "menuOptions": {
+    "DCInCutoff": {
+      "displayText": "แหล่งพลังงาน\n",
+      "description": "ตั้งค่าการตัดแรงดันไฟฟ้าเพื่อป้องกันแบตเตอรี่คลายประจุเกินพิกัด (DC = 10V) (ปิดใช้งาน PWR limit เมื่อ S = 3.3V ต่อเซลล์)"
+    },
+    "MinVolCell": {
+      "displayText": "แรงดันไฟฟ้าขั้นต่ำ\n",
+      "description": "แรงดันไฟฟ้าขั้นต่ำต่อเซลล์แบตเตอรี่ (3S: 3 - 3.7V | 4 - 6S: 2.4 - 3.7V)"
+    },
+    "QCMaxVoltage": {
+      "displayText": "แรงดันไฟฟ้า QC\n",
+      "description": "แรงดันสูงสุดที่ควรต่อรองกับที่ชาร์จ QC"
+    },
+    "PDNegTimeout": {
+      "displayText": "PD\nTimeout",
+      "description": "เวลารอการเชื่อมต่อ PD (ปรับได้ทีละ 100 มิลลิวินาที) เพื่อความเข้ากันได้กับที่ชาร์จบางรุ่น (QC)"
+    },
+    "USBPDMode": {
+      "displayText": "โหมด PD\n",
+      "description": "เมื่อปิด Dynamic ฟีเจอร์ EPR และ PPS จะถูกปิด Safe mode จะไม่ใช้ตัวต้านทานเสริม"
+    },
+    "BoostTemperature": {
+      "displayText": "อัดความร้อนเพิ่ม\n",
+      "description": "อุณหภูมิปลายหัวแร้งที่ใช้ใน \"โหมดบูสต์\""
+    },
+    "AutoStart": {
+      "displayText": "การทำงานเมื่อเริ่มเปิดเครื่อง\n",
+      "description": "S = ความร้อนไปที่อุณหภูมิเริ่มบัดกรี | Z = สแตนด์บายที่อุณหภูมิพักการทำงานจนกว่าจะมีการเคลื่อนไหว | R = สแตนด์บายโดยมีความร้อนจนกว่าจะเคลื่อนไหว"
+    },
+    "TempChangeShortStep": {
+      "displayText": "การเปลี่ยนแปลงอุณหภูมิ\nกดครั้งเดียว",
+      "description": "การเปลี่ยนแปลงอุณหภูมิเมื่อกดปุ่มครั้งเดียว"
+    },
+    "TempChangeLongStep": {
+      "displayText": "การเปลี่ยนแปลงอุณหภูมิ\nกดค้าง",
+      "description": "การเปลี่ยนแปลงอุณหภูมิเมื่อกดปุ่มค้าง"
+    },
+    "LockingMode": {
+      "displayText": "อนุญาตให้ล็อคปุ่ม\n",
+      "description": "ในขณะกำลังบัดกรี ให้กดสองปุ่มค้างไว้เพื่อสลับการล็อกปุ่มทั้งสองโหมด (B = โหมดบูสต์เท่านั้น | F = ล็อคทั้งหมด)"
+    },
+    "ProfilePhases": {
+      "displayText": "โปรไฟล์ของเฟสต่างๆ\n",
+      "description": "จำนวนเฟสต่างๆ ในโหมดโปรไฟล์"
+    },
+    "ProfilePreheatTemp": {
+      "displayText": "อุณหภูมิอุ่นเครื่อง\n",
+      "description": "อุ่นเครื่องมาที่อุณหภูมินี้เมื่อเริ่มโหมดโปรไฟล์"
+    },
+    "ProfilePreheatSpeed": {
+      "displayText": "ความเร็วในการอุ่นเครื่อง\n",
+      "description": "อุ่นเครื่องในอัตรานี้ (องศาเซลเซียสต่อวินาที)"
+    },
+    "ProfilePhase1Temp": {
+      "displayText": "อุณหภูมิเฟส 1\n",
+      "description": "อุณหภูมิเป้าหมายเมื่อสิ้นสุดเฟสนี้"
+    },
+    "ProfilePhase1Duration": {
+      "displayText": "เฟส 1\nระยะเวลา",
+      "description": "เวลาที่ใช้ของเฟสนี้ (วินาที)"
+    },
+    "ProfilePhase2Temp": {
+      "displayText": "อุณหภูมิเฟส 2\n",
+      "description": ""
+    },
+    "ProfilePhase2Duration": {
+      "displayText": "เฟส 2\nระยะเวลา",
+      "description": ""
+    },
+    "ProfilePhase3Temp": {
+      "displayText": "อุณหภูมิเฟส 3\n",
+      "description": ""
+    },
+    "ProfilePhase3Duration": {
+      "displayText": "เฟส 3\nระยะเวลา",
+      "description": ""
+    },
+    "ProfilePhase4Temp": {
+      "displayText": "อุณหภูมิเฟส 4\n",
+      "description": ""
+    },
+    "ProfilePhase4Duration": {
+      "displayText": "เฟส 4\nระยะเวลา",
+      "description": ""
+    },
+    "ProfilePhase5Temp": {
+      "displayText": "อุณหภูมิเฟส 5\n",
+      "description": ""
+    },
+    "ProfilePhase5Duration": {
+      "displayText": "เฟส 5\nระยะเวลา",
+      "description": ""
+    },
+    "ProfileCooldownSpeed": {
+      "displayText": "ความเร็วในการคูลดาวน์\n",
+      "description": "คูลดาวน์ในอัตรานี้เมื่อสิ้นสุดโหมดโปรไฟล์ (องศาเซลเซียสต่อวินาที)"
+    },
+    "MotionSensitivity": {
+      "displayText": "ความไวต่อการเคลื่อนไหว\n",
+      "description": "1 = ความไวน้อยที่สุด |... | 9 = ความไวมากที่สุด"
+    },
+    "SleepTemperature": {
+      "displayText": "อุณหภูมิในการพักการทำงาน\n",
+      "description": "อุณหภูมิปลายหัวแร้งขณะอยู่ใน \"โหมดพักการทำงาน\""
+    },
+    "SleepTimeout": {
+      "displayText": "ระยะเวลาก่อนที่จะพักการทำงาน\n",
+      "description": "ช่วงเวลาก่อนที่จะเข้า \"โหมดพักการทำงาน\" (s = วินาที | m = นาที)"
+    },
+    "ShutdownTimeout": {
+      "displayText": "ระยะเวลาก่อนที่จะปิดเครื่อง\n",
+      "description": "ช่วงเวลาก่อนที่จะปิดหัวแร้ง (m = นาที)"
+    },
+    "HallEffSensitivity": {
+      "displayText": "ความไวของ Hall sensor\n",
+      "description": "ความไวต่อแม่เหล็ก (1 = มีความไวน้อยที่สุด |... | 9 = มีความไวมากที่สุด)"
+    },
+    "HallEffSleepTimeout": {
+      "displayText": "HallSensor\nSleepTime",
+      "description": "ช่วงเวลาก่อนที่ \"โหมดพักการทำงาน\" จะเริ่มต้นเมื่อ hall effect สูงกว่าเกณฑ์"
+    },
+    "TemperatureUnit": {
+      "displayText": "หน่วยอุณหภูมิ\n",
+      "description": "C = องศาเซลเซียส | F = ฟาเรนไฮต์"
+    },
+    "DisplayRotation": {
+      "displayText": "การหมุนหน้าจอ\n",
+      "description": "R = ถนัดขวา | L = ถนัดซ้าย | A = อัตโนมัติ"
+    },
+    "CooldownBlink": {
+      "displayText": "กะพริบขณะคูลดาวน์\n",
+      "description": "กะพริบการแสดงผลอุณหภูมิในขณะที่ปลายหัวแร้งยังร้อน"
+    },
+    "ScrollingSpeed": {
+      "displayText": "ความเร็วในการเลื่อน\n",
+      "description": "ความเร็วในการเลื่อนข้อความ (S = ช้า | F = เร็ว)"
+    },
+    "ReverseButtonTempChange": {
+      "displayText": "สลับปุ่ม + -\n",
+      "description": "สลับปุ่มสำหรับการปรับอุณหภูมิ"
+    },
+    "ReverseButtonSettings": {
+      "displayText": "สลับปุ่ม A B\n",
+      "description": "สลับปุ่มสำหรับเมนูการตั้งค่า"
+    },
+    "AnimSpeed": {
+      "displayText": "ความเร็วการแสดงภาพเคลื่นไหว\n",
+      "description": "ความเร็วการเคลื่อนไหวของไอคอนในเมนู (S = ช้า | M = ปานกลาง | F = เร็ว)"
+    },
+    "AnimLoop": {
+      "displayText": "การวนของการแสดงภาพเคลื่อนไหว\n",
+      "description": "การวนซ้ำของไอคอนภาพเคลื่อนไหวในเมนูหลัก"
+    },
+    "Brightness": {
+      "displayText": "ความสว่างหน้าจอ\n",
+      "description": "ปรับความสว่างหน้าจอ OLED"
+    },
+    "ColourInversion": {
+      "displayText": "สลับสีหน้าจอ\n",
+      "description": "สลับค่าสีของหน้าจอ OLED"
+    },
+    "LOGOTime": {
+      "displayText": "ระยะเวลาของ\nโลโก้ตอนการบูต",
+      "description": "ตั้งระยะเวลาการแสดงโลโก้เมื่อบูต (s = วินาที)"
+    },
+    "AdvancedIdle": {
+      "displayText": "รายละเอียดที่แสดงเมื่อไม่มีการใช้งาน\n",
+      "description": "แสดงข้อมูลโดยละเอียดในแบบอักษรขนาดเล็กบนหน้าจอเมื่อไม่มีการใช้งาน"
+    },
+    "AdvancedSoldering": {
+      "displayText": "หน้าจอการบัดกรีแบบละเอียด\n",
+      "description": "แสดงข้อมูลโดยละเอียดในแบบอักษรขนาดเล็กบนหน้าจอการบัดกรี"
+    },
+    "BluetoothLE": {
+      "displayText": "บลูทูธ",
+      "description": "เปิดใช้งาน BLE"
+    },
+    "PowerLimit": {
+      "displayText": "การจำกัดพลังงานไฟฟ้า\n",
+      "description": "พลังงานไฟฟ้าสูงสุดโดยเฉลี่ยที่หัวแร้งสามารถใช้ได้ (W = วัตต์)"
+    },
+    "CalibrateCJC": {
+      "displayText": "แคลิเบรท CJC\nเมื่อทำการบูตใหม่",
+      "description": "แคลิเบรทค่า Cold Junction Compensation เมื่อบูตรใหม่ (ไม่จำเป็นต้องทำหาก Delta T มีอุณหภูมิ < 5°C)"
+    },
+    "VoltageCalibration": {
+      "displayText": "แคลิเบรท\nแรงดันไฟฟ้าขาเข้า",
+      "description": "เริ่มการแคลิเบรท VIN (กดค้างเพื่อออก)"
+    },
+    "PowerPulsePower": {
+      "displayText": "Power\nPulse",
+      "description": "กำลังไฟฟ้าของ Keep-awake-pulse (W = วัตต์)"
+    },
+    "PowerPulseWait": {
+      "displayText": "การหน่วงเวลาของ Power pulse\n",
+      "description": "การหน่วงเวลาก่อนจะเรียกใช้ Keep-awake-pulse (x 2.5 วินาที)"
+    },
+    "PowerPulseDuration": {
+      "displayText": "ระยะเวลา\nPower pulse",
+      "description": "ระยะเวลาของ Keep-awake-pulse (x 250ms)"
+    },
+    "SettingsReset": {
+      "displayText": "คืนค่าการตั้งค่าเริ่มต้น\n",
+      "description": "รีเซ็ตการตั้งค่าทั้งหมดให้เป็นค่าเริ่มต้น"
+    },
+    "LanguageSwitch": {
+      "displayText": "ภาษา:\n TH ไทย",
+      "description": ""
+    },
+    "SolderingTipType": {
+      "displayText": "ชนิดของปลายหัวแร้ง\n",
+      "description": "เลือกชนิดของปลายหัวแร้งที่ติดตั้ง"
+    }
+  }
+}
