@@ -3,7 +3,7 @@
 # Jan 2021 - Update by Ysard (https://github.com/ysard)
 # Jul 2025 - Update by Karakurt
 
-DIR_TMP="/tmp/ironos"
+DIR_TMP="$(mktemp -d)"
 HEX_FIRMWARE="$DIR_TMP/ts100.hex"
 MAX_TRIES=5
 
@@ -64,7 +64,6 @@ wait_for_iron() {
 }
 
 mount_iron() {
-    mkdir -p "$DIR_TMP"
     user="${UID:-$(id -u)}"
     if ! sudo mount -t msdos -o uid="$user" "$DEVICE" "$DIR_TMP"; then
         echo "Failed to mount $DEVICE on $DIR_TMP"
@@ -73,12 +72,10 @@ mount_iron() {
 }
 
 umount_iron() {
-    if ! (mountpoint "$DIR_TMP" > /dev/null && sudo umount "$DIR_TMP"); then
+    if ! sudo umount "$DIR_TMP"; then
         echo "Failed to unmount $DIR_TMP"
         exit 1
     fi
-    sleep 1	
-    sudo rmdir "$DIR_TMP"
 }
 
 check_flash() {
@@ -103,6 +100,8 @@ cleanup() {
     enable_gautomount
     if [ -d "$DIR_TMP" ]; then
         umount_iron
+	sudo fuser -k "$DIR_TMP"
+	rmdir "$DIR_TMP"
     fi
 }
 trap cleanup EXIT
