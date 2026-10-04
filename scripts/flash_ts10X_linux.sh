@@ -134,7 +134,7 @@ while [ $TRIES -lt $MAX_TRIES ]; do
 
 	mount_iron
 	echo "Mounted config disk drive, flashing..."
-	dd if="$1" of="$HEX_FIRMWARE" oflag=direct
+	pv "$1" | dd of="$HEX_FIRMWARE" oflag=nocache,sync conv=fsync status=none
 	umount_iron
 
 	echo "Waiting for $NAME to flash"
