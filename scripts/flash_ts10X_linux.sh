@@ -3,6 +3,8 @@
 # Jan 2021 - Update by Ysard (https://github.com/ysard)
 # Jul 2025 - Update by Karakurt
 
+set -o pipefail
+
 DIR_TMP="$(mktemp -d)"
 HEX_FIRMWARE="$DIR_TMP/ts100.hex"
 MAX_TRIES=5
@@ -51,29 +53,20 @@ enable_gautomount() {
     fi
 }
 
-is_attached() {
-    if ! output=$(lsblk -b --raw --output NAME,MODEL | grep 'DFU.*Disk'); then
-      return 1
-    fi
-    DEVICE=$(echo "$output" | awk '{print "/dev/"$1}')
+DFU_disk_connected() {
+    lsblk --nodeps --paths --output NAME,MODEL | grep -Po '^[[:lower:]/]+(?=[[:space:]]+DFU)'
 }
 
-instructions="not printed"
+# Notice: device path comes from output of is_DFU_disk, not from ionotifywait.
+# When using only ionotifywait you can't check already connected devices nicely.
 wait_for_iron() {
-    while ! is_attached; do
-        if [ "$instructions" = "not printed" ]; then
-            echo
-            echo "#####################################################"
-            echo "#     Waiting for config disk device to appear      #"
-            echo "#                                                   #"
-            echo "# Connect the soldering iron with a USB cable while #"
-            echo "# holding the button closest to the tip pressed     #"
-            echo "#####################################################"
-            echo
-            instructions="printed"
+    while ! DFU_disk_connected; do
+        if [ -z $instructions ]; then
+            connect_instruction >&2
+            instructions="shown"
         fi
-        sleep 0.1
-    done
+        inotifywait --quiet --quiet --event create /dev
+    done | tail -n 1 #Ignores non-DFU disks
 }
 
 mount_iron() {
@@ -141,7 +134,7 @@ disable_gautomount
 
 TRIES=0
 while [ $TRIES -lt $MAX_TRIES ]; do
-	wait_for_iron
+	DEVICE=$(wait_for_iron)
 	NAME=$(sudo fatlabel "$DEVICE" 2>/dev/null)
 	echo "Found $NAME config disk device on $DEVICE"
 
@@ -154,7 +147,7 @@ while [ $TRIES -lt $MAX_TRIES ]; do
 	sleep 5
 
 	echo "Remounting config disk drive"
-	wait_for_iron
+	DEVICE=$(wait_for_iron)
 	mount_iron
 	check_flash && exit 0
 
