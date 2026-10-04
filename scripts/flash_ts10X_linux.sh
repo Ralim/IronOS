@@ -8,17 +8,30 @@ HEX_FIRMWARE="$DIR_TMP/ts100.hex"
 MAX_TRIES=5
 
 usage() {
-    echo
-    echo "#######################"
-    echo "# TS100/TS101 Flasher #"
-    echo "#######################"
-    echo
-    echo " Usage: $0 <HEXFILE>"
-    echo
-    echo "This script has been tested to work on Fedora and Arch Linux."
-    echo "If you experience any issues please open a ticket at:"
-    echo "https://github.com/Ralim/IronOS/issues/new"
-    echo
+    cat << EOF
+
+#######################
+# TS100/TS101 Flasher #
+#######################
+
+Usage: $0 <HEXFILE>
+    
+This script has been tested to work on Fedora and Arch Linux.
+If you experience any issues please open a ticket at:
+https://github.com/Ralim/IronOS/issues/new
+    
+EOF
+}
+
+connect_instruction() {
+    cat << EOF
+######################################################
+#     Waiting for config disk device to appear      #
+#                                                   #
+# Connect the soldering iron with a USB cable while #
+# holding the button closest to the tip pressed     #
+######################################################
+EOF
 }
 
 GAUTOMOUNT=0
