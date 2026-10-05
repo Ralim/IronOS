@@ -3,22 +3,37 @@
 # Jan 2021 - Update by Ysard (https://github.com/ysard)
 # Jul 2025 - Update by Karakurt
 
-DIR_TMP="/tmp/ironos"
+set -o pipefail
+
+DIR_TMP="$(mktemp -d)"
 HEX_FIRMWARE="$DIR_TMP/ts100.hex"
 MAX_TRIES=5
 
 usage() {
-    echo
-    echo "#######################"
-    echo "# TS100/TS101 Flasher #"
-    echo "#######################"
-    echo
-    echo " Usage: $0 <HEXFILE>"
-    echo
-    echo "This script has been tested to work on Fedora and Arch Linux."
-    echo "If you experience any issues please open a ticket at:"
-    echo "https://github.com/Ralim/IronOS/issues/new"
-    echo
+    cat << EOF
+
+#######################
+# TS100/TS101 Flasher #
+#######################
+
+Usage: $0 <HEXFILE>
+    
+This script has been tested to work on Fedora and Arch Linux.
+If you experience any issues please open a ticket at:
+https://github.com/Ralim/IronOS/issues/new
+    
+EOF
+}
+
+connect_instruction() {
+    cat << EOF
+######################################################
+#     Waiting for config disk device to appear      #
+#                                                   #
+# Connect the soldering iron with a USB cable while #
+# holding the button closest to the tip pressed     #
+######################################################
+EOF
 }
 
 GAUTOMOUNT=0
@@ -38,33 +53,23 @@ enable_gautomount() {
     fi
 }
 
-is_attached() {
-    if ! output=$(lsblk -b --raw --output NAME,MODEL | grep 'DFU.*Disk'); then
-      return 1
-    fi
-    DEVICE=$(echo "$output" | awk '{print "/dev/"$1}')
+DFU_disk_connected() {
+    lsblk --nodeps --paths --output NAME,MODEL | grep -Po '^[[:lower:]/]+(?=[[:space:]]+DFU)'
 }
 
-instructions="not printed"
+# Notice: device path comes from output of is_DFU_disk, not from ionotifywait.
+# When using only ionotifywait you can't check already connected devices nicely.
 wait_for_iron() {
-    while ! is_attached; do
-        if [ "$instructions" = "not printed" ]; then
-            echo
-            echo "#####################################################"
-            echo "#     Waiting for config disk device to appear      #"
-            echo "#                                                   #"
-            echo "# Connect the soldering iron with a USB cable while #"
-            echo "# holding the button closest to the tip pressed     #"
-            echo "#####################################################"
-            echo
-            instructions="printed"
+    while ! DFU_disk_connected; do
+        if [ -z $instructions ]; then
+            connect_instruction >&2
+            instructions="shown"
         fi
-        sleep 0.1
-    done
+        inotifywait --quiet --quiet --event create /dev
+    done | tail -n 1 #Ignores non-DFU disks
 }
 
 mount_iron() {
-    mkdir -p "$DIR_TMP"
     user="${UID:-$(id -u)}"
     if ! sudo mount -t msdos -o uid="$user" "$DEVICE" "$DIR_TMP"; then
         echo "Failed to mount $DEVICE on $DIR_TMP"
@@ -73,12 +78,10 @@ mount_iron() {
 }
 
 umount_iron() {
-    if ! (mountpoint "$DIR_TMP" > /dev/null && sudo umount "$DIR_TMP"); then
+    if ! sudo umount "$DIR_TMP"; then
         echo "Failed to unmount $DIR_TMP"
         exit 1
     fi
-    sleep 1	
-    sudo rmdir "$DIR_TMP"
 }
 
 check_flash() {
@@ -103,6 +106,8 @@ cleanup() {
     enable_gautomount
     if [ -d "$DIR_TMP" ]; then
         umount_iron
+	sudo fuser -k "$DIR_TMP"
+	rmdir "$DIR_TMP"
     fi
 }
 trap cleanup EXIT
@@ -129,20 +134,20 @@ disable_gautomount
 
 TRIES=0
 while [ $TRIES -lt $MAX_TRIES ]; do
-	wait_for_iron
+	DEVICE=$(wait_for_iron)
 	NAME=$(sudo fatlabel "$DEVICE" 2>/dev/null)
 	echo "Found $NAME config disk device on $DEVICE"
 
 	mount_iron
 	echo "Mounted config disk drive, flashing..."
-	dd if="$1" of="$HEX_FIRMWARE" oflag=direct
+	pv "$1" | dd of="$HEX_FIRMWARE" oflag=nocache,sync conv=fsync status=none
 	umount_iron
 
 	echo "Waiting for $NAME to flash"
 	sleep 5
 
 	echo "Remounting config disk drive"
-	wait_for_iron
+	DEVICE=$(wait_for_iron)
 	mount_iron
 	check_flash && exit 0
 
