@@ -48,11 +48,11 @@ int main(void) {
   /* Create the thread(s) */
 
   /* definition and creation of PIDTask - Heating control*/
-  osThreadStaticDef(PIDTask, startPIDTask, osPriorityRealtime, 0, PIDTaskStackSize, PIDTaskBuffer, &PIDTaskControlBlock);
+  osThreadStaticDef(PIDTask, startPIDTask, osPriorityAboveNormal, 0, PIDTaskStackSize, PIDTaskBuffer, &PIDTaskControlBlock);
   PIDTaskHandle = osThreadCreate(osThread(PIDTask), NULL);
 
   /* definition and creation of POWTask - Power management for QC / PD */
-  osThreadStaticDef(POWTask, startPOWTask, osPriorityAboveNormal, 0, POWTaskStackSize, POWTaskBuffer, &POWTaskControlBlock);
+  osThreadStaticDef(POWTask, startPOWTask, osPriorityRealtime, 0, POWTaskStackSize, POWTaskBuffer, &POWTaskControlBlock);
   POWTaskHandle = osThreadCreate(osThread(POWTask), NULL);
 
   /* definition and creation of MOVTask - Accelerometer management */

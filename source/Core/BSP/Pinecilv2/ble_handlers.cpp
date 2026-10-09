@@ -155,7 +155,7 @@ int ble_char_read_bulk_value_callback(struct bt_conn *conn, const struct bt_gatt
           (uint32_t)TipThermoModel::getTipInC(),                               // 0  - Current temp
           getSettingValue(SettingsOptions::SolderingTemp),                     // 1  - Setpoint
           getInputVoltageX10(getSettingValue(SettingsOptions::VoltageDiv), 0), // 2  - Input voltage
-          getHandleTemperature(0),                                             // 3  - Handle X10 Temp in C
+          (uint32_t)getHandleTemperature(0),                                   // 3  - Handle X10 Temp in C
           X10WattsToPWM(x10WattHistory.average()),                             // 4  - Power as PWM level
           getPowerSrc(),                                                       // 5  - power src
           getTipResistanceX10(),                                               // 6  - Tip resistance
