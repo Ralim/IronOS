@@ -116,7 +116,7 @@
 // Vin_max = (3.3*(r1+r2))/(r2)
 // vdiv = (32768*4)/(vin_max*10)
 
-#if defined(MODEL_S60) + defined(MODEL_S60P) + defined(MODEL_T55) + defined(MODEL_S99) == 0
+#if defined(MODEL_S60) + defined(MODEL_S60P) + defined(MODEL_T55) + defined(MODEL_S99) + defined(MODEL_Si012ProMax) == 0
 #error "No model defined!"
 #endif
 
@@ -313,17 +313,84 @@
 #define MODEL_HAS_DCDC // No DC/DC, but the fast PWM (duty capped at the supply current) behaves like one, so PD can pick max voltage
 #endif                 /* S99 */
 
+#ifdef MODEL_Si012ProMax
+/*
+ * Sequre Si012 Pro Max: S60 / S99 style board with two tip sockets (T12 and TS100 / SI), each with its own
+ * op-amp and MOSFET. Only one tip is fitted at a time; the BSP drives whichever socket reads a connected tip
+ * (see getTipRawTemp() in Setup.cpp). Input is USB-C PD or 12-25 V DC.
+ *
+ * USB-C PD is negotiated by a HUSB238 in standalone mode: the voltage it asks for is set by a resistor on the
+ * board, and the stock firmware never talks to it (its only I2C traffic is the OLED). So there is no PD driver
+ * here either; the input is simply measured, and treated like DC for the cut-off and minimum voltage checks.
+ *
+ * The analog front end and gain are taken from the first port in Ralim/IronOS#2124, which heated and held
+ * temperature on real hardware with the S60 values; absolute tip temperature still wants verifying with a
+ * tip thermometer. Both sockets are assumed to share the same gain.
+ */
+#define VOLTAGE_DIV        460 // 75K / 10K divider (x0.1176), same 28.05 V full scale as the S60 / S99
+#define CALIBRATION_OFFSET 200 // Default adc offset in uV
+#define PID_POWER_LIMIT    70  // Sets the max pwm power limit
+#define POWER_LIMIT        0   // 0 watts default limit
+#define MAX_POWER_LIMIT    100
+#define POWER_LIMIT_STEPS  5
+#define OP_AMP_GAIN_STAGE  536
+#define TEMP_uV_LOOKUP_S60
+#define USB_PD_VMAX              20 // Maximum voltage for PD to negotiate
+#define USB_PD_TIMEOUT           1  // Default Timeout for USB-PD Protocol negotiation in x100ms
+#define THERMAL_RUNAWAY_TIME_SEC 20
+#define THERMAL_RUNAWAY_TEMP_C   3
+
+#define HARDWARE_MAX_WATTAGE_X10     1000 // Sequre rate it at 100 W (SI tip on 25.2 V)
+#define ENFORCE_HARDWARE_MAX_WATTAGE 1  // Always cap the PID output at HARDWARE_MAX_WATTAGE_X10 (also on DC input, where there is no PD supply limit)
+#define MCU_TEMP_CUTOFF_C            85 // Board temperature (TC1047, absolute) above which the output is cut
+
+#define TIP_THERMAL_MASS    10  // X10 watts to raise 1 deg C in 1 second
+#define TIP_THERMAL_INERTIA 128 // We use a large inertia value to smooth out the drive to the tip since its stupidly sensitive
+
+#define TIP_RESISTANCE            80 // x10 ohms; T12 socket default (Sequre T12 ~9.1 ohm per their power chart; 8.0 is on the safe side)
+#define TIP2_RESISTANCE           69 // x10 ohms; TS / SI socket default: SI ~6.9 ohm, TS ~8.0 ohm (Sequre chart), assume the lower
+#define DUAL_TIP_SOCKETS          1  // Two tip sockets (T12 and TS / SI), one tip at a time
+#define TIP_TYPE_SUPPORT          1  // Support for tips of different types, i.e. resistance
+#define AUTO_TIP_SELECTION        1  // Auto: the default resistance of whichever socket is in use
+#define TIPTYPE_T12               1  // Can manually pick a T12 tip
+#define TIP_CURRENT_LIMIT_CHOP    1  // Cap the fast PWM duty at the supply current limit (see BSP.cpp)
+#define TIP_PWM_SLOWDOWN_1_C      35 // Handle temperature at which the output PWM drops one step (less switching loss)
+#define TIP_PWM_SLOWDOWN_2_C      45 // ... and a second step; 5 C of hysteresis on the way back up
+#define HANDLE_DERATE_START_C     55 // Start reducing max power above this handle temperature
+#define HANDLE_DERATE_END_C       70 // Reduced to HANDLE_DERATE_MIN_PERCENT at this handle temperature
+#define HANDLE_DERATE_MIN_PERCENT 20
+#define BUZZER_SETTING            1    // Expose the buzzer on/off as a user setting
+#define BUZZER_STARTUP_CHIRP      1    // Short beep once the boot logo has been shown
+#define BUZZER_FREQ_HZ            4000 // Tone frequency; small piezos are loudest near their ~4 kHz resonance
+#define STATUS_LEDS_ACTIVE_HIGH   1    // LED polarity; set to 0 if the LEDs turn out to be wired to 3V3
+#define STATUS_LED_SETTING        1    // Expose the status LEDs on/off as a user setting
+
+#define OLED_128x32
+#define OLED_128x32_DENSE_UI 1 // See the note above the S60P block: enabled where the flash allows it
+#define OLED_FLIP            1 // Mounted the other way round to the S60 / S99
+#define GPIO_VIBRATION
+#define POW_PD_EXT         0 // Standalone HUSB238, nothing to talk to (see above)
+#define USB_PD_EPR_WATTAGE 0 /*No EPR*/
+#define POW_DC
+#define TEMP_NTC
+#define I2C_SOFT_BUS_2 // OLED on PB6 / PB7; PB10 / PB11 are LEDs on this board, so no bus 1
+#define OLED_I2CBB2
+#define FILTER_DISPLAYED_TIP_TEMP 4 // Filtering for GUI display
+
+#define MODEL_HAS_DCDC // No DC/DC, but the fast PWM (duty capped at the supply current) behaves like one, so PD can pick max voltage
+#endif                 /* Si012ProMax */
+
 #ifdef MODEL_S60P
 #define FLASH_LOGOADDR      (0x08000000 + (126 * 1024))
 #define SETTINGS_START_PAGE (0x08000000 + (127 * 1024))
-#elif defined(MODEL_S99)
+#elif defined(MODEL_S99) || defined(MODEL_Si012ProMax)
 // 80K usable flash, code region is 78K (see Makefile); logo + settings are the two 1K pages after it
 #define FLASH_LOGOADDR      (0x08000000 + (78 * 1024))
 #define SETTINGS_START_PAGE (0x08000000 + (79 * 1024))
 #else
 #define FLASH_LOGOADDR      (0x08000000 + (62 * 1024))
 #define SETTINGS_START_PAGE (0x08000000 + (63 * 1024))
-#endif /* Logo offset for S60P / S99 */
+#endif /* Logo offset for S60P / S99 / Si012ProMax */
 // Defaults
 
 #ifndef MIN_CALIBRATION_OFFSET

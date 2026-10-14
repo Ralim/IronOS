@@ -230,6 +230,28 @@ void setTipPWM(const uint8_t pulse, const bool shouldUseFastModePWM) {
 // These are called by the HAL after the corresponding events from the system
 // timers.
 
+// TIM4 output compare register of each tip drive (Pins.h); TIM4 channel 3 unless the model says otherwise
+#ifndef PWM_Out_CCR
+#define PWM_Out_CCR CCR3
+#endif
+
+// Output compare registers of the tip drive(s); only the socket in use is ever given a duty
+static inline void setTipDriveDuty(uint16_t duty) {
+#ifdef PWM2_Out_CHANNEL
+  if (getTipSocketsShorted()) {
+    duty = 0; // Bare T12 body touching the TS / SI contacts: heating either socket shorts the supply
+  }
+  if (getActiveTipChannel() == 1) {
+    // A T12 fitted touches the TS / SI contacts with its earthed body: never drive the TS / SI heater into it
+    htim4.Instance->PWM_Out_CCR  = 0;
+    htim4.Instance->PWM2_Out_CCR = getT12SocketHasTip() ? 0 : duty;
+    return;
+  }
+  htim4.Instance->PWM2_Out_CCR = 0;
+#endif
+  htim4.Instance->PWM_Out_CCR = duty;
+}
+
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
   // Period has elapsed
   if (htim->Instance == TIM2) {
@@ -243,7 +265,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     // While we could assume this could never happen, its a small price for
     // increased safety
     if (PWMSafetyTimer == 0) {
-      htim4.Instance->CCR3 = 0;
+      setTipDriveDuty(0);
     } else {
       uint16_t duty = pendingPWM / 4; // 0..63 of the 65 tick fast PWM period
 #ifdef TIP_CURRENT_LIMIT_CHOP
@@ -251,7 +273,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
         duty = tipDutyCapTicks; // never draw more than the supply can deliver, whatever the PID asks for
       }
 #endif
-      htim4.Instance->CCR3 = duty;
+      setTipDriveDuty(duty);
     }
   } else if (htim->Instance == TIM1) {
     // STM uses this for internal functions as a counter for timeouts
@@ -268,14 +290,129 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim) {
   // End of the drive window: output off while the ADC samples the tip
   if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_4) {
-    htim4.Instance->CCR3 = 0;
+    htim4.Instance->PWM_Out_CCR = 0;
+#ifdef PWM2_Out_CHANNEL
+    htim4.Instance->PWM2_Out_CCR = 0;
+#endif
   }
 }
 
 uint8_t getButtonA() { return HAL_GPIO_ReadPin(KEY_A_GPIO_Port, KEY_A_Pin) == GPIO_PIN_RESET ? 1 : 0; }
 uint8_t getButtonB() { return HAL_GPIO_ReadPin(KEY_B_GPIO_Port, KEY_B_Pin) == GPIO_PIN_RESET ? 1 : 0; }
 
-void BSPInit(void) { switchToFastPWM(); }
+#ifdef STATUS_LED_COUNT
+typedef struct {
+  GPIO_TypeDef *port;
+  uint16_t      pin;
+} StatusLEDPin;
+
+static const StatusLEDPin statusLEDs[STATUS_LED_COUNT] = {
+    { LED1_GPIO_Port,  LED1_Pin},
+    { LED2_GPIO_Port,  LED2_Pin},
+    { LED3_GPIO_Port,  LED3_Pin},
+    { LED4_GPIO_Port,  LED4_Pin},
+    { LED5_GPIO_Port,  LED5_Pin},
+    { LED6_GPIO_Port,  LED6_Pin},
+    { LED7_GPIO_Port,  LED7_Pin},
+    { LED8_GPIO_Port,  LED8_Pin},
+    { LED9_GPIO_Port,  LED9_Pin},
+    {LED10_GPIO_Port, LED10_Pin},
+};
+static const uint16_t allStatusLEDs = (1U << STATUS_LED_COUNT) - 1;
+
+// One bit per LED, bit 0 = LED1
+static void writeStatusLEDs(uint16_t mask) {
+  static uint16_t lastMask = 0;
+  if (mask == lastMask) {
+    return;
+  }
+  lastMask = mask;
+  for (uint8_t i = 0; i < STATUS_LED_COUNT; i++) {
+    const bool on = (mask >> i) & 1;
+    HAL_GPIO_WritePin(statusLEDs[i].port, statusLEDs[i].pin, (on == (STATUS_LEDS_ACTIVE_HIGH != 0)) ? GPIO_PIN_SET : GPIO_PIN_RESET);
+  }
+}
+
+static void initStatusLEDs(void) {
+  // PC13-15 can only source / sink a few mA and must stay at the low speed setting, which is fine for LEDs
+  __HAL_RCC_GPIOC_CLK_ENABLE();
+  GPIO_InitTypeDef GPIO_InitStruct;
+  GPIO_InitStruct.Mode  = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull  = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  for (uint8_t i = 0; i < STATUS_LED_COUNT; i++) {
+    HAL_GPIO_WritePin(statusLEDs[i].port, statusLEDs[i].pin, STATUS_LEDS_ACTIVE_HIGH ? GPIO_PIN_RESET : GPIO_PIN_SET);
+    GPIO_InitStruct.Pin = statusLEDs[i].pin;
+    HAL_GPIO_Init(statusLEDs[i].port, &GPIO_InitStruct);
+  }
+}
+
+// The first n LEDs lit, as a bar
+static uint16_t statusLEDBar(uint32_t n) { return n >= STATUS_LED_COUNT ? allStatusLEDs : (uint16_t)((1U << n) - 1); }
+
+/*
+ * LED modes (LEDMode setting):
+ *  0 off
+ *  1 status: off when idle, the middle pair in sleep, a filling bar while heating, all on at temperature and
+ *    all blinking while the tip is off but still hot
+ *  2 tip temperature as a bar, full at the set temperature (dark below 50 C, so a cold iron is dark)
+ *  3 heater power as a bar (the duty the PID asks for)
+ */
+void setStatusLED(const enum StatusLED state) {
+  const TickType_t now  = xTaskGetTickCount();
+  uint16_t         mask = 0;
+#ifdef STATUS_LED_SETTING
+  const uint16_t mode = getSettingValue(SettingsOptions::LEDMode);
+#else
+  const uint16_t mode = 1;
+#endif
+  if (mode == 0) {
+    writeStatusLEDs(0); // Turned off by the user
+    return;
+  }
+  if (mode == 2) {
+    const uint32_t tipC = TipThermoModel::getTipInC();
+    uint32_t       setC = getSettingValue(SettingsOptions::SolderingTemp);
+    if (getSettingValue(SettingsOptions::TemperatureInF)) {
+      setC = TipThermoModel::convertFtoC(setC);
+    }
+    writeStatusLEDs((tipC < 50 || setC == 0 || isTipDisconnected()) ? 0 : statusLEDBar((tipC * STATUS_LED_COUNT + setC / 2) / setC));
+    return;
+  }
+  if (mode == 3) {
+    writeStatusLEDs(PWMSafetyTimer ? statusLEDBar((pendingPWM * STATUS_LED_COUNT + 127) / 255) : 0);
+    return;
+  }
+  switch (state) {
+  case LED_STANDBY:
+    mask = (1U << 4) | (1U << 5);
+    break;
+  case LED_HEATING:
+    mask = (1U << ((now / TICKS_100MS) % (STATUS_LED_COUNT + 1))) - 1;
+    break;
+  case LED_HOT:
+    mask = allStatusLEDs;
+    break;
+  case LED_COOLING_STILL_HOT:
+    mask = ((now / (TICKS_SECOND / 2)) & 1) ? allStatusLEDs : 0;
+    break;
+  case LED_OFF:
+  case LED_UNKNOWN:
+  default:
+    break;
+  }
+  writeStatusLEDs(mask);
+}
+#else
+void setStatusLED(const enum StatusLED state) {}
+#endif /* STATUS_LED_COUNT */
+
+void BSPInit(void) {
+  switchToFastPWM();
+#ifdef STATUS_LED_COUNT
+  initStatusLEDs();
+#endif
+}
 
 void reboot() { NVIC_SystemReset(); }
 
@@ -288,7 +425,6 @@ bool isTipDisconnected() {
   return tipTemp > tipDisconnectedThres;
 }
 
-void    setStatusLED(const enum StatusLED state) {}
 uint8_t preStartChecks() {
 #if POW_PD_EXT == 1
   if (!hub238_has_run_selection() && (xTaskGetTickCount() < TICKS_SECOND * 5)) {
@@ -308,8 +444,10 @@ uint8_t preStartChecks() {
 #endif
 
 #ifdef TIP_CURRENT_LIMIT_CHOP
+#if POW_PD_EXT == 1 || POW_PD_EXT == 2
   (void)voltage;
   (void)currentx100;
+#endif
   getTipChopDutyX256(); // Latch chop duty + prescaler for the negotiated supply before heating starts
 #else
   uint16_t thresholdResistancex10 = ((voltage * 1000) / currentx100) + 5;
@@ -345,12 +483,21 @@ uint8_t getTipResistanceX10() {
 #else
   uint8_t user_selected_tip = getUserSelectedTipResistance();
   if (user_selected_tip == 0) {
+#ifdef TIP2_RESISTANCE
+    if (getActiveTipChannel() == 1) {
+      return TIP2_RESISTANCE; // Auto mode, second socket
+    }
+#endif
     return TIP_RESISTANCE; // Auto mode
   }
   return user_selected_tip;
 #endif
 }
-bool    isTipShorted() { return false; }
+#ifdef DUAL_TIP_SOCKETS
+bool isTipShorted() { return getTipSocketsShorted(); }
+#else
+bool isTipShorted() { return false; }
+#endif
 uint8_t preStartChecksDone() { return 1; }
 
 uint16_t getTipThermalMass() { return TIP_THERMAL_MASS; }

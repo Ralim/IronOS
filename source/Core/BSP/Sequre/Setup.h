@@ -13,6 +13,7 @@ extern "C" {
 #endif
 
 #include "stm32f1xx_hal.h"
+#include <stdbool.h>
 
 extern ADC_HandleTypeDef hadc1;
 extern ADC_HandleTypeDef hadc2;
@@ -28,6 +29,8 @@ uint16_t                 getADCHandleTemp(uint8_t sample);
 uint16_t                 getADCVin(uint8_t sample);
 int16_t                  getMCUTemperatureC(void);
 void                     calibrateMCUTemperature(int16_t handleTemperatureC);
+bool                     getT12SocketHasTip(void);                     // Dual socket boards: the T12 socket reads a tip
+bool                     getTipSocketsShorted(void);                   // Dual socket boards: bare T12 body touching the TS / SI contacts
 void                     HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim); // Since the hal header file does not define this one
 
 #ifdef __cplusplus

@@ -12,6 +12,19 @@
 extern uint8_t heaterThermalRunawayCounter;
 
 bool checkExitSoldering(void) {
+#ifdef DUAL_TIP_SOCKETS
+  // Bare T12 body touching the TS / SI contacts: the BSP already keeps the output off; say why and wait for a
+  // button, like the undervoltage warning
+  if (isTipShorted()) {
+    currentTempTargetDegC = 0;
+    warnUser(translatedString(Tr->WarningTipShorted), BUTTON_NONE);
+    OLED::refresh();
+    GUIDelay();
+    waitForButtonPress();
+    lastButtonTime = xTaskGetTickCount();
+    return true;
+  }
+#endif
 #ifdef POW_DC
   // Undervoltage test
   if (checkForUnderVoltage()) {

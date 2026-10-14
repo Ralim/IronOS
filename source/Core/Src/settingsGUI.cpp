@@ -52,6 +52,9 @@ static void displayPowerLimit(void);
 #ifdef BUZZER_SETTING
 static void displayBuzzerEnabled(void);
 #endif /* BUZZER_SETTING */
+#ifdef STATUS_LED_SETTING
+static void displayLEDMode(void);
+#endif /* STATUS_LED_SETTING */
 
 #ifdef BLE_ENABLED
 static void displayBluetoothLE(void);
@@ -420,6 +423,10 @@ const menuitem UIMenu[] = {
   /* Buzzer on/off */
   {SETTINGS_DESC(SettingsItemIndex::BuzzerEnabled), nullptr, displayBuzzerEnabled, nullptr, SettingsOptions::BuzzerEnabled, SettingsItemIndex::BuzzerEnabled, 7},
 #endif /* BUZZER_SETTING */
+#ifdef STATUS_LED_SETTING
+  /* Status LED mode */
+  {SETTINGS_DESC(SettingsItemIndex::LEDMode), nullptr, displayLEDMode, nullptr, SettingsOptions::LEDMode, SettingsItemIndex::LEDMode, 7},
+#endif /* STATUS_LED_SETTING */
   /* Scroll Speed for descriptions */
   {SETTINGS_DESC(SettingsItemIndex::ScrollingSpeed), nullptr, displayScrollSpeed, nullptr, SettingsOptions::DescriptionScrollSpeed, SettingsItemIndex::ScrollingSpeed, 7},
   /* Reverse Temp change buttons +/- */
@@ -935,6 +942,16 @@ static void displayDisplayRotation(void) {
 static void displayCoolingBlinkEnabled(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::CoolingTempBlink)); }
 
 static void displayBuzzerEnabled(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::BuzzerEnabled)); }
+
+#ifdef STATUS_LED_SETTING
+static void displayLEDMode(void) {
+  if (getSettingValue(SettingsOptions::LEDMode)) {
+    OLED::printNumber(getSettingValue(SettingsOptions::LEDMode), 1, VALUE_FONT, false);
+  } else {
+    OLED::drawUnavailableIcon(); // Off
+  }
+}
+#endif /* STATUS_LED_SETTING */
 
 static void displayScrollSpeed(void) { printValue(translatedString((getSettingValue(SettingsOptions::DescriptionScrollSpeed)) ? Tr->SettingFastChar : Tr->SettingSlowChar)); }
 

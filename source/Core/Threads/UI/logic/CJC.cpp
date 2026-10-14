@@ -28,7 +28,7 @@ OperatingMode performCJCC(const ButtonState buttons, guiContext *cxt) {
     // differential.
 
     uint16_t setOffset = TipThermoModel::convertTipRawADCTouV(cxt->scratch_state.state3 / 16, true);
-    setSettingValue(SettingsOptions::CalibrationOffset, setOffset);
+    setSettingValue(TipThermoModel::calibrationOffsetSetting(), setOffset); // Of the socket in use on dual socket irons
     if (warnUser(translatedString(Tr->CalibrationDone), buttons)) {
       // Preventing to repeat calibration at boot automatically (only one shot).
       setSettingValue(SettingsOptions::CalibrateCJC, 0);

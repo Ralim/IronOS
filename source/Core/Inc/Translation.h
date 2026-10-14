@@ -55,6 +55,8 @@ extern const char *SmallSymbolNoVBus;
 extern const char *SmallSymbolVBus;
 
 extern const char *LargeSymbolSleep;
+extern const char *SmallSymbolSocketT12;
+extern const char *SmallSymbolSocketTS;
 
 extern const char *DebugMenu[];
 extern const char *AccelTypeNames[];
@@ -115,6 +117,7 @@ enum class SettingsItemIndex : uint8_t {
   LanguageSwitch,
   SolderingTipType,
   BuzzerEnabled,
+  LEDMode,
   NUM_ITEMS,
 };
 

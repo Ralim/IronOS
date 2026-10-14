@@ -36,6 +36,8 @@ bool getIsPoweredByDCIN() {
   } else {
     return true;
   }
+#elif defined(POW_DC)
+  return true; // No PD controller we can talk to: the input is only ever measured
 #else
   return false;
 #endif

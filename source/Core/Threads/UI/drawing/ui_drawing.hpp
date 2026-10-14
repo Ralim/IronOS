@@ -31,4 +31,7 @@ void ui_draw_usb_pd_debug_state(const uint16_t vbus_sense_state, const uint8_t s
 void ui_draw_usb_pd_debug_pdo(const uint8_t entry_num, const uint16_t min_voltage, const uint16_t max_voltage, const uint16_t current_a_x100, const uint16_t wattage);
 // Utils
 void printVoltage(void);
+#ifdef DUAL_TIP_SOCKETS
+void ui_draw_tip_socket(void); // Name of the tip socket in use, at the cursor
+#endif
 #endif // UI_DRAWING_UI_DRAWING_HPP_

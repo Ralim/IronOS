@@ -358,6 +358,10 @@
     "BuzzerEnabled": {
       "displayText": "Buzzer",
       "description": "Beep when the set temperature is reached and at the end of a profile"
+    },
+    "LEDMode": {
+      "displayText": "LEDs",
+      "description": "Off, 1=status, 2=temperature, 3=power"
     }
   }
 }

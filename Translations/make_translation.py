@@ -157,10 +157,18 @@ def get_constants() -> List[Tuple[str, str]]:
         ("SmallSymbolNoVBus", "No VBus"),
         ("SmallSymbolVBus", "VBus"),
         ("LargeSymbolSleep", "Zzz "),
+        ("SmallSymbolSocketT12", "T12"),
+        ("SmallSymbolSocketTS", "TS"),
     ]
 
 
 def get_debug_menu(macros: frozenset = frozenset()) -> List[str]:
+    extra_items = []
+    # Index 17; also a placeholder on dual socket irons so items 18.. keep their index
+    if "MCU_TEMP_CUTOFF_C" in macros or "DUAL_TIP_SOCKETS" in macros:
+        extra_items += ["MCU C  "]
+    if "DUAL_TIP_SOCKETS" in macros:
+        extra_items += ["Socket ", "Tip2 uV"]
     return [
         time.strftime(
             "%Y%m%d %H%M%S",
@@ -182,7 +190,7 @@ def get_debug_menu(macros: frozenset = frozenset()) -> List[str]:
         "HW M   ",
         "HW P   ",
         "Hall   ",
-    ] + (["MCU C  "] if "MCU_TEMP_CUTOFF_C" in macros else [])
+    ] + extra_items
 
 
 def get_accel_names_list() -> List[str]:

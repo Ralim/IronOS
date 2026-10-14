@@ -28,6 +28,10 @@ static void drawPowerSourceSmall(int16_t x) {
   OLED::printNumber(voltX10 % 10, 1, FontStyle::TINY);
   OLED::setCursor(x + 9, 16);
   OLED::print(SmallSymbolVolts, FontStyle::TINY);
+#ifdef DUAL_TIP_SOCKETS
+  OLED::setCursor(x + 3, 24);
+  ui_draw_tip_socket();
+#endif
 }
 
 void ui_draw_homescreen_simplified(TemperatureType_t tipTemp) {
