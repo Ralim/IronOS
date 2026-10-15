@@ -26,7 +26,7 @@ public:
   static uint32_t          convertTipRawADCTouV(uint16_t rawADC, bool skipCalOffset = false);
   static TemperatureType_t convertCtoF(TemperatureType_t degC);
   static TemperatureType_t convertFtoC(TemperatureType_t degF);
-  // The setting holding the calibration (CJC) offset of the tip in use; dual socket irons keep one per socket
+  // Calibration offset setting for the active socket
   static SettingsOptions calibrationOffsetSetting();
 
 private:

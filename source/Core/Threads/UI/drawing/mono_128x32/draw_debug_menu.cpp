@@ -107,10 +107,10 @@ void ui_draw_debug_menu(const uint8_t item_number) {
 #endif
 
 #ifdef DUAL_TIP_SOCKETS
-  case 18: // Active tip socket: 1 = T12, 2 = TS / SI
+  case 18: // Active tip socket
     OLED::printNumber(getActiveTipChannel() + 1, 6, FontStyle::SMALL);
     break;
-  case 19: // Raw reading of the socket not in use, in uV (an empty socket should be at the top of the range)
+  case 19: // Raw reading of the other socket
     OLED::printNumber(TipThermoModel::convertTipRawADCTouV(getInactiveTipRawTemp(), true), 8, FontStyle::SMALL);
     break;
 #endif

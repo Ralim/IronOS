@@ -98,7 +98,7 @@ void startPIDTask(void const *argument __unused) {
 #ifdef MCU_TEMP_CUTOFF_C
       // Last line of defence for the output stage: if the MCU die gets this hot, stop heating and raise the
       // thermal runaway warning (the handle NTC derate should have kicked in long before this)
-      if (isMCUTemperatureValid() && getMCUTemperatureC() > MCU_TEMP_CUTOFF_C) {
+      if (getMCUTemperatureC() > MCU_TEMP_CUTOFF_C) {
         PIDTempTarget               = 0;
         heaterThermalRunawayCounter = 255;
       }

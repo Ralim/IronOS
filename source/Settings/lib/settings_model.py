@@ -18,14 +18,12 @@ from .settings_util import resolve_expression
 class SettingsEntry:
     """Represents a single settings entry definition"""
 
-    def __init__(self, min_value, max_value, increment, default, name, include=None):
+    def __init__(self, min_value, max_value, increment, default, name):
         self.min = min_value
         self.max = max_value
         self.increment = increment
         self.default = default
         self.name = name
-        # Optional configuration.h macro: the setting only exists on models that define it
-        self.include = include
 
     def __str__(self):
         return f"{self.name}: {self.default} (min: {self.min}, max: {self.max}, increment: {self.increment})"
@@ -55,7 +53,6 @@ class Settings:
                 setting["increment"],
                 setting["default"],
                 setting["name"],
-                setting.get("include"),
             )
             self.entries.append(entry)
 

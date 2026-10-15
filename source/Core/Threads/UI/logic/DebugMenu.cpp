@@ -11,9 +11,7 @@ OperatingMode showDebugMenu(const ButtonState buttons, guiContext *cxt) {
   } else if (buttons == BUTTON_F_SHORT) {
     cxt->scratch_state.state1++;
 #if defined(MCU_TEMP_CUTOFF_C) || defined(DUAL_TIP_SOCKETS)
-    // Items 0..15 are always there; 16 (Hall), 17 (MCU) and 18..19 (dual tip sockets) depend on the hardware.
-    // Skip the ones this build does not have rather than wrapping early, which made the MCU item unreachable
-    // on builds without a hall sensor. (Comparisons only: a variable modulo pulls in the division helper.)
+    // Skip the items this build doesn't have
 #ifndef HALL_SENSOR
     if (cxt->scratch_state.state1 == 16) {
       cxt->scratch_state.state1++;

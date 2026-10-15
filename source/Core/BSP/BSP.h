@@ -51,13 +51,11 @@ uint16_t getTipChopDutyX256Latched();
 // MCU die temperature in C (internal sensor), referenced to the handle temperature at boot
 int16_t getMCUTemperatureC(void);
 void    calibrateMCUTemperature(int16_t handleTemperatureC);
-// False when the sensor failed its plausibility check at boot; it must then not cut the output
-bool isMCUTemperatureValid(void);
 #endif
 #ifdef DUAL_TIP_SOCKETS
-// Irons with two tip sockets, one tip fitted at a time: 0 = first socket (T12), 1 = second socket (TS / SI)
+// Active tip socket (0 or 1)
 uint8_t getActiveTipChannel(void);
-// Last raw reading of the socket that is not in use (debug)
+// Raw reading of the unused socket
 uint16_t getInactiveTipRawTemp(void);
 #endif
 // Returns the Handle temp in C, X10

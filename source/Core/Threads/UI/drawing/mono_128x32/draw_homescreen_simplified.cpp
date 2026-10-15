@@ -30,7 +30,7 @@ static void drawPowerSourceSmall(int16_t x) {
   OLED::print(SmallSymbolVolts, FontStyle::TINY);
 #ifdef DUAL_TIP_SOCKETS
   OLED::setCursor(x + 3, 24);
-  ui_draw_tip_socket();
+  OLED::print(getActiveTipChannel() ? SmallSymbolSocketTS : SmallSymbolSocketT12, FontStyle::TINY);
 #endif
 }
 

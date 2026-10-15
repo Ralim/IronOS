@@ -230,19 +230,19 @@ void setTipPWM(const uint8_t pulse, const bool shouldUseFastModePWM) {
 // These are called by the HAL after the corresponding events from the system
 // timers.
 
-// TIM4 output compare register of each tip drive (Pins.h); TIM4 channel 3 unless the model says otherwise
+// Tip PWM compare register, CCR3 unless set in Pins.h
 #ifndef PWM_Out_CCR
 #define PWM_Out_CCR CCR3
 #endif
 
-// Output compare registers of the tip drive(s); only the socket in use is ever given a duty
+// Only drive the active socket
 static inline void setTipDriveDuty(uint16_t duty) {
 #ifdef PWM2_Out_CHANNEL
   if (getTipSocketsShorted()) {
-    duty = 0; // Bare T12 body touching the TS / SI contacts: heating either socket shorts the supply
+    duty = 0;
   }
   if (getActiveTipChannel() == 1) {
-    // A T12 fitted touches the TS / SI contacts with its earthed body: never drive the TS / SI heater into it
+    // Don't drive TS/SI with a T12 in
     htim4.Instance->PWM_Out_CCR  = 0;
     htim4.Instance->PWM2_Out_CCR = getT12SocketHasTip() ? 0 : duty;
     return;
@@ -320,7 +320,7 @@ static const StatusLEDPin statusLEDs[STATUS_LED_COUNT] = {
 };
 static const uint16_t allStatusLEDs = (1U << STATUS_LED_COUNT) - 1;
 
-// One bit per LED, bit 0 = LED1
+// Bit 0 = LED1
 static void writeStatusLEDs(uint16_t mask) {
   static uint16_t lastMask = 0;
   if (mask == lastMask) {
@@ -334,7 +334,7 @@ static void writeStatusLEDs(uint16_t mask) {
 }
 
 static void initStatusLEDs(void) {
-  // PC13-15 can only source / sink a few mA and must stay at the low speed setting, which is fine for LEDs
+  // PC13-15 only support low speed
   __HAL_RCC_GPIOC_CLK_ENABLE();
   GPIO_InitTypeDef GPIO_InitStruct;
   GPIO_InitStruct.Mode  = GPIO_MODE_OUTPUT_PP;
@@ -347,17 +347,10 @@ static void initStatusLEDs(void) {
   }
 }
 
-// The first n LEDs lit, as a bar
+// First n LEDs on
 static uint16_t statusLEDBar(uint32_t n) { return n >= STATUS_LED_COUNT ? allStatusLEDs : (uint16_t)((1U << n) - 1); }
 
-/*
- * LED modes (LEDMode setting):
- *  0 off
- *  1 status: off when idle, the middle pair in sleep, a filling bar while heating, all on at temperature and
- *    all blinking while the tip is off but still hot
- *  2 tip temperature as a bar, full at the set temperature (dark below 50 C, so a cold iron is dark)
- *  3 heater power as a bar (the duty the PID asks for)
- */
+// LEDMode: 0 off, 1 status, 2 temperature, 3 power
 void setStatusLED(const enum StatusLED state) {
   const TickType_t now  = xTaskGetTickCount();
   uint16_t         mask = 0;
@@ -367,7 +360,7 @@ void setStatusLED(const enum StatusLED state) {
   const uint16_t mode = 1;
 #endif
   if (mode == 0) {
-    writeStatusLEDs(0); // Turned off by the user
+    writeStatusLEDs(0);
     return;
   }
   if (mode == 2) {
@@ -485,7 +478,7 @@ uint8_t getTipResistanceX10() {
   if (user_selected_tip == 0) {
 #ifdef TIP2_RESISTANCE
     if (getActiveTipChannel() == 1) {
-      return TIP2_RESISTANCE; // Auto mode, second socket
+      return TIP2_RESISTANCE;
     }
 #endif
     return TIP_RESISTANCE; // Auto mode
@@ -493,7 +486,7 @@ uint8_t getTipResistanceX10() {
   return user_selected_tip;
 #endif
 }
-#ifdef DUAL_TIP_SOCKETS
+#ifdef TIP_SHORT_DETECTION
 bool isTipShorted() { return getTipSocketsShorted(); }
 #else
 bool isTipShorted() { return false; }

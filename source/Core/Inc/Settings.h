@@ -79,16 +79,10 @@ enum SettingsOptions {
   SolderingTipType               = 54, // Selecting the type of soldering tip fitted
   ReverseButtonSettings          = 55, // Change the A and B button assigment in Settings menu
   BuzzerEnabled                  = 56, // Buzzer on/off (devices with a buzzer)
-// Settings below only exist on the models that need them (see "include" in settings.yaml), so the ones above
-// keep their index everywhere and other models do not pay for them
-#ifdef STATUS_LED_SETTING
-  LEDMode, // Status LED mode: off / status / temperature / power
-#endif
-#ifdef DUAL_TIP_SOCKETS
-  CalibrationOffset2, // Tip calibration offset of the second tip socket
-#endif
+  LEDMode                        = 57, // Status LED mode
+  CalibrationOffset2             = 58, // Calibration offset for the second tip socket
   //
-  SettingsOptionsLength, // End marker
+  SettingsOptionsLength = 59, // End marker
 };
 
 // For every setting we need to store the min/max/increment values

@@ -482,7 +482,7 @@ Beep when the set temperature is reached and at the end of a profile
 
 ### Setting: LEDs
 
-What the status LEDs show. Off; 1 = status: heating (filling), at temperature (all on), sleep (middle pair), still hot (blinking); 2 = tip temperature as a bar, full at the set temperature; 3 = heater power as a bar.
+Status LED mode: off, 1 = status, 2 = tip temperature, 3 = heater power.
 
 On device help text:
 

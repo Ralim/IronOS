@@ -97,31 +97,6 @@ uint16_t getADCHandleTemp(uint8_t sample) {
 // reference pins it to the handle temperature and it never rises, so the cut-out simply never
 // fires. The handle NTC derate and the hardware wattage cap are the protections that do not
 // depend on this sensor.
-//
-// Boards with an external sensor (BOARD_TEMP_ADC1_CHANNEL, a TC1047: 500 mV at 0 C, 10 mV / C) sample that
-// in the odd slots instead. It is absolute, so no referencing is needed.
-#ifdef BOARD_TEMP_ADC1_CHANNEL
-static bool boardTempValid = false;
-
-int16_t getMCUTemperatureC(void) {
-  uint32_t sum = 0;
-  for (uint8_t i = 1; i < ADC_SAMPLES; i += 2) {
-    sum += ADCReadings[i];
-  }
-  const int32_t senseMv = (int32_t)((sum / (ADC_SAMPLES / 2)) * 3300) / 4096;
-  return (int16_t)((senseMv - 500) / 10);
-}
-
-// At boot the board and the handle are at about the same temperature. If the sensor disagrees with the handle
-// NTC by more than that, it is not reading what we expect (wrong part, wiring), so it is only shown in the debug
-// menu and never allowed to cut the output; the handle derate and the wattage cap still protect the output stage.
-void calibrateMCUTemperature(int16_t handleTemperatureC) {
-  const int16_t difference = getMCUTemperatureC() - handleTemperatureC;
-  boardTempValid           = difference > -15 && difference < 15;
-}
-
-bool isMCUTemperatureValid(void) { return boardTempValid; }
-#else
 static int16_t mcuTempOffsetC = 0;
 
 static int16_t mcuTemperatureUncalibratedC(void) {
@@ -136,9 +111,6 @@ static int16_t mcuTemperatureUncalibratedC(void) {
 void calibrateMCUTemperature(int16_t handleTemperatureC) { mcuTempOffsetC = handleTemperatureC - mcuTemperatureUncalibratedC(); }
 
 int16_t getMCUTemperatureC(void) { return mcuTemperatureUncalibratedC() + mcuTempOffsetC; }
-
-bool isMCUTemperatureValid(void) { return true; } // Referenced to the handle at boot, so always consistent
-#endif /* BOARD_TEMP_ADC1_CHANNEL */
 
 uint16_t getADCVin(uint8_t sample) {
   static history<uint16_t, ADC_FILTER_LEN> filter = {{0}, 0, 0};
@@ -155,30 +127,11 @@ uint16_t getADCVin(uint8_t sample) {
   return filter.average();
 }
 #ifdef TIP2_TEMP_ADC1_CHANNEL
-/*
- * Two tip sockets, one tip fitted at a time, both sampled in every off window (injected ranks 1-2 and 3-4).
- * An empty socket's op-amp saturates, so it reads at the top of the range like any disconnected tip.
- *
- * A T12 tip is long: it reaches its own contacts deep in the handle (by the USB-C / DC jack) and passes the
- * TS / SI contacts near the opening on the way. A TS / SI tip is too short to reach the T12 contacts, so the T12
- * socket reading a tip always means a T12 is fitted, and it wins.
- *
- * If the bare T12 body touches the TS / SI contacts, it is a real short: heating then trips the supply's over
- * current protection even when only the T12 heater is driven, and the T12 reading sticks at about ambient (both
- * seen on hardware; the stock firmware reports it as a short, insulating that part of the tip body fixes it).
- * Both sockets reading something other than open is therefore latched as a short on a single reading, so it is
- * in place before heating can start: no output at all (BSP.cpp) and the UI says why (isTipShorted()). It is only
- * cleared after tipSwitchSampleCount consecutive readings without it.
- *
- * Driving the TS / SI heater into a T12 body shorts the supply as well, so:
- *  - switching to TS / SI needs the T12 socket to read empty, and only happens while nothing is heating (a T12
- *    half way in touches the TS / SI contacts before its own), while switching to T12 is always allowed;
- *  - the TS / SI output is refused outright whenever the T12 socket reads a tip (t12SocketHasTip, see BSP.cpp).
- * Changes need tipSwitchSampleCount consecutive readings, except the very first one at boot, so the boot time
- * CJC calibration samples the right socket.
- */
+// Both sockets are read every cycle, an empty one reads near full scale.
+// A T12 also touches the TS/SI contacts, so T12 wins and TS/SI is only picked while idle.
+// Both sockets reading a tip means a short: no output until it clears.
 static const uint16_t tipOpenThreshold     = (ADC_MAX_READING * 31) / 32;
-static const uint8_t  tipSwitchSampleCount = 16; // consecutive PID cycles before changing socket
+static const uint8_t  tipSwitchSampleCount = 16; // Readings in a row before changing state
 static uint8_t        activeTipChannel     = 0;
 static uint8_t        socketChangeCount    = 0;
 static uint8_t        shortClearCount      = 0;
@@ -200,14 +153,14 @@ uint16_t getTipRawTemp(uint8_t sample) {
     channelRaw[1]   = (uint16_t)((hadc1.Instance->JDR3 + hadc1.Instance->JDR4) << 2);
     t12SocketHasTip = channelRaw[0] < tipOpenThreshold;
     if (t12SocketHasTip && channelRaw[1] < tipOpenThreshold) {
-      tipSocketsShorted = true; // Set on a single reading
+      tipSocketsShorted = true; // Set immediately
       shortClearCount   = 0;
     } else if (tipSocketsShorted && ++shortClearCount >= tipSwitchSampleCount) {
       tipSocketsShorted = false;
       shortClearCount   = 0;
     }
 
-    // Socket the readings point at; with neither reading a tip, stay put (the tip just reads disconnected)
+    // Keep the current socket if both are empty
     uint8_t wanted = activeTipChannel;
     if (t12SocketHasTip) {
       wanted = 0;
@@ -222,7 +175,7 @@ uint16_t getTipRawTemp(uint8_t sample) {
       if (++socketChangeCount >= tipSwitchSampleCount) {
         activeTipChannel  = wanted;
         socketChangeCount = 0;
-        // Restart the filter on the new socket rather than averaging in the open reading of the old one
+        // Reset the filter
         for (uint8_t i = 0; i < ADC_FILTER_LEN; i++) {
           filter.update(channelRaw[activeTipChannel]);
         }
@@ -329,13 +282,6 @@ static void MX_ADC1_Init(void) {
   sConfig.SamplingTime = ADC_SAMPLETIME_71CYCLES_5;
   HAL_ADC_ConfigChannel(&hadc1, &sConfig);
 #endif
-#ifdef BOARD_TEMP_ADC1_CHANNEL
-  // External board temperature sensor (last resort thermal cut-off)
-  sConfig.Channel      = BOARD_TEMP_ADC1_CHANNEL;
-  sConfig.Rank         = ADC_REGULAR_RANK_2;
-  sConfig.SamplingTime = ADC_SAMPLETIME_239CYCLES_5;
-  HAL_ADC_ConfigChannel(&hadc1, &sConfig);
-#else
   // Internal temperature sensor on channel 16 (die temperature, last resort thermal cut-off).
   // The trimmed HAL has no ADC_CHANNEL_TEMPSENSOR, so enable the sensor (TSVREFE) by hand.
   sConfig.Channel      = ADC_CHANNEL_16;
@@ -343,7 +289,6 @@ static void MX_ADC1_Init(void) {
   sConfig.SamplingTime = ADC_SAMPLETIME_239CYCLES_5; // needs >= 17.1 us
   HAL_ADC_ConfigChannel(&hadc1, &sConfig);
   SET_BIT(hadc1.Instance->CR2, ADC_CR2_TSVREFE);
-#endif
   /**Configure Injected Channel
    */
   // F in = 10.66 MHz
@@ -365,7 +310,7 @@ static void MX_ADC1_Init(void) {
   sConfigInjected.InjectedRank = 2;
   HAL_ADCEx_InjectedConfigChannel(&hadc1, &sConfigInjected);
 #ifdef TIP2_TEMP_ADC1_CHANNEL
-  // Ranks 3 and 4 sample the second tip socket, so both sockets are read in every off window
+  // Ranks 3 and 4: second tip socket
   sConfigInjected.InjectedChannel = TIP2_TEMP_ADC1_CHANNEL;
 #endif
   sConfigInjected.InjectedRank = 3;

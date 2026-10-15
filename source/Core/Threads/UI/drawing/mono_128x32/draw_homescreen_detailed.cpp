@@ -82,7 +82,7 @@ void ui_draw_homescreen_detailed(TemperatureType_t tipTemp) {
 #endif
 #ifdef DUAL_TIP_SOCKETS
   OLED::setCursor(infoX, 24);
-  ui_draw_tip_socket();
+  OLED::print(getActiveTipChannel() ? SmallSymbolSocketTS : SmallSymbolSocketT12, FontStyle::TINY);
 #endif
 }
 

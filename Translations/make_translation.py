@@ -164,7 +164,7 @@ def get_constants() -> List[Tuple[str, str]]:
 
 def get_debug_menu(macros: frozenset = frozenset()) -> List[str]:
     extra_items = []
-    # Index 17; also a placeholder on dual socket irons so items 18.. keep their index
+    # MCU item, also a placeholder before the socket items
     if "MCU_TEMP_CUTOFF_C" in macros or "DUAL_TIP_SOCKETS" in macros:
         extra_items += ["MCU C  "]
     if "DUAL_TIP_SOCKETS" in macros:
