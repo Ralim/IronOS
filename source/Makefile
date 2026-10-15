@@ -9,6 +9,20 @@ ALL_MHP30_MODELS=MHP30
 ALL_SEQURE_MODELS=S60 S60P T55 S99
 ALL_MODELS=$(ALL_MINIWARE_MODELS) $(ALL_PINECIL_MODELS) $(ALL_MHP30_MODELS) $(ALL_PINECIL_V2_MODELS) $(ALL_SEQURE_MODELS)
 
+ifeq ($(model),TS21)
+.DELETE_ON_ERROR:
+ifneq ($(TS21_EXPERIMENTAL),1)
+$(error TS21 is an experimental development port; set TS21_EXPERIMENTAL=1)
+endif
+TS21_HEATER_TEST?=0
+ifneq ($(TS21_HEATER_TEST),0)
+ifneq ($(TS21_HEATER_TEST),1)
+$(error TS21_HEATER_TEST must be 0 or 1)
+endif
+endif
+ALL_MODELS+=TS21
+endif
+
 ifneq ($(model),$(filter $(model),$(ALL_MODELS)))
 $(error Invalid model '$(model)', valid options are: $(ALL_MODELS))
 endif
@@ -19,6 +33,10 @@ HEXFILE_DIR=Hexfile
 # Temporary objects folder
 OUTPUT_DIR_BASE=Objects
 OUTPUT_DIR=Objects/$(model)
+ifeq ($(model):$(TS21_HEATER_TEST),TS21:1)
+OUTPUT_DIR=Objects/TS21-heater-test
+HEXFILE_DIR=Hexfile/TS21-heater-test
+endif
 # DENSE_UI=1 builds the data dense 128x32 layout (OLED_128x32_DENSE_UI) into its own object set.
 # Used by build.sh for the S60 / T55, where the layout fits every language except the CJK ones
 # (see the note in Core/BSP/Sequre/configuration.h); the S99 / S60P enable it in configuration.h.
@@ -307,6 +325,20 @@ bootldr_size=0x0
 
 endif # ALL_PINECIL_V2_MODELS
 
+ifeq ($(model),TS21)
+DEVICE_BSP_DIR=./Core/BSP/TS21/IronOS
+LDSCRIPT=./Core/BSP/TS21/ts21.ld
+flash_size=64k
+bootldr_size=0x7000
+DEVICE_DFU_ADDRESS=0x08007000
+CPUFLAGS=-march=rv32imac -mabi=ilp32 -mcmodel=medany -fsigned-char -nostartfiles
+DEV_LDFLAGS=-nostartfiles
+DEV_GLOBAL_DEFS=-DTS21_IRONOS -DportasmHANDLE_INTERRUPT=unused
+ifeq ($(TS21_HEATER_TEST),1)
+DEV_GLOBAL_DEFS+=-DTS21_HEATER_TEST
+endif
+endif
+
 DEVICE_BSP_INCLUDE_DIRS:= ${shell find ${DEVICE_BSP_DIR} -type d -print}
 THREADS_INCLUDE_DIRS:= ${shell find ${THREADS_DIR} -type d -print}
 DRIVERS_INCLUDE_DIRS:= ${shell find ${DRIVERS_DIR} -type d -print}
@@ -342,6 +374,13 @@ SOURCE_CPP:=$(shell find ${THREADS_DIR}      -type f -name '*.cpp') \
 
 S_SRCS:=$(shell find $(DEVICE_BSP_DIR) -type f -name '*.S')
 
+ifeq ($(model),TS21)
+INCLUDES+=-I./Core/BSP/TS21
+SOURCE:=$(filter-out ./Core/Src/freertos.c ./Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/%,$(SOURCE))
+SOURCE+=./Core/BSP/TS21/hardware.c ./Core/BSP/TS21/protocol.c ./Core/BSP/TS21/sensors.c
+S_SRCS+=./Core/BSP/TS21/startup.S
+endif
+
 
 # Code optimisation ------------------------------------------------------------
 OPTIM=-Os                             \
@@ -366,6 +405,10 @@ OPTIM=-Os                             \
       -ffinite-math-only              \
       -fno-signed-zeros               \
       -fsingle-precision-constant
+
+ifeq ($(model),TS21)
+OPTIM:=$(subst -flto=auto,-flto,$(OPTIM))
+endif
 
 # Global defines ---------------------------------------------------------------
 GLOBAL_DEFINES+=$(DEV_GLOBAL_DEFS) -D USE_RTOS_SYSTICK -D MODEL_$(model) -D VECT_TAB_OFFSET=$(bootldr_size)U -fshort-wchar $(DENSE_UI_DEFINE)
@@ -397,6 +440,9 @@ COMPILER_PREFIX=arm-none-eabi
 endif
 ifeq ($(model),$(filter $(model),$(ALL_PINECIL_MODELS) $(ALL_PINECIL_V2_MODELS)))
 COMPILER_PREFIX=riscv-none-elf
+endif
+ifeq ($(model),TS21)
+COMPILER_PREFIX?=riscv-none-embed
 endif
 
 # Programs ---------------------------------------------------------------------
@@ -503,6 +549,9 @@ firmware-%: $(HEXFILE_DIR)/$(model)_%.hex $(HEXFILE_DIR)/$(model)_%.bin $(HEXFIL
 
 %.hex: %.elf Makefile
 	$(OBJCOPY) $< -O ihex $@
+ifeq ($(model),TS21)
+	$(HOST_PYTHON) Core/BSP/TS21/tools/inspect_image.py $< --hex $@
+endif
 
 %.bin: %.elf Makefile
 	$(OBJCOPY) $< -O binary $@
@@ -511,9 +560,12 @@ firmware-%: $(HEXFILE_DIR)/$(model)_%.hex $(HEXFILE_DIR)/$(model)_%.bin $(HEXFIL
 %.dfu: %.bin Makefile
 	$(HOST_PYTHON) dfuse-pack.py -b $(DEVICE_DFU_ADDRESS)@0:$< -D $(DEVICE_DFU_VID_PID) $@
 
+# TS21 needs both existing lossless compression formats within its fixed flash region.
+SINGLE_LANGUAGE_TRANSLATION := $(if $(filter TS21,$(model)),Translation_brieflz_font,Translation)
+
 $(HEXFILE_DIR)/$(model)_%.elf: \
 		$(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP)    \
-		$(OUTPUT_DIR)/Core/Gen/Translation.%.o       \
+		$(OUTPUT_DIR)/Core/Gen/$(SINGLE_LANGUAGE_TRANSLATION).%.o \
 		$(OUTPUT_DIR)/Core/LangSupport/lang_single.o \
 		$(OUTPUT_DIR)/Core/Gen/settings_gen.$(model).o \
 		Makefile $(LDSCRIPT)
@@ -521,7 +573,7 @@ $(HEXFILE_DIR)/$(model)_%.elf: \
 	@echo Linking $@
 	@$(CPP) $(CXXFLAGS) $(OUT_OBJS_S) $(OUT_OBJS) $(OUT_OBJS_CPP) \
         $(OUTPUT_DIR)/Core/Gen/settings_gen.$(model).o \
-		$(OUTPUT_DIR)/Core/Gen/Translation.$*.o      \
+		$(OUTPUT_DIR)/Core/Gen/$(SINGLE_LANGUAGE_TRANSLATION).$*.o \
 		$(OUTPUT_DIR)/Core/LangSupport/lang_single.o \
 		$(LIBS) $(LINKER_FLAGS) -o$@ -Wl,-Map=$@.map
 
@@ -602,12 +654,12 @@ $(OUTPUT_DIR)/Core/Gen/settings_gen.%.o: Core/Gen/settings_gen.%.cpp
 $(OUTPUT_DIR)/Core/Gen/translation.files/%.o: Core/Gen/Translation.%.cpp
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Generating $@
-	@$(CPP) -c $(filter-out -flto=auto ,$(CXXFLAGS)) $< -o $@
+	@$(CPP) -c $(filter-out -flto%,$(CXXFLAGS)) $< -o $@
 
 $(OUTPUT_DIR)/Core/Gen/translation.files/multi.%.o: Core/Gen/Translation_multi.%.cpp
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Generating $@
-	@$(CPP) -c $(filter-out -flto=auto ,$(CXXFLAGS)) $< -o $@
+	@$(CPP) -c $(filter-out -flto%,$(CXXFLAGS)) $< -o $@
 
 $(HOST_OUTPUT_DIR)/brieflz/libbrieflz.so: Core/brieflz/brieflz.c Core/brieflz/depack.c
 	@test -d $(@D) || mkdir -p $(@D)
@@ -624,14 +676,15 @@ Core/Gen/Translation_brieflz.%.cpp: $(OUTPUT_DIR)/Core/Gen/translation.files/%.o
 		--strings-obj "$(OUTPUT_DIR)/Core/Gen/translation.files/$*.o"        \
 		$*
 
-Core/Gen/Translation_brieflz_font.%.cpp: $(OUTPUT_DIR)/Core/Gen/translation.files/%.pickle $(HOST_OUTPUT_DIR)/brieflz/libbrieflz.so Core/Gen/macros.txt
+Core/Gen/Translation_brieflz_font.%.cpp: $(OUTPUT_DIR)/Core/Gen/translation.files/%.pickle $(HOST_OUTPUT_DIR)/brieflz/libbrieflz.so Core/Gen/macros.txt $(if $(filter TS21,$(model)),$(OUTPUT_DIR)/Core/Gen/translation.files/%.o)
 	@test -d $(@D) || mkdir -p $(@D)
 	@echo Generating BriefLZ compressed translation font for $*
-	@$(HOST_PYTHON) ../Translations/make_translation.py        \
-		--macros $(PWD)/Core/Gen/macros.txt                \
-		-o $(PWD)/Core/Gen/Translation_brieflz_font.$*.cpp \
+	@OBJCOPY=$(OBJCOPY) $(HOST_PYTHON) ../Translations/make_translation.py \
+		--macros "$(CURDIR)/Core/Gen/macros.txt"                \
+		-o "$(CURDIR)/Core/Gen/Translation_brieflz_font.$*.cpp" \
 		--input-pickled $(OUTPUT_DIR)/Core/Gen/translation.files/$*.pickle \
 		--compress-font \
+		$(if $(filter TS21,$(model)),--strings-obj "$(OUTPUT_DIR)/Core/Gen/translation.files/$*.o") \
 		$*
 
 # The recipes to produce multi-language firmwares:
@@ -746,5 +799,6 @@ check-style:
 # Pull in dependency info for *existing* .o files
 -include $(OUT_OBJS:.o=.d)
 -include $(OUT_OBJS_CPP:.o=.d)
--include $(OUTPUT_DIR)/Core/Gen/*.d
--include $(OUTPUT_DIR)/Core/Gen/translation.files/*.d
+$(OUTPUT_DIR)/Core/Gen/%.d: ;
+-include $(wildcard $(OUTPUT_DIR)/Core/Gen/*.d)
+-include $(wildcard $(OUTPUT_DIR)/Core/Gen/translation.files/*.d)

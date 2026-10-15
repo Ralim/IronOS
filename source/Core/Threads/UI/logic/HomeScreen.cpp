@@ -36,6 +36,11 @@ OperatingMode handleHomeButtons(const ButtonState buttons, guiContext *cxt) {
 #endif
     break;
   case BUTTON_F_SHORT:
+#ifdef TS21_HEATER_TEST
+    if (ts21_status.errors & TS21_HEATER_INHIBIT_ERRORS) {
+      return OperatingMode::ThermalRunaway;
+    }
+#endif
     if (!isTipDisconnected()) {
       bool detailedView   = getSettingValue(SettingsOptions::DetailedIDLE) && getSettingValue(SettingsOptions::DetailedSoldering);
       cxt->transitionMode = detailedView ? TransitionAnimation::None : TransitionAnimation::Left;

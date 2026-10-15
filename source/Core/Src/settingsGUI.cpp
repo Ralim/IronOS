@@ -53,6 +53,10 @@ static void displayPowerLimit(void);
 static void displayBuzzerEnabled(void);
 #endif /* BUZZER_SETTING */
 
+#ifdef WORKLIGHT_SETTING
+static void displayWorklightEnabled(void);
+#endif
+
 #ifdef BLE_ENABLED
 static void displayBluetoothLE(void);
 #endif /* BLE_ENABLED */
@@ -420,6 +424,9 @@ const menuitem UIMenu[] = {
   /* Buzzer on/off */
   {SETTINGS_DESC(SettingsItemIndex::BuzzerEnabled), nullptr, displayBuzzerEnabled, nullptr, SettingsOptions::BuzzerEnabled, SettingsItemIndex::BuzzerEnabled, 7},
 #endif /* BUZZER_SETTING */
+#ifdef WORKLIGHT_SETTING
+  {SETTINGS_DESC(SettingsItemIndex::WorklightEnabled), nullptr, displayWorklightEnabled, nullptr, SettingsOptions::WorklightEnabled, SettingsItemIndex::WorklightEnabled, 7},
+#endif
   /* Scroll Speed for descriptions */
   {SETTINGS_DESC(SettingsItemIndex::ScrollingSpeed), nullptr, displayScrollSpeed, nullptr, SettingsOptions::DescriptionScrollSpeed, SettingsItemIndex::ScrollingSpeed, 7},
   /* Reverse Temp change buttons +/- */
@@ -463,7 +470,9 @@ const menuitem advancedMenu[] = {
   /* Power limit */
   {SETTINGS_DESC(SettingsItemIndex::PowerLimit), nullptr, displayPowerLimit, nullptr, SettingsOptions::PowerLimit, SettingsItemIndex::PowerLimit, 4},
   /* Calibrate Cold Junktion Compensation at next boot */
+#ifndef TEMP_DIRECT_ADC
   {SETTINGS_DESC(SettingsItemIndex::CalibrateCJC), setCalibrate, displayCalibrate, nullptr, SettingsOptions::CalibrateCJC, SettingsItemIndex::CalibrateCJC, 7},
+#endif
   /* Voltage input cal */
   {SETTINGS_DESC(SettingsItemIndex::VoltageCalibration), setCalibrateVIN, noOpDisplay, nullptr, SettingsOptions::SettingsOptionsLength, SettingsItemIndex::VoltageCalibration, 5},
   /* Power Pulse adjustment */
@@ -935,6 +944,10 @@ static void displayDisplayRotation(void) {
 static void displayCoolingBlinkEnabled(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::CoolingTempBlink)); }
 
 static void displayBuzzerEnabled(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::BuzzerEnabled)); }
+
+#ifdef WORKLIGHT_SETTING
+static void displayWorklightEnabled(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::WorklightEnabled)); }
+#endif
 
 static void displayScrollSpeed(void) { printValue(translatedString((getSettingValue(SettingsOptions::DescriptionScrollSpeed)) ? Tr->SettingFastChar : Tr->SettingSlowChar)); }
 

@@ -45,6 +45,8 @@ enum class OperatingMode {
   ThermalRunaway     = 9,  // Thermal Runaway warning state.
 };
 
+extern OperatingMode currentOperatingMode;
+
 enum class TransitionAnimation {
   None  = 0,
   Right = 1,

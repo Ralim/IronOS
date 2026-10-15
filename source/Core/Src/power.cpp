@@ -9,9 +9,11 @@
 #include <Settings.h>
 #include <power.hpp>
 
+#ifndef BSP_HAS_POWER_READBACK
 static int32_t PWMToX10Watts(uint8_t pwm, uint8_t sample);
-const int      fastPWMChangeoverPoint     = 128;
-const int      fastPWMChangeoverTolerance = 16;
+#endif
+const int fastPWMChangeoverPoint     = 128;
+const int fastPWMChangeoverTolerance = 16;
 
 expMovingAverage<uint32_t, wattHistoryFilter> x10WattHistory = {0};
 
@@ -28,10 +30,17 @@ bool shouldBeUsingFastPWMMode(const uint8_t pwmTicks) {
 }
 
 void setTipX10Watts(int32_t mw) {
+#ifdef HEATER_DISABLED
+  mw = 0;
+#endif
   int32_t    outputPWMLevel   = X10WattsToPWM(mw, 1);
   const bool shouldUseFastPWM = shouldBeUsingFastPWMMode(outputPWMLevel);
   setTipPWM(outputPWMLevel, shouldUseFastPWM);
+#ifdef BSP_HAS_POWER_READBACK
+  uint32_t actualMilliWatts = getTipX10Watts();
+#else
   uint32_t actualMilliWatts = PWMToX10Watts(outputPWMLevel, 0);
+#endif
 
   x10WattHistory.update(actualMilliWatts);
 }
@@ -65,8 +74,15 @@ uint8_t X10WattsToPWM(int32_t x10Watts, uint8_t sample) {
   }
 
   // Calculate desired x10Watts as a percentage of availableW10
+  const uint32_t available = availableW10(sample);
+  if (available == 0) {
+    return 0;
+  }
+  if ((uint32_t)x10Watts >= available) {
+    return powerPWM;
+  }
   uint32_t pwm;
-  pwm = (powerPWM * x10Watts) / availableW10(sample);
+  pwm = (powerPWM * (uint32_t)x10Watts) / available;
   if (pwm > powerPWM) {
     // constrain to max PWM counter
     pwm = powerPWM;
@@ -74,8 +90,10 @@ uint8_t X10WattsToPWM(int32_t x10Watts, uint8_t sample) {
   return pwm;
 }
 
+#ifndef BSP_HAS_POWER_READBACK
 static int32_t PWMToX10Watts(uint8_t pwm, uint8_t sample) {
   uint32_t maxMW = availableW10(sample); // Get the milliwatts for the max pwm period
   // Then convert pwm into percentage of powerPWM to get the percentage of the max mw
   return (((uint32_t)pwm) * maxMW) / powerPWM;
 }
+#endif

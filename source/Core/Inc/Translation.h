@@ -115,6 +115,7 @@ enum class SettingsItemIndex : uint8_t {
   LanguageSwitch,
   SolderingTipType,
   BuzzerEnabled,
+  WorklightEnabled,
   NUM_ITEMS,
 };
 
@@ -128,6 +129,7 @@ struct TranslationIndexTable {
   uint16_t UnlockingKeysString;
   uint16_t WarningKeysLockedString;
   uint16_t WarningThermalRunaway;
+  uint16_t WarningHeaterStopped;
   uint16_t WarningTipShorted;
 
   uint16_t SettingsCalibrationWarning;

@@ -79,8 +79,9 @@ enum SettingsOptions {
   SolderingTipType               = 54, // Selecting the type of soldering tip fitted
   ReverseButtonSettings          = 55, // Change the A and B button assigment in Settings menu
   BuzzerEnabled                  = 56, // Buzzer on/off (devices with a buzzer)
+  WorklightEnabled               = 57, // Front work light on/off
   //
-  SettingsOptionsLength = 57, // End marker
+  SettingsOptionsLength = 58, // End marker
 };
 
 // For every setting we need to store the min/max/increment values

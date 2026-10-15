@@ -235,6 +235,9 @@ jobs:
       - name: Run BriefLZ tests
         run: make  -C source/  Objects/host/brieflz/libbrieflz.so && ./Translations/brieflz_test.py
 
+      - name: Run TS21 diagnostic host tests
+        run: make test-ts21
+
   check_c-cpp:
     runs-on: ubuntu-24.04
     container:
@@ -288,10 +291,10 @@ jobs:
         run: python3 -m pip install --break-system-packages bdflib pyyaml flake8
 
       - name: Check python formatting with black
-        run: black --diff --check Translations
+        run: black --diff --check Translations source/Core/BSP/TS21
 
       - name: Check python with flake8
-        run: flake8 Translations
+        run: flake8 Translations source/Core/BSP/TS21
 
   check_shell:
     name: check_shell

@@ -479,3 +479,11 @@ Enable the buzzer: short beep when the set temperature is reached and at the end
 On device help text:
 
 Beep when the set temperature is reached and at the end of a profile
+
+### Setting: Work light
+
+Switch the front work light on or off.
+
+On device help text:
+
+Front work light on/off

@@ -2,6 +2,9 @@
 #include "ui_drawing.hpp"
 
 OperatingMode performCJCC(const ButtonState buttons, guiContext *cxt) {
+#ifdef TEMP_DIRECT_ADC
+  return OperatingMode::StartupWarnings;
+#else
   // Calibrate Cold Junction Compensation directly at boot, before internal components get warm.
 
   // While we wait for the pre-start checks to finish, we cant run CJC (as the pre-start checks control the tip)
@@ -39,4 +42,5 @@ OperatingMode performCJCC(const ButtonState buttons, guiContext *cxt) {
   }
   // Cant run calibration without the tip and for temps to be close
   return OperatingMode::StartupWarnings;
+#endif
 }

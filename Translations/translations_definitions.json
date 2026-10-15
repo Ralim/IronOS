@@ -35,7 +35,15 @@
     },
     {
       "id": "WarningThermalRunaway",
+      "exclude": ["TS21_HEATER_TEST"],
       "description": "Warning text shown when the software has disabled the heater as a safety precaution as the temperature reading didn't react as expected."
+    },
+    {
+      "id": "WarningHeaterStopped",
+      "default": "Heating stopped\n",
+      "include": ["TS21_HEATER_TEST"],
+      "maxLen": 15,
+      "description": "First line above a latched heater-stop code. Keep the trailing newline to use the small font and leave the second line for the code."
     },
     {
       "id": "WarningTipShorted",
@@ -610,6 +618,17 @@
       "maxLen2": 13,
       "include": ["BUZZER_SETTING"],
       "description": "Enable the buzzer: short beep when the set temperature is reached and at the end of a profile."
+    },
+    {
+      "id": "WorklightEnabled",
+      "maxLen": 6,
+      "maxLen2": 13,
+      "include": ["WORKLIGHT_SETTING"],
+      "description": "Switch the front work light on or off.",
+      "default": {
+        "displayText": "Work\nlight",
+        "description": "Front work light on/off"
+      }
     }
   ]
 }

@@ -51,11 +51,14 @@ OperatingMode guiHandleDraw(void) {
   } else {
     // Buttons are none; check if we can sleep display
     uint32_t tipTemp = TipThermoModel::getTipInC();
+#if !defined(HEATER_DISABLED) && !defined(TS21_HEATER_TEST)
     if ((tipTemp < 50) && getSettingValue(SettingsOptions::Sensitivity) &&
         (((xTaskGetTickCount() - lastMovementTime) > MOVEMENT_INACTIVITY_TIME) && ((xTaskGetTickCount() - lastButtonTime) > BUTTON_INACTIVITY_TIME))) {
       OLED::setDisplayState(OLED::DisplayState::OFF);
       setStatusLED(LED_OFF);
-    } else {
+    } else
+#endif
+    {
       OLED::setDisplayState(OLED::DisplayState::ON);
     }
     if (currentOperatingMode != OperatingMode::Soldering && currentOperatingMode != OperatingMode::SolderingProfile) {
@@ -142,10 +145,31 @@ OperatingMode guiHandleDraw(void) {
     }
     break;
   case OperatingMode::ThermalRunaway:
+#ifdef TS21_HEATER_TEST
+    if (!(ts21_status.errors & TS21_HEATER_INHIBIT_ERRORS)) {
+      ts21_heater_trip(TS21_ERROR_HEATER_MONITOR);
+    }
+    // Keep the stop visible until acknowledged, regardless of prior button inactivity.
+    warnUser(translatedString(Tr->WarningHeaterStopped), BUTTON_NONE);
+    OLED::setCursor(32, 16);
+    OLED::drawHex(ts21_status.errors & TS21_HEATER_INHIBIT_ERRORS, FontStyle::SMALL, 8);
+    if (buttons != BUTTON_NONE) {
+      context.scratch_state.state1 = 1;
+    }
+    // Consume the complete acknowledgment gesture before allowing a new manual start.
+    if (context.scratch_state.state1 && !getButtonA() && !getButtonB()) {
+      ts21_heater_acknowledge();
+      newMode = OperatingMode::HomeScreen;
+    }
+#else
     /*TODO*/
     newMode = OperatingMode::HomeScreen;
+#endif
     break;
   };
+#ifdef WORKLIGHT_SETTING
+  setWorklight(getSettingValue(SettingsOptions::WorklightEnabled));
+#endif
   return newMode;
 }
 void guiRenderLoop(void) {

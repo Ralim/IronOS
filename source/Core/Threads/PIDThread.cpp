@@ -28,6 +28,9 @@ TaskHandle_t               pidTaskNotification         = NULL;
 volatile TemperatureType_t currentTempTargetDegC       = 0; // Current temperature target in C
 int32_t                    powerSupplyWattageLimit     = 0;
 uint8_t                    heaterThermalRunawayCounter = 0;
+static volatile uint32_t   pidResetGeneration;
+
+void requestPIDReset() { pidResetGeneration = pidResetGeneration + 1U; }
 
 static int32_t getPIDResultX10Watts(TemperatureType_t set_point, TemperatureType_t current_value);
 static void    detectThermalRunaway(const TemperatureType_t currentTipTempInC, const uint32_t x10WattsOut);
@@ -212,17 +215,35 @@ template <class T = TemperatureType_t> struct Integrator {
 #endif
 int32_t getPIDResultX10Watts(TemperatureType_t set_point, TemperatureType_t current_reading) {
   static TickType_t lastCall = 0;
+  static uint32_t   appliedResetGeneration;
+  const TickType_t  now        = xTaskGetTickCount();
+  const uint32_t    generation = pidResetGeneration;
+  const bool        reset      = generation != appliedResetGeneration;
+  if (reset) {
+    // The PID owns its history; a GUI request must not mutate it mid-update.
+    const TickType_t restartInterval = TICKS_SECOND / PID_TIM_HZ;
+    appliedResetGeneration           = generation;
+    lastCall                         = now - (restartInterval ? restartInterval : 1);
+  }
 
 #ifdef TIP_CONTROL_PID
   static PID<TemperatureType_t, TIP_PID_KP, TIP_PID_KI, TIP_PID_KD, 5> pid = {0, 0};
+  if (reset) {
+    pid = {0, 0};
+  }
 
-  const TickType_t interval = (xTaskGetTickCount() - lastCall);
+  const TickType_t interval = (now - lastCall);
 
 #else
   static Integrator<TemperatureType_t> powerStore = {0};
-  const TickType_t                     rate       = TICKS_SECOND / (xTaskGetTickCount() - lastCall);
+  if (reset) {
+    powerStore.set(0);
+  }
+  const TickType_t elapsed = now - lastCall;
+  // Start/resume at the nominal rate; idle gaps and same-tick calls must not divide by zero.
+  const TickType_t rate = elapsed && elapsed < TICKS_SECOND ? TICKS_SECOND / elapsed : PID_TIM_HZ;
 #endif
-  lastCall = xTaskGetTickCount();
+  lastCall = now;
   // Sandman note:
   // PID Challenge - we have a small thermal mass that we to want heat up as fast as possible but we don't
   // want to overshot excessively (if at all) the set point temperature. In the same time we have 'imprecise'

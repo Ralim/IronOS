@@ -68,10 +68,18 @@ void ui_draw_debug_menu(const uint8_t item_number) {
     OLED::printNumber(getTipResistanceX10() % 10, 1, FontStyle::SMALL);
     break;
   case 11: // Raw Tip in µV
+#ifndef TEMP_DIRECT_ADC
     OLED::printNumber(TipThermoModel::convertTipRawADCTouV(getTipRawTemp(0), true), 8, FontStyle::SMALL);
+#else
+    OLED::drawUnavailableIcon();
+#endif
     break;
   case 12: // Tip Cold Junction Compensation Offset in µV
+#ifndef TEMP_DIRECT_ADC
     OLED::printNumber(getSettingValue(SettingsOptions::CalibrationOffset), 8, FontStyle::SMALL);
+#else
+    OLED::drawUnavailableIcon();
+#endif
     break;
   case 13: // High Water Mark for GUI
     OLED::printNumber(uxTaskGetStackHighWaterMark(GUITaskHandle), 8, FontStyle::SMALL);
