@@ -23,6 +23,10 @@ static const uint8_t tempMeasureTicks = 15;
 uint16_t totalPWM = powerPWM + tempMeasureTicks + holdoffTicks; // htim2.Init.Period, the full PWM cycle
 
 void resetWatchdog() { HAL_IWDG_Refresh(&hiwdg); }
+
+#ifdef BUZZER_Pin
+static volatile uint16_t buzzerTogglesLeft = 0; // Tone stops by itself when this runs out
+#endif
 // Lookup table for the NTC
 // We dont know exact specs, but it loooks to be roughly a 10K B=4000 NTC
 // Stored as ADCReading,Temp in degC
@@ -281,8 +285,14 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
   }
 #ifdef BUZZER_Pin
   else if (htim->Instance == TIM3) {
-    // Buzzer tone: square wave on a plain GPIO
-    HAL_GPIO_TogglePin(BUZZER_GPIO_Port, BUZZER_Pin);
+    // Buzzer tone: square wave on a plain GPIO, at most one second long
+    if (buzzerTogglesLeft == 0) {
+      HAL_TIM_Base_Stop_IT(&htim3);
+      HAL_GPIO_WritePin(BUZZER_GPIO_Port, BUZZER_Pin, GPIO_PIN_RESET);
+    } else {
+      buzzerTogglesLeft--;
+      HAL_GPIO_TogglePin(BUZZER_GPIO_Port, BUZZER_Pin);
+    }
   }
 #endif
 }
@@ -502,6 +512,7 @@ void setBuzzer(bool on) {
     on = false; // Muted by the user
   }
   if (on) {
+    buzzerTogglesLeft = 2 * BUZZER_FREQ_HZ;
     HAL_TIM_Base_Start_IT(&htim3);
   } else {
     HAL_TIM_Base_Stop_IT(&htim3);

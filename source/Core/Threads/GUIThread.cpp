@@ -154,6 +154,7 @@ void guiRenderLoop(void) {
   // Post draw we handle any state transitions
 
   if (newMode != currentOperatingMode) {
+    setBuzzer(false); // A beep never carries over to the next screen
     context.viewEnterTime = xTaskGetTickCount();
     context.previousMode  = currentOperatingMode;
     // If the previous mode is the startup logo; we dont want to return to it, but instead dispatch out to either home or soldering
