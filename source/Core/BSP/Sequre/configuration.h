@@ -286,6 +286,9 @@
 #define TIP_TYPE_SUPPORT          1    // Support for tips of different types, i.e. resistance
 #define TIPTYPE_C245              1    // Sequre 5.5 ohm stock or JBC/Relife style 2.5 ohm C245 cartridges
 #define TIP_CURRENT_LIMIT_CHOP    1    // Envelope PWM for power, fast chop only for supply current limiting
+#define TIP_PEAK_CURRENT_MAX_X100 600  // Highest tip current (V / R) the output stage may switch; PD picks a lower voltage for a 2.5 ohm cartridge
+#define TIP_CHOP_SLOW_ABOVE_X100  450  // Above this tip current the chop uses the slow frequency set (the loss per edge grows with the current)
+#define TIP_CHOP_TURNOFF_TAIL_US  45   // The MOSFET keeps conducting this long after the drive goes off (gate pull-up RC, see Ralim/IronOS#2244)
 #define BUZZER_SETTING            1    // Expose the buzzer on/off as a user setting
 #define BUZZER_STARTUP_CHIRP      1    // Short beep once the boot logo has been shown
 #define BUZZER_FREQ_HZ            4000 // Tone frequency; small piezos are loudest near their ~4 kHz resonance

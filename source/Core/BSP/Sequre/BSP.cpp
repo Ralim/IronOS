@@ -121,13 +121,24 @@ static const uint16_t tipChopPeriodTicks = 64 + 1; // TIM4 ARR + 1
  * uses it too), so as long as the handle stays cool the fastest sensible frequency is used, and each
  * temperature step drops it further (TIP_PWM_SLOWDOWN_1_C / _2_C, 5 C of hysteresis on the way back).
  *
- * Base step: while the duty is capped to the supply current the pulses should be as short as possible, so
- * it starts at the S60's 11.2 kHz (one step lower above 5.5 A, where a 2.5 ohm cartridge would otherwise
- * burn ~0.9 W in switching loss alone). Starting fast is only safe because the loop below walks it back
- * down as soon as the FET warms up. With no cap - or on DC, where there is no source to upset - it starts
- * at ~2.4 kHz, which is what the S60 does once it is resistance limited (see preStartChecks below).
+ * Base step: the gate drive is weak (tens of us per edge, see Ralim/IronOS#2244), so the loss per edge grows
+ * with the tip current and a 2.5 ohm cartridge cannot be switched as fast as the stock 5.5 ohm one. Up to
+ * TIP_CHOP_SLOW_ABOVE_X100 (stock cartridge, or 2.5 ohm on 9 V) it is the S60 behaviour: 11.2 kHz while the
+ * duty is capped to the supply current - the pulses should be as short as possible for the charger - and
+ * ~2.4 kHz with no cap, or on DC where there is no source to upset. Above it (2.5 ohm on 15 V = 6 A, PD never
+ * goes higher, see TIP_PEAK_CURRENT_MAX_X100) the capped chop runs at ~3 kHz: slower would be kinder to the
+ * MOSFET still, but a 6 A pulse of 150 us already pulls ~1.5 V of ripple from a charger with ~300 uF behind
+ * the port, so going slower on PD risks the brown-outs the chop is there to avoid. On DC, where the supply
+ * has the capacitance, it goes straight to ~1 kHz. Starting fast is only safe because the loop below walks
+ * it back down as soon as the FET warms up.
+ *
+ * Turn-off tail: the gate is released through a pull-up, so after the drive goes off the MOSFET stays on for
+ * another TIP_CHOP_TURNOFF_TAIL_US (-10 V to the Miller level). On the slow set that tail is taken off the
+ * commanded pulse, otherwise the supply sees ~45 us more conduction per cycle than the cap intended (that is
+ * the "85 W measured at a 60 W limit" report), and when the capped pulse would be shorter than two tails the
+ * chop slows down first so the pulse is still a pulse rather than two half-finished edges.
  */
-static const uint16_t tipChopPrescalers[]   = {10, 20, 40, 50, 80}; // ~11.2 / 5.9 / 3.0 / 2.4 / 1.5 kHz
+static const uint16_t tipChopPrescalers[]   = {10, 20, 40, 50, 80, 120}; // ~11.2 / 5.9 / 3.0 / 2.4 / 1.5 / 1.0 kHz
 static const uint8_t  tipChopPrescalerCount = sizeof(tipChopPrescalers) / sizeof(tipChopPrescalers[0]);
 
 static uint8_t tipChopThermalStep(void) {
@@ -199,21 +210,41 @@ uint16_t getTipChopDutyX256() {
   }
   tipChopDutyX256 = dutyX256;
 
-  uint16_t cap = tipChopPeriodTicks;
-  if (dutyX256 < 256) {
-    cap = (dutyX256 * tipChopPeriodTicks) / 256;
-    if (cap < 1) {
-      cap = 1;
+  // Base step from the tip current, see the comment above the prescaler table
+  const bool uncapped = (dutyX256 >= 256) || getIsPoweredByDCIN();
+  const bool slowSet  = tipCurrentx100 > TIP_CHOP_SLOW_ABOVE_X100;
+  uint8_t    step;
+  if (slowSet) {
+    step = uncapped ? 5 : 2; // ~1.0 kHz / ~3.0 kHz
+  } else {
+    step = uncapped ? 3 : 0; // ~2.4 kHz / 11.2 kHz
+  }
+  const uint16_t onTicks = (dutyX256 * tipChopPeriodTicks) / 256;
+  if (slowSet && !uncapped) {
+    // Slow down until the commanded pulse is at least two turn-off tails long (tick = (PSC + 1) / 8 us)
+    while (step < tipChopPrescalerCount - 1 && (uint32_t)onTicks * (tipChopPrescalers[step] + 1) < 16UL * TIP_CHOP_TURNOFF_TAIL_US) {
+      step++;
     }
   }
-  tipDutyCapTicks = cap;
-
-  uint8_t step = (dutyX256 >= 256 || getIsPoweredByDCIN()) ? 3 : (tipCurrentx100 > 550 ? 1 : 0);
   step += tipChopThermalStep();
   if (step >= tipChopPrescalerCount) {
     step = tipChopPrescalerCount - 1;
   }
   applyTipChopPrescaler(tipChopPrescalers[step]);
+
+  uint16_t cap = tipChopPeriodTicks;
+  if (dutyX256 < 256) {
+    cap = onTicks;
+    if (slowSet) {
+      // Take the turn-off tail off the command so the supply sees the intended average current
+      const uint16_t tailTicks = (TIP_CHOP_TURNOFF_TAIL_US * 8 + (tipChopPrescalers[step] + 1) / 2) / (tipChopPrescalers[step] + 1);
+      cap                      = cap > tailTicks ? cap - tailTicks : 0;
+    }
+    if (cap < 1) {
+      cap = 1;
+    }
+  }
+  tipDutyCapTicks = cap;
   return tipChopDutyX256;
 }
 #endif /* TIP_CURRENT_LIMIT_CHOP */

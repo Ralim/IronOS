@@ -227,6 +227,10 @@ void FS2711::negotiate() {
   // min(V^2 / R, V * I) and, within 10 %, prefer one that does not need chopping at all - e.g. 15 V / 3 A over
   // 20 V / 2.25 A for a 5.5 ohm cartridge (41 W clean instead of 45 W pulsed).
   const uint16_t real_tip_resistance = getTipResistanceX10() > 0 ? getTipResistanceX10() : 1;
+  // Peak current ceiling: every pulse runs at V / R_tip, and the gate drive is too weak to switch 8 A (2.5 ohm
+  // cartridge on 20 V) without cooking the MOSFET, whatever the duty. Fixed PDOs above the ceiling are skipped and
+  // PPS is clamped to it, so a 2.5 ohm cartridge runs from 15 V (6 A) while the stock 5.5 ohm one is unaffected.
+  const uint32_t ceiling_mv          = (uint32_t)TIP_PEAK_CURRENT_MAX_X100 * real_tip_resistance; // I_x100 * R_x10 = V_mV
   uint32_t       best_deliverable_mw = 0;
   bool           best_needs_chop     = true;
   // Second candidate: the best PDO whose chop pulses stay within 1.5x its rating. Sources with tight
@@ -260,6 +264,9 @@ void FS2711::negotiate() {
       if (pdo_max_mv > 0 && vmax >= pdo_max_mv) {
 #ifdef TIP_CURRENT_LIMIT_CHOP
         {
+          if (pdo_max_mv > ceiling_mv) {
+            break; // The pulses would exceed the peak current ceiling
+          }
           const uint32_t v_mv         = pdo_max_mv;
           const uint32_t by_tip_mw    = (v_mv * v_mv * 10) / real_tip_resistance / 1000; // V^2 / R
           const uint32_t by_supply_mw = (v_mv * pdo_max_curr) / 1000;                    // V * I
@@ -316,6 +323,11 @@ void FS2711::negotiate() {
       if (ideal_mv > vmax) {
         ideal_mv = vmax;
       }
+#ifdef TIP_CURRENT_LIMIT_CHOP
+      if (ideal_mv > (int)ceiling_mv) {
+        ideal_mv = ceiling_mv;
+      }
+#endif
 
       if (ideal_mv > best_voltage) {
         best_pdoid   = i;
