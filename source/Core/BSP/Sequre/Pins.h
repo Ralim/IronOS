@@ -30,6 +30,7 @@
 #define PWM_Out_Pin           GPIO_PIN_8
 #define PWM_Out_GPIO_Port     GPIOB
 #define PWM_Out_CHANNEL       TIM_CHANNEL_3 // Timer 4; channel 3
+#define PWM_Out_CCR           CCR3
 #define SCL2_Pin              GPIO_PIN_6
 #define SCL2_GPIO_Port        GPIOB
 #define SDA2_Pin              GPIO_PIN_7
@@ -61,6 +62,7 @@
 #define PWM_Out_Pin           GPIO_PIN_8
 #define PWM_Out_GPIO_Port     GPIOB
 #define PWM_Out_CHANNEL       TIM_CHANNEL_3 // Timer 4; channel 3
+#define PWM_Out_CCR           CCR3
 #define SCL2_Pin              GPIO_PIN_6
 #define SCL2_GPIO_Port        GPIOB
 #define SDA2_Pin              GPIO_PIN_7
@@ -96,6 +98,7 @@
 #define PWM_Out_Pin           GPIO_PIN_8
 #define PWM_Out_GPIO_Port     GPIOB
 #define PWM_Out_CHANNEL       TIM_CHANNEL_3 // Timer 4; channel 3
+#define PWM_Out_CCR           CCR3
 #define SCL2_Pin              GPIO_PIN_6
 #define SCL2_GPIO_Port        GPIOB
 #define SDA2_Pin              GPIO_PIN_7
@@ -207,6 +210,7 @@
 #define PWM_Out_Pin       GPIO_PIN_8
 #define PWM_Out_GPIO_Port GPIOB
 #define PWM_Out_CHANNEL   TIM_CHANNEL_3 // Timer 4; channel 3
+#define PWM_Out_CCR       CCR3
 #define SCL2_Pin          GPIO_PIN_6
 #define SCL2_GPIO_Port    GPIOB
 #define SDA2_Pin          GPIO_PIN_7

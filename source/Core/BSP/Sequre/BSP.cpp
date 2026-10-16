@@ -234,11 +234,6 @@ void setTipPWM(const uint8_t pulse, const bool shouldUseFastModePWM) {
 // These are called by the HAL after the corresponding events from the system
 // timers.
 
-// Tip PWM compare register, CCR3 unless set in Pins.h
-#ifndef PWM_Out_CCR
-#define PWM_Out_CCR CCR3
-#endif
-
 // Only drive the active socket
 static inline void setTipDriveDuty(uint16_t duty) {
 #ifdef PWM2_Out_CHANNEL
@@ -285,7 +280,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
   }
 #ifdef BUZZER_Pin
   else if (htim->Instance == TIM3) {
-    // Buzzer tone: square wave on a plain GPIO, at most one second long
+    // Buzzer tone: square wave on a plain GPIO
     if (buzzerTogglesLeft == 0) {
       HAL_TIM_Base_Stop_IT(&htim3);
       HAL_GPIO_WritePin(BUZZER_GPIO_Port, BUZZER_Pin, GPIO_PIN_RESET);
@@ -358,7 +353,7 @@ static void initStatusLEDs(void) {
 }
 
 // First n LEDs on
-static uint16_t statusLEDBar(uint32_t n) { return n >= STATUS_LED_COUNT ? allStatusLEDs : (uint16_t)((1U << n) - 1); }
+static uint16_t getStatusLEDBarBitmask(uint32_t n) { return n >= STATUS_LED_COUNT ? allStatusLEDs : (uint16_t)((1U << n) - 1); }
 
 // LEDMode: 0 off, 1 status, 2 temperature, 3 power
 void setStatusLED(const enum StatusLED state) {
@@ -379,11 +374,11 @@ void setStatusLED(const enum StatusLED state) {
     if (getSettingValue(SettingsOptions::TemperatureInF)) {
       setC = TipThermoModel::convertFtoC(setC);
     }
-    writeStatusLEDs((tipC < 50 || setC == 0 || isTipDisconnected()) ? 0 : statusLEDBar((tipC * STATUS_LED_COUNT + setC / 2) / setC));
+    writeStatusLEDs((tipC < 50 || setC == 0 || isTipDisconnected()) ? 0 : getStatusLEDBarBitmask((tipC * STATUS_LED_COUNT + setC / 2) / setC));
     return;
   }
   if (mode == 3) {
-    writeStatusLEDs(PWMSafetyTimer ? statusLEDBar((pendingPWM * STATUS_LED_COUNT + 127) / 255) : 0);
+    writeStatusLEDs(PWMSafetyTimer ? getStatusLEDBarBitmask((pendingPWM * STATUS_LED_COUNT + 127) / 255) : 0);
     return;
   }
   switch (state) {
@@ -512,6 +507,7 @@ void setBuzzer(bool on) {
     on = false; // Muted by the user
   }
   if (on) {
+    // Run buzzer for 1 second
     buzzerTogglesLeft = 2 * BUZZER_FREQ_HZ;
     HAL_TIM_Base_Start_IT(&htim3);
   } else {

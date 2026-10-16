@@ -127,9 +127,9 @@ uint16_t getADCVin(uint8_t sample) {
   return filter.average();
 }
 #ifdef TIP2_TEMP_ADC1_CHANNEL
-// Both sockets are read every cycle, an empty one reads near full scale.
-// A T12 also touches the TS/SI contacts, so T12 wins and TS/SI is only picked while idle.
-// Both sockets reading a tip means a short: no output until it clears.
+// Both sets of contacts are read every cycle, an empty one reads close to full scale.
+// A T12 tip also touches the TS/SI contacts, so T12 takes priority and we only switch to TS/SI while idle.
+// If a tip is detected in both sets of contacts, it is likely a short and we mask output and dont allow drive until the short is removed.
 static const uint16_t tipOpenThreshold     = (ADC_MAX_READING * 31) / 32;
 static const uint8_t  tipSwitchSampleCount = 16; // Readings in a row before changing state
 static uint8_t        activeTipChannel     = 0;
