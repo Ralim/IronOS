@@ -863,11 +863,14 @@ static void test_heater_faults(void) {
   }
 
   // An open tip, a supply excursion and an inflated post-pulse reading withhold power without stopping.
+  // The last two cannot be measured for resistance at all; that must not be read as a short.
   const struct TS21Sample transient[] = {
       {.tip_probe = 4095,  .tip = 580, .handle = 2864,  .input = 725},
       { .tip_probe = 934,  .tip = 580, .handle = 2864,  .input = 500},
       { .tip_probe = 934,  .tip = 580, .handle = 2864, .input = 3500},
       {.tip_probe = 3682, .tip = 3328, .handle = 2864,  .input = 725},
+      { .tip_probe = 580,  .tip = 580, .handle = 2864,  .input = 725},
+      { .tip_probe = 560,  .tip = 580, .handle = 2864,  .input = 725},
   };
   for (unsigned i = 0; i < sizeof(transient) / sizeof(transient[0]); ++i) {
     prepare_heater();
@@ -1005,13 +1008,13 @@ static void test_manual_heater_recovery(void) {
   sample_heater();
   setTipPWM(255, false);
   ts21_heater_trip(TS21_ERROR_SENSOR);
-  adc_fixture.tip_probe = adc_fixture.tip;
+  adc_fixture.tip_probe = (uint16_t)(adc_fixture.tip + 20); // Measurable, and genuinely below 1.0 ohm.
   sample_heater();
   assert(!ts21_heater_reset_faults());
   assert(ts21_status.errors & TS21_ERROR_HEATER_SHORT);
   assert(!heater_permitted);
   assert_heater_off();
-  adc_fixture.tip_probe += 354;
+  adc_fixture.tip_probe += 334;
   sample_heater();
   assert(ts21_heater_reset_faults());
   assert_heater_off();

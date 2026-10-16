@@ -131,7 +131,9 @@ static void heater_record_sample(const struct TS21Sample *sample) {
   heater_sample_error       = 0;
   if (!ts21_tip_delta_c(sample->tip, &tip) || !ts21_handle_c_x10(sample->handle, &handle)) {
     heater_sample_error = TS21_ERROR_SENSOR;
-  } else if (sample->tip_probe >= 4090 || sample->tip >= 4090 || resistance > TS21_HEATER_MAX_R_X10) {
+  } else if (sample->tip_probe >= 4090 || sample->tip >= 4090 || sample->tip == 0 || sample->tip_probe <= sample->tip || resistance > TS21_HEATER_MAX_R_X10) {
+    // ts21_tip_resistance_x10() reports 0 both for a genuine short and for a sample whose probe
+    // phase never rose above the temperature phase. Only the measurable case is allowed to latch.
     heater_sample_error = TS21_ERROR_HEATER_OPEN;
   } else if (resistance < TS21_HEATER_MIN_R_X10) {
     heater_sample_error = TS21_ERROR_HEATER_SHORT;

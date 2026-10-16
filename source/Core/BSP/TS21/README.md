@@ -140,8 +140,9 @@ only in the heater build.
 
 ```
 sensor  tip ADC 0 or full scale, or handle outside the NTC table   latching
-open    tip or probe ADC >= 4090, or element above 10.0 ohm        inhibit only
-short   element below 1.0 ohm                                      latching
+open    tip or probe ADC >= 4090, element above 10.0 ohm, or a     inhibit only
+        probe phase that did not rise above the temperature phase
+short   measurable element below 1.0 ohm                           latching
 supply  input below 4.5 V or above 24.0 V                          inhibit only
 temp    tip delta plus handle temperature >= 500 C                 inhibit only
 ```
@@ -203,19 +204,21 @@ the heater-free ELF.
 `--check-heater` needs the heater-test ELF. `short` and `monitor` (which sets the shared
 runaway counter to 255) must latch, hold the stop code until acknowledged and refuse a
 restart while the fault persists; `recover` clears the fault first and expects a fresh
-press to restart heating within the power limit. `open`, `supply`, `overtemp`, `continuous`
-and `range` withhold output without latching and resume on their own, the last two after
-first running at target. `uart` injects a USART2 overrun, which must be retained without
-blocking soldering, then a short. `startup` checks that saved autostart, boost and
-keep-alive cannot start heating, and `stall` that the 120 ms gate expires with the CPU
-halted.
+press to restart heating within the power limit. `open`, `probe`, `supply`, `overtemp`,
+`continuous` and `range` withhold output without latching and resume on their own, the last
+two after first running at target. `probe` drives the two tip phases to the same reading,
+which leaves the element resistance unmeasurable and must not be mistaken for a short.
+`uart` injects a USART2 overrun, which must be retained without blocking soldering, then a
+short. `startup` checks that saved autostart, boost and keep-alive cannot start heating,
+and `stall` that the 120 ms gate expires with the CPU halted.
 
 `--check-cold-display` checks that the display stays on after inactivity,
 `--check-worklight off|on|menu` the PA9 restore or the menu checkbox, and `--fahrenheit`
 boots with saved Fahrenheit settings. The first two cannot be combined with each other or
 with `--check-heater`. Exit status is 0 only if the final line starts with `PASS`. Budgets
 that have been needed: `short` 160000000 instructions, `--check-worklight menu` 200000000,
-`recover` and `range` 400000000, `continuous` 600000000 (default 40000000).
+`open`, `probe`, `recover` and `range` 400000000, `continuous` 600000000 (default
+40000000).
 
 ## Status
 

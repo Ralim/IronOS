@@ -31,6 +31,7 @@ parser.add_argument(
         "startup",
         "short",
         "open",
+        "probe",
         "supply",
         "overtemp",
         "stall",
@@ -42,7 +43,7 @@ parser.add_argument(
     ),
 )
 args = parser.parse_args()
-TRANSIENT_CHECKS = ("open", "supply", "overtemp", "continuous", "range")
+TRANSIENT_CHECKS = ("open", "probe", "supply", "overtemp", "continuous", "range")
 if args.check_cold_display and args.check_heater:
     parser.error("Use separate runs for cold-display and heater checks")
 if args.check_worklight and (args.check_cold_display or args.check_heater):
@@ -525,9 +526,13 @@ class Board:
         elif self.heater_commands == 3 and args.check_heater != "continuous":
             self.injected = True
             if args.check_heater in ("short", "uart", "recover"):
-                self.probe_delta = 0
+                # A measurable element below 1.0 ohm. A zero delta is an unreadable probe phase,
+                # not a short, and is covered by "probe".
+                self.probe_delta = 20
             elif args.check_heater == "open":
                 self.probe_delta = 4095 - self.tip_adc
+            elif args.check_heater == "probe":
+                self.probe_delta = 0
             elif args.check_heater == "supply":
                 self.input_adc = 0
             elif args.check_heater == "overtemp":
