@@ -133,10 +133,11 @@ static const uint16_t tipChopPeriodTicks = 64 + 1; // TIM4 ARR + 1
  * it back down as soon as the FET warms up.
  *
  * Turn-off tail: the gate is released through a pull-up, so after the drive goes off the MOSFET stays on for
- * another TIP_CHOP_TURNOFF_TAIL_US (-10 V to the Miller level). On the slow set that tail is taken off the
- * commanded pulse, otherwise the supply sees ~45 us more conduction per cycle than the cap intended (that is
- * the "85 W measured at a 60 W limit" report), and when the capped pulse would be shorter than two tails the
- * chop slows down first so the pulse is still a pulse rather than two half-finished edges.
+ * another ~35 us (gate level to the Miller plateau), while it only starts conducting ~15 us after the drive
+ * goes on. The net ~TIP_CHOP_TURNOFF_TAIL_US of extra conduction is taken off the commanded pulse on the slow
+ * set, otherwise the supply sees more conduction per cycle than the cap intended (that is the "85 W measured
+ * at a 60 W limit" report), and when the capped pulse would be shorter than two tails the chop slows down
+ * first so the pulse is still a pulse rather than two half-finished edges.
  */
 static const uint16_t tipChopPrescalers[]   = {10, 20, 40, 50, 80, 120}; // ~11.2 / 5.9 / 3.0 / 2.4 / 1.5 / 1.0 kHz
 static const uint8_t  tipChopPrescalerCount = sizeof(tipChopPrescalers) / sizeof(tipChopPrescalers[0]);
