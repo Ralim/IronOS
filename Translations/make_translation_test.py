@@ -2,7 +2,28 @@
 import io
 import json
 import os
+import subprocess
 import unittest
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+
+
+def setUpModule():
+    """Build the host BriefLZ shared library if it isn't already there.
+
+    The compression tests below load it through brieflz.py's ctypes binding,
+    and nothing else that runs this script first builds it, so a fresh
+    checkout (or a CI job that runs this script before its BriefLZ step)
+    would otherwise fail with an OSError from a missing .so.
+    """
+    source_dir = HERE / ".." / "source"
+    so_path = source_dir / "Objects" / "host" / "brieflz" / "libbrieflz.so"
+    if not so_path.exists():
+        subprocess.run(
+            ["make", "-C", str(source_dir), "Objects/host/brieflz/libbrieflz.so"],
+            check=True,
+        )
 
 
 class TestMakeTranslation(unittest.TestCase):
