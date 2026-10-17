@@ -80,6 +80,10 @@ void ui_draw_homescreen_detailed(TemperatureType_t tipTemp) {
   OLED::printNumber((getTipChopFrequencyHzX10() + 5000) / 10000, 2, FontStyle::TINY);
   OLED::print(SmallSymbolKiloHertz, FontStyle::TINY);
 #endif
+#ifdef DUAL_TIP_SOCKETS
+  OLED::setCursor(infoX, 24);
+  OLED::print(getActiveTipChannel() ? SmallSymbolSocketTS : SmallSymbolSocketT12, FontStyle::TINY);
+#endif
 }
 
 #else  /* upstream layout */

@@ -52,6 +52,12 @@ uint16_t getTipChopDutyX256Latched();
 int16_t getMCUTemperatureC(void);
 void    calibrateMCUTemperature(int16_t handleTemperatureC);
 #endif
+#ifdef DUAL_TIP_SOCKETS
+// Active tip socket (0 or 1)
+uint8_t getActiveTipChannel(void);
+// Raw reading of the unused socket
+uint16_t getInactiveTipRawTemp(void);
+#endif
 // Returns the Handle temp in C, X10
 int16_t getHandleTemperature(uint8_t sample);
 // Returns the Tip temperature ADC reading in raw units

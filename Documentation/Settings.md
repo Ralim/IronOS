@@ -479,3 +479,11 @@ Enable the buzzer: short beep when the set temperature is reached and at the end
 On device help text:
 
 Beep when the set temperature is reached and at the end of a profile
+
+### Setting: LEDs
+
+Status LED mode: off, 1 = status, 2 = tip temperature, 3 = heater power.
+
+On device help text:
+
+Off, 1=status, 2=temperature, 3=power

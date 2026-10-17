@@ -12,6 +12,18 @@
 extern uint8_t heaterThermalRunawayCounter;
 
 bool checkExitSoldering(void) {
+#ifdef TIP_SHORT_DETECTION
+  // Heater is already off, just show the warning
+  if (isTipShorted()) {
+    currentTempTargetDegC = 0;
+    warnUser(translatedString(Tr->WarningTipShorted), BUTTON_NONE);
+    OLED::refresh();
+    GUIDelay();
+    waitForButtonPress();
+    lastButtonTime = xTaskGetTickCount();
+    return true;
+  }
+#endif
 #ifdef POW_DC
   // Undervoltage test
   if (checkForUnderVoltage()) {
