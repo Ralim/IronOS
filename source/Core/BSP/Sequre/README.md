@@ -1,6 +1,6 @@
 # BSP section for STM32F103 based Sequre products
 
-This folder contains the hardware abstractions required for the S60, S60P and S99 soldering irons.
+This folder contains the hardware abstractions required for the S60, S60P, S99 and Si012 Pro Max soldering irons.
 
 ## Main abstractions
 

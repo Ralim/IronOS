@@ -6,7 +6,7 @@ ALL_MINIWARE_MODELS=TS100 TS80 TS80P TS101
 ALL_PINECIL_MODELS=Pinecil
 ALL_PINECIL_V2_MODELS=Pinecilv2
 ALL_MHP30_MODELS=MHP30
-ALL_SEQURE_MODELS=S60 S60P T55 S99
+ALL_SEQURE_MODELS=S60 S60P T55 S99 Si012ProMax
 ALL_MODELS=$(ALL_MINIWARE_MODELS) $(ALL_PINECIL_MODELS) $(ALL_MHP30_MODELS) $(ALL_PINECIL_V2_MODELS) $(ALL_SEQURE_MODELS)
 
 ifneq ($(model),$(filter $(model),$(ALL_MODELS)))
@@ -152,8 +152,9 @@ ifeq ($(model), S60P)
 bootldr_size=0x5000
 DEVICE_DFU_ADDRESS=0x08005000
 flash_size=126k
-else ifeq ($(model), S99)
-# Stock firmware is linked up to 0x08013820, so at least 80K of flash: 78K code + logo/settings pages
+else ifeq ($(model),$(filter $(model),S99 Si012ProMax))
+# S99 stock firmware is linked up to 0x08013820, so at least 80K of flash: 78K code + logo/settings pages.
+# The Si012 Pro Max uses the same 0x4C00 bootloader (Ralim/IronOS#2124) and CKS32F103 part.
 bootldr_size=0x4c00
 DEVICE_DFU_ADDRESS=0x08004c00
 flash_size=78k

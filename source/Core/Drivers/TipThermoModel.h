@@ -6,6 +6,7 @@
  */
 
 #include "BSP.h"
+#include "Settings.h"
 #include "Types.h"
 #include "stdint.h"
 #ifndef SRC_TIPTHERMOMODEL_H_
@@ -25,6 +26,8 @@ public:
   static uint32_t          convertTipRawADCTouV(uint16_t rawADC, bool skipCalOffset = false);
   static TemperatureType_t convertCtoF(TemperatureType_t degC);
   static TemperatureType_t convertFtoC(TemperatureType_t degF);
+  // Calibration offset setting for the active socket
+  static SettingsOptions calibrationOffsetSetting();
 
 private:
   static TemperatureType_t convertuVToDegC(uint32_t tipuVDelta);

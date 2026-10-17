@@ -610,6 +610,13 @@
       "maxLen2": 13,
       "include": ["BUZZER_SETTING"],
       "description": "Enable the buzzer: short beep when the set temperature is reached and at the end of a profile."
+    },
+    {
+      "id": "LEDMode",
+      "maxLen": 6,
+      "maxLen2": 13,
+      "include": ["STATUS_LED_SETTING"],
+      "description": "Status LED mode: off, 1 = status, 2 = tip temperature, 3 = heater power."
     }
   ]
 }
