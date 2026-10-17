@@ -227,9 +227,11 @@ void FS2711::negotiate() {
   // min(V^2 / R, V * I) and, within 10 %, prefer one that does not need chopping at all - e.g. 15 V / 3 A over
   // 20 V / 2.25 A for a 5.5 ohm cartridge (41 W clean instead of 45 W pulsed).
   const uint16_t real_tip_resistance = getTipResistanceX10() > 0 ? getTipResistanceX10() : 1;
-  // Peak current ceiling: every pulse runs at V / R_tip, and the gate drive is too weak to switch 8 A (2.5 ohm
-  // cartridge on 20 V) without cooking the MOSFET, whatever the duty. Fixed PDOs above the ceiling are skipped and
-  // PPS is clamped to it, so a 2.5 ohm cartridge runs from 15 V (6 A) while the stock 5.5 ohm one is unaffected.
+  // Peak current ceiling: every pulse runs at V / R_tip, whatever the duty. The gate drive is too weak to switch 8 A
+  // (2.5 ohm cartridge on 20 V) without cooking the MOSFET, and chargers with a fast over-current trip drop out on
+  // 6 A pulses (15 V) although the average is within the rating, while all of them take the stock cartridge at
+  // 20 V / 5.5 ohm = 1.1x the rating (Ralim/IronOS#2248). Fixed PDOs above the ceiling are skipped and PPS is clamped
+  // to it, so a 2.5 ohm cartridge runs from 9 V (3.6 A, no real chopping) while the stock 5.5 ohm one is unaffected.
   const uint32_t ceiling_mv          = (uint32_t)TIP_PEAK_CURRENT_MAX_X100 * real_tip_resistance; // I_x100 * R_x10 = V_mV
   uint32_t       best_deliverable_mw = 0;
   bool           best_needs_chop     = true;
@@ -326,6 +328,12 @@ void FS2711::negotiate() {
 #ifdef TIP_CURRENT_LIMIT_CHOP
       if (ideal_mv > (int)ceiling_mv) {
         ideal_mv = ceiling_mv;
+      }
+      // PPS only without chopping: a programmable source folds back when the pulses exceed its current limit,
+      // so stay at or below the voltage its current can supply through the tip (R_x10 * mA / 10 = mV)
+      const int chop_free_mv = (int)real_tip_resistance * (int)pdo_max_curr / 10;
+      if (ideal_mv > chop_free_mv) {
+        ideal_mv = chop_free_mv;
       }
 #endif
 
