@@ -116,6 +116,14 @@ static void switchToFastPWM(void) {
  * tried first and trips the over-current protection of some chargers, so it is deliberately not done.
  */
 static const uint16_t tipChopPeriodTicks = 64 + 1; // TIM4 ARR + 1
+// Defaults for Sequre models that use the chop without tuning these in their configuration block: the slow set
+// only engages above 4.5 A of tip current, which an 8 ohm T12 heater never reaches
+#ifndef TIP_CHOP_SLOW_ABOVE_X100
+#define TIP_CHOP_SLOW_ABOVE_X100 450
+#endif
+#ifndef TIP_CHOP_TURNOFF_TAIL_US
+#define TIP_CHOP_TURNOFF_TAIL_US 25
+#endif
 /*
  * PWM frequency. Switching loss is proportional to frequency x tip current and the gate drive is weak, so
  * the MOSFET runs hot at 11 kHz even with the 5.5 ohm cartridge (~0.4 W of switching loss on its own),
