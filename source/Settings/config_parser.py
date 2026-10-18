@@ -25,6 +25,7 @@ class ConfigParser:
         "S60": "Sequre",
         "S60P": "Sequre",
         "MHP30": "MHP30",
+        "HS01": "HS01",
     }
 
     def __init__(self, model: str, base_path: Optional[str] = None):

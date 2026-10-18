@@ -117,6 +117,13 @@ MODEL_CONFIG: Dict[str, ModelConfig] = {
             (0x22014000, 0x22017000),  # itcm_memory
         ),
     ),
+    # FNIRSI HS-01 (CH571F)
+    "HS01": ModelConfig(
+        flash_total=188 * 1024,
+        ram_total=18 * 1024,
+        flash_ranges=((0x00000000, 0x0002F000),),
+        ram_ranges=((0x20003800, 0x20008000),),
+    ),
 }
 
 SECTION_RE = re.compile(
