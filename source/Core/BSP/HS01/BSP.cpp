@@ -20,7 +20,7 @@ uint16_t totalPWM = powerPWM + tempMeasureTicks + holdoffTicks; // Total length 
 void resetWatchdog() { WWDG_SetCounter(0); }
 
 int16_t getHandleTemperature(uint8_t sample) {
-  // There is no cold junction sensor; like the stock firmware, assume the handle sits at 25 C
+  // There is no cold-junction sensor; assume 25 C, the same as the stock firmware
   (void)sample;
   return 25 * 10;
 }
@@ -41,14 +41,14 @@ void reboot() { SYS_ResetExecute(); }
 
 void delay_ms(uint16_t count) { DelayMs(count); }
 
-// Same threshold as the stock firmware, well above anything the PID can reach
+// Same limit as the stock firmware, much higher than the PID can reach
 bool isTipDisconnected() { return TipThermoModel::getTipInC() > 800; }
 
 void setStatusLED(const enum StatusLED state) { (void)state; }
 void setBuzzer(bool on) { (void)on; }
 
 uint8_t preStartChecks() {
-  // Hold the heater off until the CH224K has settled on a voltage (see Power.cpp)
+  // Keep the heater off until the CH224K voltage is stable (refer to Power.cpp)
   return CH224KVoltageSettled() ? 1 : 0;
 }
 uint8_t preStartChecksDone() { return 1; }

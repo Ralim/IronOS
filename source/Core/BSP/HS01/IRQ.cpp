@@ -50,7 +50,7 @@ static void frameTimerTick() {
   }
 }
 
-// The vector table jumps here with a plain j, so the entry has to sit in RAM next to it
+// The vector table uses a short jump, so this handler must be in RAM near it
 extern "C" __attribute__((interrupt("machine"), section(".highcode"))) void TMR1_IRQHandler(void) {
   TMR1_ClearITFlag(TMR0_3_IT_CYC_END);
   frameTimerTick();
@@ -63,7 +63,7 @@ void setTipPWM(const uint8_t pulse, const bool shouldUseFastModePWM) {
   pendingPWM = pulse;
 }
 
-// The ball switch only makes brief contact, so catch every edge and hold it for MOVThread
+// The ball switch gives only short pulses, so latch each edge for MOVThread
 static volatile bool movementLatched = false;
 
 void armMovementInterrupt() { GPIOA_ITModeCfg(MOVEMENT_Pin, GPIOA_ReadPortPin(MOVEMENT_Pin) ? GPIO_ITMode_FallEdge : GPIO_ITMode_RiseEdge); }
