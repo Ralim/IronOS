@@ -137,6 +137,9 @@ void startPIDTask(void const *argument __unused) {
 }
 
 #ifdef TIP_CONTROL_PID
+#ifndef TIP_PID_INTEGRAL_LIMIT_SCALE
+#define TIP_PID_INTEGRAL_LIMIT_SCALE 5
+#endif
 template <class T, T Kp, T Ki, T Kd, T integral_limit_scale> struct PID {
   T previous_error_term;
   T integration_running_sum;
@@ -151,7 +154,15 @@ template <class T, T Kp, T Ki, T Kd, T integral_limit_scale> struct PID {
     // Thus we multiply this out by the interval time to ~= dv/dt
     // Then the shift by 1000 is ms -> Seconds
 
-    integration_running_sum += (target_delta * (T)interval_ms * Ki) / 1000;
+#ifdef TIP_PID_INTEGRAL_RESET_C
+    // Drop the integral while far from the set point, so it can't wind up during heat-up
+    if (target_delta > TIP_PID_INTEGRAL_RESET_C || target_delta < -TIP_PID_INTEGRAL_RESET_C) {
+      integration_running_sum = 0;
+    } else
+#endif
+    {
+      integration_running_sum += (target_delta * (T)interval_ms * Ki) / 1000;
+    }
 
     // We constrain integration_running_sum to limit windup
     // This is not overly required for most use cases but can prevent large overshoot in constrained implementations
@@ -214,7 +225,11 @@ int32_t getPIDResultX10Watts(TemperatureType_t set_point, TemperatureType_t curr
   static TickType_t lastCall = 0;
 
 #ifdef TIP_CONTROL_PID
-  static PID<TemperatureType_t, TIP_PID_KP, TIP_PID_KI, TIP_PID_KD, 5> pid = {0, 0};
+  static PID<TemperatureType_t, TIP_PID_KP, TIP_PID_KI, TIP_PID_KD, TIP_PID_INTEGRAL_LIMIT_SCALE> pid = {0, 0};
+#ifdef TIP_PID_LOW_TEMP_C
+  // Softer gains below TIP_PID_LOW_TEMP_C, for tips that oscillate with the full gains at low temperatures
+  static PID<TemperatureType_t, TIP_PID_LOW_KP, TIP_PID_LOW_KI, TIP_PID_KD, TIP_PID_INTEGRAL_LIMIT_SCALE> pidLow = {0, 0};
+#endif
 
   const TickType_t interval = (xTaskGetTickCount() - lastCall);
 
@@ -246,6 +261,14 @@ int32_t getPIDResultX10Watts(TemperatureType_t set_point, TemperatureType_t curr
   // in X10 (J / °C) units as well.
 
 #ifdef TIP_CONTROL_PID
+#ifdef TIP_PID_LOW_TEMP_C
+  // Only one controller runs at a time, clear the other so it starts fresh on a switch
+  if (set_point < TIP_PID_LOW_TEMP_C) {
+    pid.integration_running_sum = 0;
+    return pidLow.update(set_point, current_reading, interval, getX10WattageLimits());
+  }
+  pidLow.integration_running_sum = 0;
+#endif
   return pid.update(set_point, current_reading, interval, getX10WattageLimits());
 #else
   return powerStore.update(((TemperatureType_t)getTipThermalMass()) * (set_point - current_reading), // the required power
