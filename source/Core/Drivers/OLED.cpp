@@ -33,6 +33,16 @@ uint32_t OLED::displayChecksum;
  * All commands are prefixed with 0x80
  * Data packets are prefixed with 0x40
  */
+// Panel timings, overridable per board
+#ifndef OLED_CHARGE_PUMP
+#define OLED_CHARGE_PUMP 0x14
+#endif
+#ifndef OLED_PRECHARGE
+#define OLED_PRECHARGE 0xF1
+#endif
+#ifndef OLED_VCOMH
+#define OLED_VCOMH 0x30
+#endif
 I2C_CLASS::I2C_REG OLED_Setup_Array[] = {
     /**/
     {0x80,         OLED_OFF, 0}, /* Display off */
@@ -54,17 +64,21 @@ I2C_CLASS::I2C_REG OLED_Setup_Array[] = {
     {0x80, 0xA0, 0}, /* Set Segment remap to normal */
 #endif
     {0x80,             0x8D, 0}, /* Charge Pump */
-    {0x80,             0x14, 0}, /* Charge Pump settings */
+    {0x80, OLED_CHARGE_PUMP, 0}, /* Charge Pump settings */
     {0x80,             0xDA, 0}, /* Set VCOM Pins hardware config */
     {0x80, OLED_VCOM_LAYOUT, 0}, /* Combination 0x2 or 0x12 depending on OLED model */
     {0x80,             0x81, 0}, /* Brightness */
     {0x80,             0x00, 0}, /* ^0 */
     {0x80,             0xD9, 0}, /* Set pre-charge period */
-    {0x80,             0xF1, 0}, /* Pre charge period */
+    {0x80,   OLED_PRECHARGE, 0}, /* Pre charge period */
     {0x80,             0xDB, 0}, /* Adjust VCOMH regulator ouput */
-    {0x80,             0x30, 0}, /* VCOM level */
+    {0x80,       OLED_VCOMH, 0}, /* VCOM level */
     {0x80,             0xA4, 0}, /* Enable the display GDDR */
     {0x80,             0xA6, 0}, /* Normal display */
+#ifdef OLED_INTERNAL_IREF
+    {0x80,             0xAD, 0}, /* Internal IREF setting */
+    {0x80,             0x10, 0}, /* Enable internal IREF */
+#endif
     {0x80,             0x20, 0}, /* Memory Mode */
     {0x80,             0x00, 0}, /* Wrap memory */
     {0x80,          OLED_ON, 0}, /* Display on */
@@ -389,6 +403,13 @@ void OLED::maskScrollIndicatorOnOLED() {
 #endif /* OLED_I2C_PER_BYTE_TRANSFERS */
 }
 
+#ifdef OLED_TRANSITIONS_INSTANT
+void OLED::showSecondaryFramebuffer() {
+  memcpy(screenBuffer + FRAMEBUFFER_START, secondFrameBuffer + FRAMEBUFFER_START, sizeof(screenBuffer) - FRAMEBUFFER_START);
+  refresh();
+}
+#endif
+
 /**
  * Plays a transition animation between two framebuffers.
  * @param forwardNavigation Direction of the navigation animation.
@@ -397,6 +418,11 @@ void OLED::maskScrollIndicatorOnOLED() {
  * Otherwise a rewinding navigation animation is shown to the second framebuffer contents.
  */
 void OLED::transitionSecondaryFramebuffer(const bool forwardNavigation, const TickType_t viewEnterTime) {
+#ifdef OLED_TRANSITIONS_INSTANT
+  (void)forwardNavigation;
+  (void)viewEnterTime;
+  showSecondaryFramebuffer();
+#else
   bool     buttonsReleased = getButtonState() == BUTTON_NONE;
   uint8_t *stripBackPointers[4];
   stripBackPointers[0] = &secondFrameBuffer[FRAMEBUFFER_START + 0];
@@ -469,6 +495,7 @@ void OLED::transitionSecondaryFramebuffer(const bool forwardNavigation, const Ti
     }
   }
   refresh(); // redraw at the end if required
+#endif
 }
 
 void OLED::useSecondaryFramebuffer(bool useSecondary) {
@@ -487,6 +514,10 @@ void OLED::useSecondaryFramebuffer(bool useSecondary) {
  * **This function blocks until the transition has completed or user presses button**
  */
 void OLED::transitionScrollDown(const TickType_t viewEnterTime) {
+#ifdef OLED_TRANSITIONS_INSTANT
+  (void)viewEnterTime;
+  showSecondaryFramebuffer();
+#else
   TickType_t startDraw       = xTaskGetTickCount();
   bool       buttonsReleased = getButtonState() == BUTTON_NONE;
 
@@ -542,6 +573,7 @@ void OLED::transitionScrollDown(const TickType_t viewEnterTime) {
 #endif
     vTaskDelayUntil(&startDraw, TICKS_100MS / 7);
   }
+#endif
 }
 /**
  * This assumes that the current display output buffer has the current on screen contents
@@ -551,6 +583,10 @@ void OLED::transitionScrollDown(const TickType_t viewEnterTime) {
  * **This function blocks until the transition has completed or user presses button**
  */
 void OLED::transitionScrollUp(const TickType_t viewEnterTime) {
+#ifdef OLED_TRANSITIONS_INSTANT
+  (void)viewEnterTime;
+  showSecondaryFramebuffer();
+#else
   TickType_t startDraw       = xTaskGetTickCount();
   bool       buttonsReleased = getButtonState() == BUTTON_NONE;
 
@@ -604,6 +640,7 @@ void OLED::transitionScrollUp(const TickType_t viewEnterTime) {
 #endif
     vTaskDelayUntil(&startDraw, TICKS_100MS / 7);
   }
+#endif
 }
 
 void OLED::setRotation(bool leftHanded) {
