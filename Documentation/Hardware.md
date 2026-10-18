@@ -88,3 +88,16 @@ Pincecil:
 ![](https://pine64.com/wp-content/uploads/2020/11/pinecil-bb2-04.jpg?v=0446c16e2e66)
 
 
+
+### FNIRSI HS-01
+
+Also sold as the KAIWEETS KETS02 (same board), which uses the same `HS01` build.
+
+- MCU is a WCH CH571F (RISC-V, 192 KiB flash, 18 KiB RAM);
+- USB-C only. A CH224K requests a fixed PD voltage (9/12/15/20 V), so there is no PPS/EPR and no QC. IronOS cannot see how much current the charger offers, so set a power limit when using a weak charger;
+- 128x32 OLED on a bit-banged I2C bus. Menu transition animations are disabled on this device because the bus is too slow for them;
+- no tip resistance sensing and no cold-junction sensor (a fixed 25 °C is assumed, as in the stock firmware);
+- motion comes from a ball switch, so the motion sensitivity setting only switches it on or off;
+- no BLE: the WCH BLE stack does not fit in the remaining RAM.
+
+The pin map was recovered from the stock firmware, see [#1614](https://github.com/Ralim/IronOS/issues/1614).
