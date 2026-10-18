@@ -228,10 +228,11 @@ void FS2711::negotiate() {
   // 20 V / 2.25 A for a 5.5 ohm cartridge (41 W clean instead of 45 W pulsed).
   const uint16_t real_tip_resistance = getTipResistanceX10() > 0 ? getTipResistanceX10() : 1;
   // Peak current ceiling: every pulse runs at V / R_tip, whatever the duty. The gate drive is too weak to switch 8 A
-  // (2.5 ohm cartridge on 20 V) without cooking the MOSFET, and chargers with a fast over-current trip drop out on
-  // 6 A pulses (15 V) although the average is within the rating, while all of them take the stock cartridge at
-  // 20 V / 5.5 ohm = 1.1x the rating (Ralim/IronOS#2248). Fixed PDOs above the ceiling are skipped and PPS is clamped
-  // to it, so a 2.5 ohm cartridge runs from 9 V (3.6 A, no real chopping) while the stock 5.5 ohm one is unaffected.
+  // (2.5 ohm cartridge on 20 V) without cooking the MOSFET. Fixed PDOs above the ceiling are skipped and PPS is
+  // clamped to it, so a 2.5 ohm cartridge runs from 15 V (6 A) while the stock 5.5 ohm one is unaffected. Going
+  // lower than 15 V to spare chargers with a fast over-current trip does not work: the gate drive follows VBUS
+  // and at 9 V the MOSFET no longer switches cleanly (Ralim/IronOS#2248). Such chargers are served by their PPS
+  // range instead, see below.
   const uint32_t ceiling_mv          = (uint32_t)TIP_PEAK_CURRENT_MAX_X100 * real_tip_resistance; // I_x100 * R_x10 = V_mV
   uint32_t       best_deliverable_mw = 0;
   bool           best_needs_chop     = true;
@@ -242,6 +243,7 @@ void FS2711::negotiate() {
   uint16_t gentle_voltage        = 0;
   uint16_t gentle_current        = 0;
   uint32_t gentle_deliverable_mw = 0;
+  bool     gentle_pps            = false;
 #endif
 #ifdef MODEL_HAS_DCDC
   // If this device has step down DC/DC inductor to smooth out current spikes
@@ -335,14 +337,40 @@ void FS2711::negotiate() {
       if (ideal_mv > chop_free_mv) {
         ideal_mv = chop_free_mv;
       }
-#endif
-
+      if (ideal_mv < (int)pdo_min_mv) {
+        break;
+      }
+      // Scored like a fixed PDO, by the power it delivers (V^2 / R, it never needs chopping here). It wins on
+      // power, or as the "gentle" alternative to a fixed PDO with hard pulses: a 2.5 ohm cartridge on a charger
+      // with 15 V / 3 A and PPS to 11 V / 5 A takes 11 V (4.4 A DC, 48 W) over 15 V (6 A pulses, 45 W), while
+      // the stock 5.5 ohm one keeps its fixed 20 V because PPS at 5.5 x 3.25 = 17.9 V delivers less.
+      {
+        const uint32_t v_mv        = ideal_mv;
+        const uint32_t deliverable = (v_mv * v_mv * 10) / real_tip_resistance / 1000;
+        if (deliverable > gentle_deliverable_mw) {
+          gentle_pdoid          = i;
+          gentle_voltage        = ideal_mv;
+          gentle_current        = pdo_max_curr;
+          gentle_deliverable_mw = deliverable;
+          gentle_pps            = true;
+        }
+        if (deliverable > best_deliverable_mw) {
+          pps                 = true;
+          best_pdoid          = i;
+          best_voltage        = ideal_mv;
+          best_current        = pdo_max_curr;
+          best_deliverable_mw = deliverable;
+          best_needs_chop     = false;
+        }
+      }
+#else
       if (ideal_mv > best_voltage) {
         best_pdoid   = i;
         best_voltage = ideal_mv;
         best_current = pdo_max_curr;
         pps          = true;
       }
+#endif
     }
 
     break;
@@ -357,10 +385,11 @@ void FS2711::negotiate() {
   // 5.5 ohm cartridge moves from 20 V / 1.75 A (pulses 2.1x its rating, browns out) to 15 V / 2.33 A
   // (31 W), while a 2.5 ohm cartridge - which cannot be run without hard pulses on any PDO - keeps
   // 20 V / 3.25 A (58 W) instead of dropping to 9 V (20 W).
-  if (!pps && gentle_pdoid != 0xFF && gentle_pdoid != best_pdoid && (gentle_deliverable_mw * 10) >= (best_deliverable_mw * 7)) {
+  if (best_needs_chop && gentle_pdoid != 0xFF && gentle_pdoid != best_pdoid && (gentle_deliverable_mw * 10) >= (best_deliverable_mw * 7)) {
     best_pdoid   = gentle_pdoid;
     best_voltage = gentle_voltage;
     best_current = gentle_current;
+    pps          = gentle_pps;
   }
 #endif
 

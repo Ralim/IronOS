@@ -117,12 +117,15 @@ static void switchToFastPWM(void) {
  */
 static const uint16_t tipChopPeriodTicks = 64 + 1; // TIM4 ARR + 1
 // Defaults for Sequre models that use the chop without tuning these in their configuration block: the slow set
-// only engages above 4.5 A of tip current, which an 8 ohm T12 heater never reaches
-#ifndef TIP_CHOP_SLOW_ABOVE_X100
-#define TIP_CHOP_SLOW_ABOVE_X100 450
+// is only for low resistance cartridges, an 8 ohm T12 heater stays on the fast set
+#ifndef TIP_CHOP_SLOW_BELOW_RX10
+#define TIP_CHOP_SLOW_BELOW_RX10 50
 #endif
 #ifndef TIP_CHOP_TURNOFF_TAIL_US
 #define TIP_CHOP_TURNOFF_TAIL_US 25
+#endif
+#ifndef TIP_CHOP_MIN_PULSE_US
+#define TIP_CHOP_MIN_PULSE_US 100
 #endif
 /*
  * PWM frequency. Switching loss is proportional to frequency x tip current and the gate drive is weak, so
@@ -134,11 +137,11 @@ static const uint16_t tipChopPeriodTicks = 64 + 1; // TIM4 ARR + 1
  * temperature step drops it further (TIP_PWM_SLOWDOWN_1_C / _2_C, 5 C of hysteresis on the way back).
  *
  * Base step: the gate drive is weak (tens of us per edge, see Ralim/IronOS#2244), so the loss per edge grows
- * with the tip current and a 2.5 ohm cartridge cannot be switched as fast as the stock 5.5 ohm one. Up to
- * TIP_CHOP_SLOW_ABOVE_X100 (stock cartridge, or 2.5 ohm on 9 V) it is the S60 behaviour: 11.2 kHz while the
- * duty is capped to the supply current - the pulses should be as short as possible for the charger - and
- * ~2.4 kHz with no cap, or on DC where there is no source to upset. Above it (2.5 ohm on 15 V = 6 A, PD never
- * goes higher, see TIP_PEAK_CURRENT_MAX_X100) the capped chop runs at ~3 kHz: slower would be kinder to the
+ * with the tip current and a 2.5 ohm cartridge cannot be switched as fast as the stock 5.5 ohm one. The stock
+ * cartridge (TIP_CHOP_SLOW_BELOW_RX10 and up) keeps the S60 behaviour: 11.2 kHz while the duty is capped to
+ * the supply current - the pulses should be as short as possible for the charger - and ~2.4 kHz with no cap,
+ * or on DC where there is no source to upset. A low resistance cartridge runs its chop at ~3 kHz on PD (15 V /
+ * 3 A = 6 A pulses, PD never goes higher, see TIP_PEAK_CURRENT_MAX_X100): slower would be kinder to the
  * MOSFET still, but a 6 A pulse of 150 us already pulls ~1.5 V of ripple from a charger with ~300 uF behind
  * the port, so going slower on PD risks the brown-outs the chop is there to avoid. On DC, where the supply
  * has the capacitance, it goes straight to ~1 kHz. Starting fast is only safe because the loop below walks
@@ -148,8 +151,12 @@ static const uint16_t tipChopPeriodTicks = 64 + 1; // TIM4 ARR + 1
  * another ~35 us (gate level to the Miller plateau), while it only starts conducting ~15 us after the drive
  * goes on. The net ~TIP_CHOP_TURNOFF_TAIL_US of extra conduction is taken off the commanded pulse on the slow
  * set, otherwise the supply sees more conduction per cycle than the cap intended (that is the "85 W measured
- * at a 60 W limit" report), and when the capped pulse would be shorter than two tails the chop slows down
- * first so the pulse is still a pulse rather than two half-finished edges.
+ * at a 60 W limit" report).
+ *
+ * Minimum pulse: the PID realises low power as short pulses, and a pulse shorter than the two edges is spent
+ * entirely in the linear region of the MOSFET (the 2.5 ohm cartridge went into thermal runaway at idle, 20 %
+ * duty at 5.9 kHz). So on the slow set the chop slows down until the pulse actually commanded - the PID duty
+ * or the cap, whichever is smaller - is at least TIP_CHOP_MIN_PULSE_US long; at idle that ends up at 1 kHz.
  */
 static const uint16_t tipChopPrescalers[]   = {10, 20, 40, 50, 80, 120}; // ~11.2 / 5.9 / 3.0 / 2.4 / 1.5 / 1.0 kHz
 static const uint8_t  tipChopPrescalerCount = sizeof(tipChopPrescalers) / sizeof(tipChopPrescalers[0]);
@@ -225,17 +232,24 @@ uint16_t getTipChopDutyX256() {
 
   // Base step from the tip current, see the comment above the prescaler table
   const bool uncapped = (dutyX256 >= 256) || getIsPoweredByDCIN();
-  const bool slowSet  = tipCurrentx100 > TIP_CHOP_SLOW_ABOVE_X100;
+  const bool slowSet  = tipRx10 < TIP_CHOP_SLOW_BELOW_RX10;
   uint8_t    step;
   if (slowSet) {
-    step = uncapped ? 5 : 2; // ~1.0 kHz / ~3.0 kHz
+    step = getIsPoweredByDCIN() ? 5 : 2; // ~1.0 kHz / ~3.0 kHz
   } else {
     step = uncapped ? 3 : 0; // ~2.4 kHz / 11.2 kHz
   }
   const uint16_t onTicks = (dutyX256 * tipChopPeriodTicks) / 256;
-  if (slowSet && !uncapped) {
-    // Slow down until the commanded pulse is at least two turn-off tails long (tick = (PSC + 1) / 8 us)
-    while (step < tipChopPrescalerCount - 1 && (uint32_t)onTicks * (tipChopPrescalers[step] + 1) < 16UL * TIP_CHOP_TURNOFF_TAIL_US) {
+  if (slowSet) {
+    // Slow down until the pulse actually commanded is at least TIP_CHOP_MIN_PULSE_US long (tick = (PSC + 1) / 8 us)
+    uint16_t cmdTicks = pendingPWM / 4; // same scaling as the TIM2 ISR
+    if (cmdTicks > onTicks) {
+      cmdTicks = onTicks;
+    }
+    if (cmdTicks < 1) {
+      cmdTicks = 1;
+    }
+    while (step < tipChopPrescalerCount - 1 && (uint32_t)cmdTicks * (tipChopPrescalers[step] + 1) < 8UL * TIP_CHOP_MIN_PULSE_US) {
       step++;
     }
   }
