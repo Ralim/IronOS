@@ -37,7 +37,7 @@
  * How many seconds/minutes we wait until going to sleep/shutdown.
  * Values 1-5 are x10 seconds, 6+ are (value - 5) minutes
  */
-#define SLEEP_TIME    10 // 5 minutes: the ball switch only reports motion while the iron moves
+#define SLEEP_TIME    10 // 5 minutes: the ball switch gives motion pulses only while the iron moves
 #define SHUTDOWN_TIME 10 // Minutes
 
 /**
@@ -137,7 +137,7 @@
 #define MIN_BOOST_TEMP_F       480 // The min settable temp for boost mode °F
 
 #define OLED_128x32 1
-// Panel timings from the stock firmware; the generic values flicker on this panel
+// Panel timings from the stock firmware; the generic values cause flicker on this panel
 #define OLED_CHARGE_PUMP 0x15
 #define OLED_PRECHARGE   0x22
 #define OLED_VCOMH       0x20
@@ -145,21 +145,21 @@
 #define OLED_TRANSITIONS_INSTANT // Bit-banged I2C is too slow for the slide animations
 // The CH224K negotiates PD on its own, so to IronOS this is a DC input (see Power.cpp)
 #define POW_DC             1
-#define DC_MIN_VOLTAGE_X10 75 // Same cutoff as the stock firmware; the 9 V PD level can read below 9.0 V
+#define DC_MIN_VOLTAGE_X10 75 // Same cut-off as the stock firmware; the 9 V PD level can read less than 9.0 V
 #define GPIO_VIBRATION        // Ball/vibration switch, no accelerometer
 #define NEEDS_VBUS_PROBE   0
 #define USB_PD_TIMEOUT     0 // No PD stack (setting unused)
 
 #define HARDWARE_MAX_WATTAGE_X10 650
 #define TIP_THERMAL_MASS         65 // X10 watts to raise 1 deg C in 1 second
-// PI with the stock firmware's gains (Kp 35, Ki 1.75 per 100 ms on a 0..3000 duty at 64 W)
+// PI control with the stock firmware gains (Kp 35, Ki 1.75 per 100 ms, duty 0..3000 at 64 W)
 #define TIP_CONTROL_PID
 #define TIP_PID_KP                   7
 #define TIP_PID_KI                   373
 #define TIP_PID_KD                   0
-#define TIP_PID_INTEGRAL_LIMIT_SCALE 100 // Let the integral reach full power, the stock loop relies on it
-#define TIP_PID_INTEGRAL_RESET_C     50  // Stock clears the integral beyond 50 C of error
-#define TIP_PID_LOW_TEMP_C           300 // Below this set point stock halves the gains (Kp 17, Ki 0.9), full gains oscillate here
+#define TIP_PID_INTEGRAL_LIMIT_SCALE 100 // The integral can supply full power, as in the stock firmware
+#define TIP_PID_INTEGRAL_RESET_C     50  // Clear the integral when the error is more than 50 C, as in the stock firmware
+#define TIP_PID_LOW_TEMP_C           300 // Below this set point, use the stock low gains (Kp 17, Ki 0.9); full gains oscillate here
 #define TIP_PID_LOW_KP               4
 #define TIP_PID_LOW_KI               192
 #define TIP_RESISTANCE               62 // x10 ohms, the iron is rated 65 W at 20 V

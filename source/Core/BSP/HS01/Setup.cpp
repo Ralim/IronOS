@@ -38,8 +38,7 @@ static void setupGPIO() {
   PFIC_EnableIRQ(GPIO_A_IRQn);
   GPIOA_ModeCfg(VIN_Pin | TIP_TEMP_Pin, GPIO_ModeIN_Floating);
 
-  // Ask for 20 V straight away so the charger has settled by the time the PID starts; Power.cpp walks it down if
-  // the charger does not offer it
+  // Request 20 V at boot; Power.cpp goes to a lower voltage if the charger does not supply 20 V
   setCH224KVoltage(20);
   GPIOA_ModeCfg(CH224K_CFG2_Pin | CH224K_CFG3_Pin, GPIO_ModeOut_PP_5mA);
 
@@ -95,8 +94,8 @@ static uint16_t convert() {
   return value < 0 ? 0 : (value > 4095 ? 4095 : value);
 }
 
-// Like the stock firmware: spread the conversions out, drop the highest and lowest, average the rest.
-// Scaled to the full scale of an ADC_SAMPLES sum.
+// Same as the stock firmware: space the conversions, remove the highest and lowest, and average the rest.
+// The result has the full scale of an ADC_SAMPLES sum.
 static uint16_t sampleChannel(uint8_t channel, uint8_t samples, uint8_t spacingUs) {
   ADC_ChannelCfg(channel);
   convert(); // Throw away the first conversion after switching the channel
@@ -136,7 +135,7 @@ uint16_t getTipRawTemp(uint8_t sample) {
     last[1] = last[0];
     last[0] = tipADCSum;
     filter.update(last[0]);
-    // Median of the last three frames, so a single noisy frame doesn't swing the PID
+    // Use the median of the last three frames, so one noisy frame does not change the PID output
     const uint16_t a = last[0], b = last[1], c = last[2];
     return a > b ? (b > c ? b : (a > c ? c : a)) : (a > c ? a : (b > c ? c : b));
   }

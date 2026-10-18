@@ -91,13 +91,17 @@ Pincecil:
 
 ### FNIRSI HS-01
 
-Also sold as the KAIWEETS KETS02 (same board), which uses the same `HS01` build.
+The KAIWEETS KETS02 is the same board. It uses the same `HS01` build.
 
-- MCU is a WCH CH571F (RISC-V, 192 KiB flash, 18 KiB RAM);
-- USB-C only. A CH224K requests a fixed PD voltage (9/12/15/20 V), so there is no PPS/EPR and no QC. IronOS cannot see how much current the charger offers, so set a power limit when using a weak charger;
-- 128x32 OLED on a bit-banged I2C bus. Menu transition animations are disabled on this device because the bus is too slow for them;
-- no tip resistance sensing and no cold-junction sensor (a fixed 25 °C is assumed, as in the stock firmware);
-- motion comes from a ball switch, so the motion sensitivity setting only switches it on or off;
-- no BLE: the WCH BLE stack does not fit in the remaining RAM.
+- The MCU is a WCH CH571F (RISC-V, 192 KiB flash, 18 KiB RAM).
+- The iron has USB-C only. A CH224K requests a fixed PD voltage (9, 12, 15 or 20 V). There is no PPS, EPR or QC.
+- IronOS requests 20 V first. If the charger does not supply it, IronOS tries 15 V, 12 V and then 9 V.
+- IronOS cannot read the current that the charger can supply. With a weak charger, set a power limit.
+- The DC cut-off is 7.5 V, the same as the stock firmware.
+- The OLED is 128x32 on a bit-banged I2C bus. The bus is too slow for the menu slide animations, so IronOS shows the next screen immediately.
+- There is no tip resistance sensor and no cold-junction sensor. IronOS assumes 25 °C at the cold junction, the same as the stock firmware.
+- The motion sensor is a ball switch. The motion sensitivity setting only sets motion detection on or off. The default sleep time is 5 minutes.
+- The tip control uses the PI gains of the stock firmware. The IronOS default gains cause oscillation with this tip.
+- There is no BLE. The WCH BLE stack does not fit in the remaining RAM.
 
-The pin map was recovered from the stock firmware, see [#1614](https://github.com/Ralim/IronOS/issues/1614).
+The pin map comes from the stock firmware. Refer to [#1614](https://github.com/Ralim/IronOS/issues/1614).

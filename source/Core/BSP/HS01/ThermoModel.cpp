@@ -23,6 +23,6 @@ static const int32_t pinuVtoDegC[] = {
 static const int     pinuVtoDegCItems = sizeof(pinuVtoDegC) / (2 * sizeof(pinuVtoDegC[0]));
 static const int32_t coldJunctionuV   = 47000; // Table voltage of 25 C
 
-// IronOS adds the handle temperature (fixed 25 C, see BSP.cpp) on top of the result, so return the rise above it
+// IronOS adds the handle temperature (25 C, refer to BSP.cpp), so return only the increase above it
 TemperatureType_t TipThermoModel::convertuVToDegC(uint32_t tipuVDelta) { return Utils::InterpolateLookupTable(pinuVtoDegC, pinuVtoDegCItems, tipuVDelta + coldJunctionuV) - 25; }
 #endif // TEMP_uV_LOOKUP_HS01

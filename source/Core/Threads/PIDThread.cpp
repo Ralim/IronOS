@@ -155,7 +155,7 @@ template <class T, T Kp, T Ki, T Kd, T integral_limit_scale> struct PID {
     // Then the shift by 1000 is ms -> Seconds
 
 #ifdef TIP_PID_INTEGRAL_RESET_C
-    // Drop the integral while far from the set point, so it can't wind up during heat-up
+    // Clear the integral when the error is large, to prevent windup during heat-up
     if (target_delta > TIP_PID_INTEGRAL_RESET_C || target_delta < -TIP_PID_INTEGRAL_RESET_C) {
       integration_running_sum = 0;
     } else
@@ -227,7 +227,7 @@ int32_t getPIDResultX10Watts(TemperatureType_t set_point, TemperatureType_t curr
 #ifdef TIP_CONTROL_PID
   static PID<TemperatureType_t, TIP_PID_KP, TIP_PID_KI, TIP_PID_KD, TIP_PID_INTEGRAL_LIMIT_SCALE> pid = {0, 0};
 #ifdef TIP_PID_LOW_TEMP_C
-  // Softer gains below TIP_PID_LOW_TEMP_C, for tips that oscillate with the full gains at low temperatures
+  // Lower gains below TIP_PID_LOW_TEMP_C, for tips that oscillate at low temperatures with the full gains
   static PID<TemperatureType_t, TIP_PID_LOW_KP, TIP_PID_LOW_KI, TIP_PID_KD, TIP_PID_INTEGRAL_LIMIT_SCALE> pidLow = {0, 0};
 #endif
 
@@ -262,7 +262,7 @@ int32_t getPIDResultX10Watts(TemperatureType_t set_point, TemperatureType_t curr
 
 #ifdef TIP_CONTROL_PID
 #ifdef TIP_PID_LOW_TEMP_C
-  // Only one controller runs at a time, clear the other so it starts fresh on a switch
+  // Only one controller is in use; clear the integral of the other so it starts at zero after a switch
   if (set_point < TIP_PID_LOW_TEMP_C) {
     pid.integration_running_sum = 0;
     return pidLow.update(set_point, current_reading, interval, getX10WattageLimits());
