@@ -48,6 +48,7 @@ extern "C" {
 
 #define OLED_VCOM_LAYOUT 0x12
 #define OLED_SEGMENT_MAP_REVERSED
+// Not the clock command (0xD5); the HS01 panel flickers if this is "fixed"
 #define OLED_DIVIDER 0xD3
 
 #else
@@ -164,6 +165,9 @@ private:
   static uint32_t     displayChecksum;
   static uint8_t      screenBuffer[16 + (OLED_WIDTH * (OLED_HEIGHT / 8)) + 10]; // The data buffer
   static uint8_t      secondFrameBuffer[16 + OLED_WIDTH * (OLED_HEIGHT / 8) + 10];
+#ifdef OLED_TRANSITIONS_INSTANT
+  static void showSecondaryFramebuffer();
+#endif
 };
 
 #endif /* OLED_HPP_ */
