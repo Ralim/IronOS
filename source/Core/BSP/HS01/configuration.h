@@ -150,10 +150,20 @@
 #define NEEDS_VBUS_PROBE   0
 #define USB_PD_TIMEOUT     0 // No PD stack (setting unused)
 
-#define HARDWARE_MAX_WATTAGE_X10  650
-#define TIP_THERMAL_MASS          65 // X10 watts to raise 1 deg C in 1 second
-#define TIP_RESISTANCE            62 // x10 ohms, the iron is rated 65 W at 20 V
-#define CANT_DIRECT_READ_SETTINGS    // Data flash is not memory mapped
+#define HARDWARE_MAX_WATTAGE_X10 650
+#define TIP_THERMAL_MASS         65 // X10 watts to raise 1 deg C in 1 second
+// PI with the stock firmware's gains (Kp 35, Ki 1.75 per 100 ms on a 0..3000 duty at 64 W)
+#define TIP_CONTROL_PID
+#define TIP_PID_KP                   7
+#define TIP_PID_KI                   373
+#define TIP_PID_KD                   0
+#define TIP_PID_INTEGRAL_LIMIT_SCALE 100 // Let the integral reach full power, the stock loop relies on it
+#define TIP_PID_INTEGRAL_RESET_C     50  // Stock clears the integral beyond 50 C of error
+#define TIP_PID_LOW_TEMP_C           300 // Below this set point stock halves the gains (Kp 17, Ki 0.9), full gains oscillate here
+#define TIP_PID_LOW_KP               4
+#define TIP_PID_LOW_KI               192
+#define TIP_RESISTANCE               62 // x10 ohms, the iron is rated 65 W at 20 V
+#define CANT_DIRECT_READ_SETTINGS       // Data flash is not memory mapped
 
 #define FILTER_DISPLAYED_TIP_TEMP 4 // Filtering for GUI display
 
