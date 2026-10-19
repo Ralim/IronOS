@@ -286,6 +286,10 @@
 #define TIP_TYPE_SUPPORT          1    // Support for tips of different types, i.e. resistance
 #define TIPTYPE_C245              1    // Sequre 5.5 ohm stock or JBC/Relife style 2.5 ohm C245 cartridges
 #define TIP_CURRENT_LIMIT_CHOP    1    // Envelope PWM for power, fast chop only for supply current limiting
+#define TIP_PEAK_CURRENT_MAX_X100 600  // Highest tip current (V / R) a PDO may be chosen for: 2.5 ohm -> 15 V. Not lower: the gate drive follows VBUS and is too weak below ~12 V
+#define TIP_CHOP_SLOW_BELOW_RX10  50   // Cartridges below this resistance (x10 ohm) always use the slow chop set; the stock 5.5 ohm one keeps the fast set
+#define TIP_CHOP_MIN_PULSE_US     100  // Shortest chop pulse; the chop slows down rather than going below it (edges of ~15 us on and ~35 us off)
+#define TIP_CHOP_TURNOFF_TAIL_US  25   // Net extra conduction per pulse: turn-off tail ~35 us minus turn-on delay ~15 us (gate RC, measured in Ralim/IronOS#2248)
 #define BUZZER_SETTING            1    // Expose the buzzer on/off as a user setting
 #define BUZZER_STARTUP_CHIRP      1    // Short beep once the boot logo has been shown
 #define BUZZER_FREQ_HZ            4000 // Tone frequency; small piezos are loudest near their ~4 kHz resonance
