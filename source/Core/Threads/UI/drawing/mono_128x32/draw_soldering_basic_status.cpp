@@ -43,6 +43,10 @@ void ui_draw_soldering_basic_status(bool boostModeOn) {
   OLED::print(SmallSymbolSpace, FontStyle::TINY);
   OLED::printNumber(getSettingValue(boostModeOn ? SettingsOptions::BoostTemp : SettingsOptions::SolderingTemp), 3, FontStyle::TINY);
   OLED::print(SmallSymbolDegreeSign, FontStyle::TINY);
+#ifdef DUAL_TIP_SOCKETS
+  OLED::setCursor(infoX + 6, 24);
+  OLED::print(getActiveTipChannel() ? SmallSymbolSocketTS : SmallSymbolSocketT12, FontStyle::TINY);
+#endif
 }
 
 #else  /* upstream layout */

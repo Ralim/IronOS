@@ -9,7 +9,7 @@ BUILD_LANGUAGES=()
 # 62K models: the dense 128x32 layout is built for every language except the CJK ones (see Makefile DENSE_UI)
 DENSE_UI_SPLIT_MODELS=(S60 T55)
 DENSE_UI_EXCLUDED_LANGUAGES=(JA_JP YUE_HK ZH_CN ZH_TW)
-AVAILABLE_MODELS=("TS100" "TS80" "TS80P" "Pinecil" "MHP30" "Pinecilv2" "S60" "S60P" "T55" "S99" "TS101")
+AVAILABLE_MODELS=("TS100" "TS80" "TS80P" "Pinecil" "MHP30" "Pinecilv2" "S60" "S60P" "T55" "S99" "Si012ProMax" "TS101")
 BUILD_MODELS=()
 OPTIONS=()
 
@@ -144,7 +144,7 @@ echo -n "Requested models : "
 if ((${#margs[@]})); then
     for i in "${margs[@]}"; do
 
-        if [[ "$i" != "Pinecil" ]] && [[ "$i" != "Pinecilv2" ]]; then # Dirty. Need to adapt the Build process to use upper cases only
+        if [[ "$i" != "Pinecil" ]] && [[ "$i" != "Pinecilv2" ]] && [[ "$i" != "Si012ProMax" ]]; then # Dirty. Need to adapt the Build process to use upper cases only
             i=$(echo "${i}" | tr '[:lower:]' '[:upper:]')
         fi
 

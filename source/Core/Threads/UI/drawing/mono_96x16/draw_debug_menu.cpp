@@ -70,7 +70,7 @@ void ui_draw_debug_menu(const uint8_t item_number) {
     OLED::printNumber(TipThermoModel::convertTipRawADCTouV(getTipRawTemp(0), true), 8, FontStyle::SMALL);
     break;
   case 12: // Tip Cold Junction Compensation Offset in µV
-    OLED::printNumber(getSettingValue(SettingsOptions::CalibrationOffset), 8, FontStyle::SMALL);
+    OLED::printNumber(getSettingValue(TipThermoModel::calibrationOffsetSetting()), 8, FontStyle::SMALL);
     break;
   case 13: // High Water Mark for GUI
     OLED::printNumber(uxTaskGetStackHighWaterMark(GUITaskHandle), 8, FontStyle::SMALL);
@@ -103,6 +103,15 @@ void ui_draw_debug_menu(const uint8_t item_number) {
     }
     OLED::printNumber(dieTemp, 6, FontStyle::SMALL);
   } break;
+#endif
+
+#ifdef DUAL_TIP_SOCKETS
+  case 18: // Active tip socket
+    OLED::printNumber(getActiveTipChannel() + 1, 6, FontStyle::SMALL);
+    break;
+  case 19: // Raw reading of the other socket
+    OLED::printNumber(TipThermoModel::convertTipRawADCTouV(getInactiveTipRawTemp(), true), 8, FontStyle::SMALL);
+    break;
 #endif
 
   default:

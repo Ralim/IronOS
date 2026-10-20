@@ -27,6 +27,7 @@ jobs:
             "S60P",
             "T55",
             "S99",
+            "Si012ProMax",
             "TS101",
           ]
       fail-fast: true

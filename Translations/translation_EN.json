@@ -365,6 +365,10 @@
     "WorklightEnabled": {
       "displayText": "Work\nlight",
       "description": "Front work light on/off"
+    },
+    "LEDMode": {
+      "displayText": "LEDs",
+      "description": "Off, 1=status, 2=temperature, 3=power"
     }
   }
 }

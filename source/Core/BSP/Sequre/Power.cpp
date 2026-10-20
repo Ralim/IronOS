@@ -36,6 +36,8 @@ bool getIsPoweredByDCIN() {
   } else {
     return true;
   }
+#elif defined(POW_DC)
+  return true; // No PD controller to talk to
 #else
   return false;
 #endif

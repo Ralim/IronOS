@@ -629,6 +629,13 @@
         "displayText": "Work\nlight",
         "description": "Front work light on/off"
       }
+    },
+    {
+      "id": "LEDMode",
+      "maxLen": 6,
+      "maxLen2": 13,
+      "include": ["STATUS_LED_SETTING"],
+      "description": "Status LED mode: off, 1 = status, 2 = tip temperature, 3 = heater power."
     }
   ]
 }

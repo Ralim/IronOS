@@ -52,6 +52,9 @@ static void displayPowerLimit(void);
 #ifdef BUZZER_SETTING
 static void displayBuzzerEnabled(void);
 #endif /* BUZZER_SETTING */
+#ifdef STATUS_LED_SETTING
+static void displayLEDMode(void);
+#endif /* STATUS_LED_SETTING */
 
 #ifdef WORKLIGHT_SETTING
 static void displayWorklightEnabled(void);
@@ -427,6 +430,10 @@ const menuitem UIMenu[] = {
 #ifdef WORKLIGHT_SETTING
   {SETTINGS_DESC(SettingsItemIndex::WorklightEnabled), nullptr, displayWorklightEnabled, nullptr, SettingsOptions::WorklightEnabled, SettingsItemIndex::WorklightEnabled, 7},
 #endif
+#ifdef STATUS_LED_SETTING
+  /* Status LED mode */
+  {SETTINGS_DESC(SettingsItemIndex::LEDMode), nullptr, displayLEDMode, nullptr, SettingsOptions::LEDMode, SettingsItemIndex::LEDMode, 7},
+#endif /* STATUS_LED_SETTING */
   /* Scroll Speed for descriptions */
   {SETTINGS_DESC(SettingsItemIndex::ScrollingSpeed), nullptr, displayScrollSpeed, nullptr, SettingsOptions::DescriptionScrollSpeed, SettingsItemIndex::ScrollingSpeed, 7},
   /* Reverse Temp change buttons +/- */
@@ -948,6 +955,15 @@ static void displayBuzzerEnabled(void) { OLED::drawCheckbox(getSettingValue(Sett
 #ifdef WORKLIGHT_SETTING
 static void displayWorklightEnabled(void) { OLED::drawCheckbox(getSettingValue(SettingsOptions::WorklightEnabled)); }
 #endif
+#ifdef STATUS_LED_SETTING
+static void displayLEDMode(void) {
+  if (getSettingValue(SettingsOptions::LEDMode)) {
+    OLED::printNumber(getSettingValue(SettingsOptions::LEDMode), 1, VALUE_FONT, false);
+  } else {
+    OLED::drawUnavailableIcon(); // Off
+  }
+}
+#endif /* STATUS_LED_SETTING */
 
 static void displayScrollSpeed(void) { printValue(translatedString((getSettingValue(SettingsOptions::DescriptionScrollSpeed)) ? Tr->SettingFastChar : Tr->SettingSlowChar)); }
 

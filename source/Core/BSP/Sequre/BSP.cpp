@@ -23,6 +23,10 @@ static const uint8_t tempMeasureTicks = 15;
 uint16_t totalPWM = powerPWM + tempMeasureTicks + holdoffTicks; // htim2.Init.Period, the full PWM cycle
 
 void resetWatchdog() { HAL_IWDG_Refresh(&hiwdg); }
+
+#ifdef BUZZER_Pin
+static volatile uint16_t buzzerTogglesLeft = 0; // Tone stops by itself when this runs out
+#endif
 // Lookup table for the NTC
 // We dont know exact specs, but it loooks to be roughly a 10K B=4000 NTC
 // Stored as ADCReading,Temp in degC
@@ -112,6 +116,17 @@ static void switchToFastPWM(void) {
  * tried first and trips the over-current protection of some chargers, so it is deliberately not done.
  */
 static const uint16_t tipChopPeriodTicks = 64 + 1; // TIM4 ARR + 1
+// Defaults for Sequre models that use the chop without tuning these in their configuration block: the slow set
+// is only for low resistance cartridges, an 8 ohm T12 heater stays on the fast set
+#ifndef TIP_CHOP_SLOW_BELOW_RX10
+#define TIP_CHOP_SLOW_BELOW_RX10 50
+#endif
+#ifndef TIP_CHOP_TURNOFF_TAIL_US
+#define TIP_CHOP_TURNOFF_TAIL_US 25
+#endif
+#ifndef TIP_CHOP_MIN_PULSE_US
+#define TIP_CHOP_MIN_PULSE_US 100
+#endif
 /*
  * PWM frequency. Switching loss is proportional to frequency x tip current and the gate drive is weak, so
  * the MOSFET runs hot at 11 kHz even with the 5.5 ohm cartridge (~0.4 W of switching loss on its own),
@@ -121,13 +136,29 @@ static const uint16_t tipChopPeriodTicks = 64 + 1; // TIM4 ARR + 1
  * uses it too), so as long as the handle stays cool the fastest sensible frequency is used, and each
  * temperature step drops it further (TIP_PWM_SLOWDOWN_1_C / _2_C, 5 C of hysteresis on the way back).
  *
- * Base step: while the duty is capped to the supply current the pulses should be as short as possible, so
- * it starts at the S60's 11.2 kHz (one step lower above 5.5 A, where a 2.5 ohm cartridge would otherwise
- * burn ~0.9 W in switching loss alone). Starting fast is only safe because the loop below walks it back
- * down as soon as the FET warms up. With no cap - or on DC, where there is no source to upset - it starts
- * at ~2.4 kHz, which is what the S60 does once it is resistance limited (see preStartChecks below).
+ * Base step: the gate drive is weak (tens of us per edge, see Ralim/IronOS#2244), so the loss per edge grows
+ * with the tip current and a 2.5 ohm cartridge cannot be switched as fast as the stock 5.5 ohm one. The stock
+ * cartridge (TIP_CHOP_SLOW_BELOW_RX10 and up) keeps the S60 behaviour: 11.2 kHz while the duty is capped to
+ * the supply current - the pulses should be as short as possible for the charger - and ~2.4 kHz with no cap,
+ * or on DC where there is no source to upset. A low resistance cartridge runs its chop at ~3 kHz on PD (15 V /
+ * 3 A = 6 A pulses, PD never goes higher, see TIP_PEAK_CURRENT_MAX_X100): slower would be kinder to the
+ * MOSFET still, but a 6 A pulse of 150 us already pulls ~1.5 V of ripple from a charger with ~300 uF behind
+ * the port, so going slower on PD risks the brown-outs the chop is there to avoid. On DC, where the supply
+ * has the capacitance, it goes straight to ~1 kHz. Starting fast is only safe because the loop below walks
+ * it back down as soon as the FET warms up.
+ *
+ * Turn-off tail: the gate is released through a pull-up, so after the drive goes off the MOSFET stays on for
+ * another ~35 us (gate level to the Miller plateau), while it only starts conducting ~15 us after the drive
+ * goes on. The net ~TIP_CHOP_TURNOFF_TAIL_US of extra conduction is taken off the commanded pulse on the slow
+ * set, otherwise the supply sees more conduction per cycle than the cap intended (that is the "85 W measured
+ * at a 60 W limit" report).
+ *
+ * Minimum pulse: the PID realises low power as short pulses, and a pulse shorter than the two edges is spent
+ * entirely in the linear region of the MOSFET (the 2.5 ohm cartridge went into thermal runaway at idle, 20 %
+ * duty at 5.9 kHz). So on the slow set the chop slows down until the pulse actually commanded - the PID duty
+ * or the cap, whichever is smaller - is at least TIP_CHOP_MIN_PULSE_US long; at idle that ends up at 1 kHz.
  */
-static const uint16_t tipChopPrescalers[]   = {10, 20, 40, 50, 80}; // ~11.2 / 5.9 / 3.0 / 2.4 / 1.5 kHz
+static const uint16_t tipChopPrescalers[]   = {10, 20, 40, 50, 80, 120}; // ~11.2 / 5.9 / 3.0 / 2.4 / 1.5 / 1.0 kHz
 static const uint8_t  tipChopPrescalerCount = sizeof(tipChopPrescalers) / sizeof(tipChopPrescalers[0]);
 
 static uint8_t tipChopThermalStep(void) {
@@ -199,21 +230,48 @@ uint16_t getTipChopDutyX256() {
   }
   tipChopDutyX256 = dutyX256;
 
-  uint16_t cap = tipChopPeriodTicks;
-  if (dutyX256 < 256) {
-    cap = (dutyX256 * tipChopPeriodTicks) / 256;
-    if (cap < 1) {
-      cap = 1;
+  // Base step from the tip current, see the comment above the prescaler table
+  const bool uncapped = (dutyX256 >= 256) || getIsPoweredByDCIN();
+  const bool slowSet  = tipRx10 < TIP_CHOP_SLOW_BELOW_RX10;
+  uint8_t    step;
+  if (slowSet) {
+    step = getIsPoweredByDCIN() ? 5 : 2; // ~1.0 kHz / ~3.0 kHz
+  } else {
+    step = uncapped ? 3 : 0; // ~2.4 kHz / 11.2 kHz
+  }
+  const uint16_t onTicks = (dutyX256 * tipChopPeriodTicks) / 256;
+  if (slowSet) {
+    // Slow down until the pulse actually commanded is at least TIP_CHOP_MIN_PULSE_US long (tick = (PSC + 1) / 8 us)
+    uint16_t cmdTicks = pendingPWM / 4; // same scaling as the TIM2 ISR
+    if (cmdTicks > onTicks) {
+      cmdTicks = onTicks;
+    }
+    if (cmdTicks < 1) {
+      cmdTicks = 1;
+    }
+    while (step < tipChopPrescalerCount - 1 && (uint32_t)cmdTicks * (tipChopPrescalers[step] + 1) < 8UL * TIP_CHOP_MIN_PULSE_US) {
+      step++;
     }
   }
-  tipDutyCapTicks = cap;
-
-  uint8_t step = (dutyX256 >= 256 || getIsPoweredByDCIN()) ? 3 : (tipCurrentx100 > 550 ? 1 : 0);
   step += tipChopThermalStep();
   if (step >= tipChopPrescalerCount) {
     step = tipChopPrescalerCount - 1;
   }
   applyTipChopPrescaler(tipChopPrescalers[step]);
+
+  uint16_t cap = tipChopPeriodTicks;
+  if (dutyX256 < 256) {
+    cap = onTicks;
+    if (slowSet) {
+      // Take the turn-off tail off the command so the supply sees the intended average current
+      const uint16_t tailTicks = (TIP_CHOP_TURNOFF_TAIL_US * 8 + (tipChopPrescalers[step] + 1) / 2) / (tipChopPrescalers[step] + 1);
+      cap                      = cap > tailTicks ? cap - tailTicks : 0;
+    }
+    if (cap < 1) {
+      cap = 1;
+    }
+  }
+  tipDutyCapTicks = cap;
   return tipChopDutyX256;
 }
 #endif /* TIP_CURRENT_LIMIT_CHOP */
@@ -230,6 +288,23 @@ void setTipPWM(const uint8_t pulse, const bool shouldUseFastModePWM) {
 // These are called by the HAL after the corresponding events from the system
 // timers.
 
+// Only drive the active socket
+static inline void setTipDriveDuty(uint16_t duty) {
+#ifdef PWM2_Out_CHANNEL
+  if (getTipSocketsShorted()) {
+    duty = 0;
+  }
+  if (getActiveTipChannel() == 1) {
+    // Don't drive TS/SI with a T12 in
+    htim4.Instance->PWM_Out_CCR  = 0;
+    htim4.Instance->PWM2_Out_CCR = getT12SocketHasTip() ? 0 : duty;
+    return;
+  }
+  htim4.Instance->PWM2_Out_CCR = 0;
+#endif
+  htim4.Instance->PWM_Out_CCR = duty;
+}
+
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
   // Period has elapsed
   if (htim->Instance == TIM2) {
@@ -243,7 +318,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     // While we could assume this could never happen, its a small price for
     // increased safety
     if (PWMSafetyTimer == 0) {
-      htim4.Instance->CCR3 = 0;
+      setTipDriveDuty(0);
     } else {
       uint16_t duty = pendingPWM / 4; // 0..63 of the 65 tick fast PWM period
 #ifdef TIP_CURRENT_LIMIT_CHOP
@@ -251,7 +326,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
         duty = tipDutyCapTicks; // never draw more than the supply can deliver, whatever the PID asks for
       }
 #endif
-      htim4.Instance->CCR3 = duty;
+      setTipDriveDuty(duty);
     }
   } else if (htim->Instance == TIM1) {
     // STM uses this for internal functions as a counter for timeouts
@@ -260,7 +335,13 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 #ifdef BUZZER_Pin
   else if (htim->Instance == TIM3) {
     // Buzzer tone: square wave on a plain GPIO
-    HAL_GPIO_TogglePin(BUZZER_GPIO_Port, BUZZER_Pin);
+    if (buzzerTogglesLeft == 0) {
+      HAL_TIM_Base_Stop_IT(&htim3);
+      HAL_GPIO_WritePin(BUZZER_GPIO_Port, BUZZER_Pin, GPIO_PIN_RESET);
+    } else {
+      buzzerTogglesLeft--;
+      HAL_GPIO_TogglePin(BUZZER_GPIO_Port, BUZZER_Pin);
+    }
   }
 #endif
 }
@@ -268,14 +349,122 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim) {
   // End of the drive window: output off while the ADC samples the tip
   if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_4) {
-    htim4.Instance->CCR3 = 0;
+    htim4.Instance->PWM_Out_CCR = 0;
+#ifdef PWM2_Out_CHANNEL
+    htim4.Instance->PWM2_Out_CCR = 0;
+#endif
   }
 }
 
 uint8_t getButtonA() { return HAL_GPIO_ReadPin(KEY_A_GPIO_Port, KEY_A_Pin) == GPIO_PIN_RESET ? 1 : 0; }
 uint8_t getButtonB() { return HAL_GPIO_ReadPin(KEY_B_GPIO_Port, KEY_B_Pin) == GPIO_PIN_RESET ? 1 : 0; }
 
-void BSPInit(void) { switchToFastPWM(); }
+#ifdef STATUS_LED_COUNT
+typedef struct {
+  GPIO_TypeDef *port;
+  uint16_t      pin;
+} StatusLEDPin;
+
+static const StatusLEDPin statusLEDs[STATUS_LED_COUNT] = {
+    { LED1_GPIO_Port,  LED1_Pin},
+    { LED2_GPIO_Port,  LED2_Pin},
+    { LED3_GPIO_Port,  LED3_Pin},
+    { LED4_GPIO_Port,  LED4_Pin},
+    { LED5_GPIO_Port,  LED5_Pin},
+    { LED6_GPIO_Port,  LED6_Pin},
+    { LED7_GPIO_Port,  LED7_Pin},
+    { LED8_GPIO_Port,  LED8_Pin},
+    { LED9_GPIO_Port,  LED9_Pin},
+    {LED10_GPIO_Port, LED10_Pin},
+};
+static const uint16_t allStatusLEDs = (1U << STATUS_LED_COUNT) - 1;
+
+// Bit 0 = LED1
+static void writeStatusLEDs(uint16_t mask) {
+  static uint16_t lastMask = 0;
+  if (mask == lastMask) {
+    return;
+  }
+  lastMask = mask;
+  for (uint8_t i = 0; i < STATUS_LED_COUNT; i++) {
+    const bool on = (mask >> i) & 1;
+    HAL_GPIO_WritePin(statusLEDs[i].port, statusLEDs[i].pin, (on == (STATUS_LEDS_ACTIVE_HIGH != 0)) ? GPIO_PIN_SET : GPIO_PIN_RESET);
+  }
+}
+
+static void initStatusLEDs(void) {
+  // PC13-15 only support low speed
+  __HAL_RCC_GPIOC_CLK_ENABLE();
+  GPIO_InitTypeDef GPIO_InitStruct;
+  GPIO_InitStruct.Mode  = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull  = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  for (uint8_t i = 0; i < STATUS_LED_COUNT; i++) {
+    HAL_GPIO_WritePin(statusLEDs[i].port, statusLEDs[i].pin, STATUS_LEDS_ACTIVE_HIGH ? GPIO_PIN_RESET : GPIO_PIN_SET);
+    GPIO_InitStruct.Pin = statusLEDs[i].pin;
+    HAL_GPIO_Init(statusLEDs[i].port, &GPIO_InitStruct);
+  }
+}
+
+// First n LEDs on
+static uint16_t getStatusLEDBarBitmask(uint32_t n) { return n >= STATUS_LED_COUNT ? allStatusLEDs : (uint16_t)((1U << n) - 1); }
+
+// LEDMode: 0 off, 1 status, 2 temperature, 3 power
+void setStatusLED(const enum StatusLED state) {
+  const TickType_t now  = xTaskGetTickCount();
+  uint16_t         mask = 0;
+#ifdef STATUS_LED_SETTING
+  const uint16_t mode = getSettingValue(SettingsOptions::LEDMode);
+#else
+  const uint16_t mode = 1;
+#endif
+  if (mode == 0) {
+    writeStatusLEDs(0);
+    return;
+  }
+  if (mode == 2) {
+    const uint32_t tipC = TipThermoModel::getTipInC();
+    uint32_t       setC = getSettingValue(SettingsOptions::SolderingTemp);
+    if (getSettingValue(SettingsOptions::TemperatureInF)) {
+      setC = TipThermoModel::convertFtoC(setC);
+    }
+    writeStatusLEDs((tipC < 50 || setC == 0 || isTipDisconnected()) ? 0 : getStatusLEDBarBitmask((tipC * STATUS_LED_COUNT + setC / 2) / setC));
+    return;
+  }
+  if (mode == 3) {
+    writeStatusLEDs(PWMSafetyTimer ? getStatusLEDBarBitmask((pendingPWM * STATUS_LED_COUNT + 127) / 255) : 0);
+    return;
+  }
+  switch (state) {
+  case LED_STANDBY:
+    mask = (1U << 4) | (1U << 5);
+    break;
+  case LED_HEATING:
+    mask = (1U << ((now / TICKS_100MS) % (STATUS_LED_COUNT + 1))) - 1;
+    break;
+  case LED_HOT:
+    mask = allStatusLEDs;
+    break;
+  case LED_COOLING_STILL_HOT:
+    mask = ((now / (TICKS_SECOND / 2)) & 1) ? allStatusLEDs : 0;
+    break;
+  case LED_OFF:
+  case LED_UNKNOWN:
+  default:
+    break;
+  }
+  writeStatusLEDs(mask);
+}
+#else
+void setStatusLED(const enum StatusLED state) {}
+#endif /* STATUS_LED_COUNT */
+
+void BSPInit(void) {
+  switchToFastPWM();
+#ifdef STATUS_LED_COUNT
+  initStatusLEDs();
+#endif
+}
 
 void reboot() { NVIC_SystemReset(); }
 
@@ -288,7 +477,6 @@ bool isTipDisconnected() {
   return tipTemp > tipDisconnectedThres;
 }
 
-void    setStatusLED(const enum StatusLED state) {}
 uint8_t preStartChecks() {
 #if POW_PD_EXT == 1
   if (!hub238_has_run_selection() && (xTaskGetTickCount() < TICKS_SECOND * 5)) {
@@ -308,8 +496,10 @@ uint8_t preStartChecks() {
 #endif
 
 #ifdef TIP_CURRENT_LIMIT_CHOP
+#if POW_PD_EXT == 1 || POW_PD_EXT == 2
   (void)voltage;
   (void)currentx100;
+#endif
   getTipChopDutyX256(); // Latch chop duty + prescaler for the negotiated supply before heating starts
 #else
   uint16_t thresholdResistancex10 = ((voltage * 1000) / currentx100) + 5;
@@ -345,12 +535,21 @@ uint8_t getTipResistanceX10() {
 #else
   uint8_t user_selected_tip = getUserSelectedTipResistance();
   if (user_selected_tip == 0) {
+#ifdef TIP2_RESISTANCE
+    if (getActiveTipChannel() == 1) {
+      return TIP2_RESISTANCE;
+    }
+#endif
     return TIP_RESISTANCE; // Auto mode
   }
   return user_selected_tip;
 #endif
 }
-bool    isTipShorted() { return false; }
+#ifdef TIP_SHORT_DETECTION
+bool isTipShorted() { return getTipSocketsShorted(); }
+#else
+bool isTipShorted() { return false; }
+#endif
 uint8_t preStartChecksDone() { return 1; }
 
 uint16_t getTipThermalMass() { return TIP_THERMAL_MASS; }
@@ -362,6 +561,8 @@ void setBuzzer(bool on) {
     on = false; // Muted by the user
   }
   if (on) {
+    // Run buzzer for 1 second
+    buzzerTogglesLeft = 2 * BUZZER_FREQ_HZ;
     HAL_TIM_Base_Start_IT(&htim3);
   } else {
     HAL_TIM_Base_Stop_IT(&htim3);

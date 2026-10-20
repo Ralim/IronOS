@@ -116,7 +116,7 @@
 // Vin_max = (3.3*(r1+r2))/(r2)
 // vdiv = (32768*4)/(vin_max*10)
 
-#if defined(MODEL_S60) + defined(MODEL_S60P) + defined(MODEL_T55) + defined(MODEL_S99) == 0
+#if defined(MODEL_S60) + defined(MODEL_S60P) + defined(MODEL_T55) + defined(MODEL_S99) + defined(MODEL_Si012ProMax) == 0
 #error "No model defined!"
 #endif
 
@@ -286,6 +286,10 @@
 #define TIP_TYPE_SUPPORT          1    // Support for tips of different types, i.e. resistance
 #define TIPTYPE_C245              1    // Sequre 5.5 ohm stock or JBC/Relife style 2.5 ohm C245 cartridges
 #define TIP_CURRENT_LIMIT_CHOP    1    // Envelope PWM for power, fast chop only for supply current limiting
+#define TIP_PEAK_CURRENT_MAX_X100 600  // Highest tip current (V / R) a PDO may be chosen for: 2.5 ohm -> 15 V. Not lower: the gate drive follows VBUS and is too weak below ~12 V
+#define TIP_CHOP_SLOW_BELOW_RX10  50   // Cartridges below this resistance (x10 ohm) always use the slow chop set; the stock 5.5 ohm one keeps the fast set
+#define TIP_CHOP_MIN_PULSE_US     100  // Shortest chop pulse; the chop slows down rather than going below it (edges of ~15 us on and ~35 us off)
+#define TIP_CHOP_TURNOFF_TAIL_US  25   // Net extra conduction per pulse: turn-off tail ~35 us minus turn-on delay ~15 us (gate RC, measured in Ralim/IronOS#2248)
 #define BUZZER_SETTING            1    // Expose the buzzer on/off as a user setting
 #define BUZZER_STARTUP_CHIRP      1    // Short beep once the boot logo has been shown
 #define BUZZER_FREQ_HZ            4000 // Tone frequency; small piezos are loudest near their ~4 kHz resonance
@@ -313,10 +317,65 @@
 #define MODEL_HAS_DCDC // No DC/DC, but the fast PWM (duty capped at the supply current) behaves like one, so PD can pick max voltage
 #endif                 /* S99 */
 
+#ifdef MODEL_Si012ProMax
+// Two tip sockets (T12 and TS/SI). PD is done by a standalone HUSB238, so the input is treated as DC.
+#define VOLTAGE_DIV        460 // Default divider scaler
+#define CALIBRATION_OFFSET 200 // Default adc offset in uV
+#define PID_POWER_LIMIT    70  // Sets the max pwm power limit
+#define POWER_LIMIT        0   // 0 watts default limit
+#define MAX_POWER_LIMIT    100
+#define POWER_LIMIT_STEPS  5
+#define OP_AMP_GAIN_STAGE  536
+#define TEMP_uV_LOOKUP_S60
+#define USB_PD_VMAX              20 // Maximum voltage for PD to negotiate
+#define USB_PD_TIMEOUT           1  // Default Timeout for USB-PD Protocol negotiation in x100ms
+#define THERMAL_RUNAWAY_TIME_SEC 20
+#define THERMAL_RUNAWAY_TEMP_C   3
+
+#define HARDWARE_MAX_WATTAGE_X10     1000
+#define ENFORCE_HARDWARE_MAX_WATTAGE 1
+
+#define TIP_THERMAL_MASS    10  // X10 watts to raise 1 deg C in 1 second
+#define TIP_THERMAL_INERTIA 128 // We use a large inertia value to smooth out the drive to the tip since its stupidly sensitive
+
+#define TIP_RESISTANCE            80 // x10 ohms, T12 socket
+#define TIP2_RESISTANCE           69 // x10 ohms, TS/SI socket
+#define DUAL_TIP_SOCKETS          1
+#define TIP_SHORT_DETECTION       1
+#define TIP_TYPE_SUPPORT          1 // Support for tips of different types, i.e. resistance
+#define AUTO_TIP_SELECTION        1 // Can auto-select the tip
+#define TIPTYPE_T12               1 // Can manually pick a T12 tip
+#define TIP_CURRENT_LIMIT_CHOP    1
+#define TIP_PWM_SLOWDOWN_1_C      35
+#define TIP_PWM_SLOWDOWN_2_C      45
+#define HANDLE_DERATE_START_C     55
+#define HANDLE_DERATE_END_C       70
+#define HANDLE_DERATE_MIN_PERCENT 20
+#define BUZZER_SETTING            1
+#define BUZZER_STARTUP_CHIRP      1
+#define BUZZER_FREQ_HZ            4000
+#define STATUS_LEDS_ACTIVE_HIGH   1
+#define STATUS_LED_SETTING        1
+
+#define OLED_128x32
+#define OLED_128x32_DENSE_UI 1
+#define OLED_FLIP            1 // Mounted upside down
+#define GPIO_VIBRATION
+#define POW_PD_EXT         0
+#define USB_PD_EPR_WATTAGE 0 /*No EPR*/
+#define POW_DC
+#define TEMP_NTC
+#define I2C_SOFT_BUS_2
+#define OLED_I2CBB2
+#define FILTER_DISPLAYED_TIP_TEMP 4 // Filtering for GUI display
+
+#define MODEL_HAS_DCDC
+#endif /* Si012ProMax */
+
 #ifdef MODEL_S60P
 #define FLASH_LOGOADDR      (0x08000000 + (126 * 1024))
 #define SETTINGS_START_PAGE (0x08000000 + (127 * 1024))
-#elif defined(MODEL_S99)
+#elif defined(MODEL_S99) || defined(MODEL_Si012ProMax)
 // 80K usable flash, code region is 78K (see Makefile); logo + settings are the two 1K pages after it
 #define FLASH_LOGOADDR      (0x08000000 + (78 * 1024))
 #define SETTINGS_START_PAGE (0x08000000 + (79 * 1024))

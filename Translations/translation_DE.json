@@ -358,6 +358,10 @@
     "BuzzerEnabled": {
       "displayText": "Summer",
       "description": "Piepton, wenn die Solltemperatur erreicht ist und am Ende eines Profils"
+    },
+    "LEDMode": {
+      "displayText": "LEDs",
+      "description": "Aus, 1=Status, 2=Temperatur, 3=Leistung"
     }
   }
 }

@@ -399,17 +399,17 @@ Average maximum power the iron can use (W=watt)
 
 ### Setting: Calibrate CJC at next boot
 
-Note:
-If the difference between the target temperature and the measured temperature is less than 5°C, **calibration is NOT required at all**.
-
-This is used to calibrate the offset between ADC and Op-amp of the tip **at next boot** (Ideally it has to be done at boot, before internal components get warm.). If the checkbox is set, the calibration will only be performed at the next boot. After a successful calibration the checkbox will be unchecked again! If you need to repeat the calibration however, you have to set the checkbox *again*, unplug your device and let it cool down to room/ambient temperature & power it up, ideally while it sits on the desk.
-
-
-Also, the calibration will only take place if both of the following conditions are met:
-- The tip must be installed.
-- The temperature difference between tip and handle must be less than 10°C. (~ ambient / room temperature)
-
-Otherwise, the calibration will be performed the next time the device is started and both conditions are met, unless the corresponding checkbox is unchecked.
+Note:
+If the difference between the target temperature and the measured temperature is less than 5°C, **calibration is NOT required at all**.
+
+This is used to calibrate the offset between ADC and Op-amp of the tip **at next boot** (Ideally it has to be done at boot, before internal components get warm.). If the checkbox is set, the calibration will only be performed at the next boot. After a successful calibration the checkbox will be unchecked again! If you need to repeat the calibration however, you have to set the checkbox *again*, unplug your device and let it cool down to room/ambient temperature & power it up, ideally while it sits on the desk.
+
+
+Also, the calibration will only take place if both of the following conditions are met:
+- The tip must be installed.
+- The temperature difference between tip and handle must be less than 10°C. (~ ambient / room temperature)
+
+Otherwise, the calibration will be performed the next time the device is started and both conditions are met, unless the corresponding checkbox is unchecked.
 Hence, never repeat the calibration in quick succession!
 
 On device help text:
@@ -487,3 +487,11 @@ Switch the front work light on or off.
 On device help text:
 
 Front work light on/off
+
+### Setting: LEDs
+
+Status LED mode: off, 1 = status, 2 = tip temperature, 3 = heater power.
+
+On device help text:
+
+Off, 1=status, 2=temperature, 3=power

@@ -80,8 +80,10 @@ enum SettingsOptions {
   ReverseButtonSettings          = 55, // Change the A and B button assigment in Settings menu
   BuzzerEnabled                  = 56, // Buzzer on/off (devices with a buzzer)
   WorklightEnabled               = 57, // Front work light on/off
+  LEDMode                        = 58, // Status LED mode
+  CalibrationOffset2             = 59, // Calibration offset for the second tip socket
   //
-  SettingsOptionsLength = 58, // End marker
+  SettingsOptionsLength = 60, // End marker
 };
 
 // For every setting we need to store the min/max/increment values

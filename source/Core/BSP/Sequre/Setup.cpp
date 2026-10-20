@@ -8,6 +8,7 @@
 #include "BSP.h"
 #include "Pins.h"
 #include "history.hpp"
+#include "main.hpp"
 #include <stdint.h>
 #include <string.h>
 ADC_HandleTypeDef hadc1;
@@ -125,6 +126,71 @@ uint16_t getADCVin(uint8_t sample) {
   }
   return filter.average();
 }
+#ifdef TIP2_TEMP_ADC1_CHANNEL
+// Both sets of contacts are read every cycle, an empty one reads close to full scale.
+// A T12 tip also touches the TS/SI contacts, so T12 takes priority and we only switch to TS/SI while idle.
+// If a tip is detected in both sets of contacts, it is likely a short and we mask output and dont allow drive until the short is removed.
+static const uint16_t tipOpenThreshold     = (ADC_MAX_READING * 31) / 32;
+static const uint8_t  tipSwitchSampleCount = 16; // Readings in a row before changing state
+static uint8_t        activeTipChannel     = 0;
+static uint8_t        socketChangeCount    = 0;
+static uint8_t        shortClearCount      = 0;
+static bool           socketPicked         = false;
+static volatile bool  t12SocketHasTip      = false;
+static volatile bool  tipSocketsShorted    = false;
+static uint16_t       inactiveTipRaw       = 0;
+
+uint8_t  getActiveTipChannel(void) { return activeTipChannel; }
+uint16_t getInactiveTipRawTemp(void) { return inactiveTipRaw; }
+bool     getT12SocketHasTip(void) { return t12SocketHasTip; }
+bool     getTipSocketsShorted(void) { return tipSocketsShorted; }
+
+uint16_t getTipRawTemp(uint8_t sample) {
+  static history<uint16_t, ADC_FILTER_LEN> filter = {{0}, 0, 0};
+  if (sample) {
+    uint16_t channelRaw[2];
+    channelRaw[0]   = (uint16_t)((hadc1.Instance->JDR1 + hadc1.Instance->JDR2) << 2);
+    channelRaw[1]   = (uint16_t)((hadc1.Instance->JDR3 + hadc1.Instance->JDR4) << 2);
+    t12SocketHasTip = channelRaw[0] < tipOpenThreshold;
+    if (t12SocketHasTip && channelRaw[1] < tipOpenThreshold) {
+      tipSocketsShorted = true; // Set immediately
+      shortClearCount   = 0;
+    } else if (tipSocketsShorted && ++shortClearCount >= tipSwitchSampleCount) {
+      tipSocketsShorted = false;
+      shortClearCount   = 0;
+    }
+
+    // Keep the current socket if both are empty
+    uint8_t wanted = activeTipChannel;
+    if (t12SocketHasTip) {
+      wanted = 0;
+    } else if (channelRaw[1] < tipOpenThreshold) {
+      wanted = 1;
+    }
+
+    if (!socketPicked) {
+      socketPicked     = true;
+      activeTipChannel = wanted;
+    } else if (wanted != activeTipChannel && (wanted == 0 || currentTempTargetDegC == 0)) {
+      if (++socketChangeCount >= tipSwitchSampleCount) {
+        activeTipChannel  = wanted;
+        socketChangeCount = 0;
+        // Reset the filter
+        for (uint8_t i = 0; i < ADC_FILTER_LEN; i++) {
+          filter.update(channelRaw[activeTipChannel]);
+        }
+      }
+    } else {
+      socketChangeCount = 0;
+    }
+
+    inactiveTipRaw = channelRaw[activeTipChannel ^ 1];
+    filter.update(channelRaw[activeTipChannel]);
+    return channelRaw[activeTipChannel];
+  }
+  return filter.average();
+}
+#else
 // Returns either average or instant value. When sample is set the samples from the injected ADC are copied to the filter and then the raw reading is returned
 uint16_t getTipRawTemp(uint8_t sample) {
   static history<uint16_t, ADC_FILTER_LEN> filter = {{0}, 0, 0};
@@ -141,6 +207,7 @@ uint16_t getTipRawTemp(uint8_t sample) {
   }
   return filter.average();
 }
+#endif /* TIP2_TEMP_ADC1_CHANNEL */
 /** System Clock Configuration
  */
 void SystemClock_Config(void) {
@@ -242,6 +309,10 @@ static void MX_ADC1_Init(void) {
   HAL_ADCEx_InjectedConfigChannel(&hadc1, &sConfigInjected);
   sConfigInjected.InjectedRank = 2;
   HAL_ADCEx_InjectedConfigChannel(&hadc1, &sConfigInjected);
+#ifdef TIP2_TEMP_ADC1_CHANNEL
+  // Ranks 3 and 4: second tip socket
+  sConfigInjected.InjectedChannel = TIP2_TEMP_ADC1_CHANNEL;
+#endif
   sConfigInjected.InjectedRank = 3;
   HAL_ADCEx_InjectedConfigChannel(&hadc1, &sConfigInjected);
   sConfigInjected.InjectedRank = 4;
@@ -335,18 +406,28 @@ static void MX_TIM4_Init(void) {
   sConfigOC.OCFastMode = TIM_OCFAST_ENABLE;
   sConfigOC.Pulse      = 0; // default to entirely off
   HAL_TIM_PWM_ConfigChannel(&htim4, &sConfigOC, PWM_Out_CHANNEL);
+#ifdef PWM2_Out_CHANNEL
+  HAL_TIM_PWM_ConfigChannel(&htim4, &sConfigOC, PWM2_Out_CHANNEL);
+#endif
 
   GPIO_InitTypeDef GPIO_InitStruct;
   GPIO_InitStruct.Pin   = PWM_Out_Pin;
   GPIO_InitStruct.Mode  = GPIO_MODE_AF_PP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH; // We would like sharp rising edges
   HAL_GPIO_Init(PWM_Out_GPIO_Port, &GPIO_InitStruct);
+#ifdef PWM2_Out_CHANNEL
+  GPIO_InitStruct.Pin = PWM2_Out_Pin;
+  HAL_GPIO_Init(PWM2_Out_GPIO_Port, &GPIO_InitStruct);
+#endif
 
   // HAL_NVIC_SetPriority(TIM4_IRQn, 15, 0);
   // HAL_NVIC_EnableIRQ(TIM4_IRQn);
 
   HAL_TIM_Base_Start(&htim4);
   HAL_TIM_PWM_Start(&htim4, PWM_Out_CHANNEL);
+#ifdef PWM2_Out_CHANNEL
+  HAL_TIM_PWM_Start(&htim4, PWM2_Out_CHANNEL);
+#endif
 }
 ///////////////////
 static void MX_TIM3_Init(void) {
@@ -503,6 +584,15 @@ static void MX_GPIO_Init(void) {
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(KEY_B_GPIO_Port, &GPIO_InitStruct);
+
+#ifdef USB_DP_GATE_Pin
+  HAL_GPIO_WritePin(USB_DP_GATE_GPIO_Port, USB_DP_GATE_Pin, GPIO_PIN_RESET);
+  GPIO_InitStruct.Pin   = USB_DP_GATE_Pin;
+  GPIO_InitStruct.Mode  = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull  = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(USB_DP_GATE_GPIO_Port, &GPIO_InitStruct);
+#endif
 }
 #ifdef USE_FULL_ASSERT
 void assert_failed(uint8_t *file, uint32_t line) { asm("bkpt"); }
