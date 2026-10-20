@@ -20,7 +20,7 @@ extern "C" void flash_save_buffer(const uint8_t *buffer, uint16_t length) {
 }
 
 int main() {
-  static_assert(SettingsOptions::WorklightEnabled == 57 && SettingsOptions::SettingsOptionsLength == 58, "Append the work-light setting without moving existing values");
+  static_assert(SettingsOptions::WorklightEnabled == 57 && SettingsOptions::SettingsOptionsLength == 60, "Append the work-light setting without moving existing values");
   static_assert(sizeof(systemSettingsType) <= sizeof(flashData), "Keep the TS21 settings page bounds");
   systemSettingsType legacy;
   std::memset(&legacy, 0xFF, sizeof(legacy));
@@ -43,7 +43,7 @@ int main() {
   }
   systemSettingsType saved;
   std::memcpy(&saved, flashData, sizeof(saved));
-  assert(saved.length == 58);
+  assert(saved.length == 60);
 
   setSettingValue(SettingsOptions::WorklightEnabled, 1);
   saveSettings();
