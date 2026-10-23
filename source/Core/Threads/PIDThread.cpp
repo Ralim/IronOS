@@ -137,6 +137,9 @@ void startPIDTask(void const *argument __unused) {
 }
 
 #ifdef TIP_CONTROL_PID
+#ifndef TIP_PID_INTEGRAL_LIMIT_SCALE
+#define TIP_PID_INTEGRAL_LIMIT_SCALE 5 // The I term may contribute up to this many percent of the max output
+#endif
 template <class T, T Kp, T Ki, T Kd, T integral_limit_scale> struct PID {
   T previous_error_term;
   T integration_running_sum;
@@ -214,7 +217,7 @@ int32_t getPIDResultX10Watts(TemperatureType_t set_point, TemperatureType_t curr
   static TickType_t lastCall = 0;
 
 #ifdef TIP_CONTROL_PID
-  static PID<TemperatureType_t, TIP_PID_KP, TIP_PID_KI, TIP_PID_KD, 5> pid = {0, 0};
+  static PID<TemperatureType_t, TIP_PID_KP, TIP_PID_KI, TIP_PID_KD, TIP_PID_INTEGRAL_LIMIT_SCALE> pid = {0, 0};
 
   const TickType_t interval = (xTaskGetTickCount() - lastCall);
 
