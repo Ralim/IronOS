@@ -284,6 +284,11 @@ settings:
     max: 1
     min: 0
     name: BuzzerEnabled
+  - default: 0
+    increment: 1
+    max: 1
+    min: 0
+    name: WorklightEnabled
   - default: 1
     increment: 1
     max: 3

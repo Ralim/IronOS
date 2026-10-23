@@ -30,6 +30,9 @@
     "WarningThermalRunaway": {
       "message": "Thermal\nRunaway"
     },
+    "WarningHeaterStopped": {
+      "message": "Heating stopped\n"
+    },
     "WarningTipShorted": {
       "message": "!Tip Shorted!"
     },
@@ -358,6 +361,10 @@
     "BuzzerEnabled": {
       "displayText": "Buzzer",
       "description": "Beep when the set temperature is reached and at the end of a profile"
+    },
+    "WorklightEnabled": {
+      "displayText": "Work\nlight",
+      "description": "Front work light on/off"
     },
     "LEDMode": {
       "displayText": "LEDs",

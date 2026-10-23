@@ -30,7 +30,8 @@
  * This was bought to my attention by <Kuba Sztandera>
  */
 volatile uint32_t lastuv = 0;
-uint32_t          TipThermoModel::convertTipRawADCTouV(uint16_t rawADC, bool skipCalOffset) {
+#ifndef TEMP_DIRECT_ADC
+uint32_t TipThermoModel::convertTipRawADCTouV(uint16_t rawADC, bool skipCalOffset) {
   // This takes the raw ADC samples, converts these to uV
   // Then divides this down by the gain to convert to the uV on the input to the op-amp (A+B terminals)
   // Then remove the calibration value that is stored as a tip offset
@@ -69,6 +70,9 @@ TemperatureType_t TipThermoModel::convertTipRawADCToDegC(uint16_t rawADC) { retu
 TemperatureType_t TipThermoModel::convertTipRawADCToDegF(uint16_t rawADC) { return convertuVToDegF(convertTipRawADCTouV(rawADC)); }
 
 TemperatureType_t TipThermoModel::convertuVToDegF(uint32_t tipuVDelta) { return convertCtoF(convertuVToDegC(tipuVDelta)); }
+#else
+TemperatureType_t TipThermoModel::convertTipRawADCToDegF(uint16_t rawADC) { return convertCtoF(convertTipRawADCToDegC(rawADC)); }
+#endif
 
 TemperatureType_t TipThermoModel::convertCtoF(TemperatureType_t degC) {
   //(Y °C × 9/5) + 32 =Y°F

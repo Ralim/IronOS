@@ -55,6 +55,14 @@ _PD Mode_ option in _Power settings_ submenu to _Safe_ or _Default_.
 
 \*\*\*\*\* Some users confirm that there is a version of newer _TS101_ revision with another OLED screen model, which is not supported yet at all by _IronOS_ unfortunately. See [this bug report](https://github.com/Ralim/IronOS/issues/2063) for more information.
 
+## Experimental TS21 development
+
+The [experimental TS21 port](source/Core/BSP/TS21/README.md) requires `TS21_EXPERIMENTAL=1`. The default `ts21-ironos` build brings up the full 128x32 UI with the heater compiled out; `ts21-heater-test` is the only target that drives the tip. Both use the S60/S60P C210 PID values and cap estimated output at 100 W, Miniware's published rating.
+
+The front work light has its own GPIO and a persistent _Settings_ -> _User interface_ -> _Work light_ switch, off by default.
+
+TS21 is excluded from release builds, and this is not supported soldering firmware. The BSP README covers the fault model, flashing and what has actually been checked on hardware.
+
 ## Getting Started
 
 To get started with _IronOS firmware_, please jump to [Getting Started Guide](https://ralim.github.io/IronOS/GettingStarted/).

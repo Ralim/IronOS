@@ -78,11 +78,17 @@ def filter_translation(lang: dict, defs: dict, macros: frozenset):
 
     for category in ("menuOptions", "menuGroups", "menuValues"):
         for _, record in enumerate(defs[category]):
+            if "default" in record:
+                lang[category].setdefault(record["id"], record["default"].copy())
             if check_excluded(record):
                 lang[category][record["id"]]["displayText"] = ""
                 lang[category][record["id"]]["description"] = ""
 
     for _, record in enumerate(defs["messagesWarn"]):
+        if "default" in record:
+            lang["messagesWarn"].setdefault(
+                record["id"], {"message": record["default"]}
+            )
         if check_excluded(record):
             lang["messagesWarn"][record["id"]]["message"] = ""
 
@@ -1121,7 +1127,8 @@ def write_language(
         f.write("void prepareTranslations() {\n")
         if compress_font:
             f.write(
-                "  blz_depack_srcsize(font_12x16_brieflz, font_out_buffer, sizeof(font_12x16_brieflz));\n"
+                "  blz_depack_srcsize(font_12x16_brieflz, font12_out_buffer, sizeof(font_12x16_brieflz));\n"
+                "  blz_depack_srcsize(font_06x08_brieflz, font06_out_buffer, sizeof(font_06x08_brieflz));\n"
             )
         if strings_bin:
             f.write(
