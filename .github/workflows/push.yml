@@ -26,6 +26,8 @@ jobs:
             "S60",
             "S60P",
             "T55",
+            "S99",
+            "Si012ProMax",
             "TS101",
           ]
       fail-fast: true
@@ -35,9 +37,9 @@ jobs:
         run: apk add --no-cache gcc-riscv-none-elf g++-riscv-none-elf gcc-arm-none-eabi g++-arm-none-eabi newlib-riscv-none-elf newlib-arm-none-eabi findutils python3 py3-pip make git bash
 
       - name: Install dependencies (python)
-        run: python3 -m pip install --break-system-packages bdflib
+        run: python3 -m pip install --break-system-packages bdflib pyyaml
 
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
         with:
           submodules: true
 
@@ -57,13 +59,14 @@ jobs:
         run: ./source/metadata.py ${{ matrix.model }}.json
 
       - name: Archive ${{ matrix.model }} artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ matrix.model }}
           path: |
             source/Hexfile/${{ matrix.model }}_*.hex
             source/Hexfile/${{ matrix.model }}_*.dfu
             source/Hexfile/${{ matrix.model }}_*.bin
+            source/Hexfile/${{ matrix.model }}_*.elf
             source/Hexfile/${{ matrix.model }}.json
             source/Hexfile/LICENSE
             source/Hexfile/LICENSE_RELEASE.md
@@ -82,9 +85,8 @@ jobs:
       - name: Install dependencies (apk)
         run: apk add --no-cache gcc-riscv-none-elf g++-riscv-none-elf gcc-arm-none-eabi g++-arm-none-eabi newlib-riscv-none-elf newlib-arm-none-eabi findutils python3 py3-pip make git bash musl-dev
       - name: Install dependencies (python)
-        run: python3 -m pip install --break-system-packages bdflib
-
-      - uses: actions/checkout@v5
+        run: python3 -m pip install --break-system-packages bdflib pyyaml
+      - uses: actions/checkout@v7
         with:
           submodules: true
 
@@ -95,7 +97,7 @@ jobs:
         run: echo "GITHUB_CI_PR_SHA=${{github.event.pull_request.head.sha}}" >> "${GITHUB_ENV}"
 
       - name: Build ${{ matrix.model }}
-        run: make -C source/ -j$(nproc) model="${{ matrix.model }}" firmware-multi_compressed_European firmware-multi_compressed_Belorussian+Bulgarian+Russian+Serbian+Ukrainian firmware-multi_Chinese+Japanese
+        run: make -C source/ -j$(nproc) model="${{ matrix.model }}" firmware-multi_compressed_European firmware-multi_compressed_Belarusian+Bulgarian+Russian+Serbian+Ukrainian firmware-multi_Chinese+Japanese
 
       - name: Copy license files
         run: cp LICENSE scripts/LICENSE_RELEASE.md  source/Hexfile/
@@ -104,13 +106,14 @@ jobs:
         run: ./source/metadata.py ${{ matrix.model }}_multi-lang.json
 
       - name: Archive ${{ matrix.model }} artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ matrix.model }}_multi-lang
           path: |
             source/Hexfile/${{ matrix.model }}_*.hex
             source/Hexfile/${{ matrix.model }}_*.dfu
             source/Hexfile/${{ matrix.model }}_*.bin
+            source/Hexfile/${{ matrix.model }}_*.elf
             source/Hexfile/${{ matrix.model }}_multi-lang.json
             source/Hexfile/LICENSE
             source/Hexfile/LICENSE_RELEASE.md
@@ -122,18 +125,94 @@ jobs:
 
     steps:
       - name: Download all prebuilts
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v8
         with:
           path: source/Hexfile/
           merge-multiple: true
       - run: ls -R source/Hexfile
 
       - name: Upload JSONs in bulk as metadata
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: metadata
           path: source/Hexfile/*.json
           if-no-files-found: error
+
+  memory_usage_report:
+    needs: [build, build_multi-lang]
+    if: ${{ github.event_name == 'pull_request' }}
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Download all build artifacts
+        uses: actions/download-artifact@v8
+        with:
+          path: source/Hexfile/
+          merge-multiple: true
+
+      - name: Generate memory report from ELF files
+        run: python3 scripts/ci/generate_memory_usage_report.py --elf-dir source/Hexfile --output memory-usage-comment.md
+
+      - name: Publish report in the job summary
+        run: cat memory-usage-comment.md >> "${GITHUB_STEP_SUMMARY}"
+
+      - name: Comment report on PR
+        uses: actions/github-script@v9
+        with:
+          script: |
+            // Pull requests from a fork get a read-only GITHUB_TOKEN whatever the permissions block
+            // asks for, so commenting is not possible there. The report is in the job summary either
+            // way; do not fail the run over it.
+            try {
+              const fs = require('fs');
+              const marker = '<!-- ironos-memory-usage-report -->';
+              const body = fs.readFileSync('memory-usage-comment.md', 'utf8');
+              const fullBody = `${marker}\n${body}`;
+              const issue_number = context.issue.number;
+
+              const comments = await github.paginate(
+                github.rest.issues.listComments,
+                {
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number,
+                  per_page: 100,
+                }
+              );
+
+              const existing = comments.find(
+                (comment) => comment.user && comment.user.type === 'Bot' && comment.body && comment.body.includes(marker)
+              );
+
+              if (existing) {
+                await github.rest.issues.updateComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  comment_id: existing.id,
+                  body: fullBody,
+                });
+                core.info(`Updated existing memory usage comment: ${existing.id}`);
+              } else {
+                const created = await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number,
+                  body: fullBody,
+                });
+                core.info(`Created memory usage comment: ${created.data.id}`);
+              }
+            } catch (error) {
+              if (error.status === 403) {
+                core.info('No write access to comment on this pull request (fork); see the job summary for the report.');
+              } else {
+                throw error;
+              }
+            }
 
   tests:
     runs-on: ubuntu-24.04
@@ -144,12 +223,12 @@ jobs:
       - name: Install dependencies (apk)
         run: apk add --no-cache python3 py3-pip make git bash findutils gcc musl-dev
 
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
         with:
           submodules: true
 
       - name: Install dependencies (python)
-        run: python3 -m pip install --break-system-packages bdflib
+        run: python3 -m pip install --break-system-packages bdflib pyyaml
 
       - name: Run python tests
         run: ./Translations/make_translation_test.py
@@ -166,7 +245,7 @@ jobs:
       - name: Install dependencies (apk)
         run: apk add --no-cache make git diffutils findutils clang-extra-tools bash
 
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
         with:
           submodules: true
 
@@ -175,12 +254,23 @@ jobs:
 
   check-settings-docs:
     runs-on: ubuntu-24.04
+    container:
+      image: alpine:3.21
+
     steps:
-      - uses: actions/checkout@v5
+      - name: Install dependencies (apk)
+        run: apk add --no-cache python3 git
+
+      - uses: actions/checkout@v7
+
+      - name: Git ownership exception
+        run: git config --global --add safe.directory /__w/IronOS/IronOS && git config --global safe.directory "$GITHUB_WORKSPACE"
+
       - name: Run the menu docs generator
-        run: python Translations/gen_menu_docs.py
+        run: python3 "$GITHUB_WORKSPACE/Translations/gen_menu_docs.py"
+
       - name: Check that Documentation/Settings.md didn't change
-        run: git diff --exit-code
+        run: git -C "$GITHUB_WORKSPACE" diff --exit-code
 
   check_python:
     runs-on: ubuntu-24.04
@@ -191,12 +281,12 @@ jobs:
       - name: Install dependencies (apk)
         run: apk add --no-cache python3 py3-pip make git black
 
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
         with:
           submodules: true
 
       - name: Install dependencies (python)
-        run: python3 -m pip install --break-system-packages bdflib flake8
+        run: python3 -m pip install --break-system-packages bdflib pyyaml flake8
 
       - name: Check python formatting with black
         run: black --diff --check Translations
@@ -208,7 +298,7 @@ jobs:
     name: check_shell
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - name: shellcheck
         uses: reviewdog/action-shellcheck@v1
         with:
@@ -226,7 +316,7 @@ jobs:
       - name: Install dependencies (apk)
         run: apk add --no-cache git bash grep
 
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
         with:
           submodules: true
           fetch-tags: true

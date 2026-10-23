@@ -81,7 +81,9 @@
     "SettingStartSleepChar": "Z",
     "SettingStartSleepOffChar": "O",
     "SettingLockBoostChar": "B",
-    "SettingLockFullChar": "P"
+    "SettingLockFullChar": "P",
+    "SettingBLEOnChar": "+",
+    "SettingBLEReadOnlyChar": "R"
   },
   "menuGroups": {
     "PowerMenu": {
@@ -132,6 +134,12 @@
     },
     "TipTypeJBCC210": {
       "displayText": "JBC\nC210"
+    },
+    "TipTypeC245Stock": {
+      "displayText": "Stock\n5.5Ω"
+    },
+    "TipTypeC245JBC": {
+      "displayText": "JBC\n2.5Ω"
     }
   },
   "menuOptions": {
@@ -276,8 +284,8 @@
       "description": "Zamienia działanie przycisków zmiany temperatury grotu"
     },
     "ReverseButtonSettings": {
-      "displayText": "Swap\nA B keys",
-      "description": "Reverse assignment of buttons for Settings menu"
+      "displayText": "Zamień\nklawisze A i B",
+      "description": "Odwrotne przypisanie przycisków dla menu Ustawienia"
     },
     "AnimSpeed": {
       "displayText": "Prędkosć\nanimacji",
@@ -346,6 +354,14 @@
     "SolderingTipType": {
       "displayText": "Typ grotu",
       "description": "Wybierz typ zamontowanego grotu"
+    },
+    "BuzzerEnabled": {
+      "displayText": "Buzzer",
+      "description": "Beep when the set temperature is reached and at the end of a profile"
+    },
+    "LEDMode": {
+      "displayText": "LEDs",
+      "description": "Off, 1=status, 2=temperature, 3=power"
     }
   }
 }

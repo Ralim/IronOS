@@ -43,7 +43,7 @@
       "message": "Ви дійсно хочете скинути налаштування до значень за замовчуванням? (A=Так, В=Ні)"
     },
     "UVLOWarningString": {
-      "message": "АККУМ--"
+      "message": "ВОЛЬТ--"
     },
     "UndervoltageString": {
       "message": "Низька напруга\n"
@@ -64,7 +64,7 @@
       "message": "Охолодження\n"
     },
     "DeviceFailedValidationWarning": {
-      "message": "Вірогідно ваш пристрій підробний!"
+      "message": "Ймовірно, ваш пристрій підроблений!"
     },
     "TooHotToStartProfileWarning": {
       "message": "Занадто гараче для\nзміни профілів"
@@ -81,7 +81,9 @@
     "SettingStartSleepChar": "С",
     "SettingStartSleepOffChar": "К",
     "SettingLockBoostChar": "Т",
-    "SettingLockFullChar": "П"
+    "SettingLockFullChar": "П",
+    "SettingBLEOnChar": "+",
+    "SettingBLEReadOnlyChar": "R"
   },
   "menuGroups": {
     "PowerMenu": {
@@ -132,6 +134,12 @@
     },
     "TipTypeJBCC210": {
       "displayText": "JBC\nC210"
+    },
+    "TipTypeC245Stock": {
+      "displayText": "Stock\n5.5Ω"
+    },
+    "TipTypeC245JBC": {
+      "displayText": "JBC\n2.5Ω"
     }
   },
   "menuOptions": {
@@ -169,7 +177,7 @@
     },
     "TempChangeLongStep": {
       "displayText": "Зміна темп.\nдовгим",
-      "description": "Зміна температуру при довгому натисканні!"
+      "description": "Зміна температури при довгому натисканні!"
     },
     "LockingMode": {
       "displayText": "Дозволити\nблок. кнопок",
@@ -276,8 +284,8 @@
       "description": "Інвертувати кнопки зміни температури."
     },
     "ReverseButtonSettings": {
-      "displayText": "Swap\nA B keys",
-      "description": "Reverse assignment of buttons for Settings menu"
+      "displayText": "Поміняти\nклавіші A і B",
+      "description": "Зворотне призначення кнопок для меню Налаштування"
     },
     "AnimSpeed": {
       "displayText": "Швидкість\nанімації",
@@ -313,7 +321,7 @@
     },
     "PowerLimit": {
       "displayText": "Макс.\nпотуж.",
-      "description": "Макс. потужність, яку може використовувати паяльник (Ватт)"
+      "description": "Макс. потужність, яку може використовувати паяльник (Ват)"
     },
     "CalibrateCJC": {
       "displayText": "Калібрувати КХС\nпри наступному запуску",
@@ -321,7 +329,7 @@
     },
     "VoltageCalibration": {
       "displayText": "Калібрування\nнапруги",
-      "description": "Калібрування напруги входу. Налаштувати кнопками, натиснути і утримати щоб завершити."
+      "description": "Калібрування напруги входу. Налаштувати кнопками, натиснути і утримати, щоб завершити."
     },
     "PowerPulsePower": {
       "displayText": "Пульс.\nНавантаж.",
@@ -346,6 +354,14 @@
     "SolderingTipType": {
       "displayText": "Тип Жала",
       "description": "Оберіть відповідний тип жала"
+    },
+    "BuzzerEnabled": {
+      "displayText": "Buzzer",
+      "description": "Beep when the set temperature is reached and at the end of a profile"
+    },
+    "LEDMode": {
+      "displayText": "LEDs",
+      "description": "Off, 1=status, 2=temperature, 3=power"
     }
   }
 }

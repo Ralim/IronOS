@@ -84,4 +84,8 @@ void HAL_TIM_Base_MspInit(TIM_HandleTypeDef *htim_base) {
     /* Peripheral clock enable */
     __HAL_RCC_TIM2_CLK_ENABLE();
   }
+  if (htim_base->Instance == TIM3) {
+    /* Peripheral clock enable */
+    __HAL_RCC_TIM3_CLK_ENABLE();
+  }
 }

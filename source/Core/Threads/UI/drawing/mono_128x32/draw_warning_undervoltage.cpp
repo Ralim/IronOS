@@ -6,7 +6,7 @@ void ui_draw_warning_undervoltage(void) {
   OLED::setCursor(0, 0);
   if (getSettingValue(SettingsOptions::DetailedSoldering)) {
     OLED::print(translatedString(Tr->UndervoltageString), FontStyle::SMALL);
-    OLED::setCursor(0, 8);
+    OLED::setCursor(0, 16);
     OLED::print(translatedString(Tr->InputVoltageString), FontStyle::SMALL);
     printVoltage();
     OLED::print(SmallSymbolVolts, FontStyle::SMALL);

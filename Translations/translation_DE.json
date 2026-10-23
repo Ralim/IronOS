@@ -81,7 +81,9 @@
     "SettingStartSleepChar": "R",
     "SettingStartSleepOffChar": "K",
     "SettingLockBoostChar": "B",
-    "SettingLockFullChar": "V"
+    "SettingLockFullChar": "V",
+    "SettingBLEOnChar": "+",
+    "SettingBLEReadOnlyChar": "R"
   },
   "menuGroups": {
     "PowerMenu": {
@@ -132,6 +134,12 @@
     },
     "TipTypeJBCC210": {
       "displayText": "JBC\nC210"
+    },
+    "TipTypeC245Stock": {
+      "displayText": "Stock\n5.5Ω"
+    },
+    "TipTypeC245JBC": {
+      "displayText": "JBC\n2.5Ω"
     }
   },
   "menuOptions": {
@@ -346,6 +354,14 @@
     "SolderingTipType": {
       "displayText": "Löt-\nspitzentyp",
       "description": "Wählen Sie den Typ der eingesetzten Spitze"
+    },
+    "BuzzerEnabled": {
+      "displayText": "Summer",
+      "description": "Piepton, wenn die Solltemperatur erreicht ist und am Ende eines Profils"
+    },
+    "LEDMode": {
+      "displayText": "LEDs",
+      "description": "Aus, 1=Status, 2=Temperatur, 3=Leistung"
     }
   }
 }

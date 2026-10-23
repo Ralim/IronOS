@@ -81,7 +81,9 @@
     "SettingStartSleepChar": "V",
     "SettingStartSleepOffChar": "O",
     "SettingLockBoostChar": "B",
-    "SettingLockFullChar": "V"
+    "SettingLockFullChar": "V",
+    "SettingBLEOnChar": "+",
+    "SettingBLEReadOnlyChar": "R"
   },
   "menuGroups": {
     "PowerMenu": {
@@ -132,6 +134,12 @@
     },
     "TipTypeJBCC210": {
       "displayText": "JBC\nC210"
+    },
+    "TipTypeC245Stock": {
+      "displayText": "Stock\n5.5Ω"
+    },
+    "TipTypeC245JBC": {
+      "displayText": "JBC\n2.5Ω"
     }
   },
   "menuOptions": {
@@ -346,6 +354,14 @@
     "SolderingTipType": {
       "displayText": "Type\nde panne",
       "description": "Séléctionner le type de panne utilisé"
+    },
+    "BuzzerEnabled": {
+      "displayText": "Buzzer",
+      "description": "Beep when the set temperature is reached and at the end of a profile"
+    },
+    "LEDMode": {
+      "displayText": "LEDs",
+      "description": "Off, 1=status, 2=temperature, 3=power"
     }
   }
 }

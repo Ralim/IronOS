@@ -232,6 +232,11 @@ int ble_char_read_setting_value_callback(struct bt_conn *conn, const struct bt_g
 
 int ble_char_write_setting_value_callback(struct bt_conn *conn, const struct bt_gatt_attr *attr, const void *buf, u16_t len, u16_t offset, u8_t flags) {
 
+  // Block all writes when BLE is in read-only mode
+  if (getSettingValue(SettingsOptions::BluetoothLE) == 2) {
+    return BT_GATT_ERR(BT_ATT_ERR_WRITE_NOT_PERMITTED);
+  }
+
   if (flags & BT_GATT_WRITE_FLAG_PREPARE) {
     // Don't use prepare write data, execute write will upload data again.
     BT_WARN((char *)"recv prepare write request\n");

@@ -12,6 +12,18 @@
 extern uint8_t heaterThermalRunawayCounter;
 
 bool checkExitSoldering(void) {
+#ifdef TIP_SHORT_DETECTION
+  // Heater is already off, just show the warning
+  if (isTipShorted()) {
+    currentTempTargetDegC = 0;
+    warnUser(translatedString(Tr->WarningTipShorted), BUTTON_NONE);
+    OLED::refresh();
+    GUIDelay();
+    waitForButtonPress();
+    lastButtonTime = xTaskGetTickCount();
+    return true;
+  }
+#endif
 #ifdef POW_DC
   // Undervoltage test
   if (checkForUnderVoltage()) {
@@ -62,6 +74,13 @@ int8_t getPowerSourceNumber(void) {
         pdHasVBUSConnected = USBPowerDelivery::isVBUSConnected();
 #endif
       }
+    }
+#endif
+#if POW_PD_EXT == 2
+    // The FS2711 runs the negotiation itself; if it has selected a PDO we are powered over PD. There is no
+    // VBUS sense line on this hardware, so report plain PD rather than claiming the sense modification.
+    if (FS2711::has_run_selection()) {
+      poweredbyPD = true;
     }
 #endif
     if (poweredbyPD) {

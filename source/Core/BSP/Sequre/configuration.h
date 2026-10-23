@@ -116,7 +116,7 @@
 // Vin_max = (3.3*(r1+r2))/(r2)
 // vdiv = (32768*4)/(vin_max*10)
 
-#if defined(MODEL_S60) + defined(MODEL_S60P) + defined(MODEL_T55) == 0
+#if defined(MODEL_S60) + defined(MODEL_S60P) + defined(MODEL_T55) + defined(MODEL_S99) + defined(MODEL_Si012ProMax) == 0
 #error "No model defined!"
 #endif
 
@@ -134,6 +134,7 @@
 #define USB_PD_VMAX              12 // Maximum voltage for PD to negotiate
 #define THERMAL_RUNAWAY_TIME_SEC 20
 #define THERMAL_RUNAWAY_TEMP_C   3
+#define USB_PD_TIMEOUT           1 // Default Timeout for USB-PD Protocol negotiation in x100ms
 
 #define HARDWARE_MAX_WATTAGE_X10 600
 
@@ -143,6 +144,7 @@
 #define TIP_RESISTANCE 20 //(actually 2.5 ish but we need to be more conservative on pwm'ing watt limit) x10 ohms
 
 #define OLED_128x32
+// OLED_128x32_DENSE_UI is set per language by build.sh (all but CJK): 45K of flash, see the S60P note
 #define GPIO_VIBRATION
 #define POW_PD_EXT                1
 #define USB_PD_EPR_WATTAGE        0 /*No EPR*/
@@ -156,6 +158,13 @@
 #define MODEL_HAS_DCDC // We dont have DC/DC but have reallly fast PWM that gets us roughly the same place
 #endif                 /* S60 */
 
+/*
+ * OLED_128x32_DENSE_UI: the data dense detailed screens plus the compact 6x8 font (~1.5K of flash).
+ * The S60P (126K) and S99 (78K) enable it here for every language. The S60 and T55 only have 45K of
+ * application flash after the bootloader and their CJK builds already sit within 1K of that limit
+ * (ZH_CN would overflow by ~1K / ~1.4K), so for those two models build.sh passes DENSE_UI=1 to make
+ * for every language except JA_JP / YUE_HK / ZH_CN / ZH_TW, which keep the default 128x32 layout.
+ */
 #ifdef MODEL_S60P
 #define VOLTAGE_DIV        460 // Default divider scaler
 #define CALIBRATION_OFFSET 200 // Default adc offset in uV
@@ -168,6 +177,7 @@
 #define USB_PD_VMAX              20 // Maximum voltage for PD to negotiate
 #define THERMAL_RUNAWAY_TIME_SEC 20
 #define THERMAL_RUNAWAY_TEMP_C   3
+#define USB_PD_TIMEOUT           1 // Default Timeout for USB-PD Protocol negotiation in x100ms
 
 #define HARDWARE_MAX_WATTAGE_X10 600
 
@@ -177,13 +187,17 @@
 #define TIP_RESISTANCE 20 //(actually 2.5 ish but we need to be more conservative on pwm'ing watt limit) x10 ohms
 
 #define OLED_128x32
+#define OLED_128x32_DENSE_UI 1 // See the note above the S60P block: enabled where the flash allows it
 #define GPIO_VIBRATION
-#define POW_PD_EXT                2
-#define USB_PD_EPR_WATTAGE        0 /*No EPR*/
+#define POW_PD_EXT         2
+#define USB_PD_EPR_WATTAGE 0 /*No EPR*/
+#define POW_DC
 #define DEBUG_POWER_MENU_BUTTON_B 1
 #define HAS_POWER_DEBUG_MENU
 #define TEMP_NTC
-#define I2C_SOFT_BUS_2 // For now we are doing software I2C to get around hardware chip issues
+#define I2C_SOFT_BUS_2              // For now we are doing software I2C to get around hardware chip issues
+#define FS2711_CHECK_BOTH_I2C_BUSES // S60P v1.2 moved the FS2711 to its own I2C bus; probe both at boot
+#define I2C_SOFT_BUS_1              // For now we are doing software I2C to get around hardware chip issues
 #define OLED_I2CBB2
 #define FILTER_DISPLAYED_TIP_TEMP 4 // Filtering for GUI display
 
@@ -205,7 +219,9 @@
 #define POWER_LIMIT_STEPS      5
 #define OP_AMP_GAIN_STAGE      1
 #define TEMP_uV_LOOKUP_PT1000
-#define USB_PD_VMAX       20  // Maximum voltage for PD to negotiate
+#define USB_PD_VMAX    20 // Maximum voltage for PD to negotiate
+#define USB_PD_TIMEOUT 1  // Default Timeout for USB-PD Protocol negotiation in x100ms
+
 #define NO_DISPLAY_ROTATE     // Disable OLED rotation by accel
 #define MAX_TEMP_C        350 // Max soldering temp selectable °C
 #define MAX_TEMP_F        660 // Max soldering temp selectable °F
@@ -224,8 +240,9 @@
 #define COPPER_HEATER_COIL 1  // Have a heater coil that changes resistance on us
 #define TIP_RESISTANCE     52 // PCB heater, measured at ~19C. Will shift by temp a decent amount
 #define CUSTOM_MAX_TEMP_C
-#define PROFILE_SUPPORT           1 // Soldering Profiles
-#define OLED_128x32               1 // Larger OLED
+#define PROFILE_SUPPORT 1 // Soldering Profiles
+#define OLED_128x32     1 // Larger OLED
+// OLED_128x32_DENSE_UI is set per language by build.sh (all but CJK): 45K of flash, see the S60P note
 #define OLED_FLIP                 1 // Mounted upside down
 #define POW_PD_EXT                1 // Older HUB238
 #define USB_PD_EPR_WATTAGE        0 /*No EPR*/
@@ -239,9 +256,144 @@
 #define MODEL_HAS_DCDC // We dont have DC/DC but have reallly fast PWM that gets us roughly the same place
 #endif                 /* T55 */
 
+#ifdef MODEL_S99
+#define VOLTAGE_DIV        460 // Default divider scaler
+#define CALIBRATION_OFFSET 200 // Default adc offset in uV
+#define PID_POWER_LIMIT    70  // Sets the max pwm power limit
+#define POWER_LIMIT        0   // 0 watts default limit
+#define MAX_POWER_LIMIT    130
+#define POWER_LIMIT_STEPS  5
+#define OP_AMP_GAIN_STAGE  237 // Two sequential op-amps 1st: 1+(9k29/997R)=10.31 2nd: 1+(22k/1k)=23 -> 10.31*23=237
+#define TEMP_uV_LOOKUP_S99
+#define USB_PD_VMAX    20 // Maximum voltage for PD to negotiate
+#define USB_PD_TIMEOUT 1  // Default Timeout for USB-PD Protocol negotiation in x100ms
+
+#define HARDWARE_MAX_WATTAGE_X10     1300
+#define MCU_TEMP_CUTOFF_C            95 // Die temperature (referenced to the handle NTC at boot) above which the output is cut
+#define ENFORCE_HARDWARE_MAX_WATTAGE 1  // Always cap the PID output at HARDWARE_MAX_WATTAGE_X10 (also on DC input, where there is no PD supply limit)
+
+#define TIP_THERMAL_MASS         8   // X10 watts to raise 1 deg C in 1 second (only the BSP accessor uses it now, the PID below does the control)
+#define TIP_THERMAL_INERTIA      128 // Idem; with the self-decaying integrator this settled ~10 C below the set point (P-only near the set point, ~1.25 W per C)
+#define THERMAL_RUNAWAY_TIME_SEC 20
+#define THERMAL_RUNAWAY_TEMP_C   10
+
+/*
+ * PID instead of the self-decaying integrator: holding a C245 at 350 C takes ~12 W, which the integrator could only
+ * deliver with a standing error. Loop period is 53 ms (TIM2). Kp in x10 W per C, Ki in x10 W per C and second (x100),
+ * Kd in x10 W per C per ms. Started from the model in Ralim/IronOS#2244, to be tuned on hardware.
+ */
+#define TIP_CONTROL_PID
+#define TIP_PID_KP                   30
+#define TIP_PID_KI                   150
+#define TIP_PID_KD                   200
+#define TIP_PID_INTEGRAL_LIMIT_SCALE 50 // The I term alone may carry up to 50 % of the max output (the holding power)
+
+/*
+ * Tip drive: no inductor, so like the S60 the tip is driven with a fast PWM whose duty is the PID output;
+ * TIP_CURRENT_LIMIT_CHOP additionally caps that duty at the supply current limit (see BSP.cpp).
+ * Cartridge resistance is a setting (stock 5.5 ohm / JBC 2.5 ohm), power is derated when the handle gets hot.
+ */
+#define TIP_RESISTANCE            55   // x10 ohms; stock 5.5 ohm cartridge
+#define TIP_TYPE_SUPPORT          1    // Support for tips of different types, i.e. resistance
+#define TIPTYPE_C245              1    // Sequre 5.5 ohm stock or JBC/Relife style 2.5 ohm C245 cartridges
+#define TIP_CURRENT_LIMIT_CHOP    1    // Envelope PWM for power, fast chop only for supply current limiting
+#define TIP_PEAK_CURRENT_MAX_X100 600  // Highest tip current (V / R) a PDO may be chosen for: 2.5 ohm -> 15 V. Not lower: the gate drive follows VBUS and is too weak below ~12 V
+#define TIP_CHOP_SLOW_BELOW_RX10  50   // Cartridges below this resistance (x10 ohm) always use the slow chop set; the stock 5.5 ohm one keeps the fast set
+#define TIP_CHOP_MIN_PULSE_US     100  // Shortest chop pulse; the chop slows down rather than going below it (edges of ~15 us on and ~35 us off)
+#define TIP_CHOP_TURNOFF_TAIL_US  25   // Net extra conduction per pulse: turn-off tail ~35 us minus turn-on delay ~15 us (gate RC, measured in Ralim/IronOS#2248)
+#define BUZZER_SETTING            1    // Expose the buzzer on/off as a user setting
+#define BUZZER_STARTUP_CHIRP      1    // Short beep once the boot logo has been shown
+#define BUZZER_FREQ_HZ            4000 // Tone frequency; small piezos are loudest near their ~4 kHz resonance
+#define OLED_128x32_DENSE_UI      1    // See the note above the S60P block: enabled where the flash allows it
+#define HANDLE_DERATE_START_C     55   // Start reducing max power above this handle temperature
+#define HANDLE_DERATE_END_C       70   // Reduced to HANDLE_DERATE_MIN_PERCENT at this handle temperature
+#define HANDLE_DERATE_MIN_PERCENT 20
+#define TIP_PWM_SLOWDOWN_1_C      35 // Handle temperature at which the output PWM drops one step (less switching loss)
+#define TIP_PWM_SLOWDOWN_2_C      45 // ... and a second step; 5 C of hysteresis on the way back up
+
+#define OLED_128x32
+#define GPIO_VIBRATION
+#define POW_PD_EXT         2
+#define USB_PD_EPR_WATTAGE 0 /*No EPR*/
+#define POW_DC
+#define DEBUG_POWER_MENU_BUTTON_B 1
+#define HAS_POWER_DEBUG_MENU
+#define TEMP_NTC
+#define I2C_SOFT_BUS_2              // For now we are doing software I2C to get around hardware chip issues
+#define FS2711_CHECK_BOTH_I2C_BUSES // S99 v1.5 moved the FS2711 to its own I2C bus; probe both at boot
+#define I2C_SOFT_BUS_1              // For now we are doing software I2C to get around hardware chip issues
+#define OLED_I2CBB2
+#define FILTER_DISPLAYED_TIP_TEMP 4 // Filtering for GUI display
+
+#define MODEL_HAS_DCDC // No DC/DC, but the fast PWM (duty capped at the supply current) behaves like one, so PD can pick max voltage
+#endif                 /* S99 */
+
+#ifdef MODEL_Si012ProMax
+// Two tip sockets (T12 and TS/SI). PD is done by a standalone HUSB238, so the input is treated as DC.
+#define VOLTAGE_DIV        460 // Default divider scaler
+#define CALIBRATION_OFFSET 200 // Default adc offset in uV
+#define PID_POWER_LIMIT    70  // Sets the max pwm power limit
+#define POWER_LIMIT        0   // 0 watts default limit
+#define MAX_POWER_LIMIT    100
+#define POWER_LIMIT_STEPS  5
+#define OP_AMP_GAIN_STAGE  536
+#define TEMP_uV_LOOKUP_S60
+#define USB_PD_VMAX              20 // Maximum voltage for PD to negotiate
+#define USB_PD_TIMEOUT           1  // Default Timeout for USB-PD Protocol negotiation in x100ms
+#define THERMAL_RUNAWAY_TIME_SEC 20
+#define THERMAL_RUNAWAY_TEMP_C   3
+
+#define HARDWARE_MAX_WATTAGE_X10     1000
+#define ENFORCE_HARDWARE_MAX_WATTAGE 1
+
+#define TIP_THERMAL_MASS    10  // X10 watts to raise 1 deg C in 1 second
+#define TIP_THERMAL_INERTIA 128 // We use a large inertia value to smooth out the drive to the tip since its stupidly sensitive
+
+#define TIP_RESISTANCE            80 // x10 ohms, T12 socket
+#define TIP2_RESISTANCE           69 // x10 ohms, TS/SI socket
+#define DUAL_TIP_SOCKETS          1
+#define TIP_SHORT_DETECTION       1
+#define TIP_TYPE_SUPPORT          1 // Support for tips of different types, i.e. resistance
+#define AUTO_TIP_SELECTION        1 // Can auto-select the tip
+#define TIPTYPE_T12               1 // Can manually pick a T12 tip
+#define TIP_CURRENT_LIMIT_CHOP    1
+#define TIP_PWM_SLOWDOWN_1_C      35
+#define TIP_PWM_SLOWDOWN_2_C      45
+#define HANDLE_DERATE_START_C     55
+#define HANDLE_DERATE_END_C       70
+#define HANDLE_DERATE_MIN_PERCENT 20
+#define BUZZER_SETTING            1
+#define BUZZER_STARTUP_CHIRP      1
+#define BUZZER_FREQ_HZ            4000
+#define STATUS_LEDS_ACTIVE_HIGH   1
+#define STATUS_LED_SETTING        1
+
+#define OLED_128x32
+#define OLED_128x32_DENSE_UI 1
+#define OLED_FLIP            1 // Mounted upside down
+#define GPIO_VIBRATION
+#define POW_PD_EXT         0
+#define USB_PD_EPR_WATTAGE 0 /*No EPR*/
+#define POW_DC
+#define TEMP_NTC
+#define I2C_SOFT_BUS_2
+#define OLED_I2CBB2
+#define FILTER_DISPLAYED_TIP_TEMP 4 // Filtering for GUI display
+
+#define MODEL_HAS_DCDC
+#endif /* Si012ProMax */
+
+#ifdef MODEL_S60P
+#define FLASH_LOGOADDR      (0x08000000 + (126 * 1024))
+#define SETTINGS_START_PAGE (0x08000000 + (127 * 1024))
+#elif defined(MODEL_S99) || defined(MODEL_Si012ProMax)
+// 80K usable flash, code region is 78K (see Makefile); logo + settings are the two 1K pages after it
+#define FLASH_LOGOADDR      (0x08000000 + (78 * 1024))
+#define SETTINGS_START_PAGE (0x08000000 + (79 * 1024))
+#else
 #define FLASH_LOGOADDR      (0x08000000 + (62 * 1024))
 #define SETTINGS_START_PAGE (0x08000000 + (63 * 1024))
-
+#endif /* Logo offset for S60P / S99 */
 // Defaults
 
 #ifndef MIN_CALIBRATION_OFFSET
