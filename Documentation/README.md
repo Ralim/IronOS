@@ -8,6 +8,7 @@
   - [Home](../Documentation/index.md)
   - [Getting Started](../Documentation/GettingStarted.md)
   - Flashing the firmware
+      - [HS-01](../Documentation/Flashing/HS01.md)
       - [MHP30](../Documentation/Flashing/MHP30.md)
       - [Pinecil V1](../Documentation/Flashing/Pinecil%20V1.md)
       - [Pinecil V2](../Documentation/Flashing/Pinecil%20V2.md)
