@@ -241,17 +241,29 @@ uint16_t getTipChopDutyX256() {
   }
   const uint16_t onTicks = (dutyX256 * tipChopPeriodTicks) / 256;
   if (slowSet) {
-    // Slow down until the pulse actually commanded is at least TIP_CHOP_MIN_PULSE_US long (tick = (PSC + 1) / 8 us)
-    uint16_t cmdTicks = pendingPWM / 4; // same scaling as the TIM2 ISR
+    // Slow down until the pulse actually commanded is at least TIP_CHOP_MIN_PULSE_US long (tick = (PSC + 1) / 8 us).
+    // Slowing down is immediate; speeding back up needs the pulse at the faster setting to be 1.5x the minimum and
+    // goes one step per PID cycle, otherwise the cycle-to-cycle movement of the PID output flips the chop frequency
+    static uint8_t minPulseSteps = 0;
+    uint16_t       cmdTicks      = pendingPWM / 4; // same scaling as the TIM2 ISR
     if (cmdTicks > onTicks) {
       cmdTicks = onTicks;
     }
     if (cmdTicks < 1) {
       cmdTicks = 1;
     }
-    while (step < tipChopPrescalerCount - 1 && (uint32_t)cmdTicks * (tipChopPrescalers[step] + 1) < 8UL * TIP_CHOP_MIN_PULSE_US) {
-      step++;
+    uint8_t s = step + minPulseSteps;
+    if (s > tipChopPrescalerCount - 1) {
+      s = tipChopPrescalerCount - 1;
     }
+    while (s < tipChopPrescalerCount - 1 && (uint32_t)cmdTicks * (tipChopPrescalers[s] + 1) < 8UL * TIP_CHOP_MIN_PULSE_US) {
+      s++;
+    }
+    if (s > step && (uint32_t)cmdTicks * (tipChopPrescalers[s - 1] + 1) >= (8UL * TIP_CHOP_MIN_PULSE_US * 3) / 2) {
+      s--;
+    }
+    minPulseSteps = s - step;
+    step          = s;
   }
   step += tipChopThermalStep();
   if (step >= tipChopPrescalerCount) {

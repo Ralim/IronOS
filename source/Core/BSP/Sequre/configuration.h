@@ -272,10 +272,21 @@
 #define MCU_TEMP_CUTOFF_C            95 // Die temperature (referenced to the handle NTC at boot) above which the output is cut
 #define ENFORCE_HARDWARE_MAX_WATTAGE 1  // Always cap the PID output at HARDWARE_MAX_WATTAGE_X10 (also on DC input, where there is no PD supply limit)
 
-#define TIP_THERMAL_MASS         8   // X10 watts to raise 1 deg C in 1 second
-#define TIP_THERMAL_INERTIA      128 // We use a large inertia value to smooth out the drive to the tip since its stupidly sensitive
+#define TIP_THERMAL_MASS         8   // X10 watts to raise 1 deg C in 1 second (only the BSP accessor uses it now, the PID below does the control)
+#define TIP_THERMAL_INERTIA      128 // Idem; with the self-decaying integrator this settled ~10 C below the set point (P-only near the set point, ~1.25 W per C)
 #define THERMAL_RUNAWAY_TIME_SEC 20
 #define THERMAL_RUNAWAY_TEMP_C   10
+
+/*
+ * PID instead of the self-decaying integrator: holding a C245 at 350 C takes ~12 W, which the integrator could only
+ * deliver with a standing error. Loop period is 53 ms (TIM2). Kp in x10 W per C, Ki in x10 W per C and second (x100),
+ * Kd in x10 W per C per ms. Started from the model in Ralim/IronOS#2244, to be tuned on hardware.
+ */
+#define TIP_CONTROL_PID
+#define TIP_PID_KP                   30
+#define TIP_PID_KI                   150
+#define TIP_PID_KD                   200
+#define TIP_PID_INTEGRAL_LIMIT_SCALE 50 // The I term alone may carry up to 50 % of the max output (the holding power)
 
 /*
  * Tip drive: no inductor, so like the S60 the tip is driven with a fast PWM whose duty is the PID output;
