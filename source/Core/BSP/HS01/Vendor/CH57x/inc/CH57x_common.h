@@ -55,17 +55,11 @@ extern "C" {
 #include "CH573SFR.h"
 #include "core_riscv.h"
 #include "CH57x_clk.h"
-#include "CH57x_uart.h"
 #include "CH57x_gpio.h"
-#include "CH57x_flash.h"
-#include "CH57x_pwr.h"
 #include "CH57x_pwm.h"
 #include "CH57x_adc.h"
 #include "CH57x_sys.h"
 #include "CH57x_timer.h"
-#include "CH57x_spi.h"
-#include "CH57x_usbdev.h"
-#include "CH57x_usbhost.h"
 #include "ISP573.h"
 // clang-format on
 

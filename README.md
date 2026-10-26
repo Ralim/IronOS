@@ -34,7 +34,8 @@ _This firmware does **NOT** support the USB port while running for changing sett
 |  Sequre S99    | ✔️  | ❌  | ✔️  | ❌  | ❌  |    ❌     |          ✔️          | Buzzer. Selectable tip (5.5Ω/2.5Ω). |
 | Sequre Si012 Pro Max | ✔️  | ❌  | ✔️  | ❌  | ❌  |    ❌     |          ✔️          |  |
 |   Sequre T55   | ❌  | ❌  | ✔️  | ❌  | ❌  |    N/A    |          ✔️          | Full OLED resolution not yet supported. |
-|  FNIRSI HS-01  | ❌  | ❌  | ✔️  | ❌  | ❌  |    ❌     |                      | Fixed PD voltage. Also KAIWEETS KETS02. |
+|  FNIRSI HS-01  | ❌  | ❌  | ✔️  | ❌  | ❌  |    ❌     |                      | HW missing cold-junction sensor. Not PD current limit aware.|
+|  KAIWEETS KETS02  | ❌  | ❌  | ✔️  | ❌  | ❌  |    ❌     | Same hardware as FNIRSI HS-01 |
 | Miniware TS80P | ❌  | ✔️  | ✔️  | ❌  | ❌  |    N/A    |          ✔️          |                                         |
 | Miniware TS100 | ✔️  | ❌  | ❌  | ❌  | ❌  |    ❌     |        ❌\*\*        |                                         |
 | Miniware TS80  | ❌  | ✔️  | ❌  | ❌  | ❌  |    N/A    |       ❌\*\*\*       |                                         |
