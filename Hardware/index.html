@@ -50,6 +50,8 @@
               </ul>
               <p class="caption"><span class="caption-text">Flashing the firmware</span></p>
               <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../Flashing/HS01/">HS-01</a>
+                  </li>
                   <li class="toctree-l1"><a class="reference internal" href="../Flashing/MHP30/">MHP30</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../Flashing/Pinecil%20V1/">Pinecil V1</a>
@@ -199,6 +201,21 @@ It does <strong>not</strong> support USB-PD and will not work when powered from 
 <li>the default firmware can be found <a href="https://files.pine64.org/os/Pinecil/Pinecil_firmware_20201115.zip">here</a>.</li>
 </ul>
 <p><img alt="" src="https://pine64.com/wp-content/uploads/2020/11/pinecil-bb2-04.jpg?v=0446c16e2e66" /></p>
+<h3 id="fnirsi-hs-01">FNIRSI HS-01</h3>
+<p>The KAIWEETS KETS02 is the same board. It uses the same <code>HS01</code> build.</p>
+<ul>
+<li>The MCU is a WCH CH571F (RISC-V, 192 KiB flash, 18 KiB RAM).</li>
+<li>The iron has USB-C only. A CH224K requests a fixed PD voltage (9, 12, 15 or 20 V). There is no PPS, EPR or QC.</li>
+<li>IronOS requests 20 V first. If the charger does not supply it, IronOS tries 15 V, 12 V and then 9 V.</li>
+<li>IronOS cannot read the current that the charger can supply. With a weak charger, set a power limit.</li>
+<li>The DC cut-off is 7.5 V, the same as the stock firmware.</li>
+<li>The OLED is 128x32 on a bit-banged I2C bus. The bus is too slow for the menu slide animations, so IronOS shows the next screen immediately.</li>
+<li>There is no tip resistance sensor and no cold-junction sensor. IronOS assumes 25 °C at the cold junction, the same as the stock firmware.</li>
+<li>The motion sensor is a ball switch. The motion sensitivity setting only sets motion detection on or off. The default sleep time is 5 minutes.</li>
+<li>The tip control uses the PI gains of the stock firmware. The IronOS default gains cause oscillation with this tip.</li>
+<li>There is no BLE. The WCH BLE stack does not fit in the remaining RAM.</li>
+</ul>
+<p>The pin map comes from the stock firmware. Refer to <a href="https://github.com/Ralim/IronOS/issues/1614">#1614</a>.</p>
               
             </div>
           </div><footer>
