@@ -112,9 +112,17 @@
               <ul class="current">
                 <li class="toctree-l1 current"><a class="reference internal current" href="#">Changelog</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#v223">v2.23</a>
+    <li class="toctree-l2"><a class="reference internal" href="#v224">v2.24</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#high-level-changes">High level changes</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#new-devices">New devices</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#v223">v2.23</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#high-level-changes_1">High level changes</a>
     </li>
         </ul>
     </li>
@@ -264,8 +272,31 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="version-changes">Version Changes</h1>
-<h2 id="v223">v2.23</h2>
+<h2 id="v224">v2.24</h2>
 <h3 id="high-level-changes">High level changes</h3>
+<ol>
+<li>Pinecilv1 has tip type selection</li>
+<li>USB-PD fixes, noteworthy for apple laptops + EPR</li>
+<li>Default USB-PD mode changed to be safe profile</li>
+<li>Auto reboot on toggling BLE on Pinecilv2 to make it active</li>
+<li>PID improvements</li>
+<li>Fixes for cold temperatures causing underflow</li>
+<li>Big improvements on large screens</li>
+<li>Language updates</li>
+<li>Read-only mode for BLE</li>
+</ol>
+<h3 id="new-devices">New devices</h3>
+<p>Version 2.24 welcomes a bunch of new devices being added. Some of these are fairly new and improvements are welcome.</p>
+<ol>
+<li>Sequre S60</li>
+<li>Sequre S60P</li>
+<li>Sequre T55</li>
+<li>Sequre S99</li>
+<li>Sequre Si012 Pro Max</li>
+<li>FNIRSI HS-01 / KAIWEETS KETS02</li>
+</ol>
+<h2 id="v223">v2.23</h2>
+<h3 id="high-level-changes_1">High level changes</h3>
 <ul>
 <li>Miniware I2C changed to bit-bang for improved compatibility with newer devices with STM32 clone IC's</li>
 <li>Looping Boot Logo option (loops until button press)</li>
@@ -393,10 +424,8 @@ Assets have been made for rendering this at full size, but the code is not compl
 <li>Shows error if tip runaway (failed temperature sensor) is detected</li>
 <li>USB-PD now has a timeout, to allow forcing QC3 negotiation to start faster</li>
 <li>QC3 Voltages are now adjustable to user desired setpoint</li>
-<li>Added a small tolerance to allow "overvoltage" on QC3 above unit specifications.<ul>
+<li>Added a small tolerance to allow "overvoltage" on QC3 above unit specifications.</li>
 <li>Please note: Doing this is entirely at your own risk!</li>
-</ul>
-</li>
 <li>New Advanced view that is much nicer to use and a very good daily driver option from @Mel-kior</li>
 <li>OLED brightness and contrast thanks to @alvinhochun</li>
 <li>Scrollbar is fixed so it doesnt jump around when menus are shown/hidden</li>
@@ -419,7 +448,7 @@ Assets have been made for rendering this at full size, but the code is not compl
 <h3 id="mhp30-support">MHP30 support</h3>
 <p>The MHP30 is a small reflow station from Miniware.
 Thanks to a massive amount of help from @g3gg0 this firmware brings the beginnings of support for this unit.
-Also kudo's to @Vinigas  and @GoJian for helping with testing.
+Also kudo's to @Vinigas and @GoJian for helping with testing.
 This is not a <em>final</em> version I'm sure, but this is a working, usable version of firmware support.
 Programs the same as any one Miniware unit using drag and drop.
 <strong>Note: The boot logo scripts will need updates for this unit, so not supported yet.</strong></p>
