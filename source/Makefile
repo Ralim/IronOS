@@ -7,7 +7,8 @@ ALL_PINECIL_MODELS=Pinecil
 ALL_PINECIL_V2_MODELS=Pinecilv2
 ALL_MHP30_MODELS=MHP30
 ALL_SEQURE_MODELS=S60 S60P T55 S99 Si012ProMax
-ALL_MODELS=$(ALL_MINIWARE_MODELS) $(ALL_PINECIL_MODELS) $(ALL_MHP30_MODELS) $(ALL_PINECIL_V2_MODELS) $(ALL_SEQURE_MODELS)
+ALL_HS01_MODELS=HS01
+ALL_MODELS=$(ALL_MINIWARE_MODELS) $(ALL_PINECIL_MODELS) $(ALL_MHP30_MODELS) $(ALL_PINECIL_V2_MODELS) $(ALL_SEQURE_MODELS) $(ALL_HS01_MODELS)
 
 ifneq ($(model),$(filter $(model),$(ALL_MODELS)))
 $(error Invalid model '$(model)', valid options are: $(ALL_MODELS))
@@ -308,6 +309,31 @@ bootldr_size=0x0
 
 endif # ALL_PINECIL_V2_MODELS
 
+ifeq ($(model),$(filter $(model),$(ALL_HS01_MODELS)))
+$(info Building for FNIRSI HS-01 )
+
+DEVICE_BSP_DIR=./Core/BSP/HS01
+LDSCRIPT=./Core/BSP/HS01/Vendor/Startup/ch571.ld
+# No bootloader of our own: flashed over USB by the WCH ROM bootloader (wchisp), replacing the vendor one
+flash_size=188k
+bootldr_size=0x0
+DEVICE_DFU_ADDRESS=0x00000000
+
+CPUFLAGS=-march=rv32imac_zicsr_zifencei \
+         -mabi=ilp32                    \
+         -mcmodel=medany                \
+         -msmall-data-limit=8           \
+         -fsigned-char                  \
+         -fno-builtin                   \
+         -nostartfiles
+
+DEV_LDFLAGS=-nostartfiles -Wl,--no-warn-rwx-segments ./Core/BSP/HS01/Vendor/CH57x/libISP573.a
+DEV_AFLAGS=
+DEV_GLOBAL_DEFS=-DFREQ_SYS=60000000
+DEV_CFLAGS=
+DEV_CXXFLAGS=
+endif # ALL_HS01_MODELS
+
 DEVICE_BSP_INCLUDE_DIRS:= ${shell find ${DEVICE_BSP_DIR} -type d -print}
 THREADS_INCLUDE_DIRS:= ${shell find ${THREADS_DIR} -type d -print}
 DRIVERS_INCLUDE_DIRS:= ${shell find ${DRIVERS_DIR} -type d -print}
@@ -396,7 +422,7 @@ endif
 ifeq ($(model),$(filter $(model),$(ALL_SEQURE_MODELS) ))
 COMPILER_PREFIX=arm-none-eabi
 endif
-ifeq ($(model),$(filter $(model),$(ALL_PINECIL_MODELS) $(ALL_PINECIL_V2_MODELS)))
+ifeq ($(model),$(filter $(model),$(ALL_PINECIL_MODELS) $(ALL_PINECIL_V2_MODELS) $(ALL_HS01_MODELS)))
 COMPILER_PREFIX=riscv-none-elf
 endif
 

@@ -237,7 +237,11 @@ uint8_t lookupVoltageLevel() {
   auto minVoltageOnCell    = getSettingValue(SettingsOptions::MinDCVoltageCells);
   auto minVoltageCellCount = getSettingValue(SettingsOptions::MinVoltageCells);
   if (minVoltageOnCell == 0) {
+#ifdef DC_MIN_VOLTAGE_X10
+    return DC_MIN_VOLTAGE_X10;
+#else
     return 90; // 9V since iron does not function effectively below this
+#endif
   } else {
     return (minVoltageOnCell * minVoltageCellCount) + (minVoltageCellCount * 2);
   }

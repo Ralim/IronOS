@@ -34,6 +34,8 @@ _This firmware does **NOT** support the USB port while running for changing sett
 |  Sequre S99    | ✔️  | ❌  | ✔️  | ❌  | ❌  |    ❌     |          ✔️          | Buzzer. Selectable tip (5.5Ω/2.5Ω). |
 | Sequre Si012 Pro Max | ✔️  | ❌  | ✔️  | ❌  | ❌  |    ❌     |          ✔️          |  |
 |   Sequre T55   | ❌  | ❌  | ✔️  | ❌  | ❌  |    N/A    |          ✔️          | Full OLED resolution not yet supported. |
+|  FNIRSI HS-01  | ❌  | ❌  | ✔️  | ❌  | ❌  |    ❌     |                      | HW missing cold-junction sensor. Not PD current limit aware.|
+| KAIWEETS KETS02 | ❌  | ❌  | ✔️  | ❌  | ❌  |    ❌     |                      | Same hardware as FNIRSI HS-01. |
 | Miniware TS80P | ❌  | ✔️  | ✔️  | ❌  | ❌  |    N/A    |          ✔️          |                                         |
 | Miniware TS100 | ✔️  | ❌  | ❌  | ❌  | ❌  |    ❌     |        ❌\*\*        |                                         |
 | Miniware TS80  | ❌  | ✔️  | ❌  | ❌  | ❌  |    N/A    |       ❌\*\*\*       |                                         |
@@ -91,6 +93,7 @@ The links in the table below allow to download available builds directly:
 | Sequre   T55          | Not Released                                                                                                 | [T55.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/T55.zip)                                   |
 | Sequre   S99          | Not Released                                                                                                 | [S99.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/S99.zip)                                   |
 | Sequre   Si012 Pro Max | Not Released                                                                                                | [Si012ProMax.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/Si012ProMax.zip)                   |
+| FNIRSI   HS-01         | Not Released                                                                                                | [HS01.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/HS01.zip)                                 |
 
 ## Key Features
 
