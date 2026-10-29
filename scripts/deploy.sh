@@ -21,7 +21,7 @@ usage()
 	echo "CMD (helper routines):"
 	echo -e "\tdocs - high level target to run docs_readme and docs_history (see below)\n"
 	echo -e "\tdocs_readme - generate & OVERWRITE(!) README.md inside Documentation/ based on nav section from mkdocs.yml if it changed\n"
-	echo -e "\tdocs_history - check if History.md has the changelog for the latest stable release\n"
+	echo -e "\tdocs_history - check if History.md has the changelog for BUILD_VERSION from source/version.h\n"
 	echo -e "\tcheck_style_file SRC - run code style checks based on clang-format & custom parsers for source code file SRC\n"
 	echo -e "\tcheck_style_log - run clang-format using source/Makefile and generate gcc-compatible error log in source/check-style.log\n"
 	echo -e "STORAGE NOTICE: for \"shell\" and \"build\" commands extra files will be downloaded so make sure that you have ~5GB of free space.\n"
@@ -73,18 +73,28 @@ EOF
 	return "${ret}"
 }
 
+# Print BUILD_VERSION (i.e. "v2.24") as defined in source/version.h
+build_version()
+{
+	vh="source/version.h"
+	test -f "${vh}" || { echo "deploy.sh: build_version: ERROR: ${vh} not found!" >&2; return 1; }
+	ver="$(sed -ne 's/^#define[[:space:]]\{1,\}BUILD_VERSION[[:space:]]\{1,\}"\(.*\)".*$/\1/p' "${vh}" | head -1)"
+	test -n "${ver}" || { echo "deploy.sh: build_version: ERROR: BUILD_VERSION not found in ${vh}!" >&2; return 1; }
+	echo "${ver}"
+}
+
 # Documentation/History.md automagical changelog routine
 docs_history()
 {
 	md="Documentation/History.md"
 	ver_md="$(sed -ne 's/^## //1p' "${md}" | head -1)"
 	echo "Latest changelog: ${ver_md}"
-	ver_git="$(git tag -l | sort | grep -e "^v" | grep -v "rc" | tail -1)"
-	echo "Latest release tag: ${ver_git}"
+	ver_build="$(build_version)" || return 1
+	echo "Build version: ${ver_build}"
 	ret=0
-	if [ "${ver_md}" != "${ver_git}" ]; then
+	if [ "${ver_md}" != "${ver_build}" ]; then
 		ret=1
-		echo "It seems there is no changelog information for ${ver_git} in ${md} yet."
+		echo "It seems there is no changelog information for ${ver_build} at the top of ${md} yet."
 		echo "Please, update changelog information in ${md}."
 	fi;
 	return "${ret}"
@@ -93,14 +103,14 @@ docs_history()
 # Check for links to release builds in README.md
 docs_links()
 {
-	ver_git="$(git tag -l | sort | grep -e "^v" | grep -v "rc" | tail -1)"
+	ver_build="$(build_version)" || return 1
 	md="README.md"
 	test -f "${md}" || (echo "deploy.sh: docs_links: ERROR with the project directory structure!" && exit 1)
-	ver_md="$(grep -c "${ver_git}" "${md}")"
+	ver_md="$(grep -cF "${ver_build}" "${md}")"
 	ret=0
 	if [ "${ver_md}" -eq 0 ]; then
 		ret=1
-		echo "Please, update mention & links in ${md} inside Builds section for release builds with version ${ver_git}."
+		echo "Please, update mention & links in ${md} inside Builds section for release builds with version ${ver_build}."
 	fi;
 	return "${ret}"
 }
@@ -118,7 +128,7 @@ build_langs()
 		return 1
 	fi;
 	cd ..
-	
+
 	echo -ne "\n"
 	grep -nH $'\11' Translations/translation*.json
 	ret="${?}"
@@ -129,7 +139,7 @@ build_langs()
 		echo -ne "\n"
 		return 1
 	fi;
-	
+
 	grep -nEH -e "^( {1}| {3}| {5}| {7}| {9}| {11})[^ ]" Translations/translation*.json
 	ret="${?}"
 	if [ "${ret}" -eq 0 ]; then
@@ -139,7 +149,7 @@ build_langs()
 		echo -ne "\n"
 		return 1
 	fi;
-	
+
 	return 0
 }
 
