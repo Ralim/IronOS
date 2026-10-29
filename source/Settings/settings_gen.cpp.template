@@ -1,0 +1,37 @@
+/*
+ * Settings.c
+ *
+ *  Created on: 29 Sep 2016
+ *      Author: Ralim
+ *
+ *      This file holds the users settings and saves / restores them to the
+ * devices flash
+ */
+
+#include "Settings.h"
+#include "BSP.h"
+#include "Setup.h"
+#include "Translation.h"
+#include "configuration.h"
+#include <string.h> // for memset
+bool sanitiseSettings();
+
+/*
+ * Used to constrain the QC 3.0 Voltage selection to suit hardware.
+ * We allow a little overvoltage for users who want to push it
+ */
+#ifdef POW_QC_20V
+#define QC_VOLTAGE_MAX 220
+#else
+#define QC_VOLTAGE_MAX 140
+#endif /* POW_QC_20V */
+
+
+const SettingConstants settingsConstants[(int)SettingsOptions::SettingsOptionsLength] = {
+    //{                   min,                               max,         increment,                      default}
+$SETTINGSTABLE
+};
+static_assert((sizeof(settingsConstants) / sizeof(SettingConstants)) == ((int)SettingsOptions::SettingsOptionsLength));
+
+//~1024 is common programming size, setting threshold to be lower so we have warning
+static_assert(sizeof(systemSettingsType) < 512);

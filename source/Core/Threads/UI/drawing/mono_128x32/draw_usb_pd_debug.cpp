@@ -4,7 +4,7 @@
 void ui_draw_usb_pd_debug_state(const uint16_t vbus_sense_state, const uint8_t stateNumber) {
   OLED::setCursor(0, 0);                             // Position the cursor at the 0,0 (top left)
   OLED::print(SmallSymbolPDDebug, FontStyle::SMALL); // Print Title
-  OLED::setCursor(0, 8);                             // second line
+  OLED::setCursor(0, 16);                            // second line
   // Print the PD state machine
   OLED::print(SmallSymbolState, FontStyle::SMALL);
   OLED::print(SmallSymbolSpace, FontStyle::SMALL);
@@ -22,7 +22,7 @@ void ui_draw_usb_pd_debug_pdo(const uint8_t entry_num, const uint16_t min_voltag
 
   OLED::setCursor(0, 0);                                   // Position the cursor at the 0,0 (top left)
   OLED::print(SmallSymbolPDDebug, FontStyle::SMALL);       // Print Title
-  OLED::setCursor(0, 8);                                   // second line
+  OLED::setCursor(0, 16);                                  // second line
   OLED::printNumber(entry_num, 2, FontStyle::SMALL, true); // print the entry number
   OLED::print(SmallSymbolSpace, FontStyle::SMALL);
   if (min_voltage > 0) {

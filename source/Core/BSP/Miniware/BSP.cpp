@@ -58,7 +58,7 @@ static const uint16_t NTCHandleLookup[] = {
 };
 #endif
 
-uint16_t getHandleTemperature(uint8_t sample) {
+int16_t getHandleTemperature(uint8_t sample) {
   int32_t result = getADCHandleTemp(sample);
 #ifdef TEMP_NTC
   // TS80P uses 100k NTC resistors instead

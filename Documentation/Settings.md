@@ -85,7 +85,7 @@ On device help text:
 
 Tip temperature used in "boost mode"
 
-### Setting: Start-up behavior
+### Setting: Start-up behaviour
 
 When the device powers up, should it enter into a special mode. These settings set it to either start into soldering mode, sleeping mode or auto mode (Enters into soldering mode on the first movement).
 
@@ -383,11 +383,11 @@ Display detailed info in a smaller font on soldering screen
 
 ### Setting: Bluetooth 
 
-Should BLE be enabled at boot time.
+BLE mode: Off, full read/write access (+), or read-only mode (R) which blocks all writes over BLE.
 
 On device help text:
 
-Enables BLE
+Enables BLE (+=full access | R=read-only)
 
 ### Setting: Power limit
 
@@ -471,3 +471,19 @@ For manually selecting the type of tip fitted
 On device help text:
 
 Select the tip type fitted
+
+### Setting: Buzzer
+
+Enable the buzzer: short beep when the set temperature is reached and at the end of a profile.
+
+On device help text:
+
+Beep when the set temperature is reached and at the end of a profile
+
+### Setting: LEDs
+
+Status LED mode: off, 1 = status, 2 = tip temperature, 3 = heater power.
+
+On device help text:
+
+Off, 1=status, 2=temperature, 3=power

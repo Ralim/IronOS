@@ -34,7 +34,18 @@ static uint16_t str_display_len(const char *const str) {
  *
  * @param message The null-terminated message string.
  */
-uint16_t messageWidth(const char *message) { return FONT_12_WIDTH * str_display_len(message); }
+static uint16_t messageWidth(const char *message) {
+  const uint8_t *msgBytes = reinterpret_cast<const uint8_t *>(message);
+  if (msgBytes[0] == 0x01) {
+    // Leading 0x01 selects large font (see OLED::print)
+    return FONT_12_WIDTH * str_display_len(message + 1);
+  }
+#ifdef OLED_128x32
+  return 8 * str_display_len(message); // descriptions use the 8x16 small font on 128x32
+#else
+  return FONT_12_WIDTH * str_display_len(message);
+#endif
+}
 
 void drawScrollingText(const char *message, TickType_t currentTickOffset) {
   OLED::clearScreen();
@@ -56,6 +67,19 @@ void drawScrollingText(const char *message, TickType_t currentTickOffset) {
   }
 
   //^ Rolling offset based on time
+#ifdef OLED_128x32
+  // make_translation.py encodes descriptions against the small font on 128x32,
+  // so draw them with the small font, vertically centred on the 32px panel.
+  // Messages it could not fit in the small font (CJK) carry the 0x01 large font marker.
+  if (message[0] == '\x01') {
+    OLED::setCursor((OLED_WIDTH - messageOffset), 4);
+    OLED::print(message + 1, FontStyle::LARGE);
+  } else {
+    OLED::setCursor((OLED_WIDTH - messageOffset), 8);
+    OLED::print(message, FontStyle::SMALL);
+  }
+#else
   OLED::setCursor((OLED_WIDTH - messageOffset), 0);
   OLED::print(message, FontStyle::LARGE);
+#endif
 }

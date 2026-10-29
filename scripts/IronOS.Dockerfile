@@ -1,7 +1,7 @@
 # Default Reference Distro for development env & deploy:
 # * Alpine Linux, version 3.21 *
 
-FROM alpine:3.21
+FROM alpine:3.22
 LABEL maintainer="Ben V. Brown <ralim@ralimtek.com>"
 
 # Default current dir when container starts
@@ -21,13 +21,22 @@ ARG APK_MISC="findutils make git diffutils zip"
 ARG APK_DEV="musl-dev clang bash clang-extra-tools shellcheck"
 
 # PIP packages to check & test Python code, and generate docs
-ARG PIP_PKGS='bdflib flake8 pymdown-extensions mkdocs mkdocs-autolinks-plugin mkdocs-awesome-pages-plugin mkdocs-git-revision-date-plugin'
+ARG PIP_PKGS='bdflib flake8 pymdown-extensions mkdocs mkdocs-autolinks-plugin mkdocs-awesome-pages-plugin mkdocs-git-revision-date-plugin pyyaml'
 
 # Install system packages using alpine package manager
 RUN apk add --no-cache ${APK_COMPS} ${APK_PYTHON} ${APK_MISC} ${APK_DEV}
 
 # Install Python3 packages as modules using pip, yes we dont care if packages break
 RUN python3 -m pip install --break-system-packages ${PIP_PKGS}
+
+# Use the host's user and group ownership for the build artifacts
+ARG GID=1000
+RUN addgroup -g $GID "iron"
+
+ARG UID=1000
+RUN adduser -u $UID -G "iron" -D "iron"
+
+USER "iron:iron"
 
 # Git trust to avoid related warning
 RUN git config --global --add safe.directory /build/ironos

@@ -8,6 +8,7 @@
 #include "BSP.h"
 #include "Pins.h"
 #include "history.hpp"
+#include "main.hpp"
 #include <stdint.h>
 #include <string.h>
 ADC_HandleTypeDef hadc1;
@@ -17,6 +18,7 @@ DMA_HandleTypeDef hdma_adc1;
 IWDG_HandleTypeDef hiwdg;
 TIM_HandleTypeDef  htim4; // Tip control
 TIM_HandleTypeDef  htim2; // ADC Scheduling
+TIM_HandleTypeDef  htim3; // Buzzer tone generator
 #define ADC_FILTER_LEN 4
 #define ADC_SAMPLES    16
 uint16_t ADCReadings[ADC_SAMPLES]; // Used to store the adc readings for the handle cold junction temp
@@ -26,6 +28,7 @@ static void SystemClock_Config(void);
 static void MX_ADC1_Init(void);
 static void MX_IWDG_Init(void);
 static void MX_TIM4_Init(void); // Tip control
+static void MX_TIM3_Init(void); // Buzzer
 static void MX_TIM2_Init(void); // ADC Scheduling
 static void MX_DMA_Init(void);
 static void MX_GPIO_Init(void);
@@ -46,6 +49,7 @@ void        Setup_HAL() {
 
   MX_TIM4_Init();
   MX_TIM2_Init();
+  MX_TIM3_Init();
   MX_IWDG_Init();
   HAL_ADC_Start_DMA(&hadc1, (uint32_t *)ADCReadings, (ADC_SAMPLES)); // start DMA of normal readings
   HAL_ADCEx_InjectedStart(&hadc1);                                   // enable injected readings
@@ -69,16 +73,44 @@ uint16_t getADCHandleTemp(uint8_t sample) {
   static history<uint16_t, ADC_FILTER_LEN> filter = {{0}, 0, 0};
   if (sample) {
     uint32_t sum = 0;
-    for (uint8_t i = 0; i < ADC_SAMPLES; i++) {
+    for (uint8_t i = 0; i < ADC_SAMPLES; i += 2) { // even slots: handle NTC (odd: MCU temperature sensor)
       sum += ADCReadings[i];
     }
-    filter.update(sum);
+    filter.update(sum * 2);
   }
   return filter.average() >> 1;
 #else
   return 0;
 #endif
 }
+
+// Internal temperature sensor on ADC channel 16, sampled into the odd DMA slots.
+//
+// These irons carry a CKS32F103 rather than an ST part, and this BSP already relies on it being
+// register compatible with the STM32F103 throughout; the sensor characteristics of the clone are
+// not published, and the ST ones vary a lot by themselves (V25 from 1.34 to 1.52 V, i.e. +-20 C if
+// the datasheet number is used blindly). So the absolute value is never trusted: the reading is
+// referenced to the handle NTC once at boot, when die and handle are at the same temperature, and
+// only the rise from there is used - which depends on the slope (4.3 mV / C) alone.
+//
+// If the clone were to lack the sensor, the channel reads a roughly constant value, the boot
+// reference pins it to the handle temperature and it never rises, so the cut-out simply never
+// fires. The handle NTC derate and the hardware wattage cap are the protections that do not
+// depend on this sensor.
+static int16_t mcuTempOffsetC = 0;
+
+static int16_t mcuTemperatureUncalibratedC(void) {
+  uint32_t sum = 0;
+  for (uint8_t i = 1; i < ADC_SAMPLES; i += 2) {
+    sum += ADCReadings[i];
+  }
+  const int32_t senseMv = (int32_t)((sum / (ADC_SAMPLES / 2)) * 3300) / 4096;
+  return (int16_t)(((1430 - senseMv) * 10) / 43 + 25);
+}
+
+void calibrateMCUTemperature(int16_t handleTemperatureC) { mcuTempOffsetC = handleTemperatureC - mcuTemperatureUncalibratedC(); }
+
+int16_t getMCUTemperatureC(void) { return mcuTemperatureUncalibratedC() + mcuTempOffsetC; }
 
 uint16_t getADCVin(uint8_t sample) {
   static history<uint16_t, ADC_FILTER_LEN> filter = {{0}, 0, 0};
@@ -94,6 +126,71 @@ uint16_t getADCVin(uint8_t sample) {
   }
   return filter.average();
 }
+#ifdef TIP2_TEMP_ADC1_CHANNEL
+// Both sets of contacts are read every cycle, an empty one reads close to full scale.
+// A T12 tip also touches the TS/SI contacts, so T12 takes priority and we only switch to TS/SI while idle.
+// If a tip is detected in both sets of contacts, it is likely a short and we mask output and dont allow drive until the short is removed.
+static const uint16_t tipOpenThreshold     = (ADC_MAX_READING * 31) / 32;
+static const uint8_t  tipSwitchSampleCount = 16; // Readings in a row before changing state
+static uint8_t        activeTipChannel     = 0;
+static uint8_t        socketChangeCount    = 0;
+static uint8_t        shortClearCount      = 0;
+static bool           socketPicked         = false;
+static volatile bool  t12SocketHasTip      = false;
+static volatile bool  tipSocketsShorted    = false;
+static uint16_t       inactiveTipRaw       = 0;
+
+uint8_t  getActiveTipChannel(void) { return activeTipChannel; }
+uint16_t getInactiveTipRawTemp(void) { return inactiveTipRaw; }
+bool     getT12SocketHasTip(void) { return t12SocketHasTip; }
+bool     getTipSocketsShorted(void) { return tipSocketsShorted; }
+
+uint16_t getTipRawTemp(uint8_t sample) {
+  static history<uint16_t, ADC_FILTER_LEN> filter = {{0}, 0, 0};
+  if (sample) {
+    uint16_t channelRaw[2];
+    channelRaw[0]   = (uint16_t)((hadc1.Instance->JDR1 + hadc1.Instance->JDR2) << 2);
+    channelRaw[1]   = (uint16_t)((hadc1.Instance->JDR3 + hadc1.Instance->JDR4) << 2);
+    t12SocketHasTip = channelRaw[0] < tipOpenThreshold;
+    if (t12SocketHasTip && channelRaw[1] < tipOpenThreshold) {
+      tipSocketsShorted = true; // Set immediately
+      shortClearCount   = 0;
+    } else if (tipSocketsShorted && ++shortClearCount >= tipSwitchSampleCount) {
+      tipSocketsShorted = false;
+      shortClearCount   = 0;
+    }
+
+    // Keep the current socket if both are empty
+    uint8_t wanted = activeTipChannel;
+    if (t12SocketHasTip) {
+      wanted = 0;
+    } else if (channelRaw[1] < tipOpenThreshold) {
+      wanted = 1;
+    }
+
+    if (!socketPicked) {
+      socketPicked     = true;
+      activeTipChannel = wanted;
+    } else if (wanted != activeTipChannel && (wanted == 0 || currentTempTargetDegC == 0)) {
+      if (++socketChangeCount >= tipSwitchSampleCount) {
+        activeTipChannel  = wanted;
+        socketChangeCount = 0;
+        // Reset the filter
+        for (uint8_t i = 0; i < ADC_FILTER_LEN; i++) {
+          filter.update(channelRaw[activeTipChannel]);
+        }
+      }
+    } else {
+      socketChangeCount = 0;
+    }
+
+    inactiveTipRaw = channelRaw[activeTipChannel ^ 1];
+    filter.update(channelRaw[activeTipChannel]);
+    return channelRaw[activeTipChannel];
+  }
+  return filter.average();
+}
+#else
 // Returns either average or instant value. When sample is set the samples from the injected ADC are copied to the filter and then the raw reading is returned
 uint16_t getTipRawTemp(uint8_t sample) {
   static history<uint16_t, ADC_FILTER_LEN> filter = {{0}, 0, 0};
@@ -110,6 +207,7 @@ uint16_t getTipRawTemp(uint8_t sample) {
   }
   return filter.average();
 }
+#endif /* TIP2_TEMP_ADC1_CHANNEL */
 /** System Clock Configuration
  */
 void SystemClock_Config(void) {
@@ -168,7 +266,7 @@ static void MX_ADC1_Init(void) {
   hadc1.Init.DiscontinuousConvMode = DISABLE;
   hadc1.Init.ExternalTrigConv      = ADC_SOFTWARE_START;
   hadc1.Init.DataAlign             = ADC_DATAALIGN_RIGHT;
-  hadc1.Init.NbrOfConversion       = 1;
+  hadc1.Init.NbrOfConversion       = 2; // handle NTC + MCU temperature sensor, alternating in the DMA buffer
   HAL_ADC_Init(&hadc1);
 
 /**Configure Regular Channel
@@ -184,6 +282,13 @@ static void MX_ADC1_Init(void) {
   sConfig.SamplingTime = ADC_SAMPLETIME_71CYCLES_5;
   HAL_ADC_ConfigChannel(&hadc1, &sConfig);
 #endif
+  // Internal temperature sensor on channel 16 (die temperature, last resort thermal cut-off).
+  // The trimmed HAL has no ADC_CHANNEL_TEMPSENSOR, so enable the sensor (TSVREFE) by hand.
+  sConfig.Channel      = ADC_CHANNEL_16;
+  sConfig.Rank         = ADC_REGULAR_RANK_2;
+  sConfig.SamplingTime = ADC_SAMPLETIME_239CYCLES_5; // needs >= 17.1 us
+  HAL_ADC_ConfigChannel(&hadc1, &sConfig);
+  SET_BIT(hadc1.Instance->CR2, ADC_CR2_TSVREFE);
   /**Configure Injected Channel
    */
   // F in = 10.66 MHz
@@ -204,6 +309,10 @@ static void MX_ADC1_Init(void) {
   HAL_ADCEx_InjectedConfigChannel(&hadc1, &sConfigInjected);
   sConfigInjected.InjectedRank = 2;
   HAL_ADCEx_InjectedConfigChannel(&hadc1, &sConfigInjected);
+#ifdef TIP2_TEMP_ADC1_CHANNEL
+  // Ranks 3 and 4: second tip socket
+  sConfigInjected.InjectedChannel = TIP2_TEMP_ADC1_CHANNEL;
+#endif
   sConfigInjected.InjectedRank = 3;
   HAL_ADCEx_InjectedConfigChannel(&hadc1, &sConfigInjected);
   sConfigInjected.InjectedRank = 4;
@@ -297,20 +406,64 @@ static void MX_TIM4_Init(void) {
   sConfigOC.OCFastMode = TIM_OCFAST_ENABLE;
   sConfigOC.Pulse      = 0; // default to entirely off
   HAL_TIM_PWM_ConfigChannel(&htim4, &sConfigOC, PWM_Out_CHANNEL);
+#ifdef PWM2_Out_CHANNEL
+  HAL_TIM_PWM_ConfigChannel(&htim4, &sConfigOC, PWM2_Out_CHANNEL);
+#endif
 
   GPIO_InitTypeDef GPIO_InitStruct;
   GPIO_InitStruct.Pin   = PWM_Out_Pin;
   GPIO_InitStruct.Mode  = GPIO_MODE_AF_PP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH; // We would like sharp rising edges
   HAL_GPIO_Init(PWM_Out_GPIO_Port, &GPIO_InitStruct);
+#ifdef PWM2_Out_CHANNEL
+  GPIO_InitStruct.Pin = PWM2_Out_Pin;
+  HAL_GPIO_Init(PWM2_Out_GPIO_Port, &GPIO_InitStruct);
+#endif
 
   // HAL_NVIC_SetPriority(TIM4_IRQn, 15, 0);
   // HAL_NVIC_EnableIRQ(TIM4_IRQn);
 
   HAL_TIM_Base_Start(&htim4);
   HAL_TIM_PWM_Start(&htim4, PWM_Out_CHANNEL);
+#ifdef PWM2_Out_CHANNEL
+  HAL_TIM_PWM_Start(&htim4, PWM2_Out_CHANNEL);
+#endif
 }
 ///////////////////
+static void MX_TIM3_Init(void) {
+#ifdef BUZZER_Pin
+  /*
+   * The buzzer is a passive piezo on a plain GPIO, so we generate the tone in software:
+   * TIM3 update interrupts toggle the pin at 2 x BUZZER_FREQ_HZ (see configuration.h).
+   * The timer is only running while the buzzer is on (see setBuzzer()).
+   */
+  htim3.Instance               = TIM3;
+  htim3.Init.Prescaler         = 7; // 8 MHz / 8 = 1 MHz timer clock
+  htim3.Init.CounterMode       = TIM_COUNTERMODE_UP;
+  htim3.Init.Period            = (1000000UL / (2UL * BUZZER_FREQ_HZ)) - 1; // two toggles per period
+  htim3.Init.ClockDivision     = TIM_CLOCKDIVISION_DIV1;
+  htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  htim3.Init.RepetitionCounter = 0;
+  HAL_TIM_Base_Init(&htim3);
+
+  GPIO_InitTypeDef GPIO_InitStruct;
+  GPIO_InitStruct.Pin   = BUZZER_Pin;
+  GPIO_InitStruct.Mode  = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull  = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(BUZZER_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_WritePin(BUZZER_GPIO_Port, BUZZER_Pin, GPIO_PIN_RESET);
+#ifdef BUZZER_RETURN_Pin
+  GPIO_InitStruct.Pin = BUZZER_RETURN_Pin;
+  HAL_GPIO_Init(BUZZER_RETURN_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_WritePin(BUZZER_RETURN_GPIO_Port, BUZZER_RETURN_Pin, GPIO_PIN_RESET);
+#endif
+
+  HAL_NVIC_SetPriority(TIM3_IRQn, 14, 0);
+  HAL_NVIC_EnableIRQ(TIM3_IRQn);
+#endif
+}
+
 static void MX_TIM2_Init(void) {
   /*
    * We use the channel 1 to trigger the ADC at end of PWM period
@@ -431,6 +584,15 @@ static void MX_GPIO_Init(void) {
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(KEY_B_GPIO_Port, &GPIO_InitStruct);
+
+#ifdef USB_DP_GATE_Pin
+  HAL_GPIO_WritePin(USB_DP_GATE_GPIO_Port, USB_DP_GATE_Pin, GPIO_PIN_RESET);
+  GPIO_InitStruct.Pin   = USB_DP_GATE_Pin;
+  GPIO_InitStruct.Mode  = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull  = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(USB_DP_GATE_GPIO_Port, &GPIO_InitStruct);
+#endif
 }
 #ifdef USE_FULL_ASSERT
 void assert_failed(uint8_t *file, uint32_t line) { asm("bkpt"); }

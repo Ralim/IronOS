@@ -13,10 +13,10 @@
       "message": "¡Ajustes\nReiniciados!"
     },
     "NoAccelerometerMessage": {
-      "message": "¡Sin acelerómetro\nDetectado!"
+      "message": "¡Acelerómetro no \nDetectado!"
     },
     "NoPowerDeliveryMessage": {
-      "message": "¡Sin USB-PD IC\nDetectado!"
+      "message": "¡USB-PD no \nDetectado!"
     },
     "LockingKeysString": {
       "message": "BLOQUEADO"
@@ -64,7 +64,7 @@
       "message": "Enfriado\n"
     },
     "DeviceFailedValidationWarning": {
-      "message": "¡Es probable es que su dispositivo sea falso!"
+      "message": "¡Es probable que su dispositivo sea falso!"
     },
     "TooHotToStartProfileWarning": {
       "message": "Muy caliente para \nempezar perfil"
@@ -81,7 +81,9 @@
     "SettingStartSleepChar": "R",
     "SettingStartSleepOffChar": "F",
     "SettingLockBoostChar": "B",
-    "SettingLockFullChar": "F"
+    "SettingLockFullChar": "F",
+    "SettingBLEOnChar": "+",
+    "SettingBLEReadOnlyChar": "R"
   },
   "menuGroups": {
     "PowerMenu": {
@@ -132,6 +134,12 @@
     },
     "TipTypeJBCC210": {
       "displayText": "JBC\nC210"
+    },
+    "TipTypeC245Stock": {
+      "displayText": "Stock\n5.5Ω"
+    },
+    "TipTypeC245JBC": {
+      "displayText": "JBC\n2.5Ω"
     }
   },
   "menuOptions": {
@@ -251,13 +259,13 @@
       "displayText": "Hall Eff\nSensibilidad",
       "description": "Sensibilidad del sensor de efecto Hall en la detección de reposo (1=menos sensible | ... | 9=más sensible)"
     },
-    "HallEffSleepTimeout": {                                           
-      "displayText": "Tiempo reposo\nSensor Hall", 
+    "HallEffSleepTimeout": {
+      "displayText": "Tiempo reposo\nSensor Hall",
       "description": "Intervalo antes de que \"modo resposo\" empiece cuando sensorhall supera límite"
     },
     "TemperatureUnit": {
       "displayText": "Unidad de\ntemperatura",
-      "description": "Unidad de temperatura (C=entígrados | F=Fahrenheit)"
+      "description": "Unidad de temperatura (C=Centígrados | F=Fahrenheit)"
     },
     "DisplayRotation": {
       "displayText": "Orientación\nde pantalla",
@@ -328,7 +336,7 @@
       "description": "Intensidad de la potencia del pulso para mantener encendido (W=Vatio)"
     },
     "PowerPulseWait": {
-      "displayText": "Tiempor entre\n pulso de energia",
+      "displayText": "Tiempo entre\n pulso de energia",
       "description": "Tiempo de espera del pulso para mantener encendido (x 2,5s)"
     },
     "PowerPulseDuration": {
@@ -346,6 +354,14 @@
     "SolderingTipType": {
       "displayText": "Tipo de\nTpunta",
       "description": "Selecciona la punta montada"
+    },
+    "BuzzerEnabled": {
+      "displayText": "Buzzer",
+      "description": "Beep when the set temperature is reached and at the end of a profile"
+    },
+    "LEDMode": {
+      "displayText": "LEDs",
+      "description": "Off, 1=status, 2=temperature, 3=power"
     }
   }
 }
