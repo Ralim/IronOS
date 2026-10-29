@@ -82,6 +82,13 @@ OperatingMode guiHandleDraw(void) {
 #endif
   case OperatingMode::StartupLogo:
     showBootLogo();
+#ifdef BUZZER_STARTUP_CHIRP
+    // Short start-up chirp. Done here rather than in postRToSInit(): that runs right before the USB-PD
+    // negotiation starts, and delaying it there makes strict sources hard-reset VBUS.
+    setBuzzer(true);
+    osDelay(TICKS_100MS);
+    setBuzzer(false);
+#endif
 
     if (getSettingValue(SettingsOptions::AutoStartMode) == autoStartMode_t::SLEEP) {
       lastMovementTime = lastButtonTime = 0; // We mask the values so that sleep goes until user moves again or presses a button
@@ -147,6 +154,7 @@ void guiRenderLoop(void) {
   // Post draw we handle any state transitions
 
   if (newMode != currentOperatingMode) {
+    setBuzzer(false); // Ensure buzzer is stopped when changing screen
     context.viewEnterTime = xTaskGetTickCount();
     context.previousMode  = currentOperatingMode;
     // If the previous mode is the startup logo; we dont want to return to it, but instead dispatch out to either home or soldering

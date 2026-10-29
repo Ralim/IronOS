@@ -32,5 +32,7 @@ void TIM1_UP_IRQHandler(void) { HAL_TIM_IRQHandler(&htim1); }
 // Timer 2 is used for co-ordination of PWM & ADC
 void TIM4_IRQHandler(void) { HAL_TIM_IRQHandler(&htim4); }
 void TIM2_IRQHandler(void) { HAL_TIM_IRQHandler(&htim2); }
+// Timer 3 generates the buzzer tone
+void TIM3_IRQHandler(void) { HAL_TIM_IRQHandler(&htim3); }
 
 void EXTI9_5_IRQHandler(void) { HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_9); }

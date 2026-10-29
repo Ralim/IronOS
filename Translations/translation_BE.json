@@ -121,10 +121,10 @@
       "displayText": "Аўта\n"
     },
     "TipTypeT12Long": {
-      "displayText": "TS100\nLong"
+      "displayText": "TS100\nстанд."
     },
     "TipTypeT12Short": {
-      "displayText": "Pine\nShort"
+      "displayText": "Pine\nкаротк."
     },
     "TipTypeT12PTS": {
       "displayText": "PTS\n200"
@@ -134,6 +134,12 @@
     },
     "TipTypeJBCC210": {
       "displayText": "JBC\nC210"
+    },
+    "TipTypeC245Stock": {
+      "displayText": "Stock\n5.5Ω"
+    },
+    "TipTypeC245JBC": {
+      "displayText": "JBC\n2.5Ω"
     }
   },
   "menuOptions": {
@@ -348,6 +354,14 @@
     "SolderingTipType": {
       "displayText": "Тып\nджала",
       "description": "Абярыце тып усталяванага джала"
+    },
+    "BuzzerEnabled": {
+      "displayText": "Buzzer",
+      "description": "Beep when the set temperature is reached and at the end of a profile"
+    },
+    "LEDMode": {
+      "displayText": "LEDs",
+      "description": "Off, 1=status, 2=temperature, 3=power"
     }
   }
 }

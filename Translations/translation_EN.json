@@ -134,6 +134,12 @@
     },
     "TipTypeJBCC210": {
       "displayText": "JBC\nC210"
+    },
+    "TipTypeC245Stock": {
+      "displayText": "Stock\n5.5Ω"
+    },
+    "TipTypeC245JBC": {
+      "displayText": "JBC\n2.5Ω"
     }
   },
   "menuOptions": {
@@ -162,7 +168,7 @@
       "description": "Tip temperature used in \"boost mode\""
     },
     "AutoStart": {
-      "displayText": "Start-up\nbehavior",
+      "displayText": "Start-up\nbehaviour",
       "description": "S=heat to soldering temp | Z=standby at sleep temp until moved | R=standby without heating until moved"
     },
     "TempChangeShortStep": {
@@ -348,6 +354,14 @@
     "SolderingTipType": {
       "displayText": "Soldering\nTip Type",
       "description": "Select the tip type fitted"
+    },
+    "BuzzerEnabled": {
+      "displayText": "Buzzer",
+      "description": "Beep when the set temperature is reached and at the end of a profile"
+    },
+    "LEDMode": {
+      "displayText": "LEDs",
+      "description": "Off, 1=status, 2=temperature, 3=power"
     }
   }
 }

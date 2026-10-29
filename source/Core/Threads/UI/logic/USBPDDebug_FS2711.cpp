@@ -32,7 +32,7 @@ OperatingMode showPDDebug(const ButtonState buttons, guiContext *cxt) {
         min_voltage = 0;
       }
 
-      ui_draw_usb_pd_debug_pdo(*screen, min_voltage / 1000, max_voltage / 1000, current * 1, 0);
+      ui_draw_usb_pd_debug_pdo(*screen, min_voltage / 1000, max_voltage / 1000, current / 10, 0); // mA -> A x100
     }
   }
 
@@ -41,7 +41,7 @@ OperatingMode showPDDebug(const ButtonState buttons, guiContext *cxt) {
   if (buttons == BUTTON_B_SHORT) {
     return OperatingMode::InitialisationDone;
   } else if (buttons == BUTTON_F_SHORT) {
-    *screen++;
+    *screen += 1;
   }
 
   return OperatingMode::UsbPDDebug;

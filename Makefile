@@ -45,14 +45,22 @@ DOCKER_FILE=$(CURDIR)/scripts/IronOS.Dockerfile
 # docker dependencies
 DOCKER_DEPS=$(DOCKER_YML) $(DOCKER_FILE)
 
+# Host UID/GID forwarded to docker compose, which passes them as build args
+# (UID/GID) to scripts/IronOS.Dockerfile so the in-image build user matches the
+# host user and build artifacts aren't owned by root. Named HOST_* because the
+# shell treats UID as a read-only variable (a literal `UID=...` prefix errors).
+HOST_UID?=$(shell id -u)
+HOST_GID?=$(shell id -g)
+DOCKER_ENV=HOST_UID=$(HOST_UID)  HOST_GID=$(HOST_GID)
+
 # compose docker-compose command
-DOCKER_CMD=$(DOCKER_BIN) -f $(DOCKER_YML)  run  --rm  builder
+DOCKER_CMD=$(DOCKER_ENV)  $(DOCKER_BIN) -f $(DOCKER_YML)  run  --rm  builder
 
 # MkDocs config
 MKDOCS_YML=$(CURDIR)/scripts/IronOS-mkdocs.yml
 
 # supported models
-MODELS=TS100 TS80 TS80P Pinecil MHP30 Pinecilv2 S60 TS101 S60P T55 # target names & dir names
+MODELS=TS100 TS80 TS80P Pinecil MHP30 Pinecilv2 S60 TS101 S60P T55 S99 Si012ProMax HS01 # target names & dir names
 MODELS_ML=Pinecil  Pinecilv2 # target names
 MODELS_MULTILANG=Pinecil_multi-lang  Pinecilv2_multi-lang # dir names
 

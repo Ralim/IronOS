@@ -22,6 +22,7 @@ nav:
   - Home: index.md
   - Getting Started: GettingStarted.md
   - Flashing the firmware:
+      - HS-01: Flashing/HS01.md
       - MHP30: Flashing/MHP30.md
       - Pinecil V1: Flashing/Pinecil V1.md
       - Pinecil V2: Flashing/Pinecil V2.md

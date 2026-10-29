@@ -23,18 +23,22 @@ _This firmware does **NOT** support the USB port while running for changing sett
 
 ## Supported Hardware
 
-|     Device     | DC  | QC  | PD  | EPR\*\*\*\* | BLE | Tip Sense | Recommended Purchase |                  Notes                  |
-| :------------: | :-: | :-: | :-: | :-: | :-: | :-------: | :------------------: | :-------------------------------------: |
-| Miniware MHP30 | ❌  | ❌  | ✔️  | ❌  | ❌  |    ✔️     |          ✔️          |                                         |
-|   Pinecil V1   | ✔️  | ✔️  | ✔️  | ❌  | ❌  |    ❌     |        ❌ \*         |                                         |
-|   Pinecil V2   | ✔️  | ✔️  | ✔️  | ✔️  | ✔️  |    ✔️     |          ✔️          |                                         |
-| Miniware TS101 | ✔️  | ❌  | ✔️  | ✔️  | ❌  |    ✔️     |     ✔️ \*\*\*\*\*    | Full OLED resolution not yet supported. |
-|   Sequre S60   | ❌  | ❌  | ✔️  | ❌  | ❌  |    ❌     |          ✔️          | Full OLED resolution not yet supported. |
-|  Sequre S60P   | ❌  | ❌  | ✔️  | ❌  | ❌  |    ❌     |          ✔️          | Full OLED resolution not yet supported. |
-|   Sequre T55   | ❌  | ❌  | ✔️  | ❌  | ❌  |    N/A    |          ✔️          | Full OLED resolution not yet supported. |
-| Miniware TS80P | ❌  | ✔️  | ✔️  | ❌  | ❌  |    N/A    |          ✔️          |                                         |
-| Miniware TS100 | ✔️  | ❌  | ❌  | ❌  | ❌  |    ❌     |        ❌\*\*        |                                         |
-| Miniware TS80  | ❌  | ✔️  | ❌  | ❌  | ❌  |    N/A    |       ❌\*\*\*       |                                         |
+|        Device        | DC  | QC  | PD  | EPR\*\*\*\* | BLE | Tip Sense | Recommended Purchase |                            Notes                             |
+| :------------------: | :-: | :-: | :-: | :---------: | :-: | :-------: | :------------------: | :----------------------------------------------------------: |
+|    Miniware MHP30    | ❌  | ❌  | ✔️  |     ❌      | ❌  |    ✔️     |          ✔️          |                                                              |
+|      Pinecil V1      | ✔️  | ✔️  | ✔️  |     ❌      | ❌  |    ❌     |        ❌ \*         |                                                              |
+|      Pinecil V2      | ✔️  | ✔️  | ✔️  |     ✔️      | ✔️  |    ✔️     |          ✔️          |                                                              |
+|    Miniware TS101    | ✔️  | ❌  | ✔️  |     ✔️      | ❌  |    ✔️     |    ✔️ \*\*\*\*\*     |           Full OLED resolution not yet supported.            |
+|      Sequre S60      | ❌  | ❌  | ✔️  |     ❌      | ❌  |    ❌     |          ✔️          |           Full OLED resolution not yet supported.            |
+|     Sequre S60P      | ❌  | ❌  | ✔️  |     ❌      | ❌  |    ❌     |          ✔️          |           Full OLED resolution not yet supported.            |
+|      Sequre S99      | ✔️  | ❌  | ✔️  |     ❌      | ❌  |    ❌     |          ✔️          |             Buzzer. Selectable tip (5.5Ω/2.5Ω).              |
+| Sequre Si012 Pro Max | ✔️  | ❌  | ✔️  |     ❌      | ❌  |    ❌     |          ✔️          |                                                              |
+|      Sequre T55      | ❌  | ❌  | ✔️  |     ❌      | ❌  |    N/A    |          ✔️          |           Full OLED resolution not yet supported.            |
+|     FNIRSI HS-01     | ❌  | ❌  | ✔️  |     ❌      | ❌  |    ❌     |                      | HW missing cold-junction sensor. Not PD current limit aware. |
+|   KAIWEETS KETS02    | ❌  | ❌  | ✔️  |     ❌      | ❌  |    ❌     |                      |                Same hardware as FNIRSI HS-01.                |
+|    Miniware TS80P    | ❌  | ✔️  | ✔️  |     ❌      | ❌  |    N/A    |          ✔️          |                                                              |
+|    Miniware TS100    | ✔️  | ❌  | ❌  |     ❌      | ❌  |    ❌     |        ❌\*\*        |                                                              |
+|    Miniware TS80     | ❌  | ✔️  | ❌  |     ❌      | ❌  |    N/A    |       ❌\*\*\*       |                                                              |
 
 _Tip Sense_ refers to the device being able to choose between the _"regular"_ _TS100_ or _Hakko T12 style_ tips and _Pine64_'s custom shorter tips which have lower resistance and allow for more power. This is N/A for _TS80(P)_ as there is only one model of tip for them.
 
@@ -59,34 +63,32 @@ To get started with _IronOS firmware_, please jump to [Getting Started Guide](ht
 
 ## Installation
 
-For notes on installation for your device, please refer to the flashing guide for your device:
-
-- [MHP30](https://ralim.github.io/IronOS/Flashing/MHP30)
-- [Pinecil V1](https://ralim.github.io/IronOS/Flashing/Pinecil%20V1/)
-- [Pinecil V2](https://ralim.github.io/IronOS/Flashing/Pinecil%20V2/)
-- [TS80 / TS80P](https://ralim.github.io/IronOS/Flashing/TS80%28P%29/)
-- [TS100](https://ralim.github.io/IronOS/Flashing/TS100)
+For notes on installation for your device, please refer to the flashing guide for your device under the [flashing](https://ralim.github.io/IronOS/Flashing/) page.
 
 ## Builds
 
 The links in the table below allow to download available builds directly:
-- current _Stable Release_ is **`v2.22`**;
+
+- current _Stable Release_ is **`v2.24`**;
 - _Development Build_ **dynamically** provides _**the latest successful build**_ from **`dev`** branch.
 
-|        Device         | Stable Release | Development Build |
-|:---------------------:|:--------------:|:-----------------:|
-| Pinecil  V1           | [Pinecil.zip](https://github.com/Ralim/IronOS/releases/download/v2.23/Pinecil.zip)                           | [Pinecil.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/Pinecil.zip)                           |
-| Pinecil  V1/multilang | [Pinecil_multi-lang.zip](https://github.com/Ralim/IronOS/releases/download/v2.23/Pinecil_multi-lang.zip)     | [Pinecil_multi-lang.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/Pinecil_multi-lang.zip)     |
-| Pinecil  V2           | [PinecilV2.zip](https://github.com/Ralim/IronOS/releases/download/v2.23/PinecilV2.zip)                       | [PinecilV2.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/Pinecilv2.zip)                       |
-| Pinecil  V2/multilang | [PinecilV2_multi-lang.zip](https://github.com/Ralim/IronOS/releases/download/v2.23/PinecilV2_multi-lang.zip) | [PinecilV2_multi-lang.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/Pinecilv2_multi-lang.zip) |
-| Miniware TS100        | [TS100.zip](https://github.com/Ralim/IronOS/releases/download/v2.23/TS100.zip)                               | [TS100.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/TS100.zip)                               |
-| Miniware TS101        | [TS101.zip](https://github.com/Ralim/IronOS/releases/download/v2.23/TS101.zip)                               | [TS101.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/TS101.zip)                               |
-| Miniware TS80         | [TS80.zip](https://github.com/Ralim/IronOS/releases/download/v2.23/TS80.zip)                                 | [TS80.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/TS80.zip)                                 |
-| Miniware TS80P        | [TS80P.zip](https://github.com/Ralim/IronOS/releases/download/v2.23/TS80P.zip)                               | [TS80P.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/TS80P.zip)                               |
-| Miniware MHP30        | [MHP30.zip](https://github.com/Ralim/IronOS/releases/download/v2.23/MHP30.zip)                               | [MHP30.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/MHP30.zip)                               |
-| Sequre   S60          | [S60.zip](https://github.com/Ralim/IronOS/releases/download/v2.23/S60.zip)                                   | [S60.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/S60.zip)                                   |
-| Sequre   S60P         | Not Released                                                                                                 | [S60P.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/S60P.zip)                                 |
-| Sequre   T55          | Not Released                                                                                                 | [T55.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/T55.zip)                                   |
+|        Device        |                                                Stable Release                                                |                                             Development Build                                             |
+| :------------------: | :----------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------: |
+|      Pinecil V1      |              [Pinecil.zip](https://github.com/Ralim/IronOS/releases/download/v2.24/Pinecil.zip)              |              [Pinecil.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/Pinecil.zip)              |
+| Pinecil V1/multilang |   [Pinecil_multi-lang.zip](https://github.com/Ralim/IronOS/releases/download/v2.24/Pinecil_multi-lang.zip)   |   [Pinecil_multi-lang.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/Pinecil_multi-lang.zip)   |
+|      Pinecil V2      |            [PinecilV2.zip](https://github.com/Ralim/IronOS/releases/download/v2.24/PinecilV2.zip)            |            [PinecilV2.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/Pinecilv2.zip)            |
+| Pinecil V2/multilang | [PinecilV2_multi-lang.zip](https://github.com/Ralim/IronOS/releases/download/v2.24/PinecilV2_multi-lang.zip) | [PinecilV2_multi-lang.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/Pinecilv2_multi-lang.zip) |
+|    Miniware TS100    |                [TS100.zip](https://github.com/Ralim/IronOS/releases/download/v2.24/TS100.zip)                |                [TS100.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/TS100.zip)                |
+|    Miniware TS101    |                [TS101.zip](https://github.com/Ralim/IronOS/releases/download/v2.24/TS101.zip)                |                [TS101.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/TS101.zip)                |
+|    Miniware TS80     |                 [TS80.zip](https://github.com/Ralim/IronOS/releases/download/v2.24/TS80.zip)                 |                 [TS80.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/TS80.zip)                 |
+|    Miniware TS80P    |                [TS80P.zip](https://github.com/Ralim/IronOS/releases/download/v2.24/TS80P.zip)                |                [TS80P.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/TS80P.zip)                |
+|    Miniware MHP30    |                [MHP30.zip](https://github.com/Ralim/IronOS/releases/download/v2.24/MHP30.zip)                |                [MHP30.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/MHP30.zip)                |
+|      Sequre S60      |                  [S60.zip](https://github.com/Ralim/IronOS/releases/download/v2.24/S60.zip)                  |                  [S60.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/S60.zip)                  |
+|     Sequre S60P      |                 [S60P.zip](https://github.com/Ralim/IronOS/releases/download/v2.24/S60P.zip)                 |                 [S60P.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/S60P.zip)                 |
+|      Sequre T55      |                  [T55.zip](https://github.com/Ralim/IronOS/releases/download/v2.24/T55.zip)                  |                  [T55.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/T55.zip)                  |
+|      Sequre S99      |                  [S99.zip](https://github.com/Ralim/IronOS/releases/download/v2.24/S99.zip)                  |                  [S99.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/S99.zip)                  |
+| Sequre Si012 Pro Max |          [Si012ProMax.zip](https://github.com/Ralim/IronOS/releases/download/v2.24/Si012ProMax.zip)          |          [Si012ProMax.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/Si012ProMax.zip)          |
+|     FNIRSI HS-01     |                 [HS01.zip](https://github.com/Ralim/IronOS/releases/download/v2.24/HS01.zip)                 |                 [HS01.zip](https://nightly.link/Ralim/IronOS/workflows/push/dev/HS01.zip)                 |
 
 ## Key Features
 
@@ -114,21 +116,23 @@ The links in the table below allow to download available builds directly:
     However, _**they are no longer included in this repo**_.
     **Please, [read the docs](https://ralim.github.io/IronOS/Logo/) for more information**.
 
-[^changelog]:
-    [See the full changelog here](https://ralim.github.io/IronOS/History).
+[^changelog]: [See the full changelog here](https://ralim.github.io/IronOS/History).
 
 ## Basic Control
 
 Supported device is controlled by two buttons which can be pressed in the following ways:
- - short: ~1 second or so;
- - long: more than 1 second;
- - both (press & hold both of them together).
+
+- short: ~1 second or so;
+- long: more than 1 second;
+- both (press & hold both of them together).
 
 Available buttons are:
- - `+/A` button: near the front closer to the tip (for irons) or on the left side of the device (for plates);
- - `-/B` button: near the back far from the tip (for irons) or on the right side of the device (for plates).
+
+- `+/A` button: near the front closer to the tip (for irons) or on the left side of the device (for plates);
+- `-/B` button: near the back far from the tip (for irons) or on the right side of the device (for plates).
 
 After powering on the device for the first time with _IronOS_ installed and having the tip/plate plugged in, on the main menu in _standby mode_ the unit shows a pair of prompts for the two most common operations:
+
 - pressing the `+/A` button enters the _soldering mode_;
 - pressing the `-/B` button enters the _settings menu_;
 - in _soldering mode_:
@@ -151,14 +155,14 @@ Additional details are described in the [menu information](https://ralim.github.
 Pinecil V2 has [_Bluetooth Low Energy_ module](https://ralim.github.io/IronOS/Bluetooth), which is supported by _IronOS_ since `2.21` release to control some of the settings using additional tools like [PineSAM](https://github.com/builder555/PineSAM) or [PineTool](https://github.com/lachlanbell/PineTool). In `2.21` and `2.22` releases the module was _on_ by default. However, **_Bluetooth_ is turned off in the settings by default in current `dev` builds and for 2.23+** [due to security concerns](#1856).[^ble]
 
 To enable _Bluetooth_ back:
+
 - go to _Settings_ menu;
 - press `-/B` button four times to scroll the menu for `Advanced settings`;
 - press `+/A` button to open submenu;
 - press `+/A` button to toggle/enable _Bluetooth_ feature;
 - press `-/B` **and hold it** for just more than five seconds to exit from the _Settings_ menu.
 
-[^ble]:
-    This is related only to situations when a user restores default settings using menu, or when _IronOS_ update is taking place on a new device or on a device with a previous firmware version.
+[^ble]: This is related only to situations when a user restores default settings using menu, or when _IronOS_ update is taking place on a new device or on a device with a previous firmware version.
 
 ## Translations
 

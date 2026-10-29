@@ -42,10 +42,16 @@ void ui_draw_debug_menu(const uint8_t item_number) {
     OLED::printNumber(TipThermoModel::getTipInC(), 6, FontStyle::SMALL);
     break;
   case 6: // Handle Temp in °C
-    OLED::printNumber(getHandleTemperature(0) / 10, 6, FontStyle::SMALL);
+  {
+    int32_t handleTemp = getHandleTemperature(0);
+    if (handleTemp < 0) {
+      OLED::print(SmallSymbolMinus, FontStyle::SMALL);
+      handleTemp = -handleTemp;
+    }
+    OLED::printNumber(handleTemp / 10, 6, FontStyle::SMALL);
     OLED::print(SmallSymbolDot, FontStyle::SMALL);
-    OLED::printNumber(getHandleTemperature(0) % 10, 1, FontStyle::SMALL);
-    break;
+    OLED::printNumber(handleTemp % 10, 1, FontStyle::SMALL);
+  } break;
   case 7: // Max Temp Limit in °C
     OLED::printNumber(TipThermoModel::getTipMaxInC(), 6, FontStyle::SMALL);
     break;
@@ -64,7 +70,7 @@ void ui_draw_debug_menu(const uint8_t item_number) {
     OLED::printNumber(TipThermoModel::convertTipRawADCTouV(getTipRawTemp(0), true), 8, FontStyle::SMALL);
     break;
   case 12: // Tip Cold Junction Compensation Offset in µV
-    OLED::printNumber(getSettingValue(SettingsOptions::CalibrationOffset), 8, FontStyle::SMALL);
+    OLED::printNumber(getSettingValue(TipThermoModel::calibrationOffsetSetting()), 8, FontStyle::SMALL);
     break;
   case 13: // High Water Mark for GUI
     OLED::printNumber(uxTaskGetStackHighWaterMark(GUITaskHandle), 8, FontStyle::SMALL);
@@ -85,6 +91,27 @@ void ui_draw_debug_menu(const uint8_t item_number) {
     }
     OLED::printNumber(hallEffectStrength, 6, FontStyle::SMALL);
   } break;
+#endif
+
+#ifdef MCU_TEMP_CUTOFF_C
+  case 17: // MCU die temperature in C (referenced to the handle NTC at boot)
+  {
+    int16_t dieTemp = getMCUTemperatureC();
+    if (dieTemp < 0) {
+      OLED::print(SmallSymbolMinus, FontStyle::SMALL);
+      dieTemp = -dieTemp;
+    }
+    OLED::printNumber(dieTemp, 6, FontStyle::SMALL);
+  } break;
+#endif
+
+#ifdef DUAL_TIP_SOCKETS
+  case 18: // Active tip socket
+    OLED::printNumber(getActiveTipChannel() + 1, 6, FontStyle::SMALL);
+    break;
+  case 19: // Raw reading of the other socket
+    OLED::printNumber(TipThermoModel::convertTipRawADCTouV(getInactiveTipRawTemp(), true), 8, FontStyle::SMALL);
+    break;
 #endif
 
   default:

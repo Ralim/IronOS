@@ -6,8 +6,9 @@ ALL_MINIWARE_MODELS=TS100 TS80 TS80P TS101
 ALL_PINECIL_MODELS=Pinecil
 ALL_PINECIL_V2_MODELS=Pinecilv2
 ALL_MHP30_MODELS=MHP30
-ALL_SEQURE_MODELS=S60 S60P T55
-ALL_MODELS=$(ALL_MINIWARE_MODELS) $(ALL_PINECIL_MODELS) $(ALL_MHP30_MODELS) $(ALL_PINECIL_V2_MODELS) $(ALL_SEQURE_MODELS)
+ALL_SEQURE_MODELS=S60 S60P T55 S99 Si012ProMax
+ALL_HS01_MODELS=HS01
+ALL_MODELS=$(ALL_MINIWARE_MODELS) $(ALL_PINECIL_MODELS) $(ALL_MHP30_MODELS) $(ALL_PINECIL_V2_MODELS) $(ALL_SEQURE_MODELS) $(ALL_HS01_MODELS)
 
 ifneq ($(model),$(filter $(model),$(ALL_MODELS)))
 $(error Invalid model '$(model)', valid options are: $(ALL_MODELS))
@@ -19,6 +20,13 @@ HEXFILE_DIR=Hexfile
 # Temporary objects folder
 OUTPUT_DIR_BASE=Objects
 OUTPUT_DIR=Objects/$(model)
+# DENSE_UI=1 builds the data dense 128x32 layout (OLED_128x32_DENSE_UI) into its own object set.
+# Used by build.sh for the S60 / T55, where the layout fits every language except the CJK ones
+# (see the note in Core/BSP/Sequre/configuration.h); the S99 / S60P enable it in configuration.h.
+ifdef DENSE_UI
+OUTPUT_DIR=Objects/$(model)-dense
+DENSE_UI_DEFINE=-D OLED_128x32_DENSE_UI=1
+endif
 
 ALL_LANGUAGES=BE BG CS DA DE EL EN ES ET FI FR HR HU IT JA_JP LT NB NL_BE NL PL PT RO RU SK SL SR_CYRL SR_LATN SV TR UK UZ VI YUE_HK ZH_CN ZH_TW
 
@@ -141,11 +149,18 @@ CPUFLAGS=-mcpu=cortex-m3  \
          -mthumb          \
          -mfloat-abi=soft
 
-flash_size=62k
 ifeq ($(model), S60P)
 bootldr_size=0x5000
 DEVICE_DFU_ADDRESS=0x08005000
+flash_size=126k
+else ifeq ($(model),$(filter $(model),S99 Si012ProMax))
+# S99 stock firmware is linked up to 0x08013820, so at least 80K of flash: 78K code + logo/settings pages.
+# The Si012 Pro Max uses the same 0x4C00 bootloader (Ralim/IronOS#2124) and CKS32F103 part.
+bootldr_size=0x4c00
+DEVICE_DFU_ADDRESS=0x08004c00
+flash_size=78k
 else
+flash_size=62k
 # S60 or T55
 bootldr_size=0x4400
 DEVICE_DFU_ADDRESS=0x08004400
@@ -294,6 +309,31 @@ bootldr_size=0x0
 
 endif # ALL_PINECIL_V2_MODELS
 
+ifeq ($(model),$(filter $(model),$(ALL_HS01_MODELS)))
+$(info Building for FNIRSI HS-01 )
+
+DEVICE_BSP_DIR=./Core/BSP/HS01
+LDSCRIPT=./Core/BSP/HS01/Vendor/Startup/ch571.ld
+# No bootloader of our own: flashed over USB by the WCH ROM bootloader (wchisp), replacing the vendor one
+flash_size=188k
+bootldr_size=0x0
+DEVICE_DFU_ADDRESS=0x00000000
+
+CPUFLAGS=-march=rv32imac_zicsr_zifencei \
+         -mabi=ilp32                    \
+         -mcmodel=medany                \
+         -msmall-data-limit=8           \
+         -fsigned-char                  \
+         -fno-builtin                   \
+         -nostartfiles
+
+DEV_LDFLAGS=-nostartfiles -Wl,--no-warn-rwx-segments ./Core/BSP/HS01/Vendor/CH57x/libISP573.a
+DEV_AFLAGS=
+DEV_GLOBAL_DEFS=-DFREQ_SYS=60000000
+DEV_CFLAGS=
+DEV_CXXFLAGS=
+endif # ALL_HS01_MODELS
+
 DEVICE_BSP_INCLUDE_DIRS:= ${shell find ${DEVICE_BSP_DIR} -type d -print}
 THREADS_INCLUDE_DIRS:= ${shell find ${THREADS_DIR} -type d -print}
 DRIVERS_INCLUDE_DIRS:= ${shell find ${DRIVERS_DIR} -type d -print}
@@ -355,7 +395,7 @@ OPTIM=-Os                             \
       -fsingle-precision-constant
 
 # Global defines ---------------------------------------------------------------
-GLOBAL_DEFINES+=$(DEV_GLOBAL_DEFS) -D USE_RTOS_SYSTICK -D MODEL_$(model) -D VECT_TAB_OFFSET=$(bootldr_size)U -fshort-wchar
+GLOBAL_DEFINES+=$(DEV_GLOBAL_DEFS) -D USE_RTOS_SYSTICK -D MODEL_$(model) -D VECT_TAB_OFFSET=$(bootldr_size)U -fshort-wchar $(DENSE_UI_DEFINE)
 
 ifdef swd_enable
 GLOBAL_DEFINES+=-DSWD_ENABLE
@@ -382,7 +422,7 @@ endif
 ifeq ($(model),$(filter $(model),$(ALL_SEQURE_MODELS) ))
 COMPILER_PREFIX=arm-none-eabi
 endif
-ifeq ($(model),$(filter $(model),$(ALL_PINECIL_MODELS) $(ALL_PINECIL_V2_MODELS)))
+ifeq ($(model),$(filter $(model),$(ALL_PINECIL_MODELS) $(ALL_PINECIL_V2_MODELS) $(ALL_HS01_MODELS)))
 COMPILER_PREFIX=riscv-none-elf
 endif
 

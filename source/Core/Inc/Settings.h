@@ -78,8 +78,11 @@ enum SettingsOptions {
   HallEffectSleepTime            = 53, // Seconds (/5) timeout to sleep when hall effect over threshold
   SolderingTipType               = 54, // Selecting the type of soldering tip fitted
   ReverseButtonSettings          = 55, // Change the A and B button assigment in Settings menu
+  BuzzerEnabled                  = 56, // Buzzer on/off (devices with a buzzer)
+  LEDMode                        = 57, // Status LED mode
+  CalibrationOffset2             = 58, // Calibration offset for the second tip socket
   //
-  SettingsOptionsLength = 56, // End marker
+  SettingsOptionsLength = 59, // End marker
 };
 
 // For every setting we need to store the min/max/increment values
@@ -157,13 +160,17 @@ typedef enum {
   T12_6_2_OHM, // Short Tips manufactured by Pine64
   T12_4_OHM,   // Longer tip but low resistance for PTS200
 #endif
-  // #ifdef TIPTYPE_TS80
-  //   TS80_4_5_OHM, // TS80(P) default tips
-  // // We do not know of other tuning tips (?yet?)
-  // #endif
-  // #ifdef TIPTYPE_JBC
-  //   JBC_210_2_5_OHM, // Small JBC tips as used in the S60/S60P
-  // #endif
+// #ifdef TIPTYPE_TS80
+//   TS80_4_5_OHM, // TS80(P) default tips
+// // We do not know of other tuning tips (?yet?)
+// #endif
+// #ifdef TIPTYPE_JBC
+//   JBC_210_2_5_OHM, // Small JBC tips as used in the S60/S60P
+// #endif
+#ifdef TIPTYPE_C245
+  C245_5_5_OHM, // Sequre stock 5.5 ohm cartridge (S99 default)
+  C245_2_5_OHM, // JBC (or clone) 2.5 ohm C245 style cartridge
+#endif
   TIP_TYPE_MAX, // Max value marker
 } tipType_t;
 #else
@@ -202,4 +209,4 @@ void setBluetoothLE(void);
 #endif /* BLE_ENABLED */
 #endif // c++ guard
 
-#endif                       /* SETTINGS_H_ */
+#endif /* SETTINGS_H_ */

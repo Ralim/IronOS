@@ -151,8 +151,10 @@
 #define ACCEL_MSA
 
 #define PROFILE_SUPPORT
+#define BUZZER_SETTING     1 // Expose the buzzer on/off as a user setting
 #define OLED_96x16         1
 #define POW_PD             1
+#define USB_PD_TIMEOUT     20 // Default Timeout for USB-PD Protocol negotiation in x100ms
 #define POW_PD_EXT         0
 #define USB_PD_EPR_WATTAGE 0 /*No EPR*/
 #define TEMP_NTC

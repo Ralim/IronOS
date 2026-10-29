@@ -43,16 +43,26 @@ uint32_t          TipThermoModel::convertTipRawADCTouV(uint16_t rawADC, bool ski
   // Now to divide this down by the gain
   valueuV /= OP_AMP_GAIN_STAGE;
 
-  if (getSettingValue(SettingsOptions::CalibrationOffset) && skipCalOffset == false) {
+  const uint16_t calibrationOffset = getSettingValue(calibrationOffsetSetting());
+  if (calibrationOffset && skipCalOffset == false) {
     // Remove uV tipOffset
-    if (valueuV > getSettingValue(SettingsOptions::CalibrationOffset)) {
-      valueuV -= getSettingValue(SettingsOptions::CalibrationOffset);
+    if (valueuV > calibrationOffset) {
+      valueuV -= calibrationOffset;
     } else {
       valueuV = 0;
     }
   }
   lastuv = valueuV;
   return valueuV;
+}
+
+SettingsOptions TipThermoModel::calibrationOffsetSetting() {
+#ifdef DUAL_TIP_SOCKETS
+  if (getActiveTipChannel() == 1) {
+    return SettingsOptions::CalibrationOffset2;
+  }
+#endif
+  return SettingsOptions::CalibrationOffset;
 }
 
 TemperatureType_t TipThermoModel::convertTipRawADCToDegC(uint16_t rawADC) { return convertuVToDegC(convertTipRawADCTouV(rawADC)); }

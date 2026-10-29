@@ -178,7 +178,6 @@ def run_editing_settings_file_cli():
     else:
         print("Running in non-interactive mode, using loaded/default values")
 
-
     versionMarker = 0x55AA
     if args.model == "Pinecilv2":
         versionMarker = 0x55AB  # Special version marker for Pinecil v2
@@ -203,7 +202,7 @@ def run_editing_settings_file_cli():
 
     # Save settings to binary or hex file
     print(f"\nSaving settings to {args.output}")
-    if not settings.save_to_binary(args.output, base_address,versionMarker):
+    if not settings.save_to_binary(args.output, base_address, versionMarker):
         print("Failed to save settings")
         sys.exit(1)
 

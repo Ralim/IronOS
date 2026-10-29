@@ -237,7 +237,11 @@ uint8_t lookupVoltageLevel() {
   auto minVoltageOnCell    = getSettingValue(SettingsOptions::MinDCVoltageCells);
   auto minVoltageCellCount = getSettingValue(SettingsOptions::MinVoltageCells);
   if (minVoltageOnCell == 0) {
+#ifdef DC_MIN_VOLTAGE_X10
+    return DC_MIN_VOLTAGE_X10;
+#else
     return 90; // 9V since iron does not function effectively below this
+#endif
   } else {
     return (minVoltageOnCell * minVoltageCellCount) + (minVoltageCellCount * 2);
   }
@@ -268,6 +272,14 @@ const char *lookupTipName() {
 #ifdef TIPTYPE_JBC
   case tipType_t::JBC_210_2_5_OHM:
     return translatedString(Tr->TipTypeJBCC210);
+    break;
+#endif
+#ifdef TIPTYPE_C245
+  case tipType_t::C245_5_5_OHM:
+    return translatedString(Tr->TipTypeC245Stock);
+    break;
+  case tipType_t::C245_2_5_OHM:
+    return translatedString(Tr->TipTypeC245JBC);
     break;
 #endif
 #ifdef AUTO_TIP_SELECTION
@@ -309,6 +321,14 @@ uint8_t getUserSelectedTipResistance() {
 #endif
 #ifdef TIPTYPE_JBC
   case tipType_t::JBC_210_2_5_OHM:
+    return 25;
+    break;
+#endif
+#ifdef TIPTYPE_C245
+  case tipType_t::C245_5_5_OHM:
+    return 55;
+    break;
+  case tipType_t::C245_2_5_OHM:
     return 25;
     break;
 #endif

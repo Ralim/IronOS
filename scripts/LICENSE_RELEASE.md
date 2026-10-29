@@ -6,6 +6,7 @@ This document outlines the license of IronOS and its dependencies.
 - CMSIS + STM32F1xx HAL driver: BSD-3-Clause
 - NMSIS: Apache-2.0
 - GD32VF103 board files: BSD-3-Clause
+- WCH CH57x drivers and startup files: Apache-2.0
 - WenQuanYi Bitmap Song font: GPL-2.0-or-later
 - BriefLZ compression library: Zlib
 
@@ -121,6 +122,17 @@ distributed under the License is distributed on an AS IS BASIS, WITHOUT
 WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+```
+
+WCH CH57x drivers and startup files
+---
+
+* Only applies to HS-01 releases.
+
+```
+Copyright (c) 2021 Nanjing Qinheng Microelectronics Co., Ltd.
+
+SPDX-License-Identifier: Apache-2.0
 ```
 
 GD32VF103 board files
