@@ -41,16 +41,6 @@ defined in linker script */
 	.type	Reset_Handler, %function
 Reset_Handler:
 
-/* The bootloader jumps here with SysTick still running. Stop it, and clear any tick already
-   pending, before .data is copied, or its tick handler can write over the application's RAM. */
-  movs	r1, #0
-  ldr	r0, =0xE000E010      /* SysTick CTRL */
-  str	r1, [r0]
-  ldr	r0, =0xE000ED04      /* SCB ICSR */
-  ldr	r1, =0x02000000      /* PENDSTCLR */
-  str	r1, [r0]
-  dsb
-
 /* Copy the data segment initializers from flash to SRAM */
   movs	r1, #0
   b	LoopCopyDataInit
