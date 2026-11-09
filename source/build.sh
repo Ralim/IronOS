@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -e
-TRANSLATION_DIR="../Translations"
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+TRANSLATION_DIR="${SCRIPT_DIR}/../Translations"
 #TRANSLATION_SCRIPT="make_translation.py"
 
 # AVAILABLE_LANGUAGES will be calculating according to json files in $TRANSLATION_DIR
