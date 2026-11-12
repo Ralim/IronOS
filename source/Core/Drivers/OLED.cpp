@@ -52,11 +52,7 @@ I2C_CLASS::I2C_REG OLED_Setup_Array[] = {
     {0x80,  OLED_HEIGHT - 1, 0}, /* Multiplex ratio adjusts how far down the matrix it scans */
     {0x80,             0xC0, 0}, /* Set COM Scan direction */
     {0x80,             0xD3, 0}, /* Set vertical Display offset */
-#ifdef OLED_DISPLAY_OFFSET_QUIRK
-    {0x80,             0x30, 0}, /* Offset (this panel needs a non-zero offset; see setRotation) */
-#else
-    {0x80, 0x00, 0}, /* 0 Offset */
-#endif
+    {0x80,             0x00, 0}, /* 0 Offset */
     {0x80,             0x40, 0}, /* Set Display start line to 0 */
 #if defined(OLED_SEGMENT_MAP_REVERSED) && !defined(OLED_DISPLAY_OFFSET_QUIRK)
     {0x80,             0xA1, 0}, /* Set Segment remap (reversed) */
@@ -134,6 +130,40 @@ static uint16_t easeInOutTiming(uint16_t t) { return t * t * (300 - 2 * t) / 100
  */
 static uint16_t lerp(uint16_t a, uint16_t b, uint16_t t) { return a + t * (b - a) / 100; }
 
+#ifdef OLED_DISPLAY_OFFSET_QUIRK
+// The stock TS101 bootloader (never overwritten by IronOS) contains its own SSD1306
+// init table with the correct per-unit segment-remap and vertical-offset bytes,
+// fixed at the factory. Real units differ: older batches (e.g. DFU 1.05 and older)
+// use remap 0xA0 and offset 0x00, while newer batches (e.g. DFU 1.06/1.08) use
+// remap 0xA1 and offset 0x10.
+// Rather than hardcoding one value for every TS101 (which broke older screens in #2254),
+// read the actual bytes the bootloader uses by scanning for the unique init anchor:
+// {0xA6, 0xA8, 0x1F, 0xC8, 0xD3}
+// where bootloader[i - 1] is the normal segment-remap byte (0xA0 or 0xA1),
+// and bootloader[i + 5] is the normal display-offset byte (0x00 or 0x10).
+static uint8_t oledDetectedSegmentRemap  = 0xA0; // default: normal remap
+static uint8_t oledDetectedDisplayOffset = 0x00; // default: 0 offset
+
+static void detectOledOffsetFromBootloader() {
+  static const uint8_t anchor[]       = {0xA6, 0xA8, 0x1F, 0xC8, 0xD3};
+  const uint8_t       *bootloader     = reinterpret_cast<const uint8_t *>(0x08000000);
+  const uint32_t       bootloaderSize = 0x8000; // 32KB TS101 bootloader
+  for (uint32_t i = 1; i + sizeof(anchor) < bootloaderSize; i++) {
+    if (memcmp(bootloader + i, anchor, sizeof(anchor)) == 0) {
+      uint8_t remap  = bootloader[i - 1];
+      uint8_t offset = bootloader[i + sizeof(anchor)];
+      if ((remap == 0xA0 || remap == 0xA1) && (offset == 0x00 || offset == 0x10)) {
+        oledDetectedSegmentRemap  = remap;
+        oledDetectedDisplayOffset = offset;
+      }
+      return;
+    }
+  }
+}
+#endif /* OLED_DISPLAY_OFFSET_QUIRK */
+
+static bool rotationInitialized = false;
+
 #ifdef OLED_I2C_PER_BYTE_TRANSFERS
 // This panel does not tolerate the bulk 0x80-continuation transmission used by
 // everything else on this bus (REFRESH_COMMANDS / I2C_CLASS::Transmit): it only
@@ -196,6 +226,14 @@ void OLED::setDisplayState(DisplayState state) {
 void OLED::initialize() {
   cursor_x = cursor_y = 0;
   inLeftHandedMode    = false;
+  rotationInitialized = false;
+
+#ifdef OLED_DISPLAY_OFFSET_QUIRK
+  detectOledOffsetFromBootloader();
+  OLED_Setup_Array[5].val = 0xC8; // COM Scan Direction
+  OLED_Setup_Array[7].val = oledDetectedDisplayOffset;
+  OLED_Setup_Array[9].val = oledDetectedSegmentRemap;
+#endif
 
 #ifdef OLED_128x32
   stripPointers[0] = &screenBuffer[FRAMEBUFFER_START];
@@ -647,23 +685,32 @@ void OLED::setRotation(bool leftHanded) {
 #ifdef OLED_FLIP
   leftHanded = !leftHanded;
 #endif /* OLED_FLIP */
-  if (inLeftHandedMode == leftHanded) {
+  if (rotationInitialized && inLeftHandedMode == leftHanded) {
     return;
   }
+  rotationInitialized = true;
 #ifdef OLED_DISPLAY_OFFSET_QUIRK
   // Segment-remap, COM-scan-direction and vertical Display-Offset (0xD3) as a matched
-  // triplet, taken from the official Miniware TS101 firmware disassembly: on this
-  // panel, changing orientation without also re-sending the Display-Offset leaves the
-  // image shifted by half the screen height.
+  // triplet. On hardware with the new OLED panel, the panel requires remap 0xA1, COM 0xC8,
+  // and offset 0x10 in normal orientation, and remap 0xA0, COM 0xC0, offset 0x30 in flipped
+  // orientation. On older hardware, the panel requires remap 0xA0, COM 0xC8, offset 0x00
+  // in normal orientation, and remap 0xA1, COM 0xC0, offset 0x00 in flipped orientation.
+  // Both match the official Miniware TS101 firmware disassembly (routine at 0x080095ec).
+  uint8_t remap;
+  uint8_t offset;
   if (leftHanded) {
-    OLED_Setup_Array[9].val = 0xA1;
+    // Normal orientation (OLED_FLIP inverted caller's false into true)
+    remap                   = oledDetectedSegmentRemap;
+    offset                  = oledDetectedDisplayOffset;
     OLED_Setup_Array[5].val = 0xC8;
-    OLED_Setup_Array[7].val = 0x10;
   } else {
-    OLED_Setup_Array[9].val = 0xA0;
+    // Flipped orientation (OLED_FLIP inverted caller's true into false)
+    remap                   = oledDetectedSegmentRemap ^ 0x01;
+    offset                  = (oledDetectedDisplayOffset == 0x00) ? 0x00 : (oledDetectedDisplayOffset ^ 0x20);
     OLED_Setup_Array[5].val = 0xC0;
-    OLED_Setup_Array[7].val = 0x30;
   }
+  OLED_Setup_Array[9].val = remap;
+  OLED_Setup_Array[7].val = offset;
 #else
 #ifdef OLED_SEGMENT_MAP_REVERSED
   if (!leftHanded) {
