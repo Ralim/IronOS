@@ -58,6 +58,10 @@ uint8_t getActiveTipChannel(void);
 // Raw reading of the unused socket
 uint16_t getInactiveTipRawTemp(void);
 #endif
+#ifdef OLED_DISPLAY_OFFSET_QUIRK
+// Provides the factory OLED segment remap and vertical display offset detected during BSP init
+void detectManufacturerOLEDRemap(uint8_t *segmentRemap, uint8_t *offset);
+#endif
 // Returns the Handle temp in C, X10
 int16_t getHandleTemperature(uint8_t sample);
 // Returns the Tip temperature ADC reading in raw units

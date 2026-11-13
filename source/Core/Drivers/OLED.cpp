@@ -131,38 +131,10 @@ static uint16_t easeInOutTiming(uint16_t t) { return t * t * (300 - 2 * t) / 100
 static uint16_t lerp(uint16_t a, uint16_t b, uint16_t t) { return a + t * (b - a) / 100; }
 
 #ifdef OLED_DISPLAY_OFFSET_QUIRK
-// The stock TS101 bootloader (never overwritten by IronOS) contains its own SSD1306
-// init table with the correct per-unit segment-remap and vertical-offset bytes,
-// fixed at the factory. Real units differ: older batches (e.g. DFU 1.05 and older)
-// use remap 0xA0 and offset 0x00, while newer batches (e.g. DFU 1.06/1.08) use
-// remap 0xA1 and offset 0x10.
-// Rather than hardcoding one value for every TS101 (which broke older screens in #2254),
-// read the actual bytes the bootloader uses by scanning for the unique init anchor:
-// {0xA6, 0xA8, 0x1F, 0xC8, 0xD3}
-// where bootloader[i - 1] is the normal segment-remap byte (0xA0 or 0xA1),
-// and bootloader[i + 5] is the normal display-offset byte (0x00 or 0x10).
-static uint8_t oledDetectedSegmentRemap  = 0xA0; // default: normal remap
-static uint8_t oledDetectedDisplayOffset = 0x00; // default: 0 offset
-
-static void detectOledOffsetFromBootloader() {
-  static const uint8_t anchor[]       = {0xA6, 0xA8, 0x1F, 0xC8, 0xD3};
-  const uint8_t       *bootloader     = reinterpret_cast<const uint8_t *>(0x08000000);
-  const uint32_t       bootloaderSize = 0x8000; // 32KB TS101 bootloader
-  for (uint32_t i = 1; i + sizeof(anchor) < bootloaderSize; i++) {
-    if (memcmp(bootloader + i, anchor, sizeof(anchor)) == 0) {
-      uint8_t remap  = bootloader[i - 1];
-      uint8_t offset = bootloader[i + sizeof(anchor)];
-      if ((remap == 0xA0 || remap == 0xA1) && (offset == 0x00 || offset == 0x10)) {
-        oledDetectedSegmentRemap  = remap;
-        oledDetectedDisplayOffset = offset;
-      }
-      return;
-    }
-  }
-}
+static uint8_t oledDetectedSegmentRemap  = 0xA0;
+static uint8_t oledDetectedDisplayOffset = 0x00;
+static bool    rotationInitialized       = false;
 #endif /* OLED_DISPLAY_OFFSET_QUIRK */
-
-static bool rotationInitialized = false;
 
 #ifdef OLED_I2C_PER_BYTE_TRANSFERS
 // This panel does not tolerate the bulk 0x80-continuation transmission used by
@@ -226,10 +198,10 @@ void OLED::setDisplayState(DisplayState state) {
 void OLED::initialize() {
   cursor_x = cursor_y = 0;
   inLeftHandedMode    = false;
-  rotationInitialized = false;
 
 #ifdef OLED_DISPLAY_OFFSET_QUIRK
-  detectOledOffsetFromBootloader();
+  rotationInitialized = false;
+  detectManufacturerOLEDRemap(&oledDetectedSegmentRemap, &oledDetectedDisplayOffset);
   OLED_Setup_Array[5].val = 0xC8; // COM Scan Direction
   OLED_Setup_Array[7].val = oledDetectedDisplayOffset;
   OLED_Setup_Array[9].val = oledDetectedSegmentRemap;
@@ -685,10 +657,16 @@ void OLED::setRotation(bool leftHanded) {
 #ifdef OLED_FLIP
   leftHanded = !leftHanded;
 #endif /* OLED_FLIP */
+#ifdef OLED_DISPLAY_OFFSET_QUIRK
   if (rotationInitialized && inLeftHandedMode == leftHanded) {
     return;
   }
   rotationInitialized = true;
+#else
+  if (inLeftHandedMode == leftHanded) {
+    return;
+  }
+#endif /* OLED_DISPLAY_OFFSET_QUIRK */
 #ifdef OLED_DISPLAY_OFFSET_QUIRK
   // Segment-remap, COM-scan-direction and vertical Display-Offset (0xD3) as a matched
   // triplet. On hardware with the new OLED panel, the panel requires remap 0xA1, COM 0xC8,
