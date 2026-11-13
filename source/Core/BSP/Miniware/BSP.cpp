@@ -12,6 +12,7 @@
 #include "history.hpp"
 #include "main.hpp"
 #include <IRQ.h>
+#include <string.h>
 
 volatile uint16_t PWMSafetyTimer = 0;
 volatile uint8_t  pendingPWM     = 0;
@@ -248,7 +249,46 @@ void unstick_I2C() {
 uint8_t getButtonA() { return HAL_GPIO_ReadPin(KEY_A_GPIO_Port, KEY_A_Pin) == GPIO_PIN_RESET ? 1 : 0; }
 uint8_t getButtonB() { return HAL_GPIO_ReadPin(KEY_B_GPIO_Port, KEY_B_Pin) == GPIO_PIN_RESET ? 1 : 0; }
 
-void BSPInit(void) { switchToFastPWM(); }
+#ifdef OLED_DISPLAY_OFFSET_QUIRK
+// Stock TS101 bootloaders store a factory SSD1306 init table in the 32KB
+// bootloader region with per-batch segment remap and display offset bytes:
+// older units use remap 0xA0 / offset 0x00, newer units use 0xA1 / 0x10.
+static uint8_t oledDetectedSegmentRemap  = 0xA0;
+static uint8_t oledDetectedDisplayOffset = 0x00;
+
+static void scanBootloaderOLEDRemap(void) {
+  static const uint8_t anchor[]       = {0xA6, 0xA8, 0x1F, 0xC8, 0xD3};
+  const uint8_t       *bootloader     = reinterpret_cast<const uint8_t *>(0x08000000);
+  const uint32_t       bootloaderSize = 0x8000;
+  for (uint32_t i = 1; i + sizeof(anchor) < bootloaderSize; i++) {
+    if (memcmp(bootloader + i, anchor, sizeof(anchor)) == 0) {
+      uint8_t remap  = bootloader[i - 1];
+      uint8_t offset = bootloader[i + sizeof(anchor)];
+      if ((remap == 0xA0 || remap == 0xA1) && (offset == 0x00 || offset == 0x10)) {
+        oledDetectedSegmentRemap  = remap;
+        oledDetectedDisplayOffset = offset;
+      }
+      return;
+    }
+  }
+}
+
+void detectManufacturerOLEDRemap(uint8_t *segmentRemap, uint8_t *offset) {
+  if (segmentRemap != nullptr) {
+    *segmentRemap = oledDetectedSegmentRemap;
+  }
+  if (offset != nullptr) {
+    *offset = oledDetectedDisplayOffset;
+  }
+}
+#endif
+
+void BSPInit(void) {
+  switchToFastPWM();
+#ifdef OLED_DISPLAY_OFFSET_QUIRK
+  scanBootloaderOLEDRemap();
+#endif
+}
 
 void reboot() { NVIC_SystemReset(); }
 
