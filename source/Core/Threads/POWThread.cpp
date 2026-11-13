@@ -19,28 +19,38 @@
 #include "stdlib.h"
 #include "task.h"
 
+volatile bool hasDoneSecondStagePDRenegotiate = false;
 // Small worker thread to handle power (PD + QC) related steps
 
 void startPOWTask(void const *argument __unused) {
-
   // Init any other misc sensors
   postRToSInit();
-  while (preStartChecksDone() == 0) {
-    osDelay(3);
-  }
-  // You have to run this once we are willing to answer PD messages
-  // Setting up too early can mean that we miss the ~20ms window to respond on some chargers
+  BaseType_t res;
 #ifdef POW_PD
   USBPowerDelivery::start();
-  // Crank the handle at boot until we are stable and waiting for IRQ
+  // Crank the handle at boot until we are stable
   USBPowerDelivery::step();
 #endif
+
+  while (preStartChecksDone() == 0) {
+#ifdef POW_PD
+    USBPowerDelivery::step();
+    if (!getFUS302IRQLow()) {
+      res = xTaskNotifyWait(0x0, 0xFFFFFF, NULL, TICKS_100MS / 4);
+    }
+    if (res != pdFALSE || getFUS302IRQLow()) {
+      USBPowerDelivery::IRQOccured();
+    }
+    USBPowerDelivery::step();
+#else
+    osDelay(3);
+#endif
+  }
 #if POW_PD_EXT == 2
   FS2711::start();
   FS2711::negotiate();
 #endif
 
-  BaseType_t res;
   for (;;) {
     res = pdFALSE;
     // While the interrupt is low, dont delay
@@ -57,6 +67,10 @@ void startPOWTask(void const *argument __unused) {
 #ifdef POW_PD
     if (res != pdFALSE || getFUS302IRQLow()) {
       USBPowerDelivery::IRQOccured();
+    }
+    if (USBPowerDelivery::negotiationHasWorked() && !hasDoneSecondStagePDRenegotiate) {
+      USBPowerDelivery::renegotiate();
+      hasDoneSecondStagePDRenegotiate = true;
     }
     USBPowerDelivery::PPSTimerCallback();
     USBPowerDelivery::step();
