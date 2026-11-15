@@ -17,9 +17,9 @@ StaticSemaphore_t FRToSI2C::xSemaphoreBuffer;
 #define SDA_LOW()  (R32_PB_DIR |= SDA_Pin)
 #define SDA_READ() (GPIOB_ReadPortPin(SDA_Pin) ? 1 : 0)
 
-// Half a bit, roughly 200-280 kHz at 60 MHz. Shorter delays gave display glitches
-static inline void i2cDelay() {
-  for (int i = 0; i < 30; i++) {
+// The stock firmware drives the OLED with no delay between edges; a few NOPs of margin on top of that
+__attribute__((always_inline)) static inline void i2cDelay() {
+  for (int i = 0; i < 3; i++) {
     asm volatile("nop");
   }
 }
@@ -46,7 +46,7 @@ static void i2cStop() {
   i2cDelay();
 }
 
-static void i2cWriteBit(uint8_t val) {
+__attribute__((always_inline)) static inline void i2cWriteBit(uint8_t val) {
   if (val) {
     SDA_HIGH();
   } else {
@@ -58,9 +58,10 @@ static void i2cWriteBit(uint8_t val) {
   SCL_LOW();
 }
 
-static uint8_t i2cReadBit() {
+__attribute__((always_inline)) static inline uint8_t i2cReadBit() {
   SDA_HIGH();
   i2cDelay();
+  i2cDelay(); // SDA rises through the pull-up only
   SCL_HIGH();
   i2cDelay();
   uint8_t b = SDA_READ();
@@ -69,11 +70,9 @@ static uint8_t i2cReadBit() {
 }
 
 static bool i2cSend(uint8_t value) {
-  for (uint8_t i = 0; i < 8; i++) {
-    i2cWriteBit(value & 0x80); // write the most-significant bit
-    value <<= 1;
+  for (uint8_t mask = 0x80; mask; mask >>= 1) {
+    i2cWriteBit(value & mask);
   }
-  SDA_HIGH();
   return i2cReadBit() == 0;
 }
 
