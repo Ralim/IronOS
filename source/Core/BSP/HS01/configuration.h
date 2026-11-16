@@ -142,7 +142,6 @@
 #define OLED_PRECHARGE   0x22
 #define OLED_VCOMH       0x20
 #define OLED_INTERNAL_IREF
-#define OLED_TRANSITIONS_INSTANT // Bit-banged I2C is too slow for the slide animations
 // The CH224K negotiates PD on its own, so to IronOS this is a DC input (see Power.cpp)
 #define POW_DC             1
 #define DC_MIN_VOLTAGE_X10 75 // Same cut-off as the stock firmware; the 9 V PD level can read less than 9.0 V
