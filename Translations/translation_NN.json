@@ -1,0 +1,351 @@
+{
+  "languageCode": "NN",
+  "languageLocalName": "Norsk nynorsk",
+  "tempUnitFahrenheit": false,
+  "messagesWarn": {
+    "CalibrationDone": {
+      "message": "Kalibrering\nfullført!"
+    },
+    "ResetOKMessage": {
+      "message": "Nullstilling OK"
+    },
+    "SettingsResetMessage": {
+      "message": "Nokre innstillingar\nblei endra!"
+    },
+    "NoAccelerometerMessage": {
+      "message": "Ingen akselerometer\nfunne!"
+    },
+    "NoPowerDeliveryMessage": {
+      "message": "Ingen USB-PD IC\nfunne!"
+    },
+    "LockingKeysString": {
+      "message": "LÅST"
+    },
+    "UnlockingKeysString": {
+      "message": "OPNA"
+    },
+    "WarningKeysLockedString": {
+      "message": "!LÅST!"
+    },
+    "WarningThermalRunaway": {
+      "message": "Termisk\nrømming"
+    },
+    "WarningTipShorted": {
+      "message": "!Spiss kortslutta!"
+    },
+    "SettingsCalibrationWarning": {
+      "message": "Før omstart, sørg for at spiss og handtak er ved romtemperatur!"
+    },
+    "CJCCalibrating": {
+      "message": "kalibrerer\n"
+    },
+    "SettingsResetWarning": {
+      "message": "Er du sikker på at du vil nullstille til standardinnstillingar?"
+    },
+    "UVLOWarningString": {
+      "message": "Lågspenning"
+    },
+    "UndervoltageString": {
+      "message": "Underspenning\n"
+    },
+    "InputVoltageString": {
+      "message": "Innspenning:\n"
+    },
+    "SleepingAdvancedString": {
+      "message": "Dvale...\n"
+    },
+    "SleepingTipAdvancedString": {
+      "message": "Spiss:\n"
+    },
+    "ProfilePreheatString": {
+      "message": "Føroppvarming\n"
+    },
+    "ProfileCooldownString": {
+      "message": "Nedkjøling\n"
+    },
+    "DeviceFailedValidationWarning": {
+      "message": "Eininga di er truleg ei forfalsking!"
+    },
+    "TooHotToStartProfileWarning": {
+      "message": "For varm til å\nstarte profil"
+    }
+  },
+  "characters": {
+    "SettingRightChar": "H",
+    "SettingLeftChar": "V",
+    "SettingAutoChar": "A",
+    "SettingSlowChar": "S",
+    "SettingMediumChar": "M",
+    "SettingFastChar": "F",
+    "SettingStartSolderingChar": "L",
+    "SettingStartSleepChar": "D",
+    "SettingStartSleepOffChar": "R",
+    "SettingLockBoostChar": "B",
+    "SettingLockFullChar": "F"
+  },
+  "menuGroups": {
+    "PowerMenu": {
+      "displayText": "Effekt-\ninnst.",
+      "description": ""
+    },
+    "SolderingMenu": {
+      "displayText": "Lodde-\ninnst.",
+      "description": ""
+    },
+    "PowerSavingMenu": {
+      "displayText": "Dvale-\ninnst.",
+      "description": ""
+    },
+    "UIMenu": {
+      "displayText": "Brukar-\ngrensesn.",
+      "description": ""
+    },
+    "AdvancedMenu": {
+      "displayText": "Avanserte\nval",
+      "description": ""
+    }
+  },
+  "menuValues": {
+    "USBPDModeDefault": {
+      "displayText": "Default\nMode"
+    },
+    "USBPDModeNoDynamic": {
+      "displayText": "No\nDynamic"
+    },
+    "USBPDModeSafe": {
+      "displayText": "Safe\nMode"
+    },
+    "TipTypeAuto": {
+      "displayText": "Auto\nSense"
+    },
+    "TipTypeT12Long": {
+      "displayText": "TS100\nLong"
+    },
+    "TipTypeT12Short": {
+      "displayText": "Pine\nShort"
+    },
+    "TipTypeT12PTS": {
+      "displayText": "PTS\n200"
+    },
+    "TipTypeTS80": {
+      "displayText": "TS80\n"
+    },
+    "TipTypeJBCC210": {
+      "displayText": "JBC\nC210"
+    }
+  },
+  "menuOptions": {
+    "DCInCutoff": {
+      "displayText": "Kjelde\n",
+      "description": "Straumforsyning. Set nedre spenning for automatisk avslåing. (DC 10V) (S 3.3V per celle)"
+    },
+    "MinVolCell": {
+      "displayText": "Minimum\nspenning",
+      "description": "Lågaste tillatne spenning per celle (3S: 3 - 3.7V | 4-6S: 2.4 - 3.7V)"
+    },
+    "QCMaxVoltage": {
+      "displayText": "QC-\nspenning",
+      "description": "Maks QC-spenning eininga skal forhandle om"
+    },
+    "PDNegTimeout": {
+      "displayText": "PD-\ntidsavbr.",
+      "description": "PD-forhandlingstidsavbrot i steg på 100 ms for kompatibilitet med nokre QC-ladarar"
+    },
+    "USBPDMode": {
+      "displayText": "PD\nmodus",
+      "description": "Ingen dynamikk slår av EPR & PPS, sikker modus brukar ikkje motstandspadding"
+    },
+    "BoostTemperature": {
+      "displayText": "KTmp\n",
+      "description": "Temperatur i \"kraftmodus\""
+    },
+    "AutoStart": {
+      "displayText": "AutoStart\n",
+      "description": "Start automatisk med lodding når straum blir kopla til. (L=Lodding | D=Dvale | R=Dvale romtemperatur)"
+    },
+    "TempChangeShortStep": {
+      "displayText": "Temp-endring\nkort",
+      "description": "Kor mykje temperaturen skal endrast ved kort trykk"
+    },
+    "TempChangeLongStep": {
+      "displayText": "Temp-endring\nlang",
+      "description": "Kor mykje temperaturen skal endrast ved langt trykk"
+    },
+    "LockingMode": {
+      "displayText": "Tillat låsing\nav knappar",
+      "description": "Under lodding, hald inne begge knappane for å byte mellom låsemodus (B=berre boost | F=full lås)"
+    },
+    "ProfilePhases": {
+      "displayText": "Profil-\nfaser",
+      "description": "Tal på fasar i profilmodus"
+    },
+    "ProfilePreheatTemp": {
+      "displayText": "Føroppv.\ntemp",
+      "description": "Føroppvarm til denne temperaturen ved start av profilmodus"
+    },
+    "ProfilePreheatSpeed": {
+      "displayText": "Føroppv.\nfart",
+      "description": "Føroppvarm med denne farten (grader per sekund)"
+    },
+    "ProfilePhase1Temp": {
+      "displayText": "Fase 1\ntemp",
+      "description": "Måltemperatur ved slutten av fasen"
+    },
+    "ProfilePhase1Duration": {
+      "displayText": "Fase 1\ntid",
+      "description": "Mållengd for fasen (sekund)"
+    },
+    "ProfilePhase2Temp": {
+      "displayText": "Fase 2\ntemp",
+      "description": ""
+    },
+    "ProfilePhase2Duration": {
+      "displayText": "Fase 2\ntid",
+      "description": ""
+    },
+    "ProfilePhase3Temp": {
+      "displayText": "Fase 3\ntemp",
+      "description": ""
+    },
+    "ProfilePhase3Duration": {
+      "displayText": "Fase 3\ntid",
+      "description": ""
+    },
+    "ProfilePhase4Temp": {
+      "displayText": "Fase 4\ntemp",
+      "description": ""
+    },
+    "ProfilePhase4Duration": {
+      "displayText": "Fase 4\ntid",
+      "description": ""
+    },
+    "ProfilePhase5Temp": {
+      "displayText": "Fase 5\ntemp",
+      "description": ""
+    },
+    "ProfilePhase5Duration": {
+      "displayText": "Fase 5\ntid",
+      "description": ""
+    },
+    "ProfileCooldownSpeed": {
+      "displayText": "Nedkj.\nfart",
+      "description": "Nedkjøling med denne farten ved slutten av profilmodus (grader per sekund)"
+    },
+    "MotionSensitivity": {
+      "displayText": "RSensr\n",
+      "description": "Rørslefølsamheit (1=Minst følsam | ... | 9=Mest følsam)"
+    },
+    "SleepTemperature": {
+      "displayText": "DTmp\n",
+      "description": "Dvaletemperatur (C)"
+    },
+    "SleepTimeout": {
+      "displayText": "DTid\n",
+      "description": "Tid før dvale (minutt | sekund)"
+    },
+    "ShutdownTimeout": {
+      "displayText": "AvTid\n",
+      "description": "Tid før automatisk avslåing (minutt)"
+    },
+    "HallEffSensitivity": {
+      "displayText": "Hall-sensor\nfølsamheit",
+      "description": "Følsamheit for Hall-effekt-sensoren for å oppdage inaktivitet (1=Minst følsam | ... | 9=Mest følsam)"
+    },
+    "HallEffSleepTimeout": {
+      "displayText": "HallSensor\nDvaletid",
+      "description": "Intervall før dvalemodus startar når Hall-effekten er over terskelen"
+    },
+    "TemperatureUnit": {
+      "displayText": "TempEinh\n",
+      "description": "Temperaturskala (C=Celsius | F=Fahrenheit)"
+    },
+    "DisplayRotation": {
+      "displayText": "SkjRetn\n",
+      "description": "Skjermretning (H=Høgrehendt | V=Venstrehendt | A=Automatisk)"
+    },
+    "CooldownBlink": {
+      "displayText": "NedBl\n",
+      "description": "Blink temperaturen på skjermen medan spissen framleis er varm."
+    },
+    "ScrollingSpeed": {
+      "displayText": "RullF\n",
+      "description": "Farten på rulletekst"
+    },
+    "ReverseButtonTempChange": {
+      "displayText": "Byt\n+ - kn.",
+      "description": "Byt om knappane for temperaturjustering"
+    },
+    "ReverseButtonSettings": {
+      "displayText": "Byt\nA B-kn.",
+      "description": "Byt tildeling av knappar i innstillingsmenyen"
+    },
+    "AnimSpeed": {
+      "displayText": "Anim.\nfart",
+      "description": "Farten på animasjonane i menyen (S=sakte | M=middels | F=rask)"
+    },
+    "AnimLoop": {
+      "displayText": "Anim.\nløkke",
+      "description": "Gjenta ikon-animasjonar i hovudmenyen"
+    },
+    "Brightness": {
+      "displayText": "Skjerm-\nlysstyrke",
+      "description": "Juster lysstyrken på OLED-skjermen"
+    },
+    "ColourInversion": {
+      "displayText": "Inverter\nskjerm",
+      "description": "Inverter fargane på OLED-skjermen"
+    },
+    "LOGOTime": {
+      "displayText": "Oppstartlogo\nvarigheit",
+      "description": "Set varigheita på oppstartlogoen (s=sekund)"
+    },
+    "AdvancedIdle": {
+      "displayText": "AvDvSk\n",
+      "description": "Vis detaljert informasjon med lita skrift på dvaleskjermen."
+    },
+    "AdvancedSoldering": {
+      "displayText": "AvLdSk\n",
+      "description": "Vis detaljert informasjon under lodding"
+    },
+    "BluetoothLE": {
+      "displayText": "Bluetooth\n",
+      "description": "Slår på BLE"
+    },
+    "PowerLimit": {
+      "displayText": "Effekt-\ngrense",
+      "description": "Maks effekt jernet kan bruke (W=watt)"
+    },
+    "CalibrateCJC": {
+      "displayText": "TempKal?\n",
+      "description": "Ved neste oppstart blir Cold Junction Compensation kalibrert (ikkje naudsynt dersom Delta T er < 5°C)"
+    },
+    "VoltageCalibration": {
+      "displayText": "KalSpIn?\n",
+      "description": "Kalibrer spenning. Knappane justerer. Langt trykk for å avslutte"
+    },
+    "PowerPulsePower": {
+      "displayText": "Effekt-\npuls",
+      "description": "Kor høg effekt pulsen for å halde ladaren vaken skal ha (watt)"
+    },
+    "PowerPulseWait": {
+      "displayText": "Effektpuls\nforsink.",
+      "description": "Forsinking før effektpulsen blir utløyst (x 2.5s)"
+    },
+    "PowerPulseDuration": {
+      "displayText": "Effektpuls\nvarigheit",
+      "description": "Kor lenge halde-vaken-pulsen varer (x 250ms)"
+    },
+    "SettingsReset": {
+      "displayText": "NullStl?\n",
+      "description": "Nullstill alle innstillingar"
+    },
+    "LanguageSwitch": {
+      "displayText": "Språk:\n NN    Norsk nynorsk",
+      "description": ""
+    },
+    "SolderingTipType": {
+      "displayText": "Loddespiss-\ntype",
+      "description": "Vel typen spiss som er montert"
+    }
+  }
+}
