@@ -42,6 +42,8 @@ static uint16_t messageWidth(const char *message) {
   }
 #ifdef OLED_128x32
   return 8 * str_display_len(message); // descriptions use the 8x16 small font on 128x32
+#elif defined(MENU_DESCRIPTION_SMALL_FONT)
+  return 6 * str_display_len(message);
 #else
   return FONT_12_WIDTH * str_display_len(message);
 #endif
@@ -78,6 +80,9 @@ void drawScrollingText(const char *message, TickType_t currentTickOffset) {
     OLED::setCursor((OLED_WIDTH - messageOffset), 8);
     OLED::print(message, FontStyle::SMALL);
   }
+#elif defined(MENU_DESCRIPTION_SMALL_FONT)
+  OLED::setCursor((OLED_WIDTH - messageOffset), 0);
+  OLED::print(message, FontStyle::SMALL);
 #else
   OLED::setCursor((OLED_WIDTH - messageOffset), 0);
   OLED::print(message, FontStyle::LARGE);

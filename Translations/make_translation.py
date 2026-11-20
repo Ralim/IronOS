@@ -220,6 +220,7 @@ def get_power_source_list() -> List[str]:
 # (Terminus 8x16) font instead of the large one, so they must be ranked and
 # encoded against the small font. Set from the build macros in main().
 DESCRIPTIONS_USE_SMALL_FONT = False
+WRAP_SMALL_DESCRIPTIONS = False
 # Build macros of the model being generated for; set in main()
 BUILD_MACROS: frozenset = frozenset()
 
@@ -1359,12 +1360,30 @@ def get_translation_strings_and_indices_text(
         record = TranslatedStringLocation(len(byte_encoded_strings) - 1, 0)
         translated_string_lookups[translation_id] = record
 
+    def wrap_text_for_small_font(text: str, width: int = 21) -> str:
+        out_lines: List[str] = []
+        current = ""
+        for word in text.split(" "):
+            if current == "":
+                current = word
+            elif len(current) + 1 + len(word) <= width:
+                current += " " + word
+            else:
+                out_lines.append(current)
+                current = word
+        if current:
+            out_lines.append(current)
+        return "\n".join(out_lines)
+
     def encode_string_and_add(
         message: str,
         translation_id: str,
         force_large_text: bool = False,
         force_small_text: bool = False,
+        wrap_small_text: bool = False,
     ):
+        if wrap_small_text:
+            message = wrap_text_for_small_font(message)
         encoded_data: bytes
         if force_small_text or (
             force_large_text is False and test_is_small_font(message)
@@ -1387,8 +1406,9 @@ def get_translation_strings_and_indices_text(
         encode_string_and_add(
             lang_data["description"],
             "menuOptions" + record["id"] + "description",
-            force_large_text=not use_small,
+            force_large_text=not DESCRIPTIONS_USE_SMALL_FONT,
             force_small_text=use_small,
+            wrap_small_text=use_small and WRAP_SMALL_DESCRIPTIONS,
         )
         encode_string_and_add(
             lang_data["displayText"], "menuOptions" + record["id"] + "displayText"
@@ -1411,8 +1431,9 @@ def get_translation_strings_and_indices_text(
         encode_string_and_add(
             lang_data["description"],
             "menuGroups" + record["id"] + "description",
-            force_large_text=not use_small,
+            force_large_text=not DESCRIPTIONS_USE_SMALL_FONT,
             force_small_text=use_small,
+            wrap_small_text=use_small and WRAP_SMALL_DESCRIPTIONS,
         )
         encode_string_and_add(
             lang_data["displayText"], "menuGroups" + record["id"] + "displayText"
@@ -1718,7 +1739,9 @@ def main() -> None:
     # hand-drawn fonts and large descriptions. CJK descriptions always fall back
     # to the large font (see description_uses_small_font), since the small font
     # has no CJK glyphs.
-    DESCRIPTIONS_USE_SMALL_FONT = "OLED_128x32" in macros
+    global WRAP_SMALL_DESCRIPTIONS
+    WRAP_SMALL_DESCRIPTIONS = "MENU_DESCRIPTION_SMALL_FONT" in macros
+    DESCRIPTIONS_USE_SMALL_FONT = "OLED_128x32" in macros or WRAP_SMALL_DESCRIPTIONS
     global BUILD_MACROS
     BUILD_MACROS = macros
 
