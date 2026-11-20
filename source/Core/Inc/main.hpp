@@ -35,6 +35,7 @@ enum class AccelType {
   SC7       = 6,
   GPIO      = 7,
   LIS_CLONE = 8,
+  QMA       = 9,
 };
 extern AccelType DetectedAccelerometerVersion;
 
