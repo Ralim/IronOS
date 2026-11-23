@@ -204,6 +204,7 @@ def get_accel_names_list() -> List[str]:
         "SC7A20",
         "GPIO",
         "LIS2 CLONE",
+        "QMA",
     ]
 
 
