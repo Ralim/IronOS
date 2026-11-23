@@ -540,7 +540,7 @@ endif
 # Alientek .atk packaging (T90): wrap the raw .bin into the T90 USB-bootloader image (13-byte
 # header + payload XOR 0xFF) with the in-tree pure-python packer (stdlib only), so the release
 # build produces a flashable image in CI. Format verified by byte-exact round-trip against real
-# factory + community .atk samples. Build date is metadata only (ATK_DATE, YYYY-MM-DD).
+# stock (dump of the developer's own iron) + community .atk samples. Build date is metadata only (ATK_DATE, YYYY-MM-DD).
 ATK_DATE ?= 2000-01-01
 %.atk: %.bin Makefile
 	$(HOST_PYTHON) atk-pack.py --date $(ATK_DATE) $< $@

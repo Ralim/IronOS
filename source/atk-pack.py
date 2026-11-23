@@ -2,7 +2,7 @@
 # Pack a raw firmware .bin into an Alientek T90 ".atk" image for its USB bootloader.
 #
 # Format reverse-engineered + byte-for-byte round-trip verified against two real T90 .atk samples
-# (the official factory t90.atk and PanKleszcz's t90_msdmem.atk):
+# (a stock firmware dump from the developer's own iron and PanKleszcz's t90_msdmem.atk):
 #
 #   header (13 bytes):
 #     [0:6]  magic            = 08 02 0A 01 A0 20
@@ -13,7 +13,7 @@
 #   payload: the raw application image with every byte XOR 0xFF (the only "encryption").
 #
 # There is no payload checksum or signature in the header; the bootloader accepts any correctly
-# formatted image (the per-USB-packet CRC of the transfer protocol is separate). The application is
+# formatted image (the 8-bit checksum on each USB frame of the transfer protocol is separate). The application is
 # linked at 0x08005000 (the 20 KB bootloader lives below it).
 #
 # Stdlib only (mirrors dfuse-pack.py), so it runs in the CI build container with plain python3.

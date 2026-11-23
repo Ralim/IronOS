@@ -8,7 +8,8 @@ brought up almost entirely from reverse engineering of the stock firmware.
 
 `model=T90` selects this BSP (`make model=T90 firmware-EN`). See
 [Documentation/Flashing/Alientek T90.md](../../../../Documentation/Flashing/Alientek%20T90.md)
-for build + flash instructions and `Tools/atktool/` for the `.atk` packer / HID flasher.
+for build and flash instructions. IronOS builds the `.atk` image with `source/atk-pack.py`.
+The standalone [atk-flash] utility installs it over USB HID.
 
 ## Hardware map
 
@@ -35,11 +36,9 @@ NTC are converted on demand on the regular group, serialised by a FreeRTOS mutex
 The T90 is not a documented IronOS target, so every value below was recovered empirically rather
 than from a datasheet or schematic:
 
-1. **Boot / flash protocol** — the stock `.atk` image format and the HID update-mode protocol were
-   recovered by byte-exact round-trip against two real factory images and the related T80P tool, and
-   re-implemented in `Tools/atktool/`. The commit opcode (`SetBoot` 0x15, *not* `SetStartAPP` 0x16)
-   was found by sweeping the bootloader's function table on hardware. See
-   [t90b HID flash protocol] in the porting notes.
+1. **Boot / flash protocol** — the T90 image format was checked against a dump from the developer’s
+   iron and PanKleszcz’s backup utility image. The [atk-flash] utility implements the HID update
+   protocol. Device testing confirmed that `SetBoot` (0x15) finalizes the update.
 2. **Pinmap + display** — SPI1 wiring, the GC9 init sequence and the analog front-end were read out
    of the disassembled stock firmware and confirmed against on-screen probes (a tri-colour I2C
    scanner identified the accelerometer chip-ID).
@@ -118,4 +117,4 @@ than from a datasheet or schematic:
 - The thermal-mass / inertia / max-wattage constants in `configuration.h` are first-cut and want a
   final fit on hardware.
 
-[t90b HID flash protocol]: ../../../../Tools/atktool/README.md
+[atk-flash]: https://github.com/vshuraeff/atk-flash

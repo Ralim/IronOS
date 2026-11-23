@@ -1,72 +1,37 @@
-# Alientek T90
+# Flashing the Alientek T90B
 
-The T90 ships a closed **USB HID "update-mode" bootloader** (it does **not** enumerate as a USB mass
-storage drive like the Miniware irons, and there is no exposed SWD header by default). IronOS is
-flashed with the small `atktool` HID utility in this repository, which packs the firmware into the
-Alientek `.atk` image format and streams it over the bootloader protocol.
+IronOS `model=T90` supports the **T90B with a C245 cartridge**. The T90A and T90C use different cartridges.
 
-> Flashing is hardware-affecting and only works while the iron is in update-mode. Always `probe`
-> first and confirm before `flash`. If anything goes wrong, recovery is reflashing the factory
-> `t90-factory.atk`.
+USB flashing with `atk-flash` has been tested on **macOS**. Linux is expected to work through hidapi and still needs a device test. Windows flashing is untested, including use of Alientek’s Windows updater with an IronOS image.
 
-## 1. Get the firmware
+## Get the firmware and flasher
 
-Download `T90.zip` from the [releases page](https://github.com/Ralim/IronOS/releases) (or the build
-artifacts for a mainline build) and extract the `T90_<Language-Code>.atk` file.
+Extract `T90_<language>.atk` from the T90 build artifact for the revision you want to install. To build the English image from the repository root with the IronOS toolchain, run
 
-To build it yourself, from the repository root:
-
-```
-docker run --rm -v "$PWD":/build/ironos -w /build/ironos/source ironos-build:latest \
-  make model=T90 -j8 firmware-EN
+```sh
+make -C source model=T90 firmware-EN
 ```
 
-The output is `source/Hexfile/T90_EN.atk` (plus `.bin/.hex/.elf`). `firmware-<LANG>` selects other
-languages. The application links to flash base `0x08005000` (the 20K bootloader sits below it).
+The build writes `source/Hexfile/T90_EN.atk`. Install the standalone USB flasher with HID support and make the `atk-flash` command available on your PATH. [atk-flash downloads and build instructions](https://github.com/vshuraeff/atk-flash)
 
-## 2. Build `atktool` (once)
+## Prepare for recovery
 
-`atktool` lives in `Tools/atktool/` (a small C CLI with a Makefile; it needs `hidapi`). Build it with
-`make` in that directory if a binary is not already present.
+Before updating, keep a compatible T90B stock application image in `.atk` format. Check the model and package on the [Alientek T90 download page](http://www.openedv.com/docs/tool/hanjie/T90.html). The `t90-factory.atk` used during development was a dump of the developer’s own iron.
 
-## 3. Enter update-mode and probe
+PanKleszcz’s `t90_msdmem` utility produces a full flash backup (`FLASH.BIN`). The recovery command below takes a T90B application image in `.atk` format. [Backup utility discussion](https://github.com/Ralim/IronOS/issues/2195#issuecomment-3962598616)
 
-To enter update-mode: **hold button B, plug in USB, and keep power for ~4 seconds** — the screen shows
-`Updating...`. Confirm over HID:
+## Install IronOS
 
+1. Hold button **B** while connecting the iron with a USB-C data cable to the computer that runs `atk-flash`. Keep it held for about four seconds, until the screen shows the update mode.
+2. Run `atk-flash probe`. It looks for the update-mode device (USB VID `19F5`, PID `3245`). Continue only if it ends with `ready to flash`.
+3. Flash the image. For an English build, run this command from the repository root. For a downloaded artifact, substitute the extracted file’s path.
+
+   ```sh
+   atk-flash flash source/Hexfile/T90_EN.atk --force
+   ```
+
+After the update, check that the iron boots into IronOS. To restore stock firmware, re-enter update mode, run `atk-flash probe`, then supply the saved T90B recovery image.
+
+```sh
+atk-flash flash /path/to/t90b-recovery.atk --force
 ```
-atktool probe
-```
-
-A good reply shows `found device at VID 19F5 PID 3245`, a valid 21-byte GET_INFO reply and
-`PROTOCOL CONFIRMED`. If `probe` finds nothing, the iron is not in update-mode — redo the
-B + USB + power sequence.
-
-## 4. Flash
-
-```
-atktool flash source/Hexfile/T90_EN.atk --force
-```
-
-It streams the image in 32-byte chunks and commits with **SetBoot (fn 0x15)**, which finalises the
-freshly written image and reboots into it. On success it prints `flashed N bytes in M chunks` and the
-iron boots the new firmware.
-
-## 5. Recovery
-
-If the new app does not boot (black/blank screen, or stuck on `Updating...`), reflash the factory
-image to recover:
-
-```
-atktool flash t90-factory.atk --force
-```
-
-## Notes
-
-- `atktool unpack <in.atk> <out.bin>` strips the 13-byte header and de-obfuscates the payload
-  (XOR 0xFF) to the raw application, which maps to `0x08005000` — useful for inspecting the stock
-  firmware. `atktool info <file.atk>` prints the header and vector table without unpacking.
-- The T90A / T90B / T90C are different cartridge families (C210 / C245 / T65) and are **not**
-  interchangeable. `model=T90` targets the C245-based variant.
-- A black screen or a stuck `Updating...` after flashing usually means the commit did not boot the app
-  or the app faulted at startup — reflash the factory image and recheck the build.
